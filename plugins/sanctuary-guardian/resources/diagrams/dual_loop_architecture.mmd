@@ -18,13 +18,12 @@ flowchart TD
     subgraph OuterStrategy ["Phase I: Strategy (Outer Loop)"]
         direction TB
 
-        Start(["Start"]):::outer --> Scout[I. Scout: Boot & Orient]:::outer
+        Start(["Start"]):::outer --> Scout[I. Scout: Boot & Orient<br>guardian_wakeup.py]:::outer
         Scout -->|Read Boot Files| Context[(RLM / Spec Context)]:::storage
 
         Scout --> SpecKitty[Spec Kitty: Specify → Plan → Tasks]:::outer
-        SpecKitty -->|Verify| StateCheck[verify_workflow_state.py<br>--phase tasks]:::outer
-        StateCheck --> Worktree[Create Worktree<br>/spec-kitty.implement]:::outer
-        Worktree --> PacketGen[Generate Strategy Packet<br>generate_strategy_packet.py]:::outer
+        SpecKitty -->|Verify| Worktree[Create Worktree<br>/spec-kitty.implement]:::outer
+        Worktree --> PacketGen[agent_orchestrator.py packet]:::outer
         PacketGen -->|Output| Packet[".agent/handoffs/<br>task_packet_NNN.md"]:::storage
     end
 
@@ -32,7 +31,7 @@ flowchart TD
     %% PHASE II: HAND-OFF (Human Bridge)
     %% ----------------------------------------------------
     Packet -->|Signal 'Ready'| User
-    User -->|Launch Claude| InnerStart([Inner Loop Terminal]):::inner
+    User -->|Launch Exec Agent| InnerStart([Inner Loop Terminal]):::inner
 
     %% ----------------------------------------------------
     %% PHASE III: EXECUTION (Inner Loop)
@@ -54,26 +53,25 @@ flowchart TD
     %% ----------------------------------------------------
     subgraph Verification ["Phase IV: Verification (Outer Loop)"]
         direction TB
-        VerifyStart --> DiffCheck[verify_inner_loop_result.py<br>Inspect Diff + Criteria]:::outer
-        DiffCheck --> CleanCheck[verify_workflow_state.py<br>--phase review]:::outer
-        CleanCheck --> Decision{Pass?}:::outer
+        VerifyStart --> DiffCheck[agent_orchestrator.py verify<br>Inspect Diff + Criteria]:::outer
+        DiffCheck --> Decision{Pass?}:::outer
 
-        Decision -- No --> Correction[Auto-generate<br>correction_packet_NNN.md]:::outer
+        Decision -- No --> Correction[agent_orchestrator.py correct<br>correction_packet_NNN.md]:::outer
         Correction -->|Delta Fix| User
 
-        Decision -- Yes --> Commit[Commit in Worktree]:::outer
-        Commit --> LaneUpdate[Update Task Lane → done]:::outer
+        Decision -- Yes --> Commit[Commit in Worktree / Merge]:::outer
+        Commit --> LaneUpdate[Spec Kitty Task Lane → done]:::outer
     end
 
     %% ----------------------------------------------------
     %% PHASE V+: CLOSURE (Protocol 128)
     %% ----------------------------------------------------
-    subgraph Closure ["Phase V+: Closure (Protocol 128)"]
+    subgraph Closure ["Phase V+: Closure Sequence"]
         direction TB
-        LaneUpdate --> Seal[VI. Seal]:::outer
-        Seal --> Persist[VII. Persist → HuggingFace]:::outer
-        Persist --> Retro[VIII. Retrospective]:::outer
-        Retro --> End([IX. End]):::outer
+        LaneUpdate --> Retro[V. agent_orchestrator.py retro]:::outer
+        Retro --> Seal[VI. capture_snapshot.py --seal]:::outer
+        Seal --> Persist[VII. persist_soul.py]:::outer
+        Persist --> End([IX. End Session]):::outer
     end
 
     %% Fallback

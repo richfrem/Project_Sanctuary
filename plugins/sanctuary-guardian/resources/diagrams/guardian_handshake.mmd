@@ -4,7 +4,7 @@ config:
 ---
 
 %% Architecture: Separation of Concerns (The Guardian Handshake)
-%% Location: plugins/guardian-onboarding/resources/diagrams/guardian_handshake.mmd
+%% Location: plugins/sanctuary-guardian/resources/diagrams/guardian_handshake.mmd
 %% Illustrates how the Guardian, Orchestrator, and individual Loops interact without overstepping boundaries.
 
 sequenceDiagram
@@ -41,9 +41,10 @@ sequenceDiagram
     Note over G: Guardian Closure Sovereignty
     
     G->>G: Phase VI: Seal<br>(Iron Check & Context Bundler)
-    G->>G: Phase VI: RLM Update<br(learning_package_snapshot.md)
+    G->>G: Phase VI: RLM Update<br>(learning_package_snapshot.md)
     G->>G: Phase VII: Persist Traces<br>(session_traces.jsonl & HuggingFace)
     G->>G: Phase VIII: Database Ingestion<br>(Vector DB Sync)
     G->>G: Phase IX: Formal Closure<br>(Git Commit & Push)
     
     Note over G: Session Safely Terminated
+

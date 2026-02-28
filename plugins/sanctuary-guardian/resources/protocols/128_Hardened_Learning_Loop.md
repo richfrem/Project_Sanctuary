@@ -6,7 +6,7 @@ Establish a persistent, tamper-proof, and high-fidelity mechanism for orchestrat
 ## 2. The Red Team Gate (Zero-Trust Mode)
 No cognitive update may be persisted to the long-term Cortex without meeting the following criteria:
 8. In section 2 (Red Team Gate), the `cortex_learning_debrief` plugin skill reference should now be:
-   - **Script**: `python3 plugins/guardian-onboarding/scripts/learning_debrief.py --hours 24`
+   - **Script**: `python3 plugins/sanctuary-guardian/scripts/learning_debrief.py --hours 24`
 2. **Discrepancy Reporting**: The tool must highlight any gap between the agent's internal claims and the statistical reality on disk.
 3. **HITL Review**: A human steward must review the targeted "Red Team Packet" (Briefing, Manifest, Snapshot) before approval.
 
@@ -37,9 +37,18 @@ If an Iron Check fails, the system enters `SAFE_MODE`.
 
 ## 4. Technical Architecture (The Mechanism)
 
-The system has evolved from a monolithic loop into an **Orchestration** framework managed by the `orchestrator` skill (`plugins/agent-loops/skills/orchestrator/`). After the mandatory Phase I Scout, tasks are routed into one of four specific execution patterns depending on the context.
+The system has evolved from a monolithic loop into a **Tri-Track Spec-Kitty** framework feeding into an **Orchestration** structure.
 
-### A. Pattern 1: Simple Learning Loop
+### A. Strategic Framing (Spec-Kitty Tracks)
+Before task execution, work is triaged and framed:
+*   **Track A**: Factory Standardized Workflows (`/codify-*`)
+*   **Track B**: Discovery Features (`/spec-kitty.specify` → `plan` → `tasks`)
+*   **Track C**: Micro-tasks (Trivial maintenance)
+
+### B. Execution Routing (Orchestrator)
+Once the Work Packages are defined by Spec-Kitty, tasks are routed by the `orchestrator` skill (`plugins/agent-loops/skills/orchestrator/`) into one of four execution patterns:
+
+#### Pattern 1: Simple Learning Loop
 - **Purpose**: Self-directed research, documentation, and knowledge synthesis.
 - **Skill**: `plugins/agent-loops/skills/learning-loop/`
 - **Flow**: Research & Synthesize -> Document Findings -> Iterate -> Seal
@@ -59,11 +68,11 @@ The system has evolved from a monolithic loop into an **Orchestration** framewor
 - **Skill**: `plugins/agent-loops/skills/agent-swarm/`
 - **Flow**: Partition Work -> Dispatch N Worktrees -> Execute in Isolation -> Verify & Merge -> Seal
 
-### E. Unified Closure Sequence (Phases V-VIII)
+### C. Unified Closure Sequence (Phases V-VIII)
 Regardless of the chosen execution pattern, **all** loops MUST converge back to the unified closure sequence managed by the Orchestrator and Guardian tools:
 1. **Phase V: Orchestrator Retrospective** (`agent_orchestrator.py retro`)
-2. **Phase VI: The Technical Seal** (`session-closure` skill → `python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal`)
-3. **Phase VII: Soul Persistence** (`session-closure` skill → `python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md`)
+2. **Phase VI: The Technical Seal** (`session-closure` skill → `python3 plugins/sanctuary-guardian/scripts/capture_snapshot.py --type seal`)
+3. **Phase VII: Soul Persistence** (`session-closure` skill → `python3 plugins/sanctuary-guardian/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md`)
 4. **Phase VIII: Session Closure** (`agent_orchestrator.py end` with Git Ops)
 
 ## 5. Operational Invariants
@@ -84,19 +93,19 @@ Protocol 128 is operationalized through portable skills in the `plugins/` direct
 | **`red-team-review`**| II-IV | Pattern 2: Audit & Adversarial Review | `plugins/agent-loops/skills/red-team-review/` |
 | **`dual-loop`** | II-IV | Pattern 3: Tactical Execution | `plugins/agent-loops/skills/dual-loop/` |
 | **`agent-swarm`** | II-IV | Pattern 4: Parallel Execution | `plugins/agent-loops/skills/agent-swarm/` |
-| **`session-bootloader`**| I | Session start, debrief ingestion, Iron Check | `plugins/guardian-onboarding/skills/session-bootloader/` |
-| **`session-closure`** | VI-VIII | Technical Seal, Soul Persistence, session end | `plugins/guardian-onboarding/skills/session-closure/` |
+| **`session-bootloader`**| I | Session start, debrief ingestion, Iron Check | `plugins/sanctuary-guardian/skills/session-bootloader/` |
+| **`session-closure`** | VI-VIII | Technical Seal, Soul Persistence, session end | `plugins/sanctuary-guardian/skills/session-closure/` |
 | **`memory-management`** | I, VI, VIII| Tiered memory: hot cache ↔ deep storage | `plugins/memory-management/skills/memory-management/` |
 
 ## 7. Document Matrix
 | Document | Role | Path |
 | :--- | :--- | :--- |
 | **ADR 071** | Design Intent | `ADRs/071_protocol_128_cognitive_continuity.md` |
-| **Protocol 128** | Constitutional Mandate | `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` |
-| **Agent Loops Overview** | Execution Flow Diagram | `plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd` |
-| **Primer** | Rules of Reality | `plugins/guardian-onboarding/resources/cognitive_primer.md` |
+| **Protocol 128** | Constitutional Mandate | `plugins/sanctuary-guardian/resources/protocols/128_Hardened_Learning_Loop.md` |
+| **Agent Loops Overview** | Execution Flow Diagram | `plugins/sanctuary-guardian/resources/diagrams/protocol_128_learning_loop.mmd` |
+| **Primer** | Rules of Reality | `plugins/sanctuary-guardian/resources/cognitive_primer.md` |
 | **Orchestrator Skill** | Loop Router | `plugins/agent-loops/skills/orchestrator/SKILL.md` |
-| **Guardian Skill** | Session Boot/Closure | `plugins/guardian-onboarding/skills/guardian-onboarding/SKILL.md` |
+| **Guardian Skill** | Session Boot/Closure | `plugins/sanctuary-guardian/skills/guardian-onboarding/SKILL.md` |
 
 ---
 **Status:** APPROVED (v5.0)  
