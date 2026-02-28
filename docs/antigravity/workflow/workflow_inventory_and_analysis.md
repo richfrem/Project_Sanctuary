@@ -4,7 +4,7 @@
 
 **Created**: 2026-01-30  
 **Updated**: 2026-01-31  
-**Status**: ACTIVE (Spec 0001 - MCP-to-CLI Migration)
+**Status**: ACTIVE (Spec 0001 - Agent Plugin Integration-to-CLI Migration)
 
 ## The Dual-Track Taxonomy
 
@@ -14,7 +14,7 @@
 
 ## Current Workflow Inventory (24 Workflows)
 
-| Workflow Name | Classification | Pre-Flight Status | MCP/Bash Dependencies | Migration Status |
+| Workflow Name | Classification | Pre-Flight Status | Agent Plugin Integration/Bash Dependencies | Migration Status |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Meta-Ops (Tier 1)** | | | | |
 | `/sanctuary-start` | Shared (Tier 1) | ✅ Python CLI | None | ✅ Complete |
@@ -31,9 +31,9 @@
 | `/spec-kitty.constitution` | Track B (Discovery) | ✅ Python CLI | None | ✅ Complete |
 | `/spec-kitty.checklist` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
 | `/spec-kitty.analyze` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh` | ⚠️ Partial |
-| `/spec-kitty.tasks-to-issues` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh`, **github-mcp-server** | ⚠️ Partial + MCP |
+| `/spec-kitty.tasks-to-issues` | Track B (Discovery) | ✅ Python CLI | `check-prerequisites.sh`, **github-mcp-server** | ⚠️ Partial + Agent Plugin Integration |
 | **Protocol 128 (Learning)** | | | | |
-| `/recursive_learning` | Shared (Meta-Ops) | ⚠️ Mixed | **Cortex MCP Suite** | 🔄 SOP Only |
+| `/recursive_learning` | Shared (Meta-Ops) | ⚠️ Mixed | **Cortex Agent Plugin Integration Suite** | 🔄 SOP Only |
 | `/sanctuary-learning-loop` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
 | `/sanctuary-scout` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
 | `/sanctuary-audit` | Track A (SOP) | ✅ Python CLI | Shim | ✅ Complete |
@@ -47,7 +47,7 @@
 
 ## Existing CLI Entry Points
 
-The following CLIs already expose MCP operations and can be extended:
+The following CLIs already expose Agent Plugin Integration operations and can be extended:
 
 | CLI | Location | Domains | Status |
 | :--- | :--- | :--- | :--- |
@@ -55,29 +55,29 @@ The following CLIs already expose MCP operations and can be extended:
 | `cortex_cli.py` | `scripts/cortex_cli.py` | RAG, Evolution, RLM, Learning | ✅ Already imports `mcp_servers/` |
 | `cli.py` | `tools/cli.py` | Workflow orchestration | ⚠️ Needs extension |
 
-## MCP Domains → CLI/Workflow Mapping (Proposed)
+## Agent Plugin Integration Domains → CLI/Workflow Mapping (Proposed)
 
-| MCP Server | Operations Count | CLI Entry Point | Workflow(s) Needed |
+| Agent Plugin Integration Server | Operations Count | CLI Entry Point | Workflow(s) Needed |
 | :--- | :---: | :--- | :--- |
-| Chronicle MCP | 7 | `domain_cli.py chronicle` ✅ | `/chronicle-*` (optional) |
-| Task MCP | 6 | `domain_cli.py task` ✅ | `/task-*` (optional) |
-| ADR MCP | 5 | `domain_cli.py adr` ✅ | `/adr-manage` (exists?) |
-| Protocol MCP | 5 | `domain_cli.py protocol` ✅ | `/protocol-*` (optional) |
-| RAG Cortex MCP | 8 | `cortex_cli.py` ✅ | `/retrieve-*` (exists?) |
-| Evolution MCP | 5 | `cortex_cli.py evolution` ✅ | Part of learning loop |
-| Git MCP | 8 | `git` (native) | `/sanctuary-end`, `/sanctuary-start` |
-| Config MCP | 4 | TBD | `/config-*` (new) |
-| Code MCP | 11 | TBD | `/investigate-*` (exists?) |
-| Forge LLM MCP | 2 | TBD | Part of Discovery workflows |
-| Agent Persona MCP | 5 | TBD | Part of council/orchestrator |
-| Council MCP | 2 | TBD | `/council-*` (new, if needed) |
-| Orchestrator MCP | 2 | `tools/cli.py workflow` | `/workflow-*` (exists) |
-| Workflow MCP | 2 | `tools/cli.py workflow` | Merged into orchestrator |
-| Learning MCP | ~5 | `cortex_cli.py` | `/recursive_learning` |
+| Chronicle Agent Plugin Integration | 7 | `domain_cli.py chronicle` ✅ | `/chronicle-*` (optional) |
+| Task Agent Plugin Integration | 6 | `domain_cli.py task` ✅ | `/task-*` (optional) |
+| ADR Agent Plugin Integration | 5 | `domain_cli.py adr` ✅ | `/adr-manage` (exists?) |
+| Protocol Agent Plugin Integration | 5 | `domain_cli.py protocol` ✅ | `/protocol-*` (optional) |
+| RAG Cortex Agent Plugin Integration | 8 | `cortex_cli.py` ✅ | `/retrieve-*` (exists?) |
+| Evolution Agent Plugin Integration | 5 | `cortex_cli.py evolution` ✅ | Part of learning loop |
+| Git Agent Plugin Integration | 8 | `git` (native) | `/sanctuary-end`, `/sanctuary-start` |
+| Config Agent Plugin Integration | 4 | TBD | `/config-*` (new) |
+| Code Agent Plugin Integration | 11 | TBD | `/investigate-*` (exists?) |
+| Forge LLM Agent Plugin Integration | 2 | TBD | Part of Discovery workflows |
+| Agent Persona Agent Plugin Integration | 5 | TBD | Part of council/orchestrator |
+| Council Agent Plugin Integration | 2 | TBD | `/council-*` (new, if needed) |
+| Orchestrator Agent Plugin Integration | 2 | `tools/cli.py workflow` | `/workflow-*` (exists) |
+| Workflow Agent Plugin Integration | 2 | `tools/cli.py workflow` | Merged into orchestrator |
+| Learning Agent Plugin Integration | ~5 | `cortex_cli.py` | `/recursive_learning` |
 
 ## Migration Strategy
 
-1.  **Register all MCP operations in RLM tool cache** using `manage_tool_inventory.py`
+1.  **Register all Agent Plugin Integration operations in RLM tool cache** using `manage_tool_inventory.py`
 2.  **Keep code in `mcp_servers/lib/`** - do not rewrite working operations
 3.  **Extend existing CLIs** to cover any missing operations
 4.  **Update workflows** to use Python CLI instead of `source scripts/bash/`
@@ -87,7 +87,7 @@ The following CLIs already expose MCP operations and can be extended:
 
 1.  **Clear Separation**: The `codify-*` vs `spec-kitty.*` namespace is resolved. `codify` is for **documenting what exists** (Factory). `speckit` is for **building what's new** (Discovery).
 2.  **The "Bridge"**: The `investigate-*` workflows are crucial. They are "Factory" modules, but `spec-kitty.plan` (Track B) should rely on them to gather context.
-3.  **Existing CLIs**: `domain_cli.py` and `cortex_cli.py` already wrap most MCP operations - we just need to register them in the tool cache!
+3.  **Existing CLIs**: `domain_cli.py` and `cortex_cli.py` already wrap most Agent Plugin Integration operations - we just need to register them in the tool cache!
 4.  **Thin Shims OK**: `workflow-start.sh`, `workflow-end.sh`, `workflow-retrospective.sh` are already thin pass-throughs. Keep them.
 
 ## Bash Script Migration Priority

@@ -1,4 +1,4 @@
-# MCP Gateway Documentation
+# Agent Plugin Integration Gateway Documentation
 
 **Status:** Research Complete, Implementation Pending  
 **Decision:** Reuse IBM ContextForge (Approved)  
@@ -8,13 +8,13 @@
 
 ## Overview
 
-The **Dynamic MCP Gateway Architecture** is Project Sanctuary's solution for scaling beyond 15 MCP servers while reducing context window overhead by 88%. This documentation covers the complete research, architecture, implementation, and operations of the Gateway.
+The **Dynamic Agent Plugin Integration Gateway Architecture** is Project Sanctuary's solution for scaling beyond 15 Agent Plugin Integration servers while reducing context window overhead by 88%. This documentation covers the complete research, architecture, implementation, and operations of the Gateway.
 
 ---
 
 ## Documentation Structure
 
-### 📚 [Research](./research/)
+### 📚 [[|Research]]
 Complete research phase documentation (12 documents, 58,387 tokens):
 - Executive summary and key findings
 - Protocol analysis, gateway patterns, performance benchmarks
@@ -25,28 +25,28 @@ Complete research phase documentation (12 documents, 58,387 tokens):
 - Build vs buy vs reuse analysis
 - **Decision document** (formal approval)
 
-### 🏗️ [Architecture](./architecture/)
+### 🏗️ [[|Architecture]]
 Technical architecture and design:
 - System architecture diagrams
 - Component specifications
 - Deployment architecture (Podman/Docker/K8s/OpenShift)
 - API specifications
 
-### ⚙️ [Operations](./operations/)
+### ⚙️ [[|Operations]]
 Gateway operations and management:
-- **[Gateway Client Library](../../../../../mcp_servers/gateway/gateway_client.py)**: Canonical Python tool for registration and RPC calls.
+- **[[gateway_client.py|Gateway Client Library]]**: Canonical Python tool for registration and RPC calls.
 - Health checks and monitoring
 - Registry management
 - Tools catalog (72+ tools across 6 clusters)
 
-### 📖 [Guides](./guides/)
+### 📖 [[|Guides]]
 How-to guides and tutorials:
 - Getting started with the Gateway
-- Adding new MCP servers
+- Adding new Agent Plugin Integration servers
 - Security configuration
 - Troubleshooting
 
-### 📋 [Reference](./reference/)
+### 📋 [[|Reference]]
 Technical reference documentation:
 - API reference
 - Configuration reference
@@ -58,17 +58,17 @@ Technical reference documentation:
 ## Quick Links
 
 **Key Documents:**
-- [Executive Summary](./research/00_executive_summary.md) - Start here
-- [Decision Document](./research/12_decision_document_gateway_adoption.md) - Formal approval
-- [Implementation Plan](./research/07_implementation_plan.md) - 5-phase roadmap
-- [Build vs Buy Analysis](./research/11_build_vs_buy_vs_reuse_analysis.md) - Options analysis
+- [[00_executive_summary|Executive Summary]] - Start here
+- [[12_decision_document_gateway_adoption|Decision Document]] - Formal approval
+- [[07_implementation_plan|Implementation Plan]] - 5-phase roadmap
+- [[11_build_vs_buy_vs_reuse_analysis|Build vs Buy Analysis]] - Options analysis
 
 **Related Sanctuary Documents:**
-- **ADR 056:** Adoption of Dynamic MCP Gateway Pattern
+- **ADR 056:** Adoption of Dynamic Agent Plugin Integration Gateway Pattern
 - **ADR 057:** Adoption of IBM ContextForge (SUPERSEDED by 058)
 - **ADR 058:** Decouple IBM Gateway to External Podman Service
 - **ADR 060:** Gateway Integration Patterns - Hybrid Fleet (Fleet of 8) ⭐
-- **Task 115:** Design and Specify Dynamic MCP Gateway Architecture
+- **Task 115:** Design and Specify Dynamic Agent Plugin Integration Gateway Architecture
 - **Task 119:** Deploy Pilot: sanctuary_utils Container
 - **Protocol 122:** Dynamic Server Binding (pending)
 
@@ -100,13 +100,13 @@ Technical reference documentation:
 
 ## Fleet of 8 Architecture (ADR 060)
 
-The **Hybrid Fleet Strategy** consolidates 10 script-based MCP servers into **8 physical containers** brokered by the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
+The **Hybrid Fleet Strategy** consolidates 10 script-based Agent Plugin Integration servers into **8 physical containers** brokered by the **IBM ContextForge Gateway** ([`IBM/mcp-context-forge`](https://github.com/IBM/mcp-context-forge)).
 
 This architecture acts as a bridge, where the Gateway service (running in Podman) routes requests to the 6 front-end clusters via SSE.
 
-![mcp_gateway_fleet](../../../../architecture_diagrams/system/mcp_gateway_fleet.png)
+![[mcp_gateway_fleet.png|mcp_gateway_fleet]]
 
-*[Source: mcp_gateway_fleet.mmd](../../../../architecture_diagrams/system/mcp_gateway_fleet.mmd)*
+*[[mcp_gateway_fleet.mmd|Source: mcp_gateway_fleet.mmd]]*
 
 **Container Inventory:**
 | # | Container | Type | Role | Port | Front-end? |
@@ -115,12 +115,12 @@ This architecture acts as a bridge, where the Gateway service (running in Podman
 | 2 | `sanctuary_filesystem` | NEW | File ops | 8101 | ✅ |
 | 3 | `sanctuary_network` | NEW | HTTP clients | 8102 | ✅ |
 | 4 | `sanctuary_git` | NEW | Git workflow | 8103 | ✅ |
-| 5 | `sanctuary_cortex` | NEW | RAG MCP Server | 8104 | ✅ |
+| 5 | `sanctuary_cortex` | NEW | RAG Agent Plugin Integration Server | 8104 | ✅ |
 | 6 | `sanctuary_domain` | NEW | Business Logic | 8105 | ✅ |
 | 7 | `sanctuary_vector_db` | EXISTING | ChromaDB backend | 8110 | ❌ |
 | 8 | `sanctuary_ollama` | EXISTING | Ollama backend | 11434 | ❌ |
 
-**See:** [ADR 060: Gateway Integration Patterns - Hybrid Fleet](../../../../../ADRs/060_gateway_integration_patterns.md)
+**See:** [[060_gateway_integration_patterns|ADR 060: Gateway Integration Patterns - Hybrid Fleet]]
 
 ---
 

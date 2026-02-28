@@ -9,18 +9,18 @@ This document outlines the Continuous Integration (CI) pipeline and the standard
 1. [Workflow Diagram](#workflow-diagram)
 2. [Development Workflow Phases](#development-workflow-phases)
 3. [Security Scanning Results Guide](#security-scanning-results-guide)
-4. [How to Commit Changes](./how_to_commit.md) - Step-by-step commit guide with pre-commit hook testing
-5. [Git Workflow Quick Reference](./git_workflow.md) - Conventional commits, aliases, and best practices
+4. [[how_to_commit|How to Commit Changes]] - Step-by-step commit guide with pre-commit hook testing
+5. [[git_workflow|Git Workflow Quick Reference]] - Conventional commits, aliases, and best practices
 6. [Related Documentation](#related-documentation)
 
 ## Related Documentation
 
-- **[GitHub Repository Setup Guide](./github_setup.md)** - Configure GitHub Actions, security scanning, and branch protection
-- **[How to Commit Changes](./how_to_commit.md)** - Step-by-step commit guide with pre-commit hook testing
-- **[Git Workflow Guide](./git_workflow.md)** - Detailed guide on git commands, conventional commits, and pre-commit hooks
+- **[[github_setup|GitHub Repository Setup Guide]]** - Configure GitHub Actions, security scanning, and branch protection
+- **[[how_to_commit|How to Commit Changes]]** - Step-by-step commit guide with pre-commit hook testing
+- **[[git_workflow|Git Workflow Guide]]** - Detailed guide on git commands, conventional commits, and pre-commit hooks
 
-- **[Security Scanning Strategy](./security_scanning.md)** - Security scanning tools and philosophy
-- **[Git Workflow Automation](./git_workflow.md)** - Git workflow best practices
+- **[[security_scanning|Security Scanning Strategy]]** - Security scanning tools and philosophy
+- **[[git_workflow|Git Workflow Automation]]** - Git workflow best practices
 
 ## Branching Strategy
 
@@ -81,15 +81,15 @@ Recommended protection for `dev` and `main`:
 - ✅ PR review required (for `main`, optional for `dev`)
 - ✅ Status checks must pass before merge
 
-See [GitHub Repository Setup Guide](./github_setup.md) for configuration details.
+See [[github_setup|GitHub Repository Setup Guide]] for configuration details.
 
 ## Workflow Diagram
 
 The following sequence diagram illustrates the interaction between the Developer, their Local Workstation, and the specific entities within GitHub (Branches, PRs, CI).
 
-![CI/CD Pipeline Sequence](../../architecture_diagrams/workflows/cicd_pipeline_sequence.png)
+![[cicd_pipeline_sequence.png|CI/CD Pipeline Sequence]]
 
-*[Source: cicd_pipeline_sequence.mmd](../../architecture_diagrams/workflows/cicd_pipeline_sequence.mmd)*
+*[[cicd_pipeline_sequence.mmd|Source: cicd_pipeline_sequence.mmd]]*
 
 ## Detailed Workflow Steps
 
@@ -112,7 +112,7 @@ The following sequence diagram illustrates the interaction between the Developer
         *   No hardcoded secrets (API keys, tokens, passwords)
         *   Blocks commit if violations found
     *   **Entity:** Updates the **Remote Feature Branch** (`origin/feature/<name>`).
-    *   **Best Practice:** Use [conventional commits](./GIT_WORKFLOW.md#conventional-commit-format) (e.g., `feat:`, `fix:`, `docs:`)
+    *   **Best Practice:** Use [[GIT_WORKFLOW#conventional-commit-format|conventional commits]] (e.g., `feat:`, `fix:`, `docs:`)
 
 ### Phase 2: GitHub (Remote)
 

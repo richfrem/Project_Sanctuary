@@ -1,0 +1,58 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+ subgraph subGraph0["Sanctuary Plugin Ecosystem"]
+        Parser{"obsidian-parser<BR>(Syntax Gatekeeper)"}
+        CRUD["obsidian-vault-crud<BR>(Atomic Disk I/O)"]
+        Markdown["obsidian-markdown-mastery<BR>(Format Controller)"]
+        Graph["obsidian-graph-traversal<BR>(In-Memory Indexer)"]
+        Bases["obsidian-bases-manager<BR>(YAML Dashboards)"]
+        Canvas["obsidian-canvas-architect<BR>(JSON Flowcharts)"]
+        Export["forge-soul-exporter<BR>(HF Pipeline)"]
+  end
+ subgraph subGraph1["Physical Obsidian<BR>Vault<BR>(Multi-Root Workspace)"]
+        ObsidianApp(("Obsidian Desktop App<BR>(Active Client)"))
+        Files[("Markdown, .base, .canvas")]
+        LockFile>".agent-lock"]
+  end
+    CRUD -. Parses Frontmatter & Links .-> Parser
+    Graph -. Extracts Node Edges .-> Parser
+    Markdown -. Injects Proprietary Syntax .-> Parser
+    Export -. Identifies Binary Embeds .-> Parser
+    Human["👤 Human Steward"] == Interacts Natively ==> ObsidianApp
+    ObsidianApp -- "Background<BR>Auto-saves" --> Files
+    Agent["🤖 Agent (Guardian / Spec Kitty)"] == Write/Update ==> CRUD
+    Agent == Query Context ==> Graph
+    Agent == Format Output ==> Markdown
+    Agent == Update Matrix ==> Bases
+    Agent == Map Visuals ==> Canvas
+    Agent == Run Daily Sync ==> Export
+    CRUD == "1. Check/Create<BR>Advisory Lock" ==> LockFile
+    CRUD -- "2. Abort if<BR>M-Time Drifted" --> Files
+    CRUD == "3. Atomic Write<BR>(os.rename .tmp)" ==> Files
+    Bases -- "ruamel.yaml<BR>Lossless Append" --> Files
+    Canvas -- "JSON Canvas<BR>1.0 Write" --> Files
+    Graph -- "High-speed<BR>Snapshot Read" --> Files
+    Export -- Strict Snapshot<BR>Isolation Check --> Files
+    Export == Exponential Backoff<BR>Push ==> HF[("Hugging Face Hub<BR>(soul_traces.jsonl)")]
+
+     Agent:::agent
+     Human:::human
+     Parser:::core
+     CRUD:::plugin
+     Markdown:::plugin
+     Graph:::plugin
+     Bases:::plugin
+     Canvas:::plugin
+     Export:::plugin
+     ObsidianApp:::human
+     Files:::vault
+     LockFile:::vault
+     HF:::core
+    classDef human fill:#ffd54f,stroke:#333,stroke-width:2px
+    classDef agent fill:#64b5f6,stroke:#333,stroke-width:2px
+    classDef plugin fill:#81c784,stroke:#333,stroke-width:2px
+    classDef vault fill:#e0e0e0,stroke:#333,stroke-width:2px
+    classDef core fill:#ffb74d,stroke:#333,stroke-width:2px

@@ -26,9 +26,9 @@ The Manager queries these sources to populate the State (`file-manifest.json`):
 
 Bundling is not a one-time event. It is a **Recursive Discovery Process**.
 
-![Recursive Context Loop](../../../diagrams/workflows/context-first-analysis.mmd)
+![[context-first-analysis.mmd|Recursive Context Loop]]
 
-**(See full workflow diagram: [`docs/diagrams/workflows/context-first-analysis.mmd`](../../../diagrams/workflows/context-first-analysis.mmd))**
+**(See full workflow diagram: [[context-first-analysis.mmd|`docs/diagrams/workflows/context-first-analysis.mmd`]])**
 
 ### Workflow Steps:
 1.  **Initialization**: `cli.py init-context` calls `manifest_manager.py init` using the target ID as the **Bundle Title**. It auto-resolves the Artifact Type (e.g., FORM) from the Inventory. It **strictly loads the Base Manifest template** and overwrites `file-manifest.json`. **No dependency analysis happens here.**

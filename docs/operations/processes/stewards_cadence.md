@@ -1,6 +1,6 @@
 # The Steward's Cadence: Daily Operational Workflow
 
-> **Related Protocol**: [P33: The Steward's Cadence](../../../01_PROTOCOLS/33_The_Stewards_Cadence.md)
+> **Related Protocol**: [[33_The_Stewards_Cadence|P33: The Steward's Cadence]]
 > **Role**: Human Steward
 > **Objective**: Maintain high-velocity alignment with the Sanctuary Council.
 

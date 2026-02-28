@@ -1,0 +1,70 @@
+{
+    "title": "Obsidian Integration Suite Red Team Review",
+    "description": "A comprehensive bundle of the architecture, research, and planned work packages for the Obsidian Agent Integration Suite, submitted for Red Team architectural review.",
+    "files": [
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/red-team-prompt.md",
+            "note": "Primary instructions for the Red Team Reviewer."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/spec.md",
+            "note": "The foundational rules and feature descriptions."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/plan.md",
+            "note": "The overarching technical context and implementation plan."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research.md",
+            "note": "The synthesis of Gemini 3.1 Pro continuous deep research and integration decisions."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research/obsidian-plugin-architecture.md",
+            "note": "The specific breakdown of the 6 new Agent Skills within the proposed obsidian-integration plugin."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/research/Obsidian Vault for AI Agents.md",
+            "note": "Raw output from the Gemini 3.1 Pro Deep Research analysis (Provides raw ground-truth for the Red Team)."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP01-research-integration-strategy.md",
+            "note": "Work Package 1: ADR Research."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP02-analyze-kepano-skills.md",
+            "note": "Work Package 2: Github Repository deep dive."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP03-research-hf-schema-mapping.md",
+            "note": "Work Package 3: HF JSONL Data Mapping rules."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP04-legacy-scrubbing.md",
+            "note": "Work Package 4: Automated Link Refactoring."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP05-build-markdown-mastery.md",
+            "note": "Work Package 5: Parser."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP06-build-obsidian-crud.md",
+            "note": "Work Package 6: Vault CRUD."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP07-build-dynamic-views.md",
+            "note": "Work Package 7: YAML Bases and JSON Canvas."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP08-build-graph-traversal.md",
+            "note": "Work Package 8: Graph Engine."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP09-build-forge-soul.md",
+            "note": "Work Package 9: Knowledge Exporter."
+        },
+        {
+            "path": "kitty-specs/007-obsidian-agent-integration-suite/tasks/WP10-integration-testing.md",
+            "note": "Work Package 10: Integration Testing."
+        }
+    ]
+}

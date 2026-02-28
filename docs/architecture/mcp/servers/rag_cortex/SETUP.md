@@ -7,14 +7,14 @@
 
 > [!IMPORTANT]
 > **🚀 Unified Fleet Deployment (ADR 065)**  
-> As of December 2025, Project Sanctuary uses a **unified Makefile-based deployment** for all MCP servers.  
+> As of December 2025, Project Sanctuary uses a **unified Makefile-based deployment** for all Agent Plugin Integration servers.  
 > Instead of manual `podman` commands, use:
 > ```bash
 > make up      # Deploy entire Fleet of 8 (includes RAG Cortex)
 > make down    # Stop all services
 > make status  # Check fleet health
 > ```
-> See [PODMAN_STARTUP_GUIDE.md](../../../../../docs/operations/processes/PODMAN_OPERATIONS_GUIDE.md) for complete workflow.
+> See [[PODMAN_OPERATIONS_GUIDE|PODMAN_STARTUP_GUIDE.md]] for complete workflow.
 >
 > The manual `podman` commands below are preserved for reference and troubleshooting only.
 
@@ -22,7 +22,7 @@
 
 ## Overview
 
-This guide covers the complete setup and operation of the RAG Cortex MCP server with ChromaDB running as a containerized service via Podman (per [ADR 034](../../../../../ADRs/034_containerize_mcp_servers_with_podman.md)).
+This guide covers the complete setup and operation of the RAG Cortex Agent Plugin Integration server with ChromaDB running as a containerized service via Podman (per [[034_containerize_mcp_servers_with_podman|ADR 034]]).
 
 The RAG Cortex provides retrieval-augmented generation capabilities for Project Sanctuary, managing the knowledge base, vector embeddings, and semantic search.
 
@@ -30,11 +30,11 @@ The RAG Cortex provides retrieval-augmented generation capabilities for Project 
 
 ## Prerequisites
 
-### General MCP Prerequisites
+### General Agent Plugin Integration Prerequisites
 
-Before setting up RAG Cortex, ensure you have completed the general MCP prerequisites:
+Before setting up RAG Cortex, ensure you have completed the general Agent Plugin Integration prerequisites:
 
-**📖 See: [MCP Server Prerequisites](../../../../operations/mcp/prerequisites.md)**
+**📖 See: [[prerequisites|Agent Plugin Integration Server Prerequisites]]**
 
 Key requirements:
 - **Podman** installed and running (Podman Desktop recommended)
@@ -98,7 +98,7 @@ podman run --rm hello-world
 # Should download image and show "Hello from Podman!" message
 ```
 
-**If Podman is not installed**, follow the installation guide in [prerequisites.md](../../../../operations/mcp/prerequisites.md#1-podman-containerization):
+**If Podman is not installed**, follow the installation guide in [[prerequisites#1-podman-containerization|prerequisites.md]]:
 
 ```bash
 # macOS: Download Podman Desktop
@@ -204,17 +204,17 @@ mkdir -p .vector_data
 
 This directory will be bind-mounted into the ChromaDB container for data persistence.
 
-### Step 2: Start MCP Services
+### Step 2: Start Agent Plugin Integration Services
 
 Using Podman Compose (Docker Compose compatible):
 
 ```bash
-# Start both critical MCP services (unified application stack)
+# Start both critical Agent Plugin Integration services (unified application stack)
 podman-compose up -d vector_db ollama_model_mcp
 ```
 
 > [!TIP]
-> **Unified Launch**: This command starts both the RAG Cortex (vector_db) and Forge LLM (ollama_model_mcp) services together, ensuring the complete MCP infrastructure is available.
+> **Unified Launch**: This command starts both the RAG Cortex (vector_db) and Forge LLM (ollama_model_mcp) services together, ensuring the complete Agent Plugin Integration infrastructure is available.
 
 Or using Podman directly for vector_db only:
 
@@ -272,9 +272,9 @@ Check database statistics:
 python3 scripts/cortex_stats.py
 ```
 
-Or via MCP (if orchestrator is running):
+Or via Agent Plugin Integration (if orchestrator is running):
 ```python
-# Via MCP client
+# Via Agent Plugin Integration client
 cortex_get_stats(include_samples=True)
 ```
 
@@ -283,7 +283,7 @@ cortex_get_stats(include_samples=True)
 ### Starting the Service
 
 ```bash
-# Start both MCP services (recommended)
+# Start both Agent Plugin Integration services (recommended)
 podman-compose up -d vector_db ollama_model_mcp
 # or start individual services
 podman start sanctuary_vector_db
@@ -312,7 +312,7 @@ After adding new documents to the project:
 python scripts/cortex_ingest_incremental.py path/to/new/file.md
 ```
 
-Or via MCP:
+Or via Agent Plugin Integration:
 ```python
 cortex_ingest_incremental(file_paths=["path/to/new/file.md"])
 ```
@@ -436,7 +436,7 @@ python scripts/cortex_ingest_full.py
 
 ## References
 
-- [ADR 034: Containerize MCP Servers with Podman](../../../../../ADRs/034_containerize_mcp_servers_with_podman.md)
+- [[034_containerize_mcp_servers_with_podman|ADR 034: Containerize Agent Plugin Integration Servers with Podman]]
 - [Podman Documentation](https://docs.podman.io/)
 - [Podman Desktop](https://podman-desktop.io/)
 - [ChromaDB Documentation](https://docs.trychroma.com/)

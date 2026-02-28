@@ -188,7 +188,40 @@ spec-kitty accept --mode local --feature <SLUG>
 > **This step is NOT optional.** Every feature closure MUST include a retrospective.
 > The retrospective file MUST exist in `kitty-specs/<SPEC-ID>/` before merge.
 
-### Step 4d: Pre-merge safety check
+### Step 4d: Pre-merge remote backup (MANDATORY)
+
+> ⚠️ **DATA SAFETY**: Before ANY merge or worktree cleanup, ALL WP branches
+> MUST be pushed to GitHub origin and verified. This prevents data loss if
+> the merge fails or worktrees are deleted before content is preserved.
+
+**Push each WP branch to origin:**
+```bash
+cd <PROJECT_ROOT>
+for wt in .worktrees/<FEATURE>-WP*/; do
+  branch=$(basename "$wt")
+  echo "Pushing $branch..."
+  git -C "$wt" push origin "$branch"
+done
+```
+**PROOF**: Paste push output for each branch.
+
+**Verify remote state:**
+```bash
+for wt in .worktrees/<FEATURE>-WP*/; do
+  branch=$(basename "$wt")
+  local_sha=$(git -C "$wt" rev-parse HEAD)
+  remote_sha=$(git ls-remote origin "$branch" | cut -f1)
+  if [ "$local_sha" = "$remote_sha" ]; then
+    echo "✅ $branch: verified on origin ($local_sha)"
+  else
+    echo "❌ $branch: MISMATCH (local=$local_sha remote=$remote_sha)"
+  fi
+done
+```
+**PROOF**: Paste verification output. ALL branches must show ✅.
+**STOP**: Do NOT proceed to merge if any branch shows ❌.
+
+### Step 4e: Pre-merge safety check
 ```bash
 cd <PROJECT_ROOT>
 git status
@@ -200,11 +233,14 @@ spec-kitty merge --feature <SLUG> --dry-run
 - [ ] `git status` shows clean working tree
 - [ ] Dry-run shows no conflicts
 
-### Step 4e: Merge from main repo
+### Step 4f: Merge from main repo
 ```bash
 cd <PROJECT_ROOT>
-spec-kitty merge --feature <SLUG>
+spec-kitty merge --feature <SLUG> --push
 ```
+
+> **ALWAYS use `--push`** to ensure merged main is immediately backed up to origin.
+> Without `--push`, worktree cleanup can destroy the only copies of feature branches.
 
 > **LOCATION RULE**: ALWAYS run merge from the **main repository root**.
 > NEVER `cd` into a worktree to merge. The `@require_main_repo` decorator

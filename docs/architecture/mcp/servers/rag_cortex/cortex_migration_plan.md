@@ -1,16 +1,16 @@
 # Implementation Plan: Migrate and Archive Legacy Mnemonic Cortex (Task #083)
 
 ## Goal
-Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architecture. This ensures the Cortex MCP (`mcp_servers/cognitive/cortex`) is the single source of truth for RAG operations, possessing the robust batching and error handling logic of the legacy scripts.
+Migrate the legacy `mnemonic_cortex` architecture to the new Agent Plugin Integration-first architecture. This ensures the Cortex Agent Plugin Integration (`mcp_servers/cognitive/cortex`) is the single source of truth for RAG operations, possessing the robust batching and error handling logic of the legacy scripts.
 
 ## User Review Required
 > [!IMPORTANT]
-> **Archival:** The `mnemonic_cortex/` directory (excluding the actual database) will be moved to `ARCHIVE/`. All future RAG operations must use the Cortex MCP.
+> **Archival:** The `mnemonic_cortex/` directory (excluding the actual database) will be moved to `ARCHIVE/`. All future RAG operations must use the Cortex Agent Plugin Integration.
 
 ## Proposed Changes
 
-### 1. Refactor Cortex MCP Operations
-#### [MODIFY] [mcp_servers/cognitive/cortex/operations.py](../../../../../mcp_servers/rag_cortex/operations.py)
+### 1. Refactor Cortex Agent Plugin Integration Operations
+#### [MODIFY] [[operations.py|mcp_servers/cognitive/cortex/operations.py]]
 - **Port Batching Logic:** Implement the `chunked_iterable` and `safe_add_documents` (recursive retry) logic directly from `ingest.py`.
 - **Remove Middleware:** Remove dependency on `IngestionService`. The `CortexOperations` class will handle ingestion logic directly to ensure visibility and error handling parity with the legacy script.
 - **Fix Reporting:** Ensure `chunks_created` is accurately calculated or estimated (unlike the hardcoded 0 in the current service).
@@ -22,7 +22,7 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 - Update links and references.
 
 ### 3. Migrate Tests
-#### [NEW] [tests/mcp_servers/cortex/](../../../../../tests/mcp_servers/rag_cortex/)
+#### [NEW] [[|tests/mcp_servers/cortex/]]
 - Move `mnemonic_cortex/scripts/verify_all.py` logic to `tests/mcp_servers/cortex/test_ingestion_integrity.py`.
 - Ensure `test_cortex_ops.py` covers the new batching logic.
 
@@ -35,7 +35,7 @@ Migrate the legacy `mnemonic_cortex` architecture to the new MCP-first architect
 
 ### Automated Tests
 1. **Unit Tests:** Run `pytest tests/mcp_servers/cortex/` to verify the refactored operations.
-2. **Ingestion Test:** Run `cortex_ingest_full` via MCP tool and verify it completes without error and indexes all documents.
+2. **Ingestion Test:** Run `cortex_ingest_full` via Agent Plugin Integration tool and verify it completes without error and indexes all documents.
 
 ### Manual Verification
 1. **Protocol 101 Check:** Query `mcp5_cortex_query("Protocol 101 v3.0 content")` to confirm the specific issue is resolved.

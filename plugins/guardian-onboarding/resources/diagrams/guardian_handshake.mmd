@@ -1,0 +1,49 @@
+---
+config:
+  theme: base
+---
+
+%% Architecture: Separation of Concerns (The Guardian Handshake)
+%% Location: plugins/guardian-onboarding/resources/diagrams/guardian_handshake.mmd
+%% Illustrates how the Guardian, Orchestrator, and individual Loops interact without overstepping boundaries.
+
+sequenceDiagram
+    participant G as The Guardian<br>(Global State Owner)
+    participant O as The Orchestrator<br>(Lifecycle Manager)
+    participant L as Agent Loop<br>(Cognitive Engine)
+    
+    Note over G: User Triggers Work
+    G->>+O: Delegate task session<br>(e.g., "Red Team Review")
+    
+    %% --- THE ORCHESTRATOR PHASE ---
+    Note over O: Orchestrator assesses request
+    O->>+L: Initialize Specific Loop Pattern
+    
+    %% --- THE LOOP PHASE ---
+    Note over L: Pattern 2: Red Team Review
+    L->>L: 1. Research & Analyze
+    L->>L: 2. Bundle Context (Draft)
+    L->>L: 3. Dispatch to Referees
+    L->>L: 4. Await "Approved" Verdict
+    
+    %% The critical handoff: Loop does NO global state management
+    Note over L: Exit Condition Met
+    L-->>-O: Handoff: Loop Complete<br>(Returns approved payload)
+    
+    %% --- THE POST-LOOP PHASE ---
+    Note over O: Orchestrator Lifecycle Duties
+    O->>O: Generate Retrospective
+    O->>O: Improve Loop Infrastructure<br>(Skills/Templates)
+    
+    O-->>-G: Signal: Session Work Finished<br>(Passes payload & retro)
+    
+    %% --- THE CLOSURE PHASE ---
+    Note over G: Guardian Closure Sovereignty
+    
+    G->>G: Phase VI: Seal<br>(Iron Check & Context Bundler)
+    G->>G: Phase VI: RLM Update<br(learning_package_snapshot.md)
+    G->>G: Phase VII: Persist Traces<br>(session_traces.jsonl & HuggingFace)
+    G->>G: Phase VIII: Database Ingestion<br>(Vector DB Sync)
+    G->>G: Phase IX: Formal Closure<br>(Git Commit & Push)
+    
+    Note over G: Session Safely Terminated

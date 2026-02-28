@@ -1,15 +1,15 @@
-# RAG Cortex MCP Server Documentation
+# RAG Cortex Agent Plugin Integration Server Documentation
 
 ## Overview
 
-RAG Cortex MCP provides retrieval-augmented generation capabilities for Project Sanctuary. It manages the knowledge base, vector embeddings, and semantic search.
+RAG Cortex Agent Plugin Integration provides retrieval-augmented generation capabilities for Project Sanctuary. It manages the knowledge base, vector embeddings, and semantic search.
 
 ## Architectural Shift: From Local File to Network Host
 
 The RAG Cortex transitioned from a legacy file-system-based database connection to a persistent **Network Service Model** (Protocol P114).
 
 * **Legacy Model (Deprecated):** The system stored ChromaDB files directly on disk at a path (e.g., `mnemonic_cortex/chroma_db`). This was fragile, slow, and incompatible with distributed agent architecture.
-* **Current MCP Model:** ChromaDB runs as a dedicated server (`vector_db` service in Docker Compose). The RAG Cortex MCP connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
+* **Current Agent Plugin Integration Model:** ChromaDB runs as a dedicated server (`vector_db` service in Docker Compose). The RAG Cortex Agent Plugin Integration connects to it via a **network address** defined in the root `.env` file (`CHROMA_HOST`, `CHROMA_PORT`).
 * **Data Persistence:** Database files are persisted via a Docker bind mount to the host directory: **`.vector_data/`**. The core application logic *never* touches this folder; it only communicates over the network.
 
 - **Vector Database:** ChromaDB for semantic search
@@ -20,7 +20,7 @@ The RAG Cortex transitioned from a legacy file-system-based database connection 
 ## Architecture
 
 ```
-External LLM → Cortex MCP (Server)
+External LLM → Cortex Agent Plugin Integration (Server)
                     ↓
             ChromaDB (Vector Store)
             OpenAI Embeddings API
@@ -28,26 +28,26 @@ External LLM → Cortex MCP (Server)
 
 ## Documentation
 
-- **[Cortex Evolution](cortex_evolution.md)** - Evolution of the Cortex architecture
-- **[Cortex Vision](cortex_vision.md)** - Long-term vision and roadmap
-- **[Cortex Operations](cortex_operations.md)** - Detailed operation specifications
-- **[Cortex Migration Plan](cortex_migration_plan.md)** - Migration from legacy architecture
-- **[Cortex Gap Analysis](cortex_gap_analysis.md)** - Feature gap analysis
-- **[Cortex Gap Analysis (Comprehensive)](cortex_gap_analysis_comprehensive.md)** - Detailed gap analysis
-- **[Analysis Files](analysis/)** - Additional analysis documents
+- **[[cortex_evolution|Cortex Evolution]]** - Evolution of the Cortex architecture
+- **[[cortex_vision|Cortex Vision]]** - Long-term vision and roadmap
+- **[[cortex_operations|Cortex Operations]]** - Detailed operation specifications
+- **[[cortex_migration_plan|Cortex Migration Plan]]** - Migration from legacy architecture
+- **[[cortex_gap_analysis|Cortex Gap Analysis]]** - Feature gap analysis
+- **[[cortex_gap_analysis_comprehensive|Cortex Gap Analysis (Comprehensive)]]** - Detailed gap analysis
+- **[[|Analysis Files]]** - Additional analysis documents
 
 ## Server Implementation
 
-- **Server Code:** [mcp_servers/rag_cortex/server.py](../../../../../mcp_servers/rag_cortex/server.py)
-- **Operations:** [mcp_servers/rag_cortex/operations.py](../../../../../mcp_servers/rag_cortex/operations.py)
-- **Models:** [mcp_servers/rag_cortex/models.py](../../../../../mcp_servers/rag_cortex/models.py)
-- **Container Service:** [docker-compose.yml](../../../../../docker-compose.yml) (`vector_db` service)
+- **Server Code:** [[server.py|mcp_servers/rag_cortex/server.py]]
+- **Operations:** [[operations.py|mcp_servers/rag_cortex/operations.py]]
+- **Models:** [[models.py|mcp_servers/rag_cortex/models.py]]
+- **Container Service:** [[docker-compose.yml|docker-compose.yml]] (`vector_db` service)
 
 ## Setup & Installation
 
 For complete setup instructions, including Podman installation, service configuration, and initial database population, see:
 
-**📖 [RAG Cortex Setup Guide](SETUP.md)**
+**📖 [[SETUP|RAG Cortex Setup Guide]]**
 
 Quick start:
 ```bash
@@ -66,7 +66,7 @@ curl http://localhost:8000/api/v2/heartbeat
 
 ## Testing
 
-- **Test Suite:** [tests/mcp_servers/rag_cortex/](../../../../../tests/mcp_servers/rag_cortex/)
+- **Test Suite:** [[|tests/mcp_servers/rag_cortex/]]
 - **Status:** ✅ 56/61 tests passing (5 skipped - PyTorch 3.13 compat)
 
 ## Operations

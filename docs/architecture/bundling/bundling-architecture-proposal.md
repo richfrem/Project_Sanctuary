@@ -2,25 +2,25 @@
 
 ## 1. Context & Problem Statement
 The project currently has two parallel bundling capabilities:
-1.  **MCP Layer (`rag_cortex/operations.py`)**: Implements Protocol 130 (Manifest Deduplication) and handles "Special Bundles" (Learning Audits, Red Team).
+1.  **Agent Plugin Integration Layer (`rag_cortex/operations.py`)**: Implements Protocol 130 (Manifest Deduplication) and handles "Special Bundles" (Learning Audits, Red Team).
 2.  **CLI Layer (`plugins/context-bundler/scripts/bundle.py`)**: A newly imported "dumb" tool that simply zips files into Markdown based on a manifest.
 
 **The Problem**:
-- Logic duplication: Protocol 130 checks exist in MCP but not in the CLI tool.
-- Workflow Disconnect: Higher-order workflows (Protocol 128 Learning Loop) need the sophistication of the MCP logic but often run via CLI/Bash shims.
+- Logic duplication: Protocol 130 checks exist in Agent Plugin Integration but not in the CLI tool.
+- Workflow Disconnect: Higher-order workflows (Protocol 128 Learning Loop) need the sophistication of the Agent Plugin Integration logic but often run via CLI/Bash shims.
 - Special Manifests: Many "smart" manifests (`learning_audit`, `guardian`) rely on dynamic logic not present in `bundle.py`.
 
 ## 2. Options Analysis
 
 ### Option A: The "Shared Core" (Refactor)
-Extract the bundling and deduplication logic into a shared Python library accessible by both the MCP and the CLI tools.
+Extract the bundling and deduplication logic into a shared Python library accessible by both the Agent Plugin Integration and the CLI tools.
 
 *   **Structure**:
     *   `tools/shared/bundler_core.py`: Contains `dedupe_manifest()` (Protocol 130) and `build_bundle()`.
     *   `mcp_servers/rag_cortex/operations.py`: Imports `bundler_core`.
     *   `plugins/context-bundler/scripts/bundle.py`: Imports `bundler_core`.
 *   **Pros**: DRY (Don't Repeat Yourself), single source of truth for Protocol 130.
-*   **Cons**: Requires refactoring the stable MCP code.
+*   **Cons**: Requires refactoring the stable Agent Plugin Integration code.
 
 ### Option B: The "Pipeline" Approach (Atomic Tools)
 Keep `bundle.py` "dumb" (Atomic) and strictly focused on execution (`JSON -> Markdown`). Move the "intelligence" (Deduplication, Registry Lookup) to a separate preparation tool.
@@ -32,9 +32,9 @@ Keep `bundle.py` "dumb" (Atomic) and strictly focused on execution (`JSON -> Mar
 *   **Cons**: Multiple steps for the user/agent.
 
 ### Option C: The CLI is the Gateway
-Deprecate the internal bundling logic in MCP and make the MCP shell out to the `bundle.py` CLI tool.
+Deprecate the internal bundling logic in Agent Plugin Integration and make the Agent Plugin Integration shell out to the `bundle.py` CLI tool.
 *   **Pros**: Extreme centralization.
-*   **Cons**: The MCP often needs in-memory access to data, shelling out is slow and fragile.
+*   **Cons**: The Agent Plugin Integration often needs in-memory access to data, shelling out is slow and fragile.
 
 ### Option D: Base Manifest Inheritance (Composition)
 Leverage the existing `base-manifests` pattern to handle "Core" content. Instead of repeating `core` file lists in every manifest, manifests define an `extends` property pointing to a registered base manifest.
@@ -56,7 +56,7 @@ We should extract the logic from `rag_cortex/operations.py` into a shared module
 
 **1. Current Model (Explicit Composite)**
 *The "Core" list is hardcoded in every manifest, leading to duplication.*
-![Current Architecture](../../docs/architecture_diagrams/workflows/bundling-architecture-current.png)
+![[bundling-architecture-current.png|Current Architecture]]
 
 ```mermaid
 graph TD
@@ -65,7 +65,7 @@ graph TD
 
 **2. Proposed Model (Base Inheritance)**
 *Manifests extend a shared Base Manifest. "Core" becomes a reusable Base.*
-![Proposed Architecture](../../docs/architecture_diagrams/workflows/bundling-architecture-proposed.png)
+![[bundling-architecture-proposed.png|Proposed Architecture]]
 
 ```mermaid
 graph TD

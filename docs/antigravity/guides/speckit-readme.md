@@ -73,7 +73,7 @@ specify init --here --ai antigravity
 specify check
 ```
 
-To upgrade Specify, see the [Upgrade Guide](./docs/upgrade.md) for detailed instructions. Quick upgrade:
+To upgrade Specify, see the [[upgrade|Upgrade Guide]] for detailed instructions. Quick upgrade:
 
 ```bash
 uv tool install specify-cli --force --from git+https://github.com/richfrem/spec-kit-antigravity.git
@@ -136,13 +136,13 @@ Use **`/spec-kitty.implement`** to execute all tasks and build your feature acco
 /spec-kitty.implement
 ```
 
-For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
+For detailed step-by-step instructions, see our [[spec-driven|comprehensive guide]].
 
 ## 📽️ Video Overview
 
 Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)!
 
-[![Spec Kit video header](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
+[[spec-kit-video-header.jpg|![Spec Kit video header]]](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
 
 ## 🤖 Supported AI Agents
 
@@ -334,7 +334,7 @@ If you encounter issues with an agent, please open an issue so we can refine the
 
 ## 📖 Learn More
 
-- **[Complete Spec-Driven Development Methodology](./spec-driven.md)** - Deep dive into the full process
+- **[[spec-driven|Complete Spec-Driven Development Methodology]]** - Deep dive into the full process
 - **[Detailed Walkthrough](#-detailed-process)** - Step-by-step implementation guide
 
 ---
@@ -357,15 +357,15 @@ specify init <project_name> --ai antigravity
 
 Go to the project folder and run your AI agent.
 
-![Spec Kit CLI Menu with Antigravity Support](./media/spec-kitty.specify_cli_menu_antigravity.png)
+![[spec-kitty.specify_cli_menu_antigravity.png|Spec Kit CLI Menu with Antigravity Support]]
 
 _Select "antigravity" from the list of supported agents._
 
-![Spec Kit Initialization Success](./media/spec-kitty.specify_init_success_antigravity.png)
+![[spec-kitty.specify_init_success_antigravity.png|Spec Kit Initialization Success]]
 
 _Successful initialization prepares your project with the correct .agent structure._
 
-![Antigravity File Structure](./media/antigravity_file_structure.png)
+![[antigravity_file_structure.png|Antigravity File Structure]]
 
 _The resulting folder structure compatible with Antigravity._
 
@@ -549,7 +549,7 @@ This helps refine the implementation plan and helps you avoid potential blind sp
 You can also ask your agent (if you have the [GitHub CLI](https://docs.github.com/en/github-cli/github-cli) installed) to go ahead and create a pull request from your current branch to `main` with a detailed description, to make sure that the effort is properly tracked.
 
 > [!NOTE]
-> Before you have the agent implement it, it's also worth prompting the agent to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask your agent to resolve them. Ensure that the agent follows the [constitution](base/.agent/rules/spec-kitty.constitution.md) as the foundational piece that it must adhere to when establishing the plan.
+> Before you have the agent implement it, it's also worth prompting the agent to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask your agent to resolve them. Ensure that the agent follows the [[spec-kitty.constitution|constitution]] as the foundational piece that it must adhere to when establishing the plan.
 
 ### **STEP 6:** Generate task breakdown with /spec-kitty.tasks
 
@@ -599,9 +599,9 @@ Once the implementation is complete, test the application and resolve any runtim
  
  This repository uses a specific source-to-distribution workflow to generate the Antigravity agent configuration.
  
- For a detailed explanation of the build and release process, see [docs/antigravity-release-process.md](./docs/antigravity-release-process.md).
+ For a detailed explanation of the build and release process, see [[antigravity-release-process|docs/antigravity-release-process.md]].
  
- ![Release Diagram](./docs/diagrams/antigravity-release-process.png)
+ ![[antigravity-release-process.png|Release Diagram]]
  
  ### Repository Structure
  
@@ -659,4 +659,4 @@ This project is heavily influenced by and based on the work and research of [Joh
 
 ## 📄 License
 
-This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) file for the full terms.
+This project is licensed under the terms of the MIT open source license. Please refer to the [[LICENSE|LICENSE]] file for the full terms.

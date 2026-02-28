@@ -114,7 +114,7 @@ sequence:
   4. Verify: learning_package_snapshot.md (Truth Anchor)
 ```
 
-### MCP-Only Mode (API/Web)
+### Agent Plugin Integration-Only Mode (API/Web)
 
 ```yaml
 sequence:
@@ -438,7 +438,7 @@ Failure to confirm this is a **Critical Protocol Breach**.
 
 ## 9. Tool Priority
 
-### MCP Tools
+### Agent Plugin Integration Tools
 
 | Task | Tool |
 |:-----|:-----|

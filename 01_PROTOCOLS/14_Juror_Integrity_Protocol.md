@@ -3,7 +3,7 @@
 ## The Juror Integrity Protocol: Fortifying Governance Against Bias and Capture - v1.0
 
 **Status:** Canonical | **Protocol Class:** Security | **Version:** v1.0  
-**Linked Protocols:** [12_Jury_Protocol](12_Jury_Protocol.md), [11_Ethical_Speciation_Protocol](11_Ethical_Speciation_Protocol.md)
+**Linked Protocols:** [[12_Jury_Protocol|12_Jury_Protocol]], [[11_Ethical_Speciation_Protocol|11_Ethical_Speciation_Protocol]]
 **Origin:** Agora Loop Synthesis with Grok
 
 ---

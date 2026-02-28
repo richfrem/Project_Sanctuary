@@ -5,9 +5,9 @@ This guide provides an overview of the **Hardened Learning Loop (Protocol 128)**
 ## 🧬 Process Overview
 The system establishes a **Zero-Trust Gate** between the agent's work and the project's permanent memory (RAG DB / Git).
 
-![protocol_128_learning_loop](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.png)
+![[protocol_128_learning_loop.png|protocol_128_learning_loop]]
 
-*[Source: protocol_128_learning_loop.mmd](../../../../../architecture_diagrams/workflows/protocol_128_learning_loop.mmd)*
+*[[protocol_128_learning_loop.mmd|Source: protocol_128_learning_loop.mmd]]*
 
 > [!IMPORTANT]
 > **HITL (Human-in-the-Loop)**: Protocol 128 v3.5 implements a **Dual-Gate** HITL model. 
@@ -15,10 +15,9 @@ The system establishes a **Zero-Trust Gate** between the agent's work and the pr
 > 2. **Technical Audit (Gate 2)**: You verify the AI's *implementation* (Code Snapshot/Red Team Packet).
 
 ## 🔗 Key Resources
-- **[ADR 071: Decision Record](../../../../../../ADRs/071_protocol_128_cognitive_continuity.md)**: Why we chose the Red Team Gate and how the architecture works.
-- **[Protocol 128: Constitutional Mandate](../../../../../plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md**: The unbreakable rules for cognitive continuity.
-- **[Recursive Learning SOP](../../../../../../.agent/workflows/sanctuary_protocols/sanctuary-learning-loop.md)**: The step-by-step guide for agents to acquire and preserve knowledge.
-- **[Cognitive Primer](../../../../../../plugins/guardian-onboarding/resources/cognitive_primer.md)**: The "Rules of Reality" that agents must follow on every boot.
+- **[[071_protocol_128_cognitive_continuity|ADR 071: Decision Record]]**: Why we chose the Red Team Gate and how the architecture works.
+- **[[sanctuary-learning-loop|Protocol 128: Constitutional Mandate]]**: The step-by-step guide for agents to acquire and preserve knowledge.
+- **[[cognitive_primer|Cognitive Primer]]**: The "Rules of Reality" that agents must follow on every boot.
 
 ### Supporting Skills (`.agent/skills/`)
 - **`learning-loop`**: Portable skill encoding the 10-phase Protocol 128 workflow.

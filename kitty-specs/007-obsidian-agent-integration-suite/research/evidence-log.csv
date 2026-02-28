@@ -1,0 +1,12 @@
+id,source_id,finding,tags
+F-001,S-003,"Obsidian provides a sovereign, durable, and interlinked memory bank to solve context rot.",architecture,memory
+F-002,S-018,"Antigravity's multi-root workspaces allow direct filesystem read/write access to Obsidian vaults without additional plugins.",architecture,antigravity
+F-003,S-020,"Agent Client Protocol (ACP) via 'Agent Client' plugin provides vault-aware conversational interface referencing notes natively.",architecture,acp
+F-004,S-022,"Obsidian CLI requires an active application instance due to an IPC singleton lock. Background scripts must verify Obsidian is open.",constraints,cli
+F-005,S-021,"CLI supports a TUI and developer mode (dev:eval) for executing JS inside the Obsidian context.",capabilities,cli
+F-006,S-026,"Obsidian Mastery skills correctly construct Wikilinks, Callouts, Embeds, and YAML properties instead of raw Markdown.",capabilities,skills
+F-007,S-029,"'Obsidian Bases Manager' allows agents to interact with .base files (YAML-based views for DB-like multi-view layouts and formulas).",capabilities,bases
+F-008,S-032,"'JSON Canvas' formatting allows agents to perform visual planning and flowcharting programmatically (JSON Canvas Spec 1.0).",capabilities,canvas
+F-009,S-038,"Semantic retrieval is achieved via plugins like 'Vector Search' (Local Ollama), 'EzRAG' (Gemini API), or 'Vault Chat'.",capabilities,retrieval
+F-010,S-013,"'Automatic Backlinking and Synthesis' workflow: Agents create 'Knowledge Notes' summarizing tasks, snippits, wikilinks, and YAML.",workflow,synthesis
+F-011,S-002,"Documentation-first workflow: Writing architecture docs *before* code prevents context chaos.",workflow,documentation

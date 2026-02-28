@@ -37,7 +37,7 @@ Before proceeding with this guide, you must complete the gateway setup:
 
 ## 🟢 Phase 0: Environment Verification
 
-Project Sanctuary requires a Unix-like environment for its MCP servers and ML dependencies.
+Project Sanctuary requires a Unix-like environment for its Agent Plugin Integration servers and ML dependencies.
 
 1. **OS**: macOS (13+), Linux (Ubuntu 22.04+), or Windows (WSL2 with Ubuntu 22.04+).
 2. **Python**: `python3 --version` should be 3.11 or higher.
@@ -123,7 +123,7 @@ make install-dev
 
 ## 🚀 Phase 4: Podman Fleet Deployment
 
-Once your local dependencies are installed and secrets are configured, you can deploy the "Fleet of 8" MCP infrastructure.
+Once your local dependencies are installed and secrets are configured, you can deploy the "Fleet of 8" Agent Plugin Integration infrastructure.
 
 1. **Ensure the Gateway is Running**:
    The Sanctuary Gateway (Port 4444) should be running as a separate service (managed in the `sanctuary-gateway` repo).
@@ -176,7 +176,7 @@ After the fleet is running, initialize the vector database with project content:
 
 ## 🛡️ Troubleshooting & Maintenance
 
-- **Detailed Operations**: For granular control, targeted rebuilds, and deep-dive maintenance, refer to the [Podman Operations Guide](processes/PODMAN_OPERATIONS_GUIDE.md).
+- **Detailed Operations**: For granular control, targeted rebuilds, and deep-dive maintenance, refer to the [[PODMAN_OPERATIONS_GUIDE|Podman Operations Guide]].
 - **Missing Dependencies**: If `ModuleNotFoundError` occurs (e.g., `tiktoken`):
   1. **Strictly Follow Protocol 073**: Do NOT run `pip install`.
   2. Add package to `mcp_servers/requirements-core.in`.
@@ -192,9 +192,9 @@ After the fleet is running, initialize the vector database with project content:
 - **Port 11434 Conflict (Ollama)**: If the container fails to start with `address already in use`, quit the Ollama desktop app (Windows System Tray) or stop the host service (`sudo systemctl stop ollama`) to allow the container to bind to the port.
 - **ChromaDB Empty**: If queries return no results, re-run `python3 scripts/cortex_cli.py ingest --full`.
 
-### Windows WSL: MCP Configuration
+### Windows WSL: Agent Plugin Integration Configuration
 
-When configuring MCP servers for Windows with WSL, the `env` block in JSON **does not propagate** to the WSL subprocess. Use `bash -c` with inline environment variables:
+When configuring Agent Plugin Integration servers for Windows with WSL, the `env` block in JSON **does not propagate** to the WSL subprocess. Use `bash -c` with inline environment variables:
 
 ```json
 {
@@ -211,11 +211,11 @@ When configuring MCP servers for Windows with WSL, the `env` block in JSON **doe
 - `PROJECT_ROOT` and `PYTHONPATH` must be set inline in the bash command
 - `MCPGATEWAY_BEARER_TOKEN` can be set inline or via `WSLENV` environment sharing
 
-**Template:** See [`docs/operations/mcp/claude_desktop_config_template_windows_wsl.json`](./mcp/claude_desktop_config_template_windows_wsl.json)
+**Template:** See [[claude_desktop_config_template_windows_wsl.json|`docs/operations/mcp/claude_desktop_config_template_windows_wsl.json`]]
 
 ### Missing `__init__.py` Files
 
-If you encounter `ModuleNotFoundError: No module named 'mcp_servers'`, ensure all MCP server directories have `__init__.py` files:
+If you encounter `ModuleNotFoundError: No module named 'mcp_servers'`, ensure all Agent Plugin Integration server directories have `__init__.py` files:
 
 ```bash
 # Check for missing __init__.py

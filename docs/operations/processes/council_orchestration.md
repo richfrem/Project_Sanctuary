@@ -1,29 +1,29 @@
 # Council Orchestration Workflows
 
-This document outlines the standard workflows for using the **Council MCP** and **Orchestrator MCP** within the 15-Domain Architecture (ADR 092). It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
+This document outlines the standard workflows for using the **Council Agent Plugin Integration** and **Orchestrator Agent Plugin Integration** within the 15-Domain Architecture (ADR 092). It is structured progressively, starting from basic building blocks and moving to complex self-evolving loops.
 
 **Related Documentation:**
 - Standard Orchestration Workflows (Pending)
-- MCP Architecture & Testing (Pending)
-- [Main Project README](../../../README.md) (Architecture Diagram)
+- Agent Plugin Integration Architecture & Testing (Pending)
+- [[README|Main Project README]] (Architecture Diagram)
 
 ---
 
 ## The Hierarchy of Orchestration
 
 The system operates on three levels of abstraction:
-1.  **Agent Persona MCP:** The "Neuron". Individual implementation of a persona (Auditor, Strategist).
-2.  **Council MCP:** The "Brain". Orchestrates multi-agent deliberation and consensus.
-3.  **Orchestrator MCP:** The "Will". Executes high-level missions and manages the Strategic Crucible Loop.
+1.  **Agent Persona Agent Plugin Integration:** The "Neuron". Individual implementation of a persona (Auditor, Strategist).
+2.  **Council Agent Plugin Integration:** The "Brain". Orchestrates multi-agent deliberation and consensus.
+3.  **Orchestrator Agent Plugin Integration:** The "Will". Executes high-level missions and manages the Strategic Crucible Loop.
 
 ---
 
 ## Level 1: Basic Agent Dispatch (The Building Block)
 
-**Concept:** Direct interaction with a single specific agent. The Council acts as a simple router to the Agent Persona MCP.
+**Concept:** Direct interaction with a single specific agent. The Council acts as a simple router to the Agent Persona Agent Plugin Integration.
 
 **Flow:**
-`Council MCP` -> `Agent Persona MCP` -> `Forge LLM MCP`
+`Council Agent Plugin Integration` -> `Agent Persona Agent Plugin Integration` -> `Forge LLM Agent Plugin Integration`
 
 **Common Use Case:**
 - "I just need the Auditor to check this file."
@@ -40,10 +40,10 @@ The system operates on three levels of abstraction:
 
 ## Level 2: Context-Aware Deliberation
 
-**Concept:** The Council retrieves relevant context from the **RAG Cortex MCP** before dispatching to an agent. This grounds the agent's response in Project Sanctuary protocols.
+**Concept:** The Council retrieves relevant context from the **RAG Cortex Agent Plugin Integration** before dispatching to an agent. This grounds the agent's response in Project Sanctuary protocols.
 
 **Flow:**
-`Council MCP` -> `RAG Cortex MCP (Query)` -> `Agent Persona MCP` -> `Forge LLM MCP`
+`Council Agent Plugin Integration` -> `RAG Cortex Agent Plugin Integration (Query)` -> `Agent Persona Agent Plugin Integration` -> `Forge LLM Agent Plugin Integration`
 
 **Common Use Case:**
 - "How does this new feature align with Protocol 101?" (Requires knowing Protocol 101)
@@ -64,7 +64,7 @@ The system operates on three levels of abstraction:
 **Concept:** The core "Council" capability. Multiple agents deliberate, critique one another, and reach a synthesized consensus.
 
 **Flow:**
-`Council MCP` -> `[Coordinator, Strategist, Auditor]` -> `Deliberation Logic` -> `Consensus`
+`Council Agent Plugin Integration` -> `[Coordinator, Strategist, Auditor]` -> `Deliberation Logic` -> `Consensus`
 
 **Common Use Case:**
 - Complex architectural decisions.
@@ -83,13 +83,13 @@ The system operates on three levels of abstraction:
 
 ## Level 4: The Strategic Crucible Loop (Task 056)
 
-**Concept:** The highest level of orchestration. The **Orchestrator MCP** manages the Council to identify gaps, creates solutions, and then **self-corrects** by updating the knowledge base (RAG).
+**Concept:** The highest level of orchestration. The **Orchestrator Agent Plugin Integration** manages the Council to identify gaps, creates solutions, and then **self-corrects** by updating the knowledge base (RAG).
 
 **Flow:**
 1. `Orchestrator` -> `Council` (Identify Gap)
-2. `Orchestrator` -> `Code MCP` (Write Research/Fix)
-3. `Orchestrator` -> `Git MCP` (Commit)
-4. `Orchestrator` -> `RAG Cortex MCP` (Ingest = Learn)
+2. `Orchestrator` -> `Code Agent Plugin Integration` (Write Research/Fix)
+3. `Orchestrator` -> `Git Agent Plugin Integration` (Commit)
+4. `Orchestrator` -> `RAG Cortex Agent Plugin Integration` (Ingest = Learn)
 
 **Common Use Case:**
 - "Harden the self-evolving loop."
@@ -100,14 +100,14 @@ The system operates on three levels of abstraction:
 - `research_report_path`: "00_CHRONICLE/..."
 
 **Reference Diagrams:**
-- [Continuous Learning Pipeline](../../../README.md#3-continuous-learning-pipeline) (Full Loop Interaction)
-- [MCP Architecture Diagram](../../../README.md#mcp-architecture-diagram) (System Components)
+- [[README#3-continuous-learning-pipeline|Continuous Learning Pipeline]] (Full Loop Interaction)
+- [[README#mcp-architecture-diagram|Agent Plugin Integration Architecture Diagram]] (System Components)
 
 ---
 
 ## Summary of Tools
 
-| Level | Tool | MCP Server | Purpose |
+| Level | Tool | Agent Plugin Integration Server | Purpose |
 | :--- | :--- | :--- | :--- |
 | **1** | `council_dispatch(agent="name")` | Council | Single Agent Router |
 | **2** | `council_dispatch(agent="name")` | Council | RAG-Augmented Agent |
@@ -127,7 +127,7 @@ Verify the `Council` -> `Agent` link.
 - **Coordinator Chain:** `council_dispatch(agent="coordinator", ...)`
 
 ### Level 2 & 3 Tests (Orchestrator Chains)
-Verify the `Orchestrator` -> `External MCP` links.
+Verify the `Orchestrator` -> `External Agent Plugin Integration` links.
 - **Council Chain:** `orchestrator_dispatch(mission="...")` (Calls Council)
 - **Cortex Query Chain:** `orchestrator_dispatch` calling `cortex_query`
 - **Cortex Ingest Chain:** `orchestrator_dispatch` calling `cortex_ingest_incremental`

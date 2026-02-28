@@ -65,7 +65,7 @@ With the introduction of **Protocol 128 (Cognitive Continuity)** and **Protocol 
     -   `exclusion_manifest.json` (Global Firewall)
 
 2.  **Process Manifests** (Workflow Context):
-    -   Defined in [ADR 089](../../ADRs/089_modular_manifest_pattern.md).
+    -   Defined in [[089_modular_manifest_pattern|ADR 089]].
     -   Examples: `learning_manifest.json`, `audit_manifest.json`, `bootstrap_manifest.json`.
     -   Define specific subsets of files for tasks like onboarding, auditing, or sealing.
 
@@ -111,5 +111,5 @@ for file in processor.traverse_and_filter():
 
 ## Related Documents
 
-- [ADR 083: Manifest-Centric Architecture](../../ADRs/083_manifest_centric_architecture.md)
-- [ADR 082: Harmonized Content Processing](../../ADRs/082_harmonized_content_processing.md)
+- [[083_manifest_centric_architecture|ADR 083: Manifest-Centric Architecture]]
+- [[082_harmonized_content_processing|ADR 082: Harmonized Content Processing]]

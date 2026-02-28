@@ -24,33 +24,33 @@ This document tracks the **complete verification status** of every operation acr
 
 ### What is STDIO vs SSE?
 
-**STDIO (Standard I/O)** is the *original* MCP transport. It uses simple stdin/stdout pipes - perfect for local tools where the AI assistant runs on your machine. Think of it like a direct phone call between two people in the same room.
+**STDIO (Standard I/O)** is the *original* Agent Plugin Integration transport. It uses simple stdin/stdout pipes - perfect for local tools where the AI assistant runs on your machine. Think of it like a direct phone call between two people in the same room.
 
-**SSE (Server-Sent Events)** is the *web* transport. It uses HTTP connections with streaming events - required when your MCP server runs in a container and the AI needs to reach it over a network. Think of it like a video call over the internet.
+**SSE (Server-Sent Events)** is the *web* transport. It uses HTTP connections with streaming events - required when your Agent Plugin Integration server runs in a container and the AI needs to reach it over a network. Think of it like a video call over the internet.
 
 ### Why Do We Need Both?
 
-![gateway_production_flow](../../../../../architecture_diagrams/transport/gateway_production_flow.png)
+![[gateway_production_flow.png|gateway_production_flow]]
 
-*[Source: gateway_production_flow.mmd](../../../../../architecture_diagrams/transport/gateway_production_flow.mmd)*
+*[[gateway_production_flow.mmd|Source: gateway_production_flow.mmd]]*
 
-> **Key:** All MCP-compatible clients speak STDIO to `bridge.py`, which converts to HTTP for the Gateway, which speaks SSE to containers.
+> **Key:** All Agent Plugin Integration-compatible clients speak STDIO to `bridge.py`, which converts to HTTP for the Gateway, which speaks SSE to containers.
 
 ### Development & Testing Path
 
 For direct testing, integration tests, and headless E2E scenarios, you bypass the bridge:
 
-![mcp_testing_dev_paths](../../../../../architecture_diagrams/transport/mcp_testing_dev_paths.png)
+![[mcp_testing_dev_paths.png|mcp_testing_dev_paths]]
 
-*[Source: mcp_testing_dev_paths.mmd](../../../../../architecture_diagrams/transport/mcp_testing_dev_paths.mmd)*
+*[[mcp_testing_dev_paths.mmd|Source: mcp_testing_dev_paths.mmd]]*
 
 > **Key:** Testing can use either transport directly without going through the full Gateway stack.
 
 ### Architecture Diagram
 
-![mcp_sse_stdio_transport](../../../../../architecture_diagrams/transport/mcp_sse_stdio_transport.png)
+![[mcp_sse_stdio_transport.png|mcp_sse_stdio_transport]]
 
-*[Source: mcp_sse_stdio_transport.mmd](../../../../../architecture_diagrams/transport/mcp_sse_stdio_transport.mmd)*
+*[[mcp_sse_stdio_transport.mmd|Source: mcp_sse_stdio_transport.mmd]]*
 
 ### Transport Implementation
 
@@ -322,4 +322,4 @@ timeout 2 curl -N http://localhost:8105/sse  # ✅ event: endpoint
 
 ---
 
-*For operations reference, see [README.md](./README.md)*
+*For operations reference, see [[README|README.md]]*

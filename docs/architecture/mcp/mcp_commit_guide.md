@@ -1,4 +1,4 @@
-# MCP Commit Message Guide
+# Agent Plugin Integration Commit Message Guide
 
 ## Format
 
@@ -26,7 +26,7 @@ mcp(<domain>): <description>
 **Good:**
 
 ```
-mcp(chronicle): create entry #283 documenting MCP architecture completion
+mcp(chronicle): create entry #283 documenting Agent Plugin Integration architecture completion
 mcp(forge): initiate model training for guardian-02-v1
 mcp(git_workflow): create feature branch for task-030
 ```
@@ -43,9 +43,9 @@ mcp(chronicle): fix  # Description too short
 
 **Status:** The failed `commit_manifest.json` system and its associated pre-commit hook have been **permanently purged**.
 
-During the transition, both MCP and Legacy commit formats are supported, but all commits now adhere to **Protocol 101 v3.0 (Functional Coherence)**.
+During the transition, both Agent Plugin Integration and Legacy commit formats are supported, but all commits now adhere to **Protocol 101 v3.0 (Functional Coherence)**.
 
-  - **MCP commits**:
+  - **Agent Plugin Integration commits**:
       - Use the canonical `mcp(<domain>):` format.
       - **No environment variable is required** to bypass the obsolete manifest check.
   - **Legacy commits**:

@@ -21,7 +21,7 @@ These are sensitive keys that should **never** be hardcoded in files.
 | `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/app/apikey) | Core reasoning engine (Bicameral logic) |
 | `OPENAI_API_KEY` | [OpenAI Dashboard](https://platform.openai.com/api-keys) | Alternative reasoning engine |
 | `HUGGING_FACE_TOKEN` | [HF Settings](https://huggingface.co/settings/tokens) | Soul Persistence & model downloads (Write access required) |
-| `GITHUB_TOKEN` | [GitHub PAT](https://github.com/settings/tokens) | Automated Git operations (MCP Git cluster) |
+| `GITHUB_TOKEN` | [GitHub PAT](https://github.com/settings/tokens) | Automated Git operations (Agent Plugin Integration Git cluster) |
 | `MCPGATEWAY_BEARER_TOKEN` | Generated per instance | Secure authentication for the Fleet Gateway |
 
 ### ⚙️ The Configuration (Set these in your local `.env`)
@@ -32,8 +32,8 @@ These are project-specific paths and settings that are generally safe to keep in
 | `PROJECT_ROOT` | `/path/to/Project_Sanctuary` | Absolute path to the repository root |
 | `PYTHONPATH` | `${PROJECT_ROOT}` | Ensures internal modules are importable |
 | `HUGGING_FACE_USERNAME` | your_hf_username | Used for automated uploads to your Hub |
-| `GIT_AUTHOR_NAME` | Your Name | Used by the `sanctuary_git` MCP container |
-| `GIT_AUTHOR_EMAIL` | your@email.com | Used by the `sanctuary_git` MCP container |
+| `GIT_AUTHOR_NAME` | Your Name | Used by the `sanctuary_git` Agent Plugin Integration container |
+| `GIT_AUTHOR_EMAIL` | your@email.com | Used by the `sanctuary_git` Agent Plugin Integration container |
 | `OLLAMA_HOST` | `http://127.0.0.1:11434` | API endpoint for local LLM compute |
 | `CHROMA_HOST` | `127.0.0.1` | Host for the Mnemonic Cortex vector store |
 

@@ -1,6 +1,6 @@
-# Project Sanctuary MCP Quickstart Guide
+# Project Sanctuary Agent Plugin Integration Quickstart Guide
 
-**Welcome to Project Sanctuary!** This guide will help you connect your LLM client (Claude Desktop, Antigravity, or others) to the Project Sanctuary Model Context Protocol (MCP) ecosystem.
+**Welcome to Project Sanctuary!** This guide will help you connect your LLM client (Claude Desktop, Antigravity, or others) to the Project Sanctuary Agent Plugin Integration (Agent Plugin Integration) ecosystem.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Before you begin, ensure you have the following installed:
     curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 3.  **Git**: Version control system.
-4.  **Podman** (Optional but Recommended): For running MCP servers in isolated containers.
+4.  **Podman** (Optional but Recommended): For running Agent Plugin Integration servers in isolated containers.
 
 ## Step 1: Clone the Repository
 
@@ -45,7 +45,7 @@ nano .env
     *   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
     *   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-2.  Add the Project Sanctuary MCP servers. You can use the helper script to generate this config:
+2.  Add the Project Sanctuary Agent Plugin Integration servers. You can use the helper script to generate this config:
 
     ```bash
     # Generate config for all servers
@@ -75,7 +75,7 @@ nano .env
 
 ### Option B: Antigravity / Other Clients
 
-Refer to your specific client's documentation for adding MCP servers. The connection details (command, args, env) remain the same.
+Refer to your specific client's documentation for adding Agent Plugin Integration servers. The connection details (command, args, env) remain the same.
 
 ## Step 4: Initialize Session Context (Protocol 118)
 
@@ -91,12 +91,12 @@ This will generate a **Guardian Briefing** (`dataset_package/guardian_boot_diges
 ## Step 5: Verify Connection
 
 1.  Restart your client (Claude Desktop, etc.).
-2.  Look for the **MCP** icon or menu to confirm servers are connected.
+2.  Look for the **Agent Plugin Integration** icon or menu to confirm servers are connected.
 3.  Try a test prompt:
 
     > "Can you ask the Council to review the current task list?"
 
-    If the system responds by dispatching a task to the Council MCP, you are connected!
+    If the system responds by dispatching a task to the Council Agent Plugin Integration, you are connected!
 
 ## Troubleshooting
 
@@ -106,6 +106,6 @@ This will generate a **Guardian Briefing** (`dataset_package/guardian_boot_diges
 
 ## Next Steps
 
-*   **[Using the Council](../processes/01_using_council_mcp.md)**: Learn how to orchestrate multi-agent tasks.
-*   **[Using the Cortex](../processes/02_using_cortex_mcp.md)**: Learn how to query the knowledge base.
-*   **[Architecture Overview](../../../docs/architecture/mcp/README.md)**: Understand the 11-server ecosystem.
+*   **[[01_using_council_mcp|Using the Council]]**: Learn how to orchestrate multi-agent tasks.
+*   **[[02_using_cortex_mcp|Using the Cortex]]**: Learn how to query the knowledge base.
+*   **[[README|Architecture Overview]]**: Understand the 11-server ecosystem.

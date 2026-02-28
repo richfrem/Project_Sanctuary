@@ -379,7 +379,7 @@ Check the **Actions** tab and **Security** tab on GitHub to verify all checks pa
 
 ## References
 
-- [Git Workflow Quick Reference](./git_workflow.md)
-- [CI/CD Pipeline Documentation](./overview.md)
-- [Git Workflow Operations](git_workflow.md)
+- [[git_workflow|Git Workflow Quick Reference]]
+- [[overview|CI/CD Pipeline Documentation]]
+- [[git_workflow|Git Workflow Operations]]
 - [Conventional Commits Specification](https://www.conventionalcommits.org/)

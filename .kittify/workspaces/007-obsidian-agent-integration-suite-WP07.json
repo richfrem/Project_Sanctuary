@@ -1,0 +1,12 @@
+{
+  "wp_id": "WP07",
+  "feature_slug": "007-obsidian-agent-integration-suite",
+  "worktree_path": ".worktrees/007-obsidian-agent-integration-suite-WP07",
+  "branch_name": "007-obsidian-agent-integration-suite-WP07",
+  "base_branch": "main",
+  "base_commit": "14b3f303280a607153ae407b84919b4bc8679cc4",
+  "dependencies": [],
+  "created_at": "2026-02-27T22:54:35.136132+00:00",
+  "created_by": "implement-command",
+  "vcs_backend": "git"
+}
