@@ -1,0 +1,72 @@
+# RLM Distillation Tasks: TOOLS
+
+Generated: 34 missing files to distill into `rlm_tool_cache.json`.
+
+- [ ] `plugins/adr-manager/skills/adr-management/scripts/adr_manager.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/adr-manager/skills/adr-management/scripts/adr_manager.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-agentic-workflow/scripts/scaffold_agentic_workflow.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/agent-scaffolders/skills/create-agentic-workflow/scripts/scaffold_agentic_workflow.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-azure-agent/scripts/scaffold_azure_agent.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/agent-scaffolders/skills/create-azure-agent/scripts/scaffold_azure_agent.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/agent-scaffolders/skills/create-github-action/scripts/scaffold_github_action.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/agent-scaffolders/skills/create-github-action/scripts/scaffold_github_action.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/chronicle-manager/skills/chronicle-agent/scripts/chronicle_manager.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/env-helper/scripts/env_helper.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/env-helper/scripts/env_helper.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/scripts/hf_config.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/huggingface-utils/scripts/hf_config.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/huggingface-utils/skills/hf-upload/scripts/hf_upload.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/huggingface-utils/skills/hf-upload/scripts/hf_upload.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/json-hygiene/skills/json-hygiene-agent/scripts/find_json_duplicates.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/json-hygiene/skills/json-hygiene-agent/scripts/find_json_duplicates.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/scripts/md_to_docx.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/scripts/md_to_docx.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/scripts/run_bulk_md_to_docx.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/markdown-to-msword-converter/skills/markdown-to-msword-converter/scripts/run_bulk_md_to_docx.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/skills/migration-utils/scripts/audit_stale_refs.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/migration-utils/skills/migration-utils/scripts/audit_stale_refs.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/skills/migration-utils/scripts/cleanup_mapped_files.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/migration-utils/skills/migration-utils/scripts/cleanup_mapped_files.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/skills/migration-utils/scripts/generate_inventory.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/migration-utils/skills/migration-utils/scripts/generate_inventory.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/migration-utils/skills/migration-utils/scripts/migration_replace.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/migration-utils/skills/migration-utils/scripts/migration_replace.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/obsidian-parser/parser.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/obsidian-parser/parser.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-bases-manager/scripts/bases_ops.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/skills/obsidian-bases-manager/scripts/bases_ops.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-canvas-architect/scripts/canvas_ops.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/skills/obsidian-canvas-architect/scripts/canvas_ops.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-graph-traversal/scripts/graph_ops.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/skills/obsidian-graph-traversal/scripts/graph_ops.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-init/scripts/init_vault.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/skills/obsidian-init/scripts/init_vault.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/obsidian-integration/skills/obsidian-vault-crud/scripts/vault_ops.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/obsidian-integration/skills/obsidian-vault-crud/scripts/vault_ops.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/protocol-manager/skills/protocol-agent/scripts/protocol_manager.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/capture_snapshot.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/capture_snapshot.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/evolution_metrics.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/evolution_metrics.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/forge_llm.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/forge_llm.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/guardian_wakeup.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/guardian_wakeup.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/learning_debrief.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/learning_debrief.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/scripts/persist_soul.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/scripts/persist_soul.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/forge-soul-exporter/scripts/forge_soul.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/skills/forge-soul-exporter/scripts/forge_soul.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-bootloader/scripts/execute.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/skills/session-bootloader/scripts/execute.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/sanctuary-guardian/skills/session-closure/scripts/execute.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/sanctuary-guardian/skills/session-closure/scripts/execute.py" --summary "YOUR_SUMMARY_HERE"`
+- [ ] `plugins/task-manager/skills/task-agent/scripts/task_manager.py`
+  - Command: `python plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --profile tools --file "plugins/task-manager/skills/task-agent/scripts/task_manager.py" --summary "YOUR_SUMMARY_HERE"`
