@@ -12,10 +12,9 @@ Token setup:
     The token should NEVER go in .env (which is committed).
 
 Project-level vars go in .env:
-    HUGGING_FACE_USERNAME=richfrem
-    HUGGING_FACE_REPO=Sanctuary-Qwen2-7B-v1.0-GGUF-Final
-    HUGGING_FACE_MODEL_PATH=hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M
-    HUGGING_FACE_DATASET_PATH=hf.co/datasets/richfrem/Project_Sanctuary_Soul
+    HUGGING_FACE_USERNAME=<your-username>
+    HUGGING_FACE_REPO=<your-model-repo>
+    HUGGING_FACE_DATASET_PATH=<your-dataset-repo>
 """
 import sys
 import json
@@ -60,7 +59,7 @@ async def full_init(validate_only: bool = False) -> dict:
         result["next_steps"] = [
             f"Visit: https://huggingface.co/datasets/{config.dataset_repo_id}",
             "Verify lineage/, data/, metadata/ folders exist",
-            "Run: python plugins/guardian-onboarding/scripts/persist_soul.py --full-sync"
+            "Configure your project's persistence plugin to use hf-upload primitives"
         ]
     except ImportError as e:
         result["warning"] = f"Could not import upload module: {e}. Install: pip install huggingface_hub"
