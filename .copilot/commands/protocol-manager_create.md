@@ -6,7 +6,7 @@ argument-hint: "\"Title\" --content \"...\" [--status PROPOSED|CANONICAL|DEPRECA
 # Create Protocol
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/protocol_manager.py create "Cognitive Continuity" \
+python3 plugins/scripts/protocol_manager.py create "Cognitive Continuity" \
   --content "This protocol defines the learning loop for agent sessions..." \
   --status PROPOSED \
   --classification Internal \

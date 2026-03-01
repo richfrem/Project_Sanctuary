@@ -34,7 +34,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -45,7 +45,7 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
@@ -495,8 +495,6 @@ This is intentional and correct - it ensures a single source of truth for projec
 - ✅ **Quality**: Follow secure, tested, documented practices.  
 - 📝 **Git**: Commit cleanly with clear messages.
 <!-- END RULES FROM PLUGIN: spec-kitty -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -523,7 +521,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
 
-
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
 
@@ -531,7 +528,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -542,13 +539,11 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -575,7 +570,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
 
-
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
 
@@ -583,7 +577,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -594,13 +588,11 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -627,7 +619,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
 
-
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
 
@@ -635,7 +626,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -646,13 +637,11 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -679,7 +668,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
 
-
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
 
@@ -687,7 +675,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -698,13 +686,11 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -731,7 +717,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
 
-
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
 
@@ -739,7 +724,7 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 --- RULE: dependency-management (dependency-management) ---
 
 ---
-description: Universal dependency management rules for Python and MCP servers.
+description: Universal dependency management rules for Python and agent services.
 globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ---
 
@@ -750,7 +735,7 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 ### Non-Negotiables
 1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
 2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
-3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
 4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 

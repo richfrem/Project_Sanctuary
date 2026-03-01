@@ -3,7 +3,7 @@ config:
   theme: base
 ---
 %% Name: Chronicle Ecosystem Context
-%% Source: docs/architecture/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
+%% Source: docs/architecture/agent_skills_architecture.md
 %% Location: docs/architecture_diagrams/system/chronicle_ecosystem_context.mmd
 %% Description: Living Chronicle entry management context
 
@@ -12,13 +12,13 @@ graph TB
         LLM[Gemini/Claude/GPT/etc]
     end
    
-    subgraph "MCP Ecosystem"
-        Chronicle[Chronicle MCP Server]
-        Protocol[Protocol MCP Server]
-        ADR[ADR MCP Server]
-        Task[Task MCP Server]
-        Cortex["RAG MCP (Cortex)"]
-        Council["Agent Orchestrator MCP (Council)"]
+    subgraph "Agent Skills Ecosystem"
+        Chronicle[Chronicle Manager]
+        Protocol[Protocol Manager]
+        ADR[ADR Manager]
+        Task[Task Manager]
+        Cortex["RLM Factory (Cortex)"]
+        Council["Agent Orchestrator (Council)"]
     end
    
     subgraph "Shared Infrastructure"
@@ -36,12 +36,12 @@ graph TB
         CouncilDir[council_orchestrator/]
     end
    
-    LLM -->|MCP Protocol| Chronicle
-    LLM -->|MCP Protocol| Protocol
-    LLM -->|MCP Protocol| ADR
-    LLM -->|MCP Protocol| Task
-    LLM -->|MCP Protocol| Cortex
-    LLM -->|MCP Protocol| Council
+    LLM -->|Native Python Execution| Chronicle
+    LLM -->|Native Python Execution| Protocol
+    LLM -->|Native Python Execution| ADR
+    LLM -->|Native Python Execution| Task
+    LLM -->|Native Python Execution| Cortex
+    LLM -->|Native Python Execution| Council
    
     Chronicle --> Git
     Protocol --> Git

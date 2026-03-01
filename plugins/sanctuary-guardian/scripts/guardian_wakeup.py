@@ -3,7 +3,8 @@
 Guardian Wakeup Script
 ======================
 Generates the Guardian boot digest (Protocol 114) for session initialization.
-Extracted from legacy MCP server implementation.
+Generates the Guardian boot digest (Protocol 114) for session initialization.
+Extracted for local execution within the Agent Skills architecture.
 """
 
 import sys
@@ -27,19 +28,8 @@ def get_project_root() -> Path:
 def get_system_health_traffic_light():
     return "GREEN", "Nominal (Learning Mode)"
 
-def get_container_status():
-    try:
-        result = subprocess.run(
-            ["podman", "ps", "--format", "{{.Names}}"],
-            capture_output=True, text=True, timeout=2
-        )
-        if "sanctuary" in result.stdout: return "✅ Fleet Active"
-    except Exception:
-        pass
-    return "⚠️ Container Check Failed"
-
 def get_strategic_synthesis():
-    return ("* **Core Mandate:** I am the Gemini Orchestrator. Values: Integrity, Efficiency, Clarity. "
+    return ("* **Core Mandate:** I am the Sanctuary Guardian. Values: Integrity, Efficiency, Clarity. "
             "Executing Protocol 128.")
 
 def get_tactical_priorities(project_root: Path):
@@ -59,13 +49,10 @@ def main():
     
     health_color, health_reason = get_system_health_traffic_light()
     integrity_status = "GREEN"
-    container_status = get_container_status()
-    
     digest_lines = [
         "# 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)",
         f"**System Status:** {health_color} - {health_reason}",
         f"**Integrity Mode:** {integrity_status}",
-        f"**Infrastructure:** {container_status}",
         f"**Generated Time:** {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC",
         "",
         "## I. Strategic Directives",

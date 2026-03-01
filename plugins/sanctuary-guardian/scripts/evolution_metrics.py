@@ -5,7 +5,7 @@ evolution_metrics.py — Evolutionary Self-Improvement Metrics (Protocol 131)
 
 Purpose:
     Computes proxy fitness metrics (Depth, Scope) for the Map-Elites archive.
-    Standalone CLI script — no mcp_servers dependencies.
+    Standalone CLI script — no internal shared dependencies.
 
 Usage:
     python3 evolution_metrics.py fitness --file docs/my-document.md

@@ -6,7 +6,7 @@ argument-hint: "\"Title\" --content \"...\" [--author \"Name\"]"
 # Create Chronicle Entry
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/chronicle_manager.py create "Session Breakthrough" \
+python3 plugins/scripts/chronicle_manager.py create "Session Breakthrough" \
   --content "Today the agent achieved..." \
   --author "Guardian" \
   --status draft \

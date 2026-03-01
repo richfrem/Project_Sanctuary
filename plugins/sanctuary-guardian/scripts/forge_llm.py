@@ -5,7 +5,7 @@ forge_llm.py — Sanctuary Fine-Tuned Model Interface
 
 Purpose:
     CLI interface for querying the fine-tuned Sanctuary model via Ollama.
-    Standalone script — no mcp_servers dependencies.
+    Standalone script — no internal shared dependencies.
 
 Usage:
     python3 forge_llm.py query "What are the core principles of Project Sanctuary?"

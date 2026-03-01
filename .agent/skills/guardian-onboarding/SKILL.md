@@ -76,9 +76,20 @@ python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 ```bash
 python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
 
-# Optional: Ingest Changes into local vector DB
-python3 plugins/vector-db/skills/vector-db/scripts/ingest.py --incremental --hours 24
+# Inject RLM summaries for any files created/modified during the session
+# Do this for every new script, skill, doc, or plugin touched this session
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py \
+  --profile project --file <modified_file> --summary "<dense summary>"
+
+# Optional: Ingest Changes into local vector DB (docs + source code)
+python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --since 24 --profile knowledge
 ```
+
+> **Cross-Agent Continuity**: This system exists for YOU -- whether you are Claude, Copilot,
+> Gemini, or any other agent. Every session starts with zero memory. The RLM cache, soul
+> persistence, and chronicle are how your collective knowledge survives and grows beyond
+> any individual session or model. When you seal and persist, you are leaving your learning
+> to every future agent that boots into this project.
 
 ### Phase VIII: Session End
 **Trigger:** Post-persistence.
@@ -106,4 +117,4 @@ python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py en
 | `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
 | `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |
 | `plugins/rlm-factory/` | I, VI | RLM cache read (boot) and synthesis (seal) |
-| `plugins/vector-db/skills/vector-db/scripts/ingest.py` | VIII | Vector Database embeddings update for semantic search capabilities |
+| `plugins/vector-db/skills/vector-db-agent/scripts/ingest.py` | VIII | Vector Database embeddings update for semantic search capabilities |

@@ -3,7 +3,7 @@
 Learning Debrief Script
 =======================
 Scans the project for technical state changes (Protocol 128 Phase I).
-Extracted from legacy MCP server implementation.
+Extracted from legacy agent implementation.
 """
 
 import os

@@ -35,7 +35,7 @@ Do not try to run a blocking `chroma run` loop inside your own execution context
 Instruct the user to execute the following command in their terminal (from the project root):
 
 ```bash
-chroma run --host 127.0.0.1 --port 8110 --path .knowledge_vector_data
+chroma run --host 127.0.0.1 --port 8110 --path .vector_data
 ```
 
 ### Step 2: Verify Connection
@@ -55,7 +55,7 @@ It should return a JSON response containing a timestamp `{"nanosecond heartbeat"
 |---------|-----|
 | `chroma: command not found` | The user hasn't run the `vector-db-init` skill yet. Run it to `pip install chromadb`. |
 | Port 8110 already in use | Another process (or zombie chroma process) is using the port. `lsof -i :8110` to find and kill it. |
-| Permission Denied for data directory | Ensure the user has write access to the `.knowledge_vector_data` directory. |
+| Permission Denied for data directory | Ensure the user has write access to the `.vector_data` directory. |
 
 ## Alternative: In-Process Mode
 If the user decides they do not want to run a background server, you can instruct them to set `chroma_host` to an empty string `""` in their profile in `.agent/learning/vector_profiles.json`. 
