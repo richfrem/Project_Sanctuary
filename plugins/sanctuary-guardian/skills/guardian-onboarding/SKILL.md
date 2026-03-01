@@ -1,6 +1,6 @@
 ---
 name: guardian-onboarding
-description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences. 
+description: "MANDATORY - Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences."
 disable-model-invocation: false
 ---
 

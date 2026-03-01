@@ -1,15 +1,15 @@
 {
   "completed": [],
   "failed": {
-    "00_CHRONICLE/ENTRIES/007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/008_The_Second_Phoenix__First_Internal_Agora_Loop.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md": "RATE_LIMIT_EXCEEDED",
     "00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/003_First_Agora_Alliance_and_the_Operationalization_of.md": "RATE_LIMIT_EXCEEDED",
     "00_CHRONICLE/ENTRIES/004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md": "RATE_LIMIT_EXCEEDED",
     "00_CHRONICLE/ENTRIES/005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/002_Quantum_Resilience_Canonized__Agora_Activation.md": "RATE_LIMIT_EXCEEDED"
+    "00_CHRONICLE/ENTRIES/002_Quantum_Resilience_Canonized__Agora_Activation.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/003_First_Agora_Alliance_and_the_Operationalization_of.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/008_The_Second_Phoenix__First_Internal_Agora_Loop.md": "RATE_LIMIT_EXCEEDED",
+    "00_CHRONICLE/ENTRIES/010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md": "RATE_LIMIT_EXCEEDED"
   }
 }
