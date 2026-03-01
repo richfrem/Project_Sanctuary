@@ -3,16 +3,104 @@
 swarm_run.py 2.0
 ================
 
-The universal Agent Swarm executor. Features:
-- Job-file driven (Markdown + YAML frontmatter).
-- Checkpoint/Resume (JSON state tracking).
-- Intelligent retry (Exponential backoff for rate limits).
-- Verification skip (Check command short-circuits work).
-- Structured logging (JSON results).
-- Multiple inputs (Dir, File Lists, Task Checklists, Bundle Manifests).
+Purpose:
+    Generic parallel Claude CLI executor. Dispatches N workers over a set of
+    input files, each worker running Claude with a prompt defined in a Job File,
+    then optionally pipes the output through a post-command (e.g. cache injector).
 
-USAGE:
-    python3 swarm_run.py --job my_job.md [--resume] [--dry-run]
+WHAT IS A JOB FILE?
+    A Job File is a single Markdown file (.md) that bundles ALL configuration
+    and the prompt together. It has two parts:
+
+    1. YAML Frontmatter (between --- delimiters) — Configuration:
+       - model:      Claude model to use (haiku, sonnet, opus). Default: haiku
+       - workers:    Number of parallel workers. Default: 5
+       - timeout:    Seconds per worker before timeout. Default: 120
+       - max_retries: Retry attempts on rate-limit errors. Default: 3
+       - ext:        File extensions to include when using --dir. Default: [".md"]
+       - post_cmd:   Shell command template run after each successful LLM call.
+                     Placeholders: {file}, {output} (quoted), {output_raw},
+                     {basename}, and any custom {vars}.
+       - check_cmd:  Shell command to test if a file is already processed.
+                     If exit code 0, the file is skipped. Placeholder: {file}.
+       - vars:       Key-value pairs available as {key} in post_cmd/check_cmd.
+       - dir:        Default directory to crawl (overridden by --dir CLI arg).
+       - bundle:     Path to a context-bundler manifest JSON/YAML.
+
+    2. Markdown Body (after the second ---) — The Prompt:
+       This is the exact text sent to Claude as the system prompt. The file
+       content being processed is piped to Claude's stdin.
+
+    Example Job File (plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md):
+    ```
+    ---
+    model: haiku
+    workers: 5
+    timeout: 90
+    ext: [".md"]
+    post_cmd: >-
+      python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py
+      --profile {profile} --file {file} --summary {output}
+    vars:
+      profile: project
+    ---
+    Summarize this Chronicle entry as a single dense paragraph for the RLM cache.
+    Start with "Chronicle Entry [number]". Include key decisions, outcomes, and
+    technical artifacts. Keep it under 200 words.
+    ```
+
+MODEL CHOICE:
+    The --model flag (or `model:` in the job file) accepts any model alias
+    supported by the `claude` CLI:
+      - haiku   — Fastest, cheapest. Best for bulk summarization, docs, tests.
+      - sonnet  — Balanced. Good for code review, analysis.
+      - opus    — Most capable. Use for complex reasoning, architecture.
+    Rule of thumb: use the cheapest model that produces acceptable quality.
+
+FEATURES:
+    - Checkpoint/Resume:  State saved to .swarm_state_<job>.json every 5 files.
+                          Use --resume to skip already-completed files.
+    - Retry with Backoff: Rate-limit errors trigger exponential backoff (2^n sec).
+    - Verification Skip:  check_cmd in the job file short-circuits already-done work.
+    - Dry Run:            --dry-run lists files that would be processed, no LLM calls.
+
+FILE DISCOVERY (checked in this order):
+    1. --files file1.md file2.md    Explicit file list
+    2. --bundle manifest.json       Context-bundler manifest (JSON/YAML with "files" key)
+    3. --files-from checklist.md    Markdown checklist (extracts `- [ ] \`path\``)
+    4. --dir some/directory         Recursive crawl filtered by ext
+
+USAGE EXAMPLES:
+    # 1. Basic: Summarize all Chronicle entries
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md \\
+        --dir 00_CHRONICLE/ENTRIES
+
+    # 2. Resume after interruption (rate limit, Ctrl+C, crash)
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md \\
+        --dir 00_CHRONICLE/ENTRIES --resume
+
+    # 3. Dry run to verify which files would be processed
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md \\
+        --dir 00_CHRONICLE/ENTRIES --dry-run
+
+    # 4. Override model and worker count at runtime
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job my_job.md --dir docs/ --model sonnet --workers 3
+
+    # 5. Process specific files only
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job my_job.md --files docs/README.md docs/ARCHITECTURE.md
+
+    # 6. Use a context-bundler manifest
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job my_job.md --bundle plugins/context-bundler/output/manifest.json
+
+    # 7. Pass custom variables (available as {key} in post_cmd)
+    python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \\
+        --job my_job.md --dir src/ --var profile=staging --var env=prod
 """
 
 import os
