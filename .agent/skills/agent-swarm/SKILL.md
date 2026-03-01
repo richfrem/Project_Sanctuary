@@ -127,6 +127,43 @@ st['failed'] = {}
 ```
 Then rerun with `--resume`.
 
+## Implementation: swarm_run.py
+
+The **swarm_run.py** script is the universal engine for executing this pattern. It is driven by **Job Files** (.md with YAML frontmatter).
+
+### Key Features
+
+- **Resume Support** — Automatically saves state to `.swarm_state_<job>.json`. Use `--resume` to skip already processed items.
+- **Intelligent Retry** — Exponential backoff for rate limits.
+- **Verification Skip** — Use `check_cmd` in the job file to short-circuit work if a file is already processed (e.g. exists in cache).
+- **Dry Run** — Test your file discovery and template substitution without cost.
+
+### Usage
+
+```bash
+python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \
+    --job plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md \
+    [--dir some/dir] [--resume] [--dry-run]
+```
+
+### Job File Schema
+
+```yaml
+---
+model: haiku        # haiku, sonnet, opus
+workers: 10         # parallelism
+timeout: 120        # seconds per worker
+ext: [".md"]        # filters for --dir
+# Shell template. {file}, {output}, {basename}, {var}
+post_cmd: "python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py --file {file} --summary {output}"
+# Optional command to check if work is already done (exit 0 => skip)
+check_cmd: "python3 plugins/rlm-factory/skills/rlm-curator/scripts/check_cache.py --file {file}"
+vars:
+  profile: project
+---
+Prompt for Claude goes here.
+```
+
 ## Constraints
 
 - Each worker execution must be independent
