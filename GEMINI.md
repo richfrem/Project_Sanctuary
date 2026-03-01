@@ -556,3 +556,263 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
+# SHARED RULES FROM coding-conventions
+
+
+--- RULE: coding-conventions (coding-conventions) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
+
+<!-- END RULES FROM PLUGIN: coding-conventions -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: dependency-management -->
+# SHARED RULES FROM dependency-management
+
+
+--- RULE: dependency-management (dependency-management) ---
+
+---
+description: Universal dependency management rules for Python and MCP servers.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
+
+<!-- END RULES FROM PLUGIN: dependency-management -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
+# SHARED RULES FROM coding-conventions
+
+
+--- RULE: coding-conventions (coding-conventions) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
+
+<!-- END RULES FROM PLUGIN: coding-conventions -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: dependency-management -->
+# SHARED RULES FROM dependency-management
+
+
+--- RULE: dependency-management (dependency-management) ---
+
+---
+description: Universal dependency management rules for Python and MCP servers.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
+
+<!-- END RULES FROM PLUGIN: dependency-management -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
+# SHARED RULES FROM coding-conventions
+
+
+--- RULE: coding-conventions (coding-conventions) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
+
+<!-- END RULES FROM PLUGIN: coding-conventions -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: dependency-management -->
+# SHARED RULES FROM dependency-management
+
+
+--- RULE: dependency-management (dependency-management) ---
+
+---
+description: Universal dependency management rules for Python and MCP servers.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
+
+<!-- END RULES FROM PLUGIN: dependency-management -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
+# SHARED RULES FROM coding-conventions
+
+
+--- RULE: coding-conventions (coding-conventions) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
+
+<!-- END RULES FROM PLUGIN: coding-conventions -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: dependency-management -->
+# SHARED RULES FROM dependency-management
+
+
+--- RULE: dependency-management (dependency-management) ---
+
+---
+description: Universal dependency management rules for Python and MCP servers.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
+
+<!-- END RULES FROM PLUGIN: dependency-management -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
+# SHARED RULES FROM coding-conventions
+
+
+--- RULE: coding-conventions (coding-conventions) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
+
+<!-- END RULES FROM PLUGIN: coding-conventions -->
+
+
+<!-- BEGIN RULES FROM PLUGIN: dependency-management -->
+# SHARED RULES FROM dependency-management
+
+
+--- RULE: dependency-management (dependency-management) ---
+
+---
+description: Universal dependency management rules for Python and MCP servers.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every MCP service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
+
+<!-- END RULES FROM PLUGIN: dependency-management -->

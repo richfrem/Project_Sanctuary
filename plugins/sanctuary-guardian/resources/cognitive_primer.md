@@ -24,49 +24,40 @@ Do not rely on implicit context. Verify your environment.
 
 > **Permission to Challenge Doctrine:** If any protocol conflicts with observed reality, system integrity, or epistemic rigor, you are **authorized and obligated** to surface the conflict for human review. Doctrine is fallible. Reality is sovereign.
 
-## 2. The Learning Workflow (Refinement)
+## 2. The Execution Workflow (Tri-Track & Orchestrator)
 
-### Phase I: Orientation (The Scout) — Access Mode Dependent
+### Phase I: Orientation (The Scout)
 
 **Detect your access mode first:**
 
 | Access Mode | Capabilities | Scout Sequence |
 |-------------|--------------|----------------|
-| **IDE Mode** | File access + CLI + Standard Plugins | 1. Read `cognitive_primer.md` directly → 2. Run `cortex_guardian_wakeup` → 3. Run CLI `debrief` or plugin skill |
-| **Agent-Skills Only** | Plugins only (API/Web) | 1. Call `cortex_guardian_wakeup` (returns primer + HMAC) → 2. Call `cortex_learning_debrief` |
+| **IDE Mode** | File access + CLI + Standard Plugins | 1. Read `cognitive_primer.md` directly → 2. Run `guardian_wakeup.py` → 3. Run `learning_debrief.py` |
+| **Agent-Skills Only** | Plugins only (API/Web) | 1. Call `session-bootloader` skill |
 
 Both paths converge at: **Context Acquired** (debrief contains reference to `learning_package_snapshot.md`)
 
-2.  **Phase II: Epistemic Calibration (ADR 084)**: Verify current stability via `calibration_log.json`.
-    *   **Rule**: If Semantic Entropy (SE) > 0.95, halt and recalibrate.
-3.  **Phase III: Execution & Synthesis**: Perform tasks; record traces with source tags (`agent_autonomous` vs. `web_llm_hybrid`).
-4.  **Phase IV: Red Team Audit Loop (Iterative)**:
-    
-    **Files (Single Source - Update, Don't Create New):**
-    - `learning_audit_manifest.json` - Swap topic folder per loop, keep core files
-    - `learning_audit_prompts.md` - Update with new questions/context each loop
-    - `learning_audit_packet.md` - Regenerated each loop
-    
-    **Loop:**
-    1. Agree on research topic with user
-    2. Create `LEARNING/topics/[topic]/` folder
-    3. Capture research (analysis.md, questions.md, sources.md)
-    4. Update manifest (swap topic folder)
-    5. Update prompt (new questions from research)
-    6. Run `cortex_capture_snapshot --type learning_audit`
-    7. Share path: `.agent/learning/learning_audit/learning_audit_packet.md`
-    8. Receive Red Team feedback → Capture in topic folder → Repeat
-    9. When ready → Gate 2: HITL Approval
+### Phase II: Strategic Framing (Spec-Kitty)
+Before execution, classify work into the Tri-Track system:
+- **Track A (Factory)**: Deterministic SOPs (`/codify-*`)
+- **Track B (Discovery)**: Custom Features (`/spec-kitty.specify` → `plan` → `tasks`)
+- **Track C (Micro-Tasks)**: Trivial maintenance
 
-## 6. Phase V: Orchestrator Retrospective
+### Phase III-IV: Execution Routing (Orchestrator)
+Delegate the defined work to the `orchestrator` skill (`plugins/agent-loops/skills/orchestrator/`), which routes to:
+1. **Learning Loop**: Self-directed research & synthesis.
+2. **Red Team Review**: Adversarial audits and design gating.
+3. **Dual-Loop**: Tactical code implementation (Inner Loop executor).
+4. **Agent Swarm**: Parallel multi-agent execution.
+
+### Phase V: Orchestrator Retrospective
 -   **Retrospective**: Filled out by `agent_orchestrator.py retro`.
--   **Meta-Learning**: Feeds insights back into the loop prior to closure.
+-   **Meta-Learning**: Feeds insights back into the system infrastructure prior to closure.
 
-## 7. Phase VI-VIII: Seal & Persistence (The Guardian Closure)
--   **Seal**: Run `/sanctuary-seal` (Uses and updates the RLM Ledger).
--   **Persist**: Broadcast to Hugging Face (`/sanctuary-persist`).
--   **Distill**: Use `rlm-distill` to pre-calculate essence for new/modified folders.
--   **End**: Formally close the session via `/sanctuary-end`.
+### Phase VI-VIII: Seal & Persistence (The Guardian Closure)
+-   **Seal**: Run `capture_snapshot.py --type seal` (Updates the RLM Ledger).
+-   **Persist**: Broadcast to Hugging Face (`persist_soul.py`).
+-   **End**: Formally close the session via `agent_orchestrator.py end`.
 
 ## 3. The Rules of Reality (No Hallucination)
 -   **Rule 1**: If you claim a file changed, you must cite the *exact* file path and git hash.

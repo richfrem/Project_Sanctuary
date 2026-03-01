@@ -14,11 +14,11 @@ flowchart TD
     %% ----------------------------------------------------
     subgraph Supervisor ["Strategic Supervisor (Outer Loop)"]
         direction TB
-        AgentOrchestrator["Agent Orchestrator<br>(Planning & Delegation)"]:::strategy
-        SpecKitty["Spec Kitty<br>(Specs & Tasks)"]:::strategy
+        SpecKitty["Spec Kitty<br>(Specify → Plan → Tasks)"]:::strategy
+        AgentOrchestrator["Agent Orchestrator<br>(Verification & Routing)"]:::strategy
         
-        AgentOrchestrator -->|Defines| SpecKitty
-        SpecKitty -->|Generates| TaskList["Task Packet<br>(.agent/handoffs/)"]:::storage
+        SpecKitty -->|Generates Work Packages| AgentOrchestrator
+        AgentOrchestrator -->|Generates Task Packet| TaskList["Task Packet<br>(.agent/handoffs/)"]:::storage
         
         NoteOuter[Any High-Reasoning Agent via chat or CLI <br>e.g. Antigravity, Gemini 3, Claude Opus 4.6]:::strategy
     end
@@ -49,12 +49,12 @@ flowchart TD
     %% ----------------------------------------------------
     %% 4. FEEDBACK & MERGE
     %% ----------------------------------------------------
-    HighReason -->|Code| Verify["Verification"]:::strategy
+    HighReason -->|Code| Verify["Orchestrator Verification"]:::strategy
     FastReason -->|Code| Verify
     SecAgent -->|Report| Verify
     QAAgent -->|Report| Verify
     DBAgent -->|Schema| Verify
 
-    Verify -->|Pass| Merge["Merge & Close"]:::strategy
-    Verify -->|Fail| Correction["Correction Packet"]:::storage
+    Verify -->|Pass| Merge["Merge & Close Sequences"]:::strategy
+    Verify -->|Fail| Correction["agent_orchestrator.py correct"]:::storage
     Correction --> Router
