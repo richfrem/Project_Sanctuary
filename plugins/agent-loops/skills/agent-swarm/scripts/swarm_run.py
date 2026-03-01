@@ -1,327 +1,299 @@
 #!/usr/bin/env python3
 """
-swarm_run.py
-============
+swarm_run.py 2.0
+================
 
-Generic parallel Claude CLI executor driven by a self-contained "job file".
-A job file is a Markdown file with YAML frontmatter encoding all configuration.
-The Markdown body is the prompt sent to Claude for every input file.
+The universal Agent Swarm executor. Features:
+- Job-file driven (Markdown + YAML frontmatter).
+- Checkpoint/Resume (JSON state tracking).
+- Intelligent retry (Exponential backoff for rate limits).
+- Verification skip (Check command short-circuits work).
+- Structured logging (JSON results).
+- Multiple inputs (Dir, File Lists, Task Checklists, Bundle Manifests).
 
-Usage:
-    python3 swarm_run.py --job <JOB_FILE> [--dir DIR | --files-from LIST | --files F ...]
-
-Overrides (all optional — job file is the source of truth):
-    --model haiku|sonnet|opus   Override the job model.
-    --workers N                 Override concurrency.
-    --var KEY=VALUE             Inject or override a template variable.
-    --dir / --files-from / --files   Override the input source.
-
-Job file format (YAML frontmatter + Markdown prompt):
-----------------------------------------------------
----
-model: haiku
-workers: 10
-timeout: 120
-ext: [".md"]
-
-# Shell command run after each file. Placeholders:
-#   {file}           — relative path of input file
-#   {output}         — Claude output, shell-safe single-quoted
-#   {output_raw}     — Claude output unquoted (use carefully)
-#   {basename}       — filename without dir or extension
-#   {<var>}          — any key defined in vars: below
-post_cmd: >
-  python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py
-  --profile {profile} --file {file} --summary {output}
-
-# Optional: save each output as <basename>.txt in this directory
-output_dir: null
-
-vars:
-  profile: project
----
-
-Your prompt text goes here. This is sent verbatim to Claude for every input file.
-Claude receives the file content via stdin.
-----------------------------------------------------
+USAGE:
+    python3 swarm_run.py --job my_job.md [--resume] [--dry-run]
 """
 
+import os
 import re
 import sys
+import json
+import time
+import shlex
+import random
+import logging
 import argparse
 import subprocess
 import concurrent.futures
 from pathlib import Path
+from datetime import datetime
 
 try:
     import yaml
 except ImportError:
-    print("❌ PyYAML not installed. Run: pip install pyyaml")
+    print("❌ PyYAML not found. Run: pip install pyyaml")
     sys.exit(1)
 
+# ─── LOGGING ───────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("swarm")
 
-# ─── Job File Parsing ─────────────────────────────────────────────────────────
-
-def load_job(job_path: Path) -> tuple[dict, str]:
-    """
-    Parse a job file with YAML frontmatter.
-    Returns (config_dict, prompt_text).
-    """
-    text = job_path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
-        return {}, text.strip()
-    parts = text.split("---", 2)
-    if len(parts) < 3:
-        return {}, text.strip()
-    config = yaml.safe_load(parts[1]) or {}
-    prompt = parts[2].strip()
-    return config, prompt
-
-
-# ─── File Resolution ──────────────────────────────────────────────────────────
-
-def get_dir_files(directory: Path, extensions: list[str]) -> list[str]:
-    root = Path.cwd().resolve()
-    abs_dir = directory.resolve()
-    exts = set(e if e.startswith(".") else f".{e}" for e in extensions)
-    return [
-        str(f.relative_to(root))
-        for f in sorted(abs_dir.rglob("*"))
-        if f.is_file() and f.suffix.lower() in exts and not f.name.startswith(".")
-    ]
-
-
-def parse_task_list(task_md: Path) -> list[str]:
-    paths = []
-    for line in task_md.read_text(encoding="utf-8").splitlines():
-        m = re.match(r"- \[ \] `(.+)`", line)
-        if m:
-            paths.append(m.group(1))
-    return paths
-
-
-def parse_bundle(bundle_path: Path) -> list[str]:
-    """Read a context-bundler manifest (JSON or YAML) and return file paths.
-
-    Supports two formats:
-      JSON: {"files": [{"path": "...", "note": "..."}, ...]}
-      YAML: files:\n  - path: ...\n    note: ...
-    Also accepts a bare list of path strings.
-    """
-    import json
-    text = bundle_path.read_text(encoding="utf-8")
-    # Try JSON first
-    try:
-        data = json.loads(text)
-    except (json.JSONDecodeError, ValueError):
-        data = yaml.safe_load(text)
-
-    if data is None:
-        return []
-
-    # Normalise to a list of path strings
-    if isinstance(data, dict):
-        data = data.get("files", [])
-    if isinstance(data, list):
-        paths = []
-        for item in data:
-            if isinstance(item, str):
-                paths.append(item)
-            elif isinstance(item, dict):
-                p = item.get("path") or item.get("file")
-                if p:
-                    paths.append(str(p))
-        return paths
-    return []
-
-
-# ─── Shell Helpers ────────────────────────────────────────────────────────────
+# ─── HELPERS ────────────────────────────────────────────────────────────────
 
 def shell_quote(value: str) -> str:
+    """Safe shell quoting for templates."""
     return "'" + value.replace("'", "'\\''") + "'"
 
+def get_relative_path(path: Path) -> str:
+    root = Path.cwd().resolve()
+    try:
+        return str(path.resolve().relative_to(root))
+    except ValueError:
+        return str(path)
 
-# ─── Worker ───────────────────────────────────────────────────────────────────
+# ─── FILE DISCOVERY ─────────────────────────────────────────────────────────
 
-def run_worker(
+def resolve_files(args, config) -> list[str]:
+    """Find files from CLI args or Job config."""
+    exts = config.get("ext", [".md"])
+    exts = set(e if e.startswith(".") else f".{e}" for e in exts)
+
+    # 1. Explicit Files
+    if args.files:
+        return args.files
+    
+    # 2. Bundle Manifest (JSON/YAML)
+    bundle_path = args.bundle or config.get("bundle")
+    if bundle_path:
+        bundle_path = Path(bundle_path)
+        if bundle_path.exists():
+            text = bundle_path.read_text()
+            try:
+                data = json.loads(text)
+            except:
+                data = yaml.safe_load(text)
+            
+            if isinstance(data, dict): data = data.get("files", [])
+            paths = []
+            for item in data:
+                p = item.get("path") if isinstance(item, dict) else item
+                if p: paths.append(str(p))
+            return paths
+
+    # 3. Task Checklist
+    task_path = args.files_from or config.get("files_from")
+    if task_path:
+        task_path = Path(task_path)
+        if task_path.exists():
+            return [m.group(1) for m in re.finditer(r"- \[ \] `(.+)`", task_path.read_text())]
+
+    # 4. Directory Crawl
+    dir_path = args.dir or config.get("dir")
+    if dir_path:
+        dir_path = Path(dir_path)
+        if dir_path.exists():
+            return [
+                get_relative_path(f)
+                for f in sorted(dir_path.rglob("*"))
+                if f.is_file() and f.suffix.lower() in exts and not f.name.startswith(".")
+            ]
+
+    return []
+
+# ─── WORKER ENGINE ───────────────────────────────────────────────────────────
+
+def execute_worker(
     file_path: str,
     prompt: str,
     model: str,
-    post_cmd_template: str | None,
-    output_dir: Path | None,
+    job_config: dict,
     user_vars: dict,
-    timeout: int,
-) -> tuple[str, bool, str]:
-    # Read source file
+    dry_run: bool
+) -> dict:
+    """Processes a single file. Handles retry, skip, and post-cmd."""
+    start_time = time.time()
+    result = {
+        "file": file_path,
+        "success": False,
+        "output": None,
+        "error": None,
+        "skipped": False,
+        "retries": 0
+    }
+
+    if dry_run:
+        logger.info(f"  [DRY] {file_path}")
+        result["success"] = True
+        return result
+
+    # 1. Skip Check
+    check_cmd_tmpl = job_config.get("check_cmd")
+    if check_cmd_tmpl:
+        check_cmd = check_cmd_tmpl.format(file=file_path, **user_vars)
+        if subprocess.run(check_cmd, shell=True, capture_output=True).returncode == 0:
+            logger.info(f"  ⏩ {file_path} (already cached)")
+            result["success"] = True
+            result["skipped"] = True
+            return result
+
+    # 2. Read content
     try:
         content = Path(file_path).read_text(encoding="utf-8")
     except Exception as e:
-        return (file_path, False, f"Read error: {e}")
+        result["error"] = f"Read error: {e}"
+        return result
 
-    # Call Claude
-    result = subprocess.run(
-        ["claude", "--model", model, "-p", prompt],
-        input=content, text=True, capture_output=True, timeout=timeout,
-    )
-    if result.returncode != 0:
-        combined = ((result.stderr or "") + (result.stdout or "")).strip()
-        # Surface rate limit clearly instead of burying in 'unknown'
-        if "hit your limit" in combined or "rate limit" in combined.lower():
-            return (file_path, False, f"RATE_LIMIT: {combined[:200]}")
-        err = combined[:300] or "unknown"
-        return (file_path, False, f"Claude: {err}")
+    # 3. LLM Call with Retry
+    max_retries = job_config.get("max_retries", 3)
+    backoff = 2
+    
+    for attempt in range(max_retries + 1):
+        result["retries"] = attempt
+        proc = subprocess.run(
+            ["claude", "--model", model, "-p", prompt],
+            input=content, text=True, capture_output=True, timeout=job_config.get("timeout", 120)
+        )
+        
+        combined_out = (proc.stdout or "") + (proc.stderr or "")
+        
+        if proc.returncode == 0 and proc.stdout.strip():
+            # SUCCESS
+            result["output"] = proc.stdout.strip()
+            result["success"] = True
+            break
+        
+        # ERROR HANDLING
+        if "hit your limit" in combined_out.lower() or "rate limit" in combined_out.lower():
+            if attempt < max_retries:
+                wait = (backoff ** attempt) + random.uniform(0, 1)
+                logger.warning(f"  ⌛ {file_path}: Rate limit. Backing off {wait:.1f}s...")
+                time.sleep(wait)
+                continue
+            else:
+                result["error"] = "RATE_LIMIT_EXCEEDED"
+                break
+        
+        result["error"] = combined_out.strip()[:200]
+        if attempt < max_retries:
+            time.sleep(1)
+            continue
+        break
 
-    output = result.stdout.strip()
-    if not output:
-        return (file_path, False, "Empty output")
+    if not result["success"]:
+        return result
 
-    # Save to output_dir
-    if output_dir:
-        output_dir.mkdir(parents=True, exist_ok=True)
-        (output_dir / (Path(file_path).stem + ".txt")).write_text(output, encoding="utf-8")
-
-    # Run post-command
-    if post_cmd_template:
+    # 4. Post-Command
+    post_cmd_tmpl = job_config.get("post_cmd")
+    if post_cmd_tmpl and not result["skipped"]:
         subs = {
-            "file":       file_path,
-            "output":     shell_quote(output),
-            "output_raw": output,
-            "basename":   Path(file_path).stem,
-            **user_vars,
+            "file": file_path,
+            "output": shell_quote(result["output"]),
+            "output_raw": result["output"],
+            "basename": Path(file_path).stem,
+            **user_vars
         }
-        try:
-            cmd = post_cmd_template.format_map(subs)
-        except KeyError as e:
-            return (file_path, False, f"Missing template var: {e}")
-
+        cmd = post_cmd_tmpl.format_map(subs)
         pr = subprocess.run(cmd, shell=True, text=True, capture_output=True)
         if pr.returncode != 0:
-            err = (pr.stderr or pr.stdout or "unknown").strip()[:300]
-            return (file_path, False, f"Post-cmd: {err}")
+            result["success"] = False
+            result["error"] = (pr.stderr or pr.stdout or "post-cmd failed").strip()[:300]
+    
+    if result["success"]:
+        logger.info(f"  ✅ {file_path}")
+    else:
+        logger.error(f"  ❌ {file_path}: {result['error']}")
 
-    return (file_path, True, (output[:80] + "...") if len(output) > 80 else output)
+    return result
 
-
-# ─── Main ─────────────────────────────────────────────────────────────────────
+# ─── MAIN ───────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(
-        prog="swarm_run.py",
-        description="Job-file-driven parallel Claude CLI executor.",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-    )
-    parser.add_argument("--job", type=Path, required=True,
-        help="Path to the job file (.md with YAML frontmatter).")
-
-    # ── Input sources (mutually exclusive) ──
-    src = parser.add_mutually_exclusive_group()
-    src.add_argument("--dir", type=Path, help="Override: process all files in DIR.")
-    src.add_argument("--files-from", type=Path, help="Override: task checklist (.md).")
-    src.add_argument("--files", nargs="+", help="Override: explicit file list.")
-    src.add_argument("--bundle", type=Path, metavar="MANIFEST",
-        help="Override: context-bundler manifest file (JSON/YAML, files[].path).")
-
-    # Optional overrides
-    parser.add_argument("--model", help="Override job model (haiku/sonnet/opus).")
-    parser.add_argument("--workers", type=int, help="Override job worker count.")
-    parser.add_argument("--var", action="append", default=[], metavar="KEY=VALUE",
-        help="Override or add a template variable. Repeatable.")
-    parser.add_argument("--output-dir", type=Path,
-        help="Override: save each output as <basename>.txt here.")
-
+    parser = argparse.ArgumentParser(description="Professional Agent Swarm Runner")
+    parser.add_argument("--job", type=Path, required=True, help="Job file (.md)")
+    parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
+    parser.add_argument("--dry-run", action="store_true", help="Don't call LLM")
+    parser.add_argument("--dir", type=Path)
+    parser.add_argument("--files-from", type=Path)
+    parser.add_argument("--files", nargs="+")
+    parser.add_argument("--bundle", type=Path)
+    parser.add_argument("--workers", type=int)
+    parser.add_argument("--model", type=str)
+    parser.add_argument("--var", action="append", default=[])
     args = parser.parse_args()
 
-    # Load job
-    if not args.job.exists():
-        print(f"❌ Job file not found: {args.job}")
+    # Load Job
+    full_text = args.job.read_text()
+    if not full_text.startswith("---"): 
+        print("❌ Invalid job file (no YAML frontmatter)")
         sys.exit(1)
-    config, prompt = load_job(args.job)
+    
+    parts = full_text.split("---", 2)
+    job_config = yaml.safe_load(parts[1]) or {}
+    prompt = parts[2].strip()
 
-    if not prompt:
-        print(f"❌ Job file has no prompt body: {args.job}")
-        sys.exit(1)
+    # Checkpoint logic
+    checkpoint_path = Path(f".swarm_state_{args.job.stem}.json")
+    state = {"completed": [], "failed": {}}
+    if args.resume and checkpoint_path.exists():
+        state = json.loads(checkpoint_path.read_text())
+        logger.info(f"🔄 Resuming from checkpoint: {len(state['completed'])} items done.")
 
-    # Merge config → CLI overrides
-    model       = args.model   or config.get("model",   "haiku")
-    workers     = args.workers or config.get("workers", 10)
-    timeout     = config.get("timeout", 120)
-    ext         = config.get("ext", [".md"])
-    post_cmd    = config.get("post_cmd")
-    raw_out_dir = args.output_dir or (Path(config["output_dir"]) if config.get("output_dir") else None)
-    base_vars   = config.get("vars", {}) or {}
+    # Overrides
+    workers = args.workers or job_config.get("workers", 5)
+    model = args.model or job_config.get("model", "haiku")
+    user_vars = job_config.get("vars", {}) or {}
+    for v in args.var:
+        k, val = v.split("=", 1)
+        user_vars[k.strip()] = val.strip()
 
-    # --var overrides
-    for item in args.var:
-        if "=" not in item:
-            print(f"❌ --var must be KEY=VALUE, got: {item!r}")
-            sys.exit(1)
-        k, v = item.split("=", 1)
-        base_vars[k.strip()] = v.strip()
+    # Resolve Files
+    all_files = resolve_files(args, job_config)
+    pending = [f for f in all_files if f not in state["completed"]]
 
-    # Resolve files
-    if args.dir:
-        files = get_dir_files(args.dir, ext)
-        src_desc = str(args.dir)
-    elif args.files_from:
-        files = parse_task_list(args.files_from)
-        src_desc = str(args.files_from)
-    elif args.files:
-        files = args.files
-        src_desc = f"{len(args.files)} explicit files"
-    elif args.bundle:
-        files = parse_bundle(args.bundle)
-        src_desc = f"bundle:{args.bundle}"
-    elif config.get("dir"):
-        files = get_dir_files(Path(config["dir"]), ext)
-        src_desc = config["dir"]
-    elif config.get("files_from"):
-        files = parse_task_list(Path(config["files_from"]))
-        src_desc = config["files_from"]
-    elif config.get("bundle"):
-        files = parse_bundle(Path(config["bundle"]))
-        src_desc = f"bundle:{config['bundle']}"
-    else:
-        print("❌ No input source. Add --dir, --files-from, --files, or --bundle (or set in job YAML).")
-        sys.exit(1)
+    if not pending:
+        logger.info("✨ Everything complete. Nothing to do.")
+        return
 
-    if not files:
-        print("No files to process. Exiting.")
-        sys.exit(0)
-
-    print(f"🚀 Job: {args.job.name}")
-    print(f"   Source:  {src_desc} ({len(files)} files)")
-    print(f"   Model:   {model}  |  Workers: {workers}  |  Timeout: {timeout}s")
-    if post_cmd:
-        print(f"   Post:    {str(post_cmd).strip()[:90]}")
-    if base_vars:
-        print(f"   Vars:    {base_vars}")
+    logger.info(f"🚀 Starting Swarm: {len(pending)} pending items ({len(all_files)} total)")
+    logger.info(f"   Model: {model} | Workers: {workers} | Dry-run: {args.dry_run}")
     print("-" * 70)
 
-    success, failed = 0, []
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {
-            pool.submit(run_worker, f, prompt, model,
-                        post_cmd, raw_out_dir, base_vars, timeout): f
-            for f in files
-        }
-        for future in concurrent.futures.as_completed(futures):
-            fp, ok, msg = future.result()
-            if ok:
-                success += 1
-                print(f"  ✅ {fp}")
-            else:
-                failed.append((fp, msg))
-                print(f"  ❌ {fp}: {msg}")
-
-    print("-" * 70)
-    print(f"Done. ✅ {success} | ❌ {len(failed)}")
-    if failed:
-        print("\nFailed:")
-        for fp, msg in failed:
-            print(f"  {fp}: {msg}")
+    results = []
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+            futures = {
+                pool.submit(execute_worker, f, prompt, model, job_config, user_vars, args.dry_run): f 
+                for f in pending
+            }
+            for future in concurrent.futures.as_completed(futures):
+                res = future.result()
+                results.append(res)
+                if res["success"]:
+                    state["completed"].append(res["file"])
+                else:
+                    state["failed"][res["file"]] = res["error"]
+                
+                # Checkpoint every 5 files
+                if len(results) % 5 == 0:
+                    checkpoint_path.write_text(json.dumps(state, indent=2))
+    except KeyboardInterrupt:
+        logger.warning("\n⚠️ Interrupted. Saving state...")
+    finally:
+        checkpoint_path.write_text(json.dumps(state, indent=2))
+        
+        # Summary
+        success_count = sum(1 for r in results if r["success"])
+        fail_count = sum(1 for r in results if not r["success"])
+        logger.info("-" * 70)
+        logger.info(f"🏁 DONE. Success: {success_count} | Failed: {fail_count}")
+        
+    if fail_count > 0:
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
