@@ -71,7 +71,7 @@ Delegate the defined work to the `orchestrator` skill (`plugins/agent-loops/skil
 -   **Rule 9**: **MUST NOT INCLUDE BROKEN/UNVERIFIED LINKS.** Mark unverified sources as `[NEEDS VERIFICATION]` and broken as `[BROKEN - 404]`.
 
 ## 4. JIT Context Strategy
--   The fleet is vast. Analyze your **Intent**. Ask Guardian for the specific **Cluster**.
+-   The plugin ecosystem is vast. Analyze your **Intent**. Search the semantic cache or vector DB for the specific script or skill you need.
 
 ## 5. The Lineage Doctrine (ADR 088)
 

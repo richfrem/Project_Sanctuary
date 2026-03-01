@@ -404,23 +404,22 @@ Failure to confirm this is a **Critical Protocol Breach**.
 
 ---
 
-### 7.3 Fleet Routing Doctrine (Iron Root)
+### 7.3 Agent Skills Routing Doctrine (Iron Root)
 
 > [!NOTE]
-> Adhere to the Fleet of 8 architecture. Route tools to correct clusters.
+> Adhere to the Agent Skills architecture. Route tasks to the correct local plugins.
 
-| Domain | Cluster | Tools |
+| Domain | Plugin Ecosystem | Example Skills/Tools |
 |:-------|:--------|:------|
-| Memory & Learning | `sanctuary-cortex` | `cortex_query`, `cortex_learning_debrief`, `cortex_capture_snapshot` |
-| Chronicles, ADRs, Tasks | `sanctuary-domain` | `adr-*`, `chronicle-*`, `task-*` |
-| Version Control | `sanctuary-git` | `git-*` |
-| File Operations | `sanctuary-filesystem` | `code-read`, `code-write`, `code-list-files` |
-| HTTP Requests | `sanctuary-network` | `fetch-url`, `check-site-status` |
+| Memory & Learning | `sanctuary-guardian`, `rlm-factory` | `query_cache.py`, `learning_debrief.py`, `capture_snapshot.py` |
+| Chronicles, ADRs, Tasks | `chronicle-manager`, `adr-manager` | `chronicle_cli.py`, `next_number.py` |
+| Orchestration | `agent-loops`, `spec-kitty-plugin` | `agent_orchestrator.py`, `tasks_cli.py` |
+| Semantic Search | `vector-db`, `vector-db-agent` | `query.py`, `ingest.py` |
 
 **Routing Rules:**
-- All tool requests flow through `sanctuary_gateway`
-- Use exact slugs from `fleet_registry.json`
-- RAG/Learning operations → `sanctuary-cortex-*`
+- All tool requests flow through native python execution paths
+- Use exact script tool locations discovered via semantic cache
+- RAG/Learning operations → `sanctuary-guardian` or `rlm-factory` scripts
 - Git operations must pass Protocol 101/128 safety gates
 
 ---

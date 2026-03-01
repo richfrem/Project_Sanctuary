@@ -81,8 +81,8 @@ python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/le
 python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py \
   --profile project --file <modified_file> --summary "<dense summary>"
 
-# Optional: Ingest Changes into local vector DB
-python3 plugins/vector-db/skills/vector-db/scripts/ingest.py --incremental --hours 24
+# Optional: Ingest Changes into local vector DB (docs + source code)
+python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --since 24 --profile knowledge
 ```
 
 > **Cross-Agent Continuity**: This system exists for YOU -- whether you are Claude, Copilot,
@@ -117,4 +117,4 @@ python3 plugins/agent-loops/skills/orchestrator/scripts/agent_orchestrator.py en
 | `plugins/context-bundler/scripts/bundle.py` | VI | Called by capture_snapshot to produce bundle |
 | `plugins/env-helper/scripts/env_helper.py` | VII | Resolves HF_TOKEN / HF_USERNAME |
 | `plugins/rlm-factory/` | I, VI | RLM cache read (boot) and synthesis (seal) |
-| `plugins/vector-db/skills/vector-db/scripts/ingest.py` | VIII | Vector Database embeddings update for semantic search capabilities |
+| `plugins/vector-db/skills/vector-db-agent/scripts/ingest.py` | VIII | Vector Database embeddings update for semantic search capabilities |

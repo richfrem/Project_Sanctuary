@@ -25,7 +25,7 @@ This skill maps the generic `memory-management` tiered architecture to Project S
 │  Backend: rlm-factory → rlm_summary_cache.json          │
 │  Backend: rlm-factory → rlm_tool_cache.json             │
 ├─────────────────────────────────────────────────────────┤
-│  VECTOR STORE (semantic search, loaded on demand)       │
+│  VECTOR STORE (semantic search + source code parsing)   │
 │  Backend: vector-db → ChromaDB on port 8110             │
 │  Profile: vector_profiles.json                          │
 ├─────────────────────────────────────────────────────────┤
@@ -110,15 +110,17 @@ st['failed'] = {}
 ## Tier 3: Vector Store (ChromaDB)
 
 **Plugin**: `vector-db`
-**Config**: `vector_profiles.json`
-**Server**: ChromaDB on `localhost:8110`
+**Config**: `vector_profiles.json` (pointing to `vector_knowledge_manifest.json`)
+**Server**: ChromaDB on `localhost:8110` (Native Python Server)
+
+The Vector DB provides **Parent-Child semantic retrieval**, returning full documents/files based on tiny 400-char conceptual embeddings. By combining scopes, it mirrors RLM coverage but extends it into deep code analysis using AST parsing.
 
 | Operation | Command |
 |---|---|
-| Query | `python plugins/vector-db/skills/vector-db-agent/scripts/query.py "semantic question"` |
-| Ingest | `python plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --profile default` |
+| Query | `python plugins/vector-db/skills/vector-db-agent/scripts/query.py "semantic question" --profile knowledge` |
+| Ingest | `python plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --profile knowledge` (Parses `.py`/`.js` via `ingest_code_shim.py`) |
 | Cleanup | `python plugins/vector-db/skills/vector-db-agent/scripts/cleanup.py` |
-| Launch server | Use `ollama-launch` skill equivalent for ChromaDB |
+| Launch server | `chroma run --host 127.0.0.1 --port 8110 --path .vector_data &` |
 
 ## Tier 4: Deep Storage (Filesystem)
 

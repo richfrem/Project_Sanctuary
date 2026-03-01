@@ -5,7 +5,7 @@ chronicle_manager.py — Living Chronicle Manager
 
 Purpose:
     Create, list, search, and view Chronicle entries (project journal).
-    Consolidates logic from mcp_servers/chronicle/ into a standalone CLI.
+    Consolidates chronicle logic into a standalone CLI.
 
 Layer: Plugin / Chronicle-Manager
 

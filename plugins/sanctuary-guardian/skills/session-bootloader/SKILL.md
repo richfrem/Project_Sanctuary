@@ -66,11 +66,19 @@ python3 plugins/sanctuary-guardian/scripts/learning_debrief.py --hours 24
 python3 plugins/sanctuary-guardian/scripts/guardian_wakeup.py --mode TELEMETRY
 ```
 
-**RLM Cache Orientation**: Before diving into any task, query the semantic cache to get instant context on relevant files:
+**Semantic Search Orientation**: Before diving into any task, query the memory banks to get instant context on relevant files and code:
+
+**1. RLM Cache (Fast lookup for file summaries & tool usage)**
 ```bash
-# Search for relevant tools or docs by keyword (no Ollama needed, instant)
+# Search for relevant tools or docs by keyword (instant, no Ollama needed)
 python3 plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile project "keyword"
 python3 plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile tools "script_name"
+```
+
+**2. Vector DB (Deep concept & source code search)**
+```bash
+# Search across docs, ADRs, protocols, and actual Python/JS source code
+python3 plugins/vector-db/skills/vector-db-agent/scripts/query.py "How does X work?" --profile knowledge
 ```
 
 ### 2. The Constitutional Gate
