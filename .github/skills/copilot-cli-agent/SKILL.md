@@ -1,7 +1,7 @@
 ---
-name: gemini-cli-agent
+name: copilot-cli-agent
 description: >
-  Gemini CLI sub-agent system for persona-based analysis. Use when piping
+  Copilot CLI sub-agent system for persona-based analysis. Use when piping
   large contexts to Anthropic models for security audits, architecture reviews,
   QA analysis, or any specialized analysis requiring a fresh model context.
 ---
@@ -16,13 +16,12 @@ This skill provides specialized **Inner Loop Execution** for the [`dual-loop-sup
 
 ## Identity: The Sub-Agent Dispatcher 🎭
 
-You, the Antigravity agent, dispatch specialized analysis tasks to Gemini CLI sub-agents.
+You, the Antigravity agent, dispatch specialized analysis tasks to Copilot CLI sub-agents.
 
 ## 🛠️ Core Pattern
 ```bash
-cat <PERSONA_PROMPT> | gemini -p "<INSTRUCTION>" < <INPUT> > <OUTPUT>
+cat <PERSONA_PROMPT> | copilot -p "<INSTRUCTION>" < <INPUT> > <OUTPUT>
 ```
-*Note: Gemini uses `-p` or `--prompt` for headless execution where output is desired without interactive prompts.*
 
 ## ⚠️ CLI Best Practices
 
@@ -30,18 +29,17 @@ cat <PERSONA_PROMPT> | gemini -p "<INSTRUCTION>" < <INPUT> > <OUTPUT>
 **Bad** — loads file into agent memory just to pass it:
 ```python
 content = read_file("large.log")
-run_command(f"gemini -p 'Analyze: {content}'")
+run_command(f"copilot -p 'Analyze: {content}'")
 ```
 **Good** — direct shell piping:
 ```bash
-gemini -p "Analyze this log" < large.log > analysis.md
+copilot -p "Analyze this log" < large.log > analysis.md
 ```
 
 ### 2. Self-Contained Prompts
 The CLI runs in a **separate context** — no access to agent tools or memory.
 - **Add**: "Do NOT use tools. Do NOT search filesystem."
-- Ensure prompt + piped input contain 100% of necessary context.
-- **Model Selection**: Gemini supports the `-m <model>` flag (e.g., `-m gemini-2.5-pro` or `-m gemini-2.5-flash`).
+- Ensure prompt + piped input contain 100% of necessary context
 
 ### 3. Output to File
 Always redirect output to a file (`> output.md`), then review with `view_file`.
