@@ -495,8 +495,6 @@ This is intentional and correct - it ensures a single source of truth for projec
 - ✅ **Quality**: Follow secure, tested, documented practices.  
 - 📝 **Git**: Commit cleanly with clear messages.
 <!-- END RULES FROM PLUGIN: spec-kitty -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -522,7 +520,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
-
 
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
@@ -547,8 +544,6 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -574,7 +569,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
-
 
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
@@ -599,8 +593,6 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -626,7 +618,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
-
 
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
@@ -651,8 +642,6 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -678,7 +667,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
-
 
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management
@@ -703,8 +691,6 @@ globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
 5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 <!-- END RULES FROM PLUGIN: dependency-management -->
-
-
 <!-- BEGIN RULES FROM PLUGIN: coding-conventions -->
 # SHARED RULES FROM coding-conventions
 
@@ -730,7 +716,6 @@ globs: ["*.py", "*.ts", "*.js", "*.cs"]
 7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 <!-- END RULES FROM PLUGIN: coding-conventions -->
-
 
 <!-- BEGIN RULES FROM PLUGIN: dependency-management -->
 # SHARED RULES FROM dependency-management

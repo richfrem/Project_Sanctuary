@@ -59,14 +59,53 @@ Loaded in order at every session start:
 ## Tier 2: Semantic Cache (RLM Factory)
 
 **Plugin**: `rlm-factory`
-**Config**: `rlm_profiles.json`
+**Config**: `.agent/learning/rlm_profiles.json`
 
-| Cache | Purpose | Query Command |
-|---|---|---|
-| `rlm_summary_cache.json` | Code/doc summaries | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py "keyword"` |
-| `rlm_tool_cache.json` | Tool/script discovery | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --type tool "keyword"` |
+| Cache | Profile | Purpose | Query Command |
+|---|---|---|---|
+| `rlm_summary_cache.json` | `project` | Chronicle/doc summaries | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile project "keyword"` |
+| `rlm_tool_cache.json` | `tools` | Tool/script discovery | `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile tools "keyword"` |
 
 **Refresh**: `/rlm-factory_gap-fill` (Agent injection) OR `python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py` (Local Ollama batch)
+
+### Gap-Fill: Zero-Cost Bulk Strategy
+
+When hundreds of files are uncached, use the **Copilot swarm** (free) rather than Ollama or paid Claude:
+
+```bash
+# Always use source ~/.zshrc -- NOT 'gh auth token' (lacks Copilot scope)
+source ~/.zshrc
+python3 plugins/agent-loops/skills/agent-swarm/scripts/swarm_run.py \
+  --engine copilot \
+  --job plugins/rlm-factory/resources/jobs/rlm_chronicle.job.md \
+  --files-from rlm_distill_tasks_project.md \
+  --resume --workers 2   # max 2 workers for Copilot rate limits
+```
+
+For higher throughput, use `--engine gemini --workers 5` (also free tier).
+
+### Cache Safety: Concurrent Write Rule
+
+`inject_summary.py` uses `fcntl.flock` (exclusive OS file lock) to serialize concurrent writes.
+**Never** run parallel cache writers without this lock -- two workers loading, then overwriting the
+same JSON will silently destroy each other's entries (race condition).
+
+### Cache Recovery: Checkpoint Reconciliation
+
+If a batch run is interrupted and the cache is partially lost, reconcile before resuming:
+
+```python
+# 1. Restore from best git snapshot:
+git show <commit>:.agent/learning/rlm_summary_cache.json > /tmp/git_cache.json
+# Merge: git as base, current as override
+merged = {**git_cache, **current_cache}
+
+# 2. Remove phantom checkpoint entries not in the real cache:
+st['completed'] = [f for f in st['completed'] if f in merged.keys()]
+st['failed'] = {}
+
+# 3. Re-run with --resume -- it will re-process only the missing files
+```
 
 ## Tier 3: Vector Store (ChromaDB)
 

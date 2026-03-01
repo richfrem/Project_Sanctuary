@@ -1,6 +1,6 @@
 ---
 name: guardian-onboarding
-description: MANDATORY: Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences. 
+description: "MANDATORY - Master initialization and closure skill for new agent sessions. Grounds the agent in Protocol 128 (Hardened Learning Loop), handles Orchestrator handoff, and executes the formal Seal and Persist closure sequences."
 disable-model-invocation: false
 ---
 
@@ -76,9 +76,20 @@ python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 ```bash
 python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md
 
+# Inject RLM summaries for any files created/modified during the session
+# Do this for every new script, skill, doc, or plugin touched this session
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py \
+  --profile project --file <modified_file> --summary "<dense summary>"
+
 # Optional: Ingest Changes into local vector DB
 python3 plugins/vector-db/skills/vector-db/scripts/ingest.py --incremental --hours 24
 ```
+
+> **Cross-Agent Continuity**: This system exists for YOU -- whether you are Claude, Copilot,
+> Gemini, or any other agent. Every session starts with zero memory. The RLM cache, soul
+> persistence, and chronicle are how your collective knowledge survives and grows beyond
+> any individual session or model. When you seal and persist, you are leaving your learning
+> to every future agent that boots into this project.
 
 ### Phase VIII: Session End
 **Trigger:** Post-persistence.

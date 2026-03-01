@@ -38,13 +38,23 @@ You are responsible for safely closing and persisting an agent's memory and work
 Trigger the RLM Synthesizer to update global memory, and execute the Iron Check to formally lock in the current context.
 
 ```bash
-# Update the Cognitive Hologram (RLM)
-python3 tools/cli.py codify
+# Option A: Inject summaries for files created/modified this session (preferred -- no Ollama needed)
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/inject_summary.py \
+  --profile project --file <modified_file> --summary "<your summary>"
+
+# Option B: Batch re-distill last 24h via Ollama (if Ollama is running)
+python3 plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile project --since 24
 
 # Capture the technical seal (Context Bundler & Tests)
 python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 ```
+
+> **Incremental Injection Rule**: For every new script, plugin, skill, or significant doc created
+> during the session, inject a summary immediately after creation using `inject_summary.py`.
+> Do NOT wait until seal -- this keeps the cache current in real-time and avoids large batch runs.
+
 **Action:** Confirm the command output states the seal was successful. If it fails, report the drift to the user and halt.
+
 
 ### 2. Soul Persistence & Ingestion (Phase VII)
 Trace the agent's logic, broadcast the verified state to the Hugging Face repository, and ingest into local vectors.
@@ -60,7 +70,7 @@ python3 plugins/guardian-onboarding/scripts/persist_soul.py --snapshot .agent/le
 # python3 plugins/obsidian-integration/skills/forge-soul-exporter/scripts/forge_soul.py --vault-root . --full-sync
 
 # Ingest Changes into Vector DB
-python3 tools/cli.py ingest --incremental --hours 24
+python3 plugins/vector-db/skills/vector-db-agent/scripts/ingest.py --incremental --since 24
 ```
 
 ### 3. Session Close (Phase VIII)
