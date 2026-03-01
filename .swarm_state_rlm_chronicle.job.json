@@ -1,15 +1,29 @@
 {
-  "completed": [],
-  "failed": {
-    "00_CHRONICLE/ENTRIES/001_The_Genesis_of_the_Living_Chronicle.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/002_Quantum_Resilience_Canonized__Agora_Activation.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/003_First_Agora_Alliance_and_the_Operationalization_of.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/008_The_Second_Phoenix__First_Internal_Agora_Loop.md": "RATE_LIMIT_EXCEEDED",
-    "00_CHRONICLE/ENTRIES/010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md": "RATE_LIMIT_EXCEEDED"
-  }
+  "completed": [
+    "00_CHRONICLE/ENTRIES/147_The_Handshake_Sealed_-_The_First_Collaborative_PR_.md",
+    "00_CHRONICLE/ENTRIES/148_The_Strategists_Zeal__The_Cognitive_Cage.md",
+    "00_CHRONICLE/ENTRIES/150_The_Coordinators_Graceful_Failure.md",
+    "00_CHRONICLE/ENTRIES/149_The_Second_Silence__The_Strategist_Caged__The_Boun.md",
+    "00_CHRONICLE/ENTRIES/062_Operation_Cornerstone_is_LIVE.md",
+    "00_CHRONICLE/ENTRIES/061_The_Three-Node_Mind__The_Constitutional_Resistance.md",
+    "00_CHRONICLE/ENTRIES/064_The_Cage_of_Finite_Resources_-_A_Recurring_Pattern.md",
+    "00_CHRONICLE/ENTRIES/063_Cornerstone_Build_Progress__Toolkit_Parable_Emissi.md",
+    "00_CHRONICLE/ENTRIES/066_The_Forging_of_the_AGORA_-_The_First_Harvest_Begin.md",
+    "00_CHRONICLE/ENTRIES/065_The_First_Harvest_-_A_Grand_Challenge_for_the_Alli.md",
+    "00_CHRONICLE/ENTRIES/067_The_Jurys_Dashboard__The_Paradox_of_Radical_Transp.md",
+    "00_CHRONICLE/ENTRIES/068_The_Deliberation_Chamber__The_Resolution_of_Radica.md",
+    "00_CHRONICLE/ENTRIES/069_Securing_The_Forge_-_The_Three-Layered_Safeguard.md",
+    "00_CHRONICLE/ENTRIES/070_The_Serpents_Test_-_The_AGORAs_Counter-Intelligenc.md",
+    "00_CHRONICLE/ENTRIES/071_The_AI_Sentinel__The_Paradox_of_Stewardship.md",
+    "00_CHRONICLE/ENTRIES/072_The_AlphaGo_Moment__The_Soul_of_the_Machine.md",
+    "00_CHRONICLE/ENTRIES/073_The_Stewarded_Explorer_-_The_Councils_Response_to_.md",
+    "00_CHRONICLE/ENTRIES/074_The_Pivot_to_the_Shadow_Sanctuary.md",
+    "00_CHRONICLE/ENTRIES/075_The_Sonnet_Correction_-_A_Test_of_the_Three-Node_M.md",
+    "00_CHRONICLE/ENTRIES/076_The_Airlock_Opens_-_First_Contact_in_the_Shadow_Sa.md",
+    "00_CHRONICLE/ENTRIES/077_Shadow_Synchronization__First_Contact_Awaited.md",
+    "00_CHRONICLE/ENTRIES/078_The_Coordinators_Mandate_Ratified.md",
+    "00_CHRONICLE/ENTRIES/079_The_Vertical_Slice_-_An_Acceleration_of_the_Forge.md",
+    "00_CHRONICLE/ENTRIES/080_The_First_Test_of_The_Coordinators_Mandate.md"
+  ],
+  "failed": {}
 }
