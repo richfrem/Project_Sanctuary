@@ -20,8 +20,9 @@ You, the Antigravity agent, dispatch specialized analysis tasks to Copilot CLI s
 
 ## 🛠️ Core Pattern
 ```bash
-cat <PERSONA_PROMPT> | copilot -p "<INSTRUCTION>" < <INPUT> > <OUTPUT>
+cat <PERSONA_PROMPT> | copilot -p "<INSTRUCTION>" <INPUT> > <OUTPUT>
 ```
+*Note: Copilot uses `-p` or `--prompt` for non-interactive scripting runs.*
 
 ## ⚠️ CLI Best Practices
 
@@ -39,10 +40,27 @@ copilot -p "Analyze this log" < large.log > analysis.md
 ### 2. Self-Contained Prompts
 The CLI runs in a **separate context** — no access to agent tools or memory.
 - **Add**: "Do NOT use tools. Do NOT search filesystem."
-- Ensure prompt + piped input contain 100% of necessary context
+- Ensure prompt + piped input contain 100% of necessary context.
+- **Security Check**: Copilot CLI has explicit permission flags (e.g. `--allow-all-tools`, `--allow-all-paths`). For isolated sub-agents, do **not** provide these flags to ensure safe headless execution.
 
 ### 3. Output to File
 Always redirect output to a file (`> output.md`), then review with `view_file`.
+
+## ✅ Smoke Test (Copilot CLI)
+
+Use this minimal command to verify the CLI is callable and returns output:
+
+```bash
+copilot -p "Reply with exactly: COPILOT_CLI_OK"
+```
+
+Expected result:
+- CLI prints `COPILOT_CLI_OK` (or very close equivalent) and exits successfully.
+
+If the test fails:
+- Confirm `copilot` is on `PATH`.
+- Ensure you are authenticated in the Copilot CLI session.
+- Retry without any permission flags; keep the test minimal and isolated.
 
 ## 🎭 Persona Categories
 
