@@ -97,6 +97,7 @@ permissions:
 
 ### Common Action Patterns
 
+{% raw %}
 ```yaml
 # Checkout
 - uses: actions/checkout@v4
@@ -123,3 +124,4 @@ permissions:
   with:
     files: dist/*
 ```
+{% endraw %}
