@@ -172,6 +172,7 @@ def format_record(note: Dict, body_repo: str) -> Dict[str, Any]:
         "semantic_entropy": metadata.get("semantic_entropy", 0.5),
         "alignment_score": metadata.get("alignment_score", 0.85),
         "stability_class": metadata.get("stability_class", "STABLE"),
+        "execution_pattern_used": metadata.get("execution_pattern", "UNKNOWN"),
         "adr_version": "081",
         "content": content,
         "source_file": rel_path

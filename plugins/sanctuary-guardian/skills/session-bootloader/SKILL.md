@@ -62,9 +62,14 @@ python3 plugins/sanctuary-guardian/scripts/learning_debrief.py --hours 24
 **Action:** Read the output `learning_package_snapshot.md` to establish the Truth Anchor.
 
 ```bash
-# Run the Guardian Integrity Check
+# Run the Guardian Integrity Check (includes Pre-Flight Brief from Vector DB)
 python3 plugins/sanctuary-guardian/scripts/guardian_wakeup.py --mode TELEMETRY
 ```
+
+> **Pre-Flight Brief**: Before delegating any trigger to the `agent-loops` Orchestrator,
+> the Guardian generates a concise "Pre-Flight Brief" by semantically searching the Obsidian vault
+> via the Vector DB, injecting only the top 3 most relevant historical memories.
+> This optimizes token usage across agent runs.
 
 **Semantic Search Orientation**: Before diving into any task, query the memory banks to get instant context on relevant files and code:
 
@@ -127,11 +132,16 @@ The `session-closure` skill manages the full Protocol 128 closure:
 
 | Phase | What It Does | Plugin Used |
 |---|---|---|
-| **Seal** | Snapshot learning state | `sanctuary-guardian/capture_snapshot.py` |
+| **Seal** | Snapshot learning state, archive scratchpads | `sanctuary-guardian/capture_snapshot.py` |
 | **Persist** | Upload soul to HuggingFace | `huggingface-utils` via `sanctuary-soul-persistence` |
 | **Retrospective** | Self-assessment and improvement | `chronicle-manager` |
 | **Ingest** | Update semantic indices | `rlm-factory` + `vector-db` |
 | **End** | Git commit, cleanup | `spec-kitty-plugin` (merge if WPs) |
+
+> **Pattern Meta-Tracking**: When the Guardian receives final artifacts from the Orchestrator,
+> it logs `execution_pattern_used` (e.g., `agent-swarm`, `dual-loop`, `learning-loop`) to both
+> the RLM cache (`inject_summary.py --execution-pattern`) and the Soul Ledger (`forge_soul.py`)
+> to build long-term meta-intelligence about which patterns work best for which task types.
 
 ---
 

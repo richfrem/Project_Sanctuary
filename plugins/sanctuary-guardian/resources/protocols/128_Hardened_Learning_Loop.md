@@ -10,6 +10,12 @@ No cognitive update may be persisted to the long-term Cortex without meeting the
 2. **Discrepancy Reporting**: The tool must highlight any gap between the agent's internal claims and the statistical reality on disk.
 3. **HITL Review**: A human steward must review the targeted "Red Team Packet" (Briefing, Manifest, Snapshot) before approval.
 
+## 2A. Pre-Flight Brief (Token Optimization)
+Before delegating a trigger to the Orchestrator, the Guardian generates a concise "Pre-Flight Brief":
+1. **Vector DB Semantic Search**: Query the Obsidian vault via `query.py --limit 3 --profile knowledge`.
+2. **Top-3 Injection**: Only the 3 most relevant historical memories are injected into the agent context.
+3. **Purpose**: Optimize token usage by providing targeted context instead of loading entire memory banks.
+
 ## 3. The Integrity Wakeup (Bootloader)
 Every agent session must initialize via the Protocol 128 Bootloader:
 1. **Semantic HMAC Check**: Validate the integrity of critical caches using whitespace-insensitive JSON canonicalization.
@@ -72,6 +78,8 @@ Once the Work Packages are defined by Spec-Kitty, tasks are routed by the `orche
 Regardless of the chosen execution pattern, **all** loops MUST converge back to the unified closure sequence managed by the Orchestrator and Guardian tools:
 1. **Phase V: Orchestrator Retrospective** (`agent_orchestrator.py retro`)
 2. **Phase VI: The Technical Seal** (`session-closure` skill → `python3 plugins/sanctuary-guardian/scripts/capture_snapshot.py --type seal`)
+   - **Scratchpad Archiving**: Extract ephemeral Shared Session State, synthesize findings, persist to Obsidian vault and Vector DB, then wipe.
+   - **Pattern Meta-Tracking**: Log `execution_pattern_used` (e.g., `learning-loop`, `dual-loop`, `agent-swarm`) to RLM cache and Soul Ledger.
 3. **Phase VII: Soul Persistence** (`session-closure` skill → `python3 plugins/sanctuary-guardian/scripts/persist_soul.py --snapshot .agent/learning/learning_package_snapshot.md`)
 4. **Phase VIII: Session Closure** (`agent_orchestrator.py end` with Git Ops)
 
