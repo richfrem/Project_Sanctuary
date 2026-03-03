@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 """
 Guardian Wakeup Script
-======================
-Generates the Guardian boot digest (Protocol 114) for session initialization.
-Generates the Guardian boot digest (Protocol 114) for session initialization.
-Extracted for local execution within the Agent Skills architecture.
+=====================================
+
+Purpose:
+    Generates the Guardian boot digest (Protocol 114) for session initialization.
+    Includes a Pre-Flight Brief via Vector DB semantic search of the Obsidian vault,
+    injecting only the top 3 most relevant historical memories to optimize token usage.
+
+Layer: Retrieve
+
+Usage:
+    python plugins/sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
 """
 
 import sys
@@ -39,6 +46,34 @@ def get_tactical_priorities(project_root: Path):
         if tasks: return f"* Found {len(tasks)} active tasks."
     return "* No active tasks found."
 
+def get_preflight_brief(project_root: Path) -> str:
+    """Generate a Pre-Flight Brief via Vector DB semantic search of the Obsidian vault."""
+    scan_dir = project_root / "tasks" / "in-progress"
+    query = "Active project context and current tasks"
+    if scan_dir.exists():
+        tasks = list(scan_dir.glob("*.md"))
+        if tasks: 
+            query = f"Current task context: {tasks[0].name}"
+
+    query_script = project_root / "plugins" / "vector-db" / "skills" / "vector-db-agent" / "scripts" / "query.py"
+    if not query_script.exists():
+        return "* Vector DB query script unavailable."
+        
+    try:
+        result = subprocess.run(
+            [sys.executable, str(query_script), query, "--limit", "3", "--profile", "knowledge"],
+            capture_output=True, text=True, timeout=15
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            lines = result.stdout.strip().split('\n')
+            filtered = [line for line in lines if not line.startswith('🔍 Searching Vector Index')]
+            return "\n".join(filtered).strip()
+    except Exception as e:
+        logger.warning(f"Error retrieving Pre-Flight Brief: {e}")
+        return f"* Error retrieving Pre-Flight Brief: {e}"
+        
+    return "* No historical memories retrieved."
+
 def main():
     parser = argparse.ArgumentParser(description="Generate Guardian Boot Digest (Protocol 114)")
     parser.add_argument("--mode", type=str, default="HOLISTIC", help="Wakeup mode")
@@ -60,6 +95,9 @@ def main():
         "",
         "## II. Tactical Priorities",
         get_tactical_priorities(project_root),
+        "",
+        "## III. Pre-Flight Brief (Vector DB Memory)",
+        get_preflight_brief(project_root),
         "",
     ]
     
@@ -86,7 +124,7 @@ def main():
             else:
                 all_files = manifest_data
             
-            digest_lines.append("## III. Context Files (from guardian_manifest.json)")
+            digest_lines.append("## IV. Context Files (from guardian_manifest.json)")
             digest_lines.append(f"*Loaded {len(all_files)} files.*")
             digest_lines.append("")
             
