@@ -1,7 +1,8 @@
 # ADR-036: Workflow Architect (Python Orchestrator)
 
 ## Status
-Superseded by [ADR-096](096_pure_python_orchestration.md)
+Superseded by [ADR-096](096_pure_python_orchestration.md) and further superseded by the **Pure Plugin Architecture** (2026-03-03).
+All `tools/cli.py` and `scripts/bash/` references in this ADR are now **DEPRECATED**.
 
 ## Context
 The project utilizes a "Hybrid Workflow" model. Agents originally struggled with abstract Markdown commands.
@@ -17,10 +18,13 @@ All "Enforcement" logic resides in `tools/orchestrator/workflow_manager.py`:
 *   **Context Strategy**: Determines if we are in a Pilot or need a new branch.
 *   **ID Generation**: Calls `next_number.py` safely.
 
-### 2. The Dumb Shim (`workflow-start.sh`)
+### 2. The Dumb Shim (`workflow-start.sh`) [DEPRECATED]
+> [!WARNING] `workflow-start.sh` and `tools/cli.py` are deprecated. Use plugin scripts in `plugins/sanctuary-guardian/` directly.
+
 The Bash scripts remain as the **Entry Point** for Agents/Users but contain **NO LOGIC**.
 They immediately `exec` the Python CLI:
 ```bash
+# DEPRECATED - do not use
 exec python3 tools/cli.py workflow start ...
 ```
 
@@ -35,6 +39,7 @@ source scripts/bash/sanctuary-start.sh ...
 ```
 Which executes:
 ```bash
+# DEPRECATED - do not use
 python tools/cli.py workflow start --name ... --target ...
 ```
 
@@ -44,9 +49,9 @@ python tools/cli.py workflow start --name ... --target ...
 
 | ❌ Wrong | ✅ Correct |
 | :--- | :--- |
-| `scripts/bash/codify-db-function.sh` | Use ONE shim: `workflow-start.sh` |
-| `scripts/bash/codify-form.sh` | OR: Invoke Python directly: `python tools/cli.py workflow start` |
-| `scripts/bash/codify-report.sh` | |
+| `scripts/bash/codify-db-function.sh` | Use plugin scripts in `plugins/sanctuary-guardian/` |
+| `scripts/bash/codify-form.sh` | OR: Use slash commands `/sanctuary-*`, `/spec-kitty.*` |
+| `scripts/bash/codify-report.sh` | DO NOT invoke `python tools/cli.py` (DEPRECATED) |
 
 The `--name` parameter to the Python CLI determines **which workflow** is executed. There is no need for per-workflow shims. The shim is a **Gateway**, not a **Factory**.
 

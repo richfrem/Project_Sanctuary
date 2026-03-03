@@ -1,7 +1,8 @@
 # ADR-096: Pure Python Orchestration
 
 ## Status
-Accepted
+Superseded by **Pure Plugin Architecture** (2026-03-03). `tools/cli.py` is now fully deprecated.
+This ADR documents a transitional step; the current architecture uses Python scripts inside `plugins/` directly.
 
 ## Context
 ADR-036 (v2) introduced a "Thick Python / Thin Shim" architecture where `.sh` files acted as dumb wrappers around `cli.py workflow start`. 
@@ -11,12 +12,13 @@ While this solved the fragility of Bash logic, it retained "Triple Tracking" (Ma
 We will remove the Shim Layer entirely.
 
 1.  **Delete** all `scripts/bash/codify-*.sh` and `scripts/bash/sanctuary-start.sh`.
-2.  **Update** all 27+ `.agent/workflows/*.md` files to invoke the Python CLI directly:
+2.  **[HISTORICAL]** Workflows were updated to invoke the Python CLI directly:
     *   Old: `source scripts/bash/sanctuary-start.sh ...`
-    *   New: `python tools/cli.py workflow start ...`
+    *   Intermediate: `python tools/cli.py workflow start ...` [NOW ALSO DEPRECATED]
+    *   **Current**: Use plugin scripts in `plugins/sanctuary-guardian/` via slash commands (`/sanctuary-*`)
 
 > [!IMPORTANT]
-> **Single Entry Point**: The `--name` argument to the Python CLI determines which workflow template is used. There is ONE orchestration command, not one per workflow type. See ADR-036 Anti-Patterns section.
+> **[SUPERSEDED]** `tools/cli.py` is now deprecated. The single entry point is the plugin ecosystem under `plugins/sanctuary-guardian/`. Use `/sanctuary-*` slash commands which map to plugin scripts.
 
 ## Consequences
 

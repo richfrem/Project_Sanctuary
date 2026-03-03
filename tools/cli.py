@@ -3,6 +3,11 @@
 cli.py - Project Sanctuary Command Line Interface
 ==================================================
 
+FOR AGENTS:  THIS IS THE OLD ARCHITECTURE.  DO NOT USE!!!!  WE HAVE SINCE PIVOTED TO USING A PLUGINS AND AGENT-SKILLS PURE ARCHITECTURE
+ALL files reference in this CLI you should instead call the python scripts that live inside of the plugins/ subdirectories 
+
+IF YOU COME ACROSS GAPS call them out and let's fix them. 
+
 Purpose:
     Main entry point for the Project Sanctuary Command System.
     Provides unified access to all core operations:
@@ -125,15 +130,46 @@ import subprocess
 from pathlib import Path
 import re
 
+# ============================================================
+# ⛔  DEPRECATION WARNING — DO NOT USE THIS FILE
+# ============================================================
+# This CLI is DEPRECATED as of 2026-03-03.
+# The project has pivoted to a pure plugin/agent-skills architecture.
+#
+# ALL operations previously invoked via:
+#     python tools/cli.py <command>
+#
+# should now be invoked via plugin scripts inside plugins/ :
+#     e.g. python plugins/sanctuary-guardian/scripts/<script>.py
+#         or via slash commands: /sanctuary-*, /spec-kitty.*
+#
+# If you encounter a GAP (a command with no plugin equivalent),
+# call it out so we can create the plugin script.
+#
+# Reference: constitution.md Section IV, ADR-096 (superseded)
+# ============================================================
+print(
+    "\n\033[91m" +
+    "=" * 60 + "\n" +
+    "  ⛔  DEPRECATED: tools/cli.py — DO NOT USE\n" +
+    "=" * 60 + "\n" +
+    "  This CLI has been replaced by the pure plugin architecture.\n" +
+    "  Use plugin scripts in plugins/ subdirectories instead.\n" +
+    "  See: plugins/sanctuary-guardian/ for Guardian operations.\n" +
+    "  Slash commands: /sanctuary-*, /spec-kitty.*\n" +
+    "=" * 60 + "\n\033[0m",
+    file=sys.stderr
+)
+
+
 # Add project root to sys.path to import utils
 CLI_DIR = Path(__file__).parent.resolve()
 PROJECT_ROOT = CLI_DIR.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
-<<<<<<< HEAD
 # Inline path resolver (formerly in tools.utils.path_resolver)
-def resolve_path(relative_path: str, base_path: Path = None) -> str:
+def resolve_path(relative_path: str, base_path: Path | None = None) -> str:
     """
     Resolves a relative path against the project root or a specified base path.
     Handles potential inconsistencies in path separators and ensures a clean, absolute path.
@@ -144,10 +180,6 @@ def resolve_path(relative_path: str, base_path: Path = None) -> str:
     return str(full_path.resolve())
 
 # Resolve Directories
-# SEARCH_DIR removed — no longer used (migrated to plugins)
-# DOCS_DIR removed — no longer used (migrated to plugins)
-# TRACKING_DIR removed — no longer used (migrated to plugins)
-# SHARED_DIR removed — no longer used (migrated to plugins)
 RETRIEVE_DIR = PROJECT_ROOT / "plugins/context-bundler/scripts"
 INVENTORIES_DIR = PROJECT_ROOT / "plugins/tool-inventory/skills/tool-inventory/scripts"
 RLM_DIR = PROJECT_ROOT / "plugins/rlm-factory/skills/rlm-curator/scripts"
@@ -158,47 +190,17 @@ for d in [RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR]:
     if str(d) not in sys.path:
         sys.path.append(str(d))
 
-=======
-# Import path resolver from plugins
 try:
-    # Try importing from the new plugin location
-    # Since plugins have hyphens, we add the path to sys.path
-    PATH_RESOLVER_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
-    if str(PATH_RESOLVER_DIR) not in sys.path:
-        sys.path.append(str(PATH_RESOLVER_DIR))
-    from path_resolver import resolve_path
+    from workflow_manager import WorkflowManager
 except ImportError:
-    # Fallback/Bootstrap
-    print("⚠️  Warning: Could not import path_resolver from plugins/context-bundler/scripts")
-    def resolve_path(p): return str(PROJECT_ROOT / p)
+    WorkflowManager = None  # type: ignore[assignment,misc]
 
-# Resolve Directories (Direct Plugin Paths)
-# Note: specific mapping based on migration
-SEARCH_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-DOCS_DIR = PROJECT_ROOT / "plugins" / "doc-coauthoring" / "skills" / "doc-coauthoring" / "scripts" # Placeholder if empty
-TRACKING_DIR = PROJECT_ROOT / "plugins" / "task-manager" / "skills" / "task-agent" / "scripts"
-SHARED_DIR = PROJECT_ROOT / "plugins" / "misc-utils" / "skills" / "misc-utils" / "scripts"
-RETRIEVE_DIR = PROJECT_ROOT / "plugins" / "context-bundler" / "skills" / "bundler-agent" / "scripts"
-INVENTORIES_DIR = PROJECT_ROOT / "plugins" / "tool-inventory" / "skills" / "tool-inventory" / "scripts"
-RLM_DIR = PROJECT_ROOT / "plugins" / "rlm-factory" / "skills" / "rlm-curator" / "scripts"
-ORCHESTRATOR_DIR = PROJECT_ROOT / "plugins" / "agent-orchestrator" / "skills" / "orchestrator-agent" / "scripts"
-SPEC_KITTY_DIR = PROJECT_ROOT / "plugins" / "spec-kitty" / "skills" / "spec-kitty-agent" / "scripts"
-
-# Add directories to sys.path for internal imports
-# We add them to sys.path so we can import modules directly (e.g. 'import query_cache')
-for d in [SEARCH_DIR, DOCS_DIR, TRACKING_DIR, SHARED_DIR, RETRIEVE_DIR, INVENTORIES_DIR, RLM_DIR, ORCHESTRATOR_DIR, SPEC_KITTY_DIR]:
-    if d.exists() and str(d) not in sys.path:
-        sys.path.append(str(d))
-
-# from tools.utils.path_resolver import resolve_path # Handled above
-from workflow_manager import WorkflowManager
-# Import query_cache for rlm-search
 try:
-    # RLM_DIR and INVENTORIES_DIR are in sys.path now.
-    # query_cache is in plugins/tool-inventory/scripts (INVENTORIES_DIR)
     from query_cache import search_cache, RLMConfig
 except ImportError:
     pass
+
+
 
 
 

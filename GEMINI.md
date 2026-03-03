@@ -68,7 +68,9 @@ trigger: always_on
 
 ## I. The Hybrid Workflow (Project Purpose)
 All work MUST follow the **Universal Hybrid Workflow**.
-**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
+**START HERE**: `/sanctuary-start` -> invokes scripts inside `plugins/sanctuary-guardian/`
+
+> **DEPRECATED**: `tools/cli.py` and all scripts under `tools/` are DEPRECATED. Use plugin scripts in `plugins/` directly.
 
 ### Workflow Hierarchy
 ```
@@ -115,10 +117,12 @@ Any operation that:
 
 ## IV. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
+- **NEVER** use `tools/cli.py`, `tools/orchestrator/`, or `scripts/bash/` - these are DEPRECATED.
 - **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
-- **ALWAYS** use **Tool Discovery**: `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`. It's your `.agent/skills/SKILL.md`
-- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.ty.*`) over raw scripts.
-- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
+- **ALWAYS** use **Tool Discovery**: `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`
+- **ALWAYS** invoke Python scripts that live directly inside `plugins/` subdirectories.
+- **ALWAYS** use defined **Slash Commands** (`/sanctuary-*`, `/spec-kitty.*`) which map to plugin scripts.
+- **KEY PLUGIN**: `plugins/sanctuary-guardian/` is the primary orchestration plugin for all Guardian work.
 
 ## V. Governing Law (The Tiers)
 

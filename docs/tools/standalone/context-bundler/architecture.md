@@ -8,7 +8,7 @@ The system follows a **Controller-Manager-Worker** pattern with a shared **State
 
 | Component | Role | File | Responsibility |
 | :--- | :--- | :--- | :--- |
-| **Interface** | Controller | `tools/cli.py` | Routes user commands (`manifest`, `init-context`) to the Manager. No logic here. |
+| **Interface** | Controller | `plugins/context-bundler/scripts/bundle.py` | Routes user commands (`manifest`, `init-context`) to the Manager. Invoked via `/curate-bundle` slash command. (Note: `tools/cli.py` was the old entry point - now deprecated.) |
 | **Manager** | Orchestrator | `plugins/context-bundler/scripts/bundle.py` | Handles the *Workflow* & *Manifest CRUD*. Inits, Adds, Updates, Removes, and Lists/Queries files. |
 | **Bundler** | Worker | `plugins/context-bundler/scripts/bundle.py` | Handles the *Action*. Reads state and compiles the Markdown bundle. |
 | **State** | Data Store | `plugins/context-bundler/file-manifest.json` | The JSON list of files currently "in scope" for the bundle. |
@@ -31,7 +31,7 @@ Bundling is not a one-time event. It is a **Recursive Discovery Process**.
 **(See full workflow diagram: [[context-first-analysis.mmd|`docs/diagrams/workflows/context-first-analysis.mmd`]])**
 
 ### Workflow Steps:
-1.  **Initialization**: `cli.py init-context` calls `manifest_manager.py init` using the target ID as the **Bundle Title**. It auto-resolves the Artifact Type (e.g., FORM) from the Inventory. It **strictly loads the Base Manifest template** and overwrites `file-manifest.json`. **No dependency analysis happens here.**
+1.  **Initialization**: `/curate-bundle init-context` calls `manifest_manager.py init` using the target ID as the **Bundle Title**. It auto-resolves the Artifact Type (e.g., FORM) from the Inventory. It **strictly loads the Base Manifest template** and overwrites `file-manifest.json`. **No dependency analysis happens here.** (Legacy: `cli.py init-context` - now deprecated.)
 2.  **Review**: The Agent reads the generated bundle (Default Context).
 3.  **Recursion (The Loop)**:
     *   The Agent analyzes logic.

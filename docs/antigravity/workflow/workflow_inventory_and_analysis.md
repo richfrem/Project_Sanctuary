@@ -53,7 +53,7 @@ The following CLIs already expose Agent Plugin Integration operations and can be
 | :--- | :--- | :--- | :--- |
 | `domain_cli.py` | `scripts/domain_cli.py` | Chronicle, Task, ADR, Protocol | ✅ Already imports `mcp_servers/` |
 | `cortex_cli.py` | `scripts/cortex_cli.py` | RAG, Evolution, RLM, Learning | ✅ Already imports `mcp_servers/` |
-| `cli.py` | `tools/cli.py` | Workflow orchestration | ⚠️ Needs extension |
+| `cli.py` | `tools/cli.py` | Workflow orchestration | ~~DEPRECATED~~ - do not use |
 
 ## Agent Plugin Integration Domains → CLI/Workflow Mapping (Proposed)
 
@@ -71,8 +71,8 @@ The following CLIs already expose Agent Plugin Integration operations and can be
 | Forge LLM Agent Plugin Integration | 2 | TBD | Part of Discovery workflows |
 | Agent Persona Agent Plugin Integration | 5 | TBD | Part of council/orchestrator |
 | Council Agent Plugin Integration | 2 | TBD | `/council-*` (new, if needed) |
-| Orchestrator Agent Plugin Integration | 2 | `tools/cli.py workflow` | `/workflow-*` (exists) |
-| Workflow Agent Plugin Integration | 2 | `tools/cli.py workflow` | Merged into orchestrator |
+| Orchestrator Agent Plugin Integration | 2 | `plugins/sanctuary-guardian/` | `/workflow-*` (exists) |
+| Workflow Agent Plugin Integration | 2 | `plugins/sanctuary-guardian/` | Merged into orchestrator |
 | Learning Agent Plugin Integration | ~5 | `cortex_cli.py` | `/recursive_learning` |
 
 ## Migration Strategy
@@ -107,6 +107,6 @@ The following CLIs already expose Agent Plugin Integration operations and can be
 
 1.  **Immediate**: Run `manage_tool_inventory.py discover` to find unregistered scripts
 2.  **Phase 1**: Register `domain_cli.py` and `cortex_cli.py` commands in RLM cache
-3.  **Phase 2**: Update speckit workflows to use `python tools/cli.py` pre-flight
+3.  **Phase 2**: Update speckit workflows to use plugin scripts under `plugins/sanctuary-guardian/` (do NOT use `python tools/cli.py`)
 4.  **Phase 3**: Port complex bash scripts (`update-agent-context.sh`, `create-new-feature.sh`)
 5.  **Update `constitution.md`** with CLI-first rules
