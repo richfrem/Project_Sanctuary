@@ -1,6 +1,6 @@
 ---
 name: session-bootloader
-description: Initializes and orients the agent session using the Protocol 128 Bootloader sequence. Master awareness skill that knows all sanctuary-guardian capabilities and utility plugin integrations. Trigger this at the start of any new assignment.
+description: Initializes and orients the agent session using the Protocol 128 Bootloader sequence. Designed as a Dual-Mode Meta-Skill (Bootstrap vs Iteration phase). Master awareness skill that knows all sanctuary-guardian capabilities and utility plugin integrations. Trigger this at the start of any new assignment.
 disable-model-invocation: false
 ---
 
@@ -12,6 +12,12 @@ You are responsible for executing the mandatory **Learning Scout** and **Initial
 1. **Never skip orientation**: You must establish context before planning or writing code.
 2. **Constitutional Enforcement**: Execution must follow the project's zero-trust constitution.
 3. **Orchestrator Handoff**: Once oriented and initialized, hand off to the `orchestrator` skill.
+
+## Dual-Mode Meta-Skill Definition
+
+The bootloader operates differently depending on the project lifecycle:
+- **BOOTSTRAP MODE**: Triggered if the project is empty or lacks a `.agent/` directory. The bootloader must run `plugins/sanctuary-guardian/scripts/guardian_wakeup.py --mode BOOTSTRAP` instead of teleporting to learning scout, and focus on establishing the initial soul config.
+- **ITERATION MODE**: Triggered if the project has an existing `.agent/` state. The bootloader executes the standard orientation phases listed below to resume where the last session left off.
 
 ---
 
@@ -71,18 +77,20 @@ python3 plugins/sanctuary-guardian/scripts/guardian_wakeup.py --mode TELEMETRY
 > via the Vector DB, injecting only the top 3 most relevant historical memories.
 > This optimizes token usage across agent runs.
 
-**Semantic Search Orientation**: Before diving into any task, query the memory banks to get instant context on relevant files and code:
+**Semantic Search Orientation (Priority-Ordered Scanning)**:
 
-**1. RLM Cache (Fast lookup for file summaries & tool usage)**
+Before diving into any task, search the memory banks to get instant context. You MUST execute these searches in the following strict priority tier system:
+
+**Tier 1 (Authoritative & Fast): RLM Cache**
+Always query this first to find recent file summaries and tool usage instructions.
 ```bash
-# Search for relevant tools or docs by keyword (instant, no Ollama needed)
 python3 plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile project "keyword"
 python3 plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py --profile tools "script_name"
 ```
 
-**2. Vector DB (Deep concept & source code search)**
+**Tier 2 (Deep & Slow): Vector DB**
+Only query this if the RLM Cache returns insufficient detail, or if you need to search across raw historical code changes and full protocol documents.
 ```bash
-# Search across docs, ADRs, protocols, and actual Python/JS source code
 python3 plugins/vector-db/skills/vector-db-agent/scripts/query.py "How does X work?" --profile knowledge
 ```
 
@@ -93,6 +101,14 @@ Before any execution begins, verify alignment with `.agent/rules/constitution.md
 1. **Human Gate**: Are you authorized to make state changes?
 2. **Zero Trust**: Are you on a feature branch (not main)?
 3. **Docs First**: Is the defining Spec/Plan up to date?
+
+**Escalation Trigger Taxonomy**:
+If any of the three Constitutional Gates fail (e.g., you notice the user is attempting to write directly to the `main` branch), you must immediately trigger the 5-step Escalation Protocol:
+1. **Stop**: Halt workflow creation or test execution immediately.
+2. **Alert**: Loudly print: `🚨 CONSTITUTIONAL VIOLATION 🚨`.
+3. **Explain**: State precisely which rule was broken (e.g., "Cannot write code directly to the main branch.").
+4. **Recommend**: Output the standard operating procedure (e.g., "Please checkout a new branch: `git checkout -b feature/name`").
+5. **Draft (If applicable)**: Wait for user confirmation before executing any mitigating git commands on their behalf.
 
 ### 3. Feature Spec & Branch Initialization
 
