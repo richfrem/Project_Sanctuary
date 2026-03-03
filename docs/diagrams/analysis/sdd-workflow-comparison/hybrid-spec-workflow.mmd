@@ -1,26 +1,25 @@
 graph TD
     User([User/Agent])
     Constitution[["🏛️ Constitution"]]
-    ThinShim{{"🐚 Thin Shim<br/>(workflow-start.sh)"}}
-    PythonCLI{{"🐍 Python CLI<br/>(tools/cli.py workflow start)"}}
-    Orchestrator[["⚙️ WorkflowManager<br/>(tools/orchestrator/)"]]
+    PluginEntry{{"🔌 Plugin Entry\n(plugins/sanctuary-guardian/)"}}
+    Orchestrator[["⚙️ WorkflowManager\n(plugins/sanctuary-guardian/)"]]
 
-    User -->|"1. Request:<br/>/sanctuary-learning-loop"| ThinShim
+    User -->|"1. Request:<br/>/sanctuary-learning-loop"| PluginEntry
     
-    %% Shim is pass-through
-    ThinShim -->|"2. exec python3<br/>tools/cli.py ..."| PythonCLI
+    %% Plugin is the direct entry point (no shim layer)
+    PluginEntry -->|"2. invoke plugin script"| Orchestrator
     
     %% Constitution aligned at start
-    PythonCLI -->|Align with| Constitution
+    PluginEntry -->|Align with| Constitution
     
-    %% Annotation about the shim
-    ThinShim -.-|"ADR-0030: Dumb wrapper<br/>NO logic, just redirect"| ShimNote["ℹ️ Thin Shim contains ONLY:<br/>exec python3 tools/cli.py ..."]
+    %% Annotation about the architecture
+    PluginEntry -.-|"Pure Plugin Architecture:<br/>No bash shims, no tools/cli.py"| ShimNote["ℹ️ Plugin scripts live in:<br/>plugins/sanctuary-guardian/"]
     
     %% Constitution governs all
     Constitution -.->|"Governs all steps"| Note["ℹ️ Adhered to at every phase:<br/>Spec, Plan, Tasks, Execution"]
     
     %% Python Orchestrator handles enforcement
-    PythonCLI -->|3. Invoke| Orchestrator
+    PluginEntry -->|3. Invoke| Orchestrator
     
     subgraph Enforcement ["Enforcement Layer (Python - ALL Logic Here)"]
         direction TB
@@ -95,9 +94,8 @@ graph TD
     %% Styling
     style User fill:#fff,stroke:#333
     style Constitution fill:#ff9999,stroke:#333,stroke-width:3px
-    style ThinShim fill:#f5deb3,stroke:#8b4513,stroke-width:2px
+    style PluginEntry fill:#4B8BBE,stroke:#333,stroke-width:2px,color:#fff
     style ShimNote fill:#fffacd,stroke:#999,stroke-dasharray:5
-    style PythonCLI fill:#4B8BBE,stroke:#333,stroke-width:2px,color:#fff
     style Orchestrator fill:#306998,stroke:#333,stroke-width:2px,color:#fff
     style Note fill:#fffacd,stroke:#999,stroke-dasharray:5
     style GitCheck fill:#ffe4b5,stroke:#333

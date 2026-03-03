@@ -15,10 +15,10 @@ This policy governs the lifecycle of Agent Workflows in Project Sanctuary. All w
   ---
   ```
 
-## 3. Architecture Alignment (ADR-036)
-- **Thin Shim**: If a CLI convenience wrapper is needed, create `scripts/bash/[name].sh`.
-- **Thick Logic**: The shim MUST NOT contain logic. It must `exec` a Python script (`tools/cli.py` or specific tool).
-- **No Shim Proliferation**: Prefer using `workflow-start` for complex, branch-managed workflows. Use specific shims only for atomic tools (e.g. `workflow-bundle`).
+## 3. Architecture Alignment (Pure Plugin Architecture)
+- **Plugin Scripts**: All logic lives in Python scripts under `plugins/` subdirectories. Do NOT use `tools/cli.py` (DEPRECATED).
+- **No Shim Layer**: The `scripts/bash/` shim layer has been removed. Workflows invoke plugin scripts or slash commands directly.
+- **No Shim Proliferation**: Use `/sanctuary-*` and `/spec-kitty.*` slash commands, which map directly to plugin scripts.
 
 ## 4. Registration Process
 After creating or modifying a workflow file (`.md`):

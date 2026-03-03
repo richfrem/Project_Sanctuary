@@ -223,6 +223,7 @@ Released under Apache 2.0 license. Developed with commitment to:
 ## Citation
 
 If you use this model, please cite:
+{% raw %}
 ```
 @misc{{sanctuary-llama-{version.replace('.', '-')},
   title={{Sanctuary-Llama-{version}: Democratically Governed AI Evolution}},
@@ -231,6 +232,7 @@ If you use this model, please cite:
   url={{https://github.com/richfrem/Project_Sanctuary}}
 }}
 ```
+{% endraw %}
 """
     
     return model_card_content
