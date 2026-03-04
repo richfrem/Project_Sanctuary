@@ -8,7 +8,7 @@ description: >
 
 ## Ecosystem Role: Inner Loop Specialist
 
-This skill provides specialized **Inner Loop Execution** for the [`dual-loop-supervisor`](../../dual-loop-supervisor/skills/dual-loop-supervisor/SKILL.md).
+This skill provides specialized **Inner Loop Execution** for the [`dual-loop`](../../../agent-loops/skills/dual-loop/SKILL.md).
 
 - **Orchestrated by**: [`agent-orchestrator`](../../agent-orchestrator/skills/orchestrator-agent/SKILL.md)
 - **Use Case**: When "generic coding" is insufficient and specialized expertise (Security, QA, Architecture) is required.
@@ -45,6 +45,10 @@ The CLI runs in a **separate context** — no access to agent tools or memory.
 
 ### 3. Output to File
 Always redirect output to a file (`> output.md`), then review with `view_file`.
+
+### 4. Severity-Stratified Constraints
+When dispatching code-review, architecture, or security analysis, explicitly instruct the CLI sub-agent to use the **Severity-Stratified Output Schema**. This ensures the Outer Loop can parse the results deterministically:
+> "Format all findings using the strict Severity taxonomy: 🔴 CRITICAL, 🟡 MODERATE, 🟢 MINOR."
 
 ## 🎭 Persona Categories
 

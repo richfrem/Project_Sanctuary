@@ -2,18 +2,18 @@
 config:
   theme: base
 ---
-%% Name: MCP Protocol Creation Workflow
-%% Source: docs/architecture/mcp_servers/architecture/mcp_ecosystem_architecture_v3.md
-%% Location: docs/architecture_diagrams/workflows/mcp_protocol_creation_workflow.mmd
-%% Description: Workflow example for creating a Protocol via MCP
+%% Name: Protocol Creation Workflow
+%% Source: docs/architecture/agent_skills_architecture.md
+%% Location: docs/architecture_diagrams/workflows/protocol_creation_workflow.mmd
+%% Description: Workflow example for creating a Protocol via Agent Skills
 
 sequenceDiagram
     participant LLM as LLM Assistant
-    participant Protocol as Protocol MCP
-    participant Chronicle as Chronicle MCP
+    participant Protocol as Protocol Agent
+    participant Chronicle as Chronicle Agent
     participant Git as Git Operations
     
-    LLM->>Protocol: create_protocol(115, "MCP Ecosystem", ...)
+    LLM->>Protocol: create_protocol(115, "Agent Skills Ecosystem", ...)
     Protocol->>Git: commit_with_manifest(...)
     Git-->>Protocol: commit_hash
     Protocol-->>LLM: {file_path, commit_hash}

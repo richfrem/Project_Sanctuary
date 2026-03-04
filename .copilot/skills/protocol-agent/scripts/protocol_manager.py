@@ -5,7 +5,7 @@ protocol_manager.py — Protocol Document Manager
 
 Purpose:
     Create, list, search, update, and view Protocol documents.
-    Consolidates logic from mcp_servers/protocol/ into a standalone CLI.
+    Consolidates protocol logic into a standalone CLI.
 
 Layer: Plugin / Protocol-Manager
 

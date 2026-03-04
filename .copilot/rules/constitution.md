@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-# Project Sanctuary Constitution V3
+# Project Ecosystem Constitution V3
 
 > **THE SUPREME LAW: HUMAN GATE**
 > You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
@@ -11,36 +11,36 @@ trigger: always_on
 
 ## I. The Hybrid Workflow (Project Purpose)
 All work MUST follow the **Universal Hybrid Workflow**.
-**START HERE**: `python tools/cli.py workflow start` (or `/sanctuary-start`)
+**START HERE**: `/project-start`
 
 ### Workflow Hierarchy
 ```
-/sanctuary-start (UNIVERSAL)
+/project-start (UNIVERSAL)
 ├── Routes to: Learning Loop (cognitive sessions)
-│   └── /sanctuary-learning-loop → Audit → Seal → Persist
+│   └── /project-learning-loop → Audit → Seal → Persist
 ├── Routes to: Custom Flow (new features)
 │   └── /spec-kitty.implement → Manual Code
-└── Both end with: /sanctuary-retrospective → /sanctuary-end
+└── Both end with: /project-retrospective → /project-end
 ```
 
 - **Track A (Factory)**: Deterministic tasks (Codify, Curate).
 - **Track B (Discovery)**: Spec-Driven Development (Spec → Plan → Tasks).
-- **Reference**: [ADR 035](../../ADRs/035_hybrid_spec_driven_development_workflow.md) | [Diagram](../../docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)
+- **Pre-Execution Mindset**: Agents MUST map their execution using `spec-kitty-workflow`'s visual constraint diagram.
 
 ## II. The Learning Loop (Cognitive Continuity)
 For all cognitive sessions, you are bound by **Protocol 128**.
-**INVOKE**: `/sanctuary-learning-loop` (called by `/sanctuary-start`)
+**INVOKE**: `/project-learning-loop` (called by `/project-start`)
 
 - **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
 - **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
-- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../plugins/guardian-onboarding/resources/protocols/protocol_128_learning_loop.mmd)
+- **Constraint**: The Learning Loop implements Protocol 128 (Cognitive Continuity) natively via RLM Cache.
 
 ### Identity Layers (Boot Files)
 | Layer | File | Purpose |
 |:------|:-----|:--------|
-| **1. Contract** | [boot_contract.md](../learning/guardian_boot_contract.md) | Immutable constraints |
-| **2. Primer** | [cognitive_primer.md](../learning/cognitive_primer.md) | Role Orientation |
-| **3. Snapshot** | [snapshot.md](../learning/learning_package_snapshot.md) | Session Context |
+| **1. Contract** | `ecosystem_boot_contract.md` (Local Context) | Immutable constraints |
+| **2. Primer** | `cognitive_primer.md` (Local Context) | Role Orientation |
+| **3. Snapshot** | `learning_package_snapshot.md` (Local Context) | Session Context |
 
 ## III. Zero Trust (Git & Execution)
 - **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
@@ -58,10 +58,10 @@ Any operation that:
 
 ## IV. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
-- **fallback IS PROHIBITED**: If `query_cache.py` fails, you MUST STOP and ask user to refresh cache.
-- **ALWAYS** use **Tool Discovery**: `python plugins/rlm-factory/skills/rlm-curator/scripts/query_cache.py`. It's your `.agent/skills/SKILL.md`
-- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.ty.*`) over raw scripts.
-- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/sanctuary-start.sh`, `scripts/bash/sanctuary-learning-loop.sh`) and the `tools/cli.py` and `tools/orchestrator/workflow_manager.py`
+- **fallback IS PROHIBITED**: If `tool_chroma.py` fails, you MUST STOP and ask user to refresh cache.
+- **ALWAYS** use **Tool Discovery**: `python plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py search "keyword"`. It's your `.agent/skills/SKILL.md`
+- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.*`) over raw scripts.
+- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/project-start.sh`, `scripts/bash/project-learning-loop.sh`) and the specialized Python scripts living in the `plugins/` directory.
 
 ## V. Governing Law (The Tiers)
 
@@ -69,7 +69,7 @@ Any operation that:
 | File | Purpose |
 |:-----|:--------|
 | [`workflow_enforcement_policy.md`](01_PROCESS/workflow_enforcement_policy.md) | **Slash Commands**: Command-Driven Improvement |
-| [`tool_discovery_enforcement_policy.md`](01_PROCESS/tool_discovery_enforcement_policy.md) | **No Grep Policy**: Use `query_cache.py` |
+| [`tool_discovery_enforcement_policy.md`](01_PROCESS/tool_discovery_enforcement_policy.md) | **No Grep Policy**: Use `tool_chroma.py` |
 | [`spec_driven_development_policy.md`](01_PROCESS/spec_driven_development_policy.md) | **Lifecycle**: Spec → Plan → Tasks |
 
 ### Tier 2: OPERATIONS (Policies)
@@ -86,7 +86,7 @@ Any operation that:
 ## VI. Session Closure (Mandate)
 - **ALWAYS** run the 9-Phase Loop before ending a session.
 - **NEVER** abandon a session without sealing.
-- **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
+- **ALWAYS** run `/project-retrospective` then `/project-end`.
 - **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
 
 **Version**: 3.7 | **Ratified**: 2026-02-01

@@ -8,7 +8,7 @@ description: >
 
 ## Ecosystem Role: Inner Loop Specialist
 
-This skill provides specialized **Inner Loop Execution** for the [`dual-loop-supervisor`](../../dual-loop-supervisor/skills/dual-loop-supervisor/SKILL.md).
+This skill provides specialized **Inner Loop Execution** for the [`dual-loop`](../../../agent-loops/skills/dual-loop/SKILL.md).
 
 - **Orchestrated by**: [`agent-orchestrator`](../../agent-orchestrator/skills/orchestrator-agent/SKILL.md)
 - **Use Case**: When "generic coding" is insufficient and specialized expertise (Security, QA, Architecture) is required.
@@ -41,8 +41,17 @@ The CLI runs in a **separate context** — no access to agent tools or memory.
 - **Add**: "Do NOT use tools. Do NOT search filesystem."
 - Ensure prompt + piped input contain 100% of necessary context
 
-### 3. Output to File
+### 3. File Size & Permission Limitations
+- The `claude` CLI will block reading massive files (e.g. 5MB+) natively via pipe or `--file` flag. If conducting whole-repository analysis, you MUST build a python script to semantically chunk or scan rather than trying to stuff the whole system into a single bash pipe.
+- Always run automated scripts containing `claude` with `--dangerously-skip-permissions` if you are passing complex generated files, otherwise the CLI will hang waiting for User UI approval.
+- Ensure the operating environment has an active session (`claude login`) before dispatching autonomous CLI commands, or it will fail silently in the background.
+
+### 4. Output to File
 Always redirect output to a file (`> output.md`), then review with `view_file`.
+
+### 5. Severity-Stratified Constraints
+When dispatching code-review, architecture, or security analysis, explicitly instruct the CLI sub-agent to use the **Severity-Stratified Output Schema**. This ensures the Outer Loop can parse the results deterministically:
+> "Format all findings using the strict Severity taxonomy: 🔴 CRITICAL, 🟡 MODERATE, 🟢 MINOR."
 
 ## 🎭 Persona Categories
 
