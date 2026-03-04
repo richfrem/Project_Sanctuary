@@ -83,20 +83,20 @@ This framework relies on loosely coupled, high-cohesion plugins mapped directly 
 The project natively implements industry-standard Agentic Execution Patterns as discrete plugins:
 
 * **`orchestrator`**: (Routing Agent Pattern) Analyzes ambiguous triggers and routes them to specialized implementation loops.
-  <br>*(Source: [`agent_loops_overview.mmd`](plugins/agent-loops/resources/diagrams/agent_loops_overview.mmd))*
-  <img src="plugins/agent-loops/resources/diagrams/agent_loops_overview.png" alt="Orchestrator Pattern" width="600">
+  <br>*(Source: [`agent_loops_overview.mmd`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/agent-loops/resources/diagrams/agent_loops_overview.mmd))*
+  <img src="https://github.com/richfrem/Project_Sanctuary/raw/main/plugins/agent-loops/resources/diagrams/agent_loops_overview.png" alt="Orchestrator Pattern" width="600">
 * **`learning-loop`**: (Single Agent / Loop Pattern) Self-contained research, synthesis, and knowledge capture without inner delegation.
-  <br>*(Source: [`learning_loop.mmd`](plugins/agent-loops/resources/diagrams/learning_loop.mmd))*
-  <img src="plugins/agent-loops/resources/diagrams/learning_loop.png" alt="Learning Loop Pattern" width="600">
+  <br>*(Source: [`learning_loop.mmd`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/agent-loops/resources/diagrams/learning_loop.mmd))*
+  <img src="https://github.com/richfrem/Project_Sanctuary/raw/main/plugins/agent-loops/resources/diagrams/learning_loop.png" alt="Learning Loop Pattern" width="600">
 * **`red-team-review`**: (Review & Critique Pattern) Iterative generation paired with adversarial review until an "Approved" verdict is reached.
-  <br>*(Source: [`red_team_review_loop.mmd`](plugins/agent-loops/resources/diagrams/red_team_review_loop.mmd))*
-  <img src="plugins/agent-loops/resources/diagrams/red_team_review_loop.png" alt="Red Team Review Pattern" width="600">
+  <br>*(Source: [`red_team_review_loop.mmd`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/agent-loops/resources/diagrams/red_team_review_loop.mmd))*
+  <img src="https://github.com/richfrem/Project_Sanctuary/raw/main/plugins/agent-loops/resources/diagrams/red_team_review_loop.png" alt="Red Team Review Pattern" width="600">
 * **`dual-loop`**: (Sequential Agent Pattern) Strategy delegation from an Outer Loop controller to an Inner Loop tactical executor.
-  <br>*(Source: [`inner_outer_loop.mmd`](plugins/agent-loops/resources/diagrams/inner_outer_loop.mmd))*
-  <img src="plugins/agent-loops/resources/diagrams/inner_outer_loop.png" alt="Dual Loop Pattern" width="600">
+  <br>*(Source: [`inner_outer_loop.mmd`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/agent-loops/resources/diagrams/inner_outer_loop.mmd))*
+  <img src="https://github.com/richfrem/Project_Sanctuary/raw/main/plugins/agent-loops/resources/diagrams/inner_outer_loop.png" alt="Dual Loop Pattern" width="600">
 * **`agent-swarm`**: (Parallel Agent Pattern) Work partitioning for simultaneous independent execution across multiple agents in isolated worktrees.
-  <br>*(Source: [`agent_swarm.mmd`](plugins/agent-loops/resources/diagrams/agent_swarm.mmd))*
-  <img src="plugins/agent-loops/resources/diagrams/agent_swarm.png" alt="Agent Swarm Pattern" width="600">
+  <br>*(Source: [`agent_swarm.mmd`](https://github.com/richfrem/Project_Sanctuary/blob/main/plugins/agent-loops/resources/diagrams/agent_swarm.mmd))*
+  <img src="https://github.com/richfrem/Project_Sanctuary/raw/main/plugins/agent-loops/resources/diagrams/agent_swarm.png" alt="Agent Swarm Pattern" width="600">
 
 ### 2.2 Transpilation to Agent Environments
 The project contains no vendor-locked system architectures. Instead, it utilizes the `agent-bridge` to transpile Sanctuary Plugins into raw capabilities for specific AI assistants:
