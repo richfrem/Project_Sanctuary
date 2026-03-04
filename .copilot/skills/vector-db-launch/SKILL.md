@@ -22,20 +22,17 @@ curl -sf http://127.0.0.1:8110/api/v1/heartbeat > /dev/null && echo "✅ ChromaD
 
 If it prints "✅ ChromaDB running", you're done. If not, proceed.
 
-## Launching the Server
+## Launching the Server (Native Python)
 
-The server must be launched using the `chroma run` command, bound to the data path defined in the profile's `chroma_data_path` field.
+The ChromaDB server runs as a background Python process. 
 
-**CRITICAL INSTRUCTION FOR AGENT:**
-The `chroma run` command blocks the terminal. You **must** instruct the user to run this command in a NEW, SEPARATE terminal window, or use `nohup` / `&` to background the process. 
+It binds to the `${chroma_host}:${chroma_port}` defined in your active profile inside `.agent/learning/vector_profiles.json` (defaults to `127.0.0.1:8110`). Its data volume is mounted from the path defined by the profile's `${chroma_data_path}`.
 
-Do not try to run a blocking `chroma run` loop inside your own execution context, or you will freeze.
-
-### Step 1: Run the Server Command
-Instruct the user to execute the following command in their terminal (from the project root):
+### Step 1: Start the Service via CLI
+Instruct the user to start the server as a background process using `nohup` or `&` so it does not block their terminal. Example:
 
 ```bash
-chroma run --host 127.0.0.1 --port 8110 --path .vector_data
+chroma run --host 127.0.0.1 --port 8110 --path .vector_data &
 ```
 
 ### Step 2: Verify Connection

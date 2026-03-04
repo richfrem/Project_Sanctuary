@@ -53,6 +53,10 @@ python3 plugins/guardian-onboarding/scripts/capture_snapshot.py --type seal
 > during the session, inject a summary immediately after creation using `inject_summary.py`.
 > Do NOT wait until seal -- this keeps the cache current in real-time and avoids large batch runs.
 
+> **Scratchpad Archiving Rule**: The Guardian MUST extract any ephemeral "Shared Session State" or scratchpads left by the loop.
+> These core findings must be synthesized and persisted into the Obsidian Vault and ingested into the Vector DB.
+> Following successful extraction and synthesis, the Guardian is responsible for wiping the ephemeral state/scratchpads to maintain a clean environment.
+
 **Action:** Confirm the command output states the seal was successful. If it fails, report the drift to the user and halt.
 
 

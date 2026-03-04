@@ -70,7 +70,9 @@ trigger: always_on
 All work MUST follow the **Universal Hybrid Workflow**.
 **START HERE**: `/sanctuary-start` -> invokes scripts inside `plugins/sanctuary-guardian/`
 
-> **DEPRECATED**: `tools/cli.py` and all scripts under `tools/` are DEPRECATED. Use plugin scripts in `plugins/` directly.
+> [!WARNING]
+> `tools/cli.py` and all scripts under `tools/` are **DEPRECATED**. Do NOT use them.
+> All work is now driven by Python scripts inside `plugins/` subdirectories.
 
 ### Workflow Hierarchy
 ```
@@ -150,7 +152,7 @@ Any operation that:
 - **ALWAYS** run `/sanctuary-retrospective` then `/sanctuary-end`.
 - **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
 
-**Version**: 3.7 | **Ratified**: 2026-02-01
+**Version**: 3.8 | **Ratified**: 2026-03-03 | **Change**: Deprecated `tools/cli.py`; pivoted to pure plugin/agent-skills architecture under `plugins/`.
 
 ---
 
@@ -188,7 +190,7 @@ All work MUST follow the **Universal Hybrid Workflow**.
 
 - **Track A (Factory)**: Deterministic tasks (Codify, Curate).
 - **Track B (Discovery)**: Spec-Driven Development (Spec → Plan → Tasks).
-- **Reference**: [ADR 035](../../ADRs/035_hybrid_spec_driven_development_workflow.md) | [Diagram](../../docs/diagrams/analysis/sdd-workflow-comparison/hybrid-spec-workflow.mmd)
+- **Pre-Execution Mindset**: Agents MUST map their execution using `spec-kitty-workflow`'s visual constraint diagram.
 
 ## II. The Learning Loop (Cognitive Continuity)
 For all cognitive sessions, you are bound by **Protocol 128**.
@@ -196,14 +198,14 @@ For all cognitive sessions, you are bound by **Protocol 128**.
 
 - **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
 - **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
-- **Reference**: [ADR 071](../../ADRs/071_protocol_128_cognitive_continuity.md) | [Diagram](../../plugins/primary-agent/resources/protocols/protocol_128_learning_loop.mmd)
+- **Constraint**: The Learning Loop implements Protocol 128 (Cognitive Continuity) natively via RLM Cache.
 
 ### Identity Layers (Boot Files)
 | Layer | File | Purpose |
 |:------|:-----|:--------|
-| **1. Contract** | [boot_contract.md](../learning/ecosystem_boot_contract.md) | Immutable constraints |
-| **2. Primer** | [cognitive_primer.md](../learning/cognitive_primer.md) | Role Orientation |
-| **3. Snapshot** | [snapshot.md](../learning/learning_package_snapshot.md) | Session Context |
+| **1. Contract** | `ecosystem_boot_contract.md` (Local Context) | Immutable constraints |
+| **2. Primer** | `cognitive_primer.md` (Local Context) | Role Orientation |
+| **3. Snapshot** | `learning_package_snapshot.md` (Local Context) | Session Context |
 
 ## III. Zero Trust (Git & Execution)
 - **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
@@ -291,7 +293,18 @@ Artifacts live in `specs/NNN/` using templates from `.agent/templates/workflow/`
 | `plan.md` | `.agent/templates/workflow/plan-template.md` | The **How** |
 | `tasks.md` | `.agent/templates/workflow/tasks-template.md` | Execution checklist |
 
-## Lifecycle Summary
+## Lifecycle Summary (Pre-Execution Workflow Commitment)
+
+Before starting work, display this visual map to commit to the state:
+```text
+┌────────────────────────────────────────────────────────┐
+│               SPEC-KITTY LIFECYCLE MAP                 │
+├────────────────────────────────────────────────────────┤
+│ [ ] Phase 0: Plan (specify -> plan -> tasks)           │
+│ [ ] Phase 1: Implement (implement WP -> code -> review)│
+│ [ ] Phase 2: Close (accept -> retro -> merge -> sync)  │
+└────────────────────────────────────────────────────────┘
+```
 1. **Specify** → `/spec-kitty.specify` (or auto-generate for Track A)
 2. **Plan** → `/spec-kitty.plan`
 3. **Tasks** → `/spec-kitty.tasks`
@@ -374,11 +387,19 @@ These rules apply to **all commands** (specify, plan, research, tasks, implement
 
 1. Paste into a plain-text buffer first (VS Code, TextEdit in plain mode)
 2. Replace smart quotes and dashes
-3. Verify no � replacement characters appear
+3. Verify no  replacement characters appear
 4. Run `spec-kitty validate-encoding --feature <feature-id>` to check
 5. Run `spec-kitty validate-encoding --feature <feature-id> --fix` to auto-repair
 
 **Failure to follow this rule causes the dashboard to render blank pages.**
+
+### Escalation Taxonomy (Encoding Violation Response)
+If the user passes illegal text inside a prompt and asks you to write it directly to a file:
+1. **Stop**: Halt file write.
+2. **Alert**: `🚨 ENCODING VIOLATION 🚨`
+3. **Explain**: "The provided text contains illegal Windows-1252 characters."
+4. **Recommend**: "I must strip smart quotes and em-dashes before writing."
+5. **Draft**: Output the stripped text for verification before writing.
 
 ### Auto-Fix Available
 
@@ -455,6 +476,14 @@ Agent directories like `.claude/`, `.codex/`, `.gemini/` contain:
 - `.claude/`, `.codex/`, `.gemini/`, etc. - Agent runtime directories
 - `.kittify/templates/command-templates/` - These are templates, not final commands
 - Any `auth.json`, `credentials.json`, or similar files
+
+### Escalation Taxonomy (Git Stage Violation Response)
+If you are asked to `git add .` in the root directory and you detect `.claude/` or `.gemini/` in the untracked files list:
+1. **Stop**: Halt the git commit.
+2. **Alert**: `🚨 SECRETS EXPOSURE RISK 🚨`
+3. **Explain**: "Agent directories contain auth tokens and must never be committed."
+4. **Recommend**: "We must add these to .gitignore and execute `git reset HEAD .claude/`."
+5. **Draft**: Ask the user for permission to execute the reset and gitignore update.
 
 ### Automatic Protection
 

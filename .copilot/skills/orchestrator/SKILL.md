@@ -1,6 +1,7 @@
 ---
 name: orchestrator
-description: "Routes triggers to the appropriate agent-loop pattern. Use when: assessing a task, research need, or work assignment and deciding whether to run a simple learning loop, red team review, dual-loop delegation, or parallel swarm. Manages shared closure (seal, persist, retrospective, self-improvement)."
+aliases: ["Routing Agent", "Orchestrator Pattern"]
+description: "(Industry standard: Routing Agent / Orchestrator Pattern) Primary Use Case: Analyzing an ambiguous trigger and routing it to one of the specific specialized implementations. Routes triggers to the appropriate agent-loop pattern. Use when: assessing a task, research need, or work assignment and deciding whether to run a simple learning loop, red team review, dual-loop delegation, or parallel swarm. Manages shared closure (seal, persist, retrospective, self-improvement)."
 ---
 
 # Orchestrator: Loop Router & Lifecycle Manager
@@ -39,13 +40,13 @@ Use this to select the correct loop pattern:
 | Large feature, bulk migration, multi-concern parallel work | **Agent Swarm** | `agent-swarm` |
 
 ### Process Flow
-1.  **Plan (Strategy)**: You define the work (Spec → Plan → Tasks).
+1.  **Plan (Strategy)**: You define the work (Spec → Plan → Tasks). When planning scripts/pipelines, default to a "Modular Building Blocks" architecture (CLI wrappers + independent core modules).
 2.  **Delegate (Handoff)**: You pack the context into a **Task Packet** and assist the user in handing off to the Inner Loop.
 3.  **Execute (Tactics)**: The Inner Loop agent (which has *no* git access) writes code and runs tests.
 4.  **Verify (Review)**: You verify the output against acceptance criteria.
 5.  **Correct (Feedback)**: If verification fails, you generate a **Correction Packet** and loop back to step 3.
 6.  **Retrospective (Learning)**: You assess the loop's success and document learnings.
-7.  **Guardian Handoff (Closure)**: You signal the repository environment to seal the session, update databases, and commit to Git.
+7.  **Primary Agent Handoff (Closure)**: You signal the repository environment to seal the session, update databases, and commit to Git.
 
 ## Roles
 
@@ -79,11 +80,19 @@ python scripts/agent_orchestrator.py packet --wp <WP-ID> --spec-dir <PATH>
 This generates a markdown file in the `handoffs/` directory. You must then instruct the user/system to launch the Inner Loop with this file.
 
 ### 3. Verification & Correction
+
 Check the Inner Loop's work against the packet using the `verify` command.
 ```bash
 python scripts/agent_orchestrator.py verify --packet handoffs/task_packet_NNN.md --worktree <PATH>
 ```
-If the work fails criteria, generate a correction packet to send back to the Inner Loop.
+
+If the work fails criteria, use the **Severity-Stratified Output** schema to generate a structured correction packet:
+
+- 🔴 **CRITICAL**: The code fails to compile, tests fail, or the requested feature is entirely missing. (Action: Hard reject, return to Inner Loop with exact error logs).
+- 🟡 **MODERATE**: The feature works, but violates project architecture, ADRs, or performance standards. (Action: Flag for revision, return to Inner Loop with the specific ADR reference).
+- 🟢 **MINOR**: The feature works and follows architecture, but has minor naming or stylistic issues. (Action: Do not return to Inner Loop. The Orchestrator fixes it directly and proceeds).
+
+Generate the correction packet to send back to the Inner Loop:
 ```bash
 python scripts/agent_orchestrator.py correct --packet handoffs/task_packet_NNN.md --feedback "Specific failure reason"
 ```
@@ -128,8 +137,8 @@ This creates a template in the `retros/` directory.
 
 This makes each loop iteration smoother than the last.
 
-### 7. Handoff to Guardian (Ecosystem Sealing)
-Once the loop is complete and learning has been extracted, the Orchestrator MUST pass control to the environment's global sovereign (e.g., the `guardian-onboarding` plugin). 
+### 7. Handoff to Primary Agent (Ecosystem Sealing)
+Once the loop is complete and learning has been extracted, the Orchestrator MUST pass control to the environment's global sovereign (e.g., the primary agent plugin). 
 
 **The Orchestrator explicitly DOES NOT:**
 - Execute `capture_snapshot.py` or update semantic ledgers (RLMs).
@@ -137,9 +146,27 @@ Once the loop is complete and learning has been extracted, the Orchestrator MUST
 - Execute Vector DB ingestion scripts.
 - Execute Git commands (`git commit`, `git push`).
 
-These are environment-specific actions owned entirely by the **Guardian**. The Orchestrator's job is done.
+These are environment-specific actions owned entirely by the **Primary Agent**.
+
+#### Chained Command Handoff
+
+When the Orchestrator loop is complete, it must use **Chained Command Invocation** to offer the user the explicit next steps to seal the ecosystem. Output this block:
+
+```markdown
+## Orchestration Complete. Offer Next Steps:
+
+The Inner Loop has successfully executed and verified the task. Please trigger the closure sequence:
+- **"/sanctuary-seal"**: To capture the learning snapshot and update RLMs.
+- **"/sanctuary-persist"**: To backup the soul to HuggingFace.
+- **"Run Retrospective"**: If you wish to review the friction log.
+```
 
 ---
+
+
+### 8. Sub-Agent Limitations
+- Be aware that `claude-cli-agent` has a hard stop on passing massive context bundles (~5MB+) either natively via stdin or `--file`. If your payload exceeds context windows, you must write a semantic chunking script instead of blindly dumping a `context-bundler` package into a prompt!
+- Automated sub-agent invocations will *silently fail* or throw an interactive block if you do not use `--dangerously-skip-permissions` or if the user is not authenticated natively using `claude login`.
 
 ## Lifecycle State Tracking
 
@@ -151,7 +178,7 @@ The orchestrator must verify these gates at each phase:
 | **Execution** | Packets are generated and handed off. |
 | **Review** | Output passes verification criteria. |
 | **Retrospective** | Post-loop learnings extracted and infrastructure improved. |
-| **Guardian Handoff** | Signal the global ecosystem to run Seal, Persist, and Git closure. |
+| **Primary Agent Handoff** | Signal the global ecosystem to run Seal, Persist, and Git closure. |
 
 **No phase may be skipped.** If a gate fails, the orchestrator must resolve it before proceeding.
 
