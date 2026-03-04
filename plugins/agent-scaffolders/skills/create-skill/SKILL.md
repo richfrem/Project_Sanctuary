@@ -2,6 +2,7 @@
 name: create-skill
 description: Interactive initialization script that acts as a Skill Designer and Architect. Generates a compliant Agent Skill containing strict YAML frontmatter, optimal interaction designs, and L4 patterns based on diagnostic questioning.
 disable-model-invocation: false
+allowed-tools: Bash, Read, Write
 ---
 
 # Agent Skill Designer & Architect
@@ -49,15 +50,19 @@ You must pause and explicitly list out:
 Ask the user: "Does this look right? (yes / adjust)"
 
 ### 2. Scaffold the Infrastructure
-Execute the deterministic `scaffold.py` script to generate the compliant physical directories:
+Execute the deterministic `scaffold.py` script to generate the compliant physical directories. **CRITICAL: Apply the Iteration Directory Isolation Pattern**.
+If the user is iterating on a design, DO NOT overwrite the main directory. Append `--iteration <N>` or save to `.history/iteration-<N>/`.
 ```bash
 python3 ~~agent-scaffolders-root/scripts/scaffold.py --type skill --name <requested-name> --path <destination-directory> --desc "<short-description>"
 ```
 
-### 3. Generate Acceptance Criteria
+### 3. Generate Testing, Evaluation, and Fallback Assets
 The Open Standard testing best practices explicitly recommend that **every skill MUST have acceptance criteria and test scenarios.**
-Using file writing tools, create a new file at `references/acceptance-criteria.md` inside the newly scaffolded skill folder.
-Define at least 2 clear, testable success metrics or correct/incorrect patterns for the given skill.
+Using file writing tools, create the following foundational files inside the newly scaffolded skill folder:
+
+1. **Acceptance Criteria**: `references/acceptance-criteria.md`. Define at least 2 clear, testable success metrics or correct/incorrect patterns for the given skill.
+2. **Benchmark Evaluations** (Rigorous Benchmarking Loop Pattern): `evals/evals.json`. Scaffold a JSON file containing at least 2 "positive" test prompts and 2 "negative/near-miss" test prompts to be used for future trigger optimization and baseline grading.
+3. **Procedural Fallbacks** (Highly Procedural Fallback Trees Pattern): `references/fallback-tree.md`. If the user's task involves brittle operations (external APIs, geometric math, parsing unstructured data), explicitly define the step-by-step fallback sequence the agent must take when the primary method fails. Link this file in the `SKILL.md`.
 
 ### 4. Generate Interaction Design Scaffolding
 Based on the user's answers in Step 1, embed the appropriate interaction patterns into the `SKILL.md`:
@@ -68,10 +73,20 @@ Based on the user's answers in Step 1, embed the appropriate interaction pattern
 - **Always**: Add a `## Next Actions` section at the end offering follow-up options
 - **If Expensive Operations**: Add confirmation gates before destructive/costly steps
 - **If Processing Documents**: Include a Pre-Conversion Classification rule for large inputs
+- **If Generating Artifacts/Code**: Include the *Tainted Context Cleanser* pattern, instructing the agent to spawn a zero-context subagent to review the final output before presenting it.
+- **If Executing In Browser/Client**: Include the *Client-Side Compute Sandbox Constraint*, mandating hardcoded upper bounds on loops and arrays.
+- **If Generating Syntax/Formulas**: Include the *Delegated Constraint Verification Loop*, instructing the user to hit an external validation script that feeds JSON errors back to the agent for self-correction.
+- **If the LLM has a Known Bias**: Include the *Negative Instruction Constraint*, structurally forbidding the LLM's default instinct using ❌ WRONG vs ✅ CORRECT contrasting headers.
 - **If JIT Patterns Loaded**: Embed the lean tables/templates you learned from the `~~l4-pattern-catalog` abstraction into the skill's `references/` folder, and link to them from `SKILL.md`.
 
-### 5. Finalize `SKILL.md`
+### 5. Finalize `SKILL.md` (Local Interactive Output Viewer Loop)
 Use file writing tools to populate the generated `SKILL.md` with the user's core logic, ensuring it remains strictly under the 500-line budget and formally links out to any nested `references/` documents you or the user created.
+
+**CRITICAL: Scaffold Previewer Phase**
+Before considering the skill "finished", inform the user you have completed the file generation. If the generation is complex involving many files, offer to write the hierarchy to a `/tmp/scaffold-preview/` directory first for their review, rather than immediately overwriting their `plugins/` directory.
+
+### 6. Trigger Optimization (Trigger Description Optimization Loop)
+If the user is unsure if their trigger description is accurate, offer to run a background prompt evaluation using `evals.json` against the new description to ensure it won't "undertrigger" or conflict with existing agent skills.
 
 
 ## Next Actions

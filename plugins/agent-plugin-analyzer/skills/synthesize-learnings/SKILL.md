@@ -5,6 +5,7 @@ description: >
   and agent-skill-open-specifications. Trigger with "synthesize learnings", "generate improvement
   recommendations", "what should we improve in our scaffolders", "update our meta-skills based on
   these findings", or after completing a plugin analysis.
+allowed-tools: Bash, Read, Write
 ---
 
 # Synthesize Learnings
@@ -138,5 +139,8 @@ The synthesis report should be a standalone markdown document suitable for:
 - Filing as a reference artifact
 - Using as a briefing for planning sessions
 - Driving specific PRs against the scaffolders and specs
+
+**Iteration Directory Isolation**: Do NOT overwrite existing synthesis reports. Always output to a newly isolated directory (e.g. `synthesis-reports/run-1/`) so historical recommendations are preserved.
+**Asynchronous Benchmark Metric Capture**: Log the `total_tokens` and `duration_ms` consumed during the synthesis back to `timing.json` to track the ROI cost of this meta-analysis.
 
 Always close with a **Next Steps** section listing the 3 most impactful changes to make first.

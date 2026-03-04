@@ -24,8 +24,6 @@ jobs:
         include:
           - language: python
             build-mode: none
-          - language: actions
-            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -36,6 +34,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/codeql/codeql-config.yml
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4

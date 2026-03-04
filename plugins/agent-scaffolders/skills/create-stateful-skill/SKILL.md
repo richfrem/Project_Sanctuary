@@ -3,6 +3,7 @@ name: create-stateful-skill
 description: Interactive initialization script that generates an advanced Agent Skill utilizing L4 State Management, Lifecycle Artifacts, Tone Configuration, and Chained Commands. Use when authoring complex, persistent workflows.
 disable-model-invocation: false
 tier: 1
+allowed-tools: Bash, Read, Write
 ---
 
 # Stateful Skill Scaffold Generator
@@ -60,5 +61,7 @@ Write the final `SKILL.md`. Ensure it:
 2. Uses Markdown links (e.g., `[See Escalation Rules](references/escalation-taxonomy.md)`) so the LLM only loads the context when needed.
 3. Includes the **Chained Commands** (Offer Next Steps) block at the bottom.
 4. Includes the mandatory **Source Transparency Declaration**.
+
+
 ## Next Actions
 - Offer to run `audit-plugin` to validate the generated artifacts.

@@ -1,0 +1,5 @@
+name: "CodeQL Config"
+paths-ignore:
+  - 'node_modules'
+  - 'ast_utilities'
+  - 'ARCHIVE'

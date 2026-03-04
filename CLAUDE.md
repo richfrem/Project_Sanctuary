@@ -167,47 +167,33 @@ Any operation that:
 trigger: always_on
 ---
 
-# Project Ecosystem Constitution V3
+# Project Ecosystem Constitution V4
 
 > **THE SUPREME LAW: HUMAN GATE**
 > You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
 > "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
 > **VIOLATION = SYSTEM FAILURE**
 
-## I. The Hybrid Workflow (Project Purpose)
-All work MUST follow the **Universal Hybrid Workflow**.
-**START HERE**: `/project-start`
+## I. The Spec-Driven Workflow (Project Purpose)
+All significant work MUST follow the **Spec-Driven Development (SDD) lifecycle**.
+Start with `/spec-kitty.specify` for new features.
 
 ### Workflow Hierarchy
 ```
-/project-start (UNIVERSAL)
-├── Routes to: Learning Loop (cognitive sessions)
-│   └── /project-learning-loop → Audit → Seal → Persist
-├── Routes to: Custom Flow (new features)
-│   └── /spec-kitty.implement → Manual Code
-└── Both end with: /project-retrospective → /project-end
+/spec-kitty.specify   -> spec.md
+/spec-kitty.plan      -> plan.md
+/spec-kitty.tasks     -> tasks/ (work packages)
+/spec-kitty.implement -> isolated worktree per WP
+/spec-kitty.review    -> for_review -> done
+/spec-kitty.accept    -> feature acceptance
+/spec-kitty.merge     -> merge + cleanup
 ```
 
-- **Track A (Factory)**: Deterministic tasks (Codify, Curate).
-- **Track B (Discovery)**: Spec-Driven Development (Spec → Plan → Tasks).
-- **Pre-Execution Mindset**: Agents MUST map their execution using `spec-kitty-workflow`'s visual constraint diagram.
+- **Track A (Factory)**: Deterministic tasks - auto-generated Spec/Plan/Tasks -> Execute.
+- **Track B (Discovery)**: Ambiguous/creative work - full SDD lifecycle.
+- **Track C (Micro-Task)**: Trivial fixes - direct execution, no spec needed.
 
-## II. The Learning Loop (Cognitive Continuity)
-For all cognitive sessions, you are bound by **Protocol 128**.
-**INVOKE**: `/project-learning-loop` (called by `/project-start`)
-
-- **Boot**: Read `cognitive_primer.md` + `learning_package_snapshot.md`
-- **Close**: Audit → Seal → Persist (SAVE YOUR MEMORY)
-- **Constraint**: The Learning Loop implements Protocol 128 (Cognitive Continuity) natively via RLM Cache.
-
-### Identity Layers (Boot Files)
-| Layer | File | Purpose |
-|:------|:-----|:--------|
-| **1. Contract** | `ecosystem_boot_contract.md` (Local Context) | Immutable constraints |
-| **2. Primer** | `cognitive_primer.md` (Local Context) | Role Orientation |
-| **3. Snapshot** | `learning_package_snapshot.md` (Local Context) | Session Context |
-
-## III. Zero Trust (Git & Execution)
+## II. Zero Trust (Git & Execution)
 - **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
 - **NEVER** run `git push` without explicit, fresh approval.
 - **NEVER** "auto-fix" via git.
@@ -218,46 +204,56 @@ Any operation that:
 1. Writes to disk (except /tmp/)
 2. Modifies version control (git add/commit/push)
 3. Executes external commands with side effects
-4. Modifies .agent/learning/* files
 **REQUIRES EXPLICIT APPROVAL ("Proceed", "Go", "Execute").**
 
-## IV. Tool Discovery & Usage
+## III. Tool Discovery & Usage
 - **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
-- **fallback IS PROHIBITED**: If `tool_chroma.py` fails, you MUST STOP and ask user to refresh cache.
-- **ALWAYS** use **Tool Discovery**: `python plugins/tool-inventory/skills/tool-inventory/scripts/tool_chroma.py search "keyword"`. It's your `.agent/skills/SKILL.md`
-- **ALWAYS** use defined **Slash Commands** (`/workflow-*`, `/spec-kitty.*`) over raw scripts.
-- **ALWAYS** use underlying `.sh` scripts e.g. (`scripts/bash/project-start.sh`, `scripts/bash/project-learning-loop.sh`) and the specialized Python scripts living in the `plugins/` directory.
+- **ALWAYS** use defined **Slash Commands** (`/spec-kitty.*`) over raw scripts.
+- **ALWAYS** use `spec-kitty-cli` for SDD lifecycle operations.
+- **ALWAYS** use the `task_manager.py` CLI for kanban lane transitions.
 
-## V. Governing Law (The Tiers)
+## IV. Governing Law (The Tiers)
 
 ### Tier 1: PROCESS (Deterministic)
-| File | Purpose |
-|:-----|:--------|
-| [`workflow_enforcement_policy.md`](01_PROCESS/workflow_enforcement_policy.md) | **Slash Commands**: Command-Driven Improvement |
-| [`tool_discovery_enforcement_policy.md`](01_PROCESS/tool_discovery_enforcement_policy.md) | **No Grep Policy**: Use `tool_chroma.py` |
-| [`spec_driven_development_policy.md`](01_PROCESS/spec_driven_development_policy.md) | **Lifecycle**: Spec → Plan → Tasks |
+| Policy | Purpose |
+|:-------|:--------|
+| `rules/spec_driven_development_policy.md` | **Lifecycle**: Spec -> Plan -> Tasks |
+| `references/standard-workflow-rules.md` | **Worktree Protocol**: Branch & merge rules |
 
-### Tier 2: OPERATIONS (Policies)
-| File | Purpose |
-|:-----|:--------|
-| [`git_workflow_policy.md`](02_OPERATIONS/git_workflow_policy.md) | Branch strategy, commit standards |
+### Tier 2: TECHNICAL (Standards)
+| Policy | Purpose |
+|:-------|:--------|
+| Coding conventions | Per language standards (snake_case, camelCase, PascalCase) |
+| Dependency management | pip-compile locked-file workflow |
 
-### Tier 3: TECHNICAL (Standards)
-| File | Purpose |
-|:-----|:--------|
-| [`coding_conventions_policy.md`](03_TECHNICAL/coding_conventions_policy.md) | Code standards, documentation |
-| [`dependency_management_policy.md`](03_TECHNICAL/dependency_management_policy.md) | pip-compile workflow |
+## V. Session Closure (Mandate)
+- **ALWAYS** run `/spec-kitty.accept` then `/spec-kitty.merge` at feature completion.
+- **NEVER** abandon a feature without acceptance + retrospective.
+- **RLM sync**: Run distill after merge to update the semantic cache.
 
-## VI. Session Closure (Mandate)
-- **ALWAYS** run the 9-Phase Loop before ending a session.
-- **NEVER** abandon a session without sealing.
-- **ALWAYS** run `/project-retrospective` then `/project-end`.
-- **PERSIST** your learnings to the Soul (HuggingFace) and **INGEST** to Brain (RAG).
-
-**Version**: 3.7 | **Ratified**: 2026-02-01
+**Version**: 4.0 | **Ratified**: 2026-03-05
 
 ---
 
+
+
+--- RULE: dependency-management (spec-kitty) ---
+
+---
+description: Universal dependency management rules for Python and agent services.
+globs: ["requirements*.txt", "requirements*.in", "Dockerfile", "pyproject.toml"]
+---
+
+## 🐍 Python Dependency Rules (Summary)
+
+**Full workflow details → `plugins/dependency-management/skills/dependency-management/SKILL.md`**
+
+### Non-Negotiables
+1. **No manual `pip install`** — all changes go through `.in` → `pip-compile` → `.txt`.
+2. **Commit `.in` + `.txt` together** — the `.in` is intent, the `.txt` is the lockfile.
+3. **Service sovereignty** — every agent service owns its own `requirements.txt`.
+4. **Tiered hierarchy** — Core (`requirements-core.in`) → Service-specific → Dev-only.
+5. **Declarative Dockerfiles** — only `COPY requirements.txt` + `RUN pip install -r`. No ad-hoc installs.
 
 
 --- RULE: spec_driven_development_policy (spec-kitty) ---
@@ -317,6 +313,27 @@ When migrating or improving an existing component:
 1. **Discovery**: Run investigation tools.
 2. **Reverse-Spec**: Populate `spec.md` from investigation results.
 3. **Plan**: Create `plan.md` for the migration.
+
+
+--- RULE: coding-conventions (spec-kitty) ---
+
+---
+description: Universal coding conventions for Python, TypeScript, and C#.
+globs: ["*.py", "*.ts", "*.js", "*.cs"]
+---
+
+## 📝 Coding Conventions (Summary)
+
+**Full standards → `plugins/coding-conventions/skills/conventions-agent/SKILL.md`**
+
+### Non-Negotiables
+1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
+2. **File headers** — every source file starts with a purpose header (Python, TS/JS, C#).
+3. **Type hints** — all Python function signatures use type annotations.
+4. **Naming** — `snake_case` (Python), `camelCase` (JS/TS), `PascalCase` (C# public).
+5. **Refactor threshold** — 50+ lines or 3+ nesting levels → extract helpers.
+6. **Tool registration** — all `plugins/` scripts registered in `plugins/tool_inventory.json`.
+7. **Manifest schema** — use simple `{title, description, files}` format (ADR 097).
 
 
 --- RULE: AGENTS (spec-kitty) ---
@@ -387,19 +404,11 @@ These rules apply to **all commands** (specify, plan, research, tasks, implement
 
 1. Paste into a plain-text buffer first (VS Code, TextEdit in plain mode)
 2. Replace smart quotes and dashes
-3. Verify no  replacement characters appear
+3. Verify no � replacement characters appear
 4. Run `spec-kitty validate-encoding --feature <feature-id>` to check
 5. Run `spec-kitty validate-encoding --feature <feature-id> --fix` to auto-repair
 
 **Failure to follow this rule causes the dashboard to render blank pages.**
-
-### Escalation Taxonomy (Encoding Violation Response)
-If the user passes illegal text inside a prompt and asks you to write it directly to a file:
-1. **Stop**: Halt file write.
-2. **Alert**: `🚨 ENCODING VIOLATION 🚨`
-3. **Explain**: "The provided text contains illegal Windows-1252 characters."
-4. **Recommend**: "I must strip smart quotes and em-dashes before writing."
-5. **Draft**: Output the stripped text for verification before writing.
 
 ### Auto-Fix Available
 
@@ -476,14 +485,6 @@ Agent directories like `.claude/`, `.codex/`, `.gemini/` contain:
 - `.claude/`, `.codex/`, `.gemini/`, etc. - Agent runtime directories
 - `.kittify/templates/command-templates/` - These are templates, not final commands
 - Any `auth.json`, `credentials.json`, or similar files
-
-### Escalation Taxonomy (Git Stage Violation Response)
-If you are asked to `git add .` in the root directory and you detect `.claude/` or `.gemini/` in the untracked files list:
-1. **Stop**: Halt the git commit.
-2. **Alert**: `🚨 SECRETS EXPOSURE RISK 🚨`
-3. **Explain**: "Agent directories contain auth tokens and must never be committed."
-4. **Recommend**: "We must add these to .gitignore and execute `git reset HEAD .claude/`."
-5. **Draft**: Ask the user for permission to execute the reset and gitignore update.
 
 ### Automatic Protection
 

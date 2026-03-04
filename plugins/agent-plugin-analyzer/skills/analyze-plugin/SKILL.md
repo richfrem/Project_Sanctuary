@@ -5,6 +5,7 @@ description: >
   and reusable techniques. Trigger with "analyze this plugin", "mine patterns from", "review plugin
   structure", "extract learnings from", "what patterns does this plugin use", or when examining any
   plugin or skill collection to understand its design.
+allowed-tools: Bash, Read, Write
 ---
 
 # Plugin & Skill Analyzer
@@ -160,5 +161,8 @@ Load the maturity model and scoring rubric from `references/maturity-model.md`.
 ## Output
 
 Generate a structured markdown report. For single plugins, output inline. For collections, create an artifact file with the full analysis.
+
+**Iteration Directory Isolation**: All analysis reports must be saved into explicitly versioned and isolated outputs (e.g. `analysis-reports/target-run-1/`) to prevent destructive overrides on re-runs.
+**Asynchronous Benchmark Metric Capture**: Once the audit run completes, immediately log the resulting `total_tokens` and `duration_ms` to a `timing.json` file to calculate the cost of the deep-dive analysis.
 
 Always end with **Virtuous Cycle Recommendations**: specific, actionable improvements for `agent-plugin-analyzer` (this plugin), `agent-scaffolders`, and `agent-skill-open-specifications` based on patterns discovered.

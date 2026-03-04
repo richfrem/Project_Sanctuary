@@ -7,3 +7,8 @@
 .claude/skills/** merge=ours
 GEMINI.md merge=ours
 .github/copilot-instructions.md merge=ours
+
+# Ignore vendored JS/TS for CodeQL and Linguist
+node_modules/** linguist-generated=true
+ast_utilities/js_transformer/node_modules/** linguist-generated=true
+ARCHIVE/07_COUNCIL_AGENTS/** linguist-generated=true

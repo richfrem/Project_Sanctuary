@@ -2,6 +2,7 @@
 name: create-plugin
 description: Interactive initialization script that acts as a Plugin Architect. Generates a compliant '.claude-plugin' directory structure and `plugin.json` manifest using diagnostic questioning to ensure proper L4 patterns and Tool Connector schemas.
 disable-model-invocation: false
+allowed-tools: Bash, Read, Write
 ---
 
 # Agent Plugin Designer & Architect
@@ -28,16 +29,18 @@ Use progressive diagnostic questioning to understand the plugin design. Do not d
 - **External Tool Integrations**: If supercharged or integration-dependent, ask which tool categories are needed (e.g., `~~CRM`, `~~project tracker`, `~~source control`). These will seed the `CONNECTORS.md`.
 - **Interaction Style**: Based on the `hitl-interaction-design.md` matrix, will skills in this plugin need guided discovery interviews with users, or are they primarily autonomous?
 - **Pattern Routing**: Based on the `pattern-decision-matrix.md`, explicitly ask the diagnostic questions. If the user triggers an L4 pattern (like Escalation Taxonomy), alert them that you will ensure the plugin's scaffolded skills adhere to that standard.
+
 ### Phase 1.5: Recap & Confirm
 **Do NOT immediately scaffold after the interview.**
 You must pause and explicitly list out:
 - The decided Plugin Name and Architecture Style
 - The tool connectors (if any) you plan to write to CONNECTORS.md
-- Any L4 Patterns you noted during discovery
+- Any L4/L5 Patterns you noted during discovery (Crucially, note if the plugin requires Client-Side Compute Sandboxes or XSS Compliance Gates due to artifact generation).
 Ask the user: "Does this look right? (yes / adjust)"
 
 ### 2. Scaffold the Plugin
-Execute the deterministic `scaffold.py` script:
+Execute the deterministic `scaffold.py` script. **CRITICAL: Apply the Iteration Directory Isolation Pattern**.
+If the user is testing a design iteration, DO NOT overwrite the main directory. Append `--iteration <N>` to save to `.history/iteration-<N>/`.
 ```bash
 python3 ~~agent-scaffolders-root/scripts/scaffold.py --type plugin --name <requested-name> --path <destination-directory>
 ```
@@ -57,9 +60,14 @@ If the user indicated MCP integrations, create a `CONNECTORS.md` file at the plu
 This ensures the plugin is tool-agnostic and portable across organizations.
 
 ### 4. Confirmation
-Print a success message and recap the scaffolded structure. Remind the user of two absolute standards:
+Print a success message and recap the scaffolded structure. Remind the user of three absolute standards:
 1. If supercharged, populate `CONNECTORS.md` with specific tool mappings.
 2. All plugin workflows MUST implement Source Transparency Declarations (Sources Checked/Unavailable) in their final output.
+3. If this plugin will generate `.html`, `.svg`, or `.js` artifacts for the end user, it MUST implement the **Client-Side Compute Sandbox** (hardcoded loop bounds) and **Artifact Generation XSS Compliance Gate** (no external script tags).
+
+**CRITICAL: Scaffold Previewer Phase**
+Before finishing, if the user wants to check your generated code visually before it goes to production, offer to output the proposed hierarchy into `/tmp/scaffold-preview/` so they can evaluate the structure without modifying their real `plugins/` directory.
+
 ## Next Actions
 - Offer to run `create-skill` to populate the plugin.
 - Offer to run `create-mcp-integration` to add tool connectors.
