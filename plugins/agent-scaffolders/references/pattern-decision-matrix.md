@@ -20,6 +20,8 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Does the user report surface symptoms that need root-cause diagnosis? | **Anti-Symptom Triage** | `anti-symptom-triage.md` |
 | Does the command group several sub-operations that have different outputs? | **Sub-Action Multiplexing** | `sub-action-multiplexing.md` |
 | Does the command require user input upstream where asking questions mid-flight hurts UX? | **Pre-Execution Input Manifest** | `pre-execution-input-manifest.md` |
+| Does the skill share overlapping keywords with generic tools, potentially causing discoverability issues? | **Multi-Variant Trigger Optimizer** | `multi-variant-trigger-optimizer.md` |
+| Does the skill inherently struggle with undertriggering due to generic namespace intent vs actual semantic queries? | **Trigger Description Optimization Loop** | `trigger-description-optimization-loop.md` (Source: Anthropic `skill-creator`) |
 
 ### Category 2: Execution and Safety
 | Diagnostic Question | Required Pattern | File |
@@ -36,6 +38,11 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Will the agent's natural sycophancy (agreeableness) ruin the analysis? | **Adversarial Objectivity Constraint** | `adversarial-objectivity-constraint.md` |
 | Is the command modifying constrained additive resources (dashboards, capacity)? | **Zero-Sum Addition Gate** | `zero-sum-addition-gate.md` |
 | Is there a minimum compliance safety standard that must never be bypassed regardless of the execution path or tool availability? | **Mode-Invariant Compliance Gate** | `mode-invariant-compliance-gate.md` |
+| Is the primary method for the task highly brittle or prone to edge-case failures (e.g. math, geometric extraction)? | **Highly Procedural Fallback Trees** | `highly-procedural-fallback-trees.md` |
+| Does the skill write code, configurations, or formulas that can be definitively proven broken by a compiler or engine evaluation? | **Delegated Constraint Verification Loop** | `delegated-constraint-verification-loop.md` |
+| Does the skill write executable code or loops destined to run directly on the client/browser? | **Client-Side Compute Sandbox Constraint** | `client-side-compute-sandbox-constraint.md` |
+| Does the generation output directly to a working directory where mistaken rollback is impossible without git reset? | **Iteration Directory Isolation** | `iteration-directory-isolation.md` (Source: Anthropic `skill-creator`) |
+| Is critical timing or token benchmark data emitted asynchronously via system notifications rather than final outputs? | **Asynchronous Benchmark Metric Capture** | `asynchronous-benchmark-metric-capture.md` (Source: Anthropic `skill-creator`) |
 
 ### Category 3: Output and Contracts
 | Diagnostic Question | Required Pattern | File |
@@ -47,7 +54,6 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Does the agent need to understand context incrementally rather than dumping 50 files into memory at once? | **Progressive Disclosure** | `progressive-disclosure.md` |
 | Does the plugin use placeholders that need to be universally understood by distributed users? | **Category-Semantic Deferred Tool Binding** | `category-semantic-deferred-tool-binding.md` |
 | Does the artifact's existing configuration state determine what the workflow should do? | **Artifact-State-Interrogative Routing** | `artifact-state-interrogative-routing.md` |
-| Does the agent need to express exactly where it looked vs where it didn't? | **Source Transparency** | `source-transparency.md` |
 | Does the output need special handling (e.g., privileged, confidential)?| **Output Classification** | `output-classification.md` |
 | Does the command produce written communications (emails, chat)? | **Multi-Dimensional Tone** | `multi-dimensional-tone.md` |
 | Is the output a priority ranking that requires mathematical determinism? | **Embedded Deterministic Scoring Formula** | `embedded-deterministic-scoring-formula.md` |
@@ -56,7 +62,13 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Does the tool produce a strategic analysis that requires the user to decide? | **Mandatory Counterfactual Scenario Templating** | `mandatory-counterfactual-scenario-templating.md` |
 | Does the primary stakeholder lack context needed to understand raw metrics? | **Impact-Translated Status** | `impact-translated-status.md` |
 | Does the organization have an expected statistical distribution or budget curve for these entities? | **Population-Normative Distribution Constraint** | `population-normative-distribution-constraint.md` |
+| Does the LLM have a strong innate bias to solve the problem the "wrong" way (e.g., calculating math in Python instead of writing a formula)? | **Negative Instruction Constraint** | `negative-instruction-constraint.md` |
 | Does the skill evaluate metrics that require external industry benchmarks rather than the agent's subjective judgment? | **Category-Calibrated Benchmark Anchoring** | `category-calibrated-benchmark-anchoring.md` |
+| Will the generated output be consumed by fresh readers lacking the agent's conversational context? | **Tainted Context Cleanser** | `tainted-context-cleanser.md` |
+| Does the output's quality or performance need to be provably benchmarked against baselines? | **Rigorous Benchmarking & Grading Loop** | `rigorous-benchmarking-loop.md` |
+| Does the command generate full UI artifacts (HTML/SVG) where external asset injection poses a security risk? | **Artifact Generation XSS Compliance Gate** | `artifact-generation-xss-compliance-gate.md` |
+| Are generated UI artifacts or whole file hierarchies difficult for the user to review purely in code before saving? | **Local Interactive Output Viewer Loop** | `local-interactive-output-viewer-loop.md` (Source: Anthropic `skill-creator`) |
+| Does the interaction pop local browsers or servers that will crash in remote VMs or headless subagent loops? | **UI Degradation Constraint** | `ui-degradation-constraint.md` (Source: Anthropic `skill-creator`) |
 
 ### Category 4: State and Knowledge
 | Diagnostic Question | Required Pattern | File |
@@ -66,13 +78,15 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Is the domain highly regulated (laws, specific numeric thresholds)? | **Temporal Anchoring** | `temporal-anchoring.md` |
 | Does the skill generate living documents (e.g., KBs, playbooks)? | **Lifecycle-Aware Knowledge** | `lifecycle-aware-knowledge.md` |
 | Does the skill create artifact files? | **Artifact Lifecycle** | `artifact-lifecycle.md` |
+| Should branding, styling, or tone rules be shared globally across multiple distinct generation skills? | **Passive Style Injection Payload** | `passive-style-injection-payload.md` |
 | Does the workflow require complex knowledge gathering from multiple sources? | **Graduated Source-Attributed Knowledge Elicitation** | `graduated-source-attributed-elicitation.md` |
 | Is there a risk that the user will be overwhelmed by technical file-path/YAML minutiae? | **Dual-Register Communication Enforcement** | `dual-register-communication-enforcement.md` |
-| Does the skill synthesize an answer based on multiple competing sources?| **Tiered Source Authority**| `tiered-source-authority.md` |
 | Should the command point the user to the next logical step in a workflow?| **Chained Command Invocation**| `chained-command-invocation.md` |
 | Do the commands require configuration that is tedious to supply on every run? | [Persistent Plugin Configuration](persistent-plugin-configuration.md) |
 | Does the workflow happen in recurring, time-bounded periods where the previous output is the next input? | [Cyclical State Propagation Contract](cyclical-state-propagation-contract.md) |
 | Should the generated artifact structurally record its own procedural history? | **Artifact-Embedded Execution Audit Trail** | `artifact-embedded-execution-audit-trail.md` |
+| Does the skill require orchestrating against an external SDK or schema that updates frequently? | **Dynamic Specification Fetching** | `dynamic-specification-fetching.md` |
+| Does the command generate randomized or chaotic output that a user might want to exactly replicate later? | **Explicit Seed-Anchored Determinism** | `explicit-seed-anchored-determinism.md` |
 
 ---
 
@@ -80,10 +94,10 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 
 If a pattern is triggered and loaded, you must perform **Progressive Disclosure Injection** into the generated skill:
 
-1. **Do not bloat the `SKILL.md`** with the full theory of the pattern.
-2. Create a lean reference file in the new skill's `references/` directory (e.g. `references/escalation-rules.md`).
-3. Populate that new reference file with ONLY the concrete, domain-specific tables and rules requested by the pattern definition.
-4. Add a markdown link in the new `SKILL.md` pointing to this newly generated reference file so the runtime agent knows to load it when executing.
+1.  **Do not bloat the `SKILL.md`** with the full theory of the pattern.
+2.  Create a lean reference file in the new skill's `references/` directory (e.g. `references/escalation-rules.md`).
+3.  Populate that new reference file with ONLY the concrete, domain-specific tables and rules requested by the pattern definition.
+4.  Add a markdown link in the new `SKILL.md` pointing to this newly generated reference file so the runtime agent knows to load it when executing.
 
 This mechanism ensures that new skills possess L4 statefulness and safety boundaries without violating the 500-line `SKILL.md` context constraint.
 ## L4 Pattern Reference Catalog
@@ -296,6 +310,47 @@ Once a pattern is triggered by the decision tree above, load the corresponding f
 - **File:** `pre-execution-workflow-commitment-diagram.md`
 - **Use Case:** Multi-phase commands where users benefit from understanding the whole process upfront or where the agent proves prone to skipping steps.
 - **Core Mechanic:** Every command opens with an ASCII flowchart visual diagram mapping the process steps before any logic evaluates, committing the agent structurally to that process.
+
+### Concept-Dialect Translation Table
+- **File:** `concept-dialect-translation-table.md`
+- **Use Case:** Integrating external systems (like Notion or Jira) whose internal terminology differs from your domain terminology.
+- **Core Mechanic:** A literal Markdown table in `CONNECTORS.md` that maps internal domain concepts to external system equivalents, so the agent can naturally "speak" the target API's dialect.
+
+### Category-Semantic Deferred Tool Binding
+- **File:** `category-semantic-deferred-tool-binding.md`
+- **Use Case:** Writing portable templates expected to be deployed across vastly different technical ecosystems.
+- **Core Mechanic:** Using human-readable categories as `~~` placeholder tokens, effectively turning the placeholder itself into the discovery keyword for registry lookups.
+
+### Artifact-State-Interrogative Routing
+- **File:** `artifact-state-interrogative-routing.md`
+- **Use Case:** Workflows that modify existing plugins or configurations that may exist in various lifecycles.
+- **Core Mechanic:** Executing a fast read-only inspection command against the artifact before user interaction to determine its lifecycle state and hard-route the workflow mode.
+
+### Dual-Register Communication Enforcement
+- **File:** `dual-register-communication-enforcement.md`
+- **Use Case:** Technical manipulation workflows for non-technical users.
+- **Core Mechanic:** Forcing a strict boundary where the agent uses technical paths/tokens internally, but ONLY ever emits semantic, capability-framed language in user-facing artifacts and summaries.
+
+### Graduated Source-Attributed Knowledge Elicitation
+- **File:** `graduated-source-attributed-elicitation.md`
+- **Use Case:** Multi-step knowledge gathering processes.
+- **Core Mechanic:** Searching systems in priority order to minimize questioning, and tracking exact provenance of every variable so the final summary proves *where* the agent learned the fact, guaranteeing transparency.
+
+### Progressive Disclosure
+- **File:** `progressive-disclosure.md`
+- **Use Case:** Coping with large architectures or domain rules.
+- **Core Mechanic:** Splitting knowledge out of the primary `SKILL.md` (which is always loaded into context window) into `references/*.md`, mapped to specific triggers so they only load when strictly necessary.
+- **Evolution:** *Tiered Progressive Disclosure with Explicit Budget Constraints* — Implementing hard token/word count budgets per progressive disclosure tier.
+
+### Zero-Sum Addition Gate
+- **File:** `zero-sum-addition-gate.md`
+- **Use Case:** Sprint planning, roadmap management, staffing changes, or any system where resources are finite.
+- **Core Mechanic:** A pre-action capacity constraint that evaluates resource limits and forbids the agent from blindly executing an additive operation without forcing a subtractive trade-off decision from the user.
+
+### Mode-Invariant Compliance Gate
+- **File:** `mode-invariant-compliance-gate.md`
+- **Use Case:** Domains where missing a safety/compliance step due to a conditional logic skip is unacceptable.
+- **Core Mechanic:** A structurally isolated block of mandatory checks that are declared immune to all conditional execution pathways, forming a compliance floor that runs on every invocation.
 
 ### Category-Calibrated Benchmark Anchoring
 - **File:** `category-calibrated-benchmark-anchoring.md`
