@@ -72,11 +72,20 @@ The heart of the project lives entirely within the `plugins/` directory.
 ### 2.1 The Core Plugins
 This framework relies on loosely coupled, high-cohesion plugins mapped directly into your AI Assistant's environment.
 
+#### Platform & Alignment Layers
 * **`sanctuary-guardian`**: The master orchestration layer enforcing the project's constitution. Handles the "Human Gate" (Zero Trust execution) and lifecycle management.
 * **`spec-kitty`**: The engine for **Spec-Driven Development (.specify -> .plan -> .tasks)** to ensure structured feature implementation without simulation.
 * **`rlm-factory`**: The Semantic Ledger. Governs Reactive Ledger Memory (RLM), providing ultra-fast precognitive "holograms" of the repository structure.
 * **`tool-inventory`**: Replaces grep/find with semantic tool discovery (`tool_chroma.py`).
 * **`agent-scaffolders`**: Rapid generation of compliant workflows, L4 Agent Skills, and hooks.
+
+#### Agent Loops (L4 Architectural Patterns)
+The project natively implements industry-standard Agentic Execution Patterns as discrete plugins:
+* **`orchestrator`**: (Routing Agent Pattern) Analyzes ambiguous triggers and routes them to specialized implementation loops.
+* **`learning-loop`**: (Single Agent / Loop Pattern) Self-contained research, synthesis, and knowledge capture without inner delegation.
+* **`red-team-review`**: (Review & Critique Pattern) Iterative generation paired with adversarial review until an "Approved" verdict is reached.
+* **`dual-loop`**: (Sequential Agent Pattern) Strategy delegation from an Outer Loop controller to an Inner Loop tactical executor.
+* **`agent-swarm`**: (Parallel Agent Pattern) Work partitioning for simultaneous independent execution across multiple agents in isolated worktrees.
 
 ### 2.2 Transpilation to Agent Environments
 The project contains no vendor-locked system architectures. Instead, it utilizes the `agent-bridge` to transpile Sanctuary Plugins into raw capabilities for specific AI assistants:
