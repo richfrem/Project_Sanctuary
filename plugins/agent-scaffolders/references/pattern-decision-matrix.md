@@ -47,6 +47,7 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Does the agent need to understand context incrementally rather than dumping 50 files into memory at once? | **Progressive Disclosure** | `progressive-disclosure.md` |
 | Does the plugin use placeholders that need to be universally understood by distributed users? | **Category-Semantic Deferred Tool Binding** | `category-semantic-deferred-tool-binding.md` |
 | Does the artifact's existing configuration state determine what the workflow should do? | **Artifact-State-Interrogative Routing** | `artifact-state-interrogative-routing.md` |
+| Does the agent need to express exactly where it looked vs where it didn't? | **Source Transparency** | `source-transparency.md` |
 | Does the output need special handling (e.g., privileged, confidential)?| **Output Classification** | `output-classification.md` |
 | Does the command produce written communications (emails, chat)? | **Multi-Dimensional Tone** | `multi-dimensional-tone.md` |
 | Is the output a priority ranking that requires mathematical determinism? | **Embedded Deterministic Scoring Formula** | `embedded-deterministic-scoring-formula.md` |
@@ -67,6 +68,7 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 | Does the skill create artifact files? | **Artifact Lifecycle** | `artifact-lifecycle.md` |
 | Does the workflow require complex knowledge gathering from multiple sources? | **Graduated Source-Attributed Knowledge Elicitation** | `graduated-source-attributed-elicitation.md` |
 | Is there a risk that the user will be overwhelmed by technical file-path/YAML minutiae? | **Dual-Register Communication Enforcement** | `dual-register-communication-enforcement.md` |
+| Does the skill synthesize an answer based on multiple competing sources?| **Tiered Source Authority**| `tiered-source-authority.md` |
 | Should the command point the user to the next logical step in a workflow?| **Chained Command Invocation**| `chained-command-invocation.md` |
 | Do the commands require configuration that is tedious to supply on every run? | [Persistent Plugin Configuration](persistent-plugin-configuration.md) |
 | Does the workflow happen in recurring, time-bounded periods where the previous output is the next input? | [Cyclical State Propagation Contract](cyclical-state-propagation-contract.md) |
@@ -78,10 +80,10 @@ Not every skill needs complex architectural patterns. Use this tree during the d
 
 If a pattern is triggered and loaded, you must perform **Progressive Disclosure Injection** into the generated skill:
 
-1.  **Do not bloat the `SKILL.md`** with the full theory of the pattern.
-2.  Create a lean reference file in the new skill's `references/` directory (e.g. `references/escalation-rules.md`).
-3.  Populate that new reference file with ONLY the concrete, domain-specific tables and rules requested by the pattern definition.
-4.  Add a markdown link in the new `SKILL.md` pointing to this newly generated reference file so the runtime agent knows to load it when executing.
+1. **Do not bloat the `SKILL.md`** with the full theory of the pattern.
+2. Create a lean reference file in the new skill's `references/` directory (e.g. `references/escalation-rules.md`).
+3. Populate that new reference file with ONLY the concrete, domain-specific tables and rules requested by the pattern definition.
+4. Add a markdown link in the new `SKILL.md` pointing to this newly generated reference file so the runtime agent knows to load it when executing.
 
 This mechanism ensures that new skills possess L4 statefulness and safety boundaries without violating the 500-line `SKILL.md` context constraint.
 ## L4 Pattern Reference Catalog
@@ -294,47 +296,6 @@ Once a pattern is triggered by the decision tree above, load the corresponding f
 - **File:** `pre-execution-workflow-commitment-diagram.md`
 - **Use Case:** Multi-phase commands where users benefit from understanding the whole process upfront or where the agent proves prone to skipping steps.
 - **Core Mechanic:** Every command opens with an ASCII flowchart visual diagram mapping the process steps before any logic evaluates, committing the agent structurally to that process.
-
-### Concept-Dialect Translation Table
-- **File:** `concept-dialect-translation-table.md`
-- **Use Case:** Integrating external systems (like Notion or Jira) whose internal terminology differs from your domain terminology.
-- **Core Mechanic:** A literal Markdown table in `CONNECTORS.md` that maps internal domain concepts to external system equivalents, so the agent can naturally "speak" the target API's dialect.
-
-### Category-Semantic Deferred Tool Binding
-- **File:** `category-semantic-deferred-tool-binding.md`
-- **Use Case:** Writing portable templates expected to be deployed across vastly different technical ecosystems.
-- **Core Mechanic:** Using human-readable categories as `~~` placeholder tokens, effectively turning the placeholder itself into the discovery keyword for registry lookups.
-
-### Artifact-State-Interrogative Routing
-- **File:** `artifact-state-interrogative-routing.md`
-- **Use Case:** Workflows that modify existing plugins or configurations that may exist in various lifecycles.
-- **Core Mechanic:** Executing a fast read-only inspection command against the artifact before user interaction to determine its lifecycle state and hard-route the workflow mode.
-
-### Dual-Register Communication Enforcement
-- **File:** `dual-register-communication-enforcement.md`
-- **Use Case:** Technical manipulation workflows for non-technical users.
-- **Core Mechanic:** Forcing a strict boundary where the agent uses technical paths/tokens internally, but ONLY ever emits semantic, capability-framed language in user-facing artifacts and summaries.
-
-### Graduated Source-Attributed Knowledge Elicitation
-- **File:** `graduated-source-attributed-elicitation.md`
-- **Use Case:** Multi-step knowledge gathering processes.
-- **Core Mechanic:** Searching systems in priority order to minimize questioning, and tracking exact provenance of every variable so the final summary proves *where* the agent learned the fact, guaranteeing transparency.
-
-### Progressive Disclosure
-- **File:** `progressive-disclosure.md`
-- **Use Case:** Coping with large architectures or domain rules.
-- **Core Mechanic:** Splitting knowledge out of the primary `SKILL.md` (which is always loaded into context window) into `references/*.md`, mapped to specific triggers so they only load when strictly necessary.
-- **Evolution:** *Tiered Progressive Disclosure with Explicit Budget Constraints* — Implementing hard token/word count budgets per progressive disclosure tier.
-
-### Zero-Sum Addition Gate
-- **File:** `zero-sum-addition-gate.md`
-- **Use Case:** Sprint planning, roadmap management, staffing changes, or any system where resources are finite.
-- **Core Mechanic:** A pre-action capacity constraint that evaluates resource limits and forbids the agent from blindly executing an additive operation without forcing a subtractive trade-off decision from the user.
-
-### Mode-Invariant Compliance Gate
-- **File:** `mode-invariant-compliance-gate.md`
-- **Use Case:** Domains where missing a safety/compliance step due to a conditional logic skip is unacceptable.
-- **Core Mechanic:** A structurally isolated block of mandatory checks that are declared immune to all conditional execution pathways, forming a compliance floor that runs on every invocation.
 
 ### Category-Calibrated Benchmark Anchoring
 - **File:** `category-calibrated-benchmark-anchoring.md`

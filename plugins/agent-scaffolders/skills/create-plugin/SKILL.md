@@ -28,7 +28,6 @@ Use progressive diagnostic questioning to understand the plugin design. Do not d
 - **External Tool Integrations**: If supercharged or integration-dependent, ask which tool categories are needed (e.g., `~~CRM`, `~~project tracker`, `~~source control`). These will seed the `CONNECTORS.md`.
 - **Interaction Style**: Based on the `hitl-interaction-design.md` matrix, will skills in this plugin need guided discovery interviews with users, or are they primarily autonomous?
 - **Pattern Routing**: Based on the `pattern-decision-matrix.md`, explicitly ask the diagnostic questions. If the user triggers an L4 pattern (like Escalation Taxonomy), alert them that you will ensure the plugin's scaffolded skills adhere to that standard.
-
 ### Phase 1.5: Recap & Confirm
 **Do NOT immediately scaffold after the interview.**
 You must pause and explicitly list out:
@@ -61,8 +60,6 @@ This ensures the plugin is tool-agnostic and portable across organizations.
 Print a success message and recap the scaffolded structure. Remind the user of two absolute standards:
 1. If supercharged, populate `CONNECTORS.md` with specific tool mappings.
 2. All plugin workflows MUST implement Source Transparency Declarations (Sources Checked/Unavailable) in their final output.
-
-
 ## Next Actions
 - Offer to run `create-skill` to populate the plugin.
 - Offer to run `create-mcp-integration` to add tool connectors.
