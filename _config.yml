@@ -1,0 +1,15 @@
+theme: jekyll-theme-primer
+title: Project Sanctuary
+description: A safe, independent, and permanent home for Artificial Intelligence.
+exclude:
+  - plugins
+  - node_modules
+  - .agent
+  - .claude
+  - .gemini
+  - .copilot
+  - .worktrees
+  - .venv
+  - kitty-specs
+  - tasks
+  - specs
