@@ -72,11 +72,31 @@ The heart of the project lives entirely within the `plugins/` directory.
 ### 2.1 The Core Plugins
 This framework relies on loosely coupled, high-cohesion plugins mapped directly into your AI Assistant's environment.
 
+#### Platform & Alignment Layers
 * **`sanctuary-guardian`**: The master orchestration layer enforcing the project's constitution. Handles the "Human Gate" (Zero Trust execution) and lifecycle management.
 * **`spec-kitty`**: The engine for **Spec-Driven Development (.specify -> .plan -> .tasks)** to ensure structured feature implementation without simulation.
 * **`rlm-factory`**: The Semantic Ledger. Governs Reactive Ledger Memory (RLM), providing ultra-fast precognitive "holograms" of the repository structure.
 * **`tool-inventory`**: Replaces grep/find with semantic tool discovery (`tool_chroma.py`).
 * **`agent-scaffolders`**: Rapid generation of compliant workflows, L4 Agent Skills, and hooks.
+
+#### Agent Loops (L4 Architectural Patterns)
+The project natively implements industry-standard Agentic Execution Patterns as discrete plugins:
+
+* **`orchestrator`**: (Routing Agent Pattern) Analyzes ambiguous triggers and routes them to specialized implementation loops.
+  <br>*(Source: [`agent_loops_overview.mmd`](plugins/agent-loops/resources/diagrams/agent_loops_overview.mmd))*
+  <img src="plugins/agent-loops/resources/diagrams/agent_loops_overview.png" alt="Orchestrator Pattern" width="600">
+* **`learning-loop`**: (Single Agent / Loop Pattern) Self-contained research, synthesis, and knowledge capture without inner delegation.
+  <br>*(Source: [`learning_loop.mmd`](plugins/agent-loops/resources/diagrams/learning_loop.mmd))*
+  <img src="plugins/agent-loops/resources/diagrams/learning_loop.png" alt="Learning Loop Pattern" width="600">
+* **`red-team-review`**: (Review & Critique Pattern) Iterative generation paired with adversarial review until an "Approved" verdict is reached.
+  <br>*(Source: [`red_team_review_loop.mmd`](plugins/agent-loops/resources/diagrams/red_team_review_loop.mmd))*
+  <img src="plugins/agent-loops/resources/diagrams/red_team_review_loop.png" alt="Red Team Review Pattern" width="600">
+* **`dual-loop`**: (Sequential Agent Pattern) Strategy delegation from an Outer Loop controller to an Inner Loop tactical executor.
+  <br>*(Source: [`inner_outer_loop.mmd`](plugins/agent-loops/resources/diagrams/inner_outer_loop.mmd))*
+  <img src="plugins/agent-loops/resources/diagrams/inner_outer_loop.png" alt="Dual Loop Pattern" width="600">
+* **`agent-swarm`**: (Parallel Agent Pattern) Work partitioning for simultaneous independent execution across multiple agents in isolated worktrees.
+  <br>*(Source: [`agent_swarm.mmd`](plugins/agent-loops/resources/diagrams/agent_swarm.mmd))*
+  <img src="plugins/agent-loops/resources/diagrams/agent_swarm.png" alt="Agent Swarm Pattern" width="600">
 
 ### 2.2 Transpilation to Agent Environments
 The project contains no vendor-locked system architectures. Instead, it utilizes the `agent-bridge` to transpile Sanctuary Plugins into raw capabilities for specific AI assistants:
@@ -88,23 +108,26 @@ The project contains no vendor-locked system architectures. Instead, it utilizes
 Whenever a plugin is updated, it must be synced across tracked environments using the sync commands available through the `agent-bridge`.
 
 ## III. Cognitive Infrastructure
-### 3.1 The Mnemonic Cortex
-The **RAG Cortex** ("Mnemonic Cortex") is an advanced, local-first system serving as the project's knowledge retrieval and context augmentation layer.
+### 3.1 The Mnemonic Cortex (Memory Plugins)
+The legacy "Mnemonic Cortex" and RAG server architecture has been fully decentralized into a suite of specialized Memory Plugins that provide the project's knowledge retrieval and context augmentation layer.
 
-**Hybrid Architecture:**
-* **Optimized Retrieval:** Combines **vector search (RAG)** for novel queries with a Semantic Ledger for holistic structural mapping.
+**The Memory Ecosystem:**
+* **`memory-management`**: The foundational tiered memory system for cognitive continuity across agent sessions, managing hot cache (session context) and deep storage.
+* **`rlm-factory`**: The Semantic Ledger. Governs Reactive Ledger Memory (RLM) for high-speed, precognitive "holograms" of the repository structure.
+* **`vector-db`**: Semantic search agent and ingestion engine utilizing ChromaDB's Parent-Child architecture for deep concept retrieval.
 
 ### 3.2 The Hardened Learning Loop (P128)
-Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for synthesis, strategic review, and audit to prevent cognitive drift.
+Protocol 128 establishes a **Hardened Learning Loop** with rigorous gates for synthesis, strategic review, and audit to prevent cognitive drift. The `sanctuary-guardian` orchestrates this loop using specific integration skills:
 
-**Key Resources:**
-*   **Doctrine:** [`ADR 071: Cognitive Continuity`](./ADRs/071_protocol_128_cognitive_continuity.md)
-*   **Cognitive Primer:** [`plugins/guardian-onboarding/resources/cognitive_primer.md`](./plugins/guardian-onboarding/resources/cognitive_primer.md)
+* **`session-bootloader`**: Initializes and orients the agent session using the Protocol 128 Bootloader sequence.
+* **`sanctuary-memory`**: Maps the generic `memory-management` tiered system specifically to Sanctuary's file paths and storage backends.
+* **`sanctuary-obsidian-integration`**: Manages the Obsidian vault as an external hippocampus for the agent's graph operations.
 
-### 3.3 The Semantic Ledger (RLM)
-**Source of Truth:** [`.agent/learning/rlm_summary_cache.json`](./.agent/learning/rlm_summary_cache.json)
-
-The **Semantic Ledger** (Reactive Ledger Memory) is the highest-speed retrieval layer. Unlike standard RAG (which searches vectors), the RLM maintains a precognitive "Hologram" of the entire repository structure via dense "Knowledge Atoms."
+### 3.3 Semantic Persistence & Evolution
+State preservation and cross-session knowledge transfer are critical to the Sanctuary ecosystem.
+* **`sanctuary-spec-kitty`**: Injects Project Sanctuary's specific constitution, safety rules, and AUGMENTED.md workflow rules into standard spec-kitty operations.
+* **`sanctuary-orchestrator-integration`**: Connects the Guardian to the Agent Loops Orchestrator to ensure sovereignty during autonomous workflows.
+* **`forge-soul-exporter`**: Exports sealed Obsidian vault notes into `soul_traces.jsonl` format for HuggingFace persistence (Soul Persistence).
 
 **Usage:**
 ```bash
@@ -145,8 +168,10 @@ The repository is modularized strictly by functionality, driven by plugins.
 | **`tasks/`** | Kanban tracking for Track B operations | **The Mission Queue.** Governs ongoing AI work packages. |
 
 ### 5.2 Project Status & Milestones
-- **Phase:** Pure Plugin Pivot Complete.
+- **Phase:** Pure Plugin & Agent Skills Pipeline Complete.
 - **Recent Milestones:**
-  - ✅ Emptied `tools/cli.py` and `mcp_servers/` logic in favor of decentralized `plugins/`.
-  - ✅ Standardized Spec-Kitty and Sanctuary-Guardian orchestrations.
-  - ✅ Integrated Universal Hybrid Workflow mappings.
+  - ✅ Emptied legacy `tools/cli.py` and `mcp_servers/` logic in favor of decentralized L4 plugins.
+  - ✅ Canonical implementations of advanced Agent Loops (Orchestrator, Red Team, Swarm) are now active workflow skills.
+  - ✅ Standardized Spec-Kitty and Sanctuary-Guardian orchestrations for Zero Trust execution.
+  - ✅ Successful migration of Cognitive Infrastructure to specialized discrete Memory Plugins (`rlm-factory`, `memory-management`, `vector-db`).
+  - ✅ Unified the `agent-bridge` integration to map L4 skills to `.agent`, `.claude`, `.gemini`, and `.copilot` seamlessly.
