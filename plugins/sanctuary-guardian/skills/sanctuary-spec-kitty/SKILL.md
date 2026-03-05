@@ -46,6 +46,10 @@ These contain project-specific best practices that survive spec-kitty CLI update
 - Pre-merge remote backup (mandatory)
 - Dual-Loop mode integration (Protocol 133)
 
+### Orchestration Diagram
+The end-to-end orchestration lifecycle—including `verify_workflow_state.py` gates and the downstream `intelligence-sync`—is mapped in our master diagram:
+`resources/diagrams/standard-spec-kitty-workflow.mmd`
+
 ### Sync Plugin
 To update when spec-kitty CLI upgrades:
 ```bash
