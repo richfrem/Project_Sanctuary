@@ -6,7 +6,7 @@
 #
 astroid==4.0.3
     # via pylint
-black==25.12.0
+black==26.3.1
     # via -r requirements-dev.in
 click==8.3.1
     # via black
@@ -54,7 +54,7 @@ pytest==9.0.2
     #   pytest-cov
 pytest-cov==7.0.0
     # via -r requirements-dev.in
-pytokens==0.3.0
+pytokens==0.4.1
     # via black
 ruff==0.14.10
     # via -r requirements-dev.in
