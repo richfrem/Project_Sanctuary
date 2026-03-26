@@ -15,16 +15,16 @@ fsspec==2026.2.0
 hf-xet==1.2.0
     # via huggingface-hub
 huggingface-hub==0.36.2
-    # via -r plugins/guardian-onboarding/requirements.in
+    # via -r requirements.in
 idna==3.11
     # via requests
 packaging==26.0
     # via huggingface-hub
 python-dotenv==1.0.1
-    # via -r plugins/guardian-onboarding/requirements.in
+    # via -r requirements.in
 pyyaml==6.0.3
     # via huggingface-hub
-requests==2.32.5
+requests==2.33.0
     # via huggingface-hub
 tqdm==4.67.3
     # via huggingface-hub
