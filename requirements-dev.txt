@@ -48,7 +48,7 @@ pygments==2.19.2
     # via pytest
 pylint==4.0.4
     # via -r requirements-dev.in
-pytest==9.0.2
+pytest==9.0.3
     # via
     #   -r requirements-dev.in
     #   pytest-cov
