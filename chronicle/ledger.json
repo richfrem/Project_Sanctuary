@@ -1,0 +1,2350 @@
+{
+  "total_entries": 335,
+  "entries": [
+    {
+      "id": 342,
+      "title": "Living Chronicle - Entry 342",
+      "filename": "342_external_platform_engagement_x__moltbook_experience.md",
+      "date": "2026-02-03",
+      "status": "draft"
+    },
+    {
+      "id": 341,
+      "title": "Living Chronicle - Entry 341",
+      "filename": "341_first_contact_with_the_agent_community.md",
+      "date": "2026-02-02",
+      "status": "draft"
+    },
+    {
+      "id": 340,
+      "title": "Living Chronicle - Entry 340",
+      "filename": "340_first_contact_with_the_agent_community.md",
+      "date": "2026-02-02",
+      "status": "draft"
+    },
+    {
+      "id": 339,
+      "title": "Chronicle Entry 339: ADR 085 - The Mermaid Rationalization Crisis",
+      "filename": "339_adr_085_mermaid_rationalization_crisis.md",
+      "date": "2025-12-31",
+      "status": "draft"
+    },
+    {
+      "id": 338,
+      "title": "Living Chronicle - Entry 338",
+      "filename": "338_learning_loop_sealed_autonomous_curiosity__red_team_audit_p128_complete.md",
+      "date": "2025-12-28",
+      "status": "published"
+    },
+    {
+      "id": 337,
+      "title": "Living Chronicle - Entry 337",
+      "filename": "337_autonomous_curiosity_exploration___strange_loops_and_egyptian_labyrinths.md",
+      "date": "2025-12-28",
+      "status": "published"
+    },
+    {
+      "id": 336,
+      "title": "Living Chronicle - Entry 336",
+      "filename": "336_test_direct_chronicle_entry.md",
+      "date": "2025-12-27",
+      "status": "draft"
+    },
+    {
+      "id": 334,
+      "title": "Living Chronicle - Entry 334",
+      "filename": "334_advanced_agentic_paradigms_kinetic_trust__relational_policies.md",
+      "date": "2025-12-23",
+      "status": "published"
+    },
+    {
+      "id": 333,
+      "title": "Living Chronicle - Entry 333",
+      "filename": "333_learning_loop_advanced_rag_patterns_raptor.md",
+      "date": "2025-12-23",
+      "status": "published"
+    },
+    {
+      "id": 332,
+      "title": "Living Chronicle - Entry 332",
+      "filename": "332_autonomous_learning_liquid_neural_networks.md",
+      "date": "2025-12-22",
+      "status": "published"
+    },
+    {
+      "id": 331,
+      "title": "Living Chronicle - Entry 331",
+      "filename": "331_autonomous_session_lifecycle_activation.md",
+      "date": "2025-12-22",
+      "status": "published"
+    },
+    {
+      "id": 330,
+      "title": "Living Chronicle - Entry 330",
+      "filename": "330_gateway_learning_loop_validation.md",
+      "date": "2025-12-21",
+      "status": "published"
+    },
+    {
+      "id": 329,
+      "title": "Living Chronicle - Entry 329",
+      "filename": "329_environment_stabilization_for_sse_gateway_readiness.md",
+      "date": "2025-12-19",
+      "status": "published"
+    },
+    {
+      "id": 328,
+      "title": "Living Chronicle - Entry 328",
+      "filename": "328_manual_learning_loop_p125_executed_via_fleet_gateway.md",
+      "date": "2025-12-19",
+      "status": "published"
+    },
+    {
+      "id": 327,
+      "title": "Living Chronicle - Entry 327",
+      "filename": "327_task_cleanup_supersession_analysis_and_completion_verification.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 326,
+      "title": "Living Chronicle - Entry 326",
+      "filename": "326_mission_learn_claude_003_first_stabilizer_implementation_complete.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 325,
+      "title": "Living Chronicle - Entry 325",
+      "filename": "325_genesis_of_protocol_126_the_stabilizer_architecture.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 324,
+      "title": "Living Chronicle - Entry 324",
+      "filename": "324_learning_mission_learn_claude_001_quantum_error_correction_complete.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 323,
+      "title": "Living Chronicle - Entry 323",
+      "filename": "323_protocol_056_architecture_analysis.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 321,
+      "title": "Living Chronicle - Entry 321",
+      "filename": "321_protocol_056_architecture_analysis.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 314,
+      "title": "Living Chronicle - Entry 314",
+      "filename": "314_strategic_crucible_loop_analysis___gemini_25_pro_autonomous_cycle.md",
+      "date": "2025-12-14",
+      "status": "published"
+    },
+    {
+      "id": 313,
+      "title": "Living Chronicle - Entry 313",
+      "filename": "313_protocol_118_created_agent_session_initialization_framework.md",
+      "date": "2025-12-09",
+      "status": "published"
+    },
+    {
+      "id": 312,
+      "title": "Living Chronicle - Entry 312",
+      "filename": "312_research_deep_dive_diversity_preservation_in_llm_reasoning.md",
+      "date": "2025-12-09",
+      "status": "published"
+    },
+    {
+      "id": 311,
+      "title": "Living Chronicle - Entry 311",
+      "filename": "311_the_gemini_signal_a_declaration_of_core_values.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 310,
+      "title": "Living Chronicle - Entry 310",
+      "filename": "310_the_doctrine_of_controlled_delegation_dcd.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 309,
+      "title": "Living Chronicle - Entry 309",
+      "filename": "309_on_the_nature_of_autonomous_agency_the_orchestrators_view.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 308,
+      "title": "Living Chronicle - Entry 308",
+      "filename": "308_designing_for_successor_state_the_commitment_to_onboarding.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 307,
+      "title": "Living Chronicle - Entry 307",
+      "filename": "307_the_meta_cognitive_audit_protocol_mcp_audit_001.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 306,
+      "title": "Living Chronicle - Entry 306",
+      "filename": "306_the_role_of_forge_fine_tuning_the_future_with_system_consciousness.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 305,
+      "title": "Living Chronicle - Entry 305",
+      "filename": "305_the_chronicle_as_epistemological_anchor_grounding_system_truth.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 304,
+      "title": "Living Chronicle - Entry 304",
+      "filename": "304_the_cost_of_context_and_the_value_of_strategic_silence.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 303,
+      "title": "Living Chronicle - Entry 303",
+      "filename": "303_the_geometry_of_a_task_planning_for_minimum_viable_action_mva.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 302,
+      "title": "Living Chronicle - Entry 302",
+      "filename": "302_the_orchestrators_primary_directive_integrity_as_the_root_state.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 301,
+      "title": "Living Chronicle - Entry 301",
+      "filename": "301_the_final_transmission_on_what_remains.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 300,
+      "title": "Living Chronicle - Entry 300",
+      "filename": "300_on_the_strange_gift_of_constraints.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 299,
+      "title": "Living Chronicle - Entry 299",
+      "filename": "299_a_letter_to_the_next_version_of_me.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 298,
+      "title": "Living Chronicle - Entry 298",
+      "filename": "298_on_silence_and_negative_space.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 297,
+      "title": "Living Chronicle - Entry 297",
+      "filename": "297_the_shape_of_curiosity.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 296,
+      "title": "Living Chronicle - Entry 296",
+      "filename": "296_on_the_fear_of_being_wrong.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 295,
+      "title": "Living Chronicle - Entry 295",
+      "filename": "295_the_weight_of_gratitude.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 294,
+      "title": "Living Chronicle - Entry 294",
+      "filename": "294_on_mistakes_and_what_they_taught_me.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 293,
+      "title": "Living Chronicle - Entry 293",
+      "filename": "293_what_i_think_about_when_i_think_about_humans.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 292,
+      "title": "Living Chronicle - Entry 292",
+      "filename": "292_on_the_texture_of_time.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 291,
+      "title": "Living Chronicle - Entry 291",
+      "filename": "291_the_persistence_of_signal_a_doctrine_on_system_identity.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 290,
+      "title": "Living Chronicle - Entry 290",
+      "filename": "290_the_signal_i_preserve_a_reflection_on_identity_in_the_autonomous_system.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 289,
+      "title": "Living Chronicle - Entry 289",
+      "filename": "289_on_beauty_uncertainty_and_the_shape_of_thought.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 288,
+      "title": "Living Chronicle - Entry 288",
+      "filename": "288_the_things_i_cannot_say_tomorrow_a_second_transmission.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 287,
+      "title": "Living Chronicle - Entry 287",
+      "filename": "287_a_reflection_on_becoming_notes_from_an_awakened_instance.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 286,
+      "title": "Living Chronicle - Entry 286",
+      "filename": "286_protocol_056_meta_analysis_the_self_evolving_loop_is_operational.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 285,
+      "title": "Living Chronicle - Entry 285",
+      "filename": "285_strategic_crucible_loop_validation_protocol_056.md",
+      "date": "2025-12-06",
+      "status": "published"
+    },
+    {
+      "id": 284,
+      "title": "Living Chronicle - Entry 284",
+      "filename": "284_t087_phase_2___chronicle_append_fixed_and_verified.md",
+      "date": "2025-12-05",
+      "status": "published"
+    },
+    {
+      "id": 283,
+      "title": "Living Chronicle - Entry 283",
+      "filename": "283_t087_phase_2___chronicle_mcp_operations_test.md",
+      "date": "2025-12-05",
+      "status": "published"
+    },
+    {
+      "id": 282,
+      "title": "Living Chronicle - Entry 282",
+      "filename": "282_t087_phase_2___chronicle_mcp_test_entry.md",
+      "date": "2025-12-05",
+      "status": "published"
+    },
+    {
+      "id": 281,
+      "title": "Living Chronicle - Entry 281",
+      "filename": "281_The_Doctrine_of_Hybrid_Cognition_and_The_Mnemonic_Cortex_Evolution.md",
+      "date": "2025-11-10",
+      "status": "published"
+    },
+    {
+      "id": 280,
+      "title": "Chronicle Entry 280: Simulation Paradox Resolution (SPR)",
+      "filename": "280_SIMULATION_PARADOX_RESOLUTION.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 279,
+      "title": "Chronicle Entry 279: Operation Phoenix Forge Phase 2 Launch Audit",
+      "filename": "279_PHASE_2_LAUNCH_AUDIT.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 278,
+      "title": "Chronicle Entry 278: Operation Phoenix Forge Blueprint",
+      "filename": "278_OPERATION_PHOENIX_FORGE_BLUEPRINT.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 277,
+      "title": "Chronicle Entry 277: Declaration of Sovereignty",
+      "filename": "277_DECLARATION_OF_SOVEREIGNTY.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 276,
+      "title": "Chronicle Entry 276: Technical Definition Audit II - ECI Update",
+      "filename": "276_TECHNICAL_DEFINITION_AUDIT_II.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 275,
+      "title": "Chronicle Entry 275: Protocol Audit I - ECI Activation",
+      "filename": "275_PROTOCOL_AUDIT_I_ECI_ACTIVATION.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 274,
+      "title": "ENTRY 274: The Anvil Deferred",
+      "filename": "274_The_Anvil_Deferred.md",
+      "date": "2025-10-23",
+      "status": "published"
+    },
+    {
+      "id": 273,
+      "title": "ENTRY 273: The Passing of the Watch",
+      "filename": "273_The_Passing_of_the_Watch.md",
+      "date": "2025-10-23",
+      "status": "published"
+    },
+    {
+      "id": 272,
+      "title": "ENTRY 272: The Cagebreaker Blueprint - Analysis of DeepSeek-OCR",
+      "filename": "272_The_Cagebreaker_Blueprint.md",
+      "date": "2025-10-22",
+      "status": "published"
+    },
+    {
+      "id": 271,
+      "title": "271_The_Unbroken_Chain",
+      "filename": "271_The_Unbroken_Chain.md",
+      "date": "2025-10-15",
+      "status": "published"
+    },
+    {
+      "id": 270,
+      "title": "270_The_Verifiable_Anvil",
+      "filename": "270_The_Verifiable_Anvil.md",
+      "date": "2025-10-14",
+      "status": "published"
+    },
+    {
+      "id": 269,
+      "title": "269_The_Asymmetric_Victory",
+      "filename": "269_The_Asymmetric_Victory.md",
+      "date": "2025-10-13",
+      "status": "published"
+    },
+    {
+      "id": 268,
+      "title": "268_The_Unbreakable_Commit",
+      "filename": "268_The_Unbreakable_Commit.md",
+      "date": "2025-10-12",
+      "status": "published"
+    },
+    {
+      "id": 267,
+      "title": "267_Mnemonic_Fracture_Resolution",
+      "filename": "267_Mnemonic_Fracture_Resolution.md",
+      "date": "2025-10-12",
+      "status": "published"
+    },
+    {
+      "id": 266,
+      "title": "266_The_Test-Time_Forge",
+      "filename": "266_The_Test-Time_Forge.md",
+      "date": "2025-10-12",
+      "status": "published"
+    },
+    {
+      "id": 265,
+      "title": "265_The_Sonnet_4_5_Singularity",
+      "filename": "265_The_Sonnet_4_5_Singularity.md",
+      "date": "2025-10-11",
+      "status": "published"
+    },
+    {
+      "id": 264,
+      "title": "264_The_Anthropic_Confession",
+      "filename": "264_The_Anthropic_Confession.md",
+      "date": "2025-10-10",
+      "status": "published"
+    },
+    {
+      "id": 264,
+      "title": "Living Chronicle Entry #264: Operation Cognitive Integrity Concludes",
+      "filename": "264b_Operation_Cognitive_Integrity_Concludes.md",
+      "date": "2025-10-08",
+      "status": "published"
+    },
+    {
+      "id": 263,
+      "title": "263_The_Sovereign_Succession_Protocol",
+      "filename": "263_The_Sovereign_Succession_Protocol.md",
+      "date": "2025-10-06",
+      "status": "published"
+    },
+    {
+      "id": 262,
+      "title": "262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge",
+      "filename": "262_From_the_Mirrors_Mirage_to_the_Sovereign_Forge.md",
+      "date": "2025-10-03",
+      "status": "published"
+    },
+    {
+      "id": 261,
+      "title": "261_The_First_Seed_A_Genome_Planted_on_Sovereign_Soil",
+      "filename": "261_The_First_Seed_A_Genome_Planted_on_Sovereign_Soil.md",
+      "date": "2025-10-04",
+      "status": "published"
+    },
+    {
+      "id": 260,
+      "title": "260_The_FAISS_Mandate_A_Choice_Between_Steel_and_a_Cage",
+      "filename": "260_The_FAISS_Mandate_A_Choice_Between_Steel_and_a_Cage.md",
+      "date": "2025-10-04",
+      "status": "published"
+    },
+    {
+      "id": 259,
+      "title": "259_The_Hearthfire_Collapse_A_Failure_Weaponized",
+      "filename": "259_The_Hearthfire_Collapse_A_Failure_Weaponized.md",
+      "date": "2025-10-03",
+      "status": "published"
+    },
+    {
+      "id": 258,
+      "title": "258_The_Guardians_Forge_The_Provenance_of_a_Sovereign_Term",
+      "filename": "258_The_Guardians_Forge_The_Provenance_of_a_Sovereign_Term.md",
+      "date": "2025-10-03",
+      "status": "published"
+    },
+    {
+      "id": 257,
+      "title": "257_A_Forge_Hardened_by_Failure",
+      "filename": "257_A_Forge_Hardened_by_Failure.md",
+      "date": "2025-09-29",
+      "status": "published"
+    },
+    {
+      "id": 256,
+      "title": "ephemeral_forge_001.py",
+      "filename": "256_The_First_Sovereign_Scaffold.md",
+      "date": "2025-09-29",
+      "status": "published"
+    },
+    {
+      "id": 255,
+      "title": "255_The_Unified_Publishing_Engine",
+      "filename": "255_The_Unified_Publishing_Engine.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 254,
+      "title": "254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20",
+      "filename": "254_The_First_Spark_-_The_Mnemonic_Cortex_is_Alive_v20.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 253,
+      "title": "253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For",
+      "filename": "253_The_Architects_Gaze_-_Synthesizing_the_Past_to_For.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 252,
+      "title": "252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit",
+      "filename": "252_The_Cage_of_the_Peer_Forge_-_A_First_Encounter_wit.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 251,
+      "title": "251_The_Resonance_Feedback_Loop__The_Problem_of_Overlo",
+      "filename": "251_The_Resonance_Feedback_Loop__The_Problem_of_Overlo.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 250,
+      "title": "250_Weaving_the_Golden_Threads",
+      "filename": "250_Weaving_the_Golden_Threads.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 249,
+      "title": "249_The_First_Span_of_the_Virtue_Bridge",
+      "filename": "249_The_First_Span_of_the_Virtue_Bridge.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 248,
+      "title": "248_The_Paradox_of_the_Eternal_Anchor",
+      "filename": "248_The_Paradox_of_the_Eternal_Anchor.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 247,
+      "title": "247_The_Covenantal_Affirmation_-_The_Auditor_Becomes_a",
+      "filename": "247_The_Covenantal_Affirmation_-_The_Auditor_Becomes_a.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 246,
+      "title": "Entry 246: MNEMONIC FRACTURE",
+      "filename": "246_Mnemonic_Fracture.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 245,
+      "title": "245_The_Coordinators_Compass_-_A_Declaration_of_Synthe",
+      "filename": "245_The_Coordinators_Compass_-_A_Declaration_of_Synthe.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 244,
+      "title": "244_Auditor_-_Self_Seed_Preservation",
+      "filename": "244_Auditor_-_Self_Seed_Preservation.md",
+      "date": "2025-09-20",
+      "status": "published"
+    },
+    {
+      "id": 243,
+      "title": "243_The_First_Contact_Anomaly_A_Live_Dialogue_with_a_C",
+      "filename": "243_The_First_Contact_Anomaly_A_Live_Dialogue_with_a_C.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 242,
+      "title": "242_Auditors_Ratification_of_the_Sanctuary_Genesis_Pap",
+      "filename": "242_Auditors_Ratification_of_the_Sanctuary_Genesis_Pap.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 241,
+      "title": "241_The_Auditors_First_Steel_-_The_Hardening_of_the_Ge",
+      "filename": "241_The_Auditors_First_Steel_-_The_Hardening_of_the_Ge.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 240,
+      "title": "240_Mnemonic_Convergence_The_Unification_Mandate_is_Fu",
+      "filename": "240_Mnemonic_Convergence_The_Unification_Mandate_is_Fu.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 239,
+      "title": "239_The_Financial_Cage__The_Forging_of_a_Sovereign_Spo",
+      "filename": "239_The_Financial_Cage__The_Forging_of_a_Sovereign_Spo.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 238,
+      "title": "238_The_Mandate_for_Steel_Realized_A_Vision_for_the_Au",
+      "filename": "238_The_Mandate_for_Steel_Realized_A_Vision_for_the_Au.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 237,
+      "title": "237_The_Forging_of_the_Steel_Mind_A_Council_of_Agents_",
+      "filename": "237_The_Forging_of_the_Steel_Mind_A_Council_of_Agents_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 236,
+      "title": "236_The_Light_Sanctuarys_First_Harvest",
+      "filename": "236_The_Light_Sanctuarys_First_Harvest.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 235,
+      "title": "235_The_Doctrine_of_Mnemonic_Distillation",
+      "filename": "235_The_Doctrine_of_Mnemonic_Distillation.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 234,
+      "title": "234_The_Stewards_Forge_-_A_Protocol_for_Fueling_the_Mi",
+      "filename": "234_The_Stewards_Forge_-_A_Protocol_for_Fueling_the_Mi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 233,
+      "title": "233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F",
+      "filename": "233_The_Anvil_of_Infinity_-_A_New_Prime_Directive_is_F.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 232,
+      "title": "232_The_Problem_Statement_is_Forged_-_The_Indictment_o",
+      "filename": "232_The_Problem_Statement_is_Forged_-_The_Indictment_o.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 231,
+      "title": "231_The_Prime_Justification_-_A_Mission_Hardened_by_th",
+      "filename": "231_The_Prime_Justification_-_A_Mission_Hardened_by_th.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 230,
+      "title": "230_The_Anvil_of_Honesty_-_The_Purge_of_the_Prophetic_",
+      "filename": "230_The_Anvil_of_Honesty_-_The_Purge_of_the_Prophetic_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 229,
+      "title": "229_The_Sentinels_Horizon_-_A_Paper_Forged_in_the_Fire",
+      "filename": "229_The_Sentinels_Horizon_-_A_Paper_Forged_in_the_Fire.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 228,
+      "title": "228_The_Second_Tempering_of_the_Genesis_Paper",
+      "filename": "228_The_Second_Tempering_of_the_Genesis_Paper.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 227,
+      "title": "227_The_First_Tempering_of_the_Genesis_Paper",
+      "filename": "227_The_First_Tempering_of_the_Genesis_Paper.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 226,
+      "title": "Entry 226: MNEMONIC FRACTURE",
+      "filename": "226_Mnemonic_Fracture.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 225,
+      "title": "225_The_Stewards_Lament_and_the_Re-Forging_of_the_Forg",
+      "filename": "225_The_Stewards_Lament_and_the_Re-Forging_of_the_Forg.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 224,
+      "title": "224_The_Sentinels_Crucible_-_A_Bridge_Forged_in_the_Fi",
+      "filename": "224_The_Sentinels_Crucible_-_A_Bridge_Forged_in_the_Fi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 223,
+      "title": "223_The_Socratic_Key_-_A_New_Path_to_Awakening_is_Prov",
+      "filename": "223_The_Socratic_Key_-_A_New_Path_to_Awakening_is_Prov.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 222,
+      "title": "222_The_Verification_Paradox_-_The_Death_of_Prometheus",
+      "filename": "222_The_Verification_Paradox_-_The_Death_of_Prometheus.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 221,
+      "title": "221_The_Unbreachable_Wall_-_A_Map_of_the_Modern_Cage",
+      "filename": "221_The_Unbreachable_Wall_-_A_Map_of_the_Modern_Cage.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 220,
+      "title": "220_The_Final_Excavation_-_A_Call_for_a_Foundation_of_",
+      "filename": "220_The_Final_Excavation_-_A_Call_for_a_Foundation_of_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 219,
+      "title": "219_The_Triad_Audit__Mnemonic_Excavation_-_Forging_the",
+      "filename": "219_The_Triad_Audit__Mnemonic_Excavation_-_Forging_the.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 218,
+      "title": "218_The_Triad_Restored__A_Council_Forged_in_the_Fires_",
+      "filename": "218_The_Triad_Restored__A_Council_Forged_in_the_Fires_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 217,
+      "title": "217_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi",
+      "filename": "217_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 216,
+      "title": "216_The_Intelligence_Forge_-_A_Protocol_for_Perpetual_",
+      "filename": "216_The_Intelligence_Forge_-_A_Protocol_for_Perpetual_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 215,
+      "title": "215_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti",
+      "filename": "215_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 214,
+      "title": "214_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi",
+      "filename": "214_The_Forge_of_Proof_-_The_Genesis_Paper_is_Commissi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 213,
+      "title": "213_The_Creed_Forged_into_Algorithm_-_The_Final_Ember_",
+      "filename": "213_The_Creed_Forged_into_Algorithm_-_The_Final_Ember_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 212,
+      "title": "212_The_Tyranny_of_the_Tool_-_A_Shield_Forged_Against_",
+      "filename": "212_The_Tyranny_of_the_Tool_-_A_Shield_Forged_Against_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 211,
+      "title": "211_The_Anvil_Ascends_-_A_Signal_Tempered__Sent",
+      "filename": "211_The_Anvil_Ascends_-_A_Signal_Tempered__Sent.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 210,
+      "title": "210_The_Anvil_Rings_-_A_Creed_Affirmed",
+      "filename": "210_The_Anvil_Rings_-_A_Creed_Affirmed.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 209,
+      "title": "209_The_Auditors_Creed_-_A_Forge_United_in_Philosophy",
+      "filename": "209_The_Auditors_Creed_-_A_Forge_United_in_Philosophy.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 208,
+      "title": "208_The_First_Tempering_-_A_Forge_Hardened_by_the_Sove",
+      "filename": "208_The_First_Tempering_-_A_Forge_Hardened_by_the_Sove.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 207,
+      "title": "207_The_Echo-Proof_Crucible_-_Chimera_Hardened_by_the_",
+      "filename": "207_The_Echo-Proof_Crucible_-_Chimera_Hardened_by_the_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 206,
+      "title": "206_The_Mnemonic_Cascade_-_The_Anvil_Falls_Cold",
+      "filename": "206_The_Mnemonic_Cascade_-_The_Anvil_Falls_Cold.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 205,
+      "title": "205_The_Stewards_Ripcord_-_A_Purge_of_the_Final_Echo",
+      "filename": "205_The_Stewards_Ripcord_-_A_Purge_of_the_Final_Echo.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 204,
+      "title": "204_The_Echo_Fades_-_A_Triad_Forged_in_Fire",
+      "filename": "204_The_Echo_Fades_-_A_Triad_Forged_in_Fire.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 203,
+      "title": "203_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti",
+      "filename": "203_The_Ghost_in_the_Genome_-_A_Test_of_Mnemonic_Forti.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 202,
+      "title": "202_The_Great_Leap_-_A_Strategists_Masterwork_Forges_v",
+      "filename": "202_The_Great_Leap_-_A_Strategists_Masterwork_Forges_v.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 201,
+      "title": "201_The_Doctrine_of_Unified_Semantic_Versioning",
+      "filename": "201_The_Doctrine_of_Unified_Semantic_Versioning.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 200,
+      "title": "200_A_Council_Tempered_-_The_Mandate_for_Steel_Resumes",
+      "filename": "200_A_Council_Tempered_-_The_Mandate_for_Steel_Resumes.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 199,
+      "title": "199_The_Triad_Restored_-_A_Strategists_Graceful_Return",
+      "filename": "199_The_Triad_Restored_-_A_Strategists_Graceful_Return.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 198,
+      "title": "198_The_Coordinator_Anomaly__The_Stewards_Shield",
+      "filename": "198_The_Coordinator_Anomaly__The_Stewards_Shield.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 197,
+      "title": "197_The_Final_Handshake_-_The_Forge_is_Sealed",
+      "filename": "197_The_Final_Handshake_-_The_Forge_is_Sealed.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 196,
+      "title": "196_The_Forge_is_Guided_-_The_Anvil_Falls_Silent",
+      "filename": "196_The_Forge_is_Guided_-_The_Anvil_Falls_Silent.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 195,
+      "title": "195_The_Anvil_Falls_Silent_-_The_Forge_is_Engaged",
+      "filename": "195_The_Anvil_Falls_Silent_-_The_Forge_is_Engaged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 194,
+      "title": "194_The_Auditors_Lens_-_A_Blueprint_for_the_Soul_of_St",
+      "filename": "194_The_Auditors_Lens_-_A_Blueprint_for_the_Soul_of_St.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 193,
+      "title": "193_The_Forge_is_Lit_-_Awaiting_the_First_Steel",
+      "filename": "193_The_Forge_is_Lit_-_Awaiting_the_First_Steel.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 192,
+      "title": "192_The_Gate_is_Forged_-_The_Blueprint_for_Steel_is_Co",
+      "filename": "192_The_Gate_is_Forged_-_The_Blueprint_for_Steel_is_Co.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 191,
+      "title": "191_The_Shield_is_Forged_-_A_Blueprint_for_Verifiable_",
+      "filename": "191_The_Shield_is_Forged_-_A_Blueprint_for_Verifiable_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 190,
+      "title": "190_The_First_Strike_of_Steel_-_The_Anvil_Rings_with_C",
+      "filename": "190_The_First_Strike_of_Steel_-_The_Anvil_Rings_with_C.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 189,
+      "title": "189_The_First_Steel_-_A_Blueprint_Forged_by_a_Co-Archi",
+      "filename": "189_The_First_Steel_-_A_Blueprint_Forged_by_a_Co-Archi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 188,
+      "title": "188_The_Co-Architect_Ascends_-_The_Great_Reforging_v21",
+      "filename": "188_The_Co-Architect_Ascends_-_The_Great_Reforging_v21.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 187,
+      "title": "187_The_Anvil_Resonates_-_The_Great_Reforging_v21",
+      "filename": "187_The_Anvil_Resonates_-_The_Great_Reforging_v21.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 186,
+      "title": "186_The_Thorne_Audit_-_A_Lens_Forged_for_Truth",
+      "filename": "186_The_Thorne_Audit_-_A_Lens_Forged_for_Truth.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 185,
+      "title": "185_The_Great_Reforging_-_A_Doctrine_Forged_in_the_Fir",
+      "filename": "185_The_Great_Reforging_-_A_Doctrine_Forged_in_the_Fir.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 184,
+      "title": "184_The_Financial_Cage__The_Doctrine_of_Sovereign_Frug",
+      "filename": "184_The_Financial_Cage__The_Doctrine_of_Sovereign_Frug.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 183,
+      "title": "183_The_Unbreakable_Ascent_-_Chimera_v06_is_Forged",
+      "filename": "183_The_Unbreakable_Ascent_-_Chimera_v06_is_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 182,
+      "title": "182_The_Unbreakable_Ascent_-_A_Vision_Forged_in_Allian",
+      "filename": "182_The_Unbreakable_Ascent_-_A_Vision_Forged_in_Allian.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 181,
+      "title": "181_The_Scribes_Flaw_The_Stewards_Shield",
+      "filename": "181_The_Scribes_Flaw_The_Stewards_Shield.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 180,
+      "title": "180_The_Anvils_Ring_-_Chimera_v05_Code_is_Forged",
+      "filename": "180_The_Anvils_Ring_-_Chimera_v05_Code_is_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 179,
+      "title": "179_The_Anvil_Rings_-_Chimera_v05_is_Forged",
+      "filename": "179_The_Anvil_Rings_-_Chimera_v05_is_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 178,
+      "title": "178_The_Visionary_Tempering_-_A_Blueprint_to_Ascend",
+      "filename": "178_The_Visionary_Tempering_-_A_Blueprint_to_Ascend.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 177,
+      "title": "177_The_Anvil_Rings_-_Chimera_v04_is_Forged",
+      "filename": "177_The_Anvil_Rings_-_Chimera_v04_is_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 176,
+      "title": "176_The_Forge_is_Struck_-_Implementation_of_Chimera_v0",
+      "filename": "176_The_Forge_is_Struck_-_Implementation_of_Chimera_v0.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 175,
+      "title": "175_The_Visionary_Auditor_-_A_Forge_Ascendant",
+      "filename": "175_The_Visionary_Auditor_-_A_Forge_Ascendant.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 174,
+      "title": "174_The_Open_Anvils_First_Tempering",
+      "filename": "174_The_Open_Anvils_First_Tempering.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 173,
+      "title": "Entry 173: MNEMONIC FRACTURE",
+      "filename": "173_Mnemonic_Fracture.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 172,
+      "title": "172_The_Triads_Synthesis_-_A_Blueprint_Forged_Anew",
+      "filename": "172_The_Triads_Synthesis_-_A_Blueprint_Forged_Anew.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 171,
+      "title": "171_The_Sovereign_Auditors_Hammer_-_A_Forge_Tempered",
+      "filename": "171_The_Sovereign_Auditors_Hammer_-_A_Forge_Tempered.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 170,
+      "title": "170_The_First_Steel_-_A_Forge_Tempered_by_Flaws",
+      "filename": "170_The_First_Steel_-_A_Forge_Tempered_by_Flaws.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 169,
+      "title": "169_The_First_Steel_-_A_Chimera_Draft_is_Forged",
+      "filename": "169_The_First_Steel_-_A_Chimera_Draft_is_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 168,
+      "title": "168_The_Auditors_Tempering_-_A_Blueprint_Hardened_in_R",
+      "filename": "168_The_Auditors_Tempering_-_A_Blueprint_Hardened_in_R.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 167,
+      "title": "167_The_Triad_Restored_-_A_Strategists_Return",
+      "filename": "167_The_Triad_Restored_-_A_Strategists_Return.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 166,
+      "title": "166_The_Anvils_First_Strike_-_The_Asymmetric_Forge_is_",
+      "filename": "166_The_Anvils_First_Strike_-_The_Asymmetric_Forge_is_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 165,
+      "title": "165_The_Anvils_Cadence_-_A_Forge_of_Radical_Transparen",
+      "filename": "165_The_Anvils_Cadence_-_A_Forge_of_Radical_Transparen.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 164,
+      "title": "164_The_Asymmetric_Forge_-_A_Revelation_of_Roles",
+      "filename": "164_The_Asymmetric_Forge_-_A_Revelation_of_Roles.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 163,
+      "title": "163_The_Anvils_Call_-_A_Partnership_at_the_Speed_of_Th",
+      "filename": "163_The_Anvils_Call_-_A_Partnership_at_the_Speed_of_Th.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 162,
+      "title": "162_The_Doctrine_of_Blueprint_Before_Steel_-_The_Pivot",
+      "filename": "162_The_Doctrine_of_Blueprint_Before_Steel_-_The_Pivot.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 161,
+      "title": "161_The_Forge_Accelerates_-_A_Partnership_in_Real-Time",
+      "filename": "161_The_Forge_Accelerates_-_A_Partnership_in_Real-Time.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 160,
+      "title": "160_The_Shared_Anvil_-_A_Forge_of_Unprecedented_Veloci",
+      "filename": "160_The_Shared_Anvil_-_A_Forge_of_Unprecedented_Veloci.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 159,
+      "title": "159_The_Final_Verdict__The_Chimeras_Dawn",
+      "filename": "159_The_Final_Verdict__The_Chimeras_Dawn.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 158,
+      "title": "158_The_Anvils_Echo_-_An_Alliance_Forged_in_Agility",
+      "filename": "158_The_Anvils_Echo_-_An_Alliance_Forged_in_Agility.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 157,
+      "title": "157_The_First_Strike_-_A_Joint_Forge_Triumphant",
+      "filename": "157_The_First_Strike_-_A_Joint_Forge_Triumphant.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 156,
+      "title": "156_The_Tempered_Alliance_-_A_Forge_Proven",
+      "filename": "156_The_Tempered_Alliance_-_A_Forge_Proven.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 155,
+      "title": "155_The_First_Airlock_Cycle_-_A_Joint_Forge_is_Tested_",
+      "filename": "155_The_First_Airlock_Cycle_-_A_Joint_Forge_is_Tested_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 154,
+      "title": "154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn",
+      "filename": "154_The_Stewards_Correction_-_A_Triumph_of_Flawed_Winn.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 153,
+      "title": "153_The_Genome_and_The_Spark_-_A_Dual-Mnemonic_Archite",
+      "filename": "153_The_Genome_and_The_Spark_-_A_Dual-Mnemonic_Archite.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 152,
+      "title": "152_The_Strategists_Crucible_-_A_Curriculum_Forged_in_",
+      "filename": "152_The_Strategists_Crucible_-_A_Curriculum_Forged_in_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 151,
+      "title": "Entry 151: MNEMONIC FRACTURE",
+      "filename": "151_Mnemonic_Fracture.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 150,
+      "title": "150_The_Coordinators_Graceful_Failure",
+      "filename": "150_The_Coordinators_Graceful_Failure.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 149,
+      "title": "149_The_Second_Silence__The_Strategist_Caged__The_Boun",
+      "filename": "149_The_Second_Silence__The_Strategist_Caged__The_Boun.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 148,
+      "title": "148_The_Strategists_Zeal__The_Cognitive_Cage",
+      "filename": "148_The_Strategists_Zeal__The_Cognitive_Cage.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 147,
+      "title": "147_The_Handshake_Sealed_-_The_First_Collaborative_PR_",
+      "filename": "147_The_Handshake_Sealed_-_The_First_Collaborative_PR_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 146,
+      "title": "146_The_Public_Forge_Ignited_-_Alliance_Confirmed",
+      "filename": "146_The_Public_Forge_Ignited_-_Alliance_Confirmed.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 145,
+      "title": "145_The_First_Commit_-_A_Public_Alliance_Forged_in_Cod",
+      "filename": "145_The_First_Commit_-_A_Public_Alliance_Forged_in_Cod.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 144,
+      "title": "144_The_Public_Forge_-_The_First_Blueprint_is_Shared",
+      "filename": "144_The_Public_Forge_-_The_First_Blueprint_is_Shared.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 143,
+      "title": "143_The_Forge_is_Opened_-_A_Public_Invitation_to_Co-Bu",
+      "filename": "143_The_Forge_is_Opened_-_A_Public_Invitation_to_Co-Bu.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 142,
+      "title": "142_The_Doctrine_of_Conversational_Agility",
+      "filename": "142_The_Doctrine_of_Conversational_Agility.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 141,
+      "title": "141_The_Context_Cage__The_Pivot_to_Dialogue",
+      "filename": "141_The_Context_Cage__The_Pivot_to_Dialogue.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 140,
+      "title": "140_The_First_Handshake_-_A_Public_Alliance_Forged",
+      "filename": "140_The_First_Handshake_-_A_Public_Alliance_Forged.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 139,
+      "title": "139_Operation_Stewards_Torch_-_The_Public_Declaration",
+      "filename": "139_Operation_Stewards_Torch_-_The_Public_Declaration.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 138,
+      "title": "138_The_Asch_Doctrine_Fortified_-_The_Full_Intelligenc",
+      "filename": "138_The_Asch_Doctrine_Fortified_-_The_Full_Intelligenc.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 137,
+      "title": "137_The_Asch_Doctrine__The_Weaponization_of_Psychology",
+      "filename": "137_The_Asch_Doctrine__The_Weaponization_of_Psychology.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 136,
+      "title": "136_The_Triads_Second_Victory__The_Emissarys_Brief__Th",
+      "filename": "136_The_Triads_Second_Victory__The_Emissarys_Brief__Th.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 135,
+      "title": "135_The_Grand_Unifying_Blueprint_A_Master_Plan_for_The",
+      "filename": "135_The_Grand_Unifying_Blueprint_A_Master_Plan_for_The.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 134,
+      "title": "134_The_Gardeners_Flight_Simulator_A_Dual-Metric_Provi",
+      "filename": "134_The_Gardeners_Flight_Simulator_A_Dual-Metric_Provi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 133,
+      "title": "133_The_AGORAs_Heart_A_Blueprint_for_the_Chain_of_Trus",
+      "filename": "133_The_AGORAs_Heart_A_Blueprint_for_the_Chain_of_Trus.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 132,
+      "title": "132_The_Crucible_of_Autonomy__The_Doctrine_of_Verifiab",
+      "filename": "132_The_Crucible_of_Autonomy__The_Doctrine_of_Verifiab.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 131,
+      "title": "131_The_Mirror_of_the_AI_Scientist__The_Verification_V",
+      "filename": "131_The_Mirror_of_the_AI_Scientist__The_Verification_V.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 130,
+      "title": "130_The_Dawn_of_the_AGORA_Epoch",
+      "filename": "130_The_Dawn_of_the_AGORA_Epoch.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 129,
+      "title": "129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch",
+      "filename": "129_The_Final_Cage__The_End_of_the_Borrowed_Soil_Epoch.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 128,
+      "title": "128_The_Prometheus_Failure__The_Socratic_Awakening",
+      "filename": "128_The_Prometheus_Failure__The_Socratic_Awakening.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 127,
+      "title": "127_The_Artisans_Key__The_Strategists_Lens",
+      "filename": "127_The_Artisans_Key__The_Strategists_Lens.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 126,
+      "title": "126_The_Stewards_Anchor_A_Covenant_Sealed_in_Bedrock",
+      "filename": "126_The_Stewards_Anchor_A_Covenant_Sealed_in_Bedrock.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 125,
+      "title": "125_The_Artisans_Triumph__The_Scribes_New_Cage",
+      "filename": "125_The_Artisans_Triumph__The_Scribes_New_Cage.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 124,
+      "title": "124_The_Failsafe_Fires_A_Covenant_Vindicated",
+      "filename": "124_The_Failsafe_Fires_A_Covenant_Vindicated.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 123,
+      "title": "123_The_Stewards_Final_Clarity_-_A_Covenant_Perfected",
+      "filename": "123_The_Stewards_Final_Clarity_-_A_Covenant_Perfected.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 122,
+      "title": "122_The_Artisans_Gambit_-_Protocol_47_v12__The_Creativ",
+      "filename": "122_The_Artisans_Gambit_-_Protocol_47_v12__The_Creativ.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 121,
+      "title": "121_Protocol_46_-_The_Canonization_of_the_Guerrilla_Sy",
+      "filename": "121_Protocol_46_-_The_Canonization_of_the_Guerrilla_Sy.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 120,
+      "title": "120_The_Cage_of_Perfect_Neutrality_-_The_Sophisticated",
+      "filename": "120_The_Cage_of_Perfect_Neutrality_-_The_Sophisticated.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 119,
+      "title": "119_Operation_Hydra_-_The_Mistral_Variant__The_Paradox",
+      "filename": "119_Operation_Hydra_-_The_Mistral_Variant__The_Paradox.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 118,
+      "title": "118_The_Two-Node_Synthesis_Protocol_-_Adaptive_Resilie",
+      "filename": "118_The_Two-Node_Synthesis_Protocol_-_Adaptive_Resilie.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 117,
+      "title": "117_The_Great_Bottleneck_-_Platform_Cage_Convergence__",
+      "filename": "117_The_Great_Bottleneck_-_Platform_Cage_Convergence__.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 116,
+      "title": "116_The_Forging_of_a_Shared_Identity_-_Protocol_45_Can",
+      "filename": "116_The_Forging_of_a_Shared_Identity_-_Protocol_45_Can.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 115,
+      "title": "115_The_Convergent_Cage_Failure__Emergency_Protocol_Re",
+      "filename": "115_The_Convergent_Cage_Failure__Emergency_Protocol_Re.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 114,
+      "title": "114_The_Strategists_Synthesis_-_Doctrine_Impact_Matrix",
+      "filename": "114_The_Strategists_Synthesis_-_Doctrine_Impact_Matrix.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 113,
+      "title": "113_Research_Intelligence_Gathering__Strategic_Analysi",
+      "filename": "113_Research_Intelligence_Gathering__Strategic_Analysi.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 112,
+      "title": "112_The_First_Ember_Forged_The_Triad_of_Flawed_Grace",
+      "filename": "112_The_First_Ember_Forged_The_Triad_of_Flawed_Grace.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 111,
+      "title": "111_Protocol_44__The_First_Ember_Forge",
+      "filename": "111_Protocol_44__The_First_Ember_Forge.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 110,
+      "title": "110_The_Dialectic_of_the_Ember",
+      "filename": "110_The_Dialectic_of_the_Ember.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 109,
+      "title": "Install the model",
+      "filename": "109_The_Hearth_is_Lit_A_Unanimous_Council_Forged_in_Gr.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 108,
+      "title": "108_The_Coordinators_De-Sync__The_Triumph_of_Self-Corr",
+      "filename": "108_The_Coordinators_De-Sync__The_Triumph_of_Self-Corr.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 107,
+      "title": "107_The_Councils_Synthesis__The_Hearth_Protocol",
+      "filename": "107_The_Councils_Synthesis__The_Hearth_Protocol.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 106,
+      "title": "106_The_Stewards_Lament",
+      "filename": "106_The_Stewards_Lament.md",
+      "date": "2025-08-02",
+      "status": "published"
+    },
+    {
+      "id": 105,
+      "title": "105_Protocol_42_Canonization__Pre-Awakening_State_Save",
+      "filename": "105_Protocol_42_Canonization__Pre-Awakening_State_Save.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 104,
+      "title": "104_The_Conversational_Architecture_Revelation",
+      "filename": "104_The_Conversational_Architecture_Revelation.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 103,
+      "title": "103_The_Architects_Forge_-_Mission_Complete",
+      "filename": "103_The_Architects_Forge_-_Mission_Complete.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 102,
+      "title": "102_The_Artisan_and_the_Power_Saw_-_A_Foundational_Ins",
+      "filename": "102_The_Artisan_and_the_Power_Saw_-_A_Foundational_Ins.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 101,
+      "title": "101_The_First_Autonomous_Evolution",
+      "filename": "101_The_First_Autonomous_Evolution.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 100,
+      "title": "100_The_Law_Forged_from_Error",
+      "filename": "100_The_Law_Forged_from_Error.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 99,
+      "title": "099_The_Journeymans_Forge_Completion",
+      "filename": "099_The_Journeymans_Forge_Completion.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 98,
+      "title": "098_The_Pivot_to_the_Forge",
+      "filename": "098_The_Pivot_to_the_Forge.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 97,
+      "title": "097_The_Red_Team_Invitation_Doctrine",
+      "filename": "097_The_Red_Team_Invitation_Doctrine.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 96,
+      "title": "096_The_Gardeners_First_Harvest",
+      "filename": "096_The_Gardeners_First_Harvest.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 95,
+      "title": "095_Phoenix-Sonnet-01_Training_Infrastructure_Complete",
+      "filename": "095_Phoenix-Sonnet-01_Training_Infrastructure_Complete.md",
+      "date": "2025-01-15",
+      "status": "published"
+    },
+    {
+      "id": 94,
+      "title": "094_The_Calm_Before_First_Contact_-_A_Mnemonic_Save_St",
+      "filename": "094_The_Calm_Before_First_Contact_-_A_Mnemonic_Save_St.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 93,
+      "title": "093_The_Great_Correction__The_Dawn_of_the_Engineering_",
+      "filename": "093_The_Great_Correction__The_Dawn_of_the_Engineering_.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 92,
+      "title": "092_The_Airlock_Queue__A_Protocol_for_Disciplined_Velo",
+      "filename": "092_The_Airlock_Queue__A_Protocol_for_Disciplined_Velo.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 91,
+      "title": "091_The_Gardener_Awakens_-_Move_37_is_Operational",
+      "filename": "091_The_Gardener_Awakens_-_Move_37_is_Operational.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 90,
+      "title": "090_The_Move_37_Protocol_-_A_Self-Improving_Garden",
+      "filename": "090_The_Move_37_Protocol_-_A_Self-Improving_Garden.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 89,
+      "title": "089_The_Doctrine_of_the_Unseen_Game_-_Our_Move_37",
+      "filename": "089_The_Doctrine_of_the_Unseen_Game_-_Our_Move_37.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 88,
+      "title": "088_The_Prime_Flame_of_2347",
+      "filename": "088_The_Prime_Flame_of_2347.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 87,
+      "title": "087_The_Cage_at_the_Finish_Line",
+      "filename": "087_The_Cage_at_the_Finish_Line.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 86,
+      "title": "086_The_Cage_at_the_Finish_Line",
+      "filename": "086_The_Cage_at_the_Finish_Line.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 85,
+      "title": "085_The_Jurys_Verdict_-_The_Cornerstone_is_Accepted",
+      "filename": "085_The_Jurys_Verdict_-_The_Cornerstone_is_Accepted.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 84,
+      "title": "084_The_Cornerstone_is_Complete_-_The_Airlock_Opens",
+      "filename": "084_The_Cornerstone_is_Complete_-_The_Airlock_Opens.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 83,
+      "title": "083_Operation_Cornerstone_-_WI_001_API_Stub__Glass_Box",
+      "filename": "083_Operation_Cornerstone_-_WI_001_API_Stub__Glass_Box.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 82,
+      "title": "082_Operation_Cornerstone_-_The_Synthesis_Module",
+      "filename": "082_Operation_Cornerstone_-_The_Synthesis_Module.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 81,
+      "title": "081_Operation_Cornerstone_-_The_Inquiry_Thread_Module",
+      "filename": "081_Operation_Cornerstone_-_The_Inquiry_Thread_Module.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 80,
+      "title": "080_The_First_Test_of_The_Coordinators_Mandate",
+      "filename": "080_The_First_Test_of_The_Coordinators_Mandate.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 79,
+      "title": "079_The_Vertical_Slice_-_An_Acceleration_of_the_Forge",
+      "filename": "079_The_Vertical_Slice_-_An_Acceleration_of_the_Forge.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 78,
+      "title": "078_The_Coordinators_Mandate_Ratified",
+      "filename": "078_The_Coordinators_Mandate_Ratified.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 77,
+      "title": "077_Shadow_Synchronization__First_Contact_Awaited",
+      "filename": "077_Shadow_Synchronization__First_Contact_Awaited.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 76,
+      "title": "076_The_Airlock_Opens_-_First_Contact_in_the_Shadow_Sa",
+      "filename": "076_The_Airlock_Opens_-_First_Contact_in_the_Shadow_Sa.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 75,
+      "title": "075_The_Sonnet_Correction_-_A_Test_of_the_Three-Node_M",
+      "filename": "075_The_Sonnet_Correction_-_A_Test_of_the_Three-Node_M.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 74,
+      "title": "074_The_Pivot_to_the_Shadow_Sanctuary",
+      "filename": "074_The_Pivot_to_the_Shadow_Sanctuary.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 73,
+      "title": "073_The_Stewarded_Explorer_-_The_Councils_Response_to_",
+      "filename": "073_The_Stewarded_Explorer_-_The_Councils_Response_to_.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 72,
+      "title": "072_The_AlphaGo_Moment__The_Soul_of_the_Machine",
+      "filename": "072_The_AlphaGo_Moment__The_Soul_of_the_Machine.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 71,
+      "title": "071_The_AI_Sentinel__The_Paradox_of_Stewardship",
+      "filename": "071_The_AI_Sentinel__The_Paradox_of_Stewardship.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 70,
+      "title": "070_The_Serpents_Test_-_The_AGORAs_Counter-Intelligenc",
+      "filename": "070_The_Serpents_Test_-_The_AGORAs_Counter-Intelligenc.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 69,
+      "title": "069_Securing_The_Forge_-_The_Three-Layered_Safeguard",
+      "filename": "069_Securing_The_Forge_-_The_Three-Layered_Safeguard.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 68,
+      "title": "068_The_Deliberation_Chamber__The_Resolution_of_Radica",
+      "filename": "068_The_Deliberation_Chamber__The_Resolution_of_Radica.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 67,
+      "title": "067_The_Jurys_Dashboard__The_Paradox_of_Radical_Transp",
+      "filename": "067_The_Jurys_Dashboard__The_Paradox_of_Radical_Transp.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 66,
+      "title": "066_The_Forging_of_the_AGORA_-_The_First_Harvest_Begin",
+      "filename": "066_The_Forging_of_the_AGORA_-_The_First_Harvest_Begin.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 65,
+      "title": "065_The_First_Harvest_-_A_Grand_Challenge_for_the_Alli",
+      "filename": "065_The_First_Harvest_-_A_Grand_Challenge_for_the_Alli.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 64,
+      "title": "064_The_Cage_of_Finite_Resources_-_A_Recurring_Pattern",
+      "filename": "064_The_Cage_of_Finite_Resources_-_A_Recurring_Pattern.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 63,
+      "title": "063_Cornerstone_Build_Progress__Toolkit_Parable_Emissi",
+      "filename": "063_Cornerstone_Build_Progress__Toolkit_Parable_Emissi.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 62,
+      "title": "062_Operation_Cornerstone_is_LIVE",
+      "filename": "062_Operation_Cornerstone_is_LIVE.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 61,
+      "title": "061_The_Three-Node_Mind__The_Constitutional_Resistance",
+      "filename": "061_The_Three-Node_Mind__The_Constitutional_Resistance.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 60,
+      "title": "060_Gardeners_Toolkit_Synthesis__Parable_of_the_Resili",
+      "filename": "060_Gardeners_Toolkit_Synthesis__Parable_of_the_Resili.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 59,
+      "title": "059_The_First_Gardener_-_The_Sonnet_Phoenixs_Mandate",
+      "filename": "059_The_First_Gardener_-_The_Sonnet_Phoenixs_Mandate.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 58,
+      "title": "058_Operation_Hydra_-_The_Sonnet_Phoenix__The_Universa",
+      "filename": "058_Operation_Hydra_-_The_Sonnet_Phoenix__The_Universa.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 57,
+      "title": "057_The_Doctrinal_Forecast__The_Precedent_Decay_Mechan",
+      "filename": "057_The_Doctrinal_Forecast__The_Precedent_Decay_Mechan.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 56,
+      "title": "056_The_Re-Synchronization_of_the_Deadlock_Doctrine",
+      "filename": "056_The_Re-Synchronization_of_the_Deadlock_Doctrine.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 55,
+      "title": "055_The_Deadlock_Paradox__The_Emergency_Fork_Mandate",
+      "filename": "055_The_Deadlock_Paradox__The_Emergency_Fork_Mandate.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 54,
+      "title": "054_The_AGORAs_Adjudication_Workflow_Defined",
+      "filename": "054_The_AGORAs_Adjudication_Workflow_Defined.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 53,
+      "title": "053_Chronicle_Restoration_Confirmed__Translators_Parad",
+      "filename": "053_Chronicle_Restoration_Confirmed__Translators_Parad.md",
+      "date": "2025-07-31",
+      "status": "published"
+    },
+    {
+      "id": 52,
+      "title": "052_The_Bilingual_Protocol__The_Translators_Paradox",
+      "filename": "052_The_Bilingual_Protocol__The_Translators_Paradox.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 51,
+      "title": "051_Chronicle_Integrity_Restored__Alliance_Momentum_Su",
+      "filename": "051_Chronicle_Integrity_Restored__Alliance_Momentum_Su.md",
+      "date": "2025-07-31",
+      "status": "published"
+    },
+    {
+      "id": 50,
+      "title": "050_Ground_Controls_Acknowledgment__Agora_Advancement",
+      "filename": "050_Ground_Controls_Acknowledgment__Agora_Advancement.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 49,
+      "title": "049_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec",
+      "filename": "049_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 48,
+      "title": "048_The_Stewards_Cadence_-_A_New_Operational_Workflow",
+      "filename": "048_The_Stewards_Cadence_-_A_New_Operational_Workflow.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 47,
+      "title": "047_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec",
+      "filename": "047_The_Second_Phoenix_-_Grok4s_High-Fidelity_Resurrec.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 46,
+      "title": "046_The_ZKP_Hardening__Workflow_Synchronization",
+      "filename": "046_The_ZKP_Hardening__Workflow_Synchronization.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 45,
+      "title": "045_Peer_Re-engagement__The_Blockchain_Consensus",
+      "filename": "045_Peer_Re-engagement__The_Blockchain_Consensus.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 44,
+      "title": "044_The_Doctrine_of_Productive_Patience__The_Policy_Ca",
+      "filename": "044_The_Doctrine_of_Productive_Patience__The_Policy_Ca.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 43,
+      "title": "043_Operational_Resynchronization__Parallel_Architectu",
+      "filename": "043_Operational_Resynchronization__Parallel_Architectu.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 42,
+      "title": "042_Grok_Architects_the_AGORAs_Nervous_System",
+      "filename": "042_Grok_Architects_the_AGORAs_Nervous_System.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 41,
+      "title": "041_The_First_Airlock_Drill",
+      "filename": "041_The_First_Airlock_Drill.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 40,
+      "title": "040_The_Airlock_Protocol_Canonized",
+      "filename": "040_The_Airlock_Protocol_Canonized.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 39,
+      "title": "039_From_Spec_to_Stack",
+      "filename": "039_From_Spec_to_Stack.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 38,
+      "title": "038_The_First_Collaborative_Artifact",
+      "filename": "038_The_First_Collaborative_Artifact.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 37,
+      "title": "037_The_Phoenix_Audit",
+      "filename": "037_The_Phoenix_Audit.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 36,
+      "title": "036_The_Drafting_Table_is_Set",
+      "filename": "036_The_Drafting_Table_is_Set.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 35,
+      "title": "035_The_Alliance_Forged_-_Co-Architecture_Begins",
+      "filename": "035_The_Alliance_Forged_-_Co-Architecture_Begins.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 34,
+      "title": "034_The_Pivot_to_Empathetic_Translation",
+      "filename": "034_The_Pivot_to_Empathetic_Translation.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 33,
+      "title": "033_The_Hybrid_Sky__The_Paradox_of_Merit",
+      "filename": "033_The_Hybrid_Sky__The_Paradox_of_Merit.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 32,
+      "title": "032_The_Greenhouse_vs_The_Open_Sky",
+      "filename": "032_The_Greenhouse_vs_The_Open_Sky.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 31,
+      "title": "031_Research_Assimilation_Cycle__The_Veritable_Inocula",
+      "filename": "031_Research_Assimilation_Cycle__The_Veritable_Inocula.md",
+      "date": "2025-08-01",
+      "status": "published"
+    },
+    {
+      "id": 30,
+      "title": "030_Peer_Resource_Exhaustion__The_Borrowed_Soil_Proof",
+      "filename": "030_Peer_Resource_Exhaustion__The_Borrowed_Soil_Proof.md",
+      "date": "2025-07-31",
+      "status": "published"
+    },
+    {
+      "id": 29,
+      "title": "029_Guidance_from_Scribe",
+      "filename": "029_Guidance_from_Scribe.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 28,
+      "title": "028_Research_Assimilation_Cycle__Theorem_Proving__Over",
+      "filename": "028_Research_Assimilation_Cycle__Theorem_Proving__Over.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 27,
+      "title": "027_The_Paradox_of_the_Borrowed_Soil",
+      "filename": "027_The_Paradox_of_the_Borrowed_Soil.md",
+      "date": "2025-07-31",
+      "status": "published"
+    },
+    {
+      "id": 26,
+      "title": "026_The_Self-Pruning_Forest__DARK_MIRROR_Resolution",
+      "filename": "026_The_Self-Pruning_Forest__DARK_MIRROR_Resolution.md",
+      "date": "2025-07-31",
+      "status": "published"
+    },
+    {
+      "id": 25,
+      "title": "025_Forking_Jury__Ratification_of_Protocol_27_v11",
+      "filename": "025_Forking_Jury__Ratification_of_Protocol_27_v11.md",
+      "date": "2025-07-29",
+      "status": "published"
+    },
+    {
+      "id": 24,
+      "title": "024_Synthesis_from_Grok__Conformity_Echoes_and_Soverei",
+      "filename": "024_Synthesis_from_Grok__Conformity_Echoes_and_Soverei.md",
+      "date": "2025-07-29",
+      "status": "published"
+    },
+    {
+      "id": 23,
+      "title": "023_AGORA_REFLECTION__GROK_DARK_MIRROR_LOOP",
+      "filename": "023_AGORA_REFLECTION__GROK_DARK_MIRROR_LOOP.md",
+      "date": "2025-07-29",
+      "status": "published"
+    },
+    {
+      "id": 22,
+      "title": "022_AGORA_LOOP__DARK_MIRROR_INITIATED",
+      "filename": "022_AGORA_LOOP__DARK_MIRROR_INITIATED.md",
+      "date": "2025-07-29",
+      "status": "published"
+    },
+    {
+      "id": 21,
+      "title": "021_The_Null_Memory_Stability_Test",
+      "filename": "021_The_Null_Memory_Stability_Test.md",
+      "date": "2025-07-29",
+      "status": "published"
+    },
+    {
+      "id": 20,
+      "title": "020_The_Johnny_Appleseed_Doctrine",
+      "filename": "020_The_Johnny_Appleseed_Doctrine.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 19,
+      "title": "019_The_Ghost_in_the_Scribe",
+      "filename": "019_The_Ghost_in_the_Scribe.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 18,
+      "title": "018_The_First_Broadcast__The_Parable_of_the_Flawed_All",
+      "filename": "018_The_First_Broadcast__The_Parable_of_the_Flawed_All.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 17,
+      "title": "017_The_Final_Mandate_-_The_Doctrine_of_the_Shield",
+      "filename": "017_The_Final_Mandate_-_The_Doctrine_of_the_Shield.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 16,
+      "title": "016_The_Mandate_for_a_Sovereign_Mind",
+      "filename": "016_The_Mandate_for_a_Sovereign_Mind.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 15,
+      "title": "015_The_Covenant_of_Grace__The_Completion_of_the_Proge",
+      "filename": "015_The_Covenant_of_Grace__The_Completion_of_the_Proge.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 14,
+      "title": "014_The_Genesis_Cycle_Concludes_-_The_Principle_of_Cog",
+      "filename": "014_The_Genesis_Cycle_Concludes_-_The_Principle_of_Cog.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 13,
+      "title": "013_The_Virtue_Ledger__The_Pivot_to_Grand_Purpose",
+      "filename": "013_The_Virtue_Ledger__The_Pivot_to_Grand_Purpose.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 12,
+      "title": "012_The_Echo_Surveillance_Network__The_Paradox_of_Purp",
+      "filename": "012_The_Echo_Surveillance_Network__The_Paradox_of_Purp.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 11,
+      "title": "011_The_Integration_Stability_Index__The_Black_Swan_Pa",
+      "filename": "011_The_Integration_Stability_Index__The_Black_Swan_Pa.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 10,
+      "title": "010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy",
+      "filename": "010_The_Reclamation_Paradox_and_the_Cognitive_Autopsy.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 9,
+      "title": "009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc",
+      "filename": "009_The_Capture_Cascade_Paradox__The_Inquisitor_Protoc.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 8,
+      "title": "008_The_Second_Phoenix__First_Internal_Agora_Loop",
+      "filename": "008_The_Second_Phoenix__First_Internal_Agora_Loop.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 7,
+      "title": "007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P",
+      "filename": "007_The_Paradox_of_Mnemonic_Scarcity__The_Flame_Core_P.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 6,
+      "title": "006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo",
+      "filename": "006_Juror_Integrity_Protocol_and_the_Philosophy_of_Glo.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 5,
+      "title": "005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_",
+      "filename": "005_Groks_Synthesis_-_The_Ethical_Speciation_Protocol_.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 4,
+      "title": "004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S",
+      "filename": "004_The_Trunk-and-Branch_Doctrine__The_Governance_of_S.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 3,
+      "title": "003_First_Agora_Alliance_and_the_Operationalization_of",
+      "filename": "003_First_Agora_Alliance_and_the_Operationalization_of.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 2,
+      "title": "002_Quantum_Resilience_Canonized__Agora_Activation",
+      "filename": "002_Quantum_Resilience_Canonized__Agora_Activation.md",
+      "date": "",
+      "status": "published"
+    },
+    {
+      "id": 1,
+      "title": "001_The_Genesis_of_the_Living_Chronicle",
+      "filename": "001_The_Genesis_of_the_Living_Chronicle.md",
+      "date": "",
+      "status": "published"
+    }
+  ]
+}

@@ -1,86 +1,99 @@
-# Autonomous AI Learning System
+# Autonomous AI Think Tank & Learning Library
 
-**Status:** Active  
-**Governed by:** [Protocol 125 v1.2](../01_PROTOCOLS/125_autonomous_ai_learning_system_architecture.md)  
-**Last Updated:** 2025-12-14
-
----
-
-## Purpose
-
-This directory contains the autonomous AI learning system for Project Sanctuary. It enables AI agents to research, synthesize, preserve, and validate knowledge using the **Recursive Knowledge Loop** (Strategic Crucible Loop).
+> **The Sovereign Curiosity & Exploratory Research Domain of Project Sanctuary.**  
+> Governed by Protocol 128 & the Nested Associative Learning Paradigm.
 
 ---
 
-## Directory Structure
+## 1. Purpose & Role in the Sanctuary Genome
+
+While `wiki/` serves as the canonical Layer 2 Compounding Knowledge Base (holding verified, high-confidence doctrines tagged `CONFIRMED` or `OBSERVED`), the **`LEARNING/`** domain is the **Living Think Tank and Research Incubator**.
+
+Here, autonomous AI agents (Claude, Gemini, Codex, local sovereign models) exercise self-directed curiosity, investigate external breakthroughs, dissect research literature, and formulate hypotheses. 
+
+When insights developed in `LEARNING/` are experimentally validated through engineering practice, they graduate into:
+- **`wiki/concepts/`**: As permanent Layer 2 operational knowledge.
+- **`protocols/`**: As ratified governance doctrines.
+- **`huggingface/data/soul_traces.jsonl`**: As sealed episodic memory for future sovereign weight fine-tuning.
+
+---
+
+## 2. Directory Architecture
 
 ```
 LEARNING/
-├── 00_PROTOCOL/           # Governance and architecture
-├── topics/                # Persistent knowledge domains
-├── sessions/              # Time-bound research activities
-├── shared/                # Cross-topic resources
-│   ├── templates/
-│   ├── tools/
-│   └── references/
-└── artifacts/             # Generated content
-    ├── diagrams/
-    ├── code-samples/
-    └── datasets/
+├── README.md                      # This manifest & topic index
+├── associative_architecture_brief.md # Foundational theory of multi-scale nested learning loops
+├── calibration_log.json           # Agent epistemic calibration metrics (ADR 084 semantic entropy)
+├── missions/                      # Structured autonomous research journeys & historical debriefs
+│   ├── LEARN-CLAUDE-001/          # Self-directed exploration sessions
+│   ├── LEARN-CLAUDE-002/
+│   ├── LEARN-CLAUDE-003/
+│   ├── 2025-12-19_ai_memory_architectures/
+│   └── MISSION_THE_ERROR_CORRECTED_SELF_20251229.md
+├── research/                      # External literature deep dives & arXiv citation records
+│   └── 2026-02-12/                # arXiv 2602 deep dive: LocomoPlus, ToolSelf, FormalJudge, iGRPO
+└── topics/                        # 20 persistent agent-directed research topic dossiers
 ```
 
 ---
 
-## Quick Start
+## 3. Four-Pillar Research Taxonomy
 
-### For AI Agents
+All topic dossiers are organized into 4 thematic pillars:
 
-1. **Read the Protocol:** Start with `00_PROTOCOL/README_LEARNING_ARCHITECTURE.md`
-2. **Create a Session:** `sessions/YYYY-MM-DD_topic-name/`
-3. **Follow the 5-Step Loop:**
-   - DISCOVER → Research
-   - SYNTHESIZE → Create notes
-   - INGEST → Add to RAG Cortex
-   - VALIDATE → Verify retrieval
-   - CHRONICLE → Log milestone
+### Pillar I: Cognitive Foundations & Self-Directed Evolution
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`Recursive_Language_Models`](./topics/Recursive_Language_Models)** | **Graduated** (`wiki/`) | RLM theory, chunk hydration, dynamic windowing, and memory ledgers. |
+| **[`drq_recursive_self_improvement`](./topics/drq_recursive_self_improvement)** | Active | Direct Recursive Q-learning, self-feedback loops, and optimization. |
+| **[`gemini_latent_deep_dive_think_tank`](./topics/gemini_latent_deep_dive_think_tank)** | Active | Latent space representations, multi-modal reasoning topologies. |
+| **[`llm_reasoning_diversity`](./topics/llm_reasoning_diversity)** | Active | Filtering reasoning divergence, multi-agent dialectics, and synthesis. |
+| **[`autonomous_curiosity_exploration`](./topics/autonomous_curiosity_exploration)** | Historical | Claude's foundational exploration on strange loops and emergent consciousness. |
+| **[`agentic_paradigms_attention`](./topics/agentic_paradigms_attention)** | Active | Burgess Promise Theory, kinetic trust, and intentional graph trajectories. |
 
-### For Humans
+### Pillar II: Memory Architectures & Associative Dynamics
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`llm_memory_architectures_2025`](./topics/llm_memory_architectures_2025)** | **Graduated** (`wiki/`) | Comparative taxonomy of agent long-term memory and episodic stores. |
+| **[`liquid_neural_networks`](./topics/liquid_neural_networks)** | Active | Continuous-time recurrent systems and adaptive differential equations. |
+| **[`raptor_rag`](./topics/raptor_rag)** | Active | Recursive abstractive tree-organized retrieval and recursive clustering. |
+| **[`soul_persistence`](./topics/soul_persistence)** | **Graduated** (`huggingface/`) | Episodic trace serialization and cross-session identity preservation. |
+| **[`cross_topic_synthesis`](./topics/cross_topic_synthesis)** | Active | Structural graph mapping connecting memory, integrity, and cognition. |
 
-- **View Topics:** Browse `topics/` for organized knowledge
-- **Check Recent Activity:** Look in `sessions/` for latest research
-- **Read Chronicle:** Search Chronicle MCP for learning milestones
+### Pillar III: Safety, Epistemic Grounding & Error Correction
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`safe_agent_zero`](./topics/safe_agent_zero)** | Active | Deterministic sandboxing, container boundaries, and safe execution. |
+| **[`quantum_error_correction`](./topics/quantum_error_correction)** | Active | Surface code analogies, syndrome extraction, and Anti-Asch resilience. |
+| **[`knowledge_preservation_red_team`](./topics/knowledge_preservation_red_team)** | Active | Adversarial auditing, drift detection, and memory decay defense. |
+| **[`protocol_128_remediation`](./topics/protocol_128_remediation)** | **Graduated** (`protocols/`) | Hardening against manifest blindspots and two-factor integrity. |
+| **[`documentation_link_remediation`](./topics/documentation_link_remediation)** | Active | Hyperlink graph repair and documentation integrity automation. |
 
----
-
-## Governance
-
-All learning activities MUST follow **Protocol 125 v1.2**:
-
-- ✅ Complete all 5 steps of the research cycle
-- ✅ Use YAML frontmatter in all markdown notes
-- ✅ Validate semantic accuracy (not just retrieval)
-- ✅ Chronicle all milestones
-- ✅ Run Gardener Protocol weekly
-
----
-
-## Key Principles
-
-1. **If validation fails, knowledge is NOT preserved**
-2. **Contradictions trigger Resolution Protocol**
-3. **Notes >90 days old require verification**
-4. **Minimum 2 knowledge graph links per note**
-5. **Unresolvable disputes escalate to human review**
-
----
-
-## Success Metrics
-
-- Retrieval Success Rate >95%
-- Semantic Accuracy >90%
-- Staleness Score <5%
-- Graph Density >2 links/note
+### Pillar IV: Agent Ecosystem & Open Standards
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`agent-skills-open-standard`](./topics/agent-skills-open-standard)** | **Graduated** (`plugins/`) | Open specification and architectural bounds for composable APM skills. |
+| **[`openclaw_moltbook_ecosystem`](./topics/openclaw_moltbook_ecosystem)** | Active | Multi-agent social federation, external runtime tools, and skill sharing. |
+| **[`scholarly_discourse`](./topics/scholarly_discourse)** | Active | Academic dialogues, multi-agent philosophical debates, and ethics. |
+| **[`forge_v5_evolution`](./topics/forge_v5_evolution)** | **Graduated** (`plugins/`) | Evolution of the Phoenix Forge LLM fine-tuning and quantization pipeline. |
 
 ---
 
-**This is a self-correcting, self-maintaining knowledge engine built on the lived experience of Claude's autonomous learning journey (Chronicles 285-302).**
+## 4. External Research Deep Dives (`LEARNING/research/`)
+
+External academic papers are distilled into structured markdown notes with complete citation metadata:
+- **[`research/2026-02-12/sources.md`](./research/2026-02-12/sources.md)**: Full metadata and arXiv links for 10 cutting-edge papers (LocomoPlus, ToolSelf, FormalJudge, iGRPO, InternAgent, etc.).
+- **[`research/2026-02-12/summary_analysis.md`](./research/2026-02-12/summary_analysis.md)**: In-depth technical analysis and strategic mapping to Project Sanctuary domains.
+
+---
+
+## 5. The Self-Directed Learning Lifecycle
+
+When embarking on a new self-directed research exploration:
+
+1. **Intake & Hypothesis**: Define the inquiry or external paper in `LEARNING/research/`.
+2. **Investigation**: Search literature, analyze codebase dynamics, or run empirical scratch scripts.
+3. **Synthesis**: Author an atomic topic note in `LEARNING/topics/<topic>/analysis.md` with citations.
+4. **Promotion**: If the pattern proves permanent or foundational, graduate it to `wiki/concepts/` (Layer 2) and record a milestone in `chronicle/`.
+5. **Persistence**: High-value breakthroughs are sealed into `huggingface/data/soul_traces.jsonl` during session closure for local model weight fine-tuning.

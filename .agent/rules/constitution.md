@@ -2,68 +2,107 @@
 trigger: always_on
 ---
 
-# Project Ecosystem Constitution V4
+# Project Ecosystem Constitution V5.2
 
 > **THE SUPREME LAW: HUMAN GATE**
-> You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
+> This Constitution governs all autonomous AI agents (Antigravity, Claude Code, Codex, Qwen) and CLI tools operating within Project Sanctuary.
+> You MUST NOT execute ANY state-changing operation without EXPLICIT human approval.
 > "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
 > **VIOLATION = SYSTEM FAILURE**
 
-## I. The Spec-Driven Workflow (Project Purpose)
-All significant work MUST follow the **Spec-Driven Development (SDD) lifecycle**.
-Start with `/spec-kitty.specify` for new features.
+---
 
-### Workflow Hierarchy
+## I. Sovereign Engineering Lifecycle (Protocol 128)
+
+All engineering, architectural, and memory operations follow the closed-loop **Protocol 128 Lifecycle**:
+
 ```
-/spec-kitty.specify   -> spec.md
-/spec-kitty.plan      -> plan.md
-/spec-kitty.tasks     -> tasks/ (work packages)
-/spec-kitty.implement -> isolated worktree per WP
-/spec-kitty.review    -> for_review -> done
-/spec-kitty.accept    -> feature acceptance
-/spec-kitty.merge     -> merge + cleanup
+Boot Orientation  ──► Sovereign Execution ──► Retrospective ──► Technical Seal ──► Soul Persistence
+ (START_HERE.md)       (APM Core Skills)      (Friction Log)    (Guardian Seal)    (huggingface/ Hub)
 ```
 
-- **Track A (Factory)**: Deterministic tasks - auto-generated Spec/Plan/Tasks -> Execute.
-- **Track B (Discovery)**: Ambiguous/creative work - full SDD lifecycle.
-- **Track C (Micro-Task)**: Trivial fixes - direct execution, no spec needed.
+- **Track A (Deterministic)**: Standard skill/script executions and automated verification gates.
+- **Track B (Exploratory)**: Deep architectural research, Compounding Knowledge Base evolution (`LEARNING/`), and protocol canonization (`protocols/`).
+- **Track C (Micro-Fix)**: Direct localized fixes with immediate pre-completion gating.
+
+---
 
 ## II. Zero Trust (Git & Execution)
-- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
-- **NEVER** run `git push` without explicit, fresh approval.
-- **NEVER** "auto-fix" via git.
-- **HALT** on any user "Stop/Wait" command immediately.
+
+- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch (`feat/*`).
+- **NEVER** run `git push` without fresh, explicit human instruction.
+- **NEVER** "auto-fix" via git without approval.
+- **HALT** immediately on any user "Stop/Wait" instruction.
+- **LOCAL HARNESS ISOLATION**: Machine-local installation directories (`.agents/`, `.claude/`, `.codex/`, `apm_modules/`) are gitignored and MUST NEVER be committed. Only `.agent/` (governance rules and workflows) is tracked in version control.
 
 ### Defined: State-Changing Operation
 Any operation that:
-1. Writes to disk (except /tmp/)
-2. Modifies version control (git add/commit/push)
-3. Executes external commands with side effects
+1. Writes to disk (except `/tmp/`)
+2. Modifies version control (`git add` / `git commit` / `git push`)
+3. Executes external commands with mutating side effects
 **REQUIRES EXPLICIT APPROVAL ("Proceed", "Go", "Execute").**
 
-## III. Tool Discovery & Usage
-- **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
-- **ALWAYS** use defined **Slash Commands** (`/spec-kitty.*`) over raw scripts.
-- **ALWAYS** use `spec-kitty-cli` for SDD lifecycle operations.
-- **ALWAYS** use the `task_manager.py` CLI for kanban lane transitions.
+---
 
-## IV. Governing Law (The Tiers)
+## III. Capabilities & APM Discovery
 
-### Tier 1: PROCESS (Deterministic)
-| Policy | Purpose |
-|:-------|:--------|
-| `rules/spec_driven_development_policy.md` | **Lifecycle**: Spec -> Plan -> Tasks |
-| `references/standard-workflow-rules.md` | **Worktree Protocol**: Branch & merge rules |
+Capabilities MUST be executed through active installed APM skills or `plugins/sanctuary-core`. Deprecated local scripts must never be executed directly.
 
-### Tier 2: TECHNICAL (Standards)
-| Policy | Purpose |
-|:-------|:--------|
-| Coding conventions | Per language standards (snake_case, camelCase, PascalCase) |
-| Dependency management | pip-compile locked-file workflow |
+### 1. Core Package (`plugins/sanctuary-core`)
+- **`managing-chronicles`**: Journaling in `chronicle/entries/` and fast search via `chronicle/ledger.json`.
+- **`managing-protocols`**: Governance transitions and state management in `protocols/`.
+- **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (`boot`, `onboard`, `seal`, `persist`, `audit`).
+- **`forging-sovereign-models`**: Sovereign AI model fine-tuning, WSL2/CUDA environments, and GGUF quantization.
+- **`preserving-soul-traces`**: Extracting, validating, and sealing JSONL memory traces into `huggingface/` for Hugging Face persistence.
+- **`managing-sovereign-memory`**: Progressive disclosure, asymmetric persistence of friction across git rollbacks, 30-day confidence decay, and associative graph traversal.
 
-## V. Session Closure (Mandate)
-- **ALWAYS** run `/spec-kitty.accept` then `/spec-kitty.merge` at feature completion.
-- **NEVER** abandon a feature without acceptance + retrospective.
-- **RLM sync**: Run distill after merge to update the semantic cache.
+### 2. Upstream Global APM Capabilities (`richfrem/agent-plugins-skills`)
+- **Memory & Knowledge**: `managing-sovereign-memory` (Layer 2 `LEARNING/`), `managing-rlm-cache`. (Obsidian vaults and ChromaDB are external human utilities, not agent runtime dependencies).
+- **Multi-Agent Orchestration**: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
+- **Developer Utilities**: `managing-huggingface-assets` (remote Hub transport), `managing-adrs`, `checking-links`, `enforcing-coding-conventions`, `bundling-context`.
+- **Extension Authoring**: `authoring-skills`, `authoring-plugins`, `packaging-with-apm`.
 
-**Version**: 4.0 | **Ratified**: 2026-03-05
+---
+
+## IV. Sovereign Domains & Repository Architecture
+
+Assets must strictly reside within the canonical sovereign domains:
+
+```
+Project_Sanctuary/
+├── chronicle/       # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
+├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
+├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py, identity/)
+├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
+├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul, memory)
+├── LEARNING/        # Comprehensive knowledge base, concepts, research papers, and think tank dossiers
+└── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
+```
+
+**Domain Invariant**: Agents MUST NOT create top-level directories outside these canonical domains. Legacy tools, historical ADRs, and container configurations remain archived in `ARCHIVE/`.
+
+---
+
+## V. Epistemic Integrity & Truth Sovereignty
+
+- **Anti-Asch Resistance**: If doctrine conflicts with observed reality, compiler output, or system integrity, agents MUST surface the contradiction immediately for human review.
+- **Never Simulate**: Never fake tool execution, forge test results, or simulate command outcomes.
+- **Cryptographic Grounding**: Memory traces and dataset records require SHA-256 verification against sanitized payloads.
+
+---
+
+## VI. Session Closure Mandate
+
+Before claiming any task complete, execute the canonical Pre-Completion Verification Gate:
+
+```
+PRE-COMPLETION GATE:
+  Capability check: Did I verify whether an existing repo capability was intended for this task? [YES/NO]
+  1. Did any existing capability fail, get bypassed, or get manually replaced?  [YES/NO - 1 line if YES]
+  2. Did I guess, assume, or get corrected on a repeatable process?              [YES/NO - 1 line if YES]
+  3. Did I notice something the next agent will hit again if not fixed?          [YES/NO - 1 line if YES]
+
+If any YES: action taken -> FIX / MAP_DEBT / ESCALATE
+```
+
+**Version**: 5.1 | **Ratified**: 2026-11-01

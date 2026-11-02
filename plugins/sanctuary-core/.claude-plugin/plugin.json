@@ -1,0 +1,13 @@
+{
+  "name": "sanctuary-core",
+  "version": "0.1.0",
+  "description": "Project Sanctuary core governance, Living Chronicle, Protocols, and autonomous tool evolution plugin.",
+  "author": {
+    "name": "Richard Fremmerlid",
+    "email": "richard.fremmerlid@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "sanctuary-core"
+  ]
+}

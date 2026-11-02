@@ -1,1 +1,0 @@
-# session-closure Protocol Reference\n\nPut deep context here so it is not loaded into context implicitly.

@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "profiles": {
+        "project": {
+            "description": "Project Sanctuary documentation, protocols, wiki concepts, and runtime context",
+            "manifest": ".agent/learning/rlm_summary_cache_manifest.json",
+            "cache": ".agent/learning/rlm_summary_cache.json",
+            "extensions": [
+                ".md",
+                ".txt"
+            ]
+        }
+    },
+    "default_profile": "project"
+}

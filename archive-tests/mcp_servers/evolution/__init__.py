@@ -1,3 +1,0 @@
-"""
-Cortex MCP Server Tests
-"""
