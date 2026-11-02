@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""
+evaluate_dispatch.py - Pre-Delegation Falsifiable Investment Evaluator
+=====================================================================
+
+Purpose:
+    Applies the Popperian scientific method and investment ROI analysis
+    BEFORE delegating tasks to external CLI agents or subagents.
+    Ensures that every agent dispatch:
+      1. Has a clear, testable, and falsifiable hypothesis.
+      2. Establishes objective falsification criteria.
+      3. Selects the most cost-effective model tier (cheap vs frontier).
+      4. Avoids wasteful token burn on questions that can be verified locally.
+
+Usage:
+    python3 evaluate_dispatch.py \
+      --task "Concurrency audit of procedural memory writes" \
+      --hypothesis "File-based JSON writes in record_procedure_outcome.py are prone to corruption under concurrent execution" \
+      --falsification-criteria "Ten simultaneous processes write to the same procedure file without losing count or corrupting JSON" \
+      --model gpt-6-astra \
+      --planned-turns 2 \
+      --format json
+"""
+
+import os
+import sys
+import json
+import uuid
+import argparse
+from pathlib import Path
+from datetime import datetime, timezone
+
+
+MODEL_COST_TIERS = {
+    # Frontier models (Expensive)
+    "gpt-6-astra": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Codex Astra (Heavy Architectural Reasoning)"},
+    "claude-3-opus": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Claude Opus"},
+    "o1": {"tier": "frontier", "weight": 3.5, "desc": "OpenAI o1 Reasoning"},
+    "o3": {"tier": "frontier", "weight": 4.0, "desc": "OpenAI o3 Reasoning"},
+
+    # Standard models
+    "claude-3-5-sonnet": {"tier": "standard", "weight": 1.0, "desc": "Standard Claude Sonnet"},
+    "gpt-4o": {"tier": "standard", "weight": 1.0, "desc": "Standard GPT-4o"},
+    "gemini-1.5-pro": {"tier": "standard", "weight": 1.0, "desc": "Standard Gemini Pro"},
+
+    # Cheap models (Fast, High Token Efficiency)
+    "claude-3-5-haiku": {"tier": "cheap", "weight": 0.2, "desc": "Fast & Cheap Haiku"},
+    "gpt-4o-mini": {"tier": "cheap", "weight": 0.15, "desc": "Fast & Cheap Mini"},
+    "gemini-1.5-flash": {"tier": "cheap", "weight": 0.1, "desc": "Fast & Cheap Flash"},
+    "local-llama": {"tier": "free", "weight": 0.05, "desc": "Local Offline LLM"}
+}
+
+
+def get_project_root() -> Path:
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / ".git").exists():
+            return parent
+    return Path.cwd()
+
+
+def get_model_tier(model_name: str) -> dict:
+    clean = model_name.lower().strip()
+    for k, v in MODEL_COST_TIERS.items():
+        if k in clean or clean in k:
+            return v
+    return {"tier": "standard", "weight": 1.0, "desc": f"Standard ({model_name})"}
+
+
+def evaluate_investment(hypothesis: str, falsification: str, model_info: dict, planned_turns: int) -> dict:
+    """Evaluates whether the dispatch represents a smart, falsifiable investment."""
+    recommendations = []
+    status = "APPROVED"
+
+    # Falsifiability check
+    hypo_words = len(hypothesis.split())
+    fals_words = len(falsification.split())
+
+    is_falsifiable = True
+    if fals_words < 5:
+        is_falsifiable = False
+        recommendations.append("Falsification criteria too vague. Provide concrete, observable test assertions.")
+        status = "NEEDS_REFINEMENT"
+
+    tier = model_info["tier"]
+    weight = model_info["weight"]
+
+    # Model tier economy check
+    if tier == "frontier":
+        if planned_turns > 3:
+            recommendations.append(f"Frontier model requested for > 3 turns ({planned_turns}). High token burn risk on subscription quota.")
+            status = "WARNING"
+        if hypo_words < 8:
+            recommendations.append("Task description lacks architectural depth required to justify frontier model cost. Consider downgrading to a standard or cheap model.")
+            status = "DOWNGRADE_RECOMMENDED"
+    elif tier == "cheap":
+        recommendations.append("High token economy. Ideal for broad reconnaissance, syntax fixes, or targeted queries.")
+
+    return {
+        "status": status,
+        "is_falsifiable": is_falsifiable,
+        "model_tier": tier,
+        "cost_weight": weight,
+        "recommendations": recommendations
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Pre-Delegation Falsifiable Investment Evaluator")
+    parser.add_argument("--task", required=True, help="Task description")
+    parser.add_argument("--hypothesis", required=True, help="Falsifiable hypothesis or expected outcome")
+    parser.add_argument("--falsification-criteria", required=True, help="Exact observable condition that would prove hypothesis false")
+    parser.add_argument("--model", default="claude-3-5-sonnet", help="Target model identifier")
+    parser.add_argument("--planned-turns", type=int, default=1, help="Expected turn budget")
+    parser.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
+    args = parser.parse_args()
+
+    root = get_project_root()
+    model_info = get_model_tier(args.model)
+    eval_result = evaluate_investment(args.hypothesis, args.falsification_criteria, model_info, args.planned_turns)
+
+    dispatch_id = str(uuid.uuid4())
+    record = {
+        "dispatch_id": dispatch_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "task": args.task,
+        "hypothesis": args.hypothesis,
+        "falsification_criteria": args.falsification_criteria,
+        "model": args.model,
+        "model_tier": model_info["tier"],
+        "cost_weight": model_info["weight"],
+        "planned_turns": args.planned_turns,
+        "investment_decision": eval_result["status"],
+        "recommendations": eval_result["recommendations"]
+    }
+
+    # Append to events.jsonl
+    events_file = root / ".agent" / "learning" / "events.jsonl"
+    events_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(events_file, "a", encoding="utf-8") as f:
+        f.write(json.dumps({
+            "event_type": "PRE_DISPATCH_EVALUATION",
+            **record
+        }) + "\n")
+
+    if args.format == "json":
+        print(json.dumps(record, indent=2))
+    else:
+        print(f"Pre-Delegation Investment Evaluation [{eval_result['status']}]:")
+        print(f"  Task:               {args.task}")
+        print(f"  Model Requested:    {args.model} ({model_info['desc']})")
+        print(f"  Cost Weight:        {model_info['weight']}x ({model_info['tier'].upper()} tier)")
+        print(f"  Hypothesis:         {args.hypothesis}")
+        print(f"  Falsification Gate: {args.falsification_criteria}")
+        if eval_result["recommendations"]:
+            print("  Guidance / Recommendations:")
+            for r in eval_result["recommendations"]:
+                print(f"    - {r}")
+
+
+if __name__ == "__main__":
+    main()
