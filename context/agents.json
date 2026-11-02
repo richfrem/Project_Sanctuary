@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "installed": "2026-03-15",
+  "adr": "ADR-100",
+  "permitted_agents": [
+    "sanctuary-guardian",
+    "orchestrator",
+    "learning-loop",
+    "red-team-review",
+    "dual-loop",
+    "agent-swarm",
+    "spec-kitty-agent",
+    "session-memory-manager",
+    "chronicle-agent",
+    "task-agent",
+    "rlm-curator",
+    "rlm-distill-agent",
+    "vector-db-agent",
+    "forge-soul-exporter",
+    "os-learning-loop",
+    "agentic-os-setup",
+    "os-health-check",
+    "os-clean-locks",
+    "skill-improvement-eval",
+    "system"
+  ]
+}
