@@ -13,6 +13,7 @@
 | [`protocol_128_lifecycle.md`](./concepts/protocol_128_lifecycle.md) | **CONFIRMED** | Protocol 128 | 5-stage sovereign session lifecycle: Boot -> Execution -> Retro -> Seal -> Persist. |
 | [`sovereign_memory_engine.md`](./concepts/sovereign_memory_engine.md) | **CONFIRMED** | ADR 100 / APM | 3-Layer Memory Engine: Runtime Context, Compounding Wiki, Deep Vault. |
 | [`sovereign_model_lineage.md`](./concepts/sovereign_model_lineage.md) | **CONFIRMED** | ADR 075 / Forge | Sanctuary-Qwen2-7B-v1.0 model lineage, weights, LoRA adapter, and inoculation. |
+| [`constitutional_identity_anchor.md`](./concepts/constitutional_identity_anchor.md) | **CONFIRMED** | Founder Seed | Constitutional identity anchor and baseline embeddings for drift detection. |
 
 ## Specialized Domains
 

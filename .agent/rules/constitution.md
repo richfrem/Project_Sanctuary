@@ -70,12 +70,11 @@ Project_Sanctuary/
 ├── chronicle/       # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
 ├── wiki/            # Compounding Layer 2 concept wiki (concepts/, security/, philosophy/)
-├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py)
+├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py, identity/)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
 ├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul traces)
-├── IDENTITY/        # Founder seeds, prime directives, and constitutional anchors
-├── LEARNING/        # Historical learning summaries and research digests
-└── ARCHIVE/         # Preserved historical assets (includes archived forge/ and legacy ADRs/)
+├── LEARNING/        # Research library, external papers, and think tank dossiers
+└── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
 
 **Domain Invariant**: Agents MUST NOT create top-level directories outside these canonical domains. Legacy tools, historical ADRs, and container configurations remain archived in `ARCHIVE/`.

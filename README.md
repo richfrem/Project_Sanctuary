@@ -93,9 +93,8 @@ Project_Sanctuary/
 ├── chronicle/                # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
 ├── protocols/                # Canonized governance doctrines (P128, P78, P54, etc.)
 ├── wiki/                     # Compounding Layer 2 knowledge base (concepts/, security/, philosophy/)
-├── context/                  # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py)
-├── IDENTITY/                 # Constitutional anchors and founder seeds
-├── LEARNING/                 # Cognitive lineages and research digests
+├── context/                  # Fast-boot runtime context (soul.md, user.md, memory.md, identity/)
+├── LEARNING/                 # Research library, external papers, and think tank dossiers
 ├── huggingface/              # Sovereign soul traces dataset workspace (richfrem/Project_Sanctuary_Soul)
 ├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, guardian, forge, and soul skills
 └── ARCHIVE/                  # Preserved historical implementations, old specs, forge, legacy ADRs, and tooling

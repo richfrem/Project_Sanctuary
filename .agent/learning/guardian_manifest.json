@@ -27,11 +27,11 @@
             "note": "Protocol 128 canonical specification"
         },
         {
-            "path": "ADRs/100_adopt_agentic_os_kernel_as_foundation_layer.md",
-            "note": "ADR 100 Agentic OS Foundation Layer"
+            "path": "wiki/concepts/sovereign_memory_engine.md",
+            "note": "Sovereign 3-layer memory engine concept"
         },
         {
-            "path": "IDENTITY/founder_seed.json",
+            "path": "context/identity/founder_seed.json",
             "note": "Founder seed and identity anchor"
         }
     ]
