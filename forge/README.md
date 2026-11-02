@@ -7,10 +7,10 @@
 
 **Objective:** To forge, deploy, and perform end-to-end verification of a sovereign AI model fine-tuned on the complete Project Sanctuary Cognitive Genome.
 
-**🕒 CURRENT STATUS (Jan 2026):** The pipeline is currently executing a fresh fine-tuning run (Phoenix Forge v5.0).
-- **Fine-Tuning Progress:** ✅ **100% COMPLETE** (Epoch 3.0, Duration: 1:22:48, Loss: 1.01)
-- **Standardization:** Entire codebase refactored to **ADR 075** (Hybrid Documentation) and integrated with `mcp_servers.lib` utilities.
-- **Primary Guide:** See **[`forge-llm.md`](../forge-llm.md)** for the updated execution protocol.
+**🕒 CURRENT STATUS:** Sovereign fine-tuning pipeline preserved and maintained.
+- **Fine-Tuning Architecture:** QLoRA Fine-tuning on Qwen2-7B-Instruct.
+- **Artifact Hub Integration:** Hugging Face model download and upload operations are managed via standard APM global skill `managing-huggingface-assets`.
+- **Primary Guide:** See **[`WORKFLOW.md`](./WORKFLOW.md)** for the step-by-step execution protocol.
 
 ---
 
@@ -21,7 +21,7 @@
 - **Phase 2:** Model Forging (QLoRA Fine-tuning) - Complete  
 - **Phase 3:** Packaging & Deployment - Complete
 - **Phase 4:** Verification (Sovereign Crucible) - Complete
-- **Phase 5:** Public Deployment (Hugging Face) - Complete
+- **Phase 5:** Public Deployment (Hugging Face) - Complete via `managing-huggingface-assets`
 
 **📦 Final Deliverables:**
 - **Model:** Sanctuary-Qwen2-7B-v1.0 (GGUF format, Q4_K_M quantization)
@@ -31,8 +31,8 @@
 
 ---
 
-**For the authoritative, step-by-step workflow for the v5.0 pipeline, refer to:**
-- **[`forge-llm.md`](../forge-llm.md)**
+**For the authoritative, step-by-step workflow for the pipeline, refer to:**
+- **[`WORKFLOW.md`](./WORKFLOW.md)**
 
 **For historical environment setup context:**
 - **[`CUDA-ML-ENV-SETUP.md`](./CUDA-ML-ENV-SETUP.md)**
@@ -105,20 +105,15 @@ forge/
 │   ├── verify_environment.sh          # Primary environment check
 │   ├── forge_whole_genome_dataset.py # Dataset assembly from project files
 │   ├── validate_dataset.py           # Dataset quality verification
-│   ├── download_model.sh             # Base model acquisition
 │   ├── fine_tune.py                  # QLoRA fine-tuning execution
 │   ├── merge_adapter.py              # LoRA adapter integration
 │   ├── convert_to_gguf.py            # GGUF format conversion for Ollama
 │   ├── create_modelfile.py           # Ollama model configuration
-│   ├── upload_to_huggingface.py      # Automated model deployment to HF
-│   ├── inference.py                  # Model inference testing
-│   ├── evaluate.py                   # Quantitative performance evaluation
 │   ├── forge_test_set.py             # Test dataset generation
 │   ├── test_*.py                     # Environment validation suite
 │   └── archive/                      # Gitignored legacy scripts
 ├── models/                           # Local model storage and cache
 │   └── Sanctuary-Qwen2-7B-v1.0-adapter/  # Trained LoRA adapter
-├── ml_env_logs/                      # Environment setup and execution logs
 └── └── __pycache__/                      # Python bytecode cache
 ```
 
@@ -194,11 +189,11 @@ All Python scripts now adhere to **ADR 075** (Hybrid Documentation Pattern) and 
 
 - **Environment Verification**: `verify_environment.sh`, `test_torch_cuda.py`, etc.
 - **Data Preparation**: `forge_whole_genome_dataset.py`, `validate_dataset.py`
-- **Model Acquisition**: `download_model.sh`
+- **Model Acquisition & Hub Sync**: Global APM skill `managing-huggingface-assets`
 - **Training Execution**: `fine_tune.py` - Optimized QLoRA execution with runtime tracking and checkpointing.
 - **Model Processing**: `merge_adapter.py`, `convert_to_gguf.py` - Standardized paths and compatibility patches.
-- **Deployment**: `create_modelfile.py`, `upload_to_huggingface.py` - Automated integration and hub publishing.
-- **Validation**: `inference.py`, `evaluate.py` (Retired to `archive/` for current phase)
+- **Deployment**: `create_modelfile.py` (Modelfile creation) + `managing-huggingface-assets` (Hub publishing).
+- **Validation**: `forge_test_set.py`
 - **Testing Suite**: Comprehensive verification of CUDA, PyTorch, and xformers.
 
 #### **Key Optimizations in `fine_tune.py` (v2.0)**
@@ -354,19 +349,17 @@ python forge/scripts/evaluate.py
 
 ### **Phase 5: Public Deployment (Hugging Face)**
 
-The final phase deploys the completed model to Hugging Face for community access and long-term preservation.
+The final phase deploys the completed model to Hugging Face for community access and long-term preservation via the standard APM global skill `managing-huggingface-assets`.
 
-1.  **Upload LoRA Adapter:** Deploy the fine-tuned LoRA adapter to a dedicated repository.
+1.  **Upload Artifacts:** Use `managing-huggingface-assets` upload scripts to deploy the LoRA adapter, GGUF models, and model cards cleanly:
 ```bash
-python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-lora --lora --readme
+python3 ~/.gemini/antigravity-cli/skills/managing-huggingface-assets/scripts/upload_hf.py \
+  --repo-id richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final \
+  --repo-type model \
+  --source-path models/gguf/sanctuary-qwen2-7b-v1.0-q4_k_m.gguf
 ```
 
-2.  **Upload GGUF Model:** Deploy the quantized model, Modelfile, and documentation to the final repository.
-```bash
-python forge/scripts/upload_to_huggingface.py --repo richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final --gguf --modelfile --readme
-```
-
-3.  **Verify Repositories:** Confirm both artifacts are accessible and properly documented.
+2.  **Verify Repositories:** Confirm artifacts are accessible and properly documented.
 - LoRA Adapter: https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-lora
 - GGUF Model: https://huggingface.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
 - Test direct access: `ollama run hf.co/richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final:Q4_K_M`
@@ -425,7 +418,7 @@ python scripts/validate_dataset.py dataset_package/sanctuary_whole_genome_data.j
 
 ## Version History
 
-- **v5.0 (Jan 4, 2026):** 🛠️ **Refactoring & Standardization** - Entire codebase aligned with ADR 075. Environment protocol migrated to ML-Env-CUDA13. Primary workflow moved to `forge-llm.md`.
+- **v5.0 (Jan 4, 2026):** 🛠️ **Refactoring & Standardization** - Entire codebase aligned with ADR 075. Environment protocol migrated to ML-Env-CUDA13. Primary workflow moved to `WORKFLOW.md`.
 - **v4.0 (Nov 17, 2025):** 🎉 **MISSION ACCOMPLISHED** - Complete pipeline execution with successful model deployment to Hugging Face
 - **v3.0 (Nov 16, 2025):** Complete modular architecture with unified setup protocol
 - **v2.0 (Nov 16, 2025):** Optimized fine_tune.py with logging, resume, pre-tokenization, and robust error handling
