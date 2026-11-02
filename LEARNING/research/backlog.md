@@ -40,8 +40,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | Rank | Mission ID | Mission Title | Strategic Leverage | Epistemic Depth | Cost Tier | Friction | Priority Score | Status |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **#1** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | Cheap (0.1x) | Medium (2) | **100.0** | `STAGED` |
-| **#2** | `MISSION-003` | **Offline Sovereign Model Quantization (Qwen2 GGUF)** | 5 | 4 | Free (0.05x) | Medium (2) | **200.0** | `PROPOSED` |
-| **#3** | `MISSION-002` | **Local Subscription Pooling Gateway (`localhost:4000`)** | 5 | 3 | Standard (1.0x) | Low (1) | **15.0** | `PROPOSED` |
+| **#2** | `MISSION-002` | **Multi-Subscription Cloud Pooling & Skill Pre-Flight Probe** | 5 | 4 | Cheap (0.2x) | Low (1) | **100.0** | `STAGED` |
+| **#3** | `MISSION-003` | **Offline Sovereign Model Quantization (Qwen2 GGUF)** | 5 | 4 | Free (0.05x) | Medium (2) | **200.0** | `PROPOSED` |
 | **#4** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark** | 4 | 5 | Cheap (0.2x) | Low (1) | **100.0** | `PROPOSED` |
 | **#5** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | Standard (1.0x) | Low (1) | **16.0** | `PROPOSED` |
 
@@ -62,15 +62,20 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 
 ---
 
-### MISSION-002: Local Subscription Pooling Gateway (`localhost:4000`)
-* **Objective**: Set up and benchmark a local proxy daemon (CLIProxyAPI or LiteLLM Proxy) that pools Claude Pro ($20/mo), ChatGPT Plus ($20/mo), and Gemini Pro (AGY) accounts.
-* **The Quota Problem**: Individual providers impose rolling rate windows (Claude 5h cap, ChatGPT 3h cap). When Claude expires, CLI workflows freeze even though Gemini and ChatGPT sit idle.
+### MISSION-002: Multi-Subscription Cloud Pooling & Skill Pre-Flight Readiness Probe
+* **Objective**: Establish cloud-to-cloud subscription pooling across Claude Pro ($20/mo), ChatGPT Plus ($20/mo), and Gemini Pro (AGY) with an integrated pre-flight readiness probe in `cli-agent`.
+* **Hardware & Epistemic Invariant (Apple Silicon M1 Optimization)**:
+  Project Sanctuary's workstation runs on an M1 Mac. Running heavy local models (e.g. 70B models or slow local 7B servers) during intensive agent loops causes high RAM pressure, thermal throttling, and sluggish reasoning. **Local LLMs are strictly deprioritized; the system must pool existing commercial cloud subscriptions instead.**
+* **Skill Pre-Flight Readiness Probe**:
+  Before executing an agent dispatch in `cli-agent` (via `run_agent.py`), the tool must run a pre-flight probe verifying whether:
+  1. Primary CLI target is authenticated and healthy.
+  2. Multi-subscription fallback chain (`--fallback-chain agy,codex`) is configured.
+  3. Work vs. Personal boundary is intact (GitHub Copilot is excluded from personal research).
 * **Hypothesis**:
-  A local proxy running on `localhost:4000` can intercept `ANTHROPIC_BASE_URL` and `OPENAI_BASE_URL` requests, monitor rolling token budgets, and automatically fail over to alternative paid subscriptions without mangling tool calls or corrupting git diffs.
+  A native multi-CLI fallback chain or lightweight gateway probe in `cli-agent` can seamlessly rotate to secondary paid subscriptions (Gemini Pro with 2M context or Codex Luna 6.0) upon detecting a 429 rate limit or 5-hour quota window, with zero proxy RAM overhead and zero local M1 compute lag.
 * **Falsification Gate**:
-  Proxy introduces JSON schema translation errors that break multi-file git diffs, or triggers provider anti-bot heuristic account suspensions.
-* **Hard Boundary Invariant**:
-  GitHub Copilot must be strictly isolated to enterprise work repositories; only personal subscriptions may be pooled for Sanctuary research.
+  Task execution halts on 429 rate limit without attempting fallback, attempts to spin up slow local M1 inference, leaks corporate Copilot tokens to personal research, or executes turns without pre-flight router verification.
+* **Reference Artifact**: `plugins/agent-orchestration/.apm/skills/cli-agent/references/setup-subscription-pooling.md`.
 
 ---
 
