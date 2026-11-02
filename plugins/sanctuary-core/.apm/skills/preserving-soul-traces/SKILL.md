@@ -41,7 +41,7 @@ python3 scripts/sync_soul_dataset.py --dry-run
 
 1. **Extraction**: Identify new or updated session notes, chronicle entries, or wiki concepts using `trace_extractor.py`.
 2. **Normalization & Hashing**: Parse frontmatter metadata and generate SHA-256 digests following [soul-trace-schema.md](references/soul-trace-schema.md).
-3. **Manifest Ledger**: Update `hugging_face_dataset_repo/metadata/manifest.json` with updated snapshot counts and dataset hash.
+3. **Manifest Ledger**: Update `huggingface/metadata/manifest.json` with updated snapshot counts and dataset hash.
 4. **Integrity Audit**: Run `--verify` to ensure zero schema drift or hash corruption.
 5. **Remote Persistence**: Delegate folder synchronization to `managing-huggingface-assets` following [huggingface-dataset-integration.md](references/huggingface-dataset-integration.md).
 

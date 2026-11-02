@@ -8,7 +8,7 @@ All remote operations are delegated to the global APM skill `managing-huggingfac
 
 ```mermaid
 graph LR
-    A[Workspace Markdown] -->|trace_extractor.py| B[hugging_face_dataset_repo/data/soul_traces.jsonl]
+    A[Workspace Markdown] -->|trace_extractor.py| B[huggingface/data/soul_traces.jsonl]
     B -->|sync_soul_dataset.py| C[managing-huggingface-assets]
     C -->|hf_upload.py with backoff| D[Hugging Face Hub / Project_Sanctuary_Soul]
 ```
@@ -16,7 +16,7 @@ graph LR
 ## Dataset Workspace Layout
 
 ```
-hugging_face_dataset_repo/
+huggingface/
 ├── README.md                # Dataset card with discovery tags and CC0 license
 ├── data/
 │   └── soul_traces.jsonl    # Canonical JSONL training split

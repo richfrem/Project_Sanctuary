@@ -2,7 +2,7 @@
 """
 Sync Soul Dataset (`sync_soul_dataset.py`)
 ==========================================
-Coordinates the synchronization of `hugging_face_dataset_repo` to the remote
+Coordinates the synchronization of `huggingface` to the remote
 Hugging Face repository (`richfrem/Project_Sanctuary_Soul`).
 
 CRITICAL INVARIANT:
@@ -107,7 +107,7 @@ def main():
     parser = argparse.ArgumentParser(description="Sanctuary Soul Trace Dataset Sync")
     parser.add_argument(
         "--dataset-dir",
-        default="hugging_face_dataset_repo",
+        default="huggingface",
         help="Path to local Hugging Face dataset folder"
     )
     parser.add_argument(

@@ -44,7 +44,7 @@ EXCLUSIONS = {
     ".git", ".obsidian", ".worktrees", "node_modules",
     ".vector_data", ".venv", "__pycache__", "ARCHIVE",
     "archive_mcp_servers", "archive-tests", "dataset_package",
-    "hugging_face_dataset_repo", "build", "dist"
+    "huggingface", "hugging_face_dataset_repo", "build", "dist"
 }
 
 ROOT_ALLOW = {
@@ -244,8 +244,8 @@ def main():
     parser.add_argument("--repo-root", default=".", help="Project repository root")
     parser.add_argument("--source-dir", help="Specific directory to extract (e.g. chronicle/entries, wiki, protocols)")
     parser.add_argument("--target-file", help="Specific file to extract")
-    parser.add_argument("--output", default="hugging_face_dataset_repo/data/soul_traces.jsonl", help="Output JSONL path")
-    parser.add_argument("--manifest", default="hugging_face_dataset_repo/metadata/manifest.json", help="Manifest path")
+    parser.add_argument("--output", default="huggingface/data/soul_traces.jsonl", help="Output JSONL path")
+    parser.add_argument("--manifest", default="huggingface/metadata/manifest.json", help="Manifest path")
     parser.add_argument("--model-version", default="Sanctuary-Qwen2-7B-v1.0-GGUF-Final", help="Model lineage identifier")
     parser.add_argument("--snapshot-type", default="genome", help="Default snapshot type")
     parser.add_argument("--limit", type=int, default=0, help="Limit number of records extracted (0 = all)")

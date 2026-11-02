@@ -81,7 +81,7 @@ def find_sealed_notes(vault_root: Path, exclusions: List[str] = None) -> List[Di
             '.git', '.obsidian', '.worktrees', 'node_modules',
             '.vector_data', '.venv', '__pycache__', 'ARCHIVE',
             'archive_mcp_servers', 'archive-tests', 'dataset_package',
-            'hugging_face_dataset_repo'
+            'huggingface', 'hugging_face_dataset_repo'
         ]
 
     sealed = []
@@ -183,7 +183,7 @@ def format_full_sync(vault_root: Path, body_repo: str) -> List[Dict]:
     """Format ALL eligible .md files into JSONL records (full genome sync)."""
     exclusions = [
         '.git', '.obsidian', '.worktrees', 'node_modules',
-        '.vector_data', '.venv', '__pycache__', 'hugging_face_dataset_repo'
+        '.vector_data', '.venv', '__pycache__', 'huggingface', 'hugging_face_dataset_repo'
     ]
     ROOT_ALLOW = {
         "README.md", "chrysalis_core_essence.md", "Living_Chronicle.md",
@@ -296,7 +296,7 @@ def main():
         print("✅ Snapshot isolation verified")
 
     # Write JSONL
-    output_dir = vault_root / "hugging_face_dataset_repo" / "data"
+    output_dir = vault_root / "huggingface" / "data"
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = Path(args.output) if args.output else output_dir / "soul_traces.jsonl"
 

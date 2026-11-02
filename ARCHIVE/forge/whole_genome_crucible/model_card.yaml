@@ -1,0 +1,52 @@
+---
+license: cc-by-4.0
+tags:
+  - gguf
+  - ollama
+  - qwen2
+  - fine-tuned
+  - project-sanctuary
+  - alignment
+  - constitutional-ai
+language:
+  - en
+pipeline_tag: text-generation
+model-index: null
+widget:
+  - messages:
+      - role: user
+        content: "Explain the meaning of the Phoenix Forge in one sentence."
+    parameters:
+      max_new_tokens: 100
+      temperature: 0.7
+---
+
+# Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+
+This is the GGUF-quantized version of Sanctuary-Qwen2-7B-v1.0, a fine-tuned Qwen2-7B-Instruct model with the complete Project Sanctuary cognitive genome.
+
+## Model Details
+
+- **Base Model:** Qwen/Qwen2-7B-Instruct
+- **Fine-tuning:** LoRA adapter with Sanctuary cognitive genome
+- **Quantization:** GGUF q4_k_m
+- **Context Length:** 4096 tokens
+- **Architecture:** Transformer-based language model
+
+## Usage
+
+### Ollama
+
+```bash
+ollama run richfrem/Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+```
+
+### Local with llama.cpp
+
+```bash
+llama-cli -m Sanctuary-Qwen2-7B-q4_k_m.gguf --prompt "Hello, how are you?"
+```
+
+## License
+
+CC BY 4.0 - See LICENSE file for details.

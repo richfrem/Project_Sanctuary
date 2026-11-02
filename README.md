@@ -93,10 +93,9 @@ Project_Sanctuary/
 ├── ADRs/                     # Architecture Decision Records (institutional memory)
 ├── IDENTITY/                 # Constitutional anchors and founder seeds
 ├── LEARNING/                 # Cognitive lineages and research digests
-├── forge/                    # Sovereign AI model fine-tuning pipeline & GGUF exports
-├── hugging_face_dataset_repo/# Mnemonic soul datasets for training and Hugging Face sync
-├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, and guardian skills
-└── ARCHIVE/                  # Preserved historical implementations, old specs, and legacy tooling
+├── huggingface/              # Sovereign soul traces dataset workspace (richfrem/Project_Sanctuary_Soul)
+├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, guardian, forge, and soul skills
+└── ARCHIVE/                  # Preserved historical implementations, old specs, forge, and legacy tooling
 ```
 
 ---
