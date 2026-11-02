@@ -29,12 +29,13 @@ flowchart TD
 - Ingest the Supreme Law Human Gate: **Never execute state-changing operations without explicit approval ("Proceed", "Go", "Execute").**
 
 ### Step 2: Dynamic Holistic Wakeup
-Run the holistic wakeup script:
+Run the holistic wakeup script (read-only by default to respect the Human Gate):
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
+# To optionally persist the briefing to disk: --write-digest
 ```
-- Execution time: < 5ms.
-- Reads runtime context and compiles the hot digest into `.agent/learning/guardian_boot_digest.md`.
+- Reads runtime context and verifies Layer 1 file health and git environment dynamically.
+- Outputs structured JSON or formatted markdown (`--format markdown`).
 
 ### Step 3: Layer 1 Fast-Boot Hydration
 Inspect the following files (total token load ~2,500 tokens):
