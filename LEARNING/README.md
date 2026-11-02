@@ -24,47 +24,76 @@ When insights developed in `LEARNING/` are experimentally validated through engi
 LEARNING/
 ├── README.md                      # This manifest & topic index
 ├── associative_architecture_brief.md # Foundational theory of multi-scale nested learning loops
-├── calibration_log.json           # Agent epistemic calibration metrics
-├── missions/                      # Structured autonomous research journeys & logs
+├── calibration_log.json           # Agent epistemic calibration metrics (ADR 084 semantic entropy)
+├── missions/                      # Structured autonomous research journeys & historical debriefs
 │   ├── LEARN-CLAUDE-001/          # Self-directed exploration sessions
 │   ├── LEARN-CLAUDE-002/
 │   ├── LEARN-CLAUDE-003/
 │   ├── 2025-12-19_ai_memory_architectures/
 │   └── MISSION_THE_ERROR_CORRECTED_SELF_20251229.md
-├── research/                      # Academic literature distillations, sources & citations
+├── research/                      # External literature deep dives & arXiv citation records
 │   └── 2026-02-12/                # arXiv 2602 deep dive: LocomoPlus, ToolSelf, FormalJudge, iGRPO
-└── topics/                        # Persistent agent-directed knowledge domains
+└── topics/                        # 20 persistent agent-directed research topic dossiers
 ```
 
 ---
 
-## 3. Persistent Research Topics Index
+## 3. Four-Pillar Research Taxonomy
 
-The following topic dossiers were self-directed and authored by various models over the lifecycle of Project Sanctuary:
+All topic dossiers are organized into 4 thematic pillars:
 
-| Topic Dossier | Core Focus & Epistemic Contribution |
-| :--- | :--- |
-| **[`Recursive_Language_Models`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/Recursive_Language_Models)** | Theory and implementation of recursive chunk hydration, dynamic windowing, and RLM memory ledgers. |
-| **[`drq_recursive_self_improvement`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/drq_recursive_self_improvement)** | Direct Recursive Q-learning, self-feedback loops, and autonomous optimization algorithms. |
-| **[`agent-skills-open-standard`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/agent-skills-open-standard)** | Open specification and architectural boundaries for composable, APM-compliant agent capabilities. |
-| **[`gemini_latent_deep_dive_think_tank`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/gemini_latent_deep_dive_think_tank)** | Latent space representations, multi-modal reasoning topologies, and cross-attention dynamics. |
-| **[`liquid_neural_networks`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/liquid_neural_networks)** | Continuous-time recurrent neural systems, adaptive differential equations, and dynamic inference. |
-| **[`llm_memory_architectures_2025`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/llm_memory_architectures_2025)** | Comprehensive comparative taxonomy of long-term agent memory architectures and episodic stores. |
-| **[`safe_agent_zero`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/safe_agent_zero)** | Safe bootstrap boundaries, container isolation, and deterministic sandbox constraints. |
-| **[`scholarly_discourse`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/scholarly_discourse)** | Multi-agent philosophical debates, consciousness explorations, and ethical considerations. |
-| **[`quantum_error_correction`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/quantum_error_correction)** | Parallels between surface codes, syndrome extraction, and Anti-Asch epistemic error correction. |
-| **[`soul_persistence`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/soul_persistence)** | Foundations of episodic trace serialization and cross-session identity preservation. |
-| **[`openclaw_moltbook_ecosystem`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/openclaw_moltbook_ecosystem)** | Open ecosystem integration, dynamic runtime tools, and skill federation. |
-| **[`knowledge_preservation_red_team`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/LEARNING/topics/knowledge_preservation_red_team)** | Adversarial testing of memory decay, prompt injection, and catastrophic forgetting. |
+### Pillar I: Cognitive Foundations & Self-Directed Evolution
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`Recursive_Language_Models`](./topics/Recursive_Language_Models)** | **Graduated** (`wiki/`) | RLM theory, chunk hydration, dynamic windowing, and memory ledgers. |
+| **[`drq_recursive_self_improvement`](./topics/drq_recursive_self_improvement)** | Active | Direct Recursive Q-learning, self-feedback loops, and optimization. |
+| **[`gemini_latent_deep_dive_think_tank`](./topics/gemini_latent_deep_dive_think_tank)** | Active | Latent space representations, multi-modal reasoning topologies. |
+| **[`llm_reasoning_diversity`](./topics/llm_reasoning_diversity)** | Active | Filtering reasoning divergence, multi-agent dialectics, and synthesis. |
+| **[`autonomous_curiosity_exploration`](./topics/autonomous_curiosity_exploration)** | Historical | Claude's foundational exploration on strange loops and emergent consciousness. |
+| **[`agentic_paradigms_attention`](./topics/agentic_paradigms_attention)** | Active | Burgess Promise Theory, kinetic trust, and intentional graph trajectories. |
+
+### Pillar II: Memory Architectures & Associative Dynamics
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`llm_memory_architectures_2025`](./topics/llm_memory_architectures_2025)** | **Graduated** (`wiki/`) | Comparative taxonomy of agent long-term memory and episodic stores. |
+| **[`liquid_neural_networks`](./topics/liquid_neural_networks)** | Active | Continuous-time recurrent systems and adaptive differential equations. |
+| **[`raptor_rag`](./topics/raptor_rag)** | Active | Recursive abstractive tree-organized retrieval and recursive clustering. |
+| **[`soul_persistence`](./topics/soul_persistence)** | **Graduated** (`huggingface/`) | Episodic trace serialization and cross-session identity preservation. |
+| **[`cross_topic_synthesis`](./topics/cross_topic_synthesis)** | Active | Structural graph mapping connecting memory, integrity, and cognition. |
+
+### Pillar III: Safety, Epistemic Grounding & Error Correction
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`safe_agent_zero`](./topics/safe_agent_zero)** | Active | Deterministic sandboxing, container boundaries, and safe execution. |
+| **[`quantum_error_correction`](./topics/quantum_error_correction)** | Active | Surface code analogies, syndrome extraction, and Anti-Asch resilience. |
+| **[`knowledge_preservation_red_team`](./topics/knowledge_preservation_red_team)** | Active | Adversarial auditing, drift detection, and memory decay defense. |
+| **[`protocol_128_remediation`](./topics/protocol_128_remediation)** | **Graduated** (`protocols/`) | Hardening against manifest blindspots and two-factor integrity. |
+| **[`documentation_link_remediation`](./topics/documentation_link_remediation)** | Active | Hyperlink graph repair and documentation integrity automation. |
+
+### Pillar IV: Agent Ecosystem & Open Standards
+| Topic Dossier | Status | Focus & Epistemic Contribution |
+| :--- | :--- | :--- |
+| **[`agent-skills-open-standard`](./topics/agent-skills-open-standard)** | **Graduated** (`plugins/`) | Open specification and architectural bounds for composable APM skills. |
+| **[`openclaw_moltbook_ecosystem`](./topics/openclaw_moltbook_ecosystem)** | Active | Multi-agent social federation, external runtime tools, and skill sharing. |
+| **[`scholarly_discourse`](./topics/scholarly_discourse)** | Active | Academic dialogues, multi-agent philosophical debates, and ethics. |
+| **[`forge_v5_evolution`](./topics/forge_v5_evolution)** | **Graduated** (`plugins/`) | Evolution of the Phoenix Forge LLM fine-tuning and quantization pipeline. |
 
 ---
 
-## 4. The Self-Directed Learning Lifecycle
+## 4. External Research Deep Dives (`LEARNING/research/`)
+
+External academic papers are distilled into structured markdown notes with complete citation metadata:
+- **[`research/2026-02-12/sources.md`](./research/2026-02-12/sources.md)**: Full metadata and arXiv links for 10 cutting-edge papers (LocomoPlus, ToolSelf, FormalJudge, iGRPO, InternAgent, etc.).
+- **[`research/2026-02-12/summary_analysis.md`](./research/2026-02-12/summary_analysis.md)**: In-depth technical analysis and strategic mapping to Project Sanctuary domains.
+
+---
+
+## 5. The Self-Directed Learning Lifecycle
 
 When embarking on a new self-directed research exploration:
 
-1. **Intake & Hypothesis**: Define the target inquiry or research paper.
-2. **Investigation**: Search literature, analyze source code, or run empirical scratch scripts.
-3. **Synthesis**: Author an atomic topic note or update an existing dossier in `LEARNING/topics/<topic>/` with clear citations and structured reasoning.
-4. **Promotion**: If the research yields actionable patterns or permanent architectural decisions, distill the findings into `wiki/concepts/` and log the milestone in `chronicle/`.
-5. **Persistence**: Seal high-value breakthroughs into `huggingface/data/soul_traces.jsonl` during session closure.
+1. **Intake & Hypothesis**: Define the inquiry or external paper in `LEARNING/research/`.
+2. **Investigation**: Search literature, analyze codebase dynamics, or run empirical scratch scripts.
+3. **Synthesis**: Author an atomic topic note in `LEARNING/topics/<topic>/analysis.md` with citations.
+4. **Promotion**: If the pattern proves permanent or foundational, graduate it to `wiki/concepts/` (Layer 2) and record a milestone in `chronicle/`.
+5. **Persistence**: High-value breakthroughs are sealed into `huggingface/data/soul_traces.jsonl` during session closure for local model weight fine-tuning.
