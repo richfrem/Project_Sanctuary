@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-guardian_wakeup.py - Sub-4ms Protocol 128 Holistic Wakeup Bootloader
-===================================================================
+guardian_wakeup.py - Protocol 128 Holistic Wakeup Bootloader
+============================================================
 
 Purpose:
-    Provides sub-4ms situational awareness and cognitive hydration for autonomous
+    Provides deterministic situational awareness and cognitive hydration for autonomous
     AI agents booting into Project Sanctuary. Evaluates Layer 1 context integrity,
-    current git branch state, and recent institutional decisions.
+    current git branch state, and recent institutional decisions with empirical latency tracking.
 
     By default, operations are strictly read-only to obey the Human Gate Law.
     To persist the briefing to disk, supply `--write-digest`.
@@ -75,27 +75,47 @@ def get_git_telemetry(project_root: Path) -> dict[str, str | bool]:
 
 
 def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
-    """Inspect presence of Layer 1 fast-boot context files."""
+    """Inspect presence and structural integrity of Layer 1 fast-boot context files."""
     checks = []
     required_files = [
-        ("context/soul.md", "Soul Identity & Anti-Asch Principles"),
-        ("context/user.md", "Human Partner Preferences & Conventions"),
-        ("context/memory.md", "Curated Long-Term Memory & Active Decisions"),
-        ("chronicle/ledger.json", "Episodic Chronicle Index")
+        ("context/soul.md", "Soul Identity & Anti-Asch Principles", "markdown"),
+        ("context/user.md", "Human Partner Preferences & Conventions", "markdown"),
+        ("context/memory.md", "Curated Long-Term Memory & Active Decisions", "markdown"),
+        ("chronicle/ledger.json", "Episodic Chronicle Index", "json")
     ]
 
     all_passed = True
-    for rel_path, desc in required_files:
+    for rel_path, desc, ftype in required_files:
         p = project_root / rel_path
         exists = p.exists() and p.is_file()
         size = p.stat().st_size if exists else 0
+        valid = False
+        detail = ""
+
+        if exists and size > 0:
+            try:
+                content = p.read_text(encoding="utf-8")
+                if ftype == "json":
+                    data = json.loads(content)
+                    valid = isinstance(data, (dict, list))
+                    detail = f"{len(data)} entries" if isinstance(data, (dict, list)) else "invalid shape"
+                elif ftype == "markdown":
+                    valid = any(line.strip().startswith("#") for line in content.splitlines())
+                    detail = "valid headers" if valid else "missing headers"
+            except Exception as e:
+                valid = False
+                detail = f"corrupt ({e.__class__.__name__})"
+        else:
+            detail = "missing or empty"
+
+        status = "PASS" if valid else "FAIL"
         checks.append({
             "path": rel_path,
-            "description": desc,
-            "status": "PASS" if exists and size > 0 else "FAIL",
+            "description": f"{desc} [{detail}]",
+            "status": status,
             "size_bytes": size
         })
-        if not exists or size == 0:
+        if not valid:
             all_passed = False
 
     health_status = "GREEN" if all_passed else "YELLOW"

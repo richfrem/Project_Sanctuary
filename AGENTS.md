@@ -38,7 +38,7 @@ Canonical repository assets are organized into dedicated sovereign domains:
 Every new session or agent invocation follows this deterministic bootstrapping sequence:
 
 1. **Orientation**: Read this [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) and [`START_HERE.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/START_HERE.md) to load constitutional bounds and the Supreme Law Human Gate.
-2. **Wakeup Script**: Execute the sub-4ms holistic wakeup bootloader:
+2. **Wakeup Script**: Execute the holistic wakeup bootloader:
    ```bash
    python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
    ```
@@ -59,6 +59,7 @@ For complete reference details, see [`bootstrapping.md`](file:///Users/richardfr
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
 python3 plugins/sanctuary-core/.apm/skills/managing-chronicles/scripts/chronicle_manager.py list --limit 5
 python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_manager.py list --limit 5
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visualize_economy.py --mode dashboard
 ```
 
 ## Non-Negotiable Invariants
@@ -76,7 +77,8 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 - **Guardian Lifecycle**: Use `operating-sanctuary-guardian` for Protocol 128 boot orientation, seal, and persistence.
 - **Sovereign Model Forging**: Use `forging-sovereign-models` for fine-tuning, Windows WSL2/CUDA setups, and GGUF quantization.
 - **Soul & Trace Persistence**: Use `preserving-soul-traces` to extract, schema-validate, and seal JSONL episodic memory traces into `huggingface/` and coordinate sync via `managing-huggingface-assets`.
-- **Sovereign Memory Management**: Use `managing-sovereign-memory` for progressive disclosure (index/summary/deep), asymmetric persistence of friction across rollbacks, 30-day confidence decay auditing, and wikilink graph traversal.
+- **Sovereign Memory Management**: Use `managing-sovereign-memory` for progressive disclosure (index/summary/deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric persistence of friction across rollbacks, 30-day confidence decay auditing, and wikilink graph traversal.
+- **Agent Work Evaluation & Budget Governance**: Use `evaluating-agent-work` for multi-dimensional cognitive scoring (0-3), token budget preservation (ChatGPT Plus, Claude Pro, Gemini Pro), model cost-tier weighting (cheap models like Haiku/Flash vs frontier models like Astra), and RL value analytics. Evaluate external subagent or `/cli-agent` dispatches to penalize bloated, low-value outputs and reward efficient, high-signal breakthroughs.
 - **Multi-Agent Orchestration**: Use global `orchestrating-agent-work` and `cli-agent` for execution topologies.
 - **Persistent Memory & RLM**: Use global `memory-management`, `managing-rlm-cache`, and `managing-obsidian-vaults`.
 - **Hugging Face Commons**: Use global `managing-huggingface-assets` for soul traces dataset synchronization.

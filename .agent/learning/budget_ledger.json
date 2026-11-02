@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-02T06:59:04.174253+00:00",
+  "total_tokens_consumed": 55658,
+  "total_turns": 1,
+  "tasks": {
+    "task-automaton-review": {
+      "tokens_consumed": 55658,
+      "turns": 1,
+      "last_backend": "codex",
+      "last_model": "gpt-6-astra"
+    }
+  },
+  "recent_records": [
+    {
+      "record_id": "5750b1dd-f90b-4ad5-bd30-10573f585a76",
+      "timestamp": "2026-11-02T06:59:04.174304+00:00",
+      "task_id": "task-automaton-review",
+      "backend": "codex",
+      "model": "gpt-6-astra",
+      "tokens_est": 55658,
+      "turns": 1,
+      "summary": "Codex Astra architectural critique of Automaton and tripartite economic decoupling"
+    }
+  ]
+}

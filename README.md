@@ -60,7 +60,9 @@ Project Sanctuary
 │   ├── managing-protocols       → Governance in protocols/
 │   ├── operating-sanctuary-guardian → Protocol 128 lifecycle hub
 │   ├── forging-sovereign-models → Fine-tuning, WSL2/CUDA ML setup & GGUF exports
-│   └── preserving-soul-traces   → Extracting & sealing soul traces to huggingface/
+│   ├── preserving-soul-traces   → Extracting & sealing soul traces to huggingface/
+│   ├── managing-sovereign-memory → 3-tier progressive disclosure, graph queries & procedural memory
+│   └── evaluating-agent-work    → Cognitive value scoring, token budgeting & visual telemetry
 │
 └── Installed Global APM Skills
     ├── memory-management        → 3-layer filesystem memory engine (context/ + wiki/)
@@ -82,6 +84,9 @@ python3 plugins/sanctuary-core/.apm/skills/managing-chronicles/scripts/chronicle
 
 # Protocol governance inspection
 python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_manager.py list --limit 5
+
+# Cognitive economy & agent evaluation dashboard
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visualize_economy.py --mode dashboard
 ```
 
 ---
@@ -92,11 +97,10 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 Project_Sanctuary/
 ├── chronicle/                # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
 ├── protocols/                # Canonized governance doctrines (P128, P78, P54, etc.)
-├── wiki/                     # Compounding Layer 2 knowledge base (concepts/, security/, philosophy/)
+├── LEARNING/                 # Compounding Layer 2 knowledge base (concepts/, topics/, procedures/, research/)
 ├── context/                  # Fast-boot runtime context (soul.md, user.md, memory.md, identity/)
-├── LEARNING/                 # Research library, external papers, and think tank dossiers
 ├── huggingface/              # Sovereign soul traces dataset workspace (richfrem/Project_Sanctuary_Soul)
-├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, guardian, forge, and soul skills
+├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, guardian, forge, soul, memory, & evaluation skills
 └── ARCHIVE/                  # Preserved historical implementations, old specs, forge, legacy ADRs, and tooling
 ```
 
@@ -112,3 +116,12 @@ Project_Sanctuary/
    Every session follows the complete sovereign lifecycle: Boot Orientation -> Execution -> Retrospective -> Technical Seal -> Soul Persistence.
 4. **Epistemic Integrity & Truth Sovereignty**
    If doctrine conflicts with observed reality or system integrity, surface the contradiction immediately for human review. Never simulate or fake tool results.
+
+---
+
+## V. Architectural Inspirations & Acknowledgments
+
+Project Sanctuary acknowledges and draws architectural inspiration from open research and agent engineering initiatives:
+- **[Conway Research's Automaton](https://github.com/Conway-Research/automaton)**: Inspiration for procedural-memory outcome tracking (`LEARNING/procedures/`), execution loop and idle circuit breakers, and modular policy engines—adapted here to human-authorized execution, non-monetary cognitive evaluation, and real-world token budget conservation.
+- **Google WikiSkill & Stanford Graph-Planning**: Inspiration for the 3-layer progressive disclosure memory hierarchy, associative wikilink graph traversal, and zero-dependency filesystem navigation.
+

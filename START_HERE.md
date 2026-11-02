@@ -10,7 +10,7 @@
 Every session follows the deterministic 5-step bootstrapping sequence (detailed in [`AGENTS.md`](./AGENTS.md)):
 
 1. **Orientation**: Ingest [`AGENTS.md`](./AGENTS.md) and constitutional bounds.
-2. **Holistic Wakeup**: Run sub-4ms bootloader:
+2. **Holistic Wakeup**: Run holistic wakeup bootloader:
    ```bash
    python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
    ```
@@ -32,7 +32,8 @@ Every session follows the deterministic 5-step bootstrapping sequence (detailed 
   - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
   - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA ML setup, and GGUF quantization.
   - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces into `huggingface/` and coordinating sync via `managing-huggingface-assets`.
-  - `managing-sovereign-memory`: Progressive disclosure (index/summary/deep), asymmetric friction persistence across git rollbacks, 30-day confidence decay, and associative graph traversal.
+  - `managing-sovereign-memory`: Progressive disclosure (index/summary/deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric friction persistence across git rollbacks, 30-day confidence decay, and associative graph traversal.
+  - `evaluating-agent-work`: Multi-dimensional cognitive value scoring, real-world subscription token budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), model cost-tier evaluation (cheap vs expensive models), and RL value analytics.
 - **Global APM Capabilities**:
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
