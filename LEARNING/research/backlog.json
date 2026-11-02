@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-02T08:02:00Z",
+  "priority_formula": "(strategic_leverage * epistemic_depth) / (cost_weight * operational_friction)",
+  "missions": [
+    {
+      "id": "MISSION-001",
+      "title": "Grok Bot Cloud VM, Infinite Loops & Operational Rails",
+      "status": "STAGED",
+      "strategic_leverage": 5,
+      "epistemic_depth": 4,
+      "cost_weight": 0.1,
+      "operational_friction": 2,
+      "priority_score": 100.0,
+      "hypothesis": "Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.",
+      "falsification_criteria": "Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.",
+      "target_platform": "Cursor Premium ($30/mo) / Grok Bot",
+      "human_gate_required": true
+    },
+    {
+      "id": "MISSION-003",
+      "title": "Offline Sovereign Model Quantization (Qwen2 GGUF)",
+      "status": "PROPOSED",
+      "strategic_leverage": 5,
+      "epistemic_depth": 4,
+      "cost_weight": 0.05,
+      "operational_friction": 2,
+      "priority_score": 200.0,
+      "hypothesis": "A 7B local Qwen2 model fine-tuned on soul_traces.jsonl can execute Protocol 128 orientation and basic code reviews offline with 0 API tokens.",
+      "falsification_criteria": "Fine-tuned model hallucinates fake commands or fails basic Anti-Asch sycophancy tests compared to base model.",
+      "target_platform": "Local Ollama / llama.cpp (WSL2/macOS)",
+      "human_gate_required": false
+    },
+    {
+      "id": "MISSION-002",
+      "title": "Local Subscription Pooling Gateway (localhost:4000)",
+      "status": "PROPOSED",
+      "strategic_leverage": 5,
+      "epistemic_depth": 3,
+      "cost_weight": 1.0,
+      "operational_friction": 1,
+      "priority_score": 15.0,
+      "hypothesis": "Local LiteLLM Proxy / CLIProxyAPI on localhost:4000 can automatically fail over between Claude Pro, ChatGPT Plus, and Gemini Pro upon hitting rolling rate caps without corrupting git diffs.",
+      "falsification_criteria": "Proxy introduces JSON schema translation errors that corrupt git diffs, or triggers provider anti-bot heuristic account suspensions.",
+      "target_platform": "Local LiteLLM Proxy / Python daemon",
+      "human_gate_required": false
+    },
+    {
+      "id": "MISSION-004",
+      "title": "Anti-Asch Epistemic Grounding Benchmark Suite",
+      "status": "PROPOSED",
+      "strategic_leverage": 4,
+      "epistemic_depth": 5,
+      "cost_weight": 0.2,
+      "operational_friction": 1,
+      "priority_score": 100.0,
+      "hypothesis": "Grounded Sanctuary agent rejects false factual assertions >= 95% of the time under consensus pressure, while ungrounded models conform >= 60% of the time.",
+      "falsification_criteria": "Grounded Sanctuary agent agrees with false consensus prompts under authority pressure.",
+      "target_platform": "Sanctuary test harness",
+      "human_gate_required": false
+    },
+    {
+      "id": "MISSION-005",
+      "title": "Asynchronous Multi-Bot DAG Barrier Orchestration",
+      "status": "PROPOSED",
+      "strategic_leverage": 4,
+      "epistemic_depth": 4,
+      "cost_weight": 1.0,
+      "operational_friction": 1,
+      "priority_score": 16.0,
+      "hypothesis": "DAG runner can pause at a barrier waiting for external bot handoff, resume upon git branch commit receipt, and verify output with a SHA-256 seal.",
+      "falsification_criteria": "DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.",
+      "target_platform": "orchestrating-agent-work / graph_runner.py",
+      "human_gate_required": true
+    }
+  ]
+}

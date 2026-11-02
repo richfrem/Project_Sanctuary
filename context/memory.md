@@ -4,6 +4,12 @@
 <!-- Only add things that will still be true in 3 months. -->
 <!-- Format: ## [YYYY-MM-DD] [#NNN] Category: Label -->
 
+## [2026-11-02] [#015] Architecture: Prioritized Sovereign Research Backlog & Grok Cloud VM Integration
+Ratified the quantitative self-directed research backlog and evaluation engine:
+1. Priority Score Formula: `(Strategic Leverage * Epistemic Depth) / (Cost Weight * Operational Friction)`.
+2. Grok Bot Infinite Loop Advantage: Grok Bot executes autonomous cloud VMs in background loops without keeping local terminals open or consuming interactive session tokens; integrated via Git worktree briefs (`handoffs/`) and AgentMail.
+3. Prioritized Missions Portfolio: `LEARNING/research/backlog.md` and `backlog.json` (Grok Bot operational rails, local proxy pooling, offline Qwen2 quantization, Anti-Asch benchmark).
+
 ## [2026-11-02] [#014] Architecture: Autonomous Agent Platforms Taxonomy & Cross-Provider Pooling
 Ratified the taxonomy of autonomous commercial agent platforms and multi-subscription pooling:
 1. Commercial Agent Platforms:
