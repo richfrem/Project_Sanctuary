@@ -242,3 +242,12 @@ old_version_452d779/_tmp_plugin_import/
 old_version_452d779/
 .graph-index.json
 .obsidian/
+
+# --- AGENTIC OS RUNTIME ARTIFACTS (ADR 100) ---
+context/memory/
+context/events.jsonl
+context/os-state.json
+context/.locks/
+context/status.md
+MEMORY.md
+START_HERE.local.md
