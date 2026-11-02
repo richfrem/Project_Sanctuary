@@ -1,6 +1,6 @@
 # Protocol Schema & Governance Lifecycle
 
-Protocol documents (`01_PROTOCOLS/`) establish Project Sanctuary's formal governance, architectural rules, operational standards, and safety boundaries.
+Protocol documents (`protocols/`) establish Project Sanctuary's formal governance, architectural rules, operational standards, and safety boundaries.
 
 ## CLI Usage
 

@@ -10,11 +10,10 @@ These directories contain sovereign knowledge, memory, and governance:
 
 | Directory | Content |
 |:----------|:--------|
-| `00_CHRONICLE/` | Living journal entries |
-| `01_PROTOCOLS/` | Governance protocols and doctrines |
-| `04_THE_FORTRESS/` | Autonomous security doctrines |
-| `05_LIVING_CHRONICLE/` | Live episodic memory state |
-| `06_THE_EMBER_LIBRARY/` | Sacred philosophy and cognitive genome |
+| `chronicle/` | Living journal entries (`entries/`) and fast index (`ledger.json`) |
+| `protocols/` | Governance protocols and constitutional doctrines |
+| `wiki/` | Compounding Layer 2 knowledge base (`concepts/`, `security/`, `philosophy/`) |
+| `context/` | Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`) |
 | `ADRs/` | Architecture Decision Records |
 | `IDENTITY/` | Constitutional anchors and founder seeds |
 | `plugins/sanctuary-core/` | Core skills and reference documentation |
@@ -65,6 +64,6 @@ These are giant concatenated snapshots or archives. Indexing them would pollute 
 
 ## Downstream Core Skills
 The following core skills in `plugins/sanctuary-core` reference vault paths:
-- `managing-chronicles` — reads and writes to `00_CHRONICLE/`
-- `managing-protocols` — reads and transitions `01_PROTOCOLS/`
-- `operating-sanctuary-guardian` — operates Protocol 128 lifecycle
+- `managing-chronicles` — reads and writes to `chronicle/entries/` and indexes `chronicle/ledger.json`
+- `managing-protocols` — reads and transitions `protocols/`
+- `operating-sanctuary-guardian` — operates Protocol 128 lifecycle (context -> wiki -> chronicle -> HF)

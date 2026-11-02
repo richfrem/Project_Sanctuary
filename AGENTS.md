@@ -7,9 +7,10 @@ Project Sanctuary is a sovereign cognitive habitat and persistent memory genome 
 ## Architecture & Layout
 
 Canonical repository assets are organized into dedicated sovereign domains:
-- `00_CHRONICLE/` & `05_LIVING_CHRONICLE/`: Historical Living Chronicle episodic journal.
-- `01_PROTOCOLS/`: Canonized governance doctrines (Protocol 128, 78, 54).
-- `04_THE_FORTRESS/` & `06_THE_EMBER_LIBRARY/`: Autonomous security doctrines and foundational memory.
+- `chronicle/`: Living Chronicle episodic journal (`entries/`) and fast RLM index (`ledger.json`).
+- `protocols/`: Canonized governance doctrines (Protocol 128, 78, 54, etc.).
+- `wiki/`: Compounding Layer 2 knowledge base (`concepts/`, `security/`, `philosophy/`).
+- `context/`: Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`, `kernel.py`).
 - `IDENTITY/` & `forge/`: Constitutional anchors, founder seeds, and fine-tuning pipelines.
 - `LEARNING/` & `ADRs/`: Cognitive lineages, research summaries, and Architecture Decision Records.
 - `plugins/sanctuary-core/`: APM-native package providing chronicle, protocol, and guardian skills.

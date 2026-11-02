@@ -43,39 +43,24 @@ def get_strategic_synthesis():
             "Executing Protocol 128.")
 
 def get_tactical_priorities(project_root: Path):
-    scan_dir = project_root / "tasks" / "in-progress"
-    if scan_dir.exists():
-        tasks = list(scan_dir.glob("*.md"))
-        if tasks: return f"* Found {len(tasks)} active tasks."
-    return "* No active tasks found."
+    status_file = project_root / "context" / "status.md"
+    if status_file.exists():
+        content = status_file.read_text(encoding="utf-8").strip()
+        if content:
+            return f"* Current Status: {content}"
+    memory_file = project_root / "context" / "memory.md"
+    if memory_file.exists():
+        lines = [line.strip() for line in memory_file.read_text(encoding="utf-8").splitlines() if line.strip().startswith("- ")]
+        if lines:
+            return "* Active Context:\n" + "\n".join(f"  {line}" for line in lines[:3])
+    return "* Sovereign habitat active. APM capabilities nominal."
 
 def get_preflight_brief(project_root: Path) -> str:
-    """Generate a Pre-Flight Brief via Vector DB semantic search of the Obsidian vault."""
-    scan_dir = project_root / "tasks" / "in-progress"
-    query = "Active project context and current tasks"
-    if scan_dir.exists():
-        tasks = list(scan_dir.glob("*.md"))
-        if tasks: 
-            query = f"Current task context: {tasks[0].name}"
-
-    query_script = project_root / "plugins" / "vector-db" / "skills" / "vector-db-agent" / "scripts" / "query.py"
-    if not query_script.exists():
-        return "* Vector DB query script unavailable."
-        
-    try:
-        result = subprocess.run(
-            [sys.executable, str(query_script), query, "--limit", "3", "--profile", "knowledge"],
-            capture_output=True, text=True, timeout=15
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            lines = result.stdout.strip().split('\n')
-            filtered = [line for line in lines if not line.startswith('🔍 Searching Vector Index')]
-            return "\n".join(filtered).strip()
-    except Exception as e:
-        logger.warning(f"Error retrieving Pre-Flight Brief: {e}")
-        return f"* Error retrieving Pre-Flight Brief: {e}"
-        
-    return "* No historical memories retrieved."
+    """Generate a Pre-Flight Brief via context or memory."""
+    memory_file = project_root / "context" / "memory.md"
+    if memory_file.exists():
+        return f"* Memory Engine: Layer 1 Context active (`{memory_file.relative_to(project_root)}`)."
+    return "* Memory Engine active."
 
 def main():
     parser = argparse.ArgumentParser(description="Generate Guardian Boot Digest (Protocol 114)")

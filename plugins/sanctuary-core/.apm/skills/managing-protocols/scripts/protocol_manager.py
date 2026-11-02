@@ -41,8 +41,18 @@ def _find_project_root() -> Path:
             return parent
     return Path.cwd()
 
+def _find_protocol_dir(project_root: Path) -> Path:
+    candidates = [
+        project_root / "protocols",
+        project_root / "01_PROTOCOLS",
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+    return project_root / "protocols"
+
 PROJECT_ROOT = _find_project_root()
-PROTOCOL_DIR = PROJECT_ROOT / "01_PROTOCOLS"
+PROTOCOL_DIR = _find_protocol_dir(PROJECT_ROOT)
 
 # --- Models ---
 

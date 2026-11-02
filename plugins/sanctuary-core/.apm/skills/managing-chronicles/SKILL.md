@@ -6,7 +6,7 @@ allowed-tools: Bash, Read, Write, Glob, Grep
 
 # Managing Chronicles (`managing-chronicles`)
 
-Manages the Living Chronicle (`00_CHRONICLE/ENTRIES/`) — Project Sanctuary's historical journal of decisions, milestones, architectural evolutions, and operational reflections.
+Manages the Living Chronicle (`chronicle/entries/`) — Project Sanctuary's historical journal of decisions, milestones, architectural evolutions, and operational reflections.
 
 ## Contents
 - [Constraints](#constraints) • [Quick Start](#quick-start) • [Workflow](#workflow) • [Verification](#verification) • [References](#references)
@@ -14,7 +14,7 @@ Manages the Living Chronicle (`00_CHRONICLE/ENTRIES/`) — Project Sanctuary's h
 ## Constraints
 
 1. Never overwrite existing historical entries; append or transition status via sequential IDs.
-2. Chronicles reside under `00_CHRONICLE/ENTRIES/`.
+2. Chronicles reside under `chronicle/entries/` with automated RLM indexing in `chronicle/ledger.json`.
 
 ## Quick Start
 
@@ -36,7 +36,7 @@ python3 scripts/chronicle_manager.py search "keyword"
 
 1. **Verify Existing Records**: Run `search` or `list` to check whether a topic or decision has already been journaled.
 2. **Author Entry**: Draft the entry with clear context, title, author, and status (`draft`, `published`, or `canonical`).
-3. **Persist**: Execute `chronicle_manager.py create` to generate the next numbered markdown chronicle file in `00_CHRONICLE/ENTRIES/`.
+3. **Persist**: Execute `chronicle_manager.py create` to generate the next numbered markdown chronicle file in `chronicle/entries/`.
 
 ## Verification
 

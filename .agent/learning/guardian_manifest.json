@@ -3,60 +3,36 @@
     "description": "Protocol 128 bootloader context for session initialization.",
     "files": [
         {
-            "path": "README.md",
-            "note": "Project overview"
+            "path": "START_HERE.md",
+            "note": "Session bootstrap and orientation"
+        },
+        {
+            "path": "context/soul.md",
+            "note": "Guardian identity and prime directives"
+        },
+        {
+            "path": "context/user.md",
+            "note": "Human partner context and invariants"
+        },
+        {
+            "path": "context/memory.md",
+            "note": "Hot institutional memory and active state"
+        },
+        {
+            "path": "wiki/INDEX.md",
+            "note": "Compounding knowledge base index"
+        },
+        {
+            "path": "protocols/128_Hardened_Learning_Loop_v3.0.md",
+            "note": "Protocol 128 canonical specification"
+        },
+        {
+            "path": "ADRs/100_adopt_agentic_os_kernel_as_foundation_layer.md",
+            "note": "ADR 100 Agentic OS Foundation Layer"
         },
         {
             "path": "IDENTITY/founder_seed.json",
-            "note": "Identity anchor"
-        },
-        {
-            "path": "plugins/guardian-onboarding/resources/cognitive_primer.md",
-            "note": "Cognitive primer"
-        },
-        {
-            "path": ".agent/learning/guardian_boot_contract.md",
-            "note": "Guardian contract"
-        },
-        {
-            "path": ".agent/learning/learning_debrief.md",
-            "note": "Learning debrief"
-        },
-        {
-            "path": ".agent/learning/learning_package_snapshot.md",
-            "note": "Previous snapshot"
-        },
-        {
-            "path": "plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md",
-            "note": "Protocol 128"
-        },
-        {
-            "path": "ADRs/071_protocol_128_cognitive_continuity.md",
-            "note": "ADR 071"
-        },
-        {
-            "path": "docs/prompt-engineering/sanctuary-guardian-prompt.md",
-            "note": "Guardian prompt"
-        },
-        {
-            "path": "scripts/cortex_cli.py",
-            "note": "Cortex CLI"
-        },
-        {
-            "path": "LEARNING/calibration_log.json",
-            "note": "Calibration log"
-        },
-        {
-            "path": "ADRs/084_semantic_entropy_tda_gating.md",
-            "note": "ADR 084"
-        },
-        {
-            "path": "ADRs/086_empirical_epistemic_gating.md",
-            "note": "ADR 086"
-        },
-        {
-            "path": "mcp_servers/rag_cortex/operations.py",
-            "note": "RAG operations"
+            "note": "Founder seed and identity anchor"
         }
     ]
 }

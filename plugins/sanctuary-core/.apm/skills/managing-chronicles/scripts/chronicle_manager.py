@@ -41,6 +41,8 @@ def _find_project_root() -> Path:
 
 def _find_chronicle_dir(project_root: Path) -> Path:
     candidates = [
+        project_root / "chronicle" / "entries",
+        project_root / "chronicle",
         project_root / "00_CHRONICLE" / "ENTRIES",
         project_root / "00_CHRONICLE",
         project_root / "02_LIVING_CHRONICLE",
@@ -48,7 +50,7 @@ def _find_chronicle_dir(project_root: Path) -> Path:
     for c in candidates:
         if c.exists():
             return c
-    return project_root / "00_CHRONICLE" / "ENTRIES"
+    return project_root / "chronicle" / "entries"
 
 PROJECT_ROOT = _find_project_root()
 CHRONICLE_DIR = _find_chronicle_dir(PROJECT_ROOT)

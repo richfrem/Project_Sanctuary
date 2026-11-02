@@ -33,8 +33,8 @@ sanctuary-core/
 
 ## Features
 
-- **`managing-chronicles`**: Comprehensive CRUD and search for the historical project journal (`00_CHRONICLE/ENTRIES/`).
-- **`managing-protocols`**: Formal governance document lifecycle management (`01_PROTOCOLS/`).
+- **`managing-chronicles`**: Comprehensive CRUD and search for the historical project journal (`chronicle/entries/`).
+- **`managing-protocols`**: Formal governance document lifecycle management (`protocols/`).
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (orientation boot, cognitive onboarding, technical seal verification, learning debrief, and soul persistence).
 
 ## Architecture

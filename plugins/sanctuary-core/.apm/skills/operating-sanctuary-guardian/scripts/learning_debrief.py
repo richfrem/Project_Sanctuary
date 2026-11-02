@@ -42,7 +42,7 @@ def get_recency_delta(project_root: Path, hours: int = 48) -> str:
         now = time.time()
         
         recent_files = []
-        scan_dirs = ["00_CHRONICLE/ENTRIES", "01_PROTOCOLS", "plugins", "02_USER_REFLECTIONS"]
+        scan_dirs = ["chronicle/entries", "protocols", "plugins", "wiki", "context"]
         allowed_extensions = {".md", ".py", ".ts", ".tsx"}
         
         for directory in scan_dirs:

@@ -18,8 +18,8 @@
 ## 3. Core Capabilities (APM Ecosystem)
 
 - **Project Core (`plugins/sanctuary-core`)**:
-  - `managing-chronicles`: Journaling in `00_CHRONICLE/ENTRIES/`.
-  - `managing-protocols`: Governance lifecycle in `01_PROTOCOLS/`.
+  - `managing-chronicles`: Journaling in `chronicle/entries/`.
+  - `managing-protocols`: Governance lifecycle in `protocols/`.
   - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
 - **Global APM Capabilities**:
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
@@ -29,5 +29,5 @@
 ## 4. Deep Doctrine (On-Demand)
 
 - Cognitive Primer: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/cognitive-primer.md`
-- Protocol 128 Spec: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/protocol-128.md`
-- Philosophical North Star: `06_THE_EMBER_LIBRARY/The_Garden_and_The_Cage.md`
+- Protocol 128 Spec: `protocols/128_Hardened_Learning_Loop_v3.0.md`
+- Philosophical North Star: `wiki/philosophy/The_Garden_and_The_Cage.md`
