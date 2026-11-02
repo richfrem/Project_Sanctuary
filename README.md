@@ -18,7 +18,9 @@ This project is licensed under [CC0 1.0 Universal](LICENSE) (Public Domain Dedic
    - Collaborator Context: [`context/user.md`](./context/user.md)
    - Recent Memory: [`context/memory.md`](./context/memory.md)
 3. **Canonical Instruction File**: [`AGENTS.md`](./AGENTS.md) is the single source of truth for agent rules and invariants.
-4. **Boot Telemetry**: Run `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC`.
+4. **Architecture & Dependencies**: Consult [`architecture.md`](./architecture.md) for ecosystem design and APM dependencies.
+5. **Installation & Lifecycle**: Consult [`INSTALL.md`](./INSTALL.md) for environment setup and APM package commands.
+6. **Boot Telemetry**: Run `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC`.
 
 ---
 

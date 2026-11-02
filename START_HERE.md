@@ -1,6 +1,8 @@
 # Session Bootstrap - Project Sanctuary
 
 <!-- Read this at the start of every session. -->
+> 🧭 For full architectural doctrine and APM dependency mapping, consult [`architecture.md`](./architecture.md).  
+> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).
 
 ## 1. Fast-Boot Context & Orientation
 
