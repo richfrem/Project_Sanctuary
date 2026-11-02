@@ -29,12 +29,18 @@ sanctuary-core/
         │   │   ├── persist_soul.py
         │   │   └── forge_soul.py
         │   └── references/
-        └── forging-sovereign-models/
+        ├── forging-sovereign-models/
+        │   ├── SKILL.md
+        │   ├── scripts/
+        │   │   ├── verify_ml_environment.py
+        │   │   ├── forge_dataset_builder.py
+        │   │   └── generate_modelfile.py
+        │   └── references/
+        └── preserving-soul-traces/
             ├── SKILL.md
             ├── scripts/
-            │   ├── verify_ml_environment.py
-            │   ├── forge_dataset_builder.py
-            │   └── generate_modelfile.py
+            │   ├── trace_extractor.py
+            │   └── sync_soul_dataset.py
             └── references/
 ```
 
@@ -44,6 +50,7 @@ sanctuary-core/
 - **`managing-protocols`**: Formal governance document lifecycle management (`protocols/`).
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (orientation boot, cognitive onboarding, technical seal verification, learning debrief, and soul persistence).
 - **`forging-sovereign-models`**: Sovereign AI fine-tuning pipeline, Windows WSL2/CUDA runtime recipes, QLoRA execution, GGUF quantization, and Hugging Face artifact publishing.
+- **`preserving-soul-traces`**: Cognitive lineage and memory preservation engine; extracts markdown sessions and documents into canonical JSONL datasets (`soul_traces.jsonl`) and coordinates Hugging Face dataset persistence via `managing-huggingface-assets`.
 
 ## Architecture
 

@@ -37,9 +37,11 @@ Any operation that:
 ## III. Capabilities & APM Discovery
 - Capabilities MUST be executed through active installed APM skills or `plugins/sanctuary-core`.
 - **Core Package (`plugins/sanctuary-core`)**:
-  - `managing-chronicles`: Journaling in `00_CHRONICLE/ENTRIES/`.
-  - `managing-protocols`: Governance transitions in `01_PROTOCOLS/`.
+  - `managing-chronicles`: Journaling in `chronicle/entries/`.
+  - `managing-protocols`: Governance transitions in `protocols/`.
   - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
+  - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA environments, and GGUF quantization.
+  - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces for Hugging Face persistence.
 - **Global APM Capabilities**:
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
