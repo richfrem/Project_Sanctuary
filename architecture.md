@@ -73,7 +73,8 @@ plugins/sanctuary-core/
     ├── operating-sanctuary-guardian/# Protocol 128 lifecycle (boot, seal, audit)
     ├── forging-sovereign-models/    # QLoRA fine-tuning, WSL2/CUDA ML setup, GGUF
     ├── preserving-soul-traces/      # JSONL episodic memory extraction & dataset sync
-    └── managing-sovereign-memory/   # Progressive disclosure, asymmetric persist, decay audit
+    ├── managing-sovereign-memory/   # Progressive disclosure, procedural memory, decay audit
+    └── evaluating-agent-work/       # Multi-dimensional scoring, token budgets, RL value analytics
 ```
 
 ### Core Skill Capabilities

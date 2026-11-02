@@ -1,0 +1,18 @@
+[
+  {
+    "query": "Evaluate the work of the delegated peer agent across our 5 dimensions",
+    "should_trigger": true
+  },
+  {
+    "query": "Check if our planned task turns exceed our Claude Pro or ChatGPT Plus budget",
+    "should_trigger": true
+  },
+  {
+    "query": "Show the cognitive fitness dashboard and token economy chart",
+    "should_trigger": true
+  },
+  {
+    "query": "What is the capital of Canada?",
+    "should_trigger": false
+  }
+]

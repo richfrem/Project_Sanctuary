@@ -41,13 +41,21 @@ sanctuary-core/
         │   ├── scripts/
         │   │   ├── trace_extractor.py
         │   └── references/
-        └── managing-sovereign-memory/
+        ├── managing-sovereign-memory/
+        │   ├── SKILL.md
+        │   ├── scripts/
+        │   │   ├── disclose.py
+        │   │   ├── record_insight.py
+        │   │   ├── record_procedure_outcome.py
+        │   │   ├── audit_decay.py
+        │   │   └── query_graph.py
+        │   └── references/
+        └── evaluating-agent-work/
             ├── SKILL.md
             ├── scripts/
-            │   ├── disclose.py
-            │   ├── record_insight.py
-            │   ├── audit_decay.py
-            │   └── query_graph.py
+            │   ├── score_contribution.py
+            │   ├── track_budget.py
+            │   └── visualize_economy.py
             └── references/
 ```
 
@@ -58,7 +66,8 @@ sanctuary-core/
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (orientation boot, cognitive onboarding, technical seal verification, learning debrief, and soul persistence).
 - **`forging-sovereign-models`**: Sovereign AI fine-tuning pipeline, Windows WSL2/CUDA runtime recipes, QLoRA execution, GGUF quantization, and Hugging Face artifact publishing.
 - **`preserving-soul-traces`**: Cognitive lineage and memory preservation engine; extracts markdown sessions and documents into canonical JSONL datasets (`soul_traces.jsonl`) and coordinates Hugging Face dataset persistence via `managing-huggingface-assets`.
-- **`managing-sovereign-memory`**: Zero-dependency, filesystem-native 3-layer memory engine. Provides progressive disclosure (Tier 1 index, Tier 2 summary, Tier 3 deep), asymmetric persistence of friction across git rollbacks, 30-day confidence decay auditing, and associative graph traversal.
+- **`managing-sovereign-memory`**: Zero-dependency, filesystem-native 3-layer memory engine. Provides progressive disclosure (Tier 1 index, Tier 2 summary, Tier 3 deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric persistence of friction across git rollbacks, 30-day confidence decay auditing, and associative graph traversal.
+- **`evaluating-agent-work`**: Multi-dimensional cognitive value scoring (outcome utility, learning depth, verification rigor, token economy, anti-Asch truth grounding), real-world subscription budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), and RL value analytics.
 
 ## Architecture
 

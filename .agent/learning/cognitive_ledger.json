@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-02T06:59:04.268080+00:00",
+  "total_assessments": 1,
+  "cumulative_score": 14,
+  "average_fitness": 0.933,
+  "dimension_totals": {
+    "useful_outcome": 3,
+    "learning_depth": 3,
+    "verification_rigor": 3,
+    "token_economy": 2,
+    "anti_asch_integrity": 3
+  },
+  "agents": {
+    "astra": {
+      "assessments": 1,
+      "cumulative_score": 14,
+      "average_fitness": 0.933
+    }
+  },
+  "recent_assessments": [
+    {
+      "assessment_id": "53e414d9-1a69-407d-be4d-504a7a256de3",
+      "timestamp": "2026-11-02T06:59:04.266886+00:00",
+      "task_id": "task-automaton-review",
+      "agent_id": "astra",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Empirical audit uncovering 59ms wakeup latency, tripartite system separation, and procedural memory model"
+    }
+  ]
+}

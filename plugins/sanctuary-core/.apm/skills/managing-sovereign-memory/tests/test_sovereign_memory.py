@@ -16,6 +16,7 @@ import disclose
 import record_insight
 import audit_decay
 import query_graph
+import record_procedure_outcome
 
 
 class TestSovereignMemory(unittest.TestCase):
@@ -24,6 +25,7 @@ class TestSovereignMemory(unittest.TestCase):
         self.test_dir = tempfile.TemporaryDirectory()
         self.root = Path(self.test_dir.name)
         (self.root / "LEARNING" / "concepts").mkdir(parents=True)
+        (self.root / "LEARNING" / "procedures").mkdir(parents=True)
         (self.root / "context").mkdir(parents=True)
         (self.root / "protocols").mkdir(parents=True)
         (self.root / ".agent" / "learning").mkdir(parents=True)
@@ -101,6 +103,29 @@ Deep technical content that should be excluded.
         outbound, inbound, path_map = query_graph.build_graph(self.root)
         self.assertIn("beta", outbound.get("alpha", set()))
         self.assertIn("alpha", inbound.get("beta", set()))
+
+    def test_procedure_outcome_recording(self):
+        proc_file = self.root / "LEARNING" / "procedures" / "test_proc.md"
+        proc_file.write_text("""---
+id: proc-test-sample
+name: Test Sample Procedure
+version: 1.0.0
+outcomes:
+  environment: test-env
+  success_count: 2
+  failure_count: 1
+  blocked_count: 0
+---
+# Test Procedure Body
+""", encoding="utf-8")
+
+        found = record_procedure_outcome.find_procedure_file(self.root, "proc-test-sample", None)
+        self.assertIsNotNone(found)
+        self.assertEqual(found, proc_file)
+
+        fm_data, _, body = record_procedure_outcome.parse_frontmatter(proc_file.read_text(encoding="utf-8"))
+        self.assertEqual(fm_data["id"], "proc-test-sample")
+        self.assertEqual(fm_data["outcomes"]["success_count"], 2)
 
 
 if __name__ == "__main__":

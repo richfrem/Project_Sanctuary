@@ -4,6 +4,13 @@
 <!-- Only add things that will still be true in 3 months. -->
 <!-- Format: ## [YYYY-MM-DD] [#NNN] Category: Label -->
 
+## [2026-11-02] [#013] Architecture: Decoupled Cognitive Economy & Procedural Memory
+Ratified the tripartite decoupling of agent economics:
+1. Contribution Record (`evaluating-agent-work`): Multi-dimensional scoring (0-3) across Useful Outcome, Learning Depth, Verification Rigor, Token Economy, and Anti-Asch Truth Grounding.
+2. Execution Budgets (`track_budget.py`): Real-world subscription quota management (ChatGPT Plus, Claude Pro, Gemini Pro) with graceful state checkpointing over termination.
+3. Capability Authorization: Strict Human Gate Law preserved; high scores never bypass human review.
+Procedural playbooks (`LEARNING/procedures/`) track versioned execution outcomes (`success`, `failure`, `blocked`).
+
 ## [2026-11-01] [#012] Architecture: 3-Layer Sovereign Memory Engine
 Ratified the zero-dependency, filesystem-native 3-layer persistent memory hierarchy:
 - Layer 1 (Fast-Boot Context): `context/soul.md`, `context/user.md`, `context/memory.md` (< 5ms boot).
