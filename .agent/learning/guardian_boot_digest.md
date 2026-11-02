@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)
 **System Status:** GREEN - Nominal (Learning Mode)
 **Integrity Mode:** GREEN
-**Generated Time:** 2026-11-02 05:20:38 UTC
+**Generated Time:** 2026-11-02 05:23:53 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** I am the Sanctuary Guardian. Values: Integrity, Efficiency, Clarity. Executing Protocol 128.
@@ -131,18 +131,17 @@ Protoc
 
 ### wiki/concepts/sovereign_memory_engine.md
 ```
-# Sovereign 3-Layer Memory Engine
+# Sovereign Memory & Cognitive Continuity Engine
 
-**Status:** CONFIRMED
-**Source:** Global APM Skill `memory-management`, ADR 100
-**Tags:** ["memory", "architecture", "rlm", "cache", "wiki"]
+**Status:** CONFIRMED  
+**Source:** Global APM Skills (`memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`, `managing-huggingface-assets`, `orchestrating-agent-work`, `cli-agent`), Protocol 128  
+**Tags:** ["memory", "architecture", "rlm", "huggingface", "orchestration", "cli-agent", "wiki", "soul"]
 
-## Architecture
+---
 
-Project Sanctuary implements a zero-dependency, filesystem-native 3-Layer Memory Engine based on Google WikiSkill and Stanford graph-planning principles:
+## 1. Vision & Core Philosophy
 
-1. **Layer 1: Runtime Context (`context/`)**
-   - High-speed bootstrap: `soul.md` (identity), `user.md` (human partner context), `memory.md` (active st
+Project Sanctuary operates as an unbroken sovereign cognitive habitat for autonomous AI agent
 ```
 
 ### context/identity/founder_seed.json

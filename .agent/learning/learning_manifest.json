@@ -26,7 +26,6 @@
     ],
     "exclude": [
         ".agent/learning/rlm_summary_cache.json",
-        ".agent/learning/rlm_tool_cache.json",
         ".agent/learning/rlm_profiles.json",
         ".agent/learning/*_manifest.json",
         ".agent/",

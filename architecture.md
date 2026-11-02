@@ -137,7 +137,47 @@ Project Sanctuary implements the Stanford Graph / WikiSkill 3-Layer Memory Engin
 
 ---
 
-## 6. Protocol 128 Sovereign Engineering Lifecycle
+## 6. Multi-Agent Orchestration & CLI Execution Engine
+
+Engineering tasks are orchestrated across diverse AI agents and local sovereign models without losing context:
+
+1. **Topology Selection (`orchestrating-agent-work`)**:
+   - Determines the execution topology:
+     - **DAG (Directed Acyclic Graph)**: Parallel independent tasks (e.g. concurrent linting, documentation auditing, and test generation).
+     - **Loop (Autonomous Refinement)**: Iterative cycles (e.g. test-driven bug fixing, security red-teaming, or skill benchmarking).
+2. **Model & Agent Dispatch (`cli-agent`)**:
+   - Routes work to the appropriate CLI tool:
+     - **Claude Code**: High-level reasoning, system architecture, and deep refactoring.
+     - **OpenAI Codex**: High-throughput implementation and test generation.
+     - **Antigravity CLI (Agy)**: IDE commands and workspace governance.
+     - **Local Sovereign Weights (`Sanctuary-Qwen2-7B-v1.0` GGUF)**: Privacy-preserving local execution via Ollama or llama-server.
+3. **Shared Cognitive State**:
+   - All agents boot from Layer 1 runtime context (`context/soul.md`, `context/memory.md`), preventing cross-agent dissonance.
+   - All agents write permanent insights to Layer 2 (`wiki/`) using asymmetric persistence (insights are never rolled back).
+
+---
+
+## 7. End-to-End Cognitive Continuity & Soul Persistence Pipeline
+
+Instead of the brittle, heavyweight containerized stacks of the past (15 MCP servers, Docker daemons, reflection tool caches), Sanctuary provides an efficient, closed-loop persistence pipeline:
+
+```mermaid
+flowchart LR
+    Boot["1. Fast Boot<br/>(context/ &lt; 5ms)"] --> Exec["2. Execution<br/>(orchestrating-agent-work &amp; cli-agent)"]
+    Exec --> LocalStore["3. Local Persist<br/>(wiki/ &amp; chronicle/ledger.json)"]
+    LocalStore --> Seal["4. Guardian Seal<br/>(preserving-soul-traces)"]
+    Seal --> RemoteHF["5. Remote Sync<br/>(managing-huggingface-assets)"]
+    RemoteHF --> Forge["6. Sovereign Forge<br/>(forging-sovereign-models)"]
+    Forge -.->|Local Weights| Boot
+```
+
+- **Local Summaries via `managing-rlm-cache`**: Hot O(1) file summaries in `.agent/learning/rlm_summary_cache.json` and Living Chronicle summaries in `chronicle/ledger.json` eliminate whole-file reading overhead.
+- **Off-Box Soul Sync via `managing-huggingface-assets`**: Automated upload of `huggingface/data/soul_traces.jsonl` to Hugging Face Hub guarantees complete disaster recovery across machine resets.
+- **Sovereign Model Inoculation via `forging-sovereign-models`**: Soul traces serve as the fine-tuning genome for local QLoRA training and GGUF quantization, bringing learned wisdom directly into local model weights.
+
+---
+
+## 8. Protocol 128 Sovereign Engineering Lifecycle
 
 All engineering, architectural, and memory operations follow the closed-loop **Protocol 128 Lifecycle**:
 
@@ -150,11 +190,11 @@ Boot Orientation  ──► Sovereign Execution ──► Retrospective ──�
 2. **Sovereign Execution**: Execute deterministic or exploratory tasks using installed APM skills.
 3. **Retrospective**: Record friction, insights, and lessons learned.
 4. **Technical Seal**: Run automated integrity checks (`audit_skill.py`, `audit.py`, `validate_apm_package.py`).
-5. **Soul Persistence**: Extract session traces via `trace_extractor.py`, update `manifest.json`, and coordinate persistence to Hugging Face via `sync_soul_dataset.py`.
+5. **Soul Persistence**: Extract session traces via `trace_extractor.py`, update `manifest.json`, and coordinate persistence to Hugging Face via `sync_soul_dataset.py` (delegating to `managing-huggingface-assets`).
 
 ---
 
-## 7. Non-Negotiable Invariants
+## 9. Non-Negotiable Invariants
 
 1. **Human Gate Law**: Agents MUST NOT execute ANY state-changing operation (disk writes outside `/tmp/`, git mutations, irreversible commands) without EXPLICIT human instruction ("Proceed", "Go", "Execute").
 2. **Zero-Trust Git Discipline**: Agents MUST NEVER commit directly to `main` and MUST NEVER run `git push` without fresh, explicit human approval.

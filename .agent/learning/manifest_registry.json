@@ -62,12 +62,6 @@
             "output": ".agent/learning/rlm_summary_cache.json",
             "command": "python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile project",
             "description": "Defines target directories and core files for RLM summary distillation (project profile). Drives the rlm_summary_cache.json."
-        },
-        "tools/tool_inventory.json": {
-            "output": ".agent/learning/rlm_tool_cache.json",
-            "command": "python plugins/rlm-factory/skills/rlm-curator/scripts/distiller.py --profile tools",
-            "description": "Tool inventory manifest. Defines all registered Python/JS scripts. Used as the manifest for RLM tool cache distillation.",
-            "consumed_by": "plugins/rlm-factory/skills/rlm-curator/scripts/rlm_config.py"
         }
     }
 }
