@@ -8,6 +8,8 @@
 **Objective:** To forge, deploy, and perform end-to-end verification of a sovereign AI model fine-tuned on the complete Project Sanctuary Cognitive Genome.
 
 **🕒 CURRENT STATUS:** Sovereign fine-tuning pipeline preserved and maintained.
+- **Active APM Skill**: Canonical operational workflows are encapsulated in [`plugins/sanctuary-core/.apm/skills/forging-sovereign-models`](../plugins/sanctuary-core/.apm/skills/forging-sovereign-models/SKILL.md).
+- **Lineage Concept**: See [`wiki/concepts/sovereign_model_lineage.md`](../wiki/concepts/sovereign_model_lineage.md) for permanent architectural knowledge.
 - **Fine-Tuning Architecture:** QLoRA Fine-tuning on Qwen2-7B-Instruct.
 - **Artifact Hub Integration:** Hugging Face model download and upload operations are managed via standard APM global skill `managing-huggingface-assets`.
 - **Primary Guide:** See **[`WORKFLOW.md`](./WORKFLOW.md)** for the step-by-step execution protocol.

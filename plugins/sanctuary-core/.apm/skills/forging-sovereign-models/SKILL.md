@@ -56,6 +56,7 @@ Check [acceptance-criteria.md](references/acceptance-criteria.md) before declari
 
 - [windows-wsl-cuda-setup.md](references/windows-wsl-cuda-setup.md) — Windows WSL2, NVIDIA driver pass-through, and surgical CUDA binary install protocol.
 - [qlora-workflow.md](references/qlora-workflow.md) — Step-by-step QLoRA fine-tuning, CPU merge, and GGUF quantization workflow.
-- [model-specifications.md](references/model-specifications.md) — Qwen2-7B architecture, chat template, system prompts, and inference parameters.
+- [model-specifications.md](references/model-specifications.md) — Qwen2-7B architecture, chat template, constitutional system prompts, and Ollama/HF coordinates.
+- [colab-whole-genome-forge.md](references/colab-whole-genome-forge.md) — Colab A100 notebook playbook for the end-to-end whole genome forge.
 - [huggingface-integration.md](references/huggingface-integration.md) — Delegating remote weights downloads and GGUF uploads to `managing-huggingface-assets`.
 - [acceptance-criteria.md](references/acceptance-criteria.md) — Verification checklist and success criteria.
