@@ -49,6 +49,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 - **Guardian Lifecycle**: Use `operating-sanctuary-guardian` for Protocol 128 boot orientation, seal, and persistence.
 - **Sovereign Model Forging**: Use `forging-sovereign-models` for fine-tuning, Windows WSL2/CUDA setups, and GGUF quantization.
 - **Soul & Trace Persistence**: Use `preserving-soul-traces` to extract, schema-validate, and seal JSONL episodic memory traces into `huggingface/` and coordinate sync via `managing-huggingface-assets`.
+- **Sovereign Memory Management**: Use `managing-sovereign-memory` for progressive disclosure (index/summary/deep), asymmetric persistence of friction across rollbacks, 30-day confidence decay auditing, and wikilink graph traversal.
 - **Multi-Agent Orchestration**: Use global `orchestrating-agent-work` and `cli-agent` for execution topologies.
 - **Persistent Memory & RLM**: Use global `memory-management`, `managing-rlm-cache`, and `managing-obsidian-vaults`.
 - **Hugging Face Commons**: Use global `managing-huggingface-assets` for soul traces dataset synchronization.

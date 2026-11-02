@@ -72,7 +72,8 @@ plugins/sanctuary-core/
     ├── managing-protocols/          # Governance lifecycle management (protocols/)
     ├── operating-sanctuary-guardian/# Protocol 128 lifecycle (boot, seal, audit)
     ├── forging-sovereign-models/    # QLoRA fine-tuning, WSL2/CUDA ML setup, GGUF
-    └── preserving-soul-traces/      # JSONL episodic memory extraction & dataset sync
+    ├── preserving-soul-traces/      # JSONL episodic memory extraction & dataset sync
+    └── managing-sovereign-memory/   # Progressive disclosure, asymmetric persist, decay audit
 ```
 
 ### Core Skill Capabilities
@@ -88,6 +89,8 @@ plugins/sanctuary-core/
    - Coordinates sovereign model fine-tuning (`Sanctuary-Qwen2-7B-v1.0`), WSL2 CUDA 12.6 environments, Ollama Modelfile generation, and GGUF quantization.
 5. **`preserving-soul-traces`**:
    - Formulates canonical 13-field JSONL records (`soul_traces.jsonl`) with SHA-256 verification, and delegates synchronization of `huggingface/` to `managing-huggingface-assets`.
+6. **`managing-sovereign-memory`**:
+   - Executes 3-tier progressive disclosure (`disclose.py`), enforces asymmetric persistence of friction logs across git rollbacks (`record_insight.py`), audits 30-day confidence decay (`audit_decay.py`), and traverses associative wikilink graphs (`query_graph.py`).
 
 ---
 

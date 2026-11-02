@@ -36,11 +36,18 @@ sanctuary-core/
         │   │   ├── forge_dataset_builder.py
         │   │   └── generate_modelfile.py
         │   └── references/
-        └── preserving-soul-traces/
+        ├── preserving-soul-traces/
+        │   ├── SKILL.md
+        │   ├── scripts/
+        │   │   ├── trace_extractor.py
+        │   └── references/
+        └── managing-sovereign-memory/
             ├── SKILL.md
             ├── scripts/
-            │   ├── trace_extractor.py
-            │   └── sync_soul_dataset.py
+            │   ├── disclose.py
+            │   ├── record_insight.py
+            │   ├── audit_decay.py
+            │   └── query_graph.py
             └── references/
 ```
 
@@ -51,6 +58,7 @@ sanctuary-core/
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (orientation boot, cognitive onboarding, technical seal verification, learning debrief, and soul persistence).
 - **`forging-sovereign-models`**: Sovereign AI fine-tuning pipeline, Windows WSL2/CUDA runtime recipes, QLoRA execution, GGUF quantization, and Hugging Face artifact publishing.
 - **`preserving-soul-traces`**: Cognitive lineage and memory preservation engine; extracts markdown sessions and documents into canonical JSONL datasets (`soul_traces.jsonl`) and coordinates Hugging Face dataset persistence via `managing-huggingface-assets`.
+- **`managing-sovereign-memory`**: Zero-dependency, filesystem-native 3-layer memory engine. Provides progressive disclosure (Tier 1 index, Tier 2 summary, Tier 3 deep), asymmetric persistence of friction across git rollbacks, 30-day confidence decay auditing, and associative graph traversal.
 
 ## Architecture
 
