@@ -37,9 +37,9 @@ def parse_date(date_str: str) -> datetime | None:
 
 
 def audit_concepts(root: Path, apply_fixes: bool = False) -> int:
-    wiki_dir = root / "wiki" / "concepts"
-    if not wiki_dir.exists():
-        print("No wiki/concepts directory found.")
+    concepts_dir = root / "LEARNING" / "concepts"
+    if not concepts_dir.exists():
+        print("No LEARNING/concepts directory found.")
         return 0
 
     now = datetime.now()
@@ -49,7 +49,7 @@ def audit_concepts(root: Path, apply_fixes: bool = False) -> int:
     status_pattern = re.compile(r"\*\*Status:\*\*\s*(CONFIRMED|OBSERVED|HYPOTHESIS)", re.IGNORECASE)
     date_pattern = re.compile(r"\*\*Last Verified:\*\*\s*([0-9\-/]+)", re.IGNORECASE)
 
-    for md_file in sorted(wiki_dir.glob("*.md")):
+    for md_file in sorted(concepts_dir.glob("*.md")):
         total_checked += 1
         content = md_file.read_text(encoding="utf-8")
         status_match = status_pattern.search(content)

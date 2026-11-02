@@ -23,7 +23,7 @@ class TestSovereignMemory(unittest.TestCase):
     def setUp(self):
         self.test_dir = tempfile.TemporaryDirectory()
         self.root = Path(self.test_dir.name)
-        (self.root / "wiki" / "concepts").mkdir(parents=True)
+        (self.root / "LEARNING" / "concepts").mkdir(parents=True)
         (self.root / "context").mkdir(parents=True)
         (self.root / "protocols").mkdir(parents=True)
 
@@ -31,7 +31,7 @@ class TestSovereignMemory(unittest.TestCase):
         self.test_dir.cleanup()
 
     def test_progressive_disclosure_summary(self):
-        sample_file = self.root / "wiki" / "concepts" / "sample.md"
+        sample_file = self.root / "LEARNING" / "concepts" / "sample.md"
         sample_file.write_text("""---
 title: Sample Note
 ---
@@ -55,12 +55,12 @@ Deep technical content that should be excluded.
         self.assertTrue(mem_file.exists())
         self.assertIn("Failed on edge case X", mem_file.read_text(encoding="utf-8"))
 
-        wiki_file = record_insight.record_to_wiki(self.root, "test_topic", "observed", "Discovered behavior Y")
-        self.assertTrue(wiki_file.exists())
-        self.assertIn("Discovered behavior Y", wiki_file.read_text(encoding="utf-8"))
+        concept_file = record_insight.record_to_learning_concepts(self.root, "test_topic", "observed", "Discovered behavior Y")
+        self.assertTrue(concept_file.exists())
+        self.assertIn("Discovered behavior Y", concept_file.read_text(encoding="utf-8"))
 
     def test_confidence_decay(self):
-        decayed_file = self.root / "wiki" / "concepts" / "old_concept.md"
+        decayed_file = self.root / "LEARNING" / "concepts" / "old_concept.md"
         decayed_file.write_text("""# Old Concept
 **Status:** CONFIRMED
 **Last Verified:** 2025-01-01
@@ -71,8 +71,8 @@ Deep technical content that should be excluded.
         self.assertIn("**Status:** OBSERVED", decayed_file.read_text(encoding="utf-8"))
 
     def test_graph_query(self):
-        note_a = self.root / "wiki" / "concepts" / "alpha.md"
-        note_b = self.root / "wiki" / "concepts" / "beta.md"
+        note_a = self.root / "LEARNING" / "concepts" / "alpha.md"
+        note_b = self.root / "LEARNING" / "concepts" / "beta.md"
         note_a.write_text("# Alpha\nRefers to [[beta]].", encoding="utf-8")
         note_b.write_text("# Beta\nTarget note.", encoding="utf-8")
 

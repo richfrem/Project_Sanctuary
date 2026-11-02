@@ -45,7 +45,7 @@ def build_graph(root: Path) -> tuple[dict[str, set[str]], dict[str, set[str]]]:
     outbound: dict[str, set[str]] = {}
     inbound: dict[str, set[str]] = {}
 
-    target_dirs = ["wiki", "protocols", "LEARNING"]
+    target_dirs = ["protocols", "LEARNING"]
 
     for d in target_dirs:
         dir_path = root / d

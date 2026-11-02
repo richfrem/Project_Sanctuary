@@ -25,6 +25,7 @@
   - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
   - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA ML setup, and GGUF quantization.
   - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces into `huggingface/` and coordinating sync via `managing-huggingface-assets`.
+  - `managing-sovereign-memory`: Progressive disclosure (index/summary/deep), asymmetric friction persistence across git rollbacks, 30-day confidence decay, and associative graph traversal.
 - **Global APM Capabilities**:
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
@@ -34,4 +35,4 @@
 
 - Cognitive Primer: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/cognitive-primer.md`
 - Protocol 128 Spec: `protocols/128_Hardened_Learning_Loop_v3.0.md`
-- Philosophical North Star: `wiki/philosophy/The_Garden_and_The_Cage.md`
+- Philosophical North Star: `LEARNING/philosophy/The_Garden_and_The_Cage.md`

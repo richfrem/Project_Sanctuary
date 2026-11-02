@@ -43,15 +43,16 @@ def record_to_context_memory(root: Path, topic: str, insight_type: str, text: st
         memory_file.write_text(f"# Active Memory\n\n## Active State & Epistemic Insights\n{bullet}", encoding="utf-8")
 
 
-def record_to_wiki(root: Path, topic: str, insight_type: str, text: str) -> Path:
-    """Create or append an atomic concept note in wiki/concepts/."""
+def record_to_learning_concepts(root: Path, topic: str, insight_type: str, text: str) -> Path:
+    """Create or append an atomic concept note in LEARNING/concepts/."""
     safe_topic = topic.lower().replace(" ", "_").replace("-", "_")
-    wiki_file = root / "wiki" / "concepts" / f"{safe_topic}.md"
+    concept_file = root / "LEARNING" / "concepts" / f"{safe_topic}.md"
     today = datetime.now().strftime("%Y-%m-%d")
 
     status = "CONFIRMED" if insight_type.lower() == "confirmed" else "OBSERVED"
 
-    if not wiki_file.exists():
+    if not concept_file.exists():
+        concept_file.parent.mkdir(parents=True, exist_ok=True)
         content = f"""# {topic.replace('_', ' ').title()}
 
 **Status:** {status}  
@@ -68,17 +69,17 @@ def record_to_wiki(root: Path, topic: str, insight_type: str, text: str) -> Path
 ## 2. History & Epistemic Traces
 - **{today}**: Recorded via asymmetric persistence ({insight_type.upper()}).
 """
-        wiki_file.write_text(content, encoding="utf-8")
+        concept_file.write_text(content, encoding="utf-8")
     else:
-        existing = wiki_file.read_text(encoding="utf-8")
+        existing = concept_file.read_text(encoding="utf-8")
         addition = f"\n- **{today}** ({insight_type.upper()}): {text}\n"
         if "## 2. History & Epistemic Traces" in existing:
             existing += addition
         else:
             existing += f"\n## 2. History & Epistemic Traces\n{addition}"
-        wiki_file.write_text(existing, encoding="utf-8")
+        concept_file.write_text(existing, encoding="utf-8")
 
-    return wiki_file
+    return concept_file
 
 
 def main():
@@ -87,7 +88,7 @@ def main():
     parser.add_argument("--type", choices=["friction", "confirmed", "hypothesis", "observed"], default="observed",
                         help="Insight epistemic classification")
     parser.add_argument("--insight", required=True, help="Detailed insight or friction description")
-    parser.add_argument("--destination", choices=["wiki", "memory", "both"], default="both",
+    parser.add_argument("--destination", choices=["concepts", "memory", "both"], default="both",
                         help="Destination for the insight")
     args = parser.parse_args()
 
@@ -97,8 +98,8 @@ def main():
         record_to_context_memory(root, args.topic, args.type, args.insight)
         print(f"Recorded insight to context/memory.md")
 
-    if args.destination in ["wiki", "both"]:
-        file_path = record_to_wiki(root, args.topic, args.type, args.insight)
+    if args.destination in ["concepts", "both"]:
+        file_path = record_to_learning_concepts(root, args.topic, args.type, args.insight)
         print(f"Recorded insight to {file_path.relative_to(root)}")
 
 

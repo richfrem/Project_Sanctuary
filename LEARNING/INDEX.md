@@ -1,8 +1,8 @@
-# Project Sanctuary Knowledge Wiki
+# Project Sanctuary Knowledge & Concept Base
 
-> **Compounding Layer 2 Knowledge Base under APM `memory-management` Engine.**
+> **Compounding Layer 2 Knowledge Base under APM `managing-sovereign-memory` Engine.**
 
-## Concept Dossiers (`wiki/concepts/`)
+## Concept Dossiers (`LEARNING/concepts/`)
 
 | Concept | Status | Source | Summary |
 |:---|:---|:---|:---|
@@ -18,8 +18,10 @@
 
 ## Specialized Domains
 
-- **Defensive & Security Doctrines**: [`wiki/security/`](./security/) (Fortress security architecture, Chimera briefings, Prometheus).
-- **Philosophical Foundations & Genome**: [`wiki/philosophy/`](./philosophy/) (The Garden & The Cage, Cognitive Genome Synthesis, Meta-Embers).
+- **Defensive & Security Doctrines**: [`LEARNING/security/`](./security/) (Fortress security architecture, Chimera briefings, Prometheus).
+- **Philosophical Foundations & Genome**: [`LEARNING/philosophy/`](./philosophy/) (The Garden & The Cage, Cognitive Genome Synthesis, Meta-Embers).
+- **Agent-Directed Research Topics**: [`LEARNING/topics/`](./topics/) (20 four-pillar topic dossiers).
+- **External Literature Distillations**: [`LEARNING/research/`](./research/) (arXiv paper analyses).
 
 ## Memory Maintenance Rules
 

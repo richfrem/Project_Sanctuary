@@ -52,6 +52,7 @@ Capabilities MUST be executed through active installed APM skills or `plugins/sa
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (`boot`, `onboard`, `seal`, `persist`, `audit`).
 - **`forging-sovereign-models`**: Sovereign AI model fine-tuning, WSL2/CUDA environments, and GGUF quantization.
 - **`preserving-soul-traces`**: Extracting, validating, and sealing JSONL memory traces into `huggingface/` for Hugging Face persistence.
+- **`managing-sovereign-memory`**: Progressive disclosure, asymmetric persistence of friction across git rollbacks, 30-day confidence decay, and associative graph traversal.
 
 ### 2. Upstream Global APM Capabilities (`richfrem/agent-plugins-skills`)
 - **Memory & Knowledge**: `memory-management` (Layer 2 `wiki/`), `managing-rlm-cache`, `managing-obsidian-vaults`, `managing-vector-db`.
@@ -69,11 +70,10 @@ Assets must strictly reside within the canonical sovereign domains:
 Project_Sanctuary/
 ├── chronicle/       # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
-├── wiki/            # Compounding Layer 2 concept wiki (concepts/, security/, philosophy/)
 ├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py, identity/)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
-├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul traces)
-├── LEARNING/        # Research library, external papers, and think tank dossiers
+├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul, memory)
+├── LEARNING/        # Comprehensive knowledge base, concepts, research papers, and think tank dossiers
 └── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
 

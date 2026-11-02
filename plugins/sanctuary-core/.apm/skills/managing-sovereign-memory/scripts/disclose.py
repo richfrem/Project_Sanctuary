@@ -103,7 +103,7 @@ def main():
     parser.add_argument("--level", choices=["index", "summary", "deep"], default="summary",
                         help="Granularity tier: index (Tier 1), summary (Tier 2), deep (Tier 3)")
     parser.add_argument("--file", type=str, help="Specific file to disclose")
-    parser.add_argument("--target", type=str, default="wiki/", help="Target directory for index")
+    parser.add_argument("--target", type=str, default="LEARNING/concepts/", help="Target directory for index")
     parser.add_argument("--max-lines", type=int, default=30, help="Max lines for summary level")
     args = parser.parse_args()
 

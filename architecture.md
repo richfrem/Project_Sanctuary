@@ -94,17 +94,16 @@ plugins/sanctuary-core/
 
 ---
 
-## 4. 10 Sovereign Repository Domains
+## 4. 7 Sovereign Repository Domains
 
 ```
 Project_Sanctuary/
 ├── chronicle/       # Living Chronicle episodic journal (entries/) & fast index (ledger.json)
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
-├── wiki/            # Compounding Layer 2 concept wiki (concepts/, security/, philosophy/)
-├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, identity/)
+├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, identity/, kernel.py)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
-├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul traces)
-├── LEARNING/        # Research library, external papers, and think tank dossiers
+├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul, memory)
+├── LEARNING/        # Comprehensive knowledge base, concepts, research papers, and think tank dossiers
 └── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
 
@@ -123,9 +122,9 @@ Project Sanctuary implements the Stanford Graph / WikiSkill 3-Layer Memory Engin
                                 │ compounds into
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ Layer 2: Compounding Knowledge Base (wiki/)                     │
-│ concepts/ • security/ • philosophy/                             │
-│ Markdown wiki linked via wikilinks. Distilled summaries with    │
+│ Layer 2: Compounding Knowledge Base (LEARNING/)                 │
+│ concepts/ • security/ • philosophy/ • topics/ • research/       │
+│ Markdown dossiers linked via wikilinks. Distilled summaries with│
 │ progressive disclosure. Atomic dossiers with confidence tags.   │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │ sealed into

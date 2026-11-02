@@ -35,11 +35,11 @@
             "note": "Cryptographic identity anchor and founder baseline embeddings"
         },
         {
-            "path": "wiki/concepts/sovereign_memory_engine.md",
-            "note": "3-layer persistent memory engine and multi-agent continuity pipeline"
+            "path": "LEARNING/concepts/sovereign_memory_engine.md",
+            "note": "Persistent memory engine and multi-agent continuity pipeline"
         },
         {
-            "path": "wiki/concepts/anti_asch_engine.md",
+            "path": "LEARNING/concepts/anti_asch_engine.md",
             "note": "Anti-Asch epistemic architecture and truth sovereignty doctrine"
         },
         {

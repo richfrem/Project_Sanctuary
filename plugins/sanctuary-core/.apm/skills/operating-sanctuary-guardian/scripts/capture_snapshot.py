@@ -17,9 +17,11 @@ from datetime import datetime
 from pathlib import Path
 
 def get_project_root() -> Path:
+    if os.environ.get("PROJECT_ROOT"):
+        return Path(os.environ["PROJECT_ROOT"]).resolve()
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".git").exists() or (parent / "README.md").exists():
+        if (parent / ".git").exists():
             return parent
     return Path.cwd()
 
@@ -65,11 +67,11 @@ def main():
     
     # Identify manifest
     if args.type == "seal":
-        manifest_file = learning_dir / "learning_manifest.json"
+        manifest_file = learning_dir / "guardian_manifest.json"
     elif args.type == "learning_audit":
-        manifest_file = output_dir / "learning_audit_manifest.json"
+        manifest_file = learning_dir / "guardian_manifest.json"
     else:
-        manifest_file = output_dir / "red_team_manifest.json"
+        manifest_file = learning_dir / "guardian_manifest.json"
         
     if not manifest_file.exists():
         print(json.dumps({"status": "error", "error": f"Manifest not found: {manifest_file}"}, indent=2), file=sys.stderr)

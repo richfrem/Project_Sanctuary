@@ -19,7 +19,7 @@
             "note": "Hot institutional memory and active state"
         },
         {
-            "path": "wiki/INDEX.md",
+            "path": "LEARNING/INDEX.md",
             "note": "Compounding knowledge base index"
         },
         {
@@ -27,8 +27,8 @@
             "note": "Protocol 128 canonical specification"
         },
         {
-            "path": "wiki/concepts/sovereign_memory_engine.md",
-            "note": "Sovereign 3-layer memory engine concept"
+            "path": "LEARNING/concepts/sovereign_memory_engine.md",
+            "note": "Sovereign memory engine concept"
         },
         {
             "path": "context/identity/founder_seed.json",

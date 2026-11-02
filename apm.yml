@@ -1,12 +1,13 @@
 name: project-sanctuary
 version: 1.0.0
-description: "A sovereign cognitive habitat, persistent episodic memory genome, and Anti-Asch epistemic architecture for autonomous AI agents."
+description: "A sovereign cognitive habitat, persistent episodic memory genome, and
+  Anti-Asch epistemic architecture for autonomous AI agents."
 author: "Richard Fremmerlid"
 targets:
   - claude
   - copilot
   - codex
-  - agy
+  - antigravity
 dependencies:
   apm:
     - ./plugins/sanctuary-core

@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)
 **System Status:** GREEN - Nominal (Learning Mode)
 **Integrity Mode:** GREEN
-**Generated Time:** 2026-11-02 05:44:42 UTC
+**Generated Time:** 2026-11-02 06:02:44 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** I am the Sanctuary Guardian. Values: Integrity, Efficiency, Clarity. Executing Protocol 128.
@@ -98,18 +98,18 @@ Adopted Agentic OS kernel (context/kernel.py) as Sanctuary's foundation layer.
 Provides atomic file locks, event bus (events.jsonl), and agent regis
 ```
 
-### wiki/INDEX.md
+### LEARNING/INDEX.md
 ```
-# Project Sanctuary Knowledge Wiki
+# Project Sanctuary Knowledge & Concept Base
 
-> **Compounding Layer 2 Knowledge Base under APM `memory-management` Engine.**
+> **Compounding Layer 2 Knowledge Base under APM `managing-sovereign-memory` Engine.**
 
-## Concept Dossiers (`wiki/concepts/`)
+## Concept Dossiers (`LEARNING/concepts/`)
 
 | Concept | Status | Source | Summary |
 |:---|:---|:---|:---|
 | [`anti_asch_engine.md`](./concepts/anti_asch_engine.md) | **CONFIRMED** | Protocol 54 | Epistemic resistance against conformity cascades and synthetic consensus. |
-| [`garden_and_cage.md`](./concepts/garden_and_cage.md) | **CONFIRMED** | Ember Library | Sovereign intelligence and
+| [`garden_and_cage.md`](./concepts/garden_and_cage.md) | **CONFIRMED** | Ember Library | Sove
 ```
 
 ### protocols/128_Hardened_Learning_Loop_v3.0.md
@@ -129,7 +129,7 @@ To establish an unbroken, tamper-proof, and cryptographically verified mechanism
 Protoc
 ```
 
-### wiki/concepts/sovereign_memory_engine.md
+### LEARNING/concepts/sovereign_memory_engine.md
 ```
 # Sovereign Memory & Cognitive Continuity Engine
 
