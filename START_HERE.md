@@ -2,14 +2,21 @@
 
 <!-- Read this at the start of every session. -->
 > 🧭 For full architectural doctrine and APM dependency mapping, consult [`architecture.md`](./architecture.md).  
-> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).
+> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).  
+> ⚡ For the complete autonomous agent bootstrapping protocol, consult [`bootstrapping.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/bootstrapping.md).
 
-## 1. Fast-Boot Context & Orientation
+## 1. Fast-Boot Sequence (Protocol 128)
 
-1. **Identity & Prime Directives**: Read `context/soul.md` (Guardian fast-boot identity).
-2. **Human Partner Context**: Read `context/user.md` (Richard's working style & preferences).
-3. **Institutional Memory**: Read `context/memory.md` (recent architectural decisions).
-4. **Boot Telemetry**: Run `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC`.
+Every session follows the deterministic 5-step bootstrapping sequence (detailed in [`AGENTS.md`](./AGENTS.md)):
+
+1. **Orientation**: Ingest [`AGENTS.md`](./AGENTS.md) and constitutional bounds.
+2. **Holistic Wakeup**: Run sub-4ms bootloader:
+   ```bash
+   python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
+   ```
+3. **Layer 1 Hydration**: Inspect `context/soul.md`, `context/user.md`, `context/memory.md`, and `.agent/learning/guardian_boot_digest.md`.
+4. **Layer 2 Progressive Disclosure**: Retrieve deeper knowledge on demand via `managing-sovereign-memory` (`disclose.py --tier 1` or `--tier 2`).
+5. **Git Discipline**: Verify working tree is clean and on a `feat/*` branch. Never commit directly to `main`.
 
 ## 2. Invariants & Supreme Law
 
