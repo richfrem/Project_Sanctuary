@@ -250,7 +250,8 @@ context/events.jsonl
 context/os-state.json
 context/.locks/
 context/status.md
-MEMORY.md
+/MEMORY.md
+!context/memory.md
 START_HERE.local.md
 
 

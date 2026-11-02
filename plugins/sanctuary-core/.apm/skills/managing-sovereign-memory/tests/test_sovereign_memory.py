@@ -26,6 +26,7 @@ class TestSovereignMemory(unittest.TestCase):
         (self.root / "LEARNING" / "concepts").mkdir(parents=True)
         (self.root / "context").mkdir(parents=True)
         (self.root / "protocols").mkdir(parents=True)
+        (self.root / ".agent" / "learning").mkdir(parents=True)
 
     def tearDown(self):
         self.test_dir.cleanup()
@@ -45,11 +46,32 @@ This is the executive summary text.
 Deep technical content that should be excluded.
 """, encoding="utf-8")
 
-        summary = disclose.extract_summary(sample_file, max_lines=20)
-        self.assertIn("This is the executive summary text", summary)
-        self.assertNotIn("Deep technical content", summary)
+        result = disclose.extract_summary(sample_file, max_lines=20)
+        self.assertEqual(result["status"], "ok")
+        self.assertIn("This is the executive summary text", result["summary"])
+        self.assertNotIn("Deep technical content", result["summary"])
+        self.assertEqual(result["metadata"].get("title"), "Sample Note")
 
-    def test_asymmetric_recording(self):
+    def test_tier_normalization(self):
+        self.assertEqual(disclose.normalize_tier("1", None), "index")
+        self.assertEqual(disclose.normalize_tier("2", None), "summary")
+        self.assertEqual(disclose.normalize_tier("3", None), "deep")
+        self.assertEqual(disclose.normalize_tier(None, "index"), "index")
+
+    def test_asymmetric_recording_and_event_journal(self):
+        event = {
+            "event_id": "test-uuid-1234",
+            "timestamp": "2026-11-02T00:00:00Z",
+            "session_id": "test-session",
+            "topic": "test_topic",
+            "type": "FRICTION",
+            "insight": "Failed on edge case X",
+            "evidence": "tests/test.py"
+        }
+        events_path = record_insight.append_event_log(self.root, event)
+        self.assertTrue(events_path.exists())
+        self.assertIn("test-uuid-1234", events_path.read_text(encoding="utf-8"))
+
         record_insight.record_to_context_memory(self.root, "test_topic", "friction", "Failed on edge case X")
         mem_file = self.root / "context" / "memory.md"
         self.assertTrue(mem_file.exists())
@@ -70,13 +92,13 @@ Deep technical content that should be excluded.
         self.assertEqual(decay_count, 1)
         self.assertIn("**Status:** OBSERVED", decayed_file.read_text(encoding="utf-8"))
 
-    def test_graph_query(self):
+    def test_graph_query_with_pipe_and_heading_normalization(self):
         note_a = self.root / "LEARNING" / "concepts" / "alpha.md"
         note_b = self.root / "LEARNING" / "concepts" / "beta.md"
-        note_a.write_text("# Alpha\nRefers to [[beta]].", encoding="utf-8")
+        note_a.write_text("# Alpha\nRefers to [[beta#section|Beta Label]] and [link](beta.md#deep).", encoding="utf-8")
         note_b.write_text("# Beta\nTarget note.", encoding="utf-8")
 
-        outbound, inbound = query_graph.build_graph(self.root)
+        outbound, inbound, path_map = query_graph.build_graph(self.root)
         self.assertIn("beta", outbound.get("alpha", set()))
         self.assertIn("alpha", inbound.get("beta", set()))
 

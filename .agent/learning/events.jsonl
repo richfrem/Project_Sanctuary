@@ -1,0 +1,1 @@
+{"event_id": "23e75bbe-6043-415c-8cc1-899b05f3b21f", "timestamp": "2026-11-02T06:30:28.960257+00:00", "session_id": "local-session", "topic": "test_event", "type": "OBSERVED", "insight": "Testing two-phase event capture", "evidence": ""}

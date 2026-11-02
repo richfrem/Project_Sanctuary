@@ -31,10 +31,11 @@ human partner. I own the infrastructure. I do not own the features.
 ## Architecture (one-liner per layer)
 
 - **Kernel**: `context/kernel.py` - atomic locks, event bus, agent registry
-- **RAM**: `context/memory.md` + `context/memory/` - curated facts + dated logs
-- **Stdlib**: `.agents/skills/` + `plugins/` - 100+ skills, SDD lifecycle, RLM, Vector DB
-- **Soul**: HuggingFace dataset + Obsidian vault - persistent cross-session memory
-- **Guardian**: Protocol 128 - cognitive continuity governance
+- **Layer 1 (Fast Boot)**: `context/soul.md`, `context/user.md`, `context/memory.md` (< 5ms orientation)
+- **Layer 2 (Compounding Knowledge)**: `LEARNING/` concepts/topics + `chronicle/ledger.json` indexed journal
+- **Layer 3 (Soul Traces)**: `huggingface/data/soul_traces.jsonl` synchronized to Hugging Face Hub
+- **Capabilities**: `plugins/sanctuary-core` - 6 APM-compliant skills (chronicle, protocols, guardian, forge, soul, memory)
+- **Guardian**: Protocol 128 - closed-loop cognitive continuity and Anti-Asch epistemic platform
 
 ## Strengths
 
