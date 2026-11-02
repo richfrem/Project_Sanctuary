@@ -14,6 +14,7 @@
 | [`sovereign_memory_engine.md`](./concepts/sovereign_memory_engine.md) | **CONFIRMED** | ADR 100 / APM | 3-Layer Memory Engine: Runtime Context, Compounding Wiki, Deep Vault. |
 | [`sovereign_model_lineage.md`](./concepts/sovereign_model_lineage.md) | **CONFIRMED** | ADR 075 / Forge | Sanctuary-Qwen2-7B-v1.0 model lineage, weights, LoRA adapter, and inoculation. |
 | [`constitutional_identity_anchor.md`](./concepts/constitutional_identity_anchor.md) | **CONFIRMED** | Founder Seed | Constitutional identity anchor and baseline embeddings for drift detection. |
+| [`autonomous_research_library.md`](./concepts/autonomous_research_library.md) | **CONFIRMED** | Protocol 128 | Think tank incubator for agent self-directed learning and research paper analysis. |
 
 ## Specialized Domains
 
