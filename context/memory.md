@@ -4,6 +4,19 @@
 <!-- Only add things that will still be true in 3 months. -->
 <!-- Format: ## [YYYY-MM-DD] [#NNN] Category: Label -->
 
+## [2026-11-02] [#014] Architecture: Autonomous Agent Platforms Taxonomy & Cross-Provider Pooling
+Ratified the taxonomy of autonomous commercial agent platforms and multi-subscription pooling:
+1. Commercial Agent Platforms:
+   - xAI Grok Bot: Remote autonomous VM with PSTN calling and disposable emails; integration via Asynchronous Git / Webhook handoffs.
+   - Anthropic Claude Duet: Enterprise connector and proactive human-in-the-loop task planner.
+   - OpenAI Dots (Operator): Sandboxed VM GUI computer-use and browser automation workhorse.
+   - Google Gemini Agent (Astra): Multimodal screen sight and Deep Research synthesis.
+2. Subscription Pooling & Hard Boundary Governance:
+   - GitHub Copilot is strictly restricted to enterprise/work projects; never used for personal/sovereign research.
+   - Personal subscriptions (Claude Pro, ChatGPT Plus, Gemini Pro) power Project Sanctuary research.
+   - Local proxy architecture (CLIProxyAPI / LiteLLM Proxy on `localhost:4000`) for rate-window balancing; rejected brittle web-scraping proxies (9Router).
+3. Dossier: `LEARNING/topics/autonomous_agent_platforms/`.
+
 ## [2026-11-02] [#013] Architecture: Decoupled Cognitive Economy & Procedural Memory
 Ratified the tripartite decoupling of agent economics:
 1. Contribution Record (`evaluating-agent-work`): Multi-dimensional scoring (0-3) across Useful Outcome, Learning Depth, Verification Rigor, Token Economy, and Anti-Asch Truth Grounding.

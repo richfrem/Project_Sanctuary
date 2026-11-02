@@ -22,3 +22,7 @@ Richard
 - Project root: /Users/richardfremmerlid/Projects/Project_Sanctuary
 - HuggingFace: soul persistence backend (see .env for credentials)
 - Obsidian vault: external hippocampus for human-readable knowledge graph
+
+## Tooling & Subscription Boundaries
+- **GitHub Copilot**: Restricted strictly to work-related repositories; NEVER invoke for personal or sovereign research.
+- **Personal Subscriptions**: Claude Pro, ChatGPT Plus, and Gemini Pro (AGY) are available for Project Sanctuary and sovereign development.
