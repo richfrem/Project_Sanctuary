@@ -48,3 +48,27 @@
   * Deep Research engine: Conducts 5 to 10 minute autonomous web sweeps, cross-referencing dozens of primary technical sources to produce structured Google Docs.
   * Real-time multimodal streaming (Project Astra): Live audio/video screen and physical camera ingestion for active environment debugging.
 * **CLI/Agent Integration Pattern**: Enterprise knowledge layer. Synthesizes broad documentation sweeps and updates team spreadsheets/docs, providing clean contextual references for CLI coding engines (`agy`, Claude Code).
+
+---
+
+## 3. Commercial Subscription Tiers & Bundling
+
+* **Cursor Premium ($30/mo)**:
+  * Includes **Grok Bot** natively alongside Cursor IDE, cloud agents & automations, and code reviews.
+  * 4x AI usage pool compared to Plus.
+  * Standalone access to Grok Bot otherwise requires an independent X Premium+ subscription, making Cursor Premium a highly effective subscription consolidation target.
+* **Personal Subscription Stack**:
+  * Claude Pro ($20/mo): Primary code planning, architecture reviews, and Sonnet/Opus reasoning via Claude Code.
+  * ChatGPT Plus ($20/mo): OpenAI Operator / Dots computer-use and general GPT-4o inference.
+  * Gemini Pro (AGY / Google One): 2M context deep research and multimodal vision.
+* **Work Separation Boundary**:
+  * GitHub Copilot is restricted strictly to employer/work codebases; never routed to Project Sanctuary.
+
+---
+
+## 4. Regional Geo-Availability Boundaries
+
+* **Claude Duet (Anthropic)**: Currently limited to US-based enterprise preview workspaces; non-US IP addresses and non-US corporate Google/Microsoft tenancies cannot activate Duet connectors.
+* **Dots / Operator (OpenAI)**: Rolling preview restricted primarily to US ChatGPT Plus/Pro accounts. Users outside the US may encounter waitlist or geo-blocking constraints.
+* **Grok Bot (xAI)**: Available globally through Cursor Premium ($30/mo) or X Premium+, with outbound phone calling dependent on regional telecom interconnects.
+* **Gemini Agent / Project Astra (Google)**: Broadest international availability across Google One AI Premium and Google AI Studio.
