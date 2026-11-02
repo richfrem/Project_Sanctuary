@@ -2,10 +2,11 @@
 trigger: always_on
 ---
 
-# Project Ecosystem Constitution V5.1
+# Project Ecosystem Constitution V5.2
 
 > **THE SUPREME LAW: HUMAN GATE**
-> You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
+> This Constitution governs all autonomous AI agents (Antigravity, Claude Code, Codex, Qwen) and CLI tools operating within Project Sanctuary.
+> You MUST NOT execute ANY state-changing operation without EXPLICIT human approval.
 > "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
 > **VIOLATION = SYSTEM FAILURE**
 
@@ -21,17 +22,18 @@ Boot Orientation  ──► Sovereign Execution ──► Retrospective ──�
 ```
 
 - **Track A (Deterministic)**: Standard skill/script executions and automated verification gates.
-- **Track B (Exploratory)**: Deep architectural research, Compounding Wiki evolution (`wiki/`), and protocol canonization (`protocols/`).
+- **Track B (Exploratory)**: Deep architectural research, Compounding Knowledge Base evolution (`LEARNING/`), and protocol canonization (`protocols/`).
 - **Track C (Micro-Fix)**: Direct localized fixes with immediate pre-completion gating.
 
 ---
 
 ## II. Zero Trust (Git & Execution)
 
-- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
+- **NEVER** commit directly to `main`. **ALWAYS** use a feature branch (`feat/*`).
 - **NEVER** run `git push` without fresh, explicit human instruction.
 - **NEVER** "auto-fix" via git without approval.
 - **HALT** immediately on any user "Stop/Wait" instruction.
+- **LOCAL HARNESS ISOLATION**: Machine-local installation directories (`.agents/`, `.claude/`, `.codex/`, `apm_modules/`) are gitignored and MUST NEVER be committed. Only `.agent/` (governance rules and workflows) is tracked in version control.
 
 ### Defined: State-Changing Operation
 Any operation that:
@@ -55,7 +57,7 @@ Capabilities MUST be executed through active installed APM skills or `plugins/sa
 - **`managing-sovereign-memory`**: Progressive disclosure, asymmetric persistence of friction across git rollbacks, 30-day confidence decay, and associative graph traversal.
 
 ### 2. Upstream Global APM Capabilities (`richfrem/agent-plugins-skills`)
-- **Memory & Knowledge**: `memory-management` (Layer 2 `wiki/`), `managing-rlm-cache`, `managing-obsidian-vaults`, `managing-vector-db`.
+- **Memory & Knowledge**: `managing-sovereign-memory` (Layer 2 `LEARNING/`), `managing-rlm-cache`. (Obsidian vaults and ChromaDB are external human utilities, not agent runtime dependencies).
 - **Multi-Agent Orchestration**: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
 - **Developer Utilities**: `managing-huggingface-assets` (remote Hub transport), `managing-adrs`, `checking-links`, `enforcing-coding-conventions`, `bundling-context`.
 - **Extension Authoring**: `authoring-skills`, `authoring-plugins`, `packaging-with-apm`.

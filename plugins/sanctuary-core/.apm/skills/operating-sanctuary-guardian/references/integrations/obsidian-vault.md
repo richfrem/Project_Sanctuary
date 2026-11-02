@@ -1,8 +1,8 @@
-# Obsidian Vault Integration
+# Obsidian Vault Integration (Human Visualization)
 
-Project Sanctuary utilizes an Obsidian vault as an "External Hippocampus" for long-term memory, note graph traversal, and visual architecture canvases.
+Human engineers may point an Obsidian vault to the repository root for visual graph traversal and canvas diagrams.
 
 ## Standards
-- **Note naming**: `YYYY-MM-DD_<topic>.md`.
-- **Vault Location**: Defined via `OBSIDIAN_VAULT_PATH` environment variable.
-- **Operations**: Vault CRUD, canvas generation, and graph queries are delegated to the globally installed `managing-obsidian-vaults` skill.
+- **Agent Execution**: AI agents operate independently of the Obsidian client application, utilizing native CLI scripts in `managing-sovereign-memory` (`query_graph.py`, `disclose.py`) to traverse markdown wikilinks.
+- **Vault Location**: If human inspection is desired, the vault root is the repository root itself (`OBSIDIAN_VAULT_PATH`).
+- **Operations**: Optional vault automation can be dispatched via the global `managing-obsidian-vaults` skill if explicitly requested.

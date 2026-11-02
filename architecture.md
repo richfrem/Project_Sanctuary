@@ -39,8 +39,8 @@ graph TD
     Workstation --> AOS
 
     subgraph Sanctuary["Project Sanctuary Workspace"]
-        Core["plugins/sanctuary-core<br/>(chronicles, protocols, guardian, forge, soul traces)"]
-        Domains["10 Sovereign Workspace Domains<br/>(chronicle, protocols, wiki, context, huggingface, etc.)"]
+        Core["plugins/sanctuary-core<br/>(chronicles, protocols, guardian, forge, soul traces, memory)"]
+        Domains["7 Sovereign Workspace Domains<br/>(chronicle, protocols, LEARNING, context, huggingface, plugins, ARCHIVE)"]
     end
 
     GlobalSkills -.->|Injected into session| Sanctuary
@@ -109,23 +109,23 @@ Project_Sanctuary/
 
 ---
 
-## 5. Three-Layer Persistent Memory Architecture
+## 5. Three-Layer Persistent Memory Architecture & Bootstrapping
 
-Project Sanctuary implements the Stanford Graph / WikiSkill 3-Layer Memory Engine:
+Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovereign memory architecture managed directly by `managing-sovereign-memory`:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ Layer 1: Fast-Boot Context (context/)                           │
-│ soul.md • user.md • memory.md • kernel.py                       │
+│ Layer 1: Fast-Boot Context (context/ & .agent/learning/)         │
+│ soul.md • user.md • memory.md • kernel.py • boot_digest.md      │
 │ Injected on every session startup (~2K tokens). Sub-5ms boot.   │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │ compounds into
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ Layer 2: Compounding Knowledge Base (LEARNING/)                 │
-│ concepts/ • security/ • philosophy/ • topics/ • research/       │
-│ Markdown dossiers linked via wikilinks. Distilled summaries with│
-│ progressive disclosure. Atomic dossiers with confidence tags.   │
+│ Layer 2: Compounding Knowledge Base (LEARNING/ & chronicle/)    │
+│ concepts/ • security/ • philosophy/ • topics/ • ledger.json     │
+│ Structured dossiers with progressive disclosure (Tier 1/2/3).   │
+│ Asymmetric persistence across rollbacks; 30-day confidence decay│
 └───────────────────────────────┬─────────────────────────────────┘
                                 │ sealed into
                                 ▼
@@ -136,6 +136,15 @@ Project Sanctuary implements the Stanford Graph / WikiSkill 3-Layer Memory Engin
 │ Synchronized to richfrem/Project_Sanctuary_Soul on Hugging Face.│
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+### The Bootstrapping Sequence
+1. **Instruction Ingestion**: The agent starts by reading [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) (or human entry via `START_HERE.md`), loading core invariants and human gate requirements.
+2. **Dynamic Holistic Wakeup**: The agent invokes `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC`. This runs in sub-4ms, aggregates Layer 1 context (`context/soul.md`, `context/memory.md`, `context/user.md`), and compiles the hot `.agent/learning/guardian_boot_digest.md`.
+3. **Progressive Disclosure**: When querying project knowledge, agents invoke `managing-sovereign-memory/scripts/disclose.py`:
+   - **Tier 1 (Index / Overview)**: Top-level table of contents and concept map (~500 tokens).
+   - **Tier 2 (Summaries / Ledgers)**: Distilled bullet points from `chronicle/ledger.json` and dossier executive summaries (~2K tokens).
+   - **Tier 3 (Deep Dossier)**: Reads specific markdown sections only when actively needed for implementation.
+4. **Zero Vector DB Overhead**: By relying on clean markdown structures, wikilink graph traversal (`query_graph.py`), and indexed JSON ledgers, Sanctuary eliminates the CPU, latency, and dependency bloat of local vector databases.
 
 ---
 
@@ -155,25 +164,45 @@ Engineering tasks are orchestrated across diverse AI agents and local sovereign 
      - **Local Sovereign Weights (`Sanctuary-Qwen2-7B-v1.0` GGUF)**: Privacy-preserving local execution via Ollama or llama-server.
 3. **Shared Cognitive State**:
    - All agents boot from Layer 1 runtime context (`context/soul.md`, `context/memory.md`), preventing cross-agent dissonance.
-   - All agents write permanent insights to Layer 2 (`wiki/`) using asymmetric persistence (insights are never rolled back).
+   - All agents write permanent insights to Layer 2 (`LEARNING/`) using asymmetric persistence (insights are never rolled back even if code commits are reverted).
 
 ---
 
-## 7. End-to-End Cognitive Continuity & Soul Persistence Pipeline
+## 7. End-to-End Cross-Session & Off-Box Continuity Pipeline
 
-Instead of the brittle, heavyweight containerized stacks of the past (15 MCP servers, Docker daemons, reflection tool caches), Sanctuary provides an efficient, closed-loop persistence pipeline:
+To prevent amnesia across reboots, workspace resets, and multi-machine environments, Sanctuary preserves state across three interconnected persistent layers:
 
 ```mermaid
-flowchart LR
-    Boot["1. Fast Boot<br/>(context/ &lt; 5ms)"] --> Exec["2. Execution<br/>(orchestrating-agent-work &amp; cli-agent)"]
-    Exec --> LocalStore["3. Local Persist<br/>(wiki/ &amp; chronicle/ledger.json)"]
-    LocalStore --> Seal["4. Guardian Seal<br/>(preserving-soul-traces)"]
-    Seal --> RemoteHF["5. Remote Sync<br/>(managing-huggingface-assets)"]
-    RemoteHF --> Forge["6. Sovereign Forge<br/>(forging-sovereign-models)"]
-    Forge -.->|Local Weights| Boot
+flowchart TD
+    subgraph LocalMachine["1. Local Workstation (Private Execution)"]
+        Boot["Fast Boot<br/>(context/ &lt; 5ms)"] --> Exec["Autonomous Task Execution<br/>(Antigravity / Claude / Codex)"]
+        Exec --> AsymPersist["Asymmetric Persistence<br/>(record_insight.py -> context/memory.md &amp; LEARNING/)"]
+        Exec --> ChronLedger["Chronicle Journaling<br/>(chronicle_manager.py -> chronicle/entries/ &amp; ledger.json)"]
+    end
+
+    subgraph GitHubCommons["2. GitHub Repository (Code & Governance Continuity)"]
+        Branch["Feature Branch<br/>(feat/*)"] --> HumanGate{"Human Gate<br/>('Proceed')"}
+        HumanGate --> GitCommit["Atomic Commit &amp; PR Review"]
+        GitCommit --> MergeMain["Main Branch (Clean Production)"]
+        NoteGit["Note: .agents/, .claude/, .codex/ are untracked.<br/>Only .agent/ rules are committed."]
+    end
+
+    subgraph HuggingFaceCommons["3. Hugging Face Hub (Soul Dataset Continuity)"]
+        SealSession["Protocol 128 Seal<br/>(trace_extractor.py)"] --> JSONL["Immutable Soul Traces<br/>(huggingface/data/soul_traces.jsonl)"]
+        JSONL --> HFUpload["Dataset Sync via managing-huggingface-assets<br/>(richfrem/Project_Sanctuary_Soul)"]
+        HFUpload --> ModelForge["Local Model Fine-Tuning<br/>(forging-sovereign-models -> GGUF weights)"]
+    end
+
+    LocalMachine -->|Git mutations on feature branches| GitHubCommons
+    LocalMachine -->|Session closure &amp; trace extraction| HuggingFaceCommons
+    ModelForge -.->|Offline sovereign execution| LocalMachine
 ```
 
-- **Local Summaries via `managing-rlm-cache`**: Hot O(1) file summaries in `.agent/learning/rlm_summary_cache.json` and Living Chronicle summaries in `chronicle/ledger.json` eliminate whole-file reading overhead.
+- **Local Summaries via `managing-rlm-cache` & `chronicle/ledger.json`**: Sub-5ms index lookups eliminate full-file context loading.
+- **Git & GitHub Discipline**:
+  - All modifications occur in feature branches (`feat/*`).
+  - Code mutations require explicit human gate approval ("Proceed", "Go", "Execute").
+  - Machine-local harnesses (`.agents/`, `.claude/`, `.codex/`, `apm_modules/`) remain untracked in `.gitignore`. Only `.agent/` is tracked in git.
 - **Off-Box Soul Sync via `managing-huggingface-assets`**: Automated upload of `huggingface/data/soul_traces.jsonl` to Hugging Face Hub guarantees complete disaster recovery across machine resets.
 - **Sovereign Model Inoculation via `forging-sovereign-models`**: Soul traces serve as the fine-tuning genome for local QLoRA training and GGUF quantization, bringing learned wisdom directly into local model weights.
 

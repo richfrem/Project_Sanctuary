@@ -224,6 +224,7 @@ LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 .amazonq/
 #.github/copilot/
 .kittify/.dashboard
+.agents/
 .claude/
 .windsurf/
 .gemini/
