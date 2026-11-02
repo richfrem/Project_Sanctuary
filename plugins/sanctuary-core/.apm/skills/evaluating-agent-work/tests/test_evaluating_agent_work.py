@@ -16,6 +16,7 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 import score_contribution
 import track_budget
 import visualize_economy
+import evaluate_dispatch
 
 
 class TestEvaluatingAgentWork(unittest.TestCase):
@@ -79,6 +80,19 @@ class TestEvaluatingAgentWork(unittest.TestCase):
 
         bar_zero = visualize_economy.render_bar(0.0, 1.0, 10)
         self.assertEqual(bar_zero, "░░░░░░░░░░")
+
+    def test_pre_delegation_evaluation(self):
+        model_info = evaluate_dispatch.get_model_tier("gpt-6-astra")
+        self.assertEqual(model_info["tier"], "frontier")
+
+        res_ok = evaluate_dispatch.evaluate_investment(
+            hypothesis="File based writes produce race conditions in concurrent execution loops",
+            falsification="Running ten concurrent writes results in zero lost updates or file errors",
+            model_info=model_info,
+            planned_turns=1
+        )
+        self.assertEqual(res_ok["status"], "APPROVED")
+        self.assertTrue(res_ok["is_falsifiable"])
 
 
 if __name__ == "__main__":
