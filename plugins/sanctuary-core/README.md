@@ -20,22 +20,30 @@ sanctuary-core/
         │   ├── SKILL.md
         │   ├── scripts/protocol_manager.py
         │   └── references/
-        └── operating-sanctuary-guardian/
+        ├── operating-sanctuary-guardian/
+        │   ├── SKILL.md
+        │   ├── scripts/
+        │   │   ├── guardian_wakeup.py
+        │   │   ├── capture_snapshot.py
+        │   │   ├── learning_debrief.py
+        │   │   ├── persist_soul.py
+        │   │   └── forge_soul.py
+        │   └── references/
+        └── forging-sovereign-models/
             ├── SKILL.md
             ├── scripts/
-            │   ├── guardian_wakeup.py
-            │   ├── capture_snapshot.py
-            │   ├── learning_debrief.py
-            │   ├── persist_soul.py
-            │   └── forge_soul.py
+            │   ├── verify_ml_environment.py
+            │   ├── forge_dataset_builder.py
+            │   └── generate_modelfile.py
             └── references/
 ```
 
 ## Features
 
-- **`managing-chronicles`**: Comprehensive CRUD and search for the historical project journal (`chronicle/entries/`).
+- **`managing-chronicles`**: Comprehensive CRUD and search for the historical project journal (`chronicle/entries/` and `ledger.json`).
 - **`managing-protocols`**: Formal governance document lifecycle management (`protocols/`).
 - **`operating-sanctuary-guardian`**: Master Protocol 128 lifecycle controller (orientation boot, cognitive onboarding, technical seal verification, learning debrief, and soul persistence).
+- **`forging-sovereign-models`**: Sovereign AI fine-tuning pipeline, Windows WSL2/CUDA runtime recipes, QLoRA execution, GGUF quantization, and Hugging Face artifact publishing.
 
 ## Architecture
 

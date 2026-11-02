@@ -38,6 +38,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 - **Living Chronicle Management**: Use `managing-chronicles` to record, search, or view journal entries.
 - **Protocol Governance**: Use `managing-protocols` to create or transition protocol lifecycle states.
 - **Guardian Lifecycle**: Use `operating-sanctuary-guardian` for Protocol 128 boot orientation, seal, and persistence.
+- **Sovereign Model Forging**: Use `forging-sovereign-models` for fine-tuning, Windows WSL2/CUDA setups, and GGUF quantization.
 - **Multi-Agent Orchestration**: Use global `orchestrating-agent-work` and `cli-agent` for execution topologies.
 - **Persistent Memory & RLM**: Use global `memory-management`, `managing-rlm-cache`, and `managing-obsidian-vaults`.
 - **Hugging Face Commons**: Use global `managing-huggingface-assets` for soul traces dataset synchronization.
