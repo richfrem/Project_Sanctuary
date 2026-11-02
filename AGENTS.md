@@ -11,10 +11,11 @@ Canonical repository assets are organized into dedicated sovereign domains:
 - `protocols/`: Canonized governance doctrines (Protocol 128, 78, 54, etc.).
 - `wiki/`: Compounding Layer 2 knowledge base (`concepts/`, `security/`, `philosophy/`).
 - `context/`: Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`, `kernel.py`).
-- `IDENTITY/` & `forge/`: Constitutional anchors, founder seeds, and fine-tuning pipelines.
+- `huggingface/`: Sovereign soul traces dataset workspace (`data/soul_traces.jsonl`, `metadata/`).
+- `IDENTITY/`: Constitutional anchors and founder seeds.
 - `LEARNING/` & `ADRs/`: Cognitive lineages, research summaries, and Architecture Decision Records.
-- `plugins/sanctuary-core/`: APM-native package providing chronicle, protocol, and guardian skills.
-- `ARCHIVE/`: Preserved historical implementations, old specs, and legacy container scaffolding.
+- `plugins/sanctuary-core/`: APM-native package providing chronicle, protocol, guardian, forge, and soul skills.
+- `ARCHIVE/`: Preserved historical implementations, old specs, forge, and legacy tooling.
 
 ## Core Commands
 

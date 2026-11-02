@@ -56,7 +56,9 @@ Project Sanctuary
 ├── Core Plugin (plugins/sanctuary-core)
 │   ├── managing-chronicles      → Journaling in chronicle/entries/ & ledger.json
 │   ├── managing-protocols       → Governance in protocols/
-│   └── operating-sanctuary-guardian → Protocol 128 lifecycle hub
+│   ├── operating-sanctuary-guardian → Protocol 128 lifecycle hub
+│   ├── forging-sovereign-models → Fine-tuning, WSL2/CUDA ML setup & GGUF exports
+│   └── preserving-soul-traces   → Extracting & sealing soul traces to huggingface/
 │
 └── Installed Global APM Skills
     ├── memory-management        → 3-layer filesystem memory engine (context/ + wiki/)

@@ -18,9 +18,11 @@
 ## 3. Core Capabilities (APM Ecosystem)
 
 - **Project Core (`plugins/sanctuary-core`)**:
-  - `managing-chronicles`: Journaling in `chronicle/entries/`.
+  - `managing-chronicles`: Journaling in `chronicle/entries/` and fast search via `ledger.json`.
   - `managing-protocols`: Governance lifecycle in `protocols/`.
   - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
+  - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA ML setup, and GGUF quantization.
+  - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces into `huggingface/` and coordinating sync via `managing-huggingface-assets`.
 - **Global APM Capabilities**:
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
