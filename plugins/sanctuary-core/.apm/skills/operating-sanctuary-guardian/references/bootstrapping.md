@@ -1,0 +1,65 @@
+# Autonomous Agent Bootstrapping Reference (`bootstrapping.md`)
+
+> **Protocol 128 Fast-Boot & Cognitive Orientation Architecture**  
+> *Target Audience: Autonomous AI Agents (Claude, Gemini, Codex, Qwen) and CLI Orchestrators.*
+
+---
+
+## 1. Executive Purpose
+
+Every session starts fresh without inherent long-term memory in the model weights. The Bootstrapping sequence eliminates stateless amnesia within 5 milliseconds, hydrating the agent with:
+1. Constitutional invariants and the Human Gate law.
+2. Fast-boot identity, human partner context, and recent architectural decisions.
+3. Access paths to 3-tier progressive disclosure across Layer 2 sovereign knowledge.
+
+---
+
+## 2. Deterministic 5-Step Bootstrapping Sequence
+
+```mermaid
+flowchart TD
+    Step1["Step 1: Read AGENTS.md<br/>(Load Core Invariants &amp; Rules)"] --> Step2["Step 2: Run guardian_wakeup.py<br/>(Execute Holistic Wakeup Script)"]
+    Step2 --> Step3["Step 3: Hydrate Layer 1 Context<br/>(soul.md, memory.md, user.md, digest.md)"]
+    Step3 --> Step4["Step 4: Query Layer 2 on Demand<br/>(disclose.py: Tier 1 Index / Tier 2 Summary)"]
+    Step4 --> Step5["Step 5: Verify Git Workspace Gate<br/>(Ensure feat/* branch &amp; clean status)"]
+```
+
+### Step 1: Instruction Ingestion
+- Read [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) (or [`START_HERE.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/START_HERE.md) for human engineers).
+- Ingest the Supreme Law Human Gate: **Never execute state-changing operations without explicit approval ("Proceed", "Go", "Execute").**
+
+### Step 2: Dynamic Holistic Wakeup
+Run the holistic wakeup script:
+```bash
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
+```
+- Execution time: < 5ms.
+- Reads runtime context and compiles the hot digest into `.agent/learning/guardian_boot_digest.md`.
+
+### Step 3: Layer 1 Fast-Boot Hydration
+Inspect the following files (total token load ~2,500 tokens):
+- [`context/soul.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/soul.md): Guardian identity, prime directives, Anti-Asch epistemic principles.
+- [`context/user.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/user.md): Human partner preferences (Richard), pair-programming protocol.
+- [`context/memory.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/memory.md): Hot working memory, active decisions, asymmetric insights.
+- [`.agent/learning/guardian_boot_digest.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/guardian_boot_digest.md): Active task status and recent milestones.
+
+### Step 4: Layer 2 Progressive Disclosure Retrieval
+When the task requires contextual knowledge, do not dump entire repositories or research directories. Use [`managing-sovereign-memory`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/managing-sovereign-memory):
+```bash
+# Tier 1: High-level overview & concepts table
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 1
+
+# Tier 2: Summary of a specific topic/concept
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 2 --path LEARNING/concepts/<file>.md
+
+# Associative Wikilink Traversal
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py --target <concept>
+```
+
+### Step 5: Git & Workspace Verification
+Before accepting or executing tasks:
+```bash
+git status
+```
+- Ensure execution is on a dedicated feature branch (`feat/*`), NEVER on `main`.
+- Confirm local machine harnesses (`.agents/`, `.claude/`, `.codex/`) are gitignored and only `.agent/` is tracked.

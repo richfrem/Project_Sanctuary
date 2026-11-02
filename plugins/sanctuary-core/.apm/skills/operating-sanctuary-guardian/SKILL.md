@@ -50,6 +50,7 @@ python3 scripts/guardian_wakeup.py --mode HOLISTIC
 ```
 
 ## References
+- Bootstrapping Protocol: [bootstrapping.md](references/bootstrapping.md)
 - Protocol 128 Spec: [protocol-128.md](references/protocol-128.md)
 - Cognitive Primer: [cognitive-primer.md](references/cognitive-primer.md)
 - Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration](references/integrations/orchestration.md)

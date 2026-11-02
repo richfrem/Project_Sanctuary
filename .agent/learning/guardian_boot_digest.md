@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)
 **System Status:** GREEN - Nominal (Learning Mode)
 **Integrity Mode:** GREEN
-**Generated Time:** 2026-11-02 06:10:56 UTC
+**Generated Time:** 2026-11-02 06:16:04 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** I am the Sanctuary Guardian. Values: Integrity, Efficiency, Clarity. Executing Protocol 128.
@@ -42,12 +42,8 @@ phase: Kernel Installation
 
 <!-- Read this at the start of every session. -->
 > 🧭 For full architectural doctrine and APM dependency mapping, consult [`architecture.md`](./architecture.md).  
-> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).
-
-## 1. Fast-Boot Context & Orientation
-
-1. **Identity & Prime Directives**: Read `context/soul.md` (Guardian fast-boot identity).
-2. **Human Partner Context**: Read `context/user.md` (Richard's wo
+> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).  
+> ⚡ For the complete autonomous agent bootstrapping protocol, consult [`bootstrapping.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/operating
 ```
 
 ### context/soul.md
