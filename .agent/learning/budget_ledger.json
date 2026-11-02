@@ -1,17 +1,33 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-02T06:59:04.174253+00:00",
-  "total_tokens_consumed": 55658,
-  "total_turns": 1,
+  "updated_at": "2026-11-02T14:48:50.313151+00:00",
+  "total_tokens_consumed": 97986,
+  "total_turns": 2,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
       "turns": 1,
       "last_backend": "codex",
       "last_model": "gpt-6-astra"
+    },
+    "task-bot-handoff-playbook": {
+      "tokens_consumed": 42328,
+      "turns": 1,
+      "last_backend": "codex",
+      "last_model": "default"
     }
   },
   "recent_records": [
+    {
+      "record_id": "6ef32fd4-c2db-4bb8-b1bb-9f12faacfcb6",
+      "timestamp": "2026-11-02T14:48:50.313183+00:00",
+      "task_id": "task-bot-handoff-playbook",
+      "backend": "codex",
+      "model": "default",
+      "tokens_est": 42328,
+      "turns": 1,
+      "summary": ""
+    },
     {
       "record_id": "5750b1dd-f90b-4ad5-bd30-10573f585a76",
       "timestamp": "2026-11-02T06:59:04.174304+00:00",

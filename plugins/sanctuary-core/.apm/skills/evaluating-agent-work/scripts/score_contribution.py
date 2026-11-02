@@ -40,17 +40,40 @@ def get_project_root() -> Path:
 
 
 MODEL_COST_WEIGHTS = {
+    # Frontier models (4.0x - 4.5x)
     "gpt-6-astra": 4.0,
-    "claude-3-opus": 4.0,
+    "astra": 4.0,
+    "claude-opus": 4.0,
+    "opus": 4.0,
+    "claude-fable": 4.5,
+    "fable": 4.5,
+    "gemini-4": 4.0,
     "o1": 3.5,
     "o3": 4.0,
-    "claude-3-5-sonnet": 1.0,
+
+    # Standard models (1.0x - 1.5x)
+    "gpt-6.1-sol": 1.5,
+    "sol": 1.5,
+    "gpt-6-luna": 1.0,
+    "luna": 1.0,
+    "claude-sonnet": 1.0,
+    "sonnet": 1.0,
+    "gemini-pro": 1.0,
+    "pro": 1.0,
     "gpt-4o": 1.0,
-    "gemini-1.5-pro": 1.0,
+
+    # Cheap models (0.1x - 0.2x)
     "claude-3-5-haiku": 0.2,
+    "claude-haiku": 0.2,
+    "haiku": 0.2,
+    "gemini-3.8-flash": 0.1,
+    "gemini-flash": 0.1,
+    "flash": 0.1,
     "gpt-4o-mini": 0.15,
-    "gemini-1.5-flash": 0.1,
-    "local-llama": 0.05
+    "mini": 0.15,
+    "local-llama": 0.05,
+    "llama": 0.05,
+    "qwen": 0.05
 }
 
 
