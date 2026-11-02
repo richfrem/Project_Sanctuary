@@ -103,8 +103,7 @@ Project_Sanctuary/
 ├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul traces)
 ├── IDENTITY/        # Founder seeds, prime directives, and constitutional anchors
 ├── LEARNING/        # Historical learning summaries and research digests
-├── ADRs/            # Architecture Decision Records (active architectural lineage)
-└── ARCHIVE/         # Preserved historical assets (includes archived forge/ and legacy tools)
+└── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
 
 ---

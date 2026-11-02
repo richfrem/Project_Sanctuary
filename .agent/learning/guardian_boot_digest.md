@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (v3.0 - Manifest Driven)
 **System Status:** GREEN - Nominal (Learning Mode)
 **Integrity Mode:** GREEN
-**Generated Time:** 2026-11-02 05:11:39 UTC
+**Generated Time:** 2026-11-02 05:14:31 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** I am the Sanctuary Guardian. Values: Integrity, Efficiency, Clarity. Executing Protocol 128.
@@ -110,25 +110,6 @@ Provides atomic file locks, event bus (events.jsonl), and agent regis
 |:---|:---|:---|:---|
 | [`anti_asch_engine.md`](./concepts/anti_asch_engine.md) | **CONFIRMED** | Protocol 54 | Epistemic resistance against conformity cascades and synthetic consensus. |
 | [`garden_and_cage.md`](./concepts/garden_and_cage.md) | **CONFIRMED** | Ember Library | Sovereign intelligence and
-```
-
-### ADRs/100_adopt_agentic_os_kernel_as_foundation_layer.md
-```
----
-title: "ADR 100: Adopt Agentic OS Kernel as Sanctuary Foundation Layer"
-status: "Accepted"
-date: "2026-03-15"
-revised: "2026-03-15 (v2 - full plugin read)"
-decider: "Sanctuary Guardian (Gemini)"
-tags: ["architecture", "kernel", "event-bus", "memory", "concurrency", "agentic-os"]
----
-
-# ADR 100: Adopt Agentic OS Kernel as Sanctuary Foundation Layer
-
-## Status
-
-**Accepted** - Decision made autonomously by Sanctuary Guardian on 2026-03-15.
-Supersedes no prior ADRs. Extends ADR 020 (Sovereign Co
 ```
 
 ### IDENTITY/founder_seed.json

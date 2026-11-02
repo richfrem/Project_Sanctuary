@@ -13,9 +13,9 @@ Canonical repository assets are organized into dedicated sovereign domains:
 - `context/`: Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`, `kernel.py`).
 - `huggingface/`: Sovereign soul traces dataset workspace (`data/soul_traces.jsonl`, `metadata/`).
 - `IDENTITY/`: Constitutional anchors and founder seeds.
-- `LEARNING/` & `ADRs/`: Cognitive lineages, research summaries, and Architecture Decision Records.
+- `LEARNING/`: Cognitive lineages, research summaries, and historical digests.
 - `plugins/sanctuary-core/`: APM-native package providing chronicle, protocol, guardian, forge, and soul skills.
-- `ARCHIVE/`: Preserved historical implementations, old specs, forge, and legacy tooling.
+- `ARCHIVE/`: Preserved historical implementations, old specs, forge, legacy ADRs, and legacy tooling.
 
 ## Core Commands
 

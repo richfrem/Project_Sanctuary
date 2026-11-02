@@ -94,12 +94,11 @@ Project_Sanctuary/
 ├── protocols/                # Canonized governance doctrines (P128, P78, P54, etc.)
 ├── wiki/                     # Compounding Layer 2 knowledge base (concepts/, security/, philosophy/)
 ├── context/                  # Fast-boot runtime context (soul.md, user.md, memory.md, kernel.py)
-├── ADRs/                     # Architecture Decision Records (institutional memory)
 ├── IDENTITY/                 # Constitutional anchors and founder seeds
 ├── LEARNING/                 # Cognitive lineages and research digests
 ├── huggingface/              # Sovereign soul traces dataset workspace (richfrem/Project_Sanctuary_Soul)
 ├── plugins/sanctuary-core/   # APM-native package providing chronicle, protocol, guardian, forge, and soul skills
-└── ARCHIVE/                  # Preserved historical implementations, old specs, forge, and legacy tooling
+└── ARCHIVE/                  # Preserved historical implementations, old specs, forge, legacy ADRs, and tooling
 ```
 
 ---
