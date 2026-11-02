@@ -1,12 +1,7 @@
-# Spec Kitty Configuration and Templates
-# These are internal directories that shouldn't be scanned by AI assistants
+# Historical Archive
+ARCHIVE/
 
-# Template directories (not working code)
-.kittify/templates/
-.kittify/missions/
-.kittify/scripts/
-
-# Agent command directories (generated from templates, not source)
+# Agent configuration directories (generated or platform-specific)
 .claude/
 .codex/
 .gemini/
@@ -18,7 +13,7 @@
 .augment/
 .roo/
 .amazonq/
-.github/copilot/
+.github/
 
 # Git metadata
 .git/
@@ -56,3 +51,4 @@ desktop.ini
 *.log
 *.db
 *.sqlite
+.vector_data/

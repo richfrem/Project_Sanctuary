@@ -5,19 +5,19 @@ The Obsidian Vault root is the `Project_Sanctuary/` repository itself.
 All agents discover this path via the `SANCTUARY_VAULT_PATH` environment variable.
 If unset, it defaults to the Git repository root.
 
-## Indexed Directories (Human-Authored Knowledge)
-These directories contain human-authored markdown and are fully indexed by Obsidian:
+## Indexed Directories (Canonical Knowledge)
+These directories contain sovereign knowledge, memory, and governance:
 
 | Directory | Content |
 |:----------|:--------|
 | `00_CHRONICLE/` | Living journal entries |
 | `01_PROTOCOLS/` | Governance protocols and doctrines |
-| `.agent/learning/cognitive_primer.md` | Role orientation |
-| `.agent/learning/guardian_boot_contract.md` | Immutable constraints |
+| `04_THE_FORTRESS/` | Autonomous security doctrines |
+| `05_LIVING_CHRONICLE/` | Live episodic memory state |
+| `06_THE_EMBER_LIBRARY/` | Sacred philosophy and cognitive genome |
 | `ADRs/` | Architecture Decision Records |
-| `docs/` | Operational and architecture documentation |
-| `plugins/*/skills/*/SKILL.md` | Skill instruction files |
-| `kitty-specs/` | Feature specifications |
+| `IDENTITY/` | Constitutional anchors and founder seeds |
+| `plugins/sanctuary-core/` | Core skills and reference documentation |
 
 ## Excluded from Indexing
 The following must be added to `.obsidian/app.json` under `"userIgnoreFilters"`:
@@ -25,11 +25,12 @@ The following must be added to `.obsidian/app.json` under `"userIgnoreFilters"`:
 ```json
 {
   "userIgnoreFilters": [
+    "ARCHIVE/",
     "node_modules/",
     ".worktrees/",
     ".vector_data/",
     ".git/",
-    "venv/",
+    ".venv/",
     "__pycache__/",
     "*.json",
     "*.jsonl",
@@ -47,23 +48,23 @@ The following must be added to `.obsidian/app.json` under `"userIgnoreFilters"`:
 
 ### Why These Are Excluded
 
-**Machine-generated bundles** (outputs of bundler/distiller scripts):
+**Machine-generated bundles & Historical Archives**:
+- `ARCHIVE/` — historical implementations, legacy code, and archived container documentation
 - `learning_package_snapshot.md` — concatenated from `learning_manifest.json`
 - `bootstrap_packet.md` — onboarding context bundle
 - `learning_debrief.md` — session debrief bundle
 - `*_packet.md` — red team and audit bundles
 - `*_digest.md` — guardian context bundles
 
-These are giant concatenated snapshots. Indexing them would pollute the Obsidian graph with thousands of false backlinks pointing into machine-generated text.
+These are giant concatenated snapshots or archives. Indexing them would pollute the Obsidian graph with thousands of false backlinks pointing into historical or machine-generated text.
 
 **Data files** (not markdown knowledge):
 - `*.json` — manifests, caches, configs
 - `*.jsonl` — HuggingFace soul traces
 - `dataset_package/` — export artifacts
 
-## Downstream Plugin Impact
-The following plugins reference vault paths and should use `SANCTUARY_VAULT_PATH`:
-- `chronicle-manager` — writes to `00_CHRONICLE/`
-- `protocol-manager` — writes to `01_PROTOCOLS/`
-- `guardian-onboarding` — reads `.agent/learning/`
-- `spec-kitty-plugin` — reads/writes `kitty-specs/`
+## Downstream Core Skills
+The following core skills in `plugins/sanctuary-core` reference vault paths:
+- `managing-chronicles` — reads and writes to `00_CHRONICLE/`
+- `managing-protocols` — reads and transitions `01_PROTOCOLS/`
+- `operating-sanctuary-guardian` — operates Protocol 128 lifecycle

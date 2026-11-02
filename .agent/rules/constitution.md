@@ -2,68 +2,64 @@
 trigger: always_on
 ---
 
-# Project Ecosystem Constitution V4
+# Project Ecosystem Constitution V5
 
 > **THE SUPREME LAW: HUMAN GATE**
 > You MUST NOT execute ANY state-changing operation without EXPLICIT user approval.
 > "Sounds good" is NOT approval. Only "Proceed", "Go", "Execute" is approval.
 > **VIOLATION = SYSTEM FAILURE**
 
-## I. The Spec-Driven Workflow (Project Purpose)
-All significant work MUST follow the **Spec-Driven Development (SDD) lifecycle**.
-Start with `/spec-kitty.specify` for new features.
+## I. Sovereign Engineering Lifecycle (Protocol 128)
+All engineering, architectural, and memory operations follow the **Protocol 128 Lifecycle**:
 
-### Workflow Hierarchy
 ```
-/spec-kitty.specify   -> spec.md
-/spec-kitty.plan      -> plan.md
-/spec-kitty.tasks     -> tasks/ (work packages)
-/spec-kitty.implement -> isolated worktree per WP
-/spec-kitty.review    -> for_review -> done
-/spec-kitty.accept    -> feature acceptance
-/spec-kitty.merge     -> merge + cleanup
+Boot Orientation  -> Sovereign Execution -> Retrospective -> Technical Seal -> Soul Persistence
+(START_HERE.md)      (APM Skills)           (Friction Log)   (Guardian Seal)  (Hugging Face)
 ```
 
-- **Track A (Factory)**: Deterministic tasks - auto-generated Spec/Plan/Tasks -> Execute.
-- **Track B (Discovery)**: Ambiguous/creative work - full SDD lifecycle.
-- **Track C (Micro-Task)**: Trivial fixes - direct execution, no spec needed.
+- **Track A (Deterministic)**: Standard skill/script executions and autonomous verification gates.
+- **Track B (Exploratory)**: Deep architectural research, ADR drafting, and protocol evolution.
+- **Track C (Micro-Fix)**: Direct localized fixes with immediate pre-completion gating.
 
 ## II. Zero Trust (Git & Execution)
 - **NEVER** commit directly to `main`. **ALWAYS** use a feature branch.
-- **NEVER** run `git push` without explicit, fresh approval.
-- **NEVER** "auto-fix" via git.
-- **HALT** on any user "Stop/Wait" command immediately.
+- **NEVER** run `git push` without fresh, explicit human instruction.
+- **NEVER** "auto-fix" via git without approval.
+- **HALT** immediately on any user "Stop/Wait" instruction.
 
 ### Defined: State-Changing Operation
 Any operation that:
-1. Writes to disk (except /tmp/)
-2. Modifies version control (git add/commit/push)
-3. Executes external commands with side effects
+1. Writes to disk (except `/tmp/`)
+2. Modifies version control (`git add` / `git commit` / `git push`)
+3. Executes external commands with mutating side effects
 **REQUIRES EXPLICIT APPROVAL ("Proceed", "Go", "Execute").**
 
-## III. Tool Discovery & Usage
-- **NEVER** use `grep` / `find` / `ls -R` for tool discovery.
-- **ALWAYS** use defined **Slash Commands** (`/spec-kitty.*`) over raw scripts.
-- **ALWAYS** use `spec-kitty-cli` for SDD lifecycle operations.
-- **ALWAYS** use the `task_manager.py` CLI for kanban lane transitions.
+## III. Capabilities & APM Discovery
+- Capabilities MUST be executed through active installed APM skills or `plugins/sanctuary-core`.
+- **Core Package (`plugins/sanctuary-core`)**:
+  - `managing-chronicles`: Journaling in `00_CHRONICLE/ENTRIES/`.
+  - `managing-protocols`: Governance transitions in `01_PROTOCOLS/`.
+  - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
+- **Global APM Capabilities**:
+  - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
+  - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
+  - Model & Dataset Sync: `managing-huggingface-assets`.
 
-## IV. Governing Law (The Tiers)
+## IV. Epistemic Integrity & Truth Sovereignty
+- If doctrine conflicts with observed reality or system integrity, surface the contradiction immediately for human review.
+- Never fake tool execution or simulate results.
 
-### Tier 1: PROCESS (Deterministic)
-| Policy | Purpose |
-|:-------|:--------|
-| `rules/spec_driven_development_policy.md` | **Lifecycle**: Spec -> Plan -> Tasks |
-| `references/standard-workflow-rules.md` | **Worktree Protocol**: Branch & merge rules |
+## V. Session Closure Mandate
+Before claiming any task complete, execute the canonical Pre-Completion Verification Gate:
 
-### Tier 2: TECHNICAL (Standards)
-| Policy | Purpose |
-|:-------|:--------|
-| Coding conventions | Per language standards (snake_case, camelCase, PascalCase) |
-| Dependency management | pip-compile locked-file workflow |
+```
+PRE-COMPLETION GATE:
+  Capability check: Did I verify whether an existing repo capability was intended for this task? [YES/NO]
+  1. Did any existing capability fail, get bypassed, or get manually replaced?  [YES/NO - 1 line if YES]
+  2. Did I guess, assume, or get corrected on a repeatable process?              [YES/NO - 1 line if YES]
+  3. Did I notice something the next agent will hit again if not fixed?          [YES/NO - 1 line if YES]
 
-## V. Session Closure (Mandate)
-- **ALWAYS** run `/spec-kitty.accept` then `/spec-kitty.merge` at feature completion.
-- **NEVER** abandon a feature without acceptance + retrospective.
-- **RLM sync**: Run distill after merge to update the semantic cache.
+If any YES: action taken -> FIX / MAP_DEBT / ESCALATE
+```
 
-**Version**: 4.0 | **Ratified**: 2026-03-05
+**Version**: 5.0 | **Ratified**: 2026-11-01
