@@ -52,3 +52,33 @@ python3 /Users/richardfremmerlid/.gemini/antigravity-cli/skills/cli-agent/script
 
 ## 3. Post-Condition Verification
 Examine `<output_file>` to ensure the review completed successfully without simulated or synthetic claims.
+
+## 4. Post-Dispatch Evaluation & Metering
+After the subagent finishes, evaluate the output against value and token cost using `evaluating-agent-work`:
+
+```bash
+# Step 1: Record tokens consumed against the Human Partner's subscription quota
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/track_budget.py record \
+  --task-id <task-id> \
+  --backend <backend> \
+  --model <model> \
+  --tokens-est <tokens> \
+  --turns 1 \
+  --summary "Peer review of <topic>"
+
+# Step 2: Score cognitive contribution across 5 dimensions with model-cost weighting
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py \
+  --task-id <task-id> \
+  --agent-id <agent-id> \
+  --model <model> \
+  --useful-outcome <0-3> \
+  --learning-depth <0-3> \
+  --verification-rigor <0-3> \
+  --token-economy <0-3> \
+  --anti-asch-integrity <0-3> \
+  --evidence-refs <output_file> \
+  --notes "Detailed review assessment"
+```
+
+> [!WARNING]
+> Expensive models (e.g. `gpt-6-astra`, weight 4.0x) that produce bloated or low-value output are heavily penalized in `cost_adjusted_roi` and trigger a `BLOATED_OUTPUT_WARNING`. Prefer fast, cheap models (e.g. Haiku, Flash) for broad exploration and reserve frontier models for high-complexity architectural decisions.

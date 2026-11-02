@@ -84,6 +84,9 @@ python3 plugins/sanctuary-core/.apm/skills/managing-chronicles/scripts/chronicle
 
 # Protocol governance inspection
 python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_manager.py list --limit 5
+
+# Cognitive economy & agent evaluation dashboard
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visualize_economy.py --mode dashboard
 ```
 
 ---

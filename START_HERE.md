@@ -33,7 +33,7 @@ Every session follows the deterministic 5-step bootstrapping sequence (detailed 
   - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA ML setup, and GGUF quantization.
   - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces into `huggingface/` and coordinating sync via `managing-huggingface-assets`.
   - `managing-sovereign-memory`: Progressive disclosure (index/summary/deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric friction persistence across git rollbacks, 30-day confidence decay, and associative graph traversal.
-  - `evaluating-agent-work`: Multi-dimensional cognitive value scoring, real-world subscription token budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), and RL value analytics.
+  - `evaluating-agent-work`: Multi-dimensional cognitive value scoring, real-world subscription token budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), model cost-tier evaluation (cheap vs expensive models), and RL value analytics.
 - **Global APM Capabilities**:
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.

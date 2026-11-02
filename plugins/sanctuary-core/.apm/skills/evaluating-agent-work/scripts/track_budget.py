@@ -50,6 +50,33 @@ BUDGET_PROFILES = {
     }
 }
 
+MODEL_COST_TIERS = {
+    # Frontier / Expensive models: High token weight, demands high cognitive yield
+    "gpt-6-astra": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Codex Astra (Heavy Reasoning)"},
+    "claude-3-opus": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Claude Opus"},
+    "o1": {"tier": "frontier", "weight": 3.5, "desc": "OpenAI o1 Reasoning"},
+    "o3": {"tier": "frontier", "weight": 4.0, "desc": "OpenAI o3 Reasoning"},
+    
+    # Standard models
+    "claude-3-5-sonnet": {"tier": "standard", "weight": 1.0, "desc": "Standard Claude Sonnet"},
+    "gpt-4o": {"tier": "standard", "weight": 1.0, "desc": "Standard GPT-4o"},
+    "gemini-1.5-pro": {"tier": "standard", "weight": 1.0, "desc": "Standard Gemini Pro"},
+    
+    # Cheap / High-efficiency models: Low cost, high ROI potential
+    "claude-3-5-haiku": {"tier": "cheap", "weight": 0.2, "desc": "Fast & Cheap Haiku"},
+    "gpt-4o-mini": {"tier": "cheap", "weight": 0.15, "desc": "Fast & Cheap Mini"},
+    "gemini-1.5-flash": {"tier": "cheap", "weight": 0.1, "desc": "Fast & Cheap Flash"},
+    "local-llama": {"tier": "free", "weight": 0.05, "desc": "Local Offline LLM"}
+}
+
+
+def get_model_tier(model_name: str) -> dict:
+    clean = model_name.lower().strip()
+    for k, v in MODEL_COST_TIERS.items():
+        if k in clean or clean in k:
+            return v
+    return {"tier": "standard", "weight": 1.0, "desc": f"Standard ({model_name})"}
+
 
 def get_project_root() -> Path:
     current = Path(__file__).resolve()

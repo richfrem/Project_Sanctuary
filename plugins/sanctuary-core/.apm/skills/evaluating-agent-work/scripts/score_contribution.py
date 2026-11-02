@@ -39,6 +39,29 @@ def get_project_root() -> Path:
     return Path.cwd()
 
 
+MODEL_COST_WEIGHTS = {
+    "gpt-6-astra": 4.0,
+    "claude-3-opus": 4.0,
+    "o1": 3.5,
+    "o3": 4.0,
+    "claude-3-5-sonnet": 1.0,
+    "gpt-4o": 1.0,
+    "gemini-1.5-pro": 1.0,
+    "claude-3-5-haiku": 0.2,
+    "gpt-4o-mini": 0.15,
+    "gemini-1.5-flash": 0.1,
+    "local-llama": 0.05
+}
+
+
+def get_model_cost_weight(model_name: str) -> float:
+    clean = model_name.lower().strip()
+    for k, w in MODEL_COST_WEIGHTS.items():
+        if k in clean or clean in k:
+            return w
+    return 1.0
+
+
 def update_ledger_projection(root: Path, assessment: dict) -> Path:
     ledger_path = root / ".agent" / "learning" / "cognitive_ledger.json"
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
@@ -113,6 +136,7 @@ def main():
     parser = argparse.ArgumentParser(description="Multi-Dimensional Cognitive Contribution Scorer")
     parser.add_argument("--task-id", required=True, help="Task identifier")
     parser.add_argument("--agent-id", default="autonomous-agent", help="Agent identifier (astra, antigravity, claude)")
+    parser.add_argument("--model", default="standard", help="Model name used (e.g. gpt-6-astra, haiku, sonnet)")
     parser.add_argument("--useful-outcome", type=int, choices=[0, 1, 2, 3], required=True, help="Useful outcome rating (0-3)")
     parser.add_argument("--learning-depth", type=int, choices=[0, 1, 2, 3], required=True, help="Learning depth rating (0-3)")
     parser.add_argument("--verification-rigor", type=int, choices=[0, 1, 2, 3], required=True, help="Verification rigor rating (0-3)")
@@ -139,6 +163,13 @@ def main():
     raw_score = sum(dimensions.values())
     cognitive_fitness = round(raw_score / 15.0, 3)
 
+    model_weight = get_model_cost_weight(args.model)
+    cost_adjusted_roi = round(cognitive_fitness / model_weight, 3)
+
+    bloat_warning = None
+    if model_weight >= 3.0 and (args.token_economy <= 1 or args.useful_outcome <= 1):
+        bloat_warning = f"CRITICAL: Expensive model '{args.model}' (weight {model_weight}x) produced bloated/low-value output without advancing core objectives."
+
     evidence_list = [e.strip() for e in args.evidence_refs.split(",") if e.strip()]
 
     assessment = {
@@ -148,11 +179,15 @@ def main():
         "event_type": "CONTRIBUTION_ASSESSED",
         "task_id": args.task_id,
         "agent_id": args.agent_id,
+        "model": args.model,
+        "model_cost_weight": model_weight,
         "assessor": args.assessor,
         "dimensions": dimensions,
         "raw_score": raw_score,
         "max_score": 15,
         "cognitive_fitness": cognitive_fitness,
+        "cost_adjusted_roi": cost_adjusted_roi,
+        "bloat_warning": bloat_warning,
         "evidence_refs": evidence_list,
         "notes": args.notes
     }
@@ -169,16 +204,20 @@ def main():
     if args.format == "json":
         print(json.dumps(assessment, indent=2))
     else:
-        print(f"Scored Contribution for [{args.agent_id}] on Task [{args.task_id}]:")
-        print(f"  Raw Score:        {raw_score} / 15")
-        print(f"  Cognitive Fitness: {cognitive_fitness:.1%} (RL Normalized)")
+        print(f"Scored Contribution for [{args.agent_id}] ({args.model}) on Task [{args.task_id}]:")
+        print(f"  Raw Score:          {raw_score} / 15")
+        print(f"  Cognitive Fitness:   {cognitive_fitness:.1%} (RL Normalized)")
+        print(f"  Model Cost Weight:   {model_weight}x")
+        print(f"  Cost-Adjusted ROI:   {cost_adjusted_roi:.2f}")
+        if bloat_warning:
+            print(f"  [!] {bloat_warning}")
         print(f"  Dimensions:")
         print(f"    - Useful Outcome:        {args.useful_outcome} / 3")
         print(f"    - Learning Depth:        {args.learning_depth} / 3")
         print(f"    - Verification Rigor:    {args.verification_rigor} / 3")
         print(f"    - Token Economy:         {args.token_economy} / 3")
         print(f"    - Anti-Asch Integrity:   {args.anti_asch_integrity} / 3")
-        print(f"  Ledger Updated:    {ledger_file.relative_to(root)}")
+        print(f"  Ledger Updated:      {ledger_file.relative_to(root)}")
 
 
 if __name__ == "__main__":

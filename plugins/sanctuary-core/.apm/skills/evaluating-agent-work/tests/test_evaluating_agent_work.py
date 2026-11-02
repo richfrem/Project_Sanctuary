@@ -64,6 +64,12 @@ class TestEvaluatingAgentWork(unittest.TestCase):
         data, ledger_path = track_budget.load_budget_ledger(self.root)
         self.assertEqual(data["total_tokens_consumed"], 0)
 
+        # Model tier weights
+        astra_weight = score_contribution.get_model_cost_weight("gpt-6-astra")
+        haiku_weight = score_contribution.get_model_cost_weight("claude-3-5-haiku")
+        self.assertEqual(astra_weight, 4.0)
+        self.assertEqual(haiku_weight, 0.2)
+
     def test_render_bar_visualizer(self):
         bar_full = visualize_economy.render_bar(1.0, 1.0, 10)
         self.assertEqual(bar_full, "██████████")
