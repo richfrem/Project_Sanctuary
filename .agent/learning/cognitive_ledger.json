@@ -1,24 +1,38 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-02T06:59:04.268080+00:00",
-  "total_assessments": 1,
-  "cumulative_score": 14,
-  "average_fitness": 0.933,
+  "updated_at": "2026-11-02T14:48:55.884723+00:00",
+  "total_assessments": 2,
+  "cumulative_score": 29,
+  "average_fitness": 0.967,
   "dimension_totals": {
-    "useful_outcome": 3,
-    "learning_depth": 3,
-    "verification_rigor": 3,
-    "token_economy": 2,
-    "anti_asch_integrity": 3
+    "useful_outcome": 6,
+    "learning_depth": 6,
+    "verification_rigor": 6,
+    "token_economy": 5,
+    "anti_asch_integrity": 6
   },
   "agents": {
     "astra": {
       "assessments": 1,
       "cumulative_score": 14,
       "average_fitness": 0.933
+    },
+    "codex-luna": {
+      "assessments": 1,
+      "cumulative_score": 15,
+      "average_fitness": 1.0
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "be5e9d20-e2c3-427f-9f46-d7807df176aa",
+      "timestamp": "2026-11-02T14:48:55.882839+00:00",
+      "task_id": "task-bot-handoff-playbook",
+      "agent_id": "codex-luna",
+      "raw_score": 15,
+      "fitness": 1.0,
+      "notes": "Empirically verified procedural memory playbook authored by Codex gpt-6-luna in 1 turn; zero slop; strict Copilot boundary"
+    },
     {
       "assessment_id": "53e414d9-1a69-407d-be4d-504a7a256de3",
       "timestamp": "2026-11-02T06:59:04.266886+00:00",
