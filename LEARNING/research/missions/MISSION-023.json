@@ -1,0 +1,42 @@
+{
+  "id": "MISSION-023",
+  "title": "Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX",
+  "created_at": "2026-11-03T06:30:00Z",
+  "updated_at": "2026-11-03T06:30:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "Deploying 1.5B/3B lightweight draft models alongside 7B Qwen2.5-Coder via MLX speculative decoding (--draft-model and --num-draft-tokens) will increase generation throughput by >= 1.6x on Apple Silicon unified memory while remaining safely within the 8 GiB memory budget.",
+  "falsification_criteria": "Draft model acceptance rate falls below 50% or combined unified memory footprint causes macOS swap pressure > 1 GiB.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if local speculative decoding encounters memory pressure"
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "speculative-decoding",
+    "draft-model",
+    "throughput-optimization",
+    "apple-mlx",
+    "sovereign-intelligence"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
