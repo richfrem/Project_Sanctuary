@@ -1,12 +1,12 @@
 {
   "id": "MISSION-003",
-  "title": "Offline Sovereign Model Quantization (Qwen2 GGUF)",
+  "title": "Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF",
   "status": "PROPOSED",
   "execution_surface": "local",
-  "target_platform": "Local Ollama / llama.cpp (WSL2/macOS)",
+  "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX (mlx-lm) & Ollama Metal",
   "created_at": "2026-11-02T08:00:00Z",
-  "updated_at": "2026-11-02T08:00:00Z",
-  "confidence_reviewed": "2026-11-02",
+  "updated_at": "2026-11-03T04:10:00Z",
+  "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
     "epistemic_depth": 4,
@@ -15,15 +15,15 @@
     "priority_score": 200.0
   },
   "priority_score": 200.0,
-  "hypothesis": "A 7B local Qwen2 model fine-tuned on soul_traces.jsonl can execute Protocol 128 orientation and basic code reviews offline with 0 API tokens.",
-  "falsification_criteria": "Fine-tuned model hallucinates fake commands or fails basic Anti-Asch sycophancy tests compared to base model.",
+  "hypothesis": "A 4-bit quantized 7B Qwen2 model running natively on Apple Silicon unified memory via Apple MLX (mlx-lm) achieves >= 35 tokens/sec within 6GB RAM on a 16GB M1 MacBook Pro, executing Protocol 128 orientation and basic code reviews offline with 0 API tokens and zero swap thrashing.",
+  "falsification_criteria": "MLX 4-bit model consumes > 8GB unified memory causing macOS system swap, throughput drops below 20 tok/sec, or output hallucinates invalid Protocol 128 commands compared to base weights.",
   "model_routing": {
     "cheapest_viable_tier": "free-local",
-    "recommended_model": "qwen2-7b-gguf",
-    "cli_target": "llama.cpp / ollama",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm / ollama-metal",
     "cost_weight": 0.05,
     "fallback_models": [
-      "local-llama"
+      "qwen2-7b-gguf-q4_k_m"
     ]
   },
   "verdict": null,
@@ -31,10 +31,12 @@
   "issue_ref": null,
   "tags": [
     "qwen2",
+    "apple-silicon-m1",
+    "mlx-lm",
     "gguf",
     "offline-sovereignty",
     "quantization",
-    "fine-tuning"
+    "metal-unified-memory"
   ],
   "evidence": [],
   "lessons_learned": []
