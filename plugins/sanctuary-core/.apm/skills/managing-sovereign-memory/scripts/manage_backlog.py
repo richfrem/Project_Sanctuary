@@ -272,8 +272,11 @@ class BacklogManager:
             if evidence:
                 md_lines.append("- **Empirical Evidence & Trials**:")
                 for ev in evidence:
-                    cit = f" ({ev.get('citation')})" if ev.get("citation") else ""
-                    md_lines.append(f"  * `{ev.get('timestamp', '')}` [{ev.get('agent', 'agent')}]{cit}: {ev.get('details', '')}")
+                    if isinstance(ev, dict):
+                        cit = f" ({ev.get('citation')})" if ev.get("citation") else ""
+                        md_lines.append(f"  * `{ev.get('timestamp', '')}` [{ev.get('agent', 'agent')}]{cit}: {ev.get('details', '')}")
+                    else:
+                        md_lines.append(f"  * {ev}")
 
             lessons = m.get("lessons_learned", [])
             if lessons:
