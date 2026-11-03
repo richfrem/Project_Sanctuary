@@ -36,7 +36,7 @@ python3 scripts/protocol_manager.py search "Protocol 128"
 
 1. **Check Existing Frameworks**: Search `protocols/` to verify if a protocol exists.
 2. **Draft Protocol**: Run `protocol_manager.py create` with title, author, and content.
-3. **Ratification / Lifecycle Update**: Once tested and ratified, update status to `CANONICAL` via `protocol_manager.py update`.
+3. **Ratification / Lifecycle Update**: Once tested and ratified, update status to `CANONICAL` via `protocol_manager.py update N --status CANONICAL --reason "..."` (edits only the Status line in place and adds a one-line change note; all other content is preserved).
 
 ## Verification
 

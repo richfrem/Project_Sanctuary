@@ -239,31 +239,54 @@ def search_protocols(query: str):
             print(f"  {p['number']:03d}  {p['title'][:50]:50}  [{p['status']}]")
 
 
+KNOWN_STATUSES = {"PROPOSED", "CANONICAL", "DEPRECATED", "ACTIVE", "DRAFT", "FOUNDATIONAL", "OPERATIONAL"}
+STATUS_RE = re.compile(r"(\*\*Status:?\*\*:?[ \t]*)([^|\n]*?)([ \t]*(?:\||$))", re.MULTILINE)
+
+
+def _set_status(content: str, status: str, reason: str = "", today: Optional[str] = None) -> str:
+    """Return `content` with only the Status value changed (all other text is preserved byte for byte).
+
+    Handles `**Status:** X`, bullet/blockquote prefixes, and inline forms such as
+    `**Status:** X | **Protocol Class:** Y`. If no Status line exists in the header, one is inserted
+    after the title. A one-line change note is added after the Status line when `reason` is given.
+    """
+    today = today or datetime.now().strftime("%Y-%m-%d")
+    lines = content.split("\n")
+    header_end = min(len(lines), 40)
+    for i in range(header_end):
+        m = STATUS_RE.search(lines[i])
+        if m:
+            old = m.group(2).strip()
+            lines[i] = lines[i][:m.start(2)] + status + lines[i][m.end(2):]
+            insert_at = i + 1
+            break
+    else:
+        old = "(none)"
+        title_idx = next((i for i, l in enumerate(lines) if l.startswith("# ")), -1)
+        lines[title_idx + 1:title_idx + 1] = ["", f"**Status:** {status}"]
+        insert_at = title_idx + 3
+    if reason:
+        lines.insert(insert_at, f"> **Status change ({today}):** {old} -> {status}. {reason}")
+    return "\n".join(lines)
+
+
 def update_protocol(number: int, status: str = None, reason: str = ""):
-    """Update a protocol's status or fields."""
+    """Update a protocol's status in place without re-rendering (or losing) any other content."""
     filepath = _find_protocol_file(PROTOCOL_DIR, number)
     if not filepath:
         print(f"❌ Protocol {number} not found.")
         return
+    if not status:
+        print("Nothing to update: pass --status.")
+        return
 
-    content = filepath.read_text(encoding='utf-8')
-    p = _parse_protocol(content, number)
-
-    if status:
-        p["status"] = status
-
-    linked_line = f"**Linked Protocols:** {p['linked_protocols']}" if p.get("linked_protocols") else ""
-    new_content = PROTOCOL_TEMPLATE.format(
-        number=p["number"], title=p["title"], status=p["status"],
-        classification=p["classification"], version=p["version"],
-        authority=p["authority"], linked_protocols_line=linked_line,
-        content=p["content"]
-    )
-
-    filepath.write_text(new_content, encoding='utf-8')
+    status = status.strip().upper()
+    if status not in KNOWN_STATUSES:
+        print(f"⚠️  '{status}' is not a standard status ({', '.join(sorted(KNOWN_STATUSES))}); applying anyway.")
+    original = filepath.read_text(encoding="utf-8")
+    filepath.write_text(_set_status(original, status, reason), encoding="utf-8")
     print(f"✅ Updated Protocol {number}")
-    if status:
-        print(f"   Status → {status}")
+    print(f"   Status → {status}")
     if reason:
         print(f"   Reason: {reason}")
 
