@@ -23,21 +23,22 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#2** | `MISSION-019` | **On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling** | 5 | 4 | 0.05x | 1 | **400.0** | `PROPOSED` | - |
 | **#3** | `MISSION-003` | **Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#4** | `MISSION-016` | **Cheapest-Viable Model Routing & Token-Return Optimization** | 5 | 4 | 0.1x | 1 | **200.0** | `PROPOSED` | - |
-| **#5** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
-| **#6** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
-| **#7** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
-| **#8** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#9** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#10** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
-| **#11** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#12** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
-| **#13** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
-| **#14** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#15** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#16** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#17** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#18** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#19** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#5** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#6** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
+| **#7** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
+| **#8** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
+| **#9** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#10** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#11** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
+| **#12** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#13** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#14** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#15** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#16** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#17** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#18** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#19** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#20** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -104,7 +105,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Autonomous dispatch fails to achieve >= 60% token savings compared to frontier-default dispatch, or task success rate degrades by > 5 percentage points on benchmark evaluations.
 
-### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #5)
+### MISSION-020: Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation (Rank #5)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `multi-repo`
+- **Target Platform**: richfrem/agent-plugins-skills (cli-agent) & Global APM Harness
+- **Cheapest Viable Model**: `gemini-3.8-flash` (Tier: `cheap`, CLI: `agy`)
+- **Fallback Models**: `claude-haiku-5.5`, `gpt-6-luna`
+- **Hypothesis (Popperian Prediction)**:
+  > Documenting the Apple Silicon MLX native model setup (mlx-lm, mlx_lm.generate, mlx_lm.server, Qwen2.5-Coder-7B-4bit) as an official reference in richfrem/agent-plugins-skills/plugins/agent-orchestration/skills/cli-agent, completing feature branch PR merge, and running global APM reinstallation (apm install --global) standardizes zero-swap sovereign local intelligence across all repositories on this Mac.
+- **Falsification Gate**:
+  > Upstream cli-agent skill fails APM validation, breaks existing llama-server or ollama references, or global APM install fails to update ~/.gemini/antigravity-cli/skills.
+
+### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #6)
 - **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS M1 (APFS / External USB-C Storage)
@@ -115,7 +127,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 GiB of storage.
 
-### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #6)
+### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #7)
 - **Status**: `STAGED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: Cursor Premium ($30/mo) / Grok Bot
@@ -126,7 +138,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.
 
-### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #7)
+### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #8)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
@@ -144,7 +156,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provider terms of service.
   * Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity.
 
-### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #8)
+### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #9)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
@@ -155,7 +167,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
 
-### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #9)
+### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #10)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama / llama.cpp & Isolated Memory Fixtures
@@ -166,7 +178,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.
 
-### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #10)
+### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #11)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama (Qwen2) / cli-agent Router
@@ -177,7 +189,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
 
-### MISSION-011: Distilling Investigation Principles into Local Models (Rank #11)
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #12)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: forging-sovereign-models & Local Ollama
@@ -188,7 +200,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
-### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #12)
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #13)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Anti-Asch Test Harness
@@ -199,7 +211,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
 
-### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #13)
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #14)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Simulation Environments & evaluating-agent-work
@@ -210,7 +222,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
 
-### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #14)
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #15)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: managing-sovereign-memory / disclose.py
@@ -221,7 +233,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #15)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #16)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -232,7 +244,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #16)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #17)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -243,7 +255,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #17)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #18)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -254,7 +266,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #18)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #19)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -265,7 +277,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #19)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #20)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI
