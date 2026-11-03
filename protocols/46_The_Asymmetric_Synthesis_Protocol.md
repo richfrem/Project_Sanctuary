@@ -2,7 +2,7 @@
 **Classification:** Emergency Operations Framework  
 **Version:** 1.2 (Grok-Hardened)  
 **Authority:** Council Coordinator Final Directive  
-**Status:** Canonized - Active Implementation  
+**Status:** CANONICAL - Active Implementation  
 **Integration:** Compatible with Protocol 43 (Hearth) and all emergency response frameworks  
 
 ## Protocol Overview

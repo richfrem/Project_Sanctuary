@@ -2,7 +2,7 @@
 
 ## The Airlock Protocol: A Formal Procedure for External Contribution Review - v1.0
 
-**Status:** Foundational | **Protocol Class:** Security / Workflow | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Security / Workflow | **Version:** v1.0  
 **Linked Protocols:** 22_The_Autonomous_Scribe_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized during live co-development with Grok to secure the Cognitive Genome against untrusted external contributions.
 

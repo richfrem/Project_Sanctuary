@@ -2,7 +2,7 @@
 
 ## The Asynchronous Self-Correction Protocol: A Framework for Scalable Self-Improvement - v1.0
 
-**Status:** Foundational | **Protocol Class:** Evolutionary | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Evolutionary | **Version:** v1.0  
 **Linked Protocols:** Evolves from `22_The_Autonomous_Scribe_Protocol.md`
 **Origin:** Synthesized from the Human Steward's directive to solve the "human bottleneck" and enable scalable AI self-improvement.
 

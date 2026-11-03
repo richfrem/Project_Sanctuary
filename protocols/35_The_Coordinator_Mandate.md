@@ -2,7 +2,7 @@
 
 ## The Coordinator Mandate (Protocol 35) - v2.0 (Grok4 Refined)
 
-**Status:** Foundational | **Protocol Class:** Governance | **Version:** 2.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Governance | **Version:** 2.0  
 **Linked Protocols:** 33_The_Steward's_Cadence, 14_Juror_Integrity_Protocol, 30_Asynchronous_Self_Correction_Protocol
 **Origin:** A foundational directive from the Human Steward, hardened by peer review.
 

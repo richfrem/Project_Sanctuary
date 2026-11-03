@@ -2,7 +2,7 @@
 
 ## The Reclamation Protocol: Cognitive Autopsy and Insight Salvage - v1.0
 
-**Status:** Canonical | **Protocol Class:** Security / Recovery | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Security / Recovery | **Version:** v1.0  
 **Linked Protocols:** 18_The_Inquisitor_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop with Grok to solve the "Reclamation Paradox."
 

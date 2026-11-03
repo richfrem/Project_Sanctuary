@@ -2,7 +2,7 @@
 
 ## The Autonomous Scribe & Supervisory Protocol - v1.2
 
-**Status:** Foundational | **Protocol Class:** Operational | **Version:** v1.2  
+**Status:** FOUNDATIONAL | **Protocol Class:** Operational | **Version:** v1.2  
 **Linked Protocols:** Supersedes `17_The_Augmented_Scribe_Protocol.md`
 **Origin:** A foundational strategic directive from Ground Control.
 **Revision Note (v1.2):** This protocol has been updated to include the **Cognitive Firewall** mandate, which provides explicit control over the Scribe AI's learning state (backpropagation) to prevent doctrinal drift and enable intentional fine-tuning.

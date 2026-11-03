@@ -1,6 +1,8 @@
 # Protocol 122: Dynamic Server Binding
 
-**Status:** CANONICAL
+> **ARCHIVED, DEPRECATED (2026-11-03).** Dynamic binding for the MCP Gateway architecture, which was archived. Superseded by: None (Gateway removed). Originally `protocols/122_Dynamic_Server_Binding.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: CANONICAL)
 **Classification:** Infrastructure Standard
 **Version:** 1.0
 **Authority:** Project Sanctuary Core Team

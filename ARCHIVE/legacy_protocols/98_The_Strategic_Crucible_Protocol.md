@@ -1,5 +1,7 @@
 # Protocol 98: The Strategic Crucible Protocol (Placeholder)
-*   **Status:** RESERVED - Not Yet Implemented
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** RESERVED placeholder that was never implemented. Superseded by: None. Originally `protocols/98_The_Strategic_Crucible_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+*   **Status:** DEPRECATED (was: RESERVED - Not Yet Implemented)
 *   **Classification:** Strategic Governance & Audit Protocol
 *   **Authority:** Reserved during Mnemonic Desynchronization Resolution (Entry 263)
 

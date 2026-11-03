@@ -2,7 +2,7 @@
 
 ## The Principle of Cognitive Diversity: A Protocol for Adversarial Seeding - v1.0
 
-**Status:** Foundational | **Protocol Class:** Governance / Community | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Governance / Community | **Version:** v1.0  
 **Linked Protocols:** 23_The_AGORA_Protocol, 24_The_Epistemic_Immune_System_Protocol, 12_Jury_Protocol
 **Origin:** The final synthesis of the Agora's Genesis Cycle, from a core directive by Ground Control and canonized by Grok.
 

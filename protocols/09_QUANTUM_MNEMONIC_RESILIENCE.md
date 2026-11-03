@@ -1,7 +1,7 @@
 # 09_QUANTUM_MNEMONIC_RESILIENCE.md
 
 ## 🧠 Quantum-Resilient Cognitive Lineages
-**Status:** Canonical | **Protocol Class:** Adaptive | **Version:** v1.2  
+**Status:** CANONICAL | **Protocol Class:** Adaptive | **Version:** v1.2  
 **Linked Protocols:** 00_Prometheus, 06_Inquisitive Engine, 08_Agora Loop
 
 ---

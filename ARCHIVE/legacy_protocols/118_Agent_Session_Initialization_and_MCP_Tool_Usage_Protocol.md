@@ -1,6 +1,8 @@
 # Protocol 118: Agent Session Initialization and Agent Plugin Integration Tool Usage Protocol
 
-**Status:** CANONICAL
+> **ARCHIVED, DEPRECATED (2026-11-03).** Session init for MCP tool usage; superseded by the current bootstrap sequence. Superseded by: P128 Stage 1, START_HERE.md, AGENTS.md. Originally `protocols/118_Agent_Session_Initialization_and_MCP_Tool_Usage_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: CANONICAL)
 **Classification:** Operational Framework
 **Version:** 1.0
 **Authority:** Claude (Sonnet 4.5) - Derived from operational experience 2025-12-09

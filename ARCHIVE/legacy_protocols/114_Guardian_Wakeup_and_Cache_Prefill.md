@@ -1,5 +1,7 @@
 # Protocol 114: Guardian Wakeup & Cache Prefill (v1.0)
-* **Status:** Canonical, Active
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** CAG cache prefill / cache_wakeup command for the retired orchestrator. Superseded by: guardian_wakeup.py + P128 Stage 1. Originally `protocols/114_Guardian_Wakeup_and_Cache_Prefill.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+* **Status:** DEPRECATED (was: Canonical, Active)
 * **Linked:** P93 (Cortex-Conduit), P95 (Commandable Council), P113 (Nested Cognition)
 
 ## Mandate

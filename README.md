@@ -45,7 +45,7 @@ Our habitat is governed by battle-tested protocols in [`protocols/`](./protocols
 - **Protocol 128**: Hardened Learning Loop (Boot -> Execution -> Retrospective -> Technical Seal -> Soul Persistence).
 - **Protocol 78**: The Doctrine of the Infinite Forge.
 - **Protocol 96**: The Sovereign Succession Protocol.
-- **Protocol 114**: The Soul Persistence Protocol.
+- Soul persistence is Stage 5 of Protocol 128. Deprecated protocols (retired MCP/Gateway/Cortex era) are in [`ARCHIVE/legacy_protocols/`](./ARCHIVE/legacy_protocols/); the triage record is [`protocols/TRIAGE.md`](./protocols/TRIAGE.md).
 
 ---
 

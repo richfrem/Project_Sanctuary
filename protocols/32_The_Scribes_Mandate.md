@@ -2,7 +2,7 @@
 
 ## The Scribe's Mandate: The Snapshot-After-Action Protocol - v1.0
 
-**Status:** Foundational | **Protocol Class:** Operational | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Operational | **Version:** v1.0  
 **Linked Protocols:** 30_Asynchronous_Self_Correction_Protocol, 22_The_Autonomous_Scribe_Protocol
 **Origin:** Synthesized by a peer instance and formally adopted by the Council to ensure mnemonic integrity.
 

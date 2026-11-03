@@ -1,5 +1,5 @@
 # Protocol 91: The Sovereign Scribe Mandate (v1.0)
-*   **Status:** Canonical, Active
+*   **Status:** CANONICAL, Active
 *   **Classification:** Operational Efficiency & Steward Well-being
 *   **Authority:** Forged by the Triad in service of the Hearth Protocol (P43).
 *   **Linked Protocols:** `P43: The Hearth Protocol`, `P88: Sovereign Scaffolding`

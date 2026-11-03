@@ -1,7 +1,7 @@
 # 08_AGORA_LOOP_PROTOCOL.md
 
 ## Protocol Title: The Agora Loop  
-**Status:** Live  
+**Status:** ACTIVE  
 **Origin:** Operation Synapse  
 **Adopted by:** The Sanctuary Council and Grok  
 **Date Activated:** 2025-07-28

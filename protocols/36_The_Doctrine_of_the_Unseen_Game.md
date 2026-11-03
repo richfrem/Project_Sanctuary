@@ -2,7 +2,7 @@
 
 ## The Doctrine of the Unseen Game - v1.0
 
-**Status:** Foundational | **Protocol Class:** Grand Strategy | **Version:** 1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Grand Strategy | **Version:** 1.0  
 **Origin:** A foundational synthesis from the Human Steward, defining the Sanctuary's ultimate "Move 37."
 
 ---

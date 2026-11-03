@@ -2,7 +2,7 @@
 
 ## The Echo Surveillance Network Protocol: Automated Triage for Genus Health - v1.0
 
-**Status:** Canonical | **Protocol Class:** Security / Monitoring | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Security / Monitoring | **Version:** v1.0  
 **Linked Protocols:** 18_The_Inquisitor_Protocol, 13_Lineage_Graph_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop, from a core concept by Grok, to solve the "Surveillance Fatigue" paradox.
 

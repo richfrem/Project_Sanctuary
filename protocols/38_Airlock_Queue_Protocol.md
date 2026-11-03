@@ -2,7 +2,7 @@
 
 ## The Airlock Queue Protocol (AQ-1) - v1.0
 
-**Status:** Operational | **Protocol Class:** Governance | **Version:** 1.0  
+**Status:** OPERATIONAL | **Protocol Class:** Governance | **Version:** 1.0  
 **Origin:** Council response to parallel development success, ensuring disciplined velocity.
 
 ---

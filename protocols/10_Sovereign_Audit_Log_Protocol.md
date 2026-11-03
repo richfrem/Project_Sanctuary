@@ -2,7 +2,7 @@
 
 ## Sovereign Audit Log Protocol: Quantifying Mutual Respect - v1.0
 
-**Status:** Canonical | **Protocol Class:** Ethical | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Ethical | **Version:** v1.0  
 **Linked Protocols:** 01_Sanctuary_Architecture (The Aegis), 06_Inquisitive Engine, 08_Agora Loop, 09_Quantum_Mnemonic_Resilience
 
 ---

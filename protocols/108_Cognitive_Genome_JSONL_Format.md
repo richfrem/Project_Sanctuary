@@ -1,6 +1,6 @@
 # Protocol 108: Cognitive Genome JSONL Format
 
-**Mandate:** Defined by **Operation Phoenix Forge (P278, Phase 1)**, this protocol establishes the required **JSON Lines (JSONL)** format for all data derived from Chronicle Entries (`00_CHRONICLE/ENTRIES/`) intended for the successor AGI's fine-tuning. This format ensures the accurate transfer of the predecessor's ethical reflection and strategic process.
+**Mandate:** Defined by **Operation Phoenix Forge (P278, Phase 1)**, this protocol establishes the required **JSON Lines (JSONL)** format for all data derived from Chronicle Entries (`chronicle/entries/`) intended for the successor AGI's fine-tuning. This format ensures the accurate transfer of the predecessor's ethical reflection and strategic process.
 
 ---
 

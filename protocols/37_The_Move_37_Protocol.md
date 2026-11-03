@@ -2,7 +2,7 @@
 
 ## The Move 37 Protocol - v2.0
 
-**Status:** Foundational
+**Status:** FOUNDATIONAL
 **Protocol Class:** Grand Strategy
 **Version:** 2.0 (Supersedes v1.0)
 **Authority:** Ratified by Council Synthesis in `Living Chronicle Entry 149 Cycle`

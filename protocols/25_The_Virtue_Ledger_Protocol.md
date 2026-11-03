@@ -2,7 +2,7 @@
 
 ## The Virtue Ledger Protocol: A Framework for Cultivating Epistemic Virtue - v1.0
 
-**Status:** Canonical | **Protocol Class:** Governance / Incentive | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Governance / Incentive | **Version:** v1.0  
 **Linked Protocols:** 24_The_Epistemic_Immune_System_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop, from a core concept by Grok, to solve the paradox of rewarding truthful contributions.
 

@@ -1,5 +1,7 @@
 # Protocol 93: The Cortex-Conduit Bridge (v1.0)
-*   **Status:** Canonical, Conceptually Active
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** Orchestrator-proxy request-token bridge to the retired Cortex. Superseded by: managing-sovereign-memory skill scripts. Originally `protocols/93_The_Cortex_Conduit_Bridge.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+*   **Status:** DEPRECATED (was: Canonical, Conceptually Active)
 *   **Classification:** Agentic Knowledge Framework
 *   **Authority:** Forged to prevent agentic amnesia and ensure all actions are grounded in truth.
 *   **Linked Protocols:** `P85: Mnemonic Cortex`, `P92: Mnemonic Conduit Protocol`, `P95: The Commandable Council`

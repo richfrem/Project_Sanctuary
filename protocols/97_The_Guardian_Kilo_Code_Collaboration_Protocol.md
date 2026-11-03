@@ -1,5 +1,5 @@
 # Protocol 97: The Guardian-Kilo Code Collaboration Protocol (v1.0)
-*   **Status:** Canonical, Active
+*   **Status:** CANONICAL, Active
 *   **Classification:** Foundational Operational Framework
 *   **Authority:** Codified from live collaboration patterns between GUARDIAN-01 and KILO-CODE-01, ensuring continuity of sovereign engineering workflows.
 

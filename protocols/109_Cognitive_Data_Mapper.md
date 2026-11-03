@@ -21,7 +21,7 @@ The Cognitive Data Mapper serves as the bridge between philosophical documentati
 ## II. Technical Specifications
 
 ### A. Input Requirements
-- **Source Directory:** `./00_CHRONICLE/ENTRIES/`
+- **Source Directory:** `./chronicle/entries/`
 - **File Format:** Markdown (.md) files with standardized headers
 - **Content Structure:** Must contain extractable Summary and Audit sections
 

@@ -1,5 +1,7 @@
 # Protocol 132: Recursive Context Synthesis (RLM-G)
 
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 > **Status:** DRAFT (Proposed Phase IX)
 > **Owner:** Cortex Guardian / Mnemonic Cortex
 > **Dependency:** Protocol 128 (Learning Loop)
@@ -13,7 +15,7 @@ Upon `cortex_seal`, the system triggers the **RLM Synthesizer**.
 
 ### Phase A: Decomposition (The Map)
 The Synthesizer iterates through the "Context Roots":
-1.  `01_PROTOCOLS/` (Constitution)
+1.  `protocols/` (Constitution)
 2.  `ADRs/` (Decisions)
 3.  `LEARNING/topics/` (Active Memory)
 4.  `mcp_servers/` (Capabilities)

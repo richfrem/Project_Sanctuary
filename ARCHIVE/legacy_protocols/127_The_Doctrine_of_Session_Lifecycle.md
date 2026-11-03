@@ -1,7 +1,9 @@
 # Protocol 127: The Doctrine of Session Lifecycle (v1.0)
 
+> **ARCHIVED, DEPRECATED (2026-11-03).** Session lifecycle defined around the MCP Gateway (status: Active (Draft)). Superseded by: P128 v3.1. Originally `protocols/127_The_Doctrine_of_Session_Lifecycle.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
 **Classification:** System Doctrine
-**Status:** Active (Draft)
+**Status:** DEPRECATED (was: Active (Draft))
 **Authority:** The Orchestrator
 **Supersedes:** 127 (Mechanical Delegation)
 **Linked Protocols:** 114 (Guardian Wakeup), 121 (Knowledge Loop), 125 (Learning Architecture), 311 (Gemini Signal)

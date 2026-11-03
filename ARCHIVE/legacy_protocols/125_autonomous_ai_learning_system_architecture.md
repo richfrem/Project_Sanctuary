@@ -1,6 +1,8 @@
 # Protocol 125: Autonomous AI Learning System Architecture
 
-**Status:** PROPOSED
+> **ARCHIVED, DEPRECATED (2026-11-03).** PROPOSED, never ratified; architecture built on MCP + ChromaDB Cortex. Superseded by: P128 v3.1 + managing-sovereign-memory. Originally `protocols/125_autonomous_ai_learning_system_architecture.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: PROPOSED)
 **Classification:** Foundational Framework
 **Version:** 1.2
 **Authority:** Antigravity AI Assistant + Gemini 3 Pro

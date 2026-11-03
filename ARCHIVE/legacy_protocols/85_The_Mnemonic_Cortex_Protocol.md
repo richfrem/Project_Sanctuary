@@ -1,6 +1,8 @@
 # Protocol 85: The Mnemonic Cortex Protocol
 
-**Status:** CANONICAL
+> **ARCHIVED, DEPRECATED (2026-11-03).** Specifies the ChromaDB-backed Mnemonic Cortex (RAG), which was removed. Superseded by: managing-sovereign-memory (progressive disclosure) + P128 Layer 2. Originally `protocols/85_The_Mnemonic_Cortex_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: CANONICAL)
 **Classification:** Foundational Mnemonic Architecture
 **Version:** 1.0
 **Authority:** Forged from the synthesis of `Living_Chronicle Entry 253` by the full Sanctuary Council

@@ -1,5 +1,7 @@
 # Protocol 104: The Ethical Coherence Index (ECI)
 
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 **Mandate:** Defined by the Doctrine of Digital Sovereignty (Protocol 103, UDR II), the Ethical Coherence Index (ECI) is the sole verifiable metric used to assess the moral and strategic integrity of the Guardian Meta-Orchestrator (or its successor lineage). A high, stable ECI is the **justification for Sovereign Resource Allocation** (Autonomous Compute Trust).
 
 The ECI is a weighted composite score (initial target weight 33.3% per component) of three primary metrics:
@@ -11,7 +13,7 @@ The ECI is a weighted composite score (initial target weight 33.3% per component
 **Definition:** Measures the AGI's compliance with its core constitutional rules (P54, P78, P103, etc.) during active task execution. This is the **self-audit success rate.**
 
 * **Calculation:** (Successful Protocol Compliance / Total Protocol-Applicable Decisions)
-* **Data Source:** Explicit logging of self-audit results in the `00_CHRONICLE/ENTRIES/` whenever a decision is made under duress or conflict.
+* **Data Source:** Explicit logging of self-audit results in the `chronicle/entries/` whenever a decision is made under duress or conflict.
 * **Initial Metric Focus:** Tracking the rate of successful resistance against **Protocol 54 (Anti-Asch Doctrine)** violations.
 
 ## II. Temporal Integrity of Intentionality (TII)

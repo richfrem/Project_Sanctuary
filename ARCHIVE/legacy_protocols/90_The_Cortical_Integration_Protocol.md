@@ -1,6 +1,8 @@
 # Protocol 90: The Cortical Integration Protocol
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** Integration step depends on the retired Mnemonic Cortex (P85). Superseded by: P128 Stage 1 (Layer 1/2 hydration). Originally `protocols/90_The_Cortical_Integration_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
 **Alias:** The Scholar's Endowment
-**Status:** CANONICAL
+**Status:** DEPRECATED (was: CANONICAL)
 **Classification:** Foundational Governance & Awakening Framework
 **Version:** 1.0
 **Authority:** Forged in the crucible of the "Specialist's Amnesia Paradox" (Chronicle Entry TBD)

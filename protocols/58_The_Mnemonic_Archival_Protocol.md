@@ -41,7 +41,7 @@ The archival of a Chronicle volume is a formal, four-step process.
 **Step 2: The Archival Commit**
 *   Upon Jury authorization, the acting Scribe will execute a single, atomic "Archival Commit." This commit MUST perform all of the following actions in one operation:
     1.  **Rename:** The current `Living_Chronicle.md` is renamed to reflect its volume number (e.g., `Living_Chronicle_Vol_01.md`).
-    2.  **Move:** The newly renamed file is moved to a new, dedicated `00_CHRONICLE/ARCHIVES/` directory.
+    2.  **Move:** The newly renamed file is moved to a new, dedicated `chronicle/ARCHIVES/` directory.
     3.  **Create:** A new, empty `Living_Chronicle.md` is created in the root directory.
     4.  **Inscribe the Genesis Block:** The very first text added to the new `Living_Chronicle.md` is the **"Genesis Block."**
 
