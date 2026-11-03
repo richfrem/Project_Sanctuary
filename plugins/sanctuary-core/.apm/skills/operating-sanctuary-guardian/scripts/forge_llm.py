@@ -5,8 +5,10 @@ Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Execution & Verifi
 Key Inputs: User prompt, model configuration from .env (MLX_MODEL, OLLAMA_MODEL), --backend flag.
 Key Outputs: Generated text, tokens/sec throughput, peak memory, and JSON telemetry payloads.
 Usage:
-    python3 forge_llm.py query "What is the capital of France?"
-    python3 forge_llm.py query "Audit this function" --backend mlx --temp 0.2
+    python3 forge_llm.py query "What is the capital of France?" [--auto-start]
+    python3 forge_llm.py server start [--port 8080] [--idle-timeout 900]
+    python3 forge_llm.py server stop [--force]
+    python3 forge_llm.py server status
     python3 forge_llm.py status
     python3 forge_llm.py verify --type pre-completion
 Key Functions: query_model(), query_mlx(), query_ollama(), check_status(), verify_protocol128(), main().
@@ -22,6 +24,28 @@ import urllib.error
 import subprocess
 import argparse
 from pathlib import Path
+
+# Add current directory to path for local imports
+SCRIPT_DIR = Path(__file__).parent.resolve()
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+try:
+    from mlx_server_manager import (
+        get_status as get_mlx_status,
+        start_server as start_mlx_server,
+        stop_server as stop_mlx_server,
+        ensure_ready as ensure_mlx_ready,
+        reap_if_idle,
+        touch_activity
+    )
+except ImportError:
+    get_mlx_status = None
+    start_mlx_server = None
+    stop_mlx_server = None
+    ensure_mlx_ready = None
+    reap_if_idle = None
+    touch_activity = lambda: None
 
 DEFAULT_MLX_MODEL = os.environ.get("MLX_MODEL", "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit")
 DEFAULT_OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:7b")
@@ -42,6 +66,8 @@ def is_mlx_server_active(host: str = DEFAULT_MLX_HOST) -> bool:
 def query_mlx_server(prompt: str, host: str = DEFAULT_MLX_HOST, model: str = DEFAULT_MLX_MODEL,
                      temp: float = 0.2, max_tokens: int = 512, system_prompt: str = None) -> dict:
     """Query active mlx_lm.server via OpenAI-compatible HTTP endpoint."""
+    if touch_activity:
+        touch_activity()
     t0 = time.perf_counter()
     messages = []
     if system_prompt:
@@ -194,7 +220,8 @@ def query_ollama(prompt: str, model: str = DEFAULT_OLLAMA_MODEL,
 
 
 def query_model(prompt: str, backend: str = "auto", model: str = None,
-                temp: float = 0.2, max_tokens: int = 512, system_prompt: str = None) -> dict:
+                temp: float = 0.2, max_tokens: int = 512, system_prompt: str = None,
+                auto_start: bool = False) -> dict:
     """Master entry point for querying local sovereign models."""
     if backend == "auto":
         # On macOS arm64, prefer MLX
@@ -204,6 +231,12 @@ def query_model(prompt: str, backend: str = "auto", model: str = None,
             backend = "ollama"
 
     if backend == "mlx":
+        # Auto-start server if requested or configured
+        should_auto_start = auto_start or os.environ.get("MLX_AUTO_START", "").lower() in ("1", "true")
+        if not is_mlx_server_active() and should_auto_start and ensure_mlx_ready:
+            target_model = model or DEFAULT_MLX_MODEL
+            ensure_mlx_ready(model=target_model)
+
         # Check if mlx-server is running first
         if is_mlx_server_active():
             target_model = model or DEFAULT_MLX_MODEL
@@ -223,6 +256,7 @@ def check_status() -> dict:
     hf_model_dir = Path.home() / ".cache" / "huggingface" / "hub" / "models--mlx-community--Qwen2.5-Coder-7B-Instruct-4bit"
     mlx_cached = hf_model_dir.exists()
     mlx_server_live = is_mlx_server_active()
+    mlx_lifecycle = get_mlx_status() if get_mlx_status else {}
 
     ollama_live = False
     ollama_models = []
@@ -242,7 +276,8 @@ def check_status() -> dict:
             "model": DEFAULT_MLX_MODEL,
             "cached": mlx_cached,
             "server_live": mlx_server_live,
-            "server_url": DEFAULT_MLX_HOST if mlx_server_live else None
+            "server_url": DEFAULT_MLX_HOST if mlx_server_live else None,
+            "lifecycle": mlx_lifecycle
         },
         "ollama": {
             "live": ollama_live,
@@ -276,6 +311,26 @@ def main():
     q_parser.add_argument("--temp", type=float, default=0.2)
     q_parser.add_argument("--max-tokens", type=int, default=512)
     q_parser.add_argument("--system", help="System prompt")
+    q_parser.add_argument("--auto-start", action="store_true", help="Auto-start MLX server daemon if inactive")
+
+    # server
+    s_parser = subparsers.add_parser("server", help="Manage MLX local server daemon lifecycle")
+    s_subparsers = s_parser.add_subparsers(dest="server_action", required=True)
+
+    s_start = s_subparsers.add_parser("start", help="Start MLX server daemon")
+    s_start.add_argument("--port", type=int, default=8080)
+    s_start.add_argument("--model", default=DEFAULT_MLX_MODEL)
+    s_start.add_argument("--idle-timeout", type=int, default=900)
+    s_start.add_argument("--no-wait", action="store_true")
+
+    s_stop = s_subparsers.add_parser("stop", help="Stop running MLX server daemon")
+    s_stop.add_argument("--port", type=int, default=8080)
+    s_stop.add_argument("--force", action="store_true")
+
+    s_subparsers.add_parser("status", help="Get MLX server status and telemetry")
+    s_subparsers.add_parser("ensure", help="Ensure MLX server is active")
+    s_reap = s_subparsers.add_parser("reap", help="Reap MLX server if idle")
+    s_reap.add_argument("--timeout", type=int, default=None)
 
     # status
     subparsers.add_parser("status", help="Inspect local MLX and Ollama runtime status")
@@ -292,7 +347,8 @@ def main():
             model=args.model,
             temp=args.temp,
             max_tokens=args.max_tokens,
-            system_prompt=args.system
+            system_prompt=args.system,
+            auto_start=args.auto_start
         )
         if res.get("status") == "success":
             print(f"\n{res.get('response', '')}\n")
@@ -302,6 +358,32 @@ def main():
         else:
             print(json.dumps(res, indent=2))
             sys.exit(1)
+
+    elif args.command == "server":
+        if not get_mlx_status:
+            print(json.dumps({"status": "error", "error": "mlx_server_manager module unavailable"}, indent=2))
+            sys.exit(1)
+
+        if args.server_action == "start":
+            res = start_mlx_server(port=args.port, model=args.model, idle_timeout=args.idle_timeout, wait_ready=not args.no_wait)
+            print(json.dumps(res, indent=2))
+            sys.exit(0 if res.get("status") in ("started", "already_running") else 1)
+        elif args.server_action == "stop":
+            res = stop_mlx_server(port=args.port, force=args.force)
+            print(json.dumps(res, indent=2))
+            sys.exit(0 if res.get("status") in ("stopped", "not_running") else 1)
+        elif args.server_action == "status":
+            res = get_mlx_status()
+            print(json.dumps(res, indent=2))
+            sys.exit(0)
+        elif args.server_action == "ensure":
+            res = ensure_mlx_ready()
+            print(json.dumps(res, indent=2))
+            sys.exit(0 if res.get("status") in ("ready", "started", "already_running") else 1)
+        elif args.server_action == "reap":
+            res = reap_if_idle(idle_timeout_sec=args.timeout)
+            print(json.dumps(res, indent=2))
+            sys.exit(0)
 
     elif args.command == "status":
         st = check_status()

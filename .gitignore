@@ -233,6 +233,7 @@ LEARNING/topics/drq_recursive_self_improvement/drq_repo/
 #other working folders
 .agent/handoffs/
 .agent/frictionlogs/
+.agent/runtime/
 .codex/
 temp/
 
