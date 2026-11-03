@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""
-Capture Snapshot Script
-=======================
-Generates a consolidated snapshot of the project state (Protocol 128 v3.5).
-Calls the context-bundler plugin for actual generation.
+"""capture_snapshot.py - Project State Snapshot Generator (Protocol 128 v3.5).
+Purpose: Generates a consolidated snapshot of the project state for audits, learning, and seals.
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Orientation & Audit).
+Key Inputs: Snapshot type (--type audit|learning_audit|seal), strategic context string, guardian manifest.
+Key Outputs: JSON snapshot packet and formatted markdown report in .agent/learning/.
+Usage:
+    python3 capture_snapshot.py --type audit
+    python3 capture_snapshot.py --type learning_audit
+    python3 capture_snapshot.py --type seal --context "Release v5.2"
+Key Functions: get_git_state(), main(), get_project_root().
 """
 
 import os

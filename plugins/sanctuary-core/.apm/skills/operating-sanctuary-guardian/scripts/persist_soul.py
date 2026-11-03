@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
-"""
-Persist Soul Script (Thin Wrapper)
-===================================
-Broadcasts the session sealed memory and RLM caches to the Hugging Face AI Commons.
-
-This script is now a thin wrapper that delegates all HF operations to the
-standalone `plugins/huggingface-utils/` plugin. The Guardian plugin consumes
-the shared HF utilities rather than maintaining its own inline implementations.
-
-Migration:
-    - Config resolution   → plugins/huggingface-utils/scripts/hf_config.py
-    - Upload primitives   → plugins/huggingface-utils/skills/hf-upload/scripts/hf_upload.py
-    - Init & env setup    → plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py
+"""persist_soul.py - Soul Traces & RLM Caches Transport to Hugging Face Hub.
+Purpose: Broadcasts session sealed memory traces and RLM caches to the Hugging Face AI Commons (ADR 081).
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 3 Remote Transport & Hub Synchronization).
+Key Inputs: Local soul traces JSONL, Hugging Face credentials from environment (HF_TOKEN, HF_REPO_ID).
+Key Outputs: Remote commit hash, dataset commit status, and upload confirmation receipts.
+Usage:
+    python3 persist_soul.py
+    python3 persist_soul.py --dry-run
+    python3 persist_soul.py --repo richfrem/Project_Sanctuary_Soul
+Key Functions: _resolve_hf_plugin(), persist_to_hf(), main().
 """
 
 import os

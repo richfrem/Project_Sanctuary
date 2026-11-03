@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""
-setup_git_hooks.py - Install Project Sanctuary Git Governance Hooks
-===================================================================
-
-Purpose:
-    Installs and configures Git pre-commit hooks to enforce the Cognitive
-    Investment Gate, Backlog Integrity, and Zero-Trust Governance.
+"""setup_git_hooks.py - Project Sanctuary Git Governance Hooks Installer.
+Purpose: Installs and verifies Git pre-commit hooks enforcing Cognitive Investment Gates and Zero-Trust Governance.
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Governance & Lifecycle Gates).
+Key Inputs: Repository root path, target git hooks directory (.git/hooks/), pre-commit-cognitive-check.sh.
+Key Outputs: Verified executable pre-commit hooks with cognitive gate execution blocks.
+Usage:
+    python3 setup_git_hooks.py
+    python3 setup_git_hooks.py --verify-only
+Key Functions: get_project_root(), install_hooks(), main().
 """
 
 import os

@@ -1,11 +1,14 @@
-"""
-Forge Soul Exporter
-
-Purpose: Exports sealed Obsidian vault notes into soul_traces.jsonl for
-HuggingFace persistence. Implements snapshot isolation, git pre-flight,
-and JSONL formatting per ADR 081.
-
-Consumes: plugins/huggingface-utils/ for upload primitives.
+#!/usr/bin/env python3
+"""forge_soul.py - Soul Traces Exporter & Frontmatter Isolator.
+Purpose: Exports sealed Obsidian vault notes into soul_traces.jsonl for Hugging Face persistence (ADR 081).
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 3 Memory & Persistence).
+Key Inputs: Vault root path, status filters (--status canonical|draft), git preflight status.
+Key Outputs: JSONL memory traces, SHA-256 lineage hashes, and export manifests in huggingface/.
+Usage:
+    python3 forge_soul.py --vault-root . --dry-run
+    python3 forge_soul.py --status canonical --output-dir huggingface/data
+    python3 forge_soul.py --verify-schema
+Key Functions: git_preflight(), extract_frontmatter(), export_soul_traces(), main().
 """
 import os
 import re
