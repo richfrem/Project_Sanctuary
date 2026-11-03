@@ -76,6 +76,13 @@ python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/man
 5. **Epistemic Integrity & Truth Sovereignty**: If doctrine conflicts with observed reality or system integrity, agents MUST surface the contradiction immediately for human review.
 6. **Cognitive Investment & Evaluation Loop**: For non-trivial engineering tasks and external model dispatches, agents MUST: (a) formulate a testable prediction before dispatch, (b) measure empirical token/compute expenditure using `track_budget.py`, (c) score delivered quality across the 5 dimensions using `score_contribution.py`, and (d) document the variance between prediction and reality to evolve capabilities and prevent repeated mistakes.
 7. **Highest ROI Dispatch & Evergreen Replenishment**: The startup bootloader (`guardian_wakeup.py`) surfaces the highest-priority incomplete mission in `LEARNING/research/index.jsonl`. Autonomous agents MUST prioritize the highest value-return-on-tokens research investment. For every mission completed (`RESOLVED`), the executing agent MUST create or generate at least 1 new candidate inquiry in `inbox.jsonl` or `missions/*.json` to ensure continuous compounding discovery.
+8. **Companion Repository (agent-plugins-skills)**: Generic skills come from the separate repo `richfrem/agent-plugins-skills` and are installed **globally by APM** from a local clone. Agents MUST NOT hand-edit installed copies (`~/.claude/skills/`, `~/.agents/skills/`, `~/.gemini/antigravity-cli/skills/`); improvements to those skills follow [Protocol 133](protocols/133_Companion_Repository_Skill_Improvement_Protocol.md) (feature branch in the clone, commit, push, PR, merge, `apm install --global`, return to `main`, delete the branch), under the Human Gate.
+
+## Companion Repository & Global Skills
+
+- **What it is**: `richfrem/agent-plugins-skills` (MIT), cloned next to this repository (`../agent-plugins-skills`). It provides the global APM skills Sanctuary relies on (memory, orchestration, dev-utils, authoring, agentic-os; list in [`architecture.md`](architecture.md) section 2). Sanctuary's own skills are in `plugins/sanctuary-core/`.
+- **How it is installed**: the global manifest `~/.apm/apm.yml` points at plugin folders inside the clone, so the installed skills equal whatever the clone's working tree holds when `apm install --global` runs. Keep the clone on a clean, up-to-date `main` at install time. Check with `apm deps list --global`.
+- **Changing it**: use Protocol 133. Sanctuary-specific behaviour belongs in `plugins/sanctuary-core/`, not upstream. Read the clone's own `AGENTS.md` before editing it.
 
 ## On-Demand Capabilities & APM Skills
 
