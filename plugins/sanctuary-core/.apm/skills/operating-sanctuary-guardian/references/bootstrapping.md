@@ -28,13 +28,16 @@ flowchart TD
 - Read [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) (or [`START_HERE.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/START_HERE.md) for human engineers).
 - Ingest the Supreme Law Human Gate: **Never execute state-changing operations without explicit approval ("Proceed", "Go", "Execute").**
 
-### Step 2: Dynamic Holistic Wakeup
+### Step 2: Dynamic Holistic Wakeup & Local Model Readiness
 Run the holistic wakeup script (read-only by default to respect the Human Gate):
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
 # To optionally persist the briefing to disk: --write-digest
 ```
 - Reads runtime context and verifies Layer 1 file health and git environment dynamically.
+- Verifies local sovereign model readiness:
+  - Check persistent MLX server endpoint: `curl -s http://127.0.0.1:8080/v1/models`
+  - Or audit cached weights and engine readiness: `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status`
 - Outputs structured JSON or formatted markdown (`--format markdown`).
 
 ### Step 3: Layer 1 Fast-Boot Hydration

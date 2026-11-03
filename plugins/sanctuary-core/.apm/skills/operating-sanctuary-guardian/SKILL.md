@@ -25,32 +25,42 @@ The master lifecycle and governance controller for Project Sanctuary, implementi
 | `seal` | Technical seal snapshot & debrief | `scripts/capture_snapshot.py` | [seal.md](references/modes/seal.md) |
 | `persist` | Soul persistence & HF export | `scripts/persist_soul.py` | [persist.md](references/modes/persist.md) |
 | `audit` | Iron Check & integrity verification | `scripts/capture_snapshot.py --type audit` | [audit.md](references/modes/audit.md) |
+| `verify` | Offline Protocol 128 verification gate | `scripts/forge_llm.py verify` | [verify.md](references/modes/verify.md) |
+| `server` | On-demand MLX server lifecycle & memory reaper | `scripts/mlx_server_manager.py` | [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md) |
 
 ## Quick Start
 
 ```bash
-# Bootloader orientation
+# 1. Bootloader orientation & local model telemetry
 python3 scripts/guardian_wakeup.py --mode HOLISTIC
 
-# Session debrief and seal
+# 2. Local sovereign model verification & server lifecycle
+python3 scripts/forge_llm.py server status
+python3 scripts/forge_llm.py verify
+
+# 3. Session debrief and seal
 python3 scripts/learning_debrief.py --hours 24
 python3 scripts/capture_snapshot.py --type seal --context "Completed milestone"
 ```
 
 ## Workflow
 
-1. **Boot**: Run `boot` mode to inspect active tasks and verify environment integrity.
-2. **Execute**: Carry out development under Protocol 128 guidelines.
-3. **Seal & Persist**: Close the session with `seal` and `persist` modes, generating the verified technical snapshot.
+1. **Boot**: Run `boot` mode to inspect active tasks, verify environment integrity, and confirm local model readiness.
+2. **Execute**: Carry out development under Protocol 128 guidelines with fast local inference.
+3. **Verify**: Run `verify` mode to validate the Pre-Completion Gate using sovereign local intelligence.
+4. **Seal & Persist**: Close the session with `seal` and `persist` modes, generating the verified technical snapshot.
 
 ## Verification
 
 ```bash
 python3 scripts/guardian_wakeup.py --mode HOLISTIC
+python3 scripts/forge_llm.py verify
 ```
 
 ## References
 - Bootstrapping Protocol: [bootstrapping.md](references/bootstrapping.md)
 - Protocol 128 Spec: [protocol-128.md](references/protocol-128.md)
 - Cognitive Primer: [cognitive-primer.md](references/cognitive-primer.md)
+- MLX Server Lifecycle & Auto-Idle: [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md)
+- Acceptance Criteria: [acceptance-criteria.md](references/acceptance-criteria.md)
 - Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration](references/integrations/orchestration.md)
