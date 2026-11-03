@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)
 **System Status:** GREEN - Layer 1 Fast-Boot Hydrated
-**Git Environment:** Branch `main` (CLEAN)
-**Generated Time:** 2026-11-03 04:49:30 UTC
+**Git Environment:** Branch `feat/bootstrap-runtime-readiness-and-env-refine` (DIRTY)
+**Generated Time:** 2026-11-03 04:56:07 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.
@@ -27,3 +27,8 @@
 - [PASS] `context/user.md`: Human Partner Preferences & Conventions [valid headers] (1337 bytes)
 - [PASS] `context/memory.md`: Curated Long-Term Memory & Active Decisions [valid headers] (7316 bytes)
 - [PASS] `chronicle/ledger.json`: Episodic Chronicle Index [2 entries] (72597 bytes)
+
+## V. Runtime & Sovereign Inference Capabilities
+- [PASS] **APM Package Manager**: CLI available (/Users/richardfremmerlid/.local/bin/apm)
+- [PASS] **Local MLX Runner (uv/uvx)**: Runner available (/opt/homebrew/bin/uvx)
+- [PASS] **Local Model Weights (Qwen2.5-Coder-7B-4bit)**: Cached in ~/.cache/huggingface/hub (offline ready)
