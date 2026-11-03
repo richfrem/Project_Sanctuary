@@ -48,7 +48,9 @@ EXCLUSIONS = {
 }
 
 ROOT_ALLOW = {
-    "README.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md"
+    "AGENTS.md",
+    "START_HERE.md",
+    "README.md",
 }
 
 
@@ -287,7 +289,15 @@ def main():
                     target_files.append(Path(root) / f)
     else:
         # Default scan across canonical domains
-        canonical_dirs = ["chronicle/entries", "protocols", "LEARNING", "wiki", "context"]
+        canonical_dirs = [
+            "chronicle",
+            "protocols",
+            "LEARNING",
+            "context",
+            "plugins/sanctuary-core",
+            ".agent",
+            "wiki",
+        ]
         for cdir in canonical_dirs:
             sd = repo_root / cdir
             if sd.exists():
