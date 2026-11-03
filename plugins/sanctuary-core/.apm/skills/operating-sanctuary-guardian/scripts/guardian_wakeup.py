@@ -122,6 +122,39 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     return health_status, checks
 
 
+def check_runtime_telemetry() -> list[dict[str, str]]:
+    """Verify runtime environment: APM CLI, Python/uv execution harness, and local sovereign models."""
+    import shutil
+    runtime_checks = []
+
+    # 1. APM CLI verification
+    apm_path = shutil.which("apm")
+    runtime_checks.append({
+        "component": "APM Package Manager",
+        "status": "PASS" if apm_path else "WARN",
+        "description": f"CLI available ({apm_path})" if apm_path else "apm CLI not found in PATH"
+    })
+
+    # 2. Local execution harness (uv / uvx)
+    uvx_path = shutil.which("uvx") or shutil.which("uv")
+    runtime_checks.append({
+        "component": "Local MLX Runner (uv/uvx)",
+        "status": "PASS" if uvx_path else "WARN",
+        "description": f"Runner available ({uvx_path})" if uvx_path else "uv/uvx not found"
+    })
+
+    # 3. Cached sovereign model
+    hf_model_dir = Path.home() / ".cache" / "huggingface" / "hub" / "models--mlx-community--Qwen2.5-Coder-7B-Instruct-4bit"
+    model_cached = hf_model_dir.exists()
+    runtime_checks.append({
+        "component": "Local Model Weights (Qwen2.5-Coder-7B-4bit)",
+        "status": "PASS" if model_cached else "WARN",
+        "description": "Cached in ~/.cache/huggingface/hub (offline ready)" if model_cached else "Model not yet cached locally"
+    })
+
+    return runtime_checks
+
+
 def get_top_mission(project_root: Path) -> dict | None:
     """Retrieves highest-priority incomplete research mission from index.jsonl."""
     index_file = project_root / "LEARNING" / "research" / "index.jsonl"
@@ -185,6 +218,7 @@ def main():
     project_root = get_project_root()
     git_meta = get_git_telemetry(project_root)
     health_status, checks = check_layer1_health(project_root)
+    runtime_checks = check_runtime_telemetry()
     top_mission = get_top_mission(project_root)
 
     digest_lines = [
@@ -208,6 +242,11 @@ def main():
 
     for check in checks:
         digest_lines.append(f"- [{check['status']}] `{check['path']}`: {check['description']} ({check['size_bytes']} bytes)")
+
+    digest_lines.append("")
+    digest_lines.append("## V. Runtime & Sovereign Inference Capabilities")
+    for rc in runtime_checks:
+        digest_lines.append(f"- [{rc['status']}] **{rc['component']}**: {rc['description']}")
 
     digest_text = "\n".join(digest_lines)
     digest_path_str = None
@@ -233,6 +272,7 @@ def main():
             "digest_persisted": bool(args.write_digest),
             "top_incomplete_mission": top_mission,
             "checks": checks,
+            "runtime_checks": runtime_checks,
             "total_time_ms": total_time_ms
         }
         print(json.dumps(output_payload, indent=2))
