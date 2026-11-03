@@ -10,16 +10,19 @@ Purpose:
       1. Has a clear, testable, and falsifiable hypothesis.
       2. Establishes objective falsification criteria.
       3. Selects the most cost-effective model tier (cheap vs frontier).
-      4. Avoids wasteful token burn on questions that can be verified locally.
+      4. Frontier escalation is approved only after >= 2 failed attempts (--failures).
+
+Key Input Dependencies:
+    Appends PRE_DISPATCH_EVALUATION events to .agent/learning/events.jsonl
+    under the project root (nearest ancestor containing .git).
 
 Usage:
-    python3 evaluate_dispatch.py \
-      --task "Concurrency audit of procedural memory writes" \
-      --hypothesis "File-based JSON writes in record_procedure_outcome.py are prone to corruption under concurrent execution" \
-      --falsification-criteria "Ten simultaneous processes write to the same procedure file without losing count or corrupting JSON" \
-      --model gpt-6-astra \
-      --planned-turns 2 \
-      --format json
+    python3 evaluate_dispatch.py --task "..." --hypothesis "..." \
+      --falsification-criteria "..." [--model gpt-6-astra] [--planned-turns 2] \
+      [--failures 0] [--format text|json]
+
+Function Index:
+    get_project_root, get_model_tier, evaluate_investment, main
 """
 
 import os
@@ -85,8 +88,22 @@ def get_model_tier(model_name: str) -> dict:
     return {"tier": "standard", "weight": 1.0, "desc": f"Standard ({model_name})"}
 
 
-def evaluate_investment(hypothesis: str, falsification: str, model_info: dict, planned_turns: int) -> dict:
-    """Evaluates whether the dispatch represents a smart, falsifiable investment."""
+ESCALATION_FAILURE_THRESHOLD = 2
+
+
+def evaluate_investment(hypothesis: str, falsification: str, model_info: dict, planned_turns: int, failures: int = 0) -> dict:
+    """Evaluates whether the dispatch represents a smart, falsifiable investment.
+
+    Args:
+        hypothesis: Falsifiable prediction for the dispatch.
+        falsification: Observable condition that would disprove the hypothesis.
+        model_info: Tier record from get_model_tier (tier, weight, desc).
+        planned_turns: Expected turn budget.
+        failures: Failed attempts so far; frontier is permitted only when >= 2.
+
+    Returns:
+        Dict with status, is_falsifiable, model_tier, cost_weight, recommendations.
+    """
     recommendations = []
     status = "APPROVED"
 
@@ -111,6 +128,15 @@ def evaluate_investment(hypothesis: str, falsification: str, model_info: dict, p
         if hypo_words < 8:
             recommendations.append("Task description lacks architectural depth required to justify frontier model cost. Consider downgrading to a standard or cheap model.")
             status = "DOWNGRADE_RECOMMENDED"
+        # Escalation gate: frontier needs repeated failures. A falsifiability failure keeps its status.
+        if failures < ESCALATION_FAILURE_THRESHOLD:
+            recommendations.append("Frontier model requested with failures < 2. Quota conservation rule requires routing to cheap tier (Gemini Flash / Claude Haiku / local MLX) before frontier escalation.")
+            if is_falsifiable:
+                status = "DOWNGRADE_REQUIRED"
+        else:
+            recommendations.append(f"Frontier escalation approved after {failures} failed attempts.")
+            if is_falsifiable:
+                status = "APPROVED"
     elif tier == "cheap":
         recommendations.append("High token economy. Ideal for broad reconnaissance, syntax fixes, or targeted queries.")
 
@@ -130,12 +156,15 @@ def main():
     parser.add_argument("--falsification-criteria", required=True, help="Exact observable condition that would prove hypothesis false")
     parser.add_argument("--model", default="claude-3-5-sonnet", help="Target model identifier")
     parser.add_argument("--planned-turns", type=int, default=1, help="Expected turn budget")
+    parser.add_argument("--failures", type=int, default=0, help="Failed attempts so far (frontier allowed at >= 2)")
     parser.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
     args = parser.parse_args()
 
     root = get_project_root()
     model_info = get_model_tier(args.model)
-    eval_result = evaluate_investment(args.hypothesis, args.falsification_criteria, model_info, args.planned_turns)
+    eval_result = evaluate_investment(
+        args.hypothesis, args.falsification_criteria, model_info, args.planned_turns, failures=args.failures
+    )
 
     dispatch_id = str(uuid.uuid4())
     record = {

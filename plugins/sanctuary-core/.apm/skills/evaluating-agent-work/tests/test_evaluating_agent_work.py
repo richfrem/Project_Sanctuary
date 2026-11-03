@@ -89,10 +89,20 @@ class TestEvaluatingAgentWork(unittest.TestCase):
             hypothesis="File based writes produce race conditions in concurrent execution loops",
             falsification="Running ten concurrent writes results in zero lost updates or file errors",
             model_info=model_info,
-            planned_turns=1
+            planned_turns=1,
+            failures=2
         )
         self.assertEqual(res_ok["status"], "APPROVED")
         self.assertTrue(res_ok["is_falsifiable"])
+
+        # Quota conservation: frontier without >= 2 failed attempts must downgrade.
+        res_default = evaluate_dispatch.evaluate_investment(
+            hypothesis="File based writes produce race conditions in concurrent execution loops",
+            falsification="Running ten concurrent writes results in zero lost updates or file errors",
+            model_info=model_info,
+            planned_turns=1
+        )
+        self.assertEqual(res_default["status"], "DOWNGRADE_REQUIRED")
 
 
 if __name__ == "__main__":

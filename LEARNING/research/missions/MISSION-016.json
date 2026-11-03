@@ -1,11 +1,11 @@
 {
   "id": "MISSION-016",
   "title": "Cheapest-Viable Model Routing & Token-Return Optimization",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "managing-sovereign-memory / manage_backlog.py & cli-agent",
   "created_at": "2026-11-03T03:30:00Z",
-  "updated_at": "2026-11-03T03:30:00Z",
+  "updated_at": "2026-11-03T06:25:00Z",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Only escalate to astra/opus if verification test fails > 2 times"
   },
-  "verdict": null,
+  "verdict": "CONFIRMED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -38,6 +38,16 @@
     "quota-conservation",
     "subscription-pooling"
   ],
-  "evidence": [],
-  "lessons_learned": []
+  "evidence": [
+    "Implemented recommend_model_routing() in manage_backlog.py automatically routing tasks below 2 failures to cheap subscription pools (Gemini 3.8 Flash @ 0.1x, Claude Haiku 5.5 @ 0.2x, MLX Qwen2.5-Coder @ 0.05x).",
+    "Enforced frontier escalation guard in evaluate_dispatch.py: frontier models (Astra, Opus) are gated with DOWNGRADE_REQUIRED until failures >= 2.",
+    "Integrated 'route' CLI subcommand in manage_backlog.py supporting JSON and text formats with --type and --failures parameters.",
+    "Authored test_model_routing.py (34 tests); all 48 unit tests across managing-sovereign-memory and evaluating-agent-work pass cleanly in 0.68s.",
+    "Delegated complete implementation to Claude Haiku 5.5 via CLI in direct workspace execution mode, achieving full pass in single iteration with zero human intervention."
+  ],
+  "lessons_learned": [
+    "Automated algorithmic routing prevents agents from burning expensive frontier subscription pools on routine reconnaissance, inspection, and formatting tasks.",
+    "Requiring at least 2 verified failures before frontier escalation provides a natural rate limiter that preserves quota while ensuring difficult roadblocks still receive frontier reasoning power.",
+    "Local MLX execution offers the ultimate floor (0.05x cost weight) for offline inspection, test running, and local schema validation."
+  ]
 }

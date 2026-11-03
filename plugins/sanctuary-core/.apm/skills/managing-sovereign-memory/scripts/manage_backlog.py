@@ -5,19 +5,31 @@ manage_backlog.py - Agent-Native Cognitive Backlog & Investment Tracker
 
 Purpose:
     Sovereign, agent-first backlog and falsifiable mission tracker for
-    Project Sanctuary. Provides ultra-compact Tier 1 machine indices,
-    zero-friction append-only inbox capture, structured mission manifests,
-    and automatic deterministic compilation to human Markdown views.
+    Project Sanctuary. Provides Tier 1 machine indices, append-only inbox
+    capture, structured mission manifests, cheapest-viable model routing
+    (MISSION-016), and deterministic compilation to human Markdown views.
+
+Key Input Dependencies:
+    LEARNING/research/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl
+    (appended by capture), .agent/learning/events.jsonl (optional event log).
 
 Usage:
-    python manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
-    python manage_backlog.py get <MISSION-ID>
-    python manage_backlog.py capture --idea "..." [--author AGENT] [--tags ...]
-    python manage_backlog.py compile
-    python manage_backlog.py validate
-    python manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED|ABANDONED --evidence "..." [--citation "..."] [--lessons "..."]
+    python3 manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
+    python3 manage_backlog.py route <TASK_DESCRIPTION> [--type TYPE] [--failures N] [--format json|text]
+    python3 manage_backlog.py get <MISSION-ID>
+    python3 manage_backlog.py capture --idea "..." [--author AGENT] [--tags ...]
+    python3 manage_backlog.py compile
+    python3 manage_backlog.py validate
+    python3 manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED|ABANDONED --evidence "..." [--citation "..."] [--lessons "..."]
+
+Function Index:
+    get_project_root, get_research_dir, calculate_priority_score,
+    recommend_model_routing, is_free_local_task, run_route,
+    BacklogManager (load_missions, get_mission, save_mission, capture_inbox,
+    record_result, compile, validate, complete_model_routing), main
 """
 
+import re
 import sys
 import json
 import uuid
@@ -47,6 +59,71 @@ def calculate_priority_score(leverage: int, depth: int, cost: float, friction: i
     if friction <= 0:
         friction = 1
     return round((leverage * depth) / (cost * friction), 2)
+
+
+# Cost weights mirror MODEL_COST_TIERS in evaluate_dispatch.py (kept in sync by tests).
+ROUTING_WEIGHTS: Dict[str, float] = {
+    "qwen2-7b-mlx-4bit": 0.05,
+    "gemini-3.8-flash": 0.1,
+    "claude-haiku-5.5": 0.2,
+    "claude-opus": 4.0,
+    "gpt-6-astra": 4.0,
+}
+FREE_LOCAL_KEYWORDS = {
+    "inspection", "inspect", "test", "tests", "testing", "verify", "verification",
+    "validate", "lint", "local", "offline", "mlx",
+}
+ESCALATION_FAILURE_THRESHOLD = 2
+
+
+def is_free_local_task(task_type: str, description: str = "") -> bool:
+    """Returns True when the task type or description marks it as local inspection/test/verification."""
+    tokens = set(re.findall(r"[a-z0-9]+", f"{task_type} {description}".lower()))
+    return bool(tokens & FREE_LOCAL_KEYWORDS)
+
+
+def recommend_model_routing(task_type: str, description: str = "", failures: int = 0) -> Dict[str, Any]:
+    """Recommends the cheapest viable model; permits frontier escalation only after repeated failures.
+
+    Args:
+        task_type: Task category (e.g. "inspection", "test", "exploration", "formatting").
+        description: Free-text task description used to detect local-only work.
+        failures: Count of failed attempts so far. Frontier is allowed when >= 2.
+
+    Returns:
+        Dict with cheapest_viable_tier, recommended_model, cost_weight, cli_target,
+        fallback_models, and frontier_escalation_condition.
+    """
+    failures = max(0, int(failures))
+    if failures >= ESCALATION_FAILURE_THRESHOLD:
+        recommended, fallbacks, tier, cli = "claude-opus", ["gpt-6-astra"], "frontier", "cli-agent"
+    elif is_free_local_task(task_type, description):
+        recommended, fallbacks, tier, cli = "qwen2-7b-mlx-4bit", ["gemini-3.8-flash", "claude-haiku-5.5"], "free-local", "mlx-lm"
+    else:
+        recommended, fallbacks, tier, cli = "gemini-3.8-flash", ["claude-haiku-5.5", "qwen2-7b-mlx-4bit"], "cheap", "cli-agent"
+    return {
+        "cheapest_viable_tier": tier,
+        "recommended_model": recommended,
+        "cost_weight": ROUTING_WEIGHTS[recommended],
+        "cli_target": cli,
+        "fallback_models": fallbacks,
+        "frontier_escalation_condition": (
+            f"Escalate to frontier only after {ESCALATION_FAILURE_THRESHOLD} failed cheap-tier attempts"
+        ),
+    }
+
+
+def run_route(args: argparse.Namespace) -> None:
+    """Prints the routing recommendation for the `route` subcommand as JSON or text."""
+    result = recommend_model_routing(args.type, args.description, args.failures)
+    if args.format == "json":
+        print(json.dumps(result, indent=2))
+        return
+    print(f"Tier:               {result['cheapest_viable_tier']}")
+    print(f"Recommended model:  {result['recommended_model']} (cost weight {result['cost_weight']}x)")
+    print(f"Fallback models:    {', '.join(result['fallback_models'])}")
+    print(f"CLI target:         {result['cli_target']}")
+    print(f"Escalation:         {result['frontier_escalation_condition']}")
 
 
 class BacklogManager:
@@ -101,7 +178,8 @@ class BacklogManager:
             "author": author,
             "idea": idea.strip(),
             "tags": tags or [],
-            "status": "CAPTURED"
+            "status": "CAPTURED",
+            "model_routing": recommend_model_routing((tags or ["general"])[0], idea)
         }
         with open(self.inbox_file, "a", encoding="utf-8") as fp:
             fp.write(json.dumps(entry) + "\n")
@@ -160,12 +238,36 @@ class BacklogManager:
         self.compile()
         return mission
 
+    def complete_model_routing(self, mission: Dict[str, Any]) -> Dict[str, Any]:
+        """Returns the mission's model_routing, filling any missing or empty keys via recommend_model_routing.
+
+        Existing non-empty values are preserved; only gaps are populated.
+        """
+        required = ("cheapest_viable_tier", "recommended_model", "cost_weight", "fallback_models", "cli_target")
+        existing = mission.get("model_routing") or {}
+        present = {k: v for k, v in existing.items() if v not in (None, "", [])}
+        if all(k in present for k in required):
+            return existing
+        generated = recommend_model_routing(
+            mission.get("task_type") or "general",
+            f"{mission.get('title', '')} {mission.get('hypothesis', '')}",
+            failures=mission.get("failures", 0),
+        )
+        merged = {**generated, **present}
+        # Keep the cost weight and fallbacks consistent with the model actually recommended.
+        if "cost_weight" not in present and merged["recommended_model"] in ROUTING_WEIGHTS:
+            merged["cost_weight"] = ROUTING_WEIGHTS[merged["recommended_model"]]
+        if "fallback_models" not in present:
+            merged["fallback_models"] = [f for f in generated["fallback_models"] if f != merged["recommended_model"]]
+        return merged
+
     def compile(self) -> None:
         """Validates all missions, writes Tier 1 index.jsonl, and generates backlog.md."""
         missions = self.load_missions()
 
-        # Recalculate priority scores and validate
+        # Recalculate priority scores, auto-populate model routing, and validate
         for m in missions:
+            m["model_routing"] = self.complete_model_routing(m)
             scores = m.get("scores", {})
             leverage = scores.get("strategic_leverage", m.get("strategic_leverage", 1))
             depth = scores.get("epistemic_depth", m.get("epistemic_depth", 1))
@@ -330,6 +432,13 @@ def main():
     list_p.add_argument("--limit", type=int, default=None, help="Limit number of items displayed")
     list_p.add_argument("--format", choices=["text", "json", "jsonl"], default="text", help="Output format")
 
+    # route
+    route_p = subparsers.add_parser("route", help="Recommend cheapest viable model for a task")
+    route_p.add_argument("description", help="Task description")
+    route_p.add_argument("--type", default="general", help="Task type (inspection, test, exploration, formatting, ...)")
+    route_p.add_argument("--failures", type=int, default=0, help="Failed attempts so far (frontier allowed at >= 2)")
+    route_p.add_argument("--format", choices=["json", "text"], default="json", help="Output format")
+
     # get
     get_p = subparsers.add_parser("get", help="Get a single mission manifest")
     get_p.add_argument("id", help="Mission ID (e.g. MISSION-001)")
@@ -356,6 +465,9 @@ def main():
     res_p.add_argument("--agent", default="agent", help="Executing agent identity")
 
     args = parser.parse_args()
+    if args.command == "route":
+        run_route(args)
+        return
     mgr = BacklogManager()
 
     if args.command == "list":
