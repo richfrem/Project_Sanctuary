@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-02T14:48:55.884723+00:00",
-  "total_assessments": 2,
-  "cumulative_score": 29,
-  "average_fitness": 0.967,
+  "updated_at": "2026-11-03T02:43:08.103618+00:00",
+  "total_assessments": 3,
+  "cumulative_score": 43,
+  "average_fitness": 0.956,
   "dimension_totals": {
-    "useful_outcome": 6,
-    "learning_depth": 6,
-    "verification_rigor": 6,
-    "token_economy": 5,
-    "anti_asch_integrity": 6
+    "useful_outcome": 9,
+    "learning_depth": 9,
+    "verification_rigor": 9,
+    "token_economy": 7,
+    "anti_asch_integrity": 9
   },
   "agents": {
     "astra": {
@@ -18,12 +18,21 @@
       "average_fitness": 0.933
     },
     "codex-luna": {
-      "assessments": 1,
-      "cumulative_score": 15,
-      "average_fitness": 1.0
+      "assessments": 2,
+      "cumulative_score": 29,
+      "average_fitness": 0.967
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "07ea5f15-d725-44e7-902f-44b63a09433b",
+      "timestamp": "2026-11-03T02:43:08.102324+00:00",
+      "task_id": "task-native-fallback-router",
+      "agent_id": "codex-luna",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Luna disproved the HTTP proxy hypothesis for consumer subscriptions (Anthropic/OpenAI OAuth cannot be pooled via transparent proxy without API keys); recommended zero-daemon CLI fallback chain with strict Copilot boundary guard; implemented in PR #744 with 71 passing tests."
+    },
     {
       "assessment_id": "be5e9d20-e2c3-427f-9f46-d7807df176aa",
       "timestamp": "2026-11-02T14:48:55.882839+00:00",

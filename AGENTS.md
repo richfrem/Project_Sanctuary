@@ -10,6 +10,7 @@ Project Sanctuary is a **sovereign engineering habitat, persistent memory archit
 3. **Anti-Asch Epistemic Grounding**: Resist conformity cascades, hallucinated consensus, and sycophancy. Truth is anchored strictly in empirical reality, compiler/test gates, cryptographic SHA-256 hashes, and canonized constitutional doctrine. When doctrine contradicts reality, agents must surface the contradiction immediately.
 4. **Offline Local Intelligence**: Ensure critical capabilities can run fully private and offline by fine-tuning accumulated episodic traces into local model weights (`Sanctuary-Qwen2-7B-v1.0` GGUF) for local Ollama and llama.cpp execution.
 5. **High-Integrity Human-Agent Partnership**: A disciplined pair-programming workflow governed by the Supreme Law Human Gate. Agents propose, explore, and rigorously test; the human partner ratifies state-changing operations. Neither acts as master nor tool, but as sovereign engineering partners.
+6. **Popperian Investment & Evolutionary Learning**: Treat engineering turns and external agent dispatches as falsifiable investments. Agents predict outcomes, establish objective falsification criteria, evaluate empirical outcomes against the [`evaluating-agent-work`](plugins/sanctuary-core/.apm/skills/evaluating-agent-work) framework, and compound lessons learned into memory so the ecosystem continuously self-optimizes.
 
 ---
 
@@ -69,6 +70,7 @@ python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visuali
 3. **Protocol 128 Learning Loop**: Sessions MUST follow the sovereign lifecycle: Boot orientation -> Cognitive Execution -> Retrospective -> Technical Seal -> Soul Persistence.
 4. **Runtime Awareness (Only Installed Skills Exist)**: Agents MUST NOT invoke deprecated local scripts; capabilities MUST be executed through active installed APM skills or `sanctuary-core`.
 5. **Epistemic Integrity & Truth Sovereignty**: If doctrine conflicts with observed reality or system integrity, agents MUST surface the contradiction immediately for human review.
+6. **Cognitive Investment & Evaluation Loop**: For non-trivial engineering tasks and external model dispatches, agents MUST: (a) formulate a testable prediction before dispatch, (b) measure empirical token/compute expenditure using `track_budget.py`, (c) score delivered quality across the 5 dimensions using `score_contribution.py`, and (d) document the variance between prediction and reality to evolve capabilities and prevent repeated mistakes.
 
 ## On-Demand Capabilities & APM Skills
 
@@ -79,6 +81,7 @@ python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visuali
 - **Soul & Trace Persistence**: Use `preserving-soul-traces` to extract, schema-validate, and seal JSONL episodic memory traces into `huggingface/` and coordinate sync via `managing-huggingface-assets`.
 - **Sovereign Memory Management**: Use `managing-sovereign-memory` for progressive disclosure (index/summary/deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric persistence of friction across rollbacks, 30-day confidence decay auditing, and wikilink graph traversal.
 - **Agent Work Evaluation & Budget Governance**: Use `evaluating-agent-work` for multi-dimensional cognitive scoring (0-3), token budget preservation (ChatGPT Plus, Claude Pro, Gemini Pro), model cost-tier weighting (cheap models like Haiku/Flash vs frontier models like Astra), and RL value analytics. Evaluate external subagent or `/cli-agent` dispatches to penalize bloated, low-value outputs and reward efficient, high-signal breakthroughs.
+- **Research Backlog & Issue Promotion**: Maintain sovereign research missions in `LEARNING/research/backlog.md` (offline canonical truth) and promote candidate investments to GitHub Issues via `managing-github-issues` for external cloud bot tracking.
 - **Multi-Agent Orchestration**: Use global `orchestrating-agent-work` and `cli-agent` for execution topologies.
 - **Persistent Memory & RLM**: Use global `memory-management`, `managing-rlm-cache`, and `managing-obsidian-vaults`.
 - **Hugging Face Commons**: Use global `managing-huggingface-assets` for soul traces dataset synchronization.
@@ -93,6 +96,7 @@ PRE-COMPLETION GATE:
   1. Did any existing capability fail, get bypassed, or get manually replaced?  [YES/NO - 1 line if YES]
   2. Did I guess, assume, or get corrected on a repeatable process?              [YES/NO - 1 line if YES]
   3. Did I notice something the next agent will hit again if not fixed?          [YES/NO - 1 line if YES]
+  4. Investment Evaluation: Did I predict, measure, and record the cognitive ROI? [YES/NO - 1 line if YES]
 
-If any YES: action taken -> FIX / MAP_DEBT / ESCALATE
+If any YES: action taken -> FIX / MAP_DEBT / ESCALATE / RECORD_ROI
 ```
