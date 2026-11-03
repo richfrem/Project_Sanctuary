@@ -140,3 +140,31 @@ class TestBacklogManager(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestIndexEnrichment(unittest.TestCase):
+    def test_hypothesis_brief_first_sentence_and_cap(self):
+        import manage_backlog as mb
+        self.assertEqual(mb.hypothesis_brief("First claim. Second claim."), "First claim.")
+        self.assertEqual(mb.hypothesis_brief(""), "")
+        long = mb.hypothesis_brief("x" * 500)
+        self.assertEqual(len(long), 220)
+        self.assertTrue(long.endswith("\u2026"))
+
+    def test_index_item_keeps_legacy_fields_and_adds_triage_fields(self):
+        import manage_backlog as mb
+        m = {"id": "MISSION-009", "title": "T", "status": "PROPOSED", "priority_score": 1.0,
+             "hypothesis": "A holds. B follows.", "tags": ["a", "b"], "updated_at": "2026-11-03T00:00:00Z",
+             "model_routing": {"cheapest_viable_tier": "free-local", "recommended_model": "m"}}
+        item = mb.build_index_item(3, m)
+        for legacy in ("rank", "id", "title", "status", "priority_score", "execution_surface",
+                       "cheapest_viable_tier", "recommended_model", "verdict", "path"):
+            self.assertIn(legacy, item)
+        self.assertEqual(item["hypothesis_brief"], "A holds.")
+        self.assertEqual(item["tags"], ["a", "b"])
+        self.assertEqual(item["rank"], 3)
+
+    def test_unknown_mission_keys_do_not_break_index_item(self):
+        import manage_backlog as mb
+        m = {"id": "MISSION-026", "title": "T", "upstream_skill_dependencies": ["x"], "reference_doctrines": ["y"]}
+        self.assertEqual(mb.build_index_item(1, m)["id"], "MISSION-026")
