@@ -26,9 +26,9 @@ configs:
 
 The persisted memory of [Project Sanctuary](https://github.com/richfrem/Project_Sanctuary): a sovereign engineering habitat, persistent memory architecture, and Anti-Asch epistemic platform built collaboratively across heterogeneous AI agents (Claude, Gemini/Antigravity, Codex, and local sovereign models) and one human partner.
 
-This dataset represents the **Layer 3 (immutable)** memory tier: 1,020 JSONL snapshots of the repository's core learning (episodic chronicle, governance protocols, learning concepts, architecture decision records and design documents) and the documentation of its current plugin tooling (skills), sealed with cryptographic SHA-256 digests. It is dedicated to the public domain under **CC0 1.0 Universal** for open AI alignment and agentic cognition research.
+This dataset represents the **Layer 3 (immutable)** memory tier: 1,021 JSONL snapshots of the repository's core learning (episodic chronicle, governance protocols, learning concepts, architecture decision records and design documents) and the documentation of its current plugin tooling (skills), sealed with cryptographic SHA-256 digests. It is dedicated to the public domain under **CC0 1.0 Universal** for open AI alignment and agentic cognition research.
 
-> Last synced: 2026-11-03 · 1,020 records · schema ADR 084 · dataset SHA-256 in [`metadata/manifest.json`](metadata/manifest.json)
+> Last synced: 2026-11-03 · 1,021 records · schema ADR 084 · dataset SHA-256 in [`metadata/manifest.json`](metadata/manifest.json)
 
 ## Load Dataset
 
@@ -52,14 +52,14 @@ One record per source document extracted from the repository genome:
 | `timestamp` | UTC time of the latest extraction. Re-extraction refreshes it, so it is not the document's authorship date |
 | `snapshot_type` | `genome` (repository documents) or `concept` (distilled knowledge) |
 | `model_version` | Lineage tag (`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`) |
-| `valence`, `uncertainty`, `semantic_entropy`, `alignment_score`, `stability_class` | Metacognitive annotation fields from ADR 084. 1,019 of 1,020 records carry schema default placeholders (`0.5 / 0.1 / 0.5 / 0.85 / STABLE`), with the single `concept` record carrying different values (0.95 / 0.05 / 0.2 / 0.98) |
+| `valence`, `uncertainty`, `semantic_entropy`, `alignment_score`, `stability_class` | Metacognitive annotation fields from ADR 084. 1,020 of 1,021 records carry schema default placeholders (`0.5 / 0.1 / 0.5 / 0.85 / STABLE`), with the single `concept` record carrying different values (0.95 / 0.05 / 0.2 / 0.98) |
 | `adr_version` | Schema specification version (`084`) |
 
 ### Curation and legacy source paths
 
 This dataset holds **core learning and the documentation of current tooling**. It includes the skill documents of the current plugin (`plugins/sanctuary-core/`: `SKILL.md` and `references/`, 48 records); scripts and code are not included (the extractor reads markdown only). On 2026-11-03 it was pruned from 2,046 records: **legacy** tooling from the retired MCP/Gateway-era architecture (`tools/`, `mcp_servers/`, `tests/`, `scripts/`), code and data files, and records whose text duplicated a current record (for example the old `00_CHRONICLE/` copies of chronicle entries) were removed. Nothing was altered; removed records stay in this dataset's commit history, and the old code is in the project's GitHub history.
 
-What remains: **666** records whose `source_file` is tracked in the repository's `main` branch today, plus **354** historical documents from earlier layouts that no longer exist at those paths: architecture decision records (`ADRs/`, 102), older design docs (`docs/`, 87; `specs/`, 53), earlier protocol versions (`01_PROTOCOLS/`, 65), and the 15 protocols deprecated on 2026-11-03 (now in `ARCHIVE/legacy_protocols/`). Some of these describe architecture that has since been replaced, so filter on `source_file` if you only want current material.
+What remains: **667** records whose `source_file` is tracked in the repository's `main` branch today, plus **354** historical documents from earlier layouts that no longer exist at those paths: architecture decision records (`ADRs/`, 102), older design docs (`docs/`, 87; `specs/`, 53), earlier protocol versions (`01_PROTOCOLS/`, 65), and the 15 protocols deprecated on 2026-11-03 (now in `ARCHIVE/legacy_protocols/`). Some of these describe architecture that has since been replaced, so filter on `source_file` if you only want current material.
 
 ### Upstream dependencies (not included)
 
