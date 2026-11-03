@@ -1,14 +1,66 @@
 #!/usr/bin/env python3
 """
-Sync Soul Dataset (`sync_soul_dataset.py`)
-==========================================
-Coordinates the synchronization of `huggingface` to the remote
-Hugging Face repository (`richfrem/Project_Sanctuary_Soul`).
+sync_soul_dataset.py (CLI)
+=====================================
 
-CRITICAL INVARIANT:
-  Does NOT implement or duplicate Hugging Face API transport, authentication,
-  or retry logic. Instead, delegates all remote interactions to the global APM
-  skill `managing-huggingface-assets` (`hf_upload.py`).
+Purpose:
+    Coordinates the synchronization of the local `huggingface/` dataset workspace
+    to the remote Hugging Face repository (`richfrem/Project_Sanctuary_Soul`).
+    Validates the local schema and delegates remote transport to the global APM
+    skill `managing-huggingface-assets` (`hf_upload.py`).
+
+Layer: Hub Transport / Remote Persistence
+
+Usage Examples:
+    # 1. Validate dataset readiness and global skill availability
+    python3 scripts/sync_soul_dataset.py --check-readiness
+
+    # 2. Preview upload and verify payload without remote mutation
+    python3 scripts/sync_soul_dataset.py --dry-run
+
+    # 3. Synchronize soul traces to Hugging Face Hub with custom message
+    python3 scripts/sync_soul_dataset.py --message "feat(soul): persist cognitive backlog snapshot"
+
+Supported Object Types:
+    - Hugging Face Dataset Repositories (Dataset Card, Manifest, JSONL corpus)
+
+Key Input Dependencies:
+    - Files:
+        - huggingface/README.md                 (Dataset card with metadata tags and license)
+        - huggingface/metadata/manifest.json     (Cryptographic dataset seal and record count)
+        - huggingface/metadata/README.md         (Schema documentation)
+        - huggingface/data/soul_traces.jsonl    (The compiled JSONL training corpus)
+    - Credentials & Environment:
+        - HUGGING_FACE_TOKEN                     (Sourced from ~/.zshrc or environment)
+        - HUGGING_FACE_USERNAME                  (Default: richfrem)
+        - HUGGING_FACE_DATASET_PATH              (Default: Project_Sanctuary_Soul)
+    - Upstream Skill Dependencies:
+        - managing-huggingface-assets            (Global skill at ~/.gemini/antigravity-cli/skills/)
+
+Key Outputs / Outcomes:
+    - Remote Repository: https://huggingface.co/datasets/richfrem/Project_Sanctuary_Soul
+    - Remote Dataset Card: Verified dataset card on Hugging Face Hub
+    - Immutable Commit: Remote commit with sanitized change description
+
+CLI Arguments:
+    --dry-run           Validate dataset and preview upload without modifying remote Hub
+    --check-readiness   Validate local files and managing-huggingface-assets integration
+    --message MSG       Commit message for the Hugging Face Hub upload
+    --dataset-dir DIR   Path to local Hugging Face dataset folder (default: huggingface)
+
+Key Functions Index:
+    - find_managing_hf_skill() -> Optional[Path]
+    - validate_local_dataset(dataset_dir: Path) -> Tuple[bool, str]
+    - execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str, dry_run: bool) -> bool
+    - main() -> None
+
+Script Dependencies:
+    - Python standard library (os, sys, json, asyncio, argparse, pathlib)
+    - huggingface_hub (via managing-huggingface-assets)
+
+Consumed by:
+    - plugins/sanctuary-core/.apm/skills/preserving-soul-traces
+    - plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian (P128 persist mode)
 """
 
 import os
@@ -20,6 +72,11 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 
+# ---------------------------------------------------------------------------
+# Global APM Skill Discovery
+# ---------------------------------------------------------------------------
+
+# Discover the installed location of the global managing-huggingface-assets skill.
 def find_managing_hf_skill() -> Optional[Path]:
     """Locate the global APM skill managing-huggingface-assets."""
     env_path = os.getenv("MANAGING_HF_SKILL_PATH")
@@ -39,6 +96,11 @@ def find_managing_hf_skill() -> Optional[Path]:
     return None
 
 
+# ---------------------------------------------------------------------------
+# Local Dataset Validation & Upload Execution
+# ---------------------------------------------------------------------------
+
+# Verify that the local dataset workspace contains valid data files and manifests.
 def validate_local_dataset(dataset_dir: Path) -> Tuple[bool, str]:
     """Check that the local dataset workspace contains valid artifacts."""
     if not dataset_dir.exists():
@@ -60,6 +122,7 @@ def validate_local_dataset(dataset_dir: Path) -> Tuple[bool, str]:
     return True, "Dataset structure valid"
 
 
+# Delegate the folder upload to managing-huggingface-assets with exponential backoff.
 async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str, dry_run: bool = False) -> bool:
     """Execute upload via managing-huggingface-assets."""
     sys.path.insert(0, str(hf_scripts_dir))
@@ -103,7 +166,13 @@ async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str,
         return False
 
 
+# ---------------------------------------------------------------------------
+# CLI Command Entrypoint
+# ---------------------------------------------------------------------------
+
+# Command-line entrypoint: parse flags, validate readiness, and execute Hub sync.
 def main():
+    """CLI entrypoint for soul trace dataset readiness and synchronization."""
     parser = argparse.ArgumentParser(description="Sanctuary Soul Trace Dataset Sync")
     parser.add_argument(
         "--dataset-dir",

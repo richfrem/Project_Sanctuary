@@ -1,17 +1,82 @@
 #!/usr/bin/env python3
 """
-Trace Extractor (`trace_extractor.py`)
-======================================
-Extracts, formats, and seals Project Sanctuary markdown documents and session
-traces into the canonical JSONL dataset (`soul_traces.jsonl`) per ADR 081 & 084.
+trace_extractor.py (CLI)
+=====================================
 
-Features:
-  - Frontmatter parsing & metadata normalization
-  - Content sanitization (binary/image embed stripping)
-  - SHA-256 integrity digest generation
-  - Deduplication and upsert handling
-  - Manifest generation/updates (`metadata/manifest.json`)
-  - Schema verification mode (`--verify`)
+Purpose:
+    Extracts, formats, sanitizes, and seals Project Sanctuary markdown documents
+    and cognitive session traces into the canonical JSONL training dataset
+    (`soul_traces.jsonl`) per ADR 081 & ADR 084. Computes SHA-256 integrity digests,
+    strips image embeds, and updates the cryptographic dataset manifest.
+
+Layer: Layer 3 Memory Genome / Cognitive Persistence
+
+Usage Examples:
+    # 1. Preview extraction across canonical domains without modifying disk
+    python3 scripts/trace_extractor.py --dry-run
+
+    # 2. Extract or upsert records in the local Hugging Face dataset repo
+    python3 scripts/trace_extractor.py --append
+
+    # 3. Verify JSONL schema compliance and SHA-256 integrity
+    python3 scripts/trace_extractor.py --verify
+
+    # 4. Extract a specific directory or file
+    python3 scripts/trace_extractor.py --source-dir LEARNING/concepts --append
+
+Supported Object Types:
+    - Markdown files (.md) with or without YAML frontmatter
+    - ADR 084 canonical 13-field JSONL records
+
+Key Input Dependencies:
+    - Folders:
+        - chronicle/                (Episodic chronicle journal entries)
+        - protocols/                (Canonized governance doctrines)
+        - LEARNING/                 (Knowledge base concepts, topics, research backlog)
+        - context/                  (Fast-boot identity, soul.md, user.md, memory.md)
+        - plugins/sanctuary-core/   (Core APM skills and lifecycle runbooks)
+        - .agent/                   (Constitution, boot telemetry, and friction logs)
+    - Root Files:
+        - AGENTS.md                 (Canonical instruction file and non-negotiable invariants)
+        - START_HERE.md             (Protocol 128 deterministic bootloader entrypoint)
+        - README.md                 (Project vision and repository architecture)
+    - Configuration:
+        - Model lineage: Sanctuary-Qwen2-7B-v1.0-GGUF-Final
+        - ADR Schema: ADR 084 (13-field canonical record specification)
+
+Key Outputs / Outcomes:
+    - Primary Dataset: huggingface/data/soul_traces.jsonl (Canonical training corpus)
+    - Integrity Manifest: huggingface/metadata/manifest.json (Cryptographic seal & record count)
+
+CLI Arguments:
+    --append            Upsert into existing JSONL instead of overwriting
+    --verify            Audit existing dataset for schema compliance and hash validity
+    --dry-run           Preview extraction without writing to disk
+    --repair            When verifying, repair invalid SHA-256 digests in-place
+    --source-dir DIR    Extract a specific directory instead of default domains
+    --target-file FILE  Extract a single markdown file
+    --limit N           Limit number of records extracted (0 = all)
+    --output PATH       Custom output JSONL path (default: huggingface/data/soul_traces.jsonl)
+    --manifest PATH     Custom manifest path (default: huggingface/metadata/manifest.json)
+    --model-version VER Model lineage identifier tag
+    --snapshot-type TYP Default snapshot type classification (e.g. genome, concept)
+
+Key Functions Index:
+    - extract_frontmatter(content: str) -> Tuple[Optional[Dict[str, Any]], str]
+    - sanitize_markdown_content(body: str) -> str
+    - sanitize_record_id(rel_path: str) -> str
+    - build_soul_trace_record(filepath: Path, repo_root: Path, ...) -> Optional[Dict[str, Any]]
+    - verify_dataset(dataset_path: Path, repair: bool) -> Tuple[bool, List[str]]
+    - update_manifest(manifest_path: Path, dataset_path: Path, model_version: str) -> None
+    - main() -> None
+
+Script Dependencies:
+    - Python standard library only (os, sys, re, json, hashlib, argparse, pathlib, datetime)
+
+Consumed by:
+    - plugins/sanctuary-core/.apm/skills/preserving-soul-traces
+    - plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian (P128 persist mode)
+    - sync_soul_dataset.py
 """
 
 import os
@@ -54,6 +119,11 @@ ROOT_ALLOW = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Metadata Extraction & Content Sanitization
+# ---------------------------------------------------------------------------
+
+# Parse YAML frontmatter metadata and extract the markdown body.
 def extract_frontmatter(content: str) -> Tuple[Optional[Dict[str, Any]], str]:
     """Extract YAML frontmatter if present without third-party dependencies."""
     if not content.startswith("---"):
@@ -92,6 +162,7 @@ def extract_frontmatter(content: str) -> Tuple[Optional[Dict[str, Any]], str]:
     return metadata if metadata else None, body
 
 
+# Strip binary image tags and wikilink embeds to keep raw token distributions clean.
 def sanitize_markdown_content(body: str) -> str:
     """Strip binary/image embeds to keep dataset lean and text-focused."""
     # Strip ![[image.png]]
@@ -101,6 +172,7 @@ def sanitize_markdown_content(body: str) -> str:
     return body.strip()
 
 
+# Convert a relative file path to a normalized alphanumeric record identifier.
 def sanitize_record_id(rel_path: str) -> str:
     """Convert relative filepath to a standardized alphanumeric record ID."""
     clean_id = rel_path.replace("/", "_").replace("\\", "_")
@@ -110,6 +182,11 @@ def sanitize_record_id(rel_path: str) -> str:
     return clean_id
 
 
+# ---------------------------------------------------------------------------
+# Record Building & Dataset Validation
+# ---------------------------------------------------------------------------
+
+# Construct and validate a single 13-field ADR 084 soul trace record from markdown source.
 def build_soul_trace_record(
     filepath: Path,
     repo_root: Path,
@@ -157,6 +234,7 @@ def build_soul_trace_record(
     return record
 
 
+# Verify that an existing JSONL dataset complies with ADR 084 schema and SHA-256 integrity.
 def verify_dataset(dataset_path: Path, repair: bool = False) -> Tuple[bool, List[str]]:
     """Verify an existing JSONL dataset for schema compliance and hash validity."""
     if not dataset_path.exists():
@@ -215,6 +293,7 @@ def verify_dataset(dataset_path: Path, repair: bool = False) -> Tuple[bool, List
     return len(errors) == 0, errors
 
 
+# Update dataset manifest metadata with current snapshot counts and cryptographic digest.
 def update_manifest(manifest_path: Path, dataset_path: Path, model_version: str) -> None:
     """Update dataset manifest.json with updated record count and hashes."""
     count = 0
@@ -241,7 +320,13 @@ def update_manifest(manifest_path: Path, dataset_path: Path, model_version: str)
         json.dump(manifest_data, f, indent=2)
 
 
+# ---------------------------------------------------------------------------
+# CLI Command Entrypoint
+# ---------------------------------------------------------------------------
+
+# Command-line entrypoint: parse arguments, discover files, extract records, and update manifest.
 def main():
+    """CLI orchestrator for soul trace extraction, verification, and sealing."""
     parser = argparse.ArgumentParser(description="Sanctuary Soul Trace Extractor")
     parser.add_argument("--repo-root", default=".", help="Project repository root")
     parser.add_argument("--source-dir", help="Specific directory to extract (e.g. chronicle/entries, wiki, protocols)")
@@ -296,7 +381,6 @@ def main():
             "context",
             "plugins/sanctuary-core",
             ".agent",
-            "wiki",
         ]
         for cdir in canonical_dirs:
             sd = repo_root / cdir
