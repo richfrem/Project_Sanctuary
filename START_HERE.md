@@ -40,6 +40,7 @@ Every session follows the deterministic 5-step bootstrapping sequence (detailed 
   - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
   - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
   - Soul Persistence: `managing-huggingface-assets`.
+  - These come from the companion repo `richfrem/agent-plugins-skills`, installed globally by APM from a local clone. Never hand-edit installed copies; to improve one, follow [Protocol 133](protocols/133_Companion_Repository_Skill_Improvement_Protocol.md).
 
 ## 4. Deep Doctrine (On-Demand)
 

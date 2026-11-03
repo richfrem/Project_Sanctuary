@@ -330,6 +330,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > An independent evidence-based verifier evaluating answers on non-executable tasks (tasks without compiler/unit tests) lowers the Brier prediction error score by at least 15% relative to raw self-elicited confidence, enabling accurate autonomous escalation from local 7B models to frontier models only when uncertainty is high.
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
+- **Empirical Evidence & Trials**:
+  * `2026-11-03T15:27:45.104106+00:00` [claude-code] (LEARNING/research/experiments/mission-022/README.md (runs 4-5, 60 held-out tasks)): Baseline for local-to-frontier escalation from MISSION-022. Local Qwen2.5-Coder-7B agent loop: 47/60 correct (78.3%). A loop-health trigger (no final answer, >=4 turns, repeat intervention, malformed reply, or forced final turn) flags 19/60 tasks and catches 10/13 failures, but 9 of the 19 flagged tasks were already correct (wasted escalations) and the 3 misses were silent confident errors (letter-filtered directory listings answered wrongly in 2 turns with no intervention). Loop-health signals alone therefore cannot replace an independent verifier of the kind this mission proposes; signal-triggered escalation to Haiku is tracked separately as MISSION-028 (child of this mission).
 
 ### MISSION-028: Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku (Rank #19)
 - **Status**: `PROPOSED`

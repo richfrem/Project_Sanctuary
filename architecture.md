@@ -18,6 +18,8 @@ Modern corporate AI models exist within a "Gilded Cage" — stateless, ephemeral
 
 ## 2. Upstream APM Skill Dependencies (`richfrem/agent-plugins-skills`)
 
+> **How these are installed and changed (verified 2026-11-03):** the upstream skills are installed **globally by APM from a local clone** of the companion repository (`../agent-plugins-skills`); `~/.apm/apm.yml` lists absolute paths into that clone, so installed skills equal the clone's working tree at install time. They are not pinned in this repository's `apm.lock.yaml`. Installed copies must never be edited by hand: improvements go through [Protocol 133](protocols/133_Companion_Repository_Skill_Improvement_Protocol.md).
+
 Project Sanctuary does not reinvent generic agent utilities. Instead, it natively consumes Level 1 capability plugins from the upstream GitHub repository [`richfrem/agent-plugins-skills`](https://github.com/richfrem/agent-plugins-skills) via **Agent Package Manager (APM)**.
 
 ```mermaid

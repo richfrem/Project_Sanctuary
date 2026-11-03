@@ -63,7 +63,7 @@ What remains: **666** records whose `source_file` is tracked in the repository's
 
 ### Upstream dependencies (not included)
 
-Sanctuary builds on generic agent skills from a separate repository, [`richfrem/agent-plugins-skills`](https://github.com/richfrem/agent-plugins-skills) (MIT license), installed globally with APM. They are not part of this dataset: they are maintained there under their own license, and copying them would go stale. The ones Sanctuary relies on:
+Sanctuary builds on generic agent skills from a separate repository, [`richfrem/agent-plugins-skills`](https://github.com/richfrem/agent-plugins-skills) (MIT license), installed globally with APM from a local clone of that repository; changes to them follow Sanctuary's Protocol 133 (feature branch, PR, merge, global reinstall). They are not part of this dataset: they are maintained there under their own license, and copying them would go stale. The ones Sanctuary relies on:
 
 | Upstream plugin | Skills used |
 |---|---|
