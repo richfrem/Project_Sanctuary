@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-03T14:38:21.472143+00:00",
-  "total_assessments": 7,
-  "cumulative_score": 103,
-  "average_fitness": 0.981,
+  "updated_at": "2026-11-03T14:44:18.887271+00:00",
+  "total_assessments": 8,
+  "cumulative_score": 116,
+  "average_fitness": 0.967,
   "dimension_totals": {
-    "useful_outcome": 21,
-    "learning_depth": 21,
-    "verification_rigor": 21,
-    "token_economy": 19,
-    "anti_asch_integrity": 21
+    "useful_outcome": 23,
+    "learning_depth": 24,
+    "verification_rigor": 24,
+    "token_economy": 21,
+    "anti_asch_integrity": 24
   },
   "agents": {
     "astra": {
@@ -23,9 +23,9 @@
       "average_fitness": 0.967
     },
     "claude": {
-      "assessments": 2,
-      "cumulative_score": 30,
-      "average_fitness": 1.0
+      "assessments": 3,
+      "cumulative_score": 43,
+      "average_fitness": 0.956
     },
     "claude-haiku-5.5": {
       "assessments": 1,
@@ -39,6 +39,15 @@
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "2ff30505-8aad-4b08-b1fc-91e72a9eb9c2",
+      "timestamp": "2026-11-03T14:44:18.886535+00:00",
+      "task_id": "MISSION-022",
+      "agent_id": "claude",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Hypothesis FALSIFIED (47/60=78.3%, run5 73.3%<75%). Useful=2: reusable loop, tests and eval method shipped, but target not met. Learning=3: negative result, scaffold-dependence, trigger analysis, MISSION-028. Rigor=3: pre-registration, held-out generated tasks, agy review adopted, unit tests. Token economy=2: many local iterations and two ~11min runs. Anti-Asch=3: did not record the scripted CORROBORATED; discarded own tuned 80% as evidence; found and reported own tool defects. Self-assessed."
+    },
     {
       "assessment_id": "75d4535b-dfdb-423c-9dea-1528630f8433",
       "timestamp": "2026-11-03T14:38:21.470320+00:00",
