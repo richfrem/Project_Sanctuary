@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""
-disclose.py - Progressive Disclosure CLI for Sovereign AI Memory
-==============================================================
-
-Purpose:
-    Retrieves knowledge at specific levels of granularity (Tier 1: Index,
-    Tier 2: Summary, Tier 3: Deep) to preserve the agent's context window.
-
+"""disclose.py - Progressive Disclosure CLI for Sovereign AI Memory.
+Purpose: Retrieves knowledge at specific levels of granularity (Tier 1: Index, Tier 2: Summary, Tier 3: Deep) to preserve the agent's context window.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Progressive Disclosure Retrieval).
+Key Inputs: Markdown files in LEARNING/ and protocols/.
+Key Outputs: Plain-text or structured JSON extraction with metadata, word counts, and byte offsets.
 Usage Examples:
-    python scripts/disclose.py --tier 1
-    python scripts/disclose.py --tier 2 --path LEARNING/concepts/sovereign_memory_engine.md
-    python scripts/disclose.py --tier 3 --path protocols/128_Hardened_Learning_Loop_v3.0.md
-    python scripts/disclose.py --tier 2 --path LEARNING/concepts/sovereign_memory_engine.md --format json
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 1
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 2 --path LEARNING/concepts/sovereign_memory_engine.md
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 3 --path protocols/128_Hardened_Learning_Loop_v3.0.md
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 2 --path LEARNING/concepts/sovereign_memory_engine.md --format json
+Key Functions: get_project_root(), normalize_tier(), parse_frontmatter(), extract_summary(), extract_index(), main().
 """
 
 import sys

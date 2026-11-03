@@ -12,7 +12,7 @@ flowchart TD
 
     %% Asymmetric Persistence
     Route -->|"Encounter Failure / Friction"| FailGuard["Asymmetric Persistence Guard"]
-    FailGuard --> Rec["record_insight.py --topic &lt;name&gt; --type friction<br/>(Appends insight to context/memory.md &amp; wiki/concepts/)"]
+    FailGuard --> Rec["record_insight.py --topic &lt;name&gt; --type friction<br/>(Appends insight to context/memory.md &amp; LEARNING/)"]
     Rec --> Rollback["Safe Git Rollback (git checkout / git branch -D)<br/>*Code discarded, but learned memory preserved!*"]
 
     %% Confidence Decay

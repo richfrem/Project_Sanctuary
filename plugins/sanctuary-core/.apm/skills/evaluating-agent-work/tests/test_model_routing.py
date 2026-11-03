@@ -12,15 +12,15 @@ Purpose:
     (failures >= 2) for frontier dispatches.
 
 Key Input Dependencies:
-    manage_backlog.py and ../../evaluating-agent-work/scripts/evaluate_dispatch.py
-    (sibling skill). Uses pytest tmp_path roots; does not touch LEARNING/ or
-    .agent/ in the real repository.
+    evaluating-agent-work/scripts/evaluate_dispatch.py and
+    managing-sovereign-memory/scripts/manage_backlog.py. Uses pytest tmp_path
+    roots; does not touch LEARNING/ or .agent/ in the real repository.
 
 Usage:
-    python3 -m pytest plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/test_model_routing.py -q
+    python3 -m pytest plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_model_routing.py -q
 
 Function Index:
-    _load_dispatch_module, _dispatch_args, test_* (see below)
+    _load_dispatch_module, _capture_main_json, _route_cli, test_* (see below)
 """
 
 import sys
@@ -33,10 +33,15 @@ from typing import Any, Dict, List
 
 import pytest
 
-SCRIPTS_DIR = Path(__file__).resolve().parent
-DISPATCH_PATH = SCRIPTS_DIR.parents[1] / "evaluating-agent-work" / "scripts" / "evaluate_dispatch.py"
-if str(SCRIPTS_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPTS_DIR))
+TESTS_DIR = Path(__file__).resolve().parent
+EVAL_SCRIPTS_DIR = TESTS_DIR.parent / "scripts"
+DISPATCH_PATH = EVAL_SCRIPTS_DIR / "evaluate_dispatch.py"
+MEMORY_SCRIPTS_DIR = TESTS_DIR.parents[1] / "managing-sovereign-memory" / "scripts"
+
+if str(EVAL_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(EVAL_SCRIPTS_DIR))
+if str(MEMORY_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(MEMORY_SCRIPTS_DIR))
 
 import manage_backlog as mb  # noqa: E402
 
@@ -47,7 +52,7 @@ FALSIFICATION = "Ten simultaneous processes write to the same procedure file wit
 
 
 def _load_dispatch_module() -> ModuleType:
-    """Imports evaluate_dispatch.py from the sibling evaluating-agent-work skill."""
+    """Imports evaluate_dispatch.py from the local evaluating-agent-work skill scripts."""
     spec = importlib.util.spec_from_file_location("evaluate_dispatch", DISPATCH_PATH)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -69,7 +74,7 @@ def _capture_main_json(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: 
 def _route_cli(*args: str) -> subprocess.CompletedProcess:
     """Invokes `manage_backlog.py route` as a subprocess."""
     return subprocess.run(
-        [sys.executable, str(SCRIPTS_DIR / "manage_backlog.py"), "route", *args],
+        [sys.executable, str(MEMORY_SCRIPTS_DIR / "manage_backlog.py"), "route", *args],
         capture_output=True, text=True, check=False,
     )
 

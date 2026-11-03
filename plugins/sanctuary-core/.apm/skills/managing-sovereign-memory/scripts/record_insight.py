@@ -1,22 +1,14 @@
 #!/usr/bin/env python3
-"""
-record_insight.py - Asymmetric Learning Persistence for Autonomous Agents
-========================================================================
-
-Purpose:
-    Enforces the Asymmetric Persistence Rule: when an evolution attempt,
-    test suite, or feature branch fails and code is rolled back, insights,
-    edge cases, and friction logs are NEVER rolled back.
-
-    Implements a two-phase architecture:
-    1. Capture: Appends an atomic, immutable event to `.agent/learning/events.jsonl`.
-    2. Promotion (Optional): Promotes curated insights into `context/memory.md`
-       or `LEARNING/concepts/` / `LEARNING/topics/`.
-
+"""record_insight.py - Asymmetric Learning Persistence for Autonomous Agents.
+Purpose: Enforces the Asymmetric Persistence Rule: when an evolution attempt, test suite, or feature branch fails and code is rolled back, insights, edge cases, and friction logs are NEVER rolled back.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Asymmetric Persistence & Insight Recording).
+Key Inputs: .agent/learning/events.jsonl, context/memory.md, LEARNING/concepts/.
+Key Outputs: Appends atomic events to events.jsonl and optionally updates context/memory.md or LEARNING/concepts/.
 Usage:
-    python scripts/record_insight.py --topic "git_hooks" --type friction --insight "Pre-commit hook failed on zsh glob syntax"
-    python scripts/record_insight.py --topic "attention_sinks" --type confirmed --insight "KV cache requires pin at position 0" --destination both
-    python scripts/record_insight.py --topic "fast_boot" --type observed --insight "Read-only wakeup prevents git dirty states" --events-only
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_insight.py --topic "git_hooks" --type friction --insight "Pre-commit hook failed on zsh glob syntax"
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_insight.py --topic "attention_sinks" --type confirmed --insight "KV cache requires pin at position 0" --destination both
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_insight.py --topic "fast_boot" --type observed --insight "Read-only wakeup prevents git dirty states" --events-only
+Key Functions: get_project_root(), append_event_log(), record_to_context_memory(), record_to_learning_concepts(), main().
 """
 
 import os

@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""
-audit_decay.py - 30-Day Confidence Decay Auditor for Sovereign Wiki
-==================================================================
-
-Purpose:
-    Enforces the Confidence Decay Protocol: Knowledge not re-verified within
-    30 days decays from CONFIRMED to OBSERVED.
-
+"""audit_decay.py - 30-Day Confidence Decay Auditor for Sovereign Memory Layer 2.
+Purpose: Enforces the Confidence Decay Protocol across LEARNING/concepts/: Knowledge not re-verified within 30 days decays from CONFIRMED to OBSERVED.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Epistemic Lifecycle & Decay).
+Key Inputs: Markdown concept files in LEARNING/concepts/*.md.
+Key Outputs: Decay detection audit reports and in-place status downgrades (CONFIRMED -> OBSERVED).
 Usage:
-    python scripts/audit_decay.py --check
-    python scripts/audit_decay.py --apply
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py --check
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py --apply
+Key Functions: get_project_root(), parse_date(), audit_concepts(), main().
 """
 
 import re
@@ -82,7 +80,7 @@ def audit_concepts(root: Path, apply_fixes: bool = False) -> int:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Audit confidence decay in wiki concepts")
+    parser = argparse.ArgumentParser(description="Audit confidence decay in LEARNING/ concepts")
     parser.add_argument("--check", action="store_true", help="Report decayed entries without modifying")
     parser.add_argument("--apply", action="store_true", help="Apply decay changes in-place")
     args = parser.parse_args()
