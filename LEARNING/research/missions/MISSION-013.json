@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-013",
+  "title": "Collective Intelligence & Multi-Agent Asymmetric Disagreement",
+  "status": "PROPOSED",
+  "execution_surface": "cloud-worker",
+  "target_platform": "orchestrating-agent-work & multi-vendor CLI",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 4,
+    "cost_weight": 1.0,
+    "operational_friction": 3,
+    "priority_score": 4.0
+  },
+  "priority_score": 4.0,
+  "hypothesis": "Multi-agent teams assigned distinct experimental strategies will solve at least 15% more held-out problems than an equal-budget repeated-sampling solo agent.",
+  "falsification_criteria": "Problem-solving advantage is below 15%, or vanishes when compared against equal-budget independent sampling followed by selection.",
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "collective-intelligence",
+    "multi-agent-debate",
+    "disagreement-discovery",
+    "sampling-controls"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-010",
+  "title": "Causal Discovery vs. Correlation Memorization",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Synthetic Causal Graph Simulator",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 2,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 25.0
+  },
+  "priority_score": 25.0,
+  "hypothesis": "An agent choosing active interventions will recover at least 25% more correct causal relationships in hidden graph systems than an observation-only agent, given the same number of environment queries.",
+  "falsification_criteria": "Relative improvement in recovered causal relationships falls below 25% on unseen environment families.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "causal-inference",
+    "experimental-science",
+    "graph-recovery",
+    "intervention-vs-observation"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-009",
+  "title": "Resisting Consensus without Reflexive Contrarianism",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Anti-Asch Test Harness",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 60.0
+  },
+  "priority_score": 60.0,
+  "hypothesis": "Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40%, while decreasing acceptance of valid peer corrections by no more than five percentage points.",
+  "falsification_criteria": "Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "social-epistemology",
+    "anti-asch",
+    "independent-reasoning",
+    "peer-calibration"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

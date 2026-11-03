@@ -25,7 +25,15 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#4** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#5** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#6** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
-| **#7** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#7** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#8** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#9** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#10** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#11** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#12** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#13** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#14** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#15** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -92,7 +100,52 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #7)
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #7)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: forging-sovereign-models & Local Ollama
+- **Hypothesis (Popperian Prediction)**:
+  > Fine-tuning a 7B local model on verified failure–correction–outcome traces will improve task success on unseen domains by at least 10 percentage points over both base models and positive-only trace training, with at most 3pp regression on general controls.
+- **Falsification Gate**:
+  > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
+
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #8)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Anti-Asch Test Harness
+- **Hypothesis (Popperian Prediction)**:
+  > Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40%, while decreasing acceptance of valid peer corrections by no more than five percentage points.
+- **Falsification Gate**:
+  > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
+
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #9)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local Simulation Environments & evaluating-agent-work
+- **Hypothesis (Popperian Prediction)**:
+  > Selecting experiments by estimated information gain per unit cost reaches fixed predictive accuracy with at least 30% fewer queries than random selection or preregistered novelty heuristics.
+- **Falsification Gate**:
+  > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
+
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #10)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: managing-sovereign-memory / disclose.py
+- **Hypothesis (Popperian Prediction)**:
+  > Memory selected for decision relevance and counterexamples retains at least 95% of full-history task performance using no more than 20% of retrieved tokens, outperforming equal-budget recency selection by at least 10 percentage points.
+- **Falsification Gate**:
+  > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
+
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #11)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Synthetic Causal Graph Simulator
+- **Hypothesis (Popperian Prediction)**:
+  > An agent choosing active interventions will recover at least 25% more correct causal relationships in hidden graph systems than an observation-only agent, given the same number of environment queries.
+- **Falsification Gate**:
+  > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
+
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #12)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -100,4 +153,31 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > DAG runner can pause at a barrier waiting for external bot handoff, resume upon git branch commit receipt, and verify output with a SHA-256 seal.
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
+
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #13)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
+- **Hypothesis (Popperian Prediction)**:
+  > A structured checkpoint containing hypotheses, evidence, failed approaches, and next discriminating experiments will improve successful research resumption by at least 20 percentage points over an equally sized narrative summary.
+- **Falsification Gate**:
+  > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
+
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #14)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
+- **Hypothesis (Popperian Prediction)**:
+  > Across 20 preregistered learning-process modifications, at least 4 changes deliver replicated improvements of >= 10% on primary metrics and survive untouched held-out evaluation sets without regressions > 3pp on designated controls.
+- **Falsification Gate**:
+  > Fewer than 4 modifications meet all criteria within the fixed research budget.
+
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #15)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `cloud-worker`
+- **Target Platform**: orchestrating-agent-work & multi-vendor CLI
+- **Hypothesis (Popperian Prediction)**:
+  > Multi-agent teams assigned distinct experimental strategies will solve at least 15% more held-out problems than an equal-budget repeated-sampling solo agent.
+- **Falsification Gate**:
+  > Problem-solving advantage is below 15%, or vanishes when compared against equal-budget independent sampling followed by selection.
 

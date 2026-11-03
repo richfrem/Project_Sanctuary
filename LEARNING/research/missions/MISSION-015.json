@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-015",
+  "title": "Scientific Self-Improvement without Self-Deception",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Protocol 128 Lifecycle & Sealed Evaluator Harnesses",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 1.0,
+    "operational_friction": 2,
+    "priority_score": 12.5
+  },
+  "priority_score": 12.5,
+  "hypothesis": "Across 20 preregistered learning-process modifications, at least 4 changes deliver replicated improvements of >= 10% on primary metrics and survive untouched held-out evaluation sets without regressions > 3pp on designated controls.",
+  "falsification_criteria": "Fewer than 4 modifications meet all criteria within the fixed research budget.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "self-improvement",
+    "meta-learning",
+    "preregistration",
+    "sealed-evaluation"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

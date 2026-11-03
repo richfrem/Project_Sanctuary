@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-014",
+  "title": "Active Curiosity as Uncertainty-Reduction Policy",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local Simulation Environments & evaluating-agent-work",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 3,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 45.0
+  },
+  "priority_score": 45.0,
+  "hypothesis": "Selecting experiments by estimated information gain per unit cost reaches fixed predictive accuracy with at least 30% fewer queries than random selection or preregistered novelty heuristics.",
+  "falsification_criteria": "Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "active-learning",
+    "curiosity-policy",
+    "information-gain",
+    "uncertainty-reduction"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
