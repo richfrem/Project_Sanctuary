@@ -235,8 +235,28 @@ uvx --from mlx-lm mlx_lm.server \
   --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit \
   --port 8080
 
-# D. Verify the running server from another terminal or probe script:
-curl http://127.0.0.1:8080/v1/models
+# D. Verify the running server from browser or terminal:
+# In browser: visit http://127.0.0.1:8080/v1/models
+# In terminal:
+curl -s http://127.0.0.1:8080/v1/models
+
+# E. How to Ask Questions to the Running Server:
+
+# 1. Via Sanctuary Guardian CLI (auto-detects local server on port 8080):
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py query "In one sentence, what is Python?"
+
+# 2. Via Direct HTTP curl (OpenAI-compatible /v1/chat/completions):
+curl -s http://127.0.0.1:8080/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+    "messages": [{"role": "user", "content": "What is the capital of France?"}],
+    "max_tokens": 50
+  }'
+
+# 3. Via Interactive Terminal Chat:
+uvx --from mlx-lm mlx_lm.chat \
+  --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
 ```
 
 ### 2. Windows WSL2/CUDA ML Training Environment (Phoenix Forge)
