@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-02T14:48:50.313151+00:00",
-  "total_tokens_consumed": 97986,
-  "total_turns": 2,
+  "updated_at": "2026-11-03T02:43:02.740975+00:00",
+  "total_tokens_consumed": 155757,
+  "total_turns": 4,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -15,9 +15,25 @@
       "turns": 1,
       "last_backend": "codex",
       "last_model": "default"
+    },
+    "task-native-fallback-router": {
+      "tokens_consumed": 57771,
+      "turns": 2,
+      "last_backend": "codex",
+      "last_model": "gpt-6-luna"
     }
   },
   "recent_records": [
+    {
+      "record_id": "29d87710-3e05-48fa-b753-81a2f9abcf4c",
+      "timestamp": "2026-11-03T02:43:02.741002+00:00",
+      "task_id": "task-native-fallback-router",
+      "backend": "codex",
+      "model": "gpt-6-luna",
+      "tokens_est": 57771,
+      "turns": 2,
+      "summary": "Codex consultation on multi-subscription pooling: disproved HTTP proxy for OAuth subscriptions, designed CLI fallback chain"
+    },
     {
       "record_id": "6ef32fd4-c2db-4bb8-b1bb-9f12faacfcb6",
       "timestamp": "2026-11-02T14:48:50.313183+00:00",
