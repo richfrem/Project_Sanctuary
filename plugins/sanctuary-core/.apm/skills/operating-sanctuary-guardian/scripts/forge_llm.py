@@ -6,16 +6,18 @@ Key Inputs: User prompt, model configuration from .env (MLX_MODEL, OLLAMA_MODEL)
 Key Outputs: Generated text, tokens/sec throughput, peak memory, and JSON telemetry payloads.
 Usage:
     python3 forge_llm.py query "What is the capital of France?" [--auto-start]
+    python3 forge_llm.py tool-call "Weather in Vancouver" --tools tools.json [--auto-start]
+    python3 forge_llm.py structured "Fix task-409" --schema schema.json [--auto-start]
     python3 forge_llm.py server start [--port 8080] [--idle-timeout 900]
     python3 forge_llm.py server stop [--force]
-    python3 forge_llm.py server status
     python3 forge_llm.py status
     python3 forge_llm.py verify --type pre-completion
-Key Functions: query_model(), query_mlx(), query_ollama(), check_status(), verify_protocol128(), main().
+Key Functions: query_model(), call_tool(), extract_structured(), check_status(), verify_protocol128(), main().
 """
 
 import os
 import sys
+import re
 import json
 import time
 import shutil
@@ -24,6 +26,13 @@ import urllib.error
 import subprocess
 import argparse
 from pathlib import Path
+from typing import Union, List, Dict, Any, Optional, Tuple
+
+try:
+    import jsonschema
+    HAS_JSONSCHEMA = True
+except ImportError:
+    HAS_JSONSCHEMA = False
 
 # Add current directory to path for local imports
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -61,6 +70,190 @@ def is_mlx_server_active(host: str = DEFAULT_MLX_HOST) -> bool:
             return resp.status == 200
     except Exception:
         return False
+
+
+def validate_against_schema(data: Any, schema: dict) -> Tuple[bool, Optional[str]]:
+    """Validate data against a JSON schema using jsonschema if available, or lightweight checks."""
+    if not isinstance(schema, dict) or not schema:
+        return True, None
+    if HAS_JSONSCHEMA:
+        try:
+            jsonschema.validate(instance=data, schema=schema)
+            return True, None
+        except jsonschema.ValidationError as ve:
+            path_str = "/".join(str(p) for p in ve.path) if ve.path else "root"
+            return False, f"Validation error at {path_str}: {ve.message}"
+        except Exception as e:
+            return False, str(e)
+
+    # Lightweight fallback validator
+    expected_type = schema.get("type")
+    if expected_type == "object":
+        if not isinstance(data, dict):
+            return False, f"Expected object, got {type(data).__name__}"
+        required = schema.get("required", [])
+        for req in required:
+            if req not in data:
+                return False, f"Missing required property: '{req}'"
+    elif expected_type == "array" and not isinstance(data, list):
+        return False, f"Expected array, got {type(data).__name__}"
+    elif expected_type == "string" and not isinstance(data, str):
+        return False, f"Expected string, got {type(data).__name__}"
+    elif expected_type == "integer" and (not isinstance(data, int) or isinstance(data, bool)):
+        return False, f"Expected integer, got {type(data).__name__}"
+    elif expected_type == "number" and not isinstance(data, (int, float)):
+        return False, f"Expected number, got {type(data).__name__}"
+    elif expected_type == "boolean" and not isinstance(data, bool):
+        return False, f"Expected boolean, got {type(data).__name__}"
+
+    return True, None
+
+
+def parse_tool_calls_from_text(text: str, raw_tool_calls: Optional[List[dict]] = None) -> List[dict]:
+    """Extract tool calls from model text or raw API payload."""
+    calls = []
+
+    # 1. Process raw API tool_calls if provided
+    if raw_tool_calls:
+        for rtc in raw_tool_calls:
+            func = rtc.get("function", {})
+            name = func.get("name")
+            args = func.get("arguments", {})
+            if isinstance(args, str):
+                try:
+                    args = json.loads(args)
+                except Exception:
+                    pass
+            if name:
+                calls.append({"name": name, "arguments": args if isinstance(args, dict) else {}})
+        if calls:
+            return calls
+
+    # 2. Extract container tags: <tools>, <tool_call>, or <function_call>
+    tag_blocks = re.findall(r'<(?:tools|tool_call|function_call)>([\s\S]*?)</(?:tools|tool_call|function_call)>', text, re.IGNORECASE)
+    for block in tag_blocks:
+        block = block.strip()
+        try:
+            parsed = json.loads(block)
+            if isinstance(parsed, list):
+                calls.extend([p for p in parsed if isinstance(p, dict) and "name" in p])
+            elif isinstance(parsed, dict) and "name" in parsed:
+                calls.append(parsed)
+        except json.JSONDecodeError:
+            for line in block.splitlines():
+                line = line.strip()
+                if line.startswith("{") and line.endswith("}"):
+                    try:
+                        p = json.loads(line)
+                        if isinstance(p, dict) and "name" in p:
+                            calls.append(p)
+                    except Exception:
+                        pass
+
+    # 4. Extract <function name="..." arguments='...'/> or <function name="...">...</function>
+    func_pattern = r'<function\s+name=[\x27\"](?P<name>[^\x27\"]+)[\x27\"](?:\s+arguments=(?P<quote>[\x27\"])(?P<args>[\s\S]*?)(?P=quote)|>(?P<inner_args>[\s\S]*?)</function>|\s*/>)'
+    for m in re.finditer(func_pattern, text, re.IGNORECASE):
+        name = m.group("name")
+        args_str = m.group("args") or m.group("inner_args") or "{}"
+        try:
+            args = json.loads(args_str)
+        except Exception:
+            args = {}
+        if name:
+            calls.append({"name": name, "arguments": args if isinstance(args, dict) else {}})
+
+    # 5. Fallback: check if entire response is a JSON object or markdown fenced JSON
+    if not calls:
+        cleaned = text.strip()
+        if cleaned.startswith("```"):
+            cleaned = re.sub(r'^```[a-zA-Z0-9_-]*\n', '', cleaned)
+            cleaned = re.sub(r'\n```$', '', cleaned).strip()
+        if cleaned.startswith("{") and cleaned.endswith("}"):
+            try:
+                parsed = json.loads(cleaned)
+                if isinstance(parsed, dict):
+                    if "name" in parsed and "arguments" in parsed:
+                        calls.append(parsed)
+                    elif "tool_calls" in parsed and isinstance(parsed["tool_calls"], list):
+                        calls.extend([c for c in parsed["tool_calls"] if isinstance(c, dict) and "name" in c])
+            except Exception:
+                pass
+
+    # Ensure each item has 'arguments' as a dict
+    sanitized = []
+    for c in calls:
+        name = c.get("name")
+        args = c.get("arguments", {})
+        if isinstance(args, str):
+            try:
+                args = json.loads(args)
+            except Exception:
+                args = {}
+        if name:
+            sanitized.append({"name": name, "arguments": args if isinstance(args, dict) else {}})
+    return sanitized
+
+
+def validate_tool_calls(tool_calls: List[dict], tools_schema: List[dict]) -> Tuple[bool, List[dict]]:
+    """Validate extracted tool calls against OpenAI-format tool definitions."""
+    tool_defs = {}
+    for t in tools_schema:
+        if isinstance(t, dict):
+            func = t.get("function") if "function" in t else t
+            if isinstance(func, dict) and "name" in func:
+                tool_defs[func["name"]] = func.get("parameters", {})
+
+    all_valid = True
+    validated_calls = []
+
+    for tc in tool_calls:
+        name = tc.get("name")
+        args = tc.get("arguments", {})
+        if name not in tool_defs:
+            all_valid = False
+            validated_calls.append({
+                "name": name,
+                "arguments": args,
+                "valid": False,
+                "error": f"Tool '{name}' is not in the provided tool definitions"
+            })
+            continue
+
+        param_schema = tool_defs[name]
+        is_val, err_msg = validate_against_schema(args, param_schema)
+        if not is_val:
+            all_valid = False
+        validated_calls.append({
+            "name": name,
+            "arguments": args,
+            "valid": is_val,
+            "error": err_msg
+        })
+
+    return all_valid, validated_calls
+
+
+def parse_and_validate_json_schema(text: str, schema: dict) -> Tuple[bool, Any, Optional[str]]:
+    """Extract and validate JSON from model output against a schema."""
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r'^```[a-zA-Z0-9_-]*\n', '', cleaned)
+        cleaned = re.sub(r'\n```$', '', cleaned).strip()
+
+    try:
+        data = json.loads(cleaned)
+    except json.JSONDecodeError:
+        match = re.search(r'(\{[\s\S]*\}|\[[\s\S]*\])', cleaned)
+        if match:
+            try:
+                data = json.loads(match.group(1))
+            except Exception as e:
+                return False, None, f"JSON parse error: {e}"
+        else:
+            return False, None, "No valid JSON structure found in model output"
+
+    is_valid, err_msg = validate_against_schema(data, schema)
+    return is_valid, data, err_msg
 
 
 def query_mlx_server(prompt: str, host: str = DEFAULT_MLX_HOST, model: str = DEFAULT_MLX_MODEL,
@@ -109,6 +302,124 @@ def query_mlx_server(prompt: str, host: str = DEFAULT_MLX_HOST, model: str = DEF
         return {"status": "error", "backend": "mlx-server", "error": str(e)}
 
 
+def query_mlx_server_tools(prompt: str, tools: List[dict], host: str = DEFAULT_MLX_HOST,
+                           model: str = DEFAULT_MLX_MODEL, temp: float = 0.0,
+                           max_tokens: int = 512, system_prompt: str = None) -> dict:
+    """Query mlx_lm.server with OpenAI tools payload and validate output."""
+    if touch_activity:
+        touch_activity()
+    t0 = time.perf_counter()
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+
+    payload = {
+        "model": model,
+        "messages": messages,
+        "tools": tools,
+        "temperature": temp,
+        "max_tokens": max_tokens
+    }
+
+    url = f"{host.rstrip('/')}/v1/chat/completions"
+    data_bytes = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data_bytes,
+        headers={"Content-Type": "application/json", "User-Agent": "Sanctuary-Guardian"}
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=60.0) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+            elapsed = time.perf_counter() - t0
+            choice_msg = body["choices"][0]["message"]
+            raw_content = choice_msg.get("content") or ""
+            raw_tool_calls = choice_msg.get("tool_calls")
+            usage = body.get("usage", {})
+
+            parsed_calls = parse_tool_calls_from_text(raw_content, raw_tool_calls)
+            all_valid, validated = validate_tool_calls(parsed_calls, tools)
+
+            return {
+                "status": "success",
+                "backend": "mlx-server",
+                "model": model,
+                "tool_selected": len(parsed_calls) > 0,
+                "tool_calls": validated,
+                "schema_valid": all_valid if parsed_calls else None,
+                "content": raw_content.strip(),
+                "latency_sec": round(elapsed, 3),
+                "prompt_tokens": usage.get("prompt_tokens"),
+                "completion_tokens": usage.get("completion_tokens"),
+                "total_tokens": usage.get("total_tokens")
+            }
+    except Exception as e:
+        return {"status": "error", "backend": "mlx-server", "error": str(e)}
+
+
+def query_mlx_server_structured(prompt: str, schema: dict, host: str = DEFAULT_MLX_HOST,
+                                model: str = DEFAULT_MLX_MODEL, temp: float = 0.0,
+                                max_tokens: int = 512, system_prompt: str = None) -> dict:
+    """Prompt mlx_lm.server for strict structured JSON output and validate against schema."""
+    if touch_activity:
+        touch_activity()
+    t0 = time.perf_counter()
+
+    schema_instruction = (
+        "You are a structured data extraction engine. You must output ONLY a valid JSON object matching this schema:\n"
+        f"{json.dumps(schema, indent=2)}\n"
+        "CRITICAL: Do NOT include markdown code blocks, fences, explanations, or conversational filler. Output raw JSON only."
+    )
+    full_system = f"{system_prompt}\n\n{schema_instruction}" if system_prompt else schema_instruction
+
+    messages = [
+        {"role": "system", "content": full_system},
+        {"role": "user", "content": prompt}
+    ]
+
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": temp,
+        "max_tokens": max_tokens
+    }
+
+    url = f"{host.rstrip('/')}/v1/chat/completions"
+    data_bytes = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data_bytes,
+        headers={"Content-Type": "application/json", "User-Agent": "Sanctuary-Guardian"}
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=60.0) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+            elapsed = time.perf_counter() - t0
+            raw_content = body["choices"][0]["message"].get("content") or ""
+            usage = body.get("usage", {})
+
+            is_valid, parsed_data, err_msg = parse_and_validate_json_schema(raw_content, schema)
+
+            return {
+                "status": "success" if is_valid else "validation_error",
+                "backend": "mlx-server",
+                "model": model,
+                "data": parsed_data,
+                "schema_valid": is_valid,
+                "error": err_msg,
+                "raw_response": raw_content.strip(),
+                "latency_sec": round(elapsed, 3),
+                "prompt_tokens": usage.get("prompt_tokens"),
+                "completion_tokens": usage.get("completion_tokens"),
+                "total_tokens": usage.get("total_tokens")
+            }
+    except Exception as e:
+        return {"status": "error", "backend": "mlx-server", "error": str(e)}
+
+
 def query_mlx_cli(prompt: str, model: str = DEFAULT_MLX_MODEL,
                   temp: float = 0.2, max_tokens: int = 256, system_prompt: str = None) -> dict:
     """Run one-shot mlx_lm.generate via uvx."""
@@ -131,7 +442,6 @@ def query_mlx_cli(prompt: str, model: str = DEFAULT_MLX_MODEL,
             return {"status": "error", "backend": "mlx-cli", "error": proc.stderr.strip()}
 
         stdout = proc.stdout
-        # Parse output between delimiters if present
         response_text = ""
         prompt_tps = None
         gen_tps = None
@@ -224,24 +534,20 @@ def query_model(prompt: str, backend: str = "auto", model: str = None,
                 auto_start: bool = False) -> dict:
     """Master entry point for querying local sovereign models."""
     if backend == "auto":
-        # On macOS arm64, prefer MLX
         if sys.platform == "darwin":
             backend = "mlx"
         else:
             backend = "ollama"
 
     if backend == "mlx":
-        # Auto-start server if requested or configured
         should_auto_start = auto_start or os.environ.get("MLX_AUTO_START", "").lower() in ("1", "true")
         if not is_mlx_server_active() and should_auto_start and ensure_mlx_ready:
             target_model = model or DEFAULT_MLX_MODEL
             ensure_mlx_ready(model=target_model)
 
-        # Check if mlx-server is running first
         if is_mlx_server_active():
             target_model = model or DEFAULT_MLX_MODEL
             return query_mlx_server(prompt, model=target_model, temp=temp, max_tokens=max_tokens, system_prompt=system_prompt)
-        # Fall back to CLI
         target_model = model or DEFAULT_MLX_MODEL
         return query_mlx_cli(prompt, model=target_model, temp=temp, max_tokens=max_tokens, system_prompt=system_prompt)
     elif backend == "ollama":
@@ -249,6 +555,106 @@ def query_model(prompt: str, backend: str = "auto", model: str = None,
         return query_ollama(prompt, model=target_model, temp=temp, max_tokens=max_tokens, system_prompt=system_prompt)
     else:
         return {"status": "error", "error": f"Unknown backend: {backend}"}
+
+
+def call_tool(prompt: str, tools: Union[List[dict], str, Path], backend: str = "auto",
+              model: str = None, temp: float = 0.0, max_tokens: int = 512,
+              system_prompt: str = None, auto_start: bool = False) -> dict:
+    """Master entry point for sovereign local tool use."""
+    # Resolve tools list
+    tools_list = []
+    if isinstance(tools, (str, Path)):
+        t_path = Path(tools)
+        if t_path.exists() and t_path.is_file():
+            with open(t_path, "r", encoding="utf-8") as f:
+                tools_list = json.load(f)
+        else:
+            try:
+                tools_list = json.loads(str(tools))
+            except Exception as e:
+                return {"status": "error", "error": f"Failed to parse tools JSON: {e}"}
+    elif isinstance(tools, list):
+        tools_list = tools
+    else:
+        return {"status": "error", "error": f"Invalid tools format: {type(tools).__name__}"}
+
+    if not isinstance(tools_list, list):
+        return {"status": "error", "error": "Tools definition must be a list of functions"}
+
+    if backend == "auto":
+        backend = "mlx" if sys.platform == "darwin" else "ollama"
+
+    if backend == "mlx":
+        should_auto_start = auto_start or os.environ.get("MLX_AUTO_START", "").lower() in ("1", "true")
+        if not is_mlx_server_active() and should_auto_start and ensure_mlx_ready:
+            target_model = model or DEFAULT_MLX_MODEL
+            ensure_mlx_ready(model=target_model)
+
+        if not is_mlx_server_active():
+            return {
+                "status": "error",
+                "error": "MLX server is not active on port 8080. Start with: forge_llm.py server start"
+            }
+
+        target_model = model or DEFAULT_MLX_MODEL
+        return query_mlx_server_tools(
+            prompt=prompt,
+            tools=tools_list,
+            model=target_model,
+            temp=temp,
+            max_tokens=max_tokens,
+            system_prompt=system_prompt
+        )
+    else:
+        return {"status": "error", "error": f"Tool calling currently requires MLX server backend (got: {backend})"}
+
+
+def extract_structured(prompt: str, schema: Union[dict, str, Path], backend: str = "auto",
+                       model: str = None, temp: float = 0.0, max_tokens: int = 512,
+                       system_prompt: str = None, auto_start: bool = False) -> dict:
+    """Master entry point for extracting schema-adhering JSON."""
+    schema_dict = {}
+    if isinstance(schema, (str, Path)):
+        s_path = Path(schema)
+        if s_path.exists() and s_path.is_file():
+            with open(s_path, "r", encoding="utf-8") as f:
+                schema_dict = json.load(f)
+        else:
+            try:
+                schema_dict = json.loads(str(schema))
+            except Exception as e:
+                return {"status": "error", "error": f"Failed to parse schema JSON: {e}"}
+    elif isinstance(schema, dict):
+        schema_dict = schema
+    else:
+        return {"status": "error", "error": f"Invalid schema format: {type(schema).__name__}"}
+
+    if backend == "auto":
+        backend = "mlx" if sys.platform == "darwin" else "ollama"
+
+    if backend == "mlx":
+        should_auto_start = auto_start or os.environ.get("MLX_AUTO_START", "").lower() in ("1", "true")
+        if not is_mlx_server_active() and should_auto_start and ensure_mlx_ready:
+            target_model = model or DEFAULT_MLX_MODEL
+            ensure_mlx_ready(model=target_model)
+
+        if not is_mlx_server_active():
+            return {
+                "status": "error",
+                "error": "MLX server is not active on port 8080. Start with: forge_llm.py server start"
+            }
+
+        target_model = model or DEFAULT_MLX_MODEL
+        return query_mlx_server_structured(
+            prompt=prompt,
+            schema=schema_dict,
+            model=target_model,
+            temp=temp,
+            max_tokens=max_tokens,
+            system_prompt=system_prompt
+        )
+    else:
+        return {"status": "error", "error": f"Structured extraction currently requires MLX server backend (got: {backend})"}
 
 
 def check_status() -> dict:
@@ -313,6 +719,28 @@ def main():
     q_parser.add_argument("--system", help="System prompt")
     q_parser.add_argument("--auto-start", action="store_true", help="Auto-start MLX server daemon if inactive")
 
+    # tool-call
+    t_parser = subparsers.add_parser("tool-call", aliases=["call-tool"], help="Dispatch tool call to local model")
+    t_parser.add_argument("prompt", help="Prompt or task for tool use")
+    t_parser.add_argument("--tools", required=True, help="Path to tools JSON file or inline JSON string")
+    t_parser.add_argument("--backend", choices=["auto", "mlx", "ollama"], default="auto")
+    t_parser.add_argument("--model", help="Override default model name")
+    t_parser.add_argument("--temp", type=float, default=0.0)
+    t_parser.add_argument("--max-tokens", type=int, default=512)
+    t_parser.add_argument("--system", help="System prompt")
+    t_parser.add_argument("--auto-start", action="store_true", help="Auto-start MLX server daemon if inactive")
+
+    # structured
+    str_parser = subparsers.add_parser("structured", aliases=["extract-json"], help="Extract structured data adhering to JSON schema")
+    str_parser.add_argument("prompt", help="Prompt or text to extract data from")
+    str_parser.add_argument("--schema", required=True, help="Path to schema JSON file or inline JSON schema string")
+    str_parser.add_argument("--backend", choices=["auto", "mlx", "ollama"], default="auto")
+    str_parser.add_argument("--model", help="Override default model name")
+    str_parser.add_argument("--temp", type=float, default=0.0)
+    str_parser.add_argument("--max-tokens", type=int, default=512)
+    str_parser.add_argument("--system", help="System prompt")
+    str_parser.add_argument("--auto-start", action="store_true", help="Auto-start MLX server daemon if inactive")
+
     # server
     s_parser = subparsers.add_parser("server", help="Manage MLX local server daemon lifecycle")
     s_subparsers = s_parser.add_subparsers(dest="server_action", required=True)
@@ -358,6 +786,34 @@ def main():
         else:
             print(json.dumps(res, indent=2))
             sys.exit(1)
+
+    elif args.command in ("tool-call", "call-tool"):
+        res = call_tool(
+            prompt=args.prompt,
+            tools=args.tools,
+            backend=args.backend,
+            model=args.model,
+            temp=args.temp,
+            max_tokens=args.max_tokens,
+            system_prompt=args.system,
+            auto_start=args.auto_start
+        )
+        print(json.dumps(res, indent=2))
+        sys.exit(0 if res.get("status") == "success" else 1)
+
+    elif args.command in ("structured", "extract-json"):
+        res = extract_structured(
+            prompt=args.prompt,
+            schema=args.schema,
+            backend=args.backend,
+            model=args.model,
+            temp=args.temp,
+            max_tokens=args.max_tokens,
+            system_prompt=args.system,
+            auto_start=args.auto_start
+        )
+        print(json.dumps(res, indent=2))
+        sys.exit(0 if res.get("status") == "success" else 1)
 
     elif args.command == "server":
         if not get_mlx_status:

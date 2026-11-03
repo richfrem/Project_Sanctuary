@@ -27,6 +27,8 @@ The master lifecycle and governance controller for Project Sanctuary, implementi
 | `audit` | Iron Check & integrity verification | `scripts/capture_snapshot.py --type audit` | [audit.md](references/modes/audit.md) |
 | `verify` | Offline Protocol 128 verification gate | `scripts/forge_llm.py verify` | [verify.md](references/modes/verify.md) |
 | `server` | On-demand MLX server lifecycle & memory reaper | `scripts/mlx_server_manager.py` | [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md) |
+| `tool-call` | Sovereign tool calling & JSON schema validation | `scripts/forge_llm.py tool-call` | [local-tool-use-and-structured-json.md](references/local-tool-use-and-structured-json.md) |
+| `structured` | Strict schema-adhering JSON extraction | `scripts/forge_llm.py structured` | [local-tool-use-and-structured-json.md](references/local-tool-use-and-structured-json.md) |
 
 ## Quick Start
 
@@ -38,7 +40,11 @@ python3 scripts/guardian_wakeup.py --mode HOLISTIC
 python3 scripts/forge_llm.py server status
 python3 scripts/forge_llm.py verify
 
-# 3. Session debrief and seal
+# 3. Sovereign tool use & structured JSON extraction
+python3 scripts/forge_llm.py tool-call "Lookup entity AGENT-GUARDIAN" --tools tools.json
+python3 scripts/forge_llm.py structured "Task 409 critical bug" --schema schema.json
+
+# 4. Session debrief and seal
 python3 scripts/learning_debrief.py --hours 24
 python3 scripts/capture_snapshot.py --type seal --context "Completed milestone"
 ```
@@ -62,5 +68,6 @@ python3 scripts/forge_llm.py verify
 - Protocol 128 Spec: [protocol-128.md](references/protocol-128.md)
 - Cognitive Primer: [cognitive-primer.md](references/cognitive-primer.md)
 - MLX Server Lifecycle & Auto-Idle: [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md)
+- Local Tool Use & Structured JSON: [local-tool-use-and-structured-json.md](references/local-tool-use-and-structured-json.md)
 - Acceptance Criteria: [acceptance-criteria.md](references/acceptance-criteria.md)
 - Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration](references/integrations/orchestration.md)
