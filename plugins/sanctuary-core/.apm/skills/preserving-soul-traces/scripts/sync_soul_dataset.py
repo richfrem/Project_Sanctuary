@@ -45,15 +45,13 @@ def find_managing_hf_skill() -> Optional[Path]:
     if env_path and Path(env_path).exists():
         return Path(env_path)
 
-    # Standard global APM skill directory
-    default_path = Path.home() / ".gemini" / "antigravity-cli" / "skills" / "managing-huggingface-assets" / "scripts"
-    if default_path.exists():
-        return default_path
-
-    # Fallback search in user home .gemini skills
-    candidate = Path.home() / ".gemini" / "skills" / "managing-huggingface-assets" / "scripts"
-    if candidate.exists():
-        return candidate
+    # Standard global APM skill directories: Claude, Copilot/Codex, Antigravity, Gemini
+    home = Path.home()
+    for base in (home / ".claude" / "skills", home / ".agents" / "skills",
+                 home / ".gemini" / "antigravity-cli" / "skills", home / ".gemini" / "skills"):
+        scripts = base / "managing-huggingface-assets" / "scripts"
+        if scripts.exists():
+            return scripts
 
     return None
 

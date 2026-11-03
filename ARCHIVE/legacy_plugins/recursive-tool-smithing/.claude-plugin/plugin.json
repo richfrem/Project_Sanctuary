@@ -1,0 +1,9 @@
+{
+    "name": "recursive-tool-smithing",
+    "version": "0.1.0",
+    "description": "Autonomous recursive tool-smithing plugin: a seed-agent that identifies capability gaps, writes Python scripts to fill them, validates in a safety sandbox, commits winners, and self-optimizes via the continuous-skill-optimizer loop.",
+    "author": {
+        "name": "richfrem"
+    },
+    "keywords": ["autoresearch", "self-improving", "tool-smithing", "seed-agent", "capability-gaps", "karpathy-loop"]
+}

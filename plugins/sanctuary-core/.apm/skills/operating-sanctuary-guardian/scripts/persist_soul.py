@@ -1,114 +1,130 @@
 #!/usr/bin/env python3
 """persist_soul.py - Soul Traces & RLM Caches Transport to Hugging Face Hub.
-Purpose: Broadcasts session sealed memory traces and RLM caches to the Hugging Face AI Commons (ADR 081).
-Layer: sanctuary-core / operating-sanctuary-guardian (Layer 3 Remote Transport & Hub Synchronization).
-Key Inputs: Local soul traces JSONL, Hugging Face credentials from environment (HF_TOKEN, HF_REPO_ID).
-Key Outputs: Remote commit hash, dataset commit status, and upload confirmation receipts.
+Purpose: Broadcasts a sealed learning snapshot (and the RLM summary cache, if present) to the Hugging Face dataset by
+    delegating to the global APM skill `managing-huggingface-assets` (ADR 081 layout).
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 3 remote transport).
+Key Input Dependencies:
+    - Global APM skill `managing-huggingface-assets` (found via MANAGING_HF_SKILL_PATH or the standard skill directories)
+    - Environment: HUGGING_FACE_TOKEN, HUGGING_FACE_USERNAME, HUGGING_FACE_REPO, HUGGING_FACE_DATASET_PATH
+    - A sealed snapshot file (default .agent/learning/learning_package_snapshot.md)
+Key Outputs: JSON receipts on stdout (upload results); JSON errors on stderr with exit code 1.
 Usage:
-    python3 persist_soul.py
-    python3 persist_soul.py --dry-run
-    python3 persist_soul.py --repo richfrem/Project_Sanctuary_Soul
-Key Functions: _resolve_hf_plugin(), persist_to_hf(), main().
+    python3 persist_soul.py                      # upload snapshot (+ RLM cache if present)
+    python3 persist_soul.py --dry-run            # resolve skill, credentials and snapshot; upload nothing
+    python3 persist_soul.py --snapshot PATH --valence 0.2
+    python3 persist_soul.py --full-sync          # prints the commands for a full dataset sync
+Key Functions: find_managing_hf_skill(), _find_project_root(), _full_sync_commands(), main().
+History: replaced a dependency on the removed `plugins/huggingface-utils/` plugin (it failed with
+    "No module named hf_config"); fixed 2026-11-03.
 """
-
+import argparse
+import asyncio
+import json
 import os
 import sys
-import json
-import asyncio
-import argparse
 from pathlib import Path
+from typing import Dict, List, Optional
 
-# ---------------------------------------------------------------------------
-# Resolve imports from huggingface-utils plugin
-# ---------------------------------------------------------------------------
-def _resolve_hf_plugin():
-    """Find and add the huggingface-utils plugin to sys.path."""
-    script_dir = Path(__file__).resolve().parent
-    # Walk up to project root
-    project_root = script_dir
-    for parent in script_dir.parents:
+SKILL_NAME = "managing-huggingface-assets"
+REQUIRED_ENV = ["HUGGING_FACE_TOKEN", "HUGGING_FACE_USERNAME", "HUGGING_FACE_REPO", "HUGGING_FACE_DATASET_PATH"]
+
+
+def find_managing_hf_skill() -> Optional[Path]:
+    """Locate the scripts directory of the global APM skill managing-huggingface-assets.
+
+    Order: MANAGING_HF_SKILL_PATH override, then the standard global skill directories for Claude,
+    Copilot/Codex and Antigravity/Gemini.
+    """
+    override = os.getenv("MANAGING_HF_SKILL_PATH")
+    if override and (Path(override) / "hf_config.py").exists():
+        return Path(override)
+    home = Path.home()
+    for base in (home / ".claude" / "skills", home / ".agents" / "skills",
+                 home / ".gemini" / "antigravity-cli" / "skills", home / ".gemini" / "skills"):
+        scripts = base / SKILL_NAME / "scripts"
+        if (scripts / "hf_config.py").exists():
+            return scripts
+    return None
+
+
+def _find_project_root(start: Path) -> Path:
+    """Walk up from `start` to the directory containing .git (a directory, or a file in a worktree)."""
+    for parent in [start, *start.parents]:
         if (parent / ".git").exists():
-            project_root = parent
-            break
-
-    hf_config_path = project_root / "plugins" / "huggingface-utils" / "scripts"
-    hf_upload_path = project_root / "plugins" / "huggingface-utils" / "skills" / "hf-upload" / "scripts"
-
-    for p in [hf_config_path, hf_upload_path]:
-        if str(p) not in sys.path:
-            sys.path.insert(0, str(p))
-
-    return project_root
-
-PROJECT_ROOT = _resolve_hf_plugin()
-
-try:
-    from hf_config import get_hf_config
-    from hf_upload import (
-        upload_soul_snapshot,
-        upload_semantic_cache,
-        upload_folder,
-    )
-    HAS_HF_PLUGIN = True
-except ImportError as e:
-    HAS_HF_PLUGIN = False
-    _import_error = str(e)
+            return parent
+    return start
 
 
-def main():
-    if not HAS_HF_PLUGIN:
-        print(json.dumps({
-            "status": "error",
-            "error": f"huggingface-utils plugin not found: {_import_error}",
-            "fix": "Ensure plugins/huggingface-utils/ exists. Run: python plugins/huggingface-utils/skills/hf-init/scripts/hf_init.py"
-        }, indent=2), file=sys.stderr)
-        sys.exit(1)
+def _full_sync_commands(project_root: Path) -> List[str]:
+    """Commands that perform a full dataset sync (extract, verify, publish)."""
+    skills = project_root / "plugins" / "sanctuary-core" / ".apm" / "skills" / "preserving-soul-traces" / "scripts"
+    return [
+        f"python3 {skills}/trace_extractor.py --source-dir chronicle/entries --append",
+        f"python3 {skills}/trace_extractor.py --verify",
+        f"python3 {skills}/sync_soul_dataset.py --dry-run",
+        f"python3 {skills}/sync_soul_dataset.py --message \"feat(soul): sync soul traces\"",
+    ]
 
+
+def _fail(payload: Dict[str, object]) -> None:
+    """Print a JSON error to stderr and exit 1."""
+    print(json.dumps(payload, indent=2), file=sys.stderr)
+    sys.exit(1)
+
+
+def main() -> None:
     parser = argparse.ArgumentParser(description="Persist Soul Memory to Hugging Face")
-    parser.add_argument("--snapshot", type=str,
-                        default=".agent/learning/learning_package_snapshot.md",
-                        help="Path to sealed snapshot")
-    parser.add_argument("--valence", type=float, default=0.0,
-                        help="Moral/Emotional charge")
-    parser.add_argument("--full-sync", action="store_true",
-                        help="Perform full Soul JSONL genomic sync")
+    parser.add_argument("--snapshot", type=str, default=".agent/learning/learning_package_snapshot.md",
+                        help="Path to sealed snapshot (relative to the project root)")
+    parser.add_argument("--valence", type=float, default=0.0, help="Moral/Emotional charge")
+    parser.add_argument("--full-sync", action="store_true", help="Print the commands for a full dataset sync")
+    parser.add_argument("--dry-run", action="store_true", help="Validate everything, upload nothing")
     args = parser.parse_args()
+
+    project_root = _find_project_root(Path(__file__).resolve().parent)
+
+    if args.full_sync:
+        print(json.dumps({"status": "redirect",
+                          "message": "A full sync is extract, verify, then sync; run these commands.",
+                          "commands": _full_sync_commands(project_root)}, indent=2))
+        return
+
+    scripts = find_managing_hf_skill()
+    if scripts is None:
+        _fail({"status": "error", "error": f"Global APM skill '{SKILL_NAME}' not found.",
+               "fix": f"Install it with APM (apm install ... --global) or set MANAGING_HF_SKILL_PATH to its scripts directory."})
+    sys.path.insert(0, str(scripts))
+    try:
+        from hf_config import get_hf_config
+        from hf_upload import upload_semantic_cache, upload_soul_snapshot
+    except ImportError as exc:
+        _fail({"status": "error", "error": f"Could not import from {scripts}: {exc}"})
 
     try:
         config = get_hf_config()
-    except Exception as e:
-        print(json.dumps({"status": "error", "error": str(e)}, indent=2), file=sys.stderr)
-        sys.exit(1)
+    except ValueError as exc:
+        _fail({"status": "error", "error": str(exc), "fix": f"Set {', '.join(REQUIRED_ENV)} in the shell environment."})
 
-    if args.full_sync:
-        # Delegate to forge-soul-exporter for full sync
-        print(json.dumps({
-            "status": "redirect",
-            "message": "Full sync should use the forge-soul-exporter skill.",
-            "command": f"python {PROJECT_ROOT}/plugins/obsidian-integration/skills/forge-soul-exporter/scripts/forge_soul.py --vault-root {PROJECT_ROOT} --full-sync"
-        }, indent=2))
+    snapshot_path = project_root / args.snapshot
+    if not snapshot_path.exists():
+        _fail({"status": "error", "error": f"Snapshot missing: {snapshot_path}"})
+    cache_file = project_root / ".agent/learning/rlm_summary_cache.json"
+
+    if args.dry_run:
+        print(json.dumps({"status": "dry-run", "skill_scripts": str(scripts), "dataset": config.dataset_repo_id,
+                          "snapshot": str(snapshot_path), "rlm_cache": str(cache_file) if cache_file.exists() else None}, indent=2))
         return
 
-    # Incremental: Upload snapshot + cache
-    snapshot_path = PROJECT_ROOT / args.snapshot
-    if not snapshot_path.exists():
-        print(json.dumps({"status": "error", "error": f"Snapshot missing: {snapshot_path}"}, indent=2), file=sys.stderr)
-        sys.exit(1)
-
     try:
-        # Upload snapshot
         result = asyncio.run(upload_soul_snapshot(snapshot_path, args.valence, config))
-        print(json.dumps({"status": "success", "snapshot": result.__dict__}, indent=2))
-
-        # Sync RLM cache if it exists
-        cache_file = PROJECT_ROOT / ".agent/learning/rlm_summary_cache.json"
+        print(json.dumps({"status": "success" if result.success else "error", "snapshot": result.__dict__}, indent=2))
+        if not result.success:
+            sys.exit(1)
         if cache_file.exists():
             cache_result = asyncio.run(upload_semantic_cache(cache_file, config))
             print(json.dumps({"cache_sync": cache_result.__dict__}, indent=2))
-
-    except Exception as e:
-        print(json.dumps({"status": "error", "error": str(e)}, indent=2), file=sys.stderr)
-        sys.exit(1)
+    except Exception as exc:  # network or API failure
+        _fail({"status": "error", "error": str(exc)})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,14 @@
+commit	metric_before	metric_after	memory_mb	fitness_depth	fitness_scope	status	description
+0	baseline	baseline	0	0.0	0.0	keep	baseline - toolbox initialized with 5 utility scripts
+1	crash	crash	0	0.0	0.0	crash	copilot v1: tried to create file via tools (permission denied) - SANDBOX_VIOLATION
+2	crash	crash	0	0.0	0.0	crash	copilot v2: relative_to path bug in self-test - fixed inline (Karpathy simple-fix rule)
+3	pass	pass	0	2.11	3.5	keep	copilot v2+fix: toolbox_manifest.py - scans toolbox, extracts metadata, outputs JSON
+4	crash	crash	0	0.0	0.0	crash	gap_auto_detector v1: SANDBOX_VIOLATION (subprocess for git log + open() outside toolbox) - narrowing to chronicles+TSV only, stdout-only
+5	pass	pass	0	4.47	4.83	keep	gap_auto_detector v2: chronicles+TSV friction scanner, ranks gaps by frequency, outputs JSON - fitness 4.65/5.0
+a2952046a9073ef6f37aef2b2837cfb7631f1077	pass	0.0008				ok	bench target=scripts/toolbox/ files=2
+7caca55ab	pass	pass	0	3.2	3.67	keep	meta-bundle-builder: JSON manifest -> markdown context bundle for Copilot CLI (74 lines, inline fix for sandbox no-args crash)
+d03291ad1	pass	pass	0	2.03	2.83	keep	meta-retrospective: friction log appender, inline fix for no-args sandbox crash, CWD path convention noted
+discard	crash	crash	0	0.0	2.17	discard	meta-results-cleaner v1: depth=0 (no nested logic), scope too low - retry with nested validation
+v2	pass	pass	0	2.04	2.50	keep	meta-results-cleaner v2: TSV validator with nested fix logic, v1 discarded (depth=0)
+8b29fc182	pass	4	22560	medium	narrow	ok	scanned 4 files
+benchmark-v2	pass	pass	0	2.14	4.0	human_gate	toolbox-benchmark v2: 155 lines (Copilot ignores line limits on complex specs) - sandbox pass fitness pass - needs human gate

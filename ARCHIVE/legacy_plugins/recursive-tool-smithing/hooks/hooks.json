@@ -1,0 +1,9 @@
+{
+    "hooks": [
+        {
+            "type": "Stop",
+            "description": "Writes hourly evolution report and updates daily digest at session end. Captures top 3 learnings/evolutions from git log, eval ledger, and plugin file changes.",
+            "command": "python3 /Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/recursive-tool-smithing/scripts/session_chronicle.py both"
+        }
+    ]
+}

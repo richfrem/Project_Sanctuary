@@ -1,0 +1,33 @@
+{
+    "plugin": "recursive-tool-smithing",
+    "version": "0.1.0",
+    "justification": "The recursive-tool-smithing plugin implements a safety-sandboxed evolution loop that requires subprocess execution to run candidate scripts under a hard 5-minute timeout. The sandbox_runner.py script uses subprocess.run with capture_output=True and a timeout parameter as the ENFORCEMENT mechanism for the Mode-Invariant Compliance Gate - it is the safety boundary, not a bypass of it. All subprocess calls are static (no shell=True, no user-controlled arguments in the command array). No network calls are permitted within the sandbox; the subprocess constraint only applies to the outer runner orchestrating the isolated evaluation.",
+    "whitelisted_operations": [
+        {
+            "operation": "subprocess.run",
+            "file": "scripts/sandbox_runner.py",
+            "reason": "Executes candidate toolbox scripts under controlled timeout enforcement. Arguments are never user-supplied at runtime - always ['python3', <static_script_path>]. No shell=True.",
+            "scope": "scripts/toolbox/*.py only"
+        },
+        {
+            "operation": "subprocess.run",
+            "file": "scripts/toolsmith_wakeup.py",
+            "reason": "Reads git branch/commit state for boot digest generation. Read-only git commands: git rev-parse, git status --porcelain. No writes.",
+            "scope": "git read-only commands only"
+        },
+        {
+            "operation": "subprocess.run",
+            "file": "scripts/commit_tool.py",
+            "reason": "Executes git add and git commit after a toolbox script passes the sandbox gate and graduated autonomy check. Only runs after explicit keep classification.",
+            "scope": "git add + git commit only, within scripts/toolbox/"
+        }
+    ],
+    "forbidden_operations": [
+        "shell=True in any subprocess call",
+        "network access from within sandbox (requests, httpx, urllib)",
+        "subprocess calls from within generated toolbox scripts",
+        "os.system in any plugin script",
+        "eval() or exec() with dynamic input"
+    ],
+    "safety_gate_reference": "skills/recursive-tool-smithing/references/safety-sandbox.md"
+}
