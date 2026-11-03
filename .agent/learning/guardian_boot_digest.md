@@ -1,22 +1,29 @@
 # 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)
 **System Status:** GREEN - Layer 1 Fast-Boot Hydrated
-**Git Environment:** Branch `feat/astra-architecture-improvements` (DIRTY)
-**Generated Time:** 2026-11-02 06:29:54 UTC
+**Git Environment:** Branch `main` (CLEAN)
+**Generated Time:** 2026-11-03 04:49:30 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.
 * **Supreme Law:** Never perform unapproved state-changing operations or git pushes.
 
 ## II. Tactical Priorities
+* Priority Mission Target (Highest Token ROI):
+  -> [MISSION-018] Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine
+     Priority Score: 400.0 | Status: PROPOSED | Surface: local
+
 * Active Context:
-  - [2026-11-01] [CONFIRMED] attention_sinks: Attention sinks mathematically require pinning Layer 1 identity at position 0 to prevent KV-cache perplexity explosion
+  - xAI Grok Bot: Remote autonomous VM with PSTN calling and disposable emails; integration via Asynchronous Git / Webhook handoffs.
+  - Anthropic Claude Duet: Enterprise connector and proactive human-in-the-loop task planner.
+  - OpenAI Dots (Operator): Sandboxed VM GUI computer-use and browser automation workhorse.
+  - Google Gemini Agent (Astra): Multimodal screen sight and Deep Research synthesis.
 
 ## III. Pre-Flight Brief (Sovereign Memory Engine)
 * Sovereign Memory Engine active (Layer 1 fast-boot + Layer 2 progressive disclosure).
 * Living Chronicle indexed: 335 entries recorded in `chronicle/ledger.json`.
 
 ## IV. Layer 1 Integrity Health Checks
-- [PASS] `context/soul.md`: Soul Identity & Anti-Asch Principles (2178 bytes)
-- [PASS] `context/user.md`: Human Partner Preferences & Conventions (1038 bytes)
-- [PASS] `context/memory.md`: Curated Long-Term Memory & Active Decisions (2720 bytes)
-- [PASS] `chronicle/ledger.json`: Episodic Chronicle Index (72597 bytes)
+- [PASS] `context/soul.md`: Soul Identity & Anti-Asch Principles [valid headers] (2396 bytes)
+- [PASS] `context/user.md`: Human Partner Preferences & Conventions [valid headers] (1337 bytes)
+- [PASS] `context/memory.md`: Curated Long-Term Memory & Active Decisions [valid headers] (7316 bytes)
+- [PASS] `chronicle/ledger.json`: Episodic Chronicle Index [2 entries] (72597 bytes)
