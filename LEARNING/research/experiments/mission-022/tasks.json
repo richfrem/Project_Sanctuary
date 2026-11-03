@@ -1,0 +1,7 @@
+[
+  {"id": "T1", "prompt": "What are the names of the files inside the context/ directory that end in .md? List them.", "expect": ["soul.md", "user.md", "memory.md"]},
+  {"id": "T2", "prompt": "Which file in LEARNING/research/missions/ is MISSION-022? Give its filename.", "expect": ["MISSION-022.json"]},
+  {"id": "T3", "prompt": "Read AGENTS.md and tell me the name of the supreme law about state-changing operations (two words).", "expect": ["human gate"]},
+  {"id": "T4", "prompt": "Read LEARNING/research/missions/MISSION-022.json and report its status field value.", "expect": ["PROPOSED"]},
+  {"id": "T5", "prompt": "List the top-level directory names in the repo that start with the letter L or C.", "expect": ["LEARNING", "chronicle", "context"]}
+]

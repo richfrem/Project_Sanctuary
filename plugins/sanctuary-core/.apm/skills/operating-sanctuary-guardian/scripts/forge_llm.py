@@ -741,6 +741,17 @@ def main():
     str_parser.add_argument("--system", help="System prompt")
     str_parser.add_argument("--auto-start", action="store_true", help="Auto-start MLX server daemon if inactive")
 
+    # loop (MISSION-022)
+    l_parser = subparsers.add_parser("loop", aliases=["agent"], help="Run bounded multi-turn read-only local agent loop")
+    l_parser.add_argument("prompt", help="Task for the agent")
+    l_parser.add_argument("--root", default=".", help="Sandbox root (read-only tools are confined here)")
+    l_parser.add_argument("--deny", action="append", help="Relative path prefix the agent may not access (repeatable)")
+    l_parser.add_argument("--max-turns", type=int, default=5, help="Turn ceiling (hard-capped at 5)")
+    l_parser.add_argument("--temp", type=float, default=0.0)
+    l_parser.add_argument("--model", default=DEFAULT_MLX_MODEL)
+    l_parser.add_argument("--host", default=DEFAULT_MLX_HOST)
+    l_parser.add_argument("--json", action="store_true", help="Emit full trace and metrics")
+
     # server
     s_parser = subparsers.add_parser("server", help="Manage MLX local server daemon lifecycle")
     s_subparsers = s_parser.add_subparsers(dest="server_action", required=True)
@@ -814,6 +825,10 @@ def main():
         )
         print(json.dumps(res, indent=2))
         sys.exit(0 if res.get("status") == "success" else 1)
+
+    elif args.command in ("loop", "agent"):
+        from local_agent_loop import run_cli
+        sys.exit(run_cli(args))
 
     elif args.command == "server":
         if not get_mlx_status:
