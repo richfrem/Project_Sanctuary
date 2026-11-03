@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-03T15:42:58.035559+00:00",
-  "total_assessments": 9,
-  "cumulative_score": 130,
-  "average_fitness": 0.963,
+  "updated_at": "2026-11-03T15:59:06.623089+00:00",
+  "total_assessments": 10,
+  "cumulative_score": 144,
+  "average_fitness": 0.96,
   "dimension_totals": {
-    "useful_outcome": 26,
-    "learning_depth": 27,
-    "verification_rigor": 27,
-    "token_economy": 23,
-    "anti_asch_integrity": 27
+    "useful_outcome": 29,
+    "learning_depth": 30,
+    "verification_rigor": 30,
+    "token_economy": 25,
+    "anti_asch_integrity": 30
   },
   "agents": {
     "astra": {
@@ -23,9 +23,9 @@
       "average_fitness": 0.967
     },
     "claude": {
-      "assessments": 4,
-      "cumulative_score": 57,
-      "average_fitness": 0.95
+      "assessments": 5,
+      "cumulative_score": 71,
+      "average_fitness": 0.947
     },
     "claude-haiku-5.5": {
       "assessments": 1,
@@ -39,6 +39,15 @@
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "58145028-ee49-4317-9468-3c74aa1ffdc4",
+      "timestamp": "2026-11-03T15:59:06.622490+00:00",
+      "task_id": "MISSION-027",
+      "agent_id": "claude",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Pre-registered; RED/GREEN; real-model validation on a spare port without touching the persistent server; reported own misses (fresh footprint, ps RSS) and the amended measurement point; corrected the mission's invalid lsof command. Economy 2: long session. Self-assessed."
+    },
     {
       "assessment_id": "27976e1e-5896-4286-b21c-a3a28ee3fbf6",
       "timestamp": "2026-11-03T15:42:58.034762+00:00",

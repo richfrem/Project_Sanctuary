@@ -1,11 +1,11 @@
 {
   "id": "MISSION-027",
   "title": "Forensic MLX Server Lifecycle Hardening: Process Group Teardown, Port Listen Scoping, and Scheduled Idle Reaping",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "macOS / Apple Silicon MLX Process & Memory Management",
   "created_at": "2026-11-03T07:20:00Z",
-  "updated_at": "2026-11-03T07:20:00Z",
+  "updated_at": "2026-11-03T15:58:53.700072+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Escalate to frontier model only if child process signal forwarding encounters macOS SIP permission errors"
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -38,6 +38,19 @@
     "anti-asch-audit",
     "peer-review-remediation"
   ],
-  "evidence": [],
-  "lessons_learned": []
+  "evidence": [
+    {
+      "timestamp": "2026-11-03T15:58:53.700072+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-027/README.md",
+      "details": "Pre-registered. RED on the old code: 4/4 defects reproduced with a stub launcher->worker tree (discovery returned a client PID; stop left the worker listening; stop reported 'stopped' while a worker ignoring SIGTERM survived; status reported the launcher). After the fix: 20/20 stub cycles and 8/8 real-model cycles (Qwen2.5-Coder-7B-4bit on spare port 8099; :8080 untouched) with verified teardown, 0 survivors, 0 client PIDs; safety rule holds (process groups containing non-MLX processes fall back to a tree kill; stale state PIDs are never signalled). Real-model footprint 4,304-4,361 MB warm; system free memory recovered about 24% -> 52% after stop. Idle reaping limited to managed servers and hooked into the Protocol 128 boot (guardian_wakeup) and closure steps. Pre-registered misses: fresh-boot footprint was 562-3,317 MB (>=4,000 predicted) and ps RSS was not <100 MB for fresh servers; the warm measurement point was added after the miss and labelled as an amendment."
+    }
+  ],
+  "lessons_learned": [
+    "The mission's literal lsof command (lsof -ti -sTCP:LISTEN :PORT) is invalid on macOS; use lsof -nP -iTCP:PORT -sTCP:LISTEN -t. Plain lsof -ti :PORT also returns client sockets.",
+    "ps RSS is not a usable memory measure for MLX (10 MB for a 4.7 GB worker on a long-lived server because the pages are compressed; 0.3-2 GB on fresh ones); use footprint -p PID on the listening worker, and measure after a warm-up generation because the model loads lazily (fresh 0.5-3.3 GB, warm about 4.3 GB).",
+    "A stop check that compares the listener PID with the launcher PID reports success while the worker survives; verify by checking nothing listens on the port and no tracked process is alive.",
+    "Signal a process group only when every member is an MLX process; otherwise tree-kill the worker and launcher. Never signal a state-file PID that no longer looks like an MLX process.",
+    "Reaping must be limited to servers the manager started; a hand-launched persistent daemon is never reaped. Pre-register thresholds with the measurement point (fresh vs warm) stated, or the first live run can miss for a reason that is about measurement, not the code."
+  ]
 }

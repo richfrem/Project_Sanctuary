@@ -1,0 +1,50 @@
+[
+  {
+    "cycle": 1,
+    "boot_latency_sec": 2.255,
+    "worker_pid": 54877,
+    "launcher_pid": 54876,
+    "listeners_while_running": [
+      54877
+    ],
+    "client_pid_returned": false,
+    "footprint_mb": 3317.0,
+    "ps_rss_mb": 2016.73,
+    "status_pid_is_worker": true,
+    "stop_status": "stopped",
+    "signalled": "process_group",
+    "verified": true,
+    "reclaimed_footprint_mb": 3620.0,
+    "processes_gone": true,
+    "listeners_after": [],
+    "free_pct_before_running_after": [
+      45,
+      14,
+      39
+    ]
+  },
+  {
+    "cycle": 2,
+    "boot_latency_sec": 1.637,
+    "worker_pid": 55030,
+    "launcher_pid": 55029,
+    "listeners_while_running": [
+      55030
+    ],
+    "client_pid_returned": false,
+    "footprint_mb": 1247.0,
+    "ps_rss_mb": 747.55,
+    "status_pid_is_worker": true,
+    "stop_status": "stopped",
+    "signalled": "process_group",
+    "verified": true,
+    "reclaimed_footprint_mb": 1657.0,
+    "processes_gone": true,
+    "listeners_after": [],
+    "free_pct_before_running_after": [
+      39,
+      36,
+      42
+    ]
+  }
+]
