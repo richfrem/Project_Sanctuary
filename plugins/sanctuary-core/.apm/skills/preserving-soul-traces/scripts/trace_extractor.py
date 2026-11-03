@@ -287,7 +287,7 @@ def main():
                     target_files.append(Path(root) / f)
     else:
         # Default scan across canonical domains
-        canonical_dirs = ["chronicle/entries", "protocols", "wiki", "context"]
+        canonical_dirs = ["chronicle/entries", "protocols", "LEARNING", "wiki", "context"]
         for cdir in canonical_dirs:
             sd = repo_root / cdir
             if sd.exists():
