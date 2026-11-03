@@ -62,7 +62,8 @@ Real-world subscription profiles in `track_budget.py`:
 1. **Pre-Dispatch Check**: Run `track_budget.py check` before launching multi-agent reviews.
 2. **Post-Dispatch Metering**: Run `track_budget.py record` immediately following execution.
 3. **Contribution Assessment**: Run `score_contribution.py` to evaluate the completed milestone.
-4. **Dashboard Inspection**: Run `visualize_economy.py` during Protocol 128 debriefs.
+4. **Popperian Mission Closure**: When an evaluated task maps to a research mission in `LEARNING/research/missions/*.json`, run `manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED --evidence <REF>` to stamp empirical proof and compound lessons learned into Layer 3.
+5. **Dashboard Inspection**: Run `visualize_economy.py` during Protocol 128 debriefs.
 
 ## Verification
 

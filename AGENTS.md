@@ -61,6 +61,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 python3 plugins/sanctuary-core/.apm/skills/managing-chronicles/scripts/chronicle_manager.py list --limit 5
 python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_manager.py list --limit 5
 python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/visualize_economy.py --mode dashboard
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py list --limit 5
 ```
 
 ## Non-Negotiable Invariants

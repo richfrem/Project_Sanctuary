@@ -310,6 +310,7 @@ def main():
     # list
     list_p = subparsers.add_parser("list", help="List missions")
     list_p.add_argument("--status", help="Filter by status")
+    list_p.add_argument("--limit", type=int, default=None, help="Limit number of items displayed")
     list_p.add_argument("--format", choices=["text", "json", "jsonl"], default="text", help="Output format")
 
     # get
@@ -347,6 +348,9 @@ def main():
 
         # Sort by priority score descending
         missions.sort(key=lambda x: x.get("priority_score", 0.0), reverse=True)
+
+        if args.limit and args.limit > 0:
+            missions = missions[:args.limit]
 
         if args.format == "json":
             print(json.dumps(missions, indent=2))
