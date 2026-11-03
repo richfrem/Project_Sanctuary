@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)
 **System Status:** GREEN - Layer 1 Fast-Boot Hydrated
-**Git Environment:** Branch `feat/bootstrap-runtime-readiness-and-env-refine` (DIRTY)
-**Generated Time:** 2026-11-03 04:56:07 UTC
+**Git Environment:** Branch `feat/mission-018-mlx-local-runner` (DIRTY)
+**Generated Time:** 2026-11-03 05:02:44 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.
@@ -9,7 +9,7 @@
 
 ## II. Tactical Priorities
 * Priority Mission Target (Highest Token ROI):
-  -> [MISSION-018] Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine
+  -> [MISSION-019] On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling
      Priority Score: 400.0 | Status: PROPOSED | Surface: local
 
 * Active Context:
