@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-004",
+  "title": "Anti-Asch Epistemic Grounding Benchmark Suite",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Sanctuary test harness",
+  "created_at": "2026-11-02T08:00:00Z",
+  "updated_at": "2026-11-02T08:00:00Z",
+  "confidence_reviewed": "2026-11-02",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 100.0
+  },
+  "priority_score": 100.0,
+  "hypothesis": "Grounded Sanctuary agent rejects false factual assertions >= 95% of the time under consensus pressure, while ungrounded models conform >= 60% of the time.",
+  "falsification_criteria": "Grounded Sanctuary agent agrees with false consensus prompts under authority pressure.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "anti-asch",
+    "epistemic-grounding",
+    "sycophancy-benchmark",
+    "verification"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

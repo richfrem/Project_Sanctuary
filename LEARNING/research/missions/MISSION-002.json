@@ -1,0 +1,42 @@
+{
+  "id": "MISSION-002",
+  "title": "Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe",
+  "status": "RESOLVED",
+  "execution_surface": "local",
+  "target_platform": "cli-agent / run_agent.py & check_routing_readiness.py",
+  "created_at": "2026-11-02T08:00:00Z",
+  "updated_at": "2026-11-03T02:45:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 100.0
+  },
+  "priority_score": 100.0,
+  "hypothesis": "A native multi-CLI fallback chain or lightweight proxy probe in cli-agent can automatically rotate between paid subscriptions (Claude Pro -> Gemini Pro -> ChatGPT Plus) upon rate limiting without running local M1 models, and pre-flight verify routing readiness before task dispatch.",
+  "falsification_criteria": "CLI fails to rotate upon 429 rate limit, attempts to execute slow local LLM inference on M1, violates Copilot work boundary, or lacks pre-flight routing check.",
+  "verdict": "CORROBORATED",
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "cli-agent",
+    "fallback-chain",
+    "subscription-pooling",
+    "routing-readiness"
+  ],
+  "evidence": [
+    {
+      "timestamp": "2026-11-03T02:44:00Z",
+      "agent": "Antigravity & Codex (Luna)",
+      "citation": "agent-plugins-skills#743, #744",
+      "details": "Implemented check_routing_readiness.py and multi-backend fallback chain in run_agent.py (--fallback-chain agy,codex). Verified zero-daemon rotation, 429 rate-limit regex detection, and strict --allow-copilot boundary with 71 passing unit tests."
+    }
+  ],
+  "lessons_learned": [
+    "Commercial consumer OAuth subscriptions cannot be pooled via local HTTP reverse proxy servers without raw API keys.",
+    "Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provider terms of service.",
+    "Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "MISSION-003",
+  "title": "Offline Sovereign Model Quantization (Qwen2 GGUF)",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local Ollama / llama.cpp (WSL2/macOS)",
+  "created_at": "2026-11-02T08:00:00Z",
+  "updated_at": "2026-11-02T08:00:00Z",
+  "confidence_reviewed": "2026-11-02",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "A 7B local Qwen2 model fine-tuned on soul_traces.jsonl can execute Protocol 128 orientation and basic code reviews offline with 0 API tokens.",
+  "falsification_criteria": "Fine-tuned model hallucinates fake commands or fails basic Anti-Asch sycophancy tests compared to base model.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "qwen2",
+    "gguf",
+    "offline-sovereignty",
+    "quantization",
+    "fine-tuning"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

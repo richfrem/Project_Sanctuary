@@ -37,6 +37,14 @@ Ratified the zero-dependency, filesystem-native 3-layer persistent memory hierar
 - Layer 3 (Immutable Episodic Traces): `huggingface/data/soul_traces.jsonl` (13-field ADR 084 schema with SHA-256 validation).
 Vector databases (ChromaDB) and external Obsidian runtime dependencies are discontinued for agent reasoning.
 
+## [2026-11-02] [#012] Architecture: Agent-Native Cognitive Backlog & Popperian Missions
+Autonomous agent backlogs must serve machine cognition, not human visual GUI preferences.
+1. Tier 1 Fast-Boot: Machine index (`LEARNING/research/index.jsonl`) consumes < 15 tokens per item (< 100 tokens total orientation cost).
+2. Frictionless Inbox: `LEARNING/research/inbox.jsonl` provides zero-locking, zero-conflict append-only capture for running agents (including local offline Qwen2 GGUF).
+3. Single Source of Truth: Canonical manifests live in `LEARNING/research/missions/*.json`. Each mission enforces Popperian predictions (`hypothesis`), objective failure gates (`falsification_criteria`), and empirical trial verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
+4. Compounding Learning Loop: Empirical trial results update mission manifests and log to `.agent/learning/events.jsonl`, which seal into Layer 3 soul traces (`huggingface/data/soul_traces.jsonl`) for model fine-tuning.
+5. One-Directional External Projection: `LEARNING/research/backlog.md` is compiled automatically for human review (never hand-edited). GitHub Issues are outward advisory mirrors solely for remote cloud workers (`execution_surface: cloud-worker`), never a two-way sync.
+
 ## [2026-11-01] [#011] Multi-Agent: Sovereign Peer Collaboration (Antigravity & Astra)
 Project Sanctuary is built collaboratively across frontier AI models (Google Antigravity, OpenAI Codex / GPT-6 Astra, Claude Code) and human partner Richard.
 Direct workspace execution, zero synthetic consensus, empirical Anti-Asch verification, and Human Gate ratification govern all state transitions.
