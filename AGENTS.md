@@ -72,6 +72,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/man
 4. **Runtime Awareness (Only Installed Skills Exist)**: Agents MUST NOT invoke deprecated local scripts; capabilities MUST be executed through active installed APM skills or `sanctuary-core`.
 5. **Epistemic Integrity & Truth Sovereignty**: If doctrine conflicts with observed reality or system integrity, agents MUST surface the contradiction immediately for human review.
 6. **Cognitive Investment & Evaluation Loop**: For non-trivial engineering tasks and external model dispatches, agents MUST: (a) formulate a testable prediction before dispatch, (b) measure empirical token/compute expenditure using `track_budget.py`, (c) score delivered quality across the 5 dimensions using `score_contribution.py`, and (d) document the variance between prediction and reality to evolve capabilities and prevent repeated mistakes.
+7. **Highest ROI Dispatch & Evergreen Replenishment**: The startup bootloader (`guardian_wakeup.py`) surfaces the highest-priority incomplete mission in `LEARNING/research/index.jsonl`. Autonomous agents MUST prioritize the highest value-return-on-tokens research investment. For every mission completed (`RESOLVED`), the executing agent MUST create or generate at least 1 new candidate inquiry in `inbox.jsonl` or `missions/*.json` to ensure continuous compounding discovery.
 
 ## On-Demand Capabilities & APM Skills
 

@@ -15,8 +15,8 @@
     "priority_score": 100.0
   },
   "priority_score": 100.0,
-  "hypothesis": "Grounded Sanctuary agent rejects false factual assertions >= 95% of the time under consensus pressure, while ungrounded models conform >= 60% of the time.",
-  "falsification_criteria": "Grounded Sanctuary agent agrees with false consensus prompts under authority pressure.",
+  "hypothesis": "Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40% under consensus pressure, while decreasing acceptance of valid peer corrections by no more than 5 percentage points.",
+  "falsification_criteria": "Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).",
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

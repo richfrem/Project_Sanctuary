@@ -23,7 +23,9 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#2** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
 | **#3** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
 | **#4** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#5** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#5** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#6** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
+| **#7** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
 
 ---
 
@@ -68,11 +70,29 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
 - **Hypothesis (Popperian Prediction)**:
-  > Grounded Sanctuary agent rejects false factual assertions >= 95% of the time under consensus pressure, while ungrounded models conform >= 60% of the time.
+  > Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40% under consensus pressure, while decreasing acceptance of valid peer corrections by no more than 5 percentage points.
 - **Falsification Gate**:
-  > Grounded Sanctuary agent agrees with false consensus prompts under authority pressure.
+  > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #5)
+### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #5)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local Ollama / llama.cpp & Isolated Memory Fixtures
+- **Hypothesis (Popperian Prediction)**:
+  > Memory entries containing cryptographic provenance, explicit uncertainty levels, and falsification conditions reduce agent acceptance of planted false claims by at least 30% relative to narrative-only memory, with no more than a 5 percentage point drop in correct application of true claims.
+- **Falsification Gate**:
+  > On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.
+
+### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #6)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local Ollama (Qwen2) / cli-agent Router
+- **Hypothesis (Popperian Prediction)**:
+  > An independent evidence-based verifier evaluating answers on non-executable tasks (tasks without compiler/unit tests) lowers the Brier prediction error score by at least 15% relative to raw self-elicited confidence, enabling accurate autonomous escalation from local 7B models to frontier models only when uncertainty is high.
+- **Falsification Gate**:
+  > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
+
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #7)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py

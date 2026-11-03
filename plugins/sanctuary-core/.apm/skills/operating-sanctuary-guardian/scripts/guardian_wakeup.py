@@ -122,13 +122,42 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     return health_status, checks
 
 
-def get_tactical_priorities(project_root: Path) -> str:
+def get_top_mission(project_root: Path) -> dict | None:
+    """Retrieves highest-priority incomplete research mission from index.jsonl."""
+    index_file = project_root / "LEARNING" / "research" / "index.jsonl"
+    if not index_file.exists():
+        return None
+    try:
+        with open(index_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                data = json.loads(line)
+                status = str(data.get("status", "")).upper()
+                if status not in ("RESOLVED", "ARCHIVED"):
+                    return data
+    except Exception:
+        pass
+    return None
+
+
+def get_tactical_priorities(project_root: Path, top_mission: dict | None = None) -> str:
+    parts = []
+    if top_mission:
+        parts.append(
+            f"* Priority Mission Target (Highest Token ROI):\n"
+            f"  -> [{top_mission.get('id')}] {top_mission.get('title')}\n"
+            f"     Priority Score: {top_mission.get('priority_score')} | Status: {top_mission.get('status')} | Surface: {top_mission.get('execution_surface', 'local')}"
+        )
     memory_file = project_root / "context" / "memory.md"
     if memory_file.exists():
         lines = [line.strip() for line in memory_file.read_text(encoding="utf-8").splitlines() if line.strip().startswith("- ")]
         if lines:
-            return "* Active Context:\n" + "\n".join(f"  {line}" for line in lines[:4])
-    return "* Sovereign engineering habitat active. APM capabilities nominal."
+            parts.append("* Active Context:\n" + "\n".join(f"  {line}" for line in lines[:4]))
+    if not parts:
+        return "* Sovereign engineering habitat active. APM capabilities nominal."
+    return "\n\n".join(parts)
 
 
 def get_preflight_brief(project_root: Path) -> str:
@@ -156,6 +185,7 @@ def main():
     project_root = get_project_root()
     git_meta = get_git_telemetry(project_root)
     health_status, checks = check_layer1_health(project_root)
+    top_mission = get_top_mission(project_root)
 
     digest_lines = [
         "# 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)",
@@ -168,7 +198,7 @@ def main():
         "* **Supreme Law:** Never perform unapproved state-changing operations or git pushes.",
         "",
         "## II. Tactical Priorities",
-        get_tactical_priorities(project_root),
+        get_tactical_priorities(project_root, top_mission),
         "",
         "## III. Pre-Flight Brief (Sovereign Memory Engine)",
         get_preflight_brief(project_root),
@@ -201,6 +231,7 @@ def main():
             "git": git_meta,
             "digest_path": digest_path_str,
             "digest_persisted": bool(args.write_digest),
+            "top_incomplete_mission": top_mission,
             "checks": checks,
             "total_time_ms": total_time_ms
         }
