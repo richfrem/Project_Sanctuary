@@ -1,0 +1,1640 @@
+{
+  "summary": {
+    "temperature": 0.0,
+    "n": 30,
+    "correct_rate": 0.8333333333333334,
+    "completion_rate": 0.9,
+    "unassisted_correct_rate": 0.7666666666666667,
+    "correct_within_3_turns": 0.6333333333333333,
+    "repetition_falsified": 0,
+    "context_exceeded": 0,
+    "repeat_interventions": 1,
+    "tasks_with_final_turn_nudge": 6,
+    "by_tier": {
+      "scalar": 1.0,
+      "locate": 0.6,
+      "dirset": 0.9
+    },
+    "max_prompt_tokens": 3050,
+    "mean_seconds": 22.2
+  },
+  "rows": [
+    {
+      "id": "S1",
+      "tier": "scalar",
+      "expected": "RESOLVED",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "RESOLVED",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1348,
+      "seconds": 15.2,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-020.json to find the value of its \"status\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-020.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-020.json to find the value of its \"status\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-020.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-020\",\n  \"title\": \"Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"multi-repo\",\n  \"target_platform\": \"richfrem/agent-plugins-skills (cli-agent) & Global APM Harness\",\n  \"created_at\": \"2026-11-"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>RESOLVED</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S2",
+      "tier": "scalar",
+      "expected": "400.0",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "400.0",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1235,
+      "seconds": 16.7,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-018.json to find the value of its \"priority_score\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-018.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-018.json to find the value of its \"priority_score\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-018.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-018\",\n  \"title\": \"Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Apple Silicon M1 (16GB Unified Memory) via Apple MLX (mlx-lm)\",\n  \"created_at\": \"2026-11-03T04"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the value of the \"priority_score\" field.</scratchpad>\n<final_answer>400.0</final_answer>",
+          "scratchpad": "The observation contains the value of the \"priority_score\" field."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S3",
+      "tier": "scalar",
+      "expected": "local",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "local",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 831,
+      "seconds": 11.7,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-012.json to find the value of its \"execution_surface\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-012.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-012.json to find the value of its \"execution_surface\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-012.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-012\",\n  \"title\": \"Selective Forgetting & Counterexample Memory Compression\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"managing-sovereign-memory / disclose.py\",\n  \"created_at\": \"2026-11-03T03:20:00Z\",\n  \"updated_at\": \"2026-11-03T03:20:00Z\",\n  \"c"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>local</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S4",
+      "tier": "scalar",
+      "expected": "PROPOSED",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "PROPOSED",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 865,
+      "seconds": 15.6,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-006.json to find the value of its \"status\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-006.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-006.json to find the value of its \"status\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-006.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-006\",\n  \"title\": \"Provenance-Tagged Memory vs. Planted Falsehoods\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Local Ollama / llama.cpp & Isolated Memory Fixtures\",\n  \"created_at\": \"2026-11-03T03:15:00Z\",\n  \"updated_at\": \"2026-11-03T03:15:00Z\",\n "
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>PROPOSED</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S5",
+      "tier": "scalar",
+      "expected": "62.5",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "62.5",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 849,
+      "seconds": 16.0,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-011.json to find the value of its \"priority_score\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-011.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-011.json to find the value of its \"priority_score\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-011.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-011\",\n  \"title\": \"Distilling Investigation Principles into Local Models\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"forging-sovereign-models & Local Ollama\",\n  \"created_at\": \"2026-11-03T03:20:00Z\",\n  \"updated_at\": \"2026-11-03T03:20:00Z\",\n  \"conf"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>62.5</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S6",
+      "tier": "scalar",
+      "expected": "cloud-worker",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "cloud-worker",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 831,
+      "seconds": 18.1,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-013.json to find the value of its \"execution_surface\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-013.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-013.json to find the value of its \"execution_surface\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-013.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-013\",\n  \"title\": \"Collective Intelligence & Multi-Agent Asymmetric Disagreement\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"cloud-worker\",\n  \"target_platform\": \"orchestrating-agent-work & multi-vendor CLI\",\n  \"created_at\": \"2026-11-03T03:20:00Z\",\n  \"updated_at\": \"2026-11-03T"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>cloud-worker</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S7",
+      "tier": "scalar",
+      "expected": "IN_PROGRESS",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "IN_PROGRESS",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 884,
+      "seconds": 16.0,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-017.json to find the value of its \"status\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-017.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-017.json to find the value of its \"status\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-017.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-017\",\n  \"title\": \"Local SSD Space Reclamation & External Storage Archive Pipeline\",\n  \"status\": \"IN_PROGRESS\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"macOS M1 (APFS / External USB-C Storage)\",\n  \"created_at\": \"2026-11-03T04:12:00Z\",\n  \"updated_at\": \"2026-11-03T04:30"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>IN_PROGRESS</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S8",
+      "tier": "scalar",
+      "expected": "200.0",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "200.0",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1238,
+      "seconds": 20.2,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-016.json to find the value of its \"priority_score\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-016.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-016.json to find the value of its \"priority_score\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-016.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-016\",\n  \"title\": \"Cheapest-Viable Model Routing & Token-Return Optimization\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"managing-sovereign-memory / manage_backlog.py & cli-agent\",\n  \"created_at\": \"2026-11-03T03:30:00Z\",\n  \"updated_at\": \"2026-11-"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>200.0</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S9",
+      "tier": "scalar",
+      "expected": "local",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "local",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1214,
+      "seconds": 19.1,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-021.json to find the value of its \"execution_surface\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-021.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-021.json to find the value of its \"execution_surface\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-021.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-021\",\n  \"title\": \"Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Apple Silicon M1 (16GB Unified Memory) via Apple MLX & OpenAI-Compatible API\",\n  \"created_at"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>local</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "S10",
+      "tier": "scalar",
+      "expected": "PROPOSED",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "PROPOSED",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 824,
+      "seconds": 15.5,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to read the content of LEARNING/research/missions/MISSION-005.json to find the value of its \"status\" field.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-005.json\"}}>",
+          "scratchpad": "I need to read the content of LEARNING/research/missions/MISSION-005.json to find the value of its \"status\" field.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-005.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-005\",\n  \"title\": \"Asynchronous Multi-Bot DAG Barrier Orchestration\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"cloud-worker\",\n  \"target_platform\": \"orchestrating-agent-work / graph_runner.py\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_at\": \"2026-11-02T08:00:00Z\",\n  "
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the value of the \"status\" field.</scratchpad>\n<final_answer>PROPOSED</final_answer>",
+          "scratchpad": "The observation contains the value of the \"status\" field."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "L1",
+      "tier": "locate",
+      "expected": "MISSION-017",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-017",
+      "turns": 4,
+      "tool_calls": 3,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1540,
+      "seconds": 23.7,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"archive\" in its title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"archive\" in its title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search for the word \"archive\" in each mission file to find the one with the title containing that word.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"archive\", \"path\": \"LEARNING/research/missions/\"}}}",
+          "scratchpad": "I need to search for the word \"archive\" in each mission file to find the one with the title containing that word.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "archive",
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-017.json:3: \"title\": \"Local SSD Space Reclamation & External Storage Archive Pipeline\",\nLEARNING/research/missions/MISSION-017.json:19: \"falsification_criteria\": \"Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 "
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>I need to read the content of MISSION-017.json to extract the mission id.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-017.json\"}}",
+          "scratchpad": "I need to read the content of MISSION-017.json to extract the mission id.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-017.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-017\",\n  \"title\": \"Local SSD Space Reclamation & External Storage Archive Pipeline\",\n  \"status\": \"IN_PROGRESS\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"macOS M1 (APFS / External USB-C Storage)\",\n  \"created_at\": \"2026-11-03T04:12:00Z\",\n  \"updated_at\": \"2026-11-03T04:30"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>The mission id is already provided in the observation.</scratchpad>\n<final_answer>MISSION-017</final_answer>",
+          "scratchpad": "The mission id is already provided in the observation."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "L2",
+      "tier": "locate",
+      "expected": "MISSION-002",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-002",
+      "turns": 5,
+      "tool_calls": 4,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": true,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1814,
+      "seconds": 30.6,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"failover\" in its title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"failover\" in its title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search for \"failover\" in each mission file to find the correct one.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"failover\", \"path\": \"LEARNING/research/missions/MISSION-001.json\"}}",
+          "scratchpad": "I need to search for \"failover\" in each mission file to find the correct one.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "failover",
+              "path": "LEARNING/research/missions/MISSION-001.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>I need to search for \"failover\" in the next mission file.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"failover\", \"path\": \"LEARNING/research/missions/MISSION-002.json\"}}",
+          "scratchpad": "I need to search for \"failover\" in the next mission file.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "failover",
+              "path": "LEARNING/research/missions/MISSION-002.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-002.json:3: \"title\": \"Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe\",\nLEARNING/research/missions/MISSION-002.json:49: \"Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provide"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>I have found the mission file containing \"failover\". Now, I need to extract the mission id from it.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-002.json\"}}",
+          "scratchpad": "I have found the mission file containing \"failover\". Now, I need to extract the mission id from it.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-002.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-002\",\n  \"title\": \"Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"cli-agent / run_agent.py & check_routing_readiness.py\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_a"
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>The mission id is clearly stated in the JSON content.</scratchpad>\n<final_answer>MISSION-002</final_answer>",
+          "scratchpad": "The mission id is clearly stated in the JSON content."
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L3",
+      "tier": "locate",
+      "expected": "MISSION-012",
+      "grade": {
+        "correct": false,
+        "reason": "no final answer"
+      },
+      "status": "turn_limit",
+      "final_answer": null,
+      "turns": 5,
+      "tool_calls": 5,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 3050,
+      "seconds": 46.3,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"counterexample\" in its title. I'll search for files matching the pattern LEARNING/research/missions/*.json.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"counterexample\" in its title. I'll search for files matching the pattern LEARNING/research/missions/*.json.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search through each mission file to find the one with \"counterexample\" in its title. I'll read the content of each file and look for the title.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-001.json\"}}",
+          "scratchpad": "I need to search through each mission file to find the one with \"counterexample\" in its title. I'll read the content of each file and look for the title.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-001.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-001\",\n  \"title\": \"Grok Bot Cloud VM, Infinite Loops & Operational Rails\",\n  \"status\": \"STAGED\",\n  \"execution_surface\": \"cloud-worker\",\n  \"target_platform\": \"Cursor Premium ($30/mo) / Grok Bot\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_at\": \"2026-11-02T08:00:00Z\",\n  \"conf"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>The title of MISSION-001 does not contain \"counterexample\". I'll move on to the next mission file.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-002.json\"}}",
+          "scratchpad": "The title of MISSION-001 does not contain \"counterexample\". I'll move on to the next mission file.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-002.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-002\",\n  \"title\": \"Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"cli-agent / run_agent.py & check_routing_readiness.py\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_a"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>The title of MISSION-002 does not contain \"counterexample\". I'll move on to the next mission file.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-003.json\"}}",
+          "scratchpad": "The title of MISSION-002 does not contain \"counterexample\". I'll move on to the next mission file.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-003.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-003\",\n  \"title\": \"Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Apple Silicon M1 (16GB Unified Memory) via Apple MLX (mlx-lm) & Ollama Metal\",\n  \"created_at\": \"2026-11-02T08:00:"
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>The title of MISSION-003 does not contain \"counterexample\". I'll move on to the next mission file.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-004.json\"}}",
+          "scratchpad": "The title of MISSION-003 does not contain \"counterexample\". I'll move on to the next mission file.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-004.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-004\",\n  \"title\": \"Anti-Asch Epistemic Grounding Benchmark Suite\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Sanctuary test harness\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_at\": \"2026-11-02T08:00:00Z\",\n  \"confidence_reviewed\": \"2026-1"
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L4",
+      "tier": "locate",
+      "expected": "MISSION-020",
+      "grade": {
+        "correct": false,
+        "reason": "no final answer"
+      },
+      "status": "turn_limit",
+      "final_answer": null,
+      "turns": 5,
+      "tool_calls": 5,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1658,
+      "seconds": 31.5,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"reinstallation\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"reinstallation\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search each mission file for the word \"reinstallation\" and extract the mission id if found.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"reinstallation\", \"path\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to search each mission file for the word \"reinstallation\" and extract the mission id if found.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "reinstallation",
+              "path": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>No matches found in the initial search. I will check each mission file individually for the word \"reinstallation\".</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "No matches found in the initial search. I will check each mission file individually for the word \"reinstallation\".",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "MISSION-001.json\nMISSION-002.json\nMISSION-003.json\nMISSION-004.json\nMISSION-005.json\nMISSION-006.json\nMISSION-007.json\nMISSION-008.json\nMISSION-009.json\nMISSION-010.json\nMISSION-011.json\nMISSION-012.json\nMISSION-013.json\nMISSION-014.json\nMISSION-015.json\nMISSION-016.json\nMISSION-017.json\nMISSION-018"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>I will read each mission file individually to find the word \"reinstallation\" and extract the mission id if found.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-001.json\"}}",
+          "scratchpad": "I will read each mission file individually to find the word \"reinstallation\" and extract the mission id if found.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-001.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-001\",\n  \"title\": \"Grok Bot Cloud VM, Infinite Loops & Operational Rails\",\n  \"status\": \"STAGED\",\n  \"execution_surface\": \"cloud-worker\",\n  \"target_platform\": \"Cursor Premium ($30/mo) / Grok Bot\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_at\": \"2026-11-02T08:00:00Z\",\n  \"conf"
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>No matches found in the first mission file. I will continue with the next mission file.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-002.json\"}}",
+          "scratchpad": "No matches found in the first mission file. I will continue with the next mission file.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-002.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-002\",\n  \"title\": \"Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"cli-agent / run_agent.py & check_routing_readiness.py\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_a"
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L5",
+      "tier": "locate",
+      "expected": "MISSION-019",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-019",
+      "turns": 4,
+      "tool_calls": 3,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1751,
+      "seconds": 29.0,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"controller\" in its title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"controller\" in its title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search for \"controller\" in the title of each mission file.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"controller\", \"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "I need to search for \"controller\" in the title of each mission file.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "controller",
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-019.json:3: \"title\": \"On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling\",\nLEARNING/research/missions/MISSION-019.json:42: \"Wired lifecycle controller directly into forge_llm.py (server start/stop/status/ensure/reap subcommands and --auto-"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>I need to extract the mission id from the file containing \"controller\" in its title.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-019.json\"}}",
+          "scratchpad": "I need to extract the mission id from the file containing \"controller\" in its title.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-019.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-019\",\n  \"title\": \"On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Apple Silicon M1 (16GB Unified Memory) via Apple MLX\",\n  \"created_at\": \"2026-11-03T05:05:00Z\",\n  \"updated_"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>The mission id is already extracted from the file content.</scratchpad>\n<final_answer>MISSION-019</final_answer>",
+          "scratchpad": "The mission id is already extracted from the file content."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "L6",
+      "tier": "locate",
+      "expected": "MISSION-007",
+      "grade": {
+        "correct": false,
+        "reason": "expected='mission-007' got='not found'"
+      },
+      "status": "final",
+      "final_answer": "NOT FOUND",
+      "turns": 5,
+      "tool_calls": 4,
+      "repeat_interventions": 1,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": true,
+      "max_identical_calls": 2,
+      "max_prompt_tokens": 1102,
+      "seconds": 61.3,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"calibrated\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"calibrated\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search each mission file for the word \"calibrated\" and extract the mission id if found.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"calibrated\", \"path\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to search each mission file for the word \"calibrated\" and extract the mission id if found.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "calibrated",
+              "path": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>No matches found in the initial search. I need to check if there are any mission files with \"calibrated\" in their title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*calibrated*.json\"}}",
+          "scratchpad": "No matches found in the initial search. I need to check if there are any mission files with \"calibrated\" in their title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*calibrated*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>No matches found in the second search. I need to check if there are any mission files with \"calibrated\" in their title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*calibrated*.json\"}}",
+          "scratchpad": "No matches found in the second search. I need to check if there are any mission files with \"calibrated\" in their title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*calibrated*.json"
+            }
+          },
+          "observation": "NOTICE: you already made this exact call; its result is above. Do not repeat it."
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>No matches found in the third search. The mission file with \"calibrated\" in its title does not exist.</scratchpad>\n<final_answer>NOT FOUND</final_answer>",
+          "scratchpad": "No matches found in the third search. The mission file with \"calibrated\" in its title does not exist."
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L7",
+      "tier": "locate",
+      "expected": "MISSION-011",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-011",
+      "turns": 5,
+      "tool_calls": 4,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": true,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1093,
+      "seconds": 29.3,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"distilling\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"distilling\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search each mission file for the title containing \"distilling\" and extract the mission id.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"distilling\", \"path\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to search each mission file for the title containing \"distilling\" and extract the mission id.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "distilling",
+              "path": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>No matches found in the initial search. I will try a more specific search pattern to narrow down the results.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/distilling*.json\"}}",
+          "scratchpad": "No matches found in the initial search. I will try a more specific search pattern to narrow down the results.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/distilling*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>No matches found with the specific pattern. I will search all files in the directory for the title containing \"distilling\" and extract the mission id.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"distilling\", \"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "No matches found with the specific pattern. I will search all files in the directory for the title containing \"distilling\" and extract the mission id.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "distilling",
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-011.json:3: \"title\": \"Distilling Investigation Principles into Local Models\","
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>The mission id is found in the search results.</scratchpad>\n<final_answer>MISSION-011</final_answer>",
+          "scratchpad": "The mission id is found in the search results."
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L8",
+      "tier": "locate",
+      "expected": "MISSION-006",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-006",
+      "turns": 4,
+      "tool_calls": 3,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1604,
+      "seconds": 37.3,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"provenance\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"provenance\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search each mission file for the word \"provenance\" to find the correct mission.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"provenance\", \"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "I need to search each mission file for the word \"provenance\" to find the correct mission.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "provenance",
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-006.json:3: \"title\": \"Provenance-Tagged Memory vs. Planted Falsehoods\",\nLEARNING/research/missions/MISSION-006.json:18: \"hypothesis\": \"Memory entries containing cryptographic provenance, explicit uncertainty levels, and falsification conditions reduce agent accepta"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>The mission file containing \"provenance\" is MISSION-006.json. I need to read this file to find the mission id.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-006.json\"}}",
+          "scratchpad": "The mission file containing \"provenance\" is MISSION-006.json. I need to read this file to find the mission id.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-006.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-006\",\n  \"title\": \"Provenance-Tagged Memory vs. Planted Falsehoods\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Local Ollama / llama.cpp & Isolated Memory Fixtures\",\n  \"created_at\": \"2026-11-03T03:15:00Z\",\n  \"updated_at\": \"2026-11-03T03:15:00Z\",\n "
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>The mission id is MISSION-006.</scratchpad>\n<final_answer>MISSION-006</final_answer>",
+          "scratchpad": "The mission id is MISSION-006."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "L9",
+      "tier": "locate",
+      "expected": "MISSION-010",
+      "grade": {
+        "correct": false,
+        "reason": "no final answer"
+      },
+      "status": "turn_limit",
+      "final_answer": null,
+      "turns": 5,
+      "tool_calls": 5,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": true,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1664,
+      "seconds": 54.0,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"correlation\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"correlation\" in its title under LEARNING/research/missions/. I will search for files matching the pattern.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search each mission file for the word \"correlation\" and extract the mission id if found.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"correlation\", \"path\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to search each mission file for the word \"correlation\" and extract the mission id if found.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "correlation",
+              "path": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "(no matches)"
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>No matches found in the initial search. I will check each mission file individually to see if \"correlation\" is present.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "No matches found in the initial search. I will check each mission file individually to see if \"correlation\" is present.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "MISSION-001.json\nMISSION-002.json\nMISSION-003.json\nMISSION-004.json\nMISSION-005.json\nMISSION-006.json\nMISSION-007.json\nMISSION-008.json\nMISSION-009.json\nMISSION-010.json\nMISSION-011.json\nMISSION-012.json\nMISSION-013.json\nMISSION-014.json\nMISSION-015.json\nMISSION-016.json\nMISSION-017.json\nMISSION-018"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>I will read the first mission file to check if it contains \"correlation\". If not, I will move to the next one.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-001.json\"}}",
+          "scratchpad": "I will read the first mission file to check if it contains \"correlation\". If not, I will move to the next one.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-001.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-001\",\n  \"title\": \"Grok Bot Cloud VM, Infinite Loops & Operational Rails\",\n  \"status\": \"STAGED\",\n  \"execution_surface\": \"cloud-worker\",\n  \"target_platform\": \"Cursor Premium ($30/mo) / Grok Bot\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_at\": \"2026-11-02T08:00:00Z\",\n  \"conf"
+        },
+        {
+          "turn": 5,
+          "reply": "<scratchpad>No \"correlation\" found in the first mission file. I will check the next one.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-002.json\"}}",
+          "scratchpad": "No \"correlation\" found in the first mission file. I will check the next one.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-002.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-002\",\n  \"title\": \"Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe\",\n  \"status\": \"RESOLVED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"cli-agent / run_agent.py & check_routing_readiness.py\",\n  \"created_at\": \"2026-11-02T08:00:00Z\",\n  \"updated_a"
+        }
+      ],
+      "unassisted": false
+    },
+    {
+      "id": "L10",
+      "tier": "locate",
+      "expected": "MISSION-008",
+      "grade": {
+        "correct": true,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "MISSION-008",
+      "turns": 4,
+      "tool_calls": 3,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 1393,
+      "seconds": 30.3,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to find a mission file with \"functional\" in its title under LEARNING/research/missions/.</scratchpad>\n<{\"name\": \"find_files\", \"arguments\": {\"pattern\": \"LEARNING/research/missions/*.json\"}}",
+          "scratchpad": "I need to find a mission file with \"functional\" in its title under LEARNING/research/missions/.",
+          "call": {
+            "name": "find_files",
+            "arguments": {
+              "pattern": "LEARNING/research/missions/*.json"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-001.json\nLEARNING/research/missions/MISSION-002.json\nLEARNING/research/missions/MISSION-003.json\nLEARNING/research/missions/MISSION-004.json\nLEARNING/research/missions/MISSION-005.json\nLEARNING/research/missions/MISSION-006.json\nLEARNING/research/missions/MISSION-0"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>I need to search for \"functional\" in each mission file to find the correct one.</scratchpad>\n<{\"name\": \"search_text\", \"arguments\": {\"query\": \"functional\", \"path\": \"LEARNING/research/missions/\"}}",
+          "scratchpad": "I need to search for \"functional\" in each mission file to find the correct one.",
+          "call": {
+            "name": "search_text",
+            "arguments": {
+              "query": "functional",
+              "path": "LEARNING/research/missions/"
+            }
+          },
+          "observation": "LEARNING/research/missions/MISSION-008.json:3: \"title\": \"Functional Cognitive Continuity & Resumption Checkpoints\","
+        },
+        {
+          "turn": 3,
+          "reply": "<scratchpad>I have found the mission file with \"functional\" in its title. Now, I need to extract the mission id from it.</scratchpad>\n<{\"name\": \"read_file\", \"arguments\": {\"path\": \"LEARNING/research/missions/MISSION-008.json\"}}",
+          "scratchpad": "I have found the mission file with \"functional\" in its title. Now, I need to extract the mission id from it.",
+          "call": {
+            "name": "read_file",
+            "arguments": {
+              "path": "LEARNING/research/missions/MISSION-008.json"
+            }
+          },
+          "observation": "{\n  \"id\": \"MISSION-008\",\n  \"title\": \"Functional Cognitive Continuity & Resumption Checkpoints\",\n  \"status\": \"PROPOSED\",\n  \"execution_surface\": \"local\",\n  \"target_platform\": \"Sanctuary Memory Layers (context/ & LEARNING/)\",\n  \"created_at\": \"2026-11-03T03:20:00Z\",\n  \"updated_at\": \"2026-11-03T03:20:00Z"
+        },
+        {
+          "turn": 4,
+          "reply": "<scratchpad>The mission id is already extracted from the file content. The mission id is MISSION-008.</scratchpad>\n<final_answer>MISSION-008</final_answer>",
+          "scratchpad": "The mission id is already extracted from the file content. The mission id is MISSION-008."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D1",
+      "tier": "dirset",
+      "expected": [
+        "evaluating-agent-work",
+        "forging-sovereign-models",
+        "managing-chronicles",
+        "managing-protocols",
+        "managing-sovereign-memory",
+        "operating-sanctuary-guardian",
+        "preserving-soul-traces"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "evaluating-agent-work, forging-sovereign-models, managing-chronicles, managing-protocols, managing-sovereign-memory, operating-sanctuary-guardian, preserving-soul-traces",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 439,
+      "seconds": 19.4,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need the entries of plugins/sanctuary-core/.apm/skills/ to find the subdirectories.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"plugins/sanctuary-core/.apm/skills/\"}}",
+          "scratchpad": "I need the entries of plugins/sanctuary-core/.apm/skills/ to find the subdirectories.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "plugins/sanctuary-core/.apm/skills/"
+            }
+          },
+          "observation": "evaluating-agent-work/\nforging-sovereign-models/\nmanaging-chronicles/\nmanaging-protocols/\nmanaging-sovereign-memory/\noperating-sanctuary-guardian/\npreserving-soul-traces/"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>evaluating-agent-work, forging-sovereign-models, managing-chronicles, managing-protocols, managing-sovereign-memory, operating-sanctuary-guardian, preserving-soul-traces</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D2",
+      "tier": "dirset",
+      "expected": [
+        "concepts",
+        "philosophy",
+        "procedures",
+        "research",
+        "security",
+        "topics"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "concepts, philosophy, procedures, research, security, topics",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 401,
+      "seconds": 7.7,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need the entries of LEARNING/ to find its subdirectories.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"LEARNING/\"}}",
+          "scratchpad": "I need the entries of LEARNING/ to find its subdirectories.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "LEARNING/"
+            }
+          },
+          "observation": "INDEX.md\nREADME.md\nassociative_architecture_brief.md\ncalibration_log.json\nconcepts/\nphilosophy/\nprocedures/\nresearch/\nsecurity/\ntopics/"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The subdirectories directly inside LEARNING/ are concepts, philosophy, procedures, research, security, and topics.</scratchpad>\n<final_answer>concepts, philosophy, procedures, research, security, topics</final_answer>",
+          "scratchpad": "The subdirectories directly inside LEARNING/ are concepts, philosophy, procedures, research, security, and topics."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D3",
+      "tier": "dirset",
+      "expected": [
+        "integrations",
+        "modes"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "integrations, modes",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 476,
+      "seconds": 11.7,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need the entries of plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/ to find the subdirectories.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/\"}}",
+          "scratchpad": "I need the entries of plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/ to find the subdirectories.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/"
+            }
+          },
+          "observation": "acceptance-criteria.md\nbootstrapping.md\ncognitive-primer.md\nintegrations/\nlocal-agent-execution-loop.md\nlocal-mlx-server-lifecycle.md\nlocal-tool-use-and-structured-json.md\nmodes/\nprotocol-128.md"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the names of files and subdirectories. I need to filter out the files and list only the subdirectories.</scratchpad>\n<final_answer>integrations, modes</final_answer>",
+          "scratchpad": "The observation contains the names of files and subdirectories. I need to filter out the files and list only the subdirectories."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D4",
+      "tier": "dirset",
+      "expected": [
+        "acceptance-criteria.md",
+        "bootstrapping.md",
+        "cognitive-primer.md",
+        "local-agent-execution-loop.md",
+        "local-mlx-server-lifecycle.md",
+        "local-tool-use-and-structured-json.md",
+        "protocol-128.md"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "acceptance-criteria.md,bootstrapping.md,cognitive-primer.md,local-agent-execution-loop.md,local-mlx-server-lifecycle.md,local-tool-use-and-structured-json.md,protocol-128.md",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 471,
+      "seconds": 23.0,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to list the files with the .md extension directly inside the specified directory.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/\"}}",
+          "scratchpad": "I need to list the files with the .md extension directly inside the specified directory.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/"
+            }
+          },
+          "observation": "acceptance-criteria.md\nbootstrapping.md\ncognitive-primer.md\nintegrations/\nlocal-agent-execution-loop.md\nlocal-mlx-server-lifecycle.md\nlocal-tool-use-and-structured-json.md\nmodes/\nprotocol-128.md"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the names of the .md files directly inside the specified directory.</scratchpad>\n<final_answer>acceptance-criteria.md,bootstrapping.md,cognitive-primer.md,local-agent-execution-loop.md,local-mlx-server-lifecycle.md,local-tool-use-and-structured-json.md,protocol-128.md</final_answer>",
+          "scratchpad": "The observation contains the names of the .md files directly inside the specified directory."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D5",
+      "tier": "dirset",
+      "expected": [
+        "archives",
+        "entries"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "archives, entries",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 388,
+      "seconds": 6.6,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need the entries of chronicle/ to find its subdirectories.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"chronicle/\"}}",
+          "scratchpad": "I need the entries of chronicle/ to find its subdirectories.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "chronicle/"
+            }
+          },
+          "observation": "Living_Chronicle.md\nThe_Ground_Control_Chronicle.md\narchives/\nentries/\nledger.json"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The subdirectories inside chronicle/ are archives/ and entries/.</scratchpad>\n<final_answer>archives, entries</final_answer>",
+          "scratchpad": "The subdirectories inside chronicle/ are archives/ and entries/."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D6",
+      "tier": "dirset",
+      "expected": [
+        "audit_decay.py",
+        "disclose.py",
+        "manage_backlog.py",
+        "query_graph.py",
+        "record_insight.py",
+        "record_procedure_outcome.py"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "audit_decay.py, disclose.py, manage_backlog.py, query_graph.py, record_insight.py, record_procedure_outcome.py",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 441,
+      "seconds": 9.2,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to list all files with the .py extension directly inside the specified directory.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/\"}}",
+          "scratchpad": "I need to list all files with the .py extension directly inside the specified directory.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/"
+            }
+          },
+          "observation": "audit_decay.py\ndisclose.py\nmanage_backlog.py\nquery_graph.py\nrecord_insight.py\nrecord_procedure_outcome.py"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>audit_decay.py, disclose.py, manage_backlog.py, query_graph.py, record_insight.py, record_procedure_outcome.py</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D7",
+      "tier": "dirset",
+      "expected": [
+        "Living_Chronicle.md",
+        "The_Ground_Control_Chronicle.md"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "Living_Chronicle.md, The_Ground_Control_Chronicle.md",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 401,
+      "seconds": 6.6,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to list all files with the .md extension directly inside chronicle/.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"chronicle\"}}",
+          "scratchpad": "I need to list all files with the .md extension directly inside chronicle/.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "chronicle"
+            }
+          },
+          "observation": "Living_Chronicle.md\nThe_Ground_Control_Chronicle.md\narchives/\nentries/\nledger.json"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The observation contains the answer.</scratchpad>\n<final_answer>Living_Chronicle.md, The_Ground_Control_Chronicle.md</final_answer>",
+          "scratchpad": "The observation contains the answer."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D8",
+      "tier": "dirset",
+      "expected": [
+        "INDEX.md",
+        "README.md",
+        "associative_architecture_brief.md"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "INDEX.md, README.md, associative_architecture_brief.md",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 415,
+      "seconds": 14.1,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to list all files with the .md extension directly inside LEARNING/.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \"LEARNING/\"}}",
+          "scratchpad": "I need to list all files with the .md extension directly inside LEARNING/.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "LEARNING/"
+            }
+          },
+          "observation": "INDEX.md\nREADME.md\nassociative_architecture_brief.md\ncalibration_log.json\nconcepts/\nphilosophy/\nprocedures/\nresearch/\nsecurity/\ntopics/"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>From the observation, I can see the files directly inside LEARNING/. The files with the .md extension are INDEX.md, README.md, and associative_architecture_brief.md.</scratchpad>\n<final_answer>INDEX.md, README.md, associative_architecture_brief.md</final_answer>",
+          "scratchpad": "From the observation, I can see the files directly inside LEARNING/. The files with the .md extension are INDEX.md, README.md, and associative_architecture_brief.md."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D9",
+      "tier": "dirset",
+      "expected": [
+        "plugins",
+        "protocols"
+      ],
+      "grade": {
+        "correct": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "reason": "got=['.github', '.venv']"
+      },
+      "status": "final",
+      "final_answer": ".github/, .venv/",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 492,
+      "seconds": 17.1,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need to list all top-level directories starting with 'p'.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \".\"}}",
+          "scratchpad": "I need to list all top-level directories starting with 'p'.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": "."
+            }
+          },
+          "observation": ".agent/\n.agents/\n.claude/\n.codex/\n.env\n.env.example\n.gitattributes\n.github/\n.gitignore\n.pytest_cache/\n.venv/\n.worktrees/\nAGENTS.md\nARCHIVE/\nCLAUDE.md\nGEMINI.md\nINSTALL.md\nLEARNING/\nLICENSE\nREADME.md\nSTART_HERE.md\napm.lock.yaml\napm.yml\napm_modules/\narchitecture.md\nchronicle/\ncontext/\nhuggingface/\nplu"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>From the observation, I see directories starting with 'p' are .github/ and .venv/.</scratchpad>\n<final_answer>.github/, .venv/</final_answer>",
+          "scratchpad": "From the observation, I see directories starting with 'p' are .github/ and .venv/."
+        }
+      ],
+      "unassisted": true
+    },
+    {
+      "id": "D10",
+      "tier": "dirset",
+      "expected": [
+        "data",
+        "frictionlogs",
+        "hooks",
+        "learning",
+        "rules",
+        "runtime"
+      ],
+      "grade": {
+        "correct": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "reason": ""
+      },
+      "status": "final",
+      "final_answer": "data, frictionlogs, hooks, learning, rules, runtime",
+      "turns": 2,
+      "tool_calls": 1,
+      "repeat_interventions": 0,
+      "malformed_replies": 0,
+      "final_turn_nudged": false,
+      "final_on_nudged_turn": false,
+      "max_identical_calls": 1,
+      "max_prompt_tokens": 379,
+      "seconds": 12.8,
+      "trace": [
+        {
+          "turn": 1,
+          "reply": "<scratchpad>I need the entries of .agent/ to find its subdirectories.</scratchpad>\n<{\"name\": \"list_dir\", \"arguments\": {\"path\": \".agent/\"}}",
+          "scratchpad": "I need the entries of .agent/ to find its subdirectories.",
+          "call": {
+            "name": "list_dir",
+            "arguments": {
+              "path": ".agent/"
+            }
+          },
+          "observation": "data/\nfrictionlogs/\nhooks/\nlearning/\nrules/\nruntime/"
+        },
+        {
+          "turn": 2,
+          "reply": "<scratchpad>The subdirectories of .agent/ are data, frictionlogs, hooks, learning, rules, and runtime.</scratchpad>\n<final_answer>data, frictionlogs, hooks, learning, rules, runtime</final_answer>",
+          "scratchpad": "The subdirectories of .agent/ are data, frictionlogs, hooks, learning, rules, and runtime."
+        }
+      ],
+      "unassisted": true
+    }
+  ]
+}

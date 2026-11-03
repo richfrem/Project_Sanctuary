@@ -1,0 +1,46 @@
+{
+  "id": "MISSION-028",
+  "title": "Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Apple Silicon M1 (16GB) local Qwen2.5-Coder-7B loop + Claude Haiku 5.5 via cli-agent",
+  "created_at": "2026-11-03T14:50:00Z",
+  "updated_at": "2026-11-03T14:50:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 80.0
+  },
+  "hypothesis": "Escalating a task from the local MLX agent loop to Claude Haiku when a loop-health trigger fires (no final answer, >=4 turns, repeat intervention, malformed reply, or forced final turn) reaches >=95% correct on generated held-out repository-discovery tasks while escalating <=35% of tasks, beating both local-only (73-83% in MISSION-022) and always-Haiku on cost-adjusted accuracy.",
+  "falsification_criteria": "Escalate-on-signal correct rate < 95%, or escalation rate > 35%, or always-Haiku is both cheaper (credits + wall-clock) and >= as accurate, or the trigger misses > 20% of local failures (silent confident errors such as MISSION-022 D9/D10 are expected misses and need a verifier; see MISSION-007).",
+  "baseline_evidence": "MISSION-022 runs 4+5 (60 tasks): local correct 47/60; the trigger flags 19/60, catching 10/13 failures; 9 of the 19 flagged tasks were already correct (wasted escalations); 3 misses were silent directory-listing errors; locate tier is the weak one (10 of 13 failures).",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.1,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "This mission measures the escalation policy itself; escalate to Haiku only through the signal trigger under test."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "escalation-routing",
+    "local-vs-haiku",
+    "agent-loop",
+    "cost-adjusted-accuracy",
+    "mlx-lm",
+    "child-of-mission-007",
+    "spawned-by-mission-022"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "priority_score": 80.0
+}

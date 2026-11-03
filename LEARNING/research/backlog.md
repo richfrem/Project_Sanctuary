@@ -27,7 +27,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#6** | `MISSION-016` | **Cheapest-Viable Model Routing & Token-Return Optimization** | 5 | 4 | 0.1x | 1 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#7** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#8** | `MISSION-021` | **Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
-| **#9** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#9** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `FALSIFIED` |
 | **#10** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
 | **#11** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
 | **#12** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
@@ -37,15 +37,16 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#16** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#17** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#18** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
-| **#19** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#20** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
-| **#21** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
-| **#22** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#23** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#24** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#25** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#26** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#27** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#19** | `MISSION-028` | **Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku** | 4 | 4 | 0.1x | 2 | **80.0** | `PROPOSED` | - |
+| **#20** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#21** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#22** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#23** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#24** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#25** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#26** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#27** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#28** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -200,7 +201,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Offline local tool use provides a viable zero-cost, zero-latency-variance alternative to cloud tool execution for sovereign agents on Apple Silicon.
 
 ### MISSION-022: Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX (Rank #9)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB Unified Memory) via Apple MLX
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -209,6 +211,14 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Autonomous multi-step loops (plan -> dispatch tool -> receive tool observation -> reflect -> emit final result) can execute completely offline on Apple Silicon unified memory using Qwen2.5-Coder-7B with <= 3 turns per task, achieving >= 85% completion rate on bounded repository discovery workflows without cloud API reliance.
 - **Falsification Gate**:
   > Local multi-turn agent degrades into repetitive infinite loops (> 4 identical tool dispatches), exceeds context cache limits, or completes < 75% of bounded inspection tasks.
+- **Empirical Evidence & Trials**:
+  * `2026-11-03T14:43:53.074952+00:00` [claude-code] (LEARNING/research/experiments/mission-022/README.md): Frozen local_agent_loop.py on Qwen2.5-Coder-7B-4bit/MLX, 30 generated held-out tasks per run, exact-match grading, temp 0, max 5 turns. Run 4 (seed 1337): 25/30=83.3% (inconclusive band). Run 5 (seed 2024, after search_text fix): 22/30=73.3% < 75% pre-registered falsification line. Combined 47/60=78.3%, never reaching the 85% claim. By tier: scalar 100%, dirset 80-90%, locate 40-60%. No repetition falsification, no context overflow (max 3050 prompt tokens). Unassisted-correct 70-77%; only 63% correct within 3 turns; 6-7 of 30 tasks needed the forced final turn. Earlier runs 1-2 (5 hand tasks, 1/5 then 4/5 after tuning on the test set) are recorded as non-evidence.
+- **Lessons Learned & Epistemic Compounding**:
+  * Local 7B loop is reliable for single-hop reads (scalar 100%) and mostly for directory listings, but fails multi-hop locate tasks (40-60%): it repeats a first wasteful glob, mis-targets search_text with glob paths, and ignores error hints.
+  * Scaffolding (repeat suppression, forced final turn, error observations) is load-bearing; report unassisted-correct next to accuracy.
+  * Loop-health signals flag 19/60 tasks and catch 10/13 failures but miss silent confident errors (letter-filtered directory lists); needs a verifier (MISSION-007) and an escalation policy (MISSION-028).
+  * Tool error hints can mislead small models: 'use find_files' sent the model back to the glob; hints should show the corrected call. Fix requires a new frozen harness and fresh held-out run.
+  * MLX server strips the <tool_call> special token; parse bare JSON calls.
 
 ### MISSION-023: Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX (Rank #10)
 - **Status**: `PROPOSED`
@@ -321,7 +331,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
 
-### MISSION-011: Distilling Investigation Principles into Local Models (Rank #19)
+### MISSION-028: Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku (Rank #19)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Apple Silicon M1 (16GB) local Qwen2.5-Coder-7B loop + Claude Haiku 5.5 via cli-agent
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Escalating a task from the local MLX agent loop to Claude Haiku when a loop-health trigger fires (no final answer, >=4 turns, repeat intervention, malformed reply, or forced final turn) reaches >=95% correct on generated held-out repository-discovery tasks while escalating <=35% of tasks, beating both local-only (73-83% in MISSION-022) and always-Haiku on cost-adjusted accuracy.
+- **Falsification Gate**:
+  > Escalate-on-signal correct rate < 95%, or escalation rate > 35%, or always-Haiku is both cheaper (credits + wall-clock) and >= as accurate, or the trigger misses > 20% of local failures (silent confident errors such as MISSION-022 D9/D10 are expected misses and need a verifier; see MISSION-007).
+
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #20)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: forging-sovereign-models & Local Ollama
@@ -332,7 +353,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
-### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #20)
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #21)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Anti-Asch Test Harness
@@ -343,7 +364,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
 
-### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #21)
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #22)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Simulation Environments & evaluating-agent-work
@@ -354,7 +375,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
 
-### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #22)
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #23)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: managing-sovereign-memory / disclose.py
@@ -365,7 +386,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #23)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #24)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -376,7 +397,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #24)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #25)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -387,7 +408,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #25)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #26)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -398,7 +419,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #26)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #27)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -409,7 +430,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #27)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #28)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

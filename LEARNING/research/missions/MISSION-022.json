@@ -1,11 +1,11 @@
 {
   "id": "MISSION-022",
   "title": "Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX",
   "created_at": "2026-11-03T06:20:00Z",
-  "updated_at": "2026-11-03T06:20:00Z",
+  "updated_at": "2026-11-03T14:43:53.074952+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -27,7 +27,7 @@
     ],
     "frontier_escalation_condition": "Escalate to Gemini Flash or Claude Haiku if local multi-turn loop detects repetitive deadlock after 3 iterations"
   },
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -38,6 +38,19 @@
     "offline-agent",
     "sovereign-intelligence"
   ],
-  "evidence": [],
-  "lessons_learned": []
+  "evidence": [
+    {
+      "timestamp": "2026-11-03T14:43:53.074952+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-022/README.md",
+      "details": "Frozen local_agent_loop.py on Qwen2.5-Coder-7B-4bit/MLX, 30 generated held-out tasks per run, exact-match grading, temp 0, max 5 turns. Run 4 (seed 1337): 25/30=83.3% (inconclusive band). Run 5 (seed 2024, after search_text fix): 22/30=73.3% < 75% pre-registered falsification line. Combined 47/60=78.3%, never reaching the 85% claim. By tier: scalar 100%, dirset 80-90%, locate 40-60%. No repetition falsification, no context overflow (max 3050 prompt tokens). Unassisted-correct 70-77%; only 63% correct within 3 turns; 6-7 of 30 tasks needed the forced final turn. Earlier runs 1-2 (5 hand tasks, 1/5 then 4/5 after tuning on the test set) are recorded as non-evidence."
+    }
+  ],
+  "lessons_learned": [
+    "Local 7B loop is reliable for single-hop reads (scalar 100%) and mostly for directory listings, but fails multi-hop locate tasks (40-60%): it repeats a first wasteful glob, mis-targets search_text with glob paths, and ignores error hints.",
+    "Scaffolding (repeat suppression, forced final turn, error observations) is load-bearing; report unassisted-correct next to accuracy.",
+    "Loop-health signals flag 19/60 tasks and catch 10/13 failures but miss silent confident errors (letter-filtered directory lists); needs a verifier (MISSION-007) and an escalation policy (MISSION-028).",
+    "Tool error hints can mislead small models: 'use find_files' sent the model back to the glob; hints should show the corrected call. Fix requires a new frozen harness and fresh held-out run.",
+    "MLX server strips the <tool_call> special token; parse bare JSON calls."
+  ]
 }
