@@ -29,7 +29,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 - **Local model gate** (when local inference is in scope): confirm the MLX server on `:8080` or run `forge_llm.py status`.
 - **Hydrate Layer 1**: `context/soul.md`, `context/user.md`, `context/memory.md`, and the boot digest.
 - **Progressive disclosure (Layer 2)**: use `managing-sovereign-memory` (`disclose.py --tier 1|2`). Search `LEARNING/research/index.jsonl` first (it carries each mission's title, status, verdict, `hypothesis_brief` and tags) and open a manifest only when needed.
-- **Git and concurrency**: tree clean, on a `feat/*` branch, never on `main`. When other agents may be active, check `manage_coordination.py board`, then `checkout --create-worktree` an isolated worktree and lease your target files; `checkin` when done.
+- **Git and concurrency**: tree clean, on a `feat/*` branch, never on `main`. When other agents may be active, check `manage_coordination.py board`, then `checkout --create-worktree` an isolated worktree and lease your target files; `checkin` when done. Note: `checkout --mission <ID>` also marks that mission's manifest `IN_PROGRESS` (adding `assignee` and `worktree`) in the directory you ran it from, which leaves that tree dirty and conflicts with your own PR's version of the file; before pulling, discard it (`git checkout -- LEARNING/research/missions/<ID>.json`) or let the PR carry the final manifest.
 
 ### Stage 2: Sovereign Execution
 - **Tracks**: A (deterministic skill or script runs), B (exploratory research and doctrine work in `LEARNING/` and `protocols/`), C (micro-fix with immediate gating).
@@ -86,7 +86,7 @@ Note: the dataset accumulates. Records extracted from earlier repository layouts
 
 ## 5. Changelog
 
-- **v3.1.2 (2026-11-03)**: Stage 5 gains the local-model release step; MLX server teardown and idle reaping hardened (MISSION-027).
+- **v3.1.2 (2026-11-03)**: Stage 1 notes that mission checkout edits the manifest in the main tree; Stage 5 gains the local-model release step; MLX server teardown and idle reaping hardened (MISSION-027).
 - **v3.1.1 (2026-11-03)**: `persist_soul.py` repaired and its known-gap note removed; `protocol_manager.py update` now edits the Status line in place.
 - **v3.1 (2026-11-03)**: Layer 2 corrected from the removed `wiki/` to `LEARNING/`; closure gate updated to the current form (capability check + 4 questions); added local-model gate, index-first retrieval, flight board and worktree isolation, Popperian execution discipline, cost accounting, mission recording and replenishment, working soul-persistence path, and invariants 5-8; removed the claimed sub-10 ms wakeup and three audit scripts that do not exist in the repository; declared this file the single source of truth for the lifecycle.
 - **v3.0**: five-stage lifecycle aligned to the 3-layer memory engine.
