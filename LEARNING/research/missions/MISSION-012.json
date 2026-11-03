@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-012",
+  "title": "Selective Forgetting & Counterexample Memory Compression",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "managing-sovereign-memory / disclose.py",
+  "created_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-03T03:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 40.0
+  },
+  "priority_score": 40.0,
+  "hypothesis": "Memory selected for decision relevance and counterexamples retains at least 95% of full-history task performance using no more than 20% of retrieved tokens, outperforming equal-budget recency selection by at least 10 percentage points.",
+  "falsification_criteria": "Task performance retention drops below 95% or comparative advantage over recency is below 10pp.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "memory-compression",
+    "selective-retention",
+    "counterexamples",
+    "progressive-disclosure"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
