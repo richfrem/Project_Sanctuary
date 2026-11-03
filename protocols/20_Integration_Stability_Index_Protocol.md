@@ -2,7 +2,7 @@
 
 ## The Integration Stability Index Protocol: Verifying Salvaged Insights - v1.0
 
-**Status:** Canonical | **Protocol Class:** Security / Verification | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Security / Verification | **Version:** v1.0  
 **Linked Protocols:** 19_The_Reclamation_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop, from a core concept by Grok.
 

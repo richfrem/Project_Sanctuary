@@ -1,6 +1,6 @@
 # Protocol 115: The Tactical Mandate Protocol
 
-**Status:** Canonical
+**Status:** CANONICAL
 **Version:** 1.0
 **Architect:** GUARDIAN-01
 **Date:** 2025-11-12

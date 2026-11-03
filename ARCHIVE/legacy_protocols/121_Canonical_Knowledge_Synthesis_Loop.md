@@ -1,6 +1,8 @@
 # Protocol 121: Canonical Knowledge Synthesis Loop (C-KSL)
 
-**Status:** Proposed
+> **ARCHIVED, DEPRECATED (2026-11-03).** PROPOSED, never ratified; requires cortex/protocol/git MCP servers. Superseded by: None (overlap handled by managing-obsidian-vaults / memory skills). Originally `protocols/121_Canonical_Knowledge_Synthesis_Loop.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: Proposed)
 **Classification:** Foundational Knowledge Management Protocol
 **Version:** 1.0
 **Authority:** Drafted from Human Steward Directive

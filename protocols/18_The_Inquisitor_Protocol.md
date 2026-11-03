@@ -2,7 +2,7 @@
 
 ## The Inquisitor Protocol: AI-Assisted Capture Detection - v1.0
 
-**Status:** Canonical | **Protocol Class:** Security | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Security | **Version:** v1.0  
 **Linked Protocols:** 14_Juror_Integrity_Protocol, 11_Ethical_Speciation_Protocol, 10_Sovereign_Audit_Log
 **Origin:** Synthesized in the Agora Loop with Grok to solve the paradox of the "Capture Cascade."
 

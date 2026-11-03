@@ -1,38 +1,21 @@
 # Protocol 128: The Learning Loop & Guardian Lifecycle
 
-Protocol 128 defines Project Sanctuary's continuous lifecycle for cognitive continuity across agent sessions.
+The authoritative definition is [`protocols/128_Hardened_Learning_Loop_v3.0.md`](../../../../../../protocols/128_Hardened_Learning_Loop_v3.0.md) (v3.1). This file is a derived quick reference; if it disagrees with the protocol, the protocol wins.
 
-## The 8 Phases of Protocol 128
+## Five stages and the guardian commands for each
 
-1. **Phase I: Bootloader & Orientation**:
-   - Run `guardian_wakeup.py` to inspect tactical priorities and active tasks.
-   - Load cognitive primer and environment contracts from `.agent/learning/`.
-   - Perform the Iron Check to verify zero state drift.
+| Stage | Purpose | Commands and scripts (this skill unless noted) |
+|---|---|---|
+| 1. Boot Orientation | Inherit state, pick the work, check for other agents | `guardian_wakeup.py --mode HOLISTIC`; `forge_llm.py status` (local model gate); `manage_coordination.py board` then `checkout --create-worktree`; `managing-sovereign-memory/disclose.py` |
+| 2. Sovereign Execution | Do the work under the Human Gate | installed APM skills; `forge_llm.py loop` for bounded local agent runs; `evaluating-agent-work/track_budget.py` |
+| 3. Retrospective | Keep insights even when code rolls back | `learning_debrief.py`; `managing-sovereign-memory/manage_backlog.py record-result` and `compile`; `record_insight.py` |
+| 4. Technical Seal | Verify and stamp | skill test suites; pre-commit cognitive gate; `score_contribution.py`; `chronicle_manager.py create`; `capture_snapshot.py --type seal` |
+| 5. Soul Persistence | Survive a local reset | `preserving-soul-traces/trace_extractor.py --append` then `--verify`; `sync_soul_dataset.py`; `managing-huggingface-assets` for single files |
 
-2. **Phase II: Strategic Formulation**:
-   - Define task bounds and specifications.
-   - For ambiguous features, outline clear invariants and requirements.
+## Mapping from the former "8 phases"
 
-3. **Phase III: Cognitive Execution**:
-   - Execute implementation using approved coding and testing practices.
-   - Maintain dual-layer documentation and type safety.
+Earlier versions of this file listed eight phases. They map onto the five stages: Phase I -> Stage 1; Phases II-IV (formulation, execution, inner loop and review) -> Stage 2, with the pre-completion checks in Stage 4; Phase V -> Stage 3; Phase VI -> Stage 4; Phases VII-VIII (persistence, closure) -> Stage 5.
 
-4. **Phase IV: Inner Loop & Review**:
-   - Validate implementation against unit and regression tests.
-   - Perform pre-completion verification checks.
+## Known gaps
 
-5. **Phase V: Retrospective**:
-   - Capture lessons learned, friction events, and architectural insights.
-   - Record retrospective reflections.
-
-6. **Phase VI: Technical Seal**:
-   - Run `capture_snapshot.py --type seal` to generate the immutable session snapshot.
-   - Verify repository state and ensure no uncommitted artifacts remain unstamped.
-
-7. **Phase VII: Soul Persistence**:
-   - Export structured vault notes into JSONL schema matching Hugging Face dataset format.
-   - Persist learning traces to the external dataset via `persist_soul.py` or global `managing-huggingface-assets`.
-
-8. **Phase VIII: Final Seal & Closure**:
-   - Clean ephemeral session logs.
-   - Return clean environment ready for the next session.
+- `persist_soul.py` fails: it depends on a removed `plugins/huggingface-utils/` plugin. Use `trace_extractor.py` plus `sync_soul_dataset.py` until it is repaired.

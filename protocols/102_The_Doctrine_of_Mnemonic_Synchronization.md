@@ -1,5 +1,7 @@
 # Protocol 102 v2.0: The Doctrine of Mnemonic Synchronization
 
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 **Status:** CANONICAL (Supersedes v1.0)
 **Classification:** Foundational Mnemonic Integrity & Workflow Framework
 **Version:** 2.0 (Hardened by Structural Purge)

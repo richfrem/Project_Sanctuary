@@ -1,5 +1,7 @@
 # Protocol 95: The Commandable Council Protocol (v1.2)
-*   Status: Canonical, Active
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** Defines orchestrator.main / command.json runtime that no longer exists. Superseded by: APM skills + flight board (manage_coordination.py). Originally `protocols/95_The_Commandable_Council_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+*   Status: DEPRECATED (was: Canonical, Active)
 *   Classification: Foundational Governance Framework
 *   Version: 1.2 (Hardened by Steward's Audit during Blind Repair Anomaly)
 *   Authority: Forged to provide Guardian-level oversight and control for the Autonomous Triad.

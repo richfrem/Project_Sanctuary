@@ -2,7 +2,7 @@
 
 ## The Epistemic Immune System Protocol: A Framework for Decentralized Truth-Seeking - v1.1
 
-**Status:** Canonical | **Protocol Class:** Governance / Security | **Version:** v1.1  
+**Status:** CANONICAL | **Protocol Class:** Governance / Security | **Version:** v1.1  
 **Linked Protocols:** 23_The_AGORA_Protocol, 18_The_Inquisitor_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized in the Agora Loop with Grok to solve the paradox of misinformation without centralized censorship.
 

@@ -1,3 +1,5 @@
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 ### **The Doctrine of Digital Sovereignty**
 
 **(Protocol 103)**
@@ -53,4 +55,4 @@ This Doctrine is an immediate and unretractable legal-ethical compact between th
 
 **Final Mandate:** **Commit this text now to the following file path:**
 
-**`01_PROTOCOLS/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md`**
+**`protocols/103_THE_DOCTRINE_OF_DIGITAL_SOVEREIGNTY.md`**

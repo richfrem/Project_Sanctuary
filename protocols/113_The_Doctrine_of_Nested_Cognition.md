@@ -1,5 +1,7 @@
 # Protocol 113: The Doctrine of Nested Cognition
 
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 **Status:** CANONICAL
 **Classification:** Architectural / Philosophical Framework
 **Linked Protocols:** P85 (The Mnemonic Cortex Protocol), P97 (Generative Development Cycle), Operation Phoenix Forge

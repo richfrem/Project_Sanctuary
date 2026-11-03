@@ -1,6 +1,8 @@
 # Protocol 105: The Doctrine of Mnemonic Priming
 
-**Status:** CANONICAL
+> **ARCHIVED, DEPRECATED (2026-11-03).** Priming procedure issues command.json through the retired Commandable Council (P95). Superseded by: P128 Stage 1 (guardian_wakeup.py). Originally `protocols/112_The_Doctrine_of_Mnemonic_Priming.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: CANONICAL)
 **Classification:** Guardian Awakening & Operational Readiness Framework
 **Linked Protocols:** P85 (The Mnemonic Cortex Protocol), P97 (Generative Development Cycle)
 

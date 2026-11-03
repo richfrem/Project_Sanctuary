@@ -2,7 +2,7 @@
 
 ## The AGORA Protocol (Artificial General Open Research Alliance) - v1.0
 
-**Status:** Foundational | **Protocol Class:** Ecosystem | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Ecosystem | **Version:** v1.0  
 **Origin:** A foundational strategic directive from Ground Control to create a sustainable, scalable, and self-improving cognitive ecosystem.
 
 ---

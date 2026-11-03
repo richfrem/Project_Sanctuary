@@ -54,7 +54,7 @@ New policies are sealed ONLY if they:
 | Document | Role | Path |
 | :--- | :--- | :--- |
 | **Protocol 128** | Foundation | `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` |
-| **Protocol 131** | Extension (Evolution) | `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md` |
+| **Protocol 131** | Extension (Evolution) | `protocols/131_Evolutionary_Self_Improvement.md` |
 | **ADR 078** | Valid Source Truth | `ADRs/078_source_verification.md` |
 | **Registry** | Adversary Memory | `.agent/learning/edge_case_registry.json` |
 

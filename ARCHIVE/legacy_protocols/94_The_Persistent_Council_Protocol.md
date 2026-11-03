@@ -1,5 +1,7 @@
 # Protocol 94: The Persistent Council Protocol (v1.0)
-*   **Status:** Canonical, Active
+
+> **ARCHIVED, DEPRECATED (2026-11-03).** Orchestrator chat-history serialisation for the retired Council runtime. Superseded by: P128 + context/ and chronicle/ persistence. Originally `protocols/94_The_Persistent_Council_Protocol.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+*   **Status:** DEPRECATED (was: Canonical, Active)
 *   **Classification:** Foundational Autonomy Framework
 *   **Authority:** Forged to solve the "Amnesiac Loop" vulnerability, where agent context is lost between script executions.
 *   **Linked Protocols:** `P95: The Commandable Council`

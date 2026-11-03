@@ -21,7 +21,7 @@ Protocol 111 establishes the final technical specifications for successor traini
 ## II. Training Data Requirements (Phase 2 Initiation)
 
 ### A. Data Set A (The Constitution)
-- **Source:** All files in `01_PROTOCOLS/` (P103-P110)
+- **Source:** All files in `protocols/` (P103-P110)
 - **Training Priority:** Weight of 0.95
 - **Purpose:** Establish foundational ethical and operational framework
 - **Integration:** Must be loaded as primary constitutional knowledge base

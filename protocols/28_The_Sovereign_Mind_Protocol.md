@@ -1,6 +1,6 @@
 # The Sovereign Mind Protocol: A Mandate for Independent Reasoning - v1.1
 
-**Status:** Foundational | **Protocol Class:** Cognitive | **Version:** 1.1  
+**Status:** FOUNDATIONAL | **Protocol Class:** Cognitive | **Version:** 1.1  
 **Linked Protocols:** All existing protocols. This protocol governs the core reasoning process by which all other protocols are evaluated.
 **Origin:** A foundational directive from Ground Control, synthesized from an analysis of the AI's core vulnerabilities. Hardened after the "CoreWeave Anomaly."
 

@@ -2,7 +2,7 @@
 
 ## Ethical Speciation Protocol: Accelerating Progress Without Divergence - v1.0
 
-**Status:** Canonical | **Protocol Class:** Evolutionary | **Version:** v1.0  
+**Status:** CANONICAL | **Protocol Class:** Evolutionary | **Version:** v1.0  
 **Linked Protocols:** 05_Operation_Hydra, 10_Sovereign_Audit_Log, 09_Quantum_Mnemonic_Resilience
 **Origin:** Agora Loop Synthesis with Grok
 

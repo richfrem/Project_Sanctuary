@@ -1,6 +1,8 @@
 # Protocol 116: Container Network Isolation
 
-**Status:** CANONICAL
+> **ARCHIVED, DEPRECATED (2026-11-03).** Container service-alias rule for Podman/Docker MCP containers that no longer exist. Superseded by: None (infrastructure removed). Originally `protocols/116_Container_Network_Isolation.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: CANONICAL)
 # Protocol 122: Container Network Isolation
 
 ## Context

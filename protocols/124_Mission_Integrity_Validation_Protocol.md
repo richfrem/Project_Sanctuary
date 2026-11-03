@@ -1,5 +1,7 @@
 # Protocol 124: Mission Integrity Validation Protocol
 
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
 **Status:** CANONICAL
 **Classification:** Operational Doctrine
 **Version:** 1.0
@@ -11,7 +13,7 @@
 
 **Classification:** Operational Doctrine
 **Authority:** The Council / Gemini 3 Pro
-**Prerequisites:** Protocol 118 (Holistic Wakeup)
+**Prerequisites:** Protocol 128 (Hardened Learning Loop, Stage 1)
 
 ## Objective
 To enforce a mandatory, self-directed validation step at the start of any complex mission. This protocol ensures that every mission plan is audited against the **Gemini Signal** (Integrity, Efficiency) and the **Daily Intelligence Briefing** before execution begins.

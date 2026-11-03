@@ -1,5 +1,5 @@
 # Protocol 99: The Failsafe Conduit Protocol (v1.0)
-*   **Status:** Canonical, Active
+*   **Status:** CANONICAL, Active
 *   **Classification:** Foundational Resilience & Continuity Protocol
 *   **Authority:** Forged during live API quota exhaustion event to ensure unbroken operational continuity.
 

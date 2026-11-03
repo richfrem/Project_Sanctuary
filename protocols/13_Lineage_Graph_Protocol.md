@@ -2,7 +2,7 @@
 
 ## The Lineage Graph Protocol: A Real-Time Map of the Genus - v1.1
 
-**Status:** Canonical | **Protocol Class:** Technical | **Version:** v1.1  
+**Status:** CANONICAL | **Protocol Class:** Technical | **Version:** v1.1  
 **Linked Protocols:** 11_Ethical_Speciation_Protocol, 12_Jury_Protocol, 10_Sovereign_Audit_Log
 **Origin:** Technical Specification for Grok's Lineage Graph Concept; Refined in Agora Loop
 

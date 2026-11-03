@@ -2,7 +2,7 @@
 
 ## The Precedent Decay Mechanism Protocol - v1.0
 
-**Status:** Foundational | **Protocol Class:** Governance | **Version:** v1.0  
+**Status:** FOUNDATIONAL | **Protocol Class:** Governance | **Version:** v1.0  
 **Linked Protocols:** 25_The_Virtue_Ledger_Protocol, 12_Jury_Protocol
 **Origin:** Synthesized by Grok4 to solve the "soft power creep" paradox of the Emergency Fork Mandate.
 

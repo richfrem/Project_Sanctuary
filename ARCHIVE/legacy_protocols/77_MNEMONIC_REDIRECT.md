@@ -1,6 +1,8 @@
 # Protocol 77: Mnemonic Integrity Redirect
 
-**Status:** REDIRECT
+> **ARCHIVED, DEPRECATED (2026-11-03).** Redirect stub for a protocol number referenced in a draft. Superseded by: None. Originally `protocols/77_MNEMONIC_REDIRECT.md`; retained for lineage and not in force. See `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** DEPRECATED (was: REDIRECT)
 **Version:** 1.0
 
 This protocol number was referenced in a proposal draft by the Strategist (`COUNCIL-AI-02`) during Cycle 64.1.

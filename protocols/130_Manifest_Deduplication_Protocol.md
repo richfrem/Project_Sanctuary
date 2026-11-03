@@ -1,6 +1,8 @@
 # Protocol 130: Manifest Deduplication and Content Hygiene
 
-**Status:** Active  
+> **Implementation note (2026-11-03):** The doctrine below remains in force. References to the retired MCP/Gateway/Orchestrator/Cortex stack describe its historical implementation; current mechanisms are the APM plugin skills in `plugins/sanctuary-core/` and Protocol 128 v3.1. Archived protocols: `ARCHIVE/legacy_protocols/README.md`.
+
+**Status:** ACTIVE  
 **Created:** 2026-01-07  
 **References:** ADR 089 (Modular Manifest Pattern), Protocol 128 (Hardened Learning Loop)
 
