@@ -71,7 +71,7 @@ Project-local installation places materialized, dereferenced copies of the skill
 
 ### 1. Install Sanctuary Core Skills Locally
 
-To install all 5 sovereign skills (`managing-chronicles`, `managing-protocols`, `operating-sanctuary-guardian`, `forging-sovereign-models`, `preserving-soul-traces`) into this project's client targets:
+To install all 7 sovereign skills (`managing-chronicles`, `managing-protocols`, `operating-sanctuary-guardian`, `forging-sovereign-models`, `preserving-soul-traces`, `managing-sovereign-memory`, `evaluating-agent-work`) into this project's client targets:
 
 ```bash
 # From Project_Sanctuary root:
@@ -167,7 +167,13 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 # 4. Verify Soul Traces dataset workspace & Hugging Face integration
 python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/sync_soul_dataset.py --check-readiness
 
-# 5. Run Plugin Open-Standard Compliance Audits
+# 5. Verify Sovereign Memory progressive disclosure
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 1
+
+# 6. Verify Cognitive work evaluation & token budget governance
+python3 plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/track_budget.py status
+
+# 7. Run Plugin Open-Standard Compliance Audits
 python3 ~/.gemini/antigravity-cli/skills/authoring-plugins/scripts/audit.py --path plugins/sanctuary-core
 python3 ~/.gemini/antigravity-cli/skills/packaging-with-apm/scripts/validate_apm_package.py --path plugins/sanctuary-core
 ```
