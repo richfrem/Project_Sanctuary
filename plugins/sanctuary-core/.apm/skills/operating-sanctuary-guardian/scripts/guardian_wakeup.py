@@ -152,6 +152,20 @@ def check_runtime_telemetry() -> list[dict[str, str]]:
         "description": "Cached in ~/.cache/huggingface/hub (offline ready)" if model_cached else "Model not yet cached locally"
     })
 
+    # 4. Local MLX Server daemon
+    server_live = False
+    try:
+        import urllib.request
+        with urllib.request.urlopen("http://127.0.0.1:8080/v1/models", timeout=0.5) as r:
+            server_live = (r.status == 200)
+    except Exception:
+        pass
+    runtime_checks.append({
+        "component": "Local MLX Server Daemon (:8080)",
+        "status": "ACTIVE" if server_live else "STANDBY",
+        "description": "Responding at http://127.0.0.1:8080/v1 (zero-latency ready)" if server_live else "Standby (auto-starts on demand via forge_llm.py)"
+    })
+
     return runtime_checks
 
 
