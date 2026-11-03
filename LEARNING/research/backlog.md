@@ -27,21 +27,22 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#6** | `MISSION-021` | **Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#7** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
 | **#8** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
-| **#9** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
-| **#10** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
-| **#11** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
-| **#12** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#13** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#14** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
-| **#15** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#16** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
-| **#17** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
-| **#18** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#19** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#20** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#21** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#22** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#23** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#9** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#10** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
+| **#11** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
+| **#12** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
+| **#13** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#14** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#15** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
+| **#16** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#17** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#18** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#19** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#20** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#21** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#22** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#23** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#24** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -195,7 +196,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Draft model acceptance rate falls below 50% or combined unified memory footprint causes macOS swap pressure > 1 GiB.
 
-### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #9)
+### MISSION-024: Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration (Rank #9)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: macOS / APM Lifecycle Hooks (SessionStart) for Claude Code, Codex & AGY
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Configuring a deterministic SessionStart lifecycle hook via APM (.apm/hooks/hooks.json) that runs guardian_wakeup.py --mode HOLISTIC --write-digest before turn 1 eliminates manual boot commands for incoming agents, guarantees Layer 1 memory hydration across CLI agents (Claude Code, Codex, Antigravity), and preserves startup latency under 500ms.
+- **Falsification Gate**:
+  > A clean agent session starts without executing the hook, the hook fails to produce .agent/learning/guardian_boot_digest.md, or total execution overhead exceeds 1,500ms.
+
+### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #10)
 - **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS M1 (APFS / External USB-C Storage)
@@ -206,7 +218,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 GiB of storage.
 
-### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #10)
+### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #11)
 - **Status**: `STAGED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: Cursor Premium ($30/mo) / Grok Bot
@@ -217,7 +229,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.
 
-### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #11)
+### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #12)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
@@ -235,7 +247,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provider terms of service.
   * Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity.
 
-### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #12)
+### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #13)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
@@ -246,7 +258,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
 
-### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #13)
+### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #14)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama / llama.cpp & Isolated Memory Fixtures
@@ -257,7 +269,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.
 
-### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #14)
+### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #15)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama (Qwen2) / cli-agent Router
@@ -268,7 +280,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
 
-### MISSION-011: Distilling Investigation Principles into Local Models (Rank #15)
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #16)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: forging-sovereign-models & Local Ollama
@@ -279,7 +291,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
-### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #16)
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #17)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Anti-Asch Test Harness
@@ -290,7 +302,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
 
-### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #17)
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #18)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Simulation Environments & evaluating-agent-work
@@ -301,7 +313,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
 
-### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #18)
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #19)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: managing-sovereign-memory / disclose.py
@@ -312,7 +324,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #19)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #20)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -323,7 +335,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #20)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #21)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -334,7 +346,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #21)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #22)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -345,7 +357,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #22)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #23)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -356,7 +368,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #23)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #24)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

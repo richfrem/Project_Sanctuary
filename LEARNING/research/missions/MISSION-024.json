@@ -1,0 +1,44 @@
+{
+  "id": "MISSION-024",
+  "title": "Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "macOS / APM Lifecycle Hooks (SessionStart) for Claude Code, Codex & AGY",
+  "created_at": "2026-11-03T06:45:00Z",
+  "updated_at": "2026-11-03T06:45:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "Configuring a deterministic SessionStart lifecycle hook via APM (.apm/hooks/hooks.json) that runs guardian_wakeup.py --mode HOLISTIC --write-digest before turn 1 eliminates manual boot commands for incoming agents, guarantees Layer 1 memory hydration across CLI agents (Claude Code, Codex, Antigravity), and preserves startup latency under 500ms.",
+  "falsification_criteria": "A clean agent session starts without executing the hook, the hook fails to produce .agent/learning/guardian_boot_digest.md, or total execution overhead exceeds 1,500ms.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if cross-platform lifecycle hook specification requires multi-agent orchestration"
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "lifecycle-hooks",
+    "session-start",
+    "protocol-128",
+    "fast-boot",
+    "zero-turn-hydration",
+    "apm"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
