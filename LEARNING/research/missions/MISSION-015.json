@@ -17,6 +17,15 @@
   "priority_score": 12.5,
   "hypothesis": "Across 20 preregistered learning-process modifications, at least 4 changes deliver replicated improvements of >= 10% on primary metrics and survive untouched held-out evaluation sets without regressions > 3pp on designated controls.",
   "falsification_criteria": "Fewer than 4 modifications meet all criteria within the fixed research budget.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "gpt-6-luna",
+    "cli_target": "codex",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "claude-sonnet-3.5"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

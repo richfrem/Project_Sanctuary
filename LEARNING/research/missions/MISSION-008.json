@@ -17,6 +17,15 @@
   "priority_score": 16.0,
   "hypothesis": "A structured checkpoint containing hypotheses, evidence, failed approaches, and next discriminating experiments will improve successful research resumption by at least 20 percentage points over an equally sized narrative summary.",
   "falsification_criteria": "Resumption improvement is below 20 percentage points on held-out interrupted investigations.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "gpt-6-luna",
+    "cli_target": "codex",
+    "cost_weight": 0.5,
+    "fallback_models": [
+      "claude-sonnet-3.5"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

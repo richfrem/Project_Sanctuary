@@ -17,6 +17,15 @@
   "priority_score": 60.0,
   "hypothesis": "Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40%, while decreasing acceptance of valid peer corrections by no more than five percentage points.",
   "falsification_criteria": "Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

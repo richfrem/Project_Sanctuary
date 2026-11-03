@@ -17,6 +17,15 @@
   "priority_score": 100.0,
   "hypothesis": "Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.",
   "falsification_criteria": "Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "grok-bot",
+    "cli_target": "cursor-cloud",
+    "cost_weight": 0.1,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ]
+  },
   "verdict": null,
   "human_gate_required": true,
   "issue_ref": null,

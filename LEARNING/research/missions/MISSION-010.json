@@ -17,6 +17,15 @@
   "priority_score": 25.0,
   "hypothesis": "An agent choosing active interventions will recover at least 25% more correct causal relationships in hidden graph systems than an observation-only agent, given the same number of environment queries.",
   "falsification_criteria": "Relative improvement in recovered causal relationships falls below 25% on unseen environment families.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gpt-6-luna"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

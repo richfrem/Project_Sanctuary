@@ -17,6 +17,16 @@
   "priority_score": 16.0,
   "hypothesis": "DAG runner can pause at a barrier waiting for external bot handoff, resume upon git branch commit receipt, and verify output with a SHA-256 seal.",
   "falsification_criteria": "DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "gpt-6-luna",
+    "cli_target": "codex",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "claude-sonnet-3.5",
+      "gemini-pro"
+    ]
+  },
   "verdict": null,
   "human_gate_required": true,
   "issue_ref": null,
