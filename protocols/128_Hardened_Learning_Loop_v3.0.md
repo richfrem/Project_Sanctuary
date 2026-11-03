@@ -54,6 +54,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 - **Extract**: `trace_extractor.py --source-dir chronicle/entries --append` upserts records (re-extraction refreshes every record's timestamp; only changed content is new knowledge).
 - **Verify**: `trace_extractor.py --verify` checks the 13-field ADR 084 schema and SHA-256 digests; the manifest is `huggingface/metadata/manifest.json`.
 - **Sync**: `sync_soul_dataset.py --dry-run` then without `--dry-run` to publish the whole `huggingface/` folder to `richfrem/Project_Sanctuary_Soul`; for a single file use `managing-huggingface-assets` (`upload_file`) and verify by re-download. Credentials come only from the shell environment; never write tokens to disk or logs.
+- **Release the local model**: if you started the MLX server this session, stop it (`mlx_server_manager.py stop`), or run `mlx_server_manager.py reap --only-managed`; boot (`guardian_wakeup.py`) also reaps an idle server that the manager started. A persistent daemon you did not start is left running.
 - **Single snapshot**: `persist_soul.py` uploads one sealed snapshot (and the RLM cache, if present) through `managing-huggingface-assets`; `--dry-run` validates the skill, credentials and snapshot first. Repaired 2026-11-03 (it previously failed on a removed `huggingface-utils` plugin).
 
 ---
@@ -85,6 +86,7 @@ Note: the dataset accumulates. Records extracted from earlier repository layouts
 
 ## 5. Changelog
 
+- **v3.1.2 (2026-11-03)**: Stage 5 gains the local-model release step; MLX server teardown and idle reaping hardened (MISSION-027).
 - **v3.1.1 (2026-11-03)**: `persist_soul.py` repaired and its known-gap note removed; `protocol_manager.py update` now edits the Status line in place.
 - **v3.1 (2026-11-03)**: Layer 2 corrected from the removed `wiki/` to `LEARNING/`; closure gate updated to the current form (capability check + 4 questions); added local-model gate, index-first retrieval, flight board and worktree isolation, Popperian execution discipline, cost accounting, mission recording and replenishment, working soul-persistence path, and invariants 5-8; removed the claimed sub-10 ms wakeup and three audit scripts that do not exist in the repository; declared this file the single source of truth for the lifecycle.
 - **v3.0**: five-stage lifecycle aligned to the 3-layer memory engine.
