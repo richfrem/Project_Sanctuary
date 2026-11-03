@@ -185,6 +185,22 @@ def get_top_mission(project_root: Path) -> dict | None:
 
 def get_tactical_priorities(project_root: Path, top_mission: dict | None = None) -> str:
     parts = []
+    board_file = project_root / ".agent" / "coordination" / "board.json"
+    if board_file.exists():
+        try:
+            with open(board_file, "r", encoding="utf-8") as f:
+                bdata = json.load(f)
+            now = time.time()
+            active_leases = [l for l in bdata.get("leases", []) if l.get("expires_at", 0) >= now]
+            if active_leases:
+                flight_lines = ["* 🛫 Active Agent Flight Board (Concurrent Leases):"]
+                for l in active_leases:
+                    elapsed = round((now - l.get("checked_out_timestamp", now)) / 60.0, 1)
+                    flight_lines.append(f"  -> [{l.get('status', 'EXECUTING')}] Agent: `{l.get('agent_id')}` on `{l.get('mission_id')}` (Worktree: `{l.get('worktree')}`, Elapsed: {elapsed}m)")
+                parts.append("\n".join(flight_lines))
+        except Exception:
+            pass
+
     if top_mission:
         parts.append(
             f"* Priority Mission Target (Highest Token ROI):\n"
@@ -238,6 +254,7 @@ def main():
         "## I. Strategic Directives",
         "* **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.",
         "* **Supreme Law:** Never perform unapproved state-changing operations or git pushes.",
+        "* **Cross-Model Cognitive Relay:** Operating on shared sovereign memory across Antigravity (Gemini), Claude Code (Anthropic), Codex (OpenAI), and Local MLX (Qwen2.5). Check the Flight Board and build upon predecessor work without amnesiac repetition.",
         "",
         "## II. Tactical Priorities",
         get_tactical_priorities(project_root, top_mission),
