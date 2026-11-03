@@ -1,0 +1,43 @@
+{
+  "id": "MISSION-027",
+  "title": "Forensic MLX Server Lifecycle Hardening: Process Group Teardown, Port Listen Scoping, and Scheduled Idle Reaping",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "macOS / Apple Silicon MLX Process & Memory Management",
+  "created_at": "2026-11-03T07:20:00Z",
+  "updated_at": "2026-11-03T07:20:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.05,
+    "operational_friction": 1,
+    "priority_score": 500.0
+  },
+  "priority_score": 500.0,
+  "hypothesis": "Refactoring mlx_server_manager.py to: (1) scope port discovery via `lsof -ti -sTCP:LISTEN :<port>`, (2) terminate the complete process group (`os.killpg`) to guarantee child Python model termination, (3) measure true Metal unified memory RSS from the listening worker child, and (4) hook idle reaping to Protocol 128 session timers will guarantee 100% memory reclamation (~4.7 GiB) and eliminate zombie daemon leaks.",
+  "falsification_criteria": "After executing `stop_server`, any child python process remains listening on :8080, memory RSS fails to reflect the model weight allocation, or client TCP sockets are returned by port discovery.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if child process signal forwarding encounters macOS SIP permission errors"
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "mlx-lifecycle",
+    "process-groups",
+    "memory-reclamation",
+    "anti-asch-audit",
+    "peer-review-remediation"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
