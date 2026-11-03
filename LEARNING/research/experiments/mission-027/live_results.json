@@ -1,0 +1,83 @@
+[
+  {
+    "cycle": 1,
+    "boot_latency_sec": 1.609,
+    "worker_pid": 55996,
+    "launcher_pid": 55977,
+    "listeners_while_running": [
+      55996
+    ],
+    "client_pid_returned": false,
+    "fresh_footprint_mb": 1441.0,
+    "fresh_ps_rss_mb": 873.84,
+    "warm_footprint_mb": 4357.0,
+    "warm_ps_rss_mb": 3675.7,
+    "status_pid_is_worker": true,
+    "original_prediction_fresh_ge_4000": false,
+    "stop_status": "stopped",
+    "signalled": "process_group",
+    "verified": true,
+    "reclaimed_footprint_mb": 4357.0,
+    "processes_gone": true,
+    "listeners_after": [],
+    "free_pct_before_running_after": [
+      54,
+      23,
+      52
+    ]
+  },
+  {
+    "cycle": 2,
+    "boot_latency_sec": 1.604,
+    "worker_pid": 56135,
+    "launcher_pid": 56134,
+    "listeners_while_running": [
+      56135
+    ],
+    "client_pid_returned": false,
+    "fresh_footprint_mb": 1493.0,
+    "fresh_ps_rss_mb": 943.86,
+    "warm_footprint_mb": 4356.0,
+    "warm_ps_rss_mb": 3679.61,
+    "status_pid_is_worker": true,
+    "original_prediction_fresh_ge_4000": false,
+    "stop_status": "stopped",
+    "signalled": "process_group",
+    "verified": true,
+    "reclaimed_footprint_mb": 4356.0,
+    "processes_gone": true,
+    "listeners_after": [],
+    "free_pct_before_running_after": [
+      52,
+      24,
+      52
+    ]
+  },
+  {
+    "cycle": 3,
+    "boot_latency_sec": 1.63,
+    "worker_pid": 56282,
+    "launcher_pid": 56281,
+    "listeners_while_running": [
+      56282
+    ],
+    "client_pid_returned": false,
+    "fresh_footprint_mb": 1493.0,
+    "fresh_ps_rss_mb": 947.06,
+    "warm_footprint_mb": 4358.0,
+    "warm_ps_rss_mb": 3682.31,
+    "status_pid_is_worker": true,
+    "original_prediction_fresh_ge_4000": false,
+    "stop_status": "stopped",
+    "signalled": "process_group",
+    "verified": true,
+    "reclaimed_footprint_mb": 4357.0,
+    "processes_gone": true,
+    "listeners_after": [],
+    "free_pct_before_running_after": [
+      52,
+      24,
+      53
+    ]
+  }
+]

@@ -7,6 +7,7 @@ Comprehensive operational runbook for managing local sovereign inference servers
 - [Server Lifecycle CLI Commands](#2-server-lifecycle-cli-commands)
 - [Querying & Verification Runbooks](#3-querying--verification-runbooks)
 - [Bootloader Telemetry Integration](#4-bootloader-telemetry-integration)
+- [Hardening Notes (MISSION-027)](#5-hardening-notes-mission-027)
 
 ---
 
@@ -43,9 +44,13 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
   "uptime_sec": 342.1,
   "idle_sec": 12.4,
   "idle_timeout_sec": 900,
-  "rss_mb": 24.81
+  "launcher_pid": null,
+  "managed": false,
+  "rss_mb": 10.1,
+  "footprint_mb": 4711.0
 }
 ```
+`pid` and the memory figures describe the **listening worker**. `footprint_mb` is the number to trust (it includes Metal/unified memory); `rss_mb` is `ps` RSS, which can read a few MB for a worker holding the whole model (see section 5). `managed` is true only for a server this manager started.
 
 ### Ensure Ready (Start on Demand)
 ```bash
@@ -62,12 +67,14 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server stop
 ```
-*Sends `SIGTERM`, verifies process termination, removes runtime state files, and logs memory reclaimed.*
+*Tears down the whole server tree (the `uvx` launcher and the worker that listens on the port): `SIGTERM` to the process group when every member is an MLX process, otherwise to the worker, launcher and their children only. It then verifies that nothing is alive and nothing listens on the port, and returns `status: error` with the survivors (not "stopped") if anything remains; `--force` escalates to `SIGKILL`. Reports `reclaimed_footprint_mb`.*
 
 ### Reap If Idle
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server reap --timeout 900
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py reap --only-managed
 ```
+`--only-managed` reaps only a server this manager started and leaves an attached or hand-launched persistent daemon alone.
 
 ---
 
@@ -109,3 +116,16 @@ During Holistic Wakeup (`guardian_wakeup.py --mode HOLISTIC`), the local server 
 }
 ```
 *(If inactive, returns status `STANDBY` without throwing an error).*
+
+---
+
+## 5. Hardening Notes (MISSION-027)
+
+Measured on an M1 with 16 GB and `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (details: `LEARNING/research/experiments/mission-027/`).
+
+- **Port discovery lists LISTEN sockets only.** The correct macOS command is `lsof -nP -iTCP:<port> -sTCP:LISTEN -t`. (`lsof -ti -sTCP:LISTEN :<port>` errors, and plain `lsof -ti :<port>` also returns client connections, so it could return a client's PID.)
+- **Process shape.** `uv tool uvx ...` (launcher, tiny) starts a python worker (listener, the model). Both share one process group. Signalling only the launcher left the worker listening and the old check reported "stopped" anyway.
+- **Memory.** Use `footprint -p <pid>` (the worker's physical footprint). `ps` RSS depends on paging and compression and read about 10 MB for a worker with 4.7 GB resident. The footprint of a freshly started server varies (about 0.5-3.3 GB) because weights load lazily; after one small generation it was 4.30-4.36 GB (4.71 GB on a server that had been serving for hours).
+- **Reclamation.** Stopping returned about 4.3 GB: system free memory went from about 24% (server running) to about 52%.
+- **Reaping policy.** Idle reaping applies only to servers this manager started (`managed`). Holistic wakeup calls `reap_if_idle(only_managed=True)` at boot, and the closure step of Protocol 128 should run `mlx_server_manager.py reap --only-managed` (or `stop` for a server you started). A persistent daemon you launched yourself is never reaped.
+- **Not covered.** macOS SIP permission errors when signalling are not handled (none occurred); processes owned by another user cannot be signalled.

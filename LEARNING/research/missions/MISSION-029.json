@@ -1,0 +1,44 @@
+{
+  "id": "MISSION-029",
+  "title": "Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX",
+  "created_at": "2026-11-03T20:00:00Z",
+  "updated_at": "2026-11-03T20:00:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 3,
+    "cost_weight": 0.05,
+    "operational_friction": 1,
+    "priority_score": 180.0
+  },
+  "hypothesis": "With teardown now verified (MISSION-027), reaping an idle managed MLX server after at most 5 minutes and restarting it on demand adds at most 10 seconds to the first request (p95 over 20 cold starts, boot to first generated token) with zero failed requests, while returning at least 3 GiB of the 16 GiB to the system, so an aggressive idle timeout is net-positive on a 16 GB machine.",
+  "falsification_criteria": "p95 cold-start-to-first-token exceeds 10 s, or any request fails during a reap/restart cycle, or free system memory recovers by less than 3 GiB after a reap, or a reap kills a server the manager did not start.",
+  "baseline_evidence": "MISSION-027 measured boot-to-ready at 1.6-2.3 s (hot cache), warm footprint 4.30-4.36 GB, and free memory recovering from about 24% to about 52% after stop; first-token latency after a cold start was not measured.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Not applicable; this mission measures local lifecycle latency."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "mlx-lifecycle",
+    "idle-reap-policy",
+    "cold-start-latency",
+    "memory-reclamation",
+    "spawned-by-mission-027"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "priority_score": 180.0
+}
