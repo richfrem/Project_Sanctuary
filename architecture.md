@@ -219,26 +219,11 @@ flowchart TD
 
 ---
 
-## 8. Protocol 128 Sovereign Engineering Lifecycle
+## 8. Governance & Constitutional Law
 
-All engineering, architectural, and memory operations follow the closed-loop **Protocol 128 Lifecycle**:
-
-```
-Boot Orientation  ──► Sovereign Execution ──► Retrospective ──► Technical Seal ──► Soul Persistence
- (START_HERE.md)       (APM Core Skills)      (Friction Log)    (Guardian Seal)    (Hugging Face)
-```
-
-1. **Boot Orientation**: Read `START_HERE.md` and execute `guardian_wakeup.py --mode HOLISTIC`.
-2. **Sovereign Execution**: Execute deterministic or exploratory tasks using installed APM skills.
-3. **Retrospective**: Record friction, insights, and lessons learned.
-4. **Technical Seal**: Run automated integrity checks (`audit_skill.py`, `audit.py`, `validate_apm_package.py`).
-5. **Soul Persistence**: Extract session traces via `trace_extractor.py`, update `manifest.json`, and coordinate persistence to Hugging Face via `sync_soul_dataset.py` (delegating to `managing-huggingface-assets`).
-
----
-
-## 9. Non-Negotiable Invariants
-
-1. **Human Gate Law**: Agents MUST NOT execute ANY state-changing operation (disk writes outside `/tmp/`, git mutations, irreversible commands) without EXPLICIT human instruction ("Proceed", "Go", "Execute").
-2. **Zero-Trust Git Discipline**: Agents MUST NEVER commit directly to `main` and MUST NEVER run `git push` without fresh, explicit human approval.
-3. **Epistemic Integrity & Truth Sovereignty**: If doctrine conflicts with observed reality or system integrity, agents MUST surface the contradiction immediately for human review. Never simulate or fake tool results.
-4. **Runtime Awareness (Only Installed Skills Exist)**: Agents MUST NOT invoke deprecated local scripts; capabilities MUST be executed through active installed APM skills or `sanctuary-core`.
+Project Sanctuary is governed by formal doctrine and constitutional invariants:
+- **The Supreme Law (Human Gate)**: Mandates explicit user approval for any state-changing operations. See [constitution.md](.agent/rules/constitution.md).
+- **Core Invariants & Orientation**: See [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md).
+- **Protocol 128 Lifecycle**: The 5-stage sovereign lifecycle (Orientation Boot → Sovereign Execution → Retrospective → Technical Seal → Soul Persistence). See [protocols/128_Hardened_Learning_Loop_v3.0.md](protocols/128_Hardened_Learning_Loop_v3.0.md).
+- **Autonomous Cognitive Engine & Model Routing**: 3-tier cognitive backlog, cheapest-viable model routing (MISSION-016), and 5-dimensional scoring rubric. See [autonomous_cognitive_engine.md](LEARNING/concepts/autonomous_cognitive_engine.md).
+- **Epistemic Truth Sovereignty (Anti-Asch Engine)**: Empirical grounding in compiler/test gates and SHA-256 digests. See [anti_asch_engine.md](LEARNING/concepts/anti_asch_engine.md).

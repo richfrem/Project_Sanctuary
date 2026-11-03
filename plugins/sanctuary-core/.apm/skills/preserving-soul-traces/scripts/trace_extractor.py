@@ -1,82 +1,29 @@
 #!/usr/bin/env python3
 """
-trace_extractor.py (CLI)
-=====================================
-
+trace_extractor.py — Soul Trace Extraction, Sealing & Verification CLI
+======================================================================
 Purpose:
-    Extracts, formats, sanitizes, and seals Project Sanctuary markdown documents
-    and cognitive session traces into the canonical JSONL training dataset
-    (`soul_traces.jsonl`) per ADR 081 & ADR 084. Computes SHA-256 integrity digests,
-    strips image embeds, and updates the cryptographic dataset manifest.
-
+    Extracts, sanitizes, and seals Project Sanctuary markdown documents and
+    session traces into the ADR 084 canonical JSONL dataset (soul_traces.jsonl).
 Layer: Layer 3 Memory Genome / Cognitive Persistence
 
+Key Inputs:
+    Folders: chronicle/, protocols/, LEARNING/, context/, plugins/sanctuary-core/, .agent/
+    Root Files: AGENTS.md, START_HERE.md, README.md
+    Config: model_version="Sanctuary-Qwen2-7B-v1.0-GGUF-Final", snapshot_type="genome"
+
+Key Outputs:
+    Dataset: huggingface/data/soul_traces.jsonl (Canonical 13-field ADR 084 training corpus)
+    Manifest: huggingface/metadata/manifest.json (Cryptographic SHA-256 seal & record count)
+
 Usage Examples:
-    # 1. Preview extraction across canonical domains without modifying disk
-    python3 scripts/trace_extractor.py --dry-run
+    python3 scripts/trace_extractor.py --dry-run    # Preview extraction without disk mutation
+    python3 scripts/trace_extractor.py --append     # Upsert records into local JSONL dataset
+    python3 scripts/trace_extractor.py --verify     # Audit schema compliance & SHA-256 integrity
 
-    # 2. Extract or upsert records in the local Hugging Face dataset repo
-    python3 scripts/trace_extractor.py --append
-
-    # 3. Verify JSONL schema compliance and SHA-256 integrity
-    python3 scripts/trace_extractor.py --verify
-
-    # 4. Extract a specific directory or file
-    python3 scripts/trace_extractor.py --source-dir LEARNING/concepts --append
-
-Supported Object Types:
-    - Markdown files (.md) with or without YAML frontmatter
-    - ADR 084 canonical 13-field JSONL records
-
-Key Input Dependencies:
-    - Folders:
-        - chronicle/                (Episodic chronicle journal entries)
-        - protocols/                (Canonized governance doctrines)
-        - LEARNING/                 (Knowledge base concepts, topics, research backlog)
-        - context/                  (Fast-boot identity, soul.md, user.md, memory.md)
-        - plugins/sanctuary-core/   (Core APM skills and lifecycle runbooks)
-        - .agent/                   (Constitution, boot telemetry, and friction logs)
-    - Root Files:
-        - AGENTS.md                 (Canonical instruction file and non-negotiable invariants)
-        - START_HERE.md             (Protocol 128 deterministic bootloader entrypoint)
-        - README.md                 (Project vision and repository architecture)
-    - Configuration:
-        - Model lineage: Sanctuary-Qwen2-7B-v1.0-GGUF-Final
-        - ADR Schema: ADR 084 (13-field canonical record specification)
-
-Key Outputs / Outcomes:
-    - Primary Dataset: huggingface/data/soul_traces.jsonl (Canonical training corpus)
-    - Integrity Manifest: huggingface/metadata/manifest.json (Cryptographic seal & record count)
-
-CLI Arguments:
-    --append            Upsert into existing JSONL instead of overwriting
-    --verify            Audit existing dataset for schema compliance and hash validity
-    --dry-run           Preview extraction without writing to disk
-    --repair            When verifying, repair invalid SHA-256 digests in-place
-    --source-dir DIR    Extract a specific directory instead of default domains
-    --target-file FILE  Extract a single markdown file
-    --limit N           Limit number of records extracted (0 = all)
-    --output PATH       Custom output JSONL path (default: huggingface/data/soul_traces.jsonl)
-    --manifest PATH     Custom manifest path (default: huggingface/metadata/manifest.json)
-    --model-version VER Model lineage identifier tag
-    --snapshot-type TYP Default snapshot type classification (e.g. genome, concept)
-
-Key Functions Index:
-    - extract_frontmatter(content: str) -> Tuple[Optional[Dict[str, Any]], str]
-    - sanitize_markdown_content(body: str) -> str
-    - sanitize_record_id(rel_path: str) -> str
-    - build_soul_trace_record(filepath: Path, repo_root: Path, ...) -> Optional[Dict[str, Any]]
-    - verify_dataset(dataset_path: Path, repair: bool) -> Tuple[bool, List[str]]
-    - update_manifest(manifest_path: Path, dataset_path: Path, model_version: str) -> None
-    - main() -> None
-
-Script Dependencies:
-    - Python standard library only (os, sys, re, json, hashlib, argparse, pathlib, datetime)
-
-Consumed by:
-    - plugins/sanctuary-core/.apm/skills/preserving-soul-traces
-    - plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian (P128 persist mode)
-    - sync_soul_dataset.py
+Key Functions:
+    extract_frontmatter(), sanitize_markdown_content(), sanitize_record_id(),
+    build_soul_trace_record(), verify_dataset(), update_manifest(), main()
 """
 
 import os
