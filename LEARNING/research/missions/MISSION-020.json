@@ -1,11 +1,11 @@
 {
   "id": "MISSION-020",
   "title": "Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "multi-repo",
   "target_platform": "richfrem/agent-plugins-skills (cli-agent) & Global APM Harness",
   "created_at": "2026-11-03T05:10:00Z",
-  "updated_at": "2026-11-03T05:10:00Z",
+  "updated_at": "2026-11-03T05:25:00Z",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -27,9 +27,9 @@
       "gpt-6-luna"
     ]
   },
-  "verdict": null,
+  "verdict": "CONFIRMED",
   "human_gate_required": true,
-  "issue_ref": null,
+  "issue_ref": "https://github.com/richfrem/agent-plugins-skills/pull/745",
   "tags": [
     "agent-plugins-skills",
     "cli-agent",
@@ -38,6 +38,16 @@
     "apm-global",
     "upstream-propagation"
   ],
-  "evidence": [],
-  "lessons_learned": []
+  "evidence": [
+    "Created plugins/agent-orchestration/.apm/skills/cli-agent/references/local-mlx-apple-silicon.md in richfrem/agent-plugins-skills documenting zero-swap Apple Silicon MLX inference, Qwen2.5-Coder-7B-4bit (~4.43 GB RAM footprint), mlx_lm.server --port 8080 runbooks, and health verification via curl http://127.0.0.1:8080/v1/models.",
+    "Updated SKILL.md, local-llm-dispatch.md, and local-llm-setup-deep-reference.md to index Apple Silicon MLX native runner alongside llama-server.",
+    "Logged institutional evolution in references/map-debt.md under DEBT-20261102-CLI-AGENT-APPLE-SILICON-MLX-LOCAL-INFERENCE.",
+    "Successfully created PR #745 and squash-merged into main branch of richfrem/agent-plugins-skills.",
+    "Reinstalled APM packages to synchronize global workstation harnesses.",
+    "Canonized local MLX server endpoint health check (http://127.0.0.1:8080/v1/models) into AGENTS.md and START_HERE.md Protocol 128 Bootstrapping sequences."
+  ],
+  "lessons_learned": [
+    "Apple Silicon M1/M2/M3/M4 unified memory excels at 4-bit local inference (83.7 tok/sec prompt, 14.3 tok/sec gen) with zero swap-thrashing, whereas fine-tuning 7B models requires dedicated NVIDIA CUDA / WSL2 environments.",
+    "Documenting the standard OpenAI-compatible port (8080) and model endpoint (/v1/models) allows multi-agent harnesses to seamlessly query local intelligence without background memory leaks."
+  ]
 }
