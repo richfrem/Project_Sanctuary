@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
-"""
-record_procedure_outcome.py - Procedural Memory Outcome Tracking CLI
-===================================================================
-
-Purpose:
-    Records deterministic execution outcomes (success, failure, blocked)
-    for procedural recipes in `LEARNING/procedures/`. Updates frontmatter
-    counters bound to specific versions and runtime environments, and
-    emits an immutable event to `.agent/learning/events.jsonl`.
-
+"""record_procedure_outcome.py - Procedural Memory Outcome Tracking CLI.
+Purpose: Records deterministic execution outcomes (success, failure, blocked) for procedural recipes in LEARNING/procedures/. Updates frontmatter counters bound to specific versions and runtime environments, and emits an immutable event to .agent/learning/events.jsonl.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Procedural Memory Outcome Governance).
+Key Inputs: Markdown procedure files in LEARNING/procedures/*.md, .agent/learning/events.jsonl.
+Key Outputs: Mutated procedure frontmatter with updated execution stats and appended events in events.jsonl.
 Usage:
-    python3 record_procedure_outcome.py --id proc-git-feature-branch --outcome success
-    python3 record_procedure_outcome.py --file LEARNING/procedures/git/create_feature_branch.md --outcome failure --reason "Merge conflict"
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --id proc-git-feature-branch --outcome success
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --file LEARNING/procedures/git/create_feature_branch.md --outcome failure --reason "Merge conflict"
+Key Functions: get_project_root(), find_procedure_file(), parse_frontmatter(), main().
 """
 
 import os

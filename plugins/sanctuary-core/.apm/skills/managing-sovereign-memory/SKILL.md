@@ -33,7 +33,7 @@ Agent-native memory management system providing token-efficient retrieval, asymm
 
 ```bash
 # Retrieve summary of a concept (Tier 2, < 200 tokens)
-python3 scripts/disclose.py --level summary --file wiki/concepts/sovereign_memory_engine.md
+python3 scripts/disclose.py --level summary --file LEARNING/concepts/sovereign_memory_engine.md
 
 # Traverse associative graph links
 python3 scripts/query_graph.py --concept sovereign_memory_engine
@@ -41,7 +41,7 @@ python3 scripts/query_graph.py --concept sovereign_memory_engine
 # Record an insight or friction log asymmetrically
 python3 scripts/record_insight.py --topic "git_guards" --type friction --insight "Pre-commit hook requires UTF-8"
 
-# Audit confidence decay across wiki concepts
+# Audit confidence decay across LEARNING/ concepts
 python3 scripts/audit_decay.py --check
 
 # Manage agent-native cognitive backlog (Tier 1 index & mission tracker)
@@ -51,7 +51,7 @@ python3 scripts/manage_backlog.py compile
 
 ## Workflow
 
-1. **Orient & Explore (Tier 1)**: Inspect high-level tables via `disclose.py --level index` or `wiki/INDEX.md`.
+1. **Orient & Explore (Tier 1)**: Inspect high-level tables via `disclose.py --level index` or `LEARNING/concepts/INDEX.md`.
 2. **Validate (Tier 2)**: Query executive summaries (`disclose.py --level summary`) to confirm relevance before loading full content.
 3. **Deep Retrieval (Tier 3)**: Load full files only when implementing changes or verifying technical contracts.
 4. **Asymmetric Recording**: When an experiment or test fails, run `record_insight.py` BEFORE reverting git commits.

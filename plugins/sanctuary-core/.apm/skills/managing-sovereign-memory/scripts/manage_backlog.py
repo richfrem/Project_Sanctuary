@@ -1,18 +1,9 @@
 #!/usr/bin/env python3
-"""
-manage_backlog.py - Agent-Native Cognitive Backlog & Investment Tracker
-======================================================================
-
-Purpose:
-    Sovereign, agent-first backlog and falsifiable mission tracker for
-    Project Sanctuary. Provides Tier 1 machine indices, append-only inbox
-    capture, structured mission manifests, cheapest-viable model routing
-    (MISSION-016), and deterministic compilation to human Markdown views.
-
-Key Input Dependencies:
-    LEARNING/research/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl
-    (appended by capture), .agent/learning/events.jsonl (optional event log).
-
+"""manage_backlog.py - Agent-Native Cognitive Backlog & Investment Tracker.
+Purpose: Sovereign, agent-first backlog and falsifiable mission tracker for Project Sanctuary. Provides Tier 1 machine indices, append-only inbox capture, structured mission manifests, cheapest-viable model routing (MISSION-016), and deterministic compilation to human Markdown views.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Epistemic Backlog & Mission Governance).
+Key Input Dependencies: LEARNING/research/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
+Key Outputs: LEARNING/research/index.jsonl (Tier 1 fast index), LEARNING/research/backlog.md (human view).
 Usage:
     python3 manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
     python3 manage_backlog.py route <TASK_DESCRIPTION> [--type TYPE] [--failures N] [--format json|text]

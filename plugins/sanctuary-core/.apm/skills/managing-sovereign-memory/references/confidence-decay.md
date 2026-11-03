@@ -10,7 +10,7 @@
 
 ## Epistemic Grounding
 
-To prevent stale consensus and synthetic stagnation, knowledge within the sovereign wiki is treated as an active epistemic state with an expiration date. 
+To prevent stale consensus and synthetic stagnation, knowledge within sovereign memory (Layer 2 `LEARNING/`) is treated as an active epistemic state with an expiration date. 
 
 A claim that was true 6 months ago may no longer be true after upstream dependencies or compiler versions change.
 

@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
-"""
-query_graph.py - Instant Wikilink & Associative Graph Traverser
-=============================================================
-
-Purpose:
-    Traverses inbound and outbound wikilinks ([[concept]]) and standard
-    relative Markdown links across LEARNING/ and protocols/ in milliseconds
-    using only Python standard library.
-
+"""query_graph.py - Layer 2 Associative Concept & Link Graph Traverser.
+Purpose: Traverses inbound and outbound associative links ([[concept]] markdown syntax and standard relative links) across Layer 2 LEARNING/ and protocols/ in milliseconds using standard library only.
+Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Associative Graph & Memory Traversal).
+Key Inputs: Markdown files in LEARNING/ and protocols/.
+Key Outputs: Associative relationship graph in human-readable text or structured JSON format.
 Usage:
-    python scripts/query_graph.py --target sovereign_memory_engine
-    python scripts/query_graph.py --target sovereign_memory_engine --format json
-    python scripts/query_graph.py --file LEARNING/concepts/anti_asch_engine.md
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py --target sovereign_memory_engine
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py --target anti_asch_engine --format json
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py --file LEARNING/concepts/anti_asch_engine.md
+Key Functions: get_project_root(), extract_links(), build_graph(), query_concept(), main().
 """
 
 import re

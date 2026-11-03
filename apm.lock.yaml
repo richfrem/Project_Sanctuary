@@ -18,6 +18,7 @@ dependencies:
   - .agents/skills/evaluating-agent-work/scripts/track_budget.py
   - .agents/skills/evaluating-agent-work/scripts/visualize_economy.py
   - .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
+  - .agents/skills/evaluating-agent-work/tests/test_model_routing.py
   - .agents/skills/forging-sovereign-models
   - .agents/skills/forging-sovereign-models/SKILL.md
   - .agents/skills/forging-sovereign-models/assets/Modelfile.template
@@ -126,6 +127,7 @@ dependencies:
   - .claude/skills/evaluating-agent-work/scripts/track_budget.py
   - .claude/skills/evaluating-agent-work/scripts/visualize_economy.py
   - .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
+  - .claude/skills/evaluating-agent-work/tests/test_model_routing.py
   - .claude/skills/forging-sovereign-models
   - .claude/skills/forging-sovereign-models/SKILL.md
   - .claude/skills/forging-sovereign-models/assets/Modelfile.template
@@ -229,11 +231,12 @@ dependencies:
     .agents/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:20b3720bbd669c3c630d2737bbffd684f54e5c1a067ce2e13501ce5c13002657
     .agents/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
     .agents/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
-    .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:5dd76d0f28fc7a5c326fa06628310027c453af25aebb96b061653c2d703425b7
+    .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
     .agents/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
     .agents/skills/evaluating-agent-work/scripts/track_budget.py: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
     .agents/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
-    .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:94d4b1a43c2080b3909640bc5dd878e0c5c9a0e0d638502454559d5832d54a25
+    .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
+    .agents/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
     .agents/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
     .agents/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .agents/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
@@ -270,21 +273,21 @@ dependencies:
     .agents/skills/managing-protocols/references/acceptance-criteria.md: sha256:9d771338b10ea346f343564f0946bd7004e76390c30bd6aca53b8e49ce7d1835
     .agents/skills/managing-protocols/references/protocol-schema.md: sha256:1ff0453c5f07a462ddf6deb75ff83fb1a829e4110263400317644faa5011f0ed
     .agents/skills/managing-protocols/scripts/protocol_manager.py: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
-    .agents/skills/managing-sovereign-memory/SKILL.md: sha256:c73054e538f94ea21510a1ddcbb647a7fb8eab1c39d2637791bc9323f399f6c8
-    .agents/skills/managing-sovereign-memory/evals/evals.json: sha256:2717ea119b5dd1b350c7e40be0448c7d3a5d577f1d3f61e19a4001cd6351a467
+    .agents/skills/managing-sovereign-memory/SKILL.md: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+    .agents/skills/managing-sovereign-memory/evals/evals.json: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
     .agents/skills/managing-sovereign-memory/evals/results.tsv: sha256:3c609d0c0a5ae5b1366824253e9fa0a6fb75173f771f8ddb664ba863b5e2c064
-    .agents/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:e8877627a27ac068d62fef13a5de56ef3ded0920244d2ded306dc8e4e225ccf0
-    .agents/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:4b30226a7d0ac3d2b430c622bc97772d6bb536ca3259a83c75a9d51c818c92f6
+    .agents/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
+    .agents/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
     .agents/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
-    .agents/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:a6523f3de5338690821685b71a72f5a584b10fcc88ea850c34df33c05e7517b4
-    .agents/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:215b6fcb92273bd4579f7fb4782be3b8e9eabe0e41058f3bf6d8fc89d3ce1122
-    .agents/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:add88e99e29ee1bfdef6dd8eb10cf974a77f4137cf0b1343f539c553f8ca3965
-    .agents/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:ed69822bfb2948d06cf65cab1155df1f440ec97383610ce1be50f7c3f383d81e
-    .agents/skills/managing-sovereign-memory/scripts/disclose.py: sha256:f4a6b7a4692d6948b96bad31f54afcd8b858aa8d2688346c2ad72c3de63c4343
-    .agents/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:f5796bd7884f02100e50acb23d5882ee4eaeaa5dd7a4d8ec4bd213fcf057c516
-    .agents/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:79c6be71e3760a90f334c003525d4c4040b53518ba1c91082a3823823c5dbf71
-    .agents/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:434dc9a507043d3dc094b92f99053d7d00cc414cf259550256e995d3eb150f26
-    .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:55c555c28ebc62fdbf164e656d82882d473c29c385578c38a9303d878f21317d
+    .agents/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+    .agents/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
+    .agents/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
+    .agents/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+    .agents/skills/managing-sovereign-memory/scripts/disclose.py: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
+    .agents/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+    .agents/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
+    .agents/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
+    .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
     .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
     .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .agents/skills/operating-sanctuary-guardian/SKILL.md: sha256:1ab2a852def372198523a2f6ad0b85c95c9b5f893e0b9d5a2a9522498aab0102
@@ -330,11 +333,12 @@ dependencies:
     .claude/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:20b3720bbd669c3c630d2737bbffd684f54e5c1a067ce2e13501ce5c13002657
     .claude/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
     .claude/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
-    .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:5dd76d0f28fc7a5c326fa06628310027c453af25aebb96b061653c2d703425b7
+    .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
     .claude/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
     .claude/skills/evaluating-agent-work/scripts/track_budget.py: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
     .claude/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
-    .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:94d4b1a43c2080b3909640bc5dd878e0c5c9a0e0d638502454559d5832d54a25
+    .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
+    .claude/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
     .claude/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
     .claude/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .claude/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
@@ -371,21 +375,21 @@ dependencies:
     .claude/skills/managing-protocols/references/acceptance-criteria.md: sha256:9d771338b10ea346f343564f0946bd7004e76390c30bd6aca53b8e49ce7d1835
     .claude/skills/managing-protocols/references/protocol-schema.md: sha256:1ff0453c5f07a462ddf6deb75ff83fb1a829e4110263400317644faa5011f0ed
     .claude/skills/managing-protocols/scripts/protocol_manager.py: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
-    .claude/skills/managing-sovereign-memory/SKILL.md: sha256:c73054e538f94ea21510a1ddcbb647a7fb8eab1c39d2637791bc9323f399f6c8
-    .claude/skills/managing-sovereign-memory/evals/evals.json: sha256:2717ea119b5dd1b350c7e40be0448c7d3a5d577f1d3f61e19a4001cd6351a467
+    .claude/skills/managing-sovereign-memory/SKILL.md: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+    .claude/skills/managing-sovereign-memory/evals/evals.json: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
     .claude/skills/managing-sovereign-memory/evals/results.tsv: sha256:3c609d0c0a5ae5b1366824253e9fa0a6fb75173f771f8ddb664ba863b5e2c064
-    .claude/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:e8877627a27ac068d62fef13a5de56ef3ded0920244d2ded306dc8e4e225ccf0
-    .claude/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:4b30226a7d0ac3d2b430c622bc97772d6bb536ca3259a83c75a9d51c818c92f6
+    .claude/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
+    .claude/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
     .claude/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
-    .claude/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:a6523f3de5338690821685b71a72f5a584b10fcc88ea850c34df33c05e7517b4
-    .claude/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:215b6fcb92273bd4579f7fb4782be3b8e9eabe0e41058f3bf6d8fc89d3ce1122
-    .claude/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:add88e99e29ee1bfdef6dd8eb10cf974a77f4137cf0b1343f539c553f8ca3965
-    .claude/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:ed69822bfb2948d06cf65cab1155df1f440ec97383610ce1be50f7c3f383d81e
-    .claude/skills/managing-sovereign-memory/scripts/disclose.py: sha256:f4a6b7a4692d6948b96bad31f54afcd8b858aa8d2688346c2ad72c3de63c4343
-    .claude/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:f5796bd7884f02100e50acb23d5882ee4eaeaa5dd7a4d8ec4bd213fcf057c516
-    .claude/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:79c6be71e3760a90f334c003525d4c4040b53518ba1c91082a3823823c5dbf71
-    .claude/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:434dc9a507043d3dc094b92f99053d7d00cc414cf259550256e995d3eb150f26
-    .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:55c555c28ebc62fdbf164e656d82882d473c29c385578c38a9303d878f21317d
+    .claude/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+    .claude/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
+    .claude/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
+    .claude/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+    .claude/skills/managing-sovereign-memory/scripts/disclose.py: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
+    .claude/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+    .claude/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
+    .claude/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
+    .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
     .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
     .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .claude/skills/operating-sanctuary-guardian/SKILL.md: sha256:1ab2a852def372198523a2f6ad0b85c95c9b5f893e0b9d5a2a9522498aab0102
@@ -500,7 +504,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5dd76d0f28fc7a5c326fa06628310027c453af25aebb96b061653c2d703425b7
+  content_hash: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/score_contribution.py
@@ -536,7 +540,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:94d4b1a43c2080b3909640bc5dd878e0c5c9a0e0d638502454559d5832d54a25
+  content_hash: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/test_model_routing.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
 - kind: project-relative
   target: antigravity
   value: .agents/skills/forging-sovereign-models
@@ -905,7 +918,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c73054e538f94ea21510a1ddcbb647a7fb8eab1c39d2637791bc9323f399f6c8
+  content_hash: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/evals/evals.json
@@ -914,7 +927,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2717ea119b5dd1b350c7e40be0448c7d3a5d577f1d3f61e19a4001cd6351a467
+  content_hash: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/evals/results.tsv
@@ -932,7 +945,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e8877627a27ac068d62fef13a5de56ef3ded0920244d2ded306dc8e4e225ccf0
+  content_hash: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/acceptance-criteria.md
@@ -941,7 +954,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:4b30226a7d0ac3d2b430c622bc97772d6bb536ca3259a83c75a9d51c818c92f6
+  content_hash: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/agent-native-backlog.md
@@ -959,7 +972,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a6523f3de5338690821685b71a72f5a584b10fcc88ea850c34df33c05e7517b4
+  content_hash: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/confidence-decay.md
@@ -968,7 +981,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:215b6fcb92273bd4579f7fb4782be3b8e9eabe0e41058f3bf6d8fc89d3ce1122
+  content_hash: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/progressive-disclosure.md
@@ -977,7 +990,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:add88e99e29ee1bfdef6dd8eb10cf974a77f4137cf0b1343f539c553f8ca3965
+  content_hash: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/audit_decay.py
@@ -986,7 +999,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:ed69822bfb2948d06cf65cab1155df1f440ec97383610ce1be50f7c3f383d81e
+  content_hash: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/disclose.py
@@ -995,7 +1008,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f4a6b7a4692d6948b96bad31f54afcd8b858aa8d2688346c2ad72c3de63c4343
+  content_hash: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/manage_backlog.py
@@ -1004,7 +1017,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f5796bd7884f02100e50acb23d5882ee4eaeaa5dd7a4d8ec4bd213fcf057c516
+  content_hash: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/query_graph.py
@@ -1013,7 +1026,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:79c6be71e3760a90f334c003525d4c4040b53518ba1c91082a3823823c5dbf71
+  content_hash: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/record_insight.py
@@ -1022,7 +1035,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:434dc9a507043d3dc094b92f99053d7d00cc414cf259550256e995d3eb150f26
+  content_hash: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py
@@ -1031,7 +1044,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:55c555c28ebc62fdbf164e656d82882d473c29c385578c38a9303d878f21317d
+  content_hash: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py
@@ -1472,7 +1485,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5dd76d0f28fc7a5c326fa06628310027c453af25aebb96b061653c2d703425b7
+  content_hash: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/score_contribution.py
@@ -1508,7 +1521,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:94d4b1a43c2080b3909640bc5dd878e0c5c9a0e0d638502454559d5832d54a25
+  content_hash: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/test_model_routing.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
 - kind: project-relative
   target: claude
   value: .claude/skills/forging-sovereign-models
@@ -1877,7 +1899,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c73054e538f94ea21510a1ddcbb647a7fb8eab1c39d2637791bc9323f399f6c8
+  content_hash: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/evals/evals.json
@@ -1886,7 +1908,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2717ea119b5dd1b350c7e40be0448c7d3a5d577f1d3f61e19a4001cd6351a467
+  content_hash: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/evals/results.tsv
@@ -1904,7 +1926,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e8877627a27ac068d62fef13a5de56ef3ded0920244d2ded306dc8e4e225ccf0
+  content_hash: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/acceptance-criteria.md
@@ -1913,7 +1935,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:4b30226a7d0ac3d2b430c622bc97772d6bb536ca3259a83c75a9d51c818c92f6
+  content_hash: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/agent-native-backlog.md
@@ -1931,7 +1953,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a6523f3de5338690821685b71a72f5a584b10fcc88ea850c34df33c05e7517b4
+  content_hash: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/confidence-decay.md
@@ -1940,7 +1962,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:215b6fcb92273bd4579f7fb4782be3b8e9eabe0e41058f3bf6d8fc89d3ce1122
+  content_hash: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/progressive-disclosure.md
@@ -1949,7 +1971,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:add88e99e29ee1bfdef6dd8eb10cf974a77f4137cf0b1343f539c553f8ca3965
+  content_hash: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/audit_decay.py
@@ -1958,7 +1980,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:ed69822bfb2948d06cf65cab1155df1f440ec97383610ce1be50f7c3f383d81e
+  content_hash: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/disclose.py
@@ -1967,7 +1989,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f4a6b7a4692d6948b96bad31f54afcd8b858aa8d2688346c2ad72c3de63c4343
+  content_hash: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/manage_backlog.py
@@ -1976,7 +1998,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f5796bd7884f02100e50acb23d5882ee4eaeaa5dd7a4d8ec4bd213fcf057c516
+  content_hash: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/query_graph.py
@@ -1985,7 +2007,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:79c6be71e3760a90f334c003525d4c4040b53518ba1c91082a3823823c5dbf71
+  content_hash: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/record_insight.py
@@ -1994,7 +2016,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:434dc9a507043d3dc094b92f99053d7d00cc414cf259550256e995d3eb150f26
+  content_hash: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py
@@ -2003,7 +2025,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:55c555c28ebc62fdbf164e656d82882d473c29c385578c38a9303d878f21317d
+  content_hash: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py

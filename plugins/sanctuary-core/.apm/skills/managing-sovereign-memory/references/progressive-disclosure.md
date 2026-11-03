@@ -34,10 +34,10 @@ Progressive Disclosure governs how autonomous AI agents query, read, and ingest 
 
 ```bash
 # Retrieve repository index
-python scripts/disclose.py --level index --target wiki/
+python scripts/disclose.py --level index --target LEARNING/
 
 # Retrieve summary of a concept
-python scripts/disclose.py --level summary --file wiki/concepts/sovereign_memory_engine.md
+python scripts/disclose.py --level summary --file LEARNING/concepts/sovereign_memory_engine.md
 
 # Retrieve full document
 python scripts/disclose.py --level deep --file protocols/128_Hardened_Learning_Loop_v3.0.md
@@ -47,5 +47,5 @@ python scripts/disclose.py --level deep --file protocols/128_Hardened_Learning_L
 
 Verify extraction speed is sub-10ms using Python standard library:
 ```bash
-python scripts/disclose.py --level summary --file wiki/concepts/anti_asch_engine.md
+python scripts/disclose.py --level summary --file LEARNING/concepts/anti_asch_engine.md
 ```
