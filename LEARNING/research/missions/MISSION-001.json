@@ -1,0 +1,31 @@
+{
+  "id": "MISSION-001",
+  "title": "Grok Bot Cloud VM, Infinite Loops & Operational Rails",
+  "status": "STAGED",
+  "execution_surface": "cloud-worker",
+  "target_platform": "Cursor Premium ($30/mo) / Grok Bot",
+  "created_at": "2026-11-02T08:00:00Z",
+  "updated_at": "2026-11-02T08:00:00Z",
+  "confidence_reviewed": "2026-11-02",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 100.0
+  },
+  "priority_score": 100.0,
+  "hypothesis": "Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.",
+  "falsification_criteria": "Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.",
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "grok-bot",
+    "cloud-vm",
+    "infinite-loops",
+    "operational-rails"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

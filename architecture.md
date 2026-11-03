@@ -91,7 +91,7 @@ plugins/sanctuary-core/
 5. **`preserving-soul-traces`**:
    - Formulates canonical 13-field JSONL records (`soul_traces.jsonl`) with SHA-256 verification, and delegates synchronization of `huggingface/` to `managing-huggingface-assets`.
 6. **`managing-sovereign-memory`**:
-   - Executes 3-tier progressive disclosure (`disclose.py`), procedural memory outcome tracking (`LEARNING/procedures/`, `record_procedure_outcome.py`), enforces asymmetric persistence of friction logs across git rollbacks (`record_insight.py`), audits 30-day confidence decay (`audit_decay.py`), and traverses associative wikilink graphs (`query_graph.py`).
+   - Executes 3-tier progressive disclosure (`disclose.py`), agent-native cognitive backlog management (`manage_backlog.py`), procedural memory outcome tracking (`LEARNING/procedures/`, `record_procedure_outcome.py`), enforces asymmetric persistence of friction logs across git rollbacks (`record_insight.py`), audits 30-day confidence decay (`audit_decay.py`), and traverses associative wikilink graphs (`query_graph.py`).
 7. **`evaluating-agent-work`**:
    - Evaluates delegated subagent and `/cli-agent` dispatches across 5 anchored dimensions (useful outcome, learning depth, verification rigor, token economy, anti-Asch truth grounding).
    - Bounds token expenditure against real-world subscription quotas (ChatGPT Plus, Claude Pro, Gemini Pro), weighting model costs (cheap models like Haiku/Flash vs expensive models like Astra) to penalize bloated, low-value outputs and reward efficient, high-signal breakthroughs.
@@ -128,7 +128,7 @@ Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovere
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │ Layer 2: Compounding Knowledge Base (LEARNING/ & chronicle/)    │
-│ concepts/ • security/ • philosophy/ • topics/ • ledger.json     │
+│ concepts/ • research/missions/ • topics/ • index.jsonl • ledger │
 │ Structured dossiers with progressive disclosure (Tier 1/2/3).   │
 │ Asymmetric persistence across rollbacks; 30-day confidence decay│
 └───────────────────────────────┬─────────────────────────────────┘
@@ -150,6 +150,12 @@ Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovere
    - **Tier 2 (Summaries / Ledgers)**: Distilled bullet points from `chronicle/ledger.json` and dossier executive summaries (~2K tokens).
    - **Tier 3 (Deep Dossier)**: Reads specific markdown sections only when actively needed for implementation.
 4. **Zero Vector DB Overhead**: By relying on clean markdown structures, wikilink graph traversal (`query_graph.py`), and indexed JSON ledgers, Sanctuary eliminates the CPU, latency, and dependency bloat of local vector databases.
+5. **Agent-Native Cognitive Backlog & Popperian Mission Tracking**: Research and engineering investments are managed via `manage_backlog.py`:
+   - **Tier 1 Fast Index (`LEARNING/research/index.jsonl`)**: Dense, single-line JSON items (< 15 tokens/item, < 100 tokens total orientation cost).
+   - **Frictionless Inbox (`LEARNING/research/inbox.jsonl`)**: Append-only capture for unvetted ideas across sessions, including offline local Qwen2 GGUF runs.
+   - **Popperian Manifests (`LEARNING/research/missions/*.json`)**: Enforces explicit hypotheses, objective falsification criteria, empirical trial evidence, and verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
+   - **Automated Human Projection (`LEARNING/research/backlog.md`)**: Compiled deterministically; never hand-edited.
+   - **One-Directional Cloud Mirrors**: Outward advisory mirrors to GitHub Issues are created solely for remote cloud workers (`execution_surface: cloud-worker`), never as a bidirectional sync.
 
 ---
 

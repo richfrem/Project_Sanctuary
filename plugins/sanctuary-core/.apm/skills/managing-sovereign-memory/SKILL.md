@@ -5,7 +5,8 @@ description: >
   Operates the zero-dependency, filesystem-native 3-layer sovereign memory engine.
   Provides progressive disclosure retrieval (Tier 1 index, Tier 2 summary, Tier 3 deep),
   asymmetric persistence of friction logs across rollbacks, 30-day confidence decay
-  auditing, and associative wikilink graph traversal for autonomous AI agents.
+  auditing, associative wikilink graph traversal, and agent-native cognitive backlog
+  and mission management for autonomous AI agents.
 allowed-tools: Bash, Read, Write
 ---
 
@@ -42,6 +43,10 @@ python3 scripts/record_insight.py --topic "git_guards" --type friction --insight
 
 # Audit confidence decay across wiki concepts
 python3 scripts/audit_decay.py --check
+
+# Manage agent-native cognitive backlog (Tier 1 index & mission tracker)
+python3 scripts/manage_backlog.py list --format jsonl
+python3 scripts/manage_backlog.py compile
 ```
 
 ## Workflow
@@ -57,7 +62,7 @@ python3 scripts/audit_decay.py --check
 Run the automated test suite:
 
 ```bash
-python3 tests/test_sovereign_memory.py
+python3 -m unittest discover -s tests
 ```
 
 ## References
@@ -65,3 +70,4 @@ python3 tests/test_sovereign_memory.py
 - [Progressive Disclosure](references/progressive-disclosure.md) — 3-tier retrieval to preserve context tokens.
 - [Asymmetric Persistence](references/asymmetric-persistence.md) — Protocol for logging failures before code rollback.
 - [Confidence Decay](references/confidence-decay.md) — Epistemic state lifecycle (HYPOTHESIS, OBSERVED, CONFIRMED).
+- [Agent-Native Backlog](references/agent-native-backlog.md) — Token-efficient backlog, Popperian falsification manifests, and single-writer authority.
