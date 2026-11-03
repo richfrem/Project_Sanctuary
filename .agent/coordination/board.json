@@ -1,0 +1,37 @@
+{
+  "leases": [
+    {
+      "agent_id": "claude-code",
+      "mission_id": "MISSION-022",
+      "status": "EXECUTING",
+      "worktree": "main",
+      "locked_targets": [
+        "forge_llm.py",
+        "local_agent_loop.py"
+      ],
+      "exclusive_resources": [
+        "mlx-server:8080"
+      ],
+      "checked_out_at": "2026-11-03T14:32:55.369370+00:00",
+      "checked_out_timestamp": 1793716375.3693619,
+      "last_heartbeat": 1793716375.3693619,
+      "expires_at": 1793719975.3693619,
+      "ttl_minutes": 60
+    },
+    {
+      "agent_id": "antigravity",
+      "mission_id": "MISSION-026",
+      "status": "EXECUTING",
+      "worktree": ".worktrees/mission-026",
+      "locked_targets": [
+        "manage_coordination.py"
+      ],
+      "exclusive_resources": [],
+      "checked_out_at": "2026-11-03T14:33:02.547338+00:00",
+      "checked_out_timestamp": 1793716382.547312,
+      "last_heartbeat": 1793716382.547312,
+      "expires_at": 1793719982.547312,
+      "ttl_minutes": 60
+    }
+  ]
+}

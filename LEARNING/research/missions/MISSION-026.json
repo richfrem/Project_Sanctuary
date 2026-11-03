@@ -1,0 +1,67 @@
+{
+  "id": "MISSION-026",
+  "title": "Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol",
+  "status": "RESOLVED",
+  "execution_surface": "local",
+  "target_platform": "macOS / Git 2.40+ Worktrees & Filesystem Coordination Ledger",
+  "created_at": "2026-11-03T07:20:00Z",
+  "updated_at": "2026-11-03T14:36:36.509784+00:00",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "Synthesizing upstream agent-plugins-skills orchestration doctrine (orchestrating-agent-work worktree confinement, running-control-plane pre-worktree reconciliation, and multi-worktree non-overlapping ownership) into a zero-daemon coordination ledger (.agent/coordination/leases.jsonl) allows multiple heterogeneous AI CLI agents (AGY, Claude Code, Codex, MLX) to execute parallel research missions on isolated git worktrees (.worktrees/<agent>-<mission>/) with 0 file-clobbering collisions, 0 pre-worktree dirty-state leakage, and 100% clean squash-merges.",
+  "falsification_criteria": "Two concurrent agents modify overlapping file paths without lease detection, an agent commits un-staged files belonging to a peer agent, a new worktree inherits uncommitted dirty files from main without reconciliation, or worktree provisioning latency exceeds 2.0 seconds.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if concurrent git worktree rebase requires three-way semantic AST merge"
+  },
+  "verdict": "CORROBORATED",
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "multi-agent-concurrency",
+    "git-worktrees",
+    "optimistic-locking",
+    "file-leases",
+    "coordination-ledger",
+    "parallel-execution",
+    "orchestrating-agent-work",
+    "running-control-plane"
+  ],
+  "evidence": [
+    {
+      "timestamp": "2026-11-03T14:36:36.509784+00:00",
+      "agent": "agent",
+      "citation": "",
+      "details": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_coordination.py"
+    }
+  ],
+  "lessons_learned": [
+    "Git worktree isolation combined with atomic zero-daemon flight board leases enables safe concurrent multi-agent pairing with zero file clobbering."
+  ],
+  "upstream_skill_dependencies": [
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work",
+    "agent-plugins-skills/plugins/agent-agentic-os/.apm/skills/running-control-plane",
+    "agent-plugins-skills/plugins/agent-agentic-os/.apm/skills/setting-up-agentic-os"
+  ],
+  "reference_doctrines": [
+    "agent-plugins-skills/plugins/agent-agentic-os/.apm/skills/running-control-plane/references/worktree-reconciliation-and-multi-worktree-practices.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/topology-rules.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/graph-planning.md"
+  ],
+  "assignee": "antigravity",
+  "worktree": ".worktrees/mission-026"
+}

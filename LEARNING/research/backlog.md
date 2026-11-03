@@ -19,36 +19,50 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 
 | Rank | ID | Title | Leverage | Depth | Cost | Friction | Score | Status | Verdict |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **#1** | `MISSION-018` | **Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
-| **#2** | `MISSION-019` | **On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
-| **#3** | `MISSION-003` | **Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
-| **#4** | `MISSION-016` | **Cheapest-Viable Model Routing & Token-Return Optimization** | 5 | 4 | 0.1x | 1 | **200.0** | `RESOLVED` | `CONFIRMED` |
-| **#5** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
-| **#6** | `MISSION-021` | **Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
-| **#7** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
-| **#8** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
-| **#9** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
-| **#10** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
-| **#11** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
-| **#12** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
-| **#13** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#14** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
-| **#15** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
-| **#16** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#17** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
-| **#18** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
-| **#19** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#20** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#21** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#22** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#23** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#24** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#1** | `MISSION-027` | **Forensic MLX Server Lifecycle Hardening: Process Group Teardown, Port Listen Scoping, and Scheduled Idle Reaping** | 5 | 5 | 0.05x | 1 | **500.0** | `PROPOSED` | - |
+| **#2** | `MISSION-018` | **Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
+| **#3** | `MISSION-019` | **On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
+| **#4** | `MISSION-025` | **Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX)** | 5 | 5 | 0.05x | 2 | **250.0** | `PROPOSED` | - |
+| **#5** | `MISSION-003` | **Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
+| **#6** | `MISSION-016` | **Cheapest-Viable Model Routing & Token-Return Optimization** | 5 | 4 | 0.1x | 1 | **200.0** | `RESOLVED` | `CONFIRMED` |
+| **#7** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
+| **#8** | `MISSION-021` | **Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
+| **#9** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#10** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#11** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#12** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
+| **#13** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
+| **#14** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
+| **#15** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
+| **#16** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#17** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#18** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
+| **#19** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#20** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#21** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#22** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#23** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#24** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#25** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#26** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#27** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
 ## 4. Mission Deep-Dives
 
-### MISSION-018: Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine (Rank #1)
+### MISSION-027: Forensic MLX Server Lifecycle Hardening: Process Group Teardown, Port Listen Scoping, and Scheduled Idle Reaping (Rank #1)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: macOS / Apple Silicon MLX Process & Memory Management
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Refactoring mlx_server_manager.py to: (1) scope port discovery via `lsof -ti -sTCP:LISTEN :<port>`, (2) terminate the complete process group (`os.killpg`) to guarantee child Python model termination, (3) measure true Metal unified memory RSS from the listening worker child, and (4) hook idle reaping to Protocol 128 session timers will guarantee 100% memory reclamation (~4.7 GiB) and eliminate zombie daemon leaks.
+- **Falsification Gate**:
+  > After executing `stop_server`, any child python process remains listening on :8080, memory RSS fails to reflect the model weight allocation, or client TCP sockets are returned by port discovery.
+
+### MISSION-018: Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine (Rank #2)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `local`
@@ -68,7 +82,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Prompt processing speeds on M1 Metal hit 83.7 tok/sec for structured JSON schema validation.
   * First 20 lines coding convention and dual-mode query interface ensure smooth subagent and tool invocation across the sanctuary ecosystem.
 
-### MISSION-019: On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling (Rank #2)
+### MISSION-019: On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling (Rank #3)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `local`
@@ -89,7 +103,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Retaining the MLX model in unified memory avoids the ~10s process startup penalty of one-shot CLI execution, while an idle reaper guarantees no persistent RAM lockup.
   * Checking existing port occupancy prior to launching prevents port conflicts if a server was already started manually by the developer.
 
-### MISSION-003: Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF (Rank #3)
+### MISSION-025: Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX) (Rank #4)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: macOS / Project Sanctuary Sovereign Memory Engine across AGY, Claude Code, Codex, and Apple MLX
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Surfacing explicit cross-model relay telemetry and predecessor agent provenance in guardian_wakeup.py and START_HERE.md eliminates amnesiac re-derivation across heterogeneous frontier CLI agents (Google Gemini/AGY, Anthropic Claude Code, OpenAI Codex, and sovereign Apple MLX Qwen2.5), achieving >= 90% decision consistency across model handovers with 0 repetitive briefing turns.
+- **Falsification Gate**:
+  > A successor agent from a different vendor contradicts an established architectural invariant, repeats a previously verified benchmark without citation, or requires human intervention to discover the preceding model's work.
+
+### MISSION-003: Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF (Rank #5)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `local`
@@ -108,7 +133,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Unquantized KV cache overhead for Qwen2.5-Coder-7B is only 0.44 GiB at 8K context, compared to 1.13 GiB on Qwen3-8B.
   * 8-bit variants should be avoided on 16GB Macs due to risk of crossing the APFS paging boundary when running alongside an IDE.
 
-### MISSION-016: Cheapest-Viable Model Routing & Token-Return Optimization (Rank #4)
+### MISSION-016: Cheapest-Viable Model Routing & Token-Return Optimization (Rank #6)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `local`
@@ -130,7 +155,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Requiring at least 2 verified failures before frontier escalation provides a natural rate limiter that preserves quota while ensuring difficult roadblocks still receive frontier reasoning power.
   * Local MLX execution offers the ultimate floor (0.05x cost weight) for offline inspection, test running, and local schema validation.
 
-### MISSION-020: Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation (Rank #5)
+### MISSION-020: Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation (Rank #7)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `multi-repo`
@@ -152,7 +177,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Apple Silicon M1/M2/M3/M4 unified memory excels at 4-bit local inference (83.7 tok/sec prompt, 14.3 tok/sec gen) with zero swap-thrashing, whereas fine-tuning 7B models requires dedicated NVIDIA CUDA / WSL2 environments.
   * Documenting the standard OpenAI-compatible port (8080) and model endpoint (/v1/models) allows multi-agent harnesses to seamlessly query local intelligence without background memory leaks.
 
-### MISSION-021: Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX (Rank #6)
+### MISSION-021: Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX (Rank #8)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CONFIRMED`
 - **Execution Surface**: `local`
@@ -174,7 +199,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Conversational queries with tools passed in the payload correctly produce natural language without hallucinating tools when standard chat templates are used.
   * Offline local tool use provides a viable zero-cost, zero-latency-variance alternative to cloud tool execution for sovereign agents on Apple Silicon.
 
-### MISSION-022: Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX (Rank #7)
+### MISSION-022: Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX (Rank #9)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB Unified Memory) via Apple MLX
@@ -185,7 +210,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Local multi-turn agent degrades into repetitive infinite loops (> 4 identical tool dispatches), exceeds context cache limits, or completes < 75% of bounded inspection tasks.
 
-### MISSION-023: Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX (Rank #8)
+### MISSION-023: Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX (Rank #10)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB Unified Memory) via Apple MLX
@@ -196,7 +221,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Draft model acceptance rate falls below 50% or combined unified memory footprint causes macOS swap pressure > 1 GiB.
 
-### MISSION-024: Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration (Rank #9)
+### MISSION-024: Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration (Rank #11)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS / APM Lifecycle Hooks (SessionStart) for Claude Code, Codex & AGY
@@ -207,7 +232,23 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > A clean agent session starts without executing the hook, the hook fails to produce .agent/learning/guardian_boot_digest.md, or total execution overhead exceeds 1,500ms.
 
-### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #10)
+### MISSION-026: Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol (Rank #12)
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
+- **Execution Surface**: `local`
+- **Target Platform**: macOS / Git 2.40+ Worktrees & Filesystem Coordination Ledger
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Synthesizing upstream agent-plugins-skills orchestration doctrine (orchestrating-agent-work worktree confinement, running-control-plane pre-worktree reconciliation, and multi-worktree non-overlapping ownership) into a zero-daemon coordination ledger (.agent/coordination/leases.jsonl) allows multiple heterogeneous AI CLI agents (AGY, Claude Code, Codex, MLX) to execute parallel research missions on isolated git worktrees (.worktrees/<agent>-<mission>/) with 0 file-clobbering collisions, 0 pre-worktree dirty-state leakage, and 100% clean squash-merges.
+- **Falsification Gate**:
+  > Two concurrent agents modify overlapping file paths without lease detection, an agent commits un-staged files belonging to a peer agent, a new worktree inherits uncommitted dirty files from main without reconciliation, or worktree provisioning latency exceeds 2.0 seconds.
+- **Empirical Evidence & Trials**:
+  * `2026-11-03T14:36:36.509784+00:00` [agent]: plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_coordination.py
+- **Lessons Learned & Epistemic Compounding**:
+  * Git worktree isolation combined with atomic zero-daemon flight board leases enables safe concurrent multi-agent pairing with zero file clobbering.
+
+### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #13)
 - **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS M1 (APFS / External USB-C Storage)
@@ -218,7 +259,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 GiB of storage.
 
-### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #11)
+### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #14)
 - **Status**: `STAGED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: Cursor Premium ($30/mo) / Grok Bot
@@ -229,7 +270,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.
 
-### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #12)
+### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #15)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
@@ -247,7 +288,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provider terms of service.
   * Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity.
 
-### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #13)
+### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #16)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
@@ -258,7 +299,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
 
-### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #14)
+### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #17)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama / llama.cpp & Isolated Memory Fixtures
@@ -269,7 +310,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.
 
-### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #15)
+### MISSION-007: Calibrated Self-Verification & Metacognitive Model Escalation (Rank #18)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Ollama (Qwen2) / cli-agent Router
@@ -280,7 +321,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.
 
-### MISSION-011: Distilling Investigation Principles into Local Models (Rank #16)
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #19)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: forging-sovereign-models & Local Ollama
@@ -291,7 +332,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
-### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #17)
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #20)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Anti-Asch Test Harness
@@ -302,7 +343,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
 
-### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #18)
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #21)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Simulation Environments & evaluating-agent-work
@@ -313,7 +354,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
 
-### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #19)
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #22)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: managing-sovereign-memory / disclose.py
@@ -324,7 +365,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #20)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #23)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -335,7 +376,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #21)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #24)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -346,7 +387,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #22)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #25)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -357,7 +398,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #23)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #26)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -368,7 +409,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #24)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #27)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI
