@@ -1,18 +1,14 @@
 #!/usr/bin/env python3
-"""
-evolution_metrics.py — Evolutionary Self-Improvement Metrics (Protocol 131)
-===========================================================================
-
-Purpose:
-    Computes proxy fitness metrics (Depth, Scope) for the Map-Elites archive.
-    Standalone CLI script — no internal shared dependencies.
-
+"""evolution_metrics.py - Evolutionary Self-Improvement Metrics Calculator (Protocol 131).
+Purpose: Computes proxy fitness metrics (Depth, Scope) for the Map-Elites cognitive archive.
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Analysis & Self-Improvement).
+Key Inputs: Markdown document file path (--file) or raw string content (--content).
+Key Outputs: JSON metrics dictionary with depth, scope, word_count, and citation_density scores.
 Usage:
     python3 evolution_metrics.py fitness --file docs/my-document.md
     python3 evolution_metrics.py depth --file README.md
     python3 evolution_metrics.py scope --content "Some text content..."
-
-Layer: Plugin Script (guardian-onboarding)
+Key Functions: measure_depth(), measure_scope(), compute_fitness(), main().
 """
 
 import re

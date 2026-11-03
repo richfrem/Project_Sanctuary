@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
-"""
-guardian_wakeup.py - Protocol 128 Holistic Wakeup Bootloader
-============================================================
-
-Purpose:
-    Provides deterministic situational awareness and cognitive hydration for autonomous
-    AI agents booting into Project Sanctuary. Evaluates Layer 1 context integrity,
-    current git branch state, and recent institutional decisions with empirical latency tracking.
-
-    By default, operations are strictly read-only to obey the Human Gate Law.
-    To persist the briefing to disk, supply `--write-digest`.
-
+"""guardian_wakeup.py - Protocol 128 Holistic Wakeup Bootloader.
+Purpose: Deterministic situational awareness, cognitive hydration, and runtime telemetry for autonomous AI agents.
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Fast-Boot & Readiness).
+Key Inputs: Runtime context files (soul.md, user.md, memory.md), index.jsonl, git telemetry, local MLX server.
+Key Outputs: JSON situational awareness digest, human markdown brief, and health metrics (boot time < 10ms).
 Usage:
-    python3 scripts/guardian_wakeup.py --mode HOLISTIC
-    python3 scripts/guardian_wakeup.py --mode HOLISTIC --write-digest
-    python3 scripts/guardian_wakeup.py --format markdown
+    python3 guardian_wakeup.py --mode HOLISTIC
+    python3 guardian_wakeup.py --mode HOLISTIC --write-digest
+    python3 guardian_wakeup.py --format markdown
+Key Functions: get_git_telemetry(), check_runtime_telemetry(), get_top_mission(), main().
 """
 
 import os

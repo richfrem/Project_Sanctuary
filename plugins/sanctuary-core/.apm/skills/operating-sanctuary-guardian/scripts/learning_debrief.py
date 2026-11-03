@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""
-Learning Debrief Script
-=======================
-Scans the project for technical state changes (Protocol 128 Phase I).
-Extracted from legacy agent implementation.
+"""learning_debrief.py - Project State Scanner & Technical Debrief Generator.
+Purpose: Scans the project repository for technical state changes and recent activity (Protocol 128 Phase I).
+Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Introspection & Debrief).
+Key Inputs: Git diff status, file modification timestamps (--hours 48), scan directories list.
+Key Outputs: Markdown debrief summary with modified files, recency delta, and git change statistics.
+Usage:
+    python3 learning_debrief.py
+    python3 learning_debrief.py --hours 24 --json
+    python3 learning_debrief.py --output .agent/learning/debrief.md
+Key Functions: get_git_diff_summary(), get_recency_delta(), run_debrief(), main().
 """
 
 import os
