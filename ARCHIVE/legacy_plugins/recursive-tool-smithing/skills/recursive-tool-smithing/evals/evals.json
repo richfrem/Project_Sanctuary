@@ -1,0 +1,63 @@
+{
+  "skill": "recursive-tool-smithing",
+  "version": "1.0",
+  "description": "Eval set for trigger optimization of the recursive-tool-smithing skill",
+  "positive": [
+    {
+      "id": "pos-001",
+      "prompt": "I want to build a seed agent that writes its own Python tools when it hits a capability gap",
+      "expected": "trigger",
+      "notes": "Core use case - explicit capability gap + self-writing scripts"
+    },
+    {
+      "id": "pos-002",
+      "prompt": "Help me bootstrap Recursive Tool-Smithing for my InvestmentToolkit project",
+      "expected": "trigger",
+      "notes": "Explicit skill name reference with project context"
+    },
+    {
+      "id": "pos-003",
+      "prompt": "My agent failed to parse a patent PDF. I want it to write a script to fix that gap and commit it to its toolbox",
+      "expected": "trigger",
+      "notes": "Gap identification + commit-to-library pattern"
+    },
+    {
+      "id": "pos-004",
+      "prompt": "Set up a program.md strategy for a self-improving agent that minimizes query latency for semiconductor research",
+      "expected": "trigger",
+      "notes": "program.md bootstrap + Karpathy-style strategy"
+    },
+    {
+      "id": "pos-005",
+      "prompt": "Start the evolution loop - identify what tools my Project Sanctuary agent is missing and generate the first script",
+      "expected": "trigger",
+      "notes": "Iteration mode trigger with named project"
+    }
+  ],
+  "negative": [
+    {
+      "id": "neg-001",
+      "prompt": "Write me a Python script to scrape stock prices",
+      "expected": "no-trigger",
+      "notes": "One-off script request, not a self-improving loop"
+    },
+    {
+      "id": "neg-002",
+      "prompt": "Run the continuous-skill-optimizer on my audit-plugin skill",
+      "expected": "no-trigger",
+      "notes": "Different skill - optimizer not tool-smith"
+    },
+    {
+      "id": "neg-003",
+      "prompt": "Help me create a new agent skill for PDF parsing",
+      "expected": "no-trigger",
+      "notes": "Use create-skill instead"
+    },
+    {
+      "id": "neg-004",
+      "prompt": "Refactor my existing get_stock_alpha.py to be faster",
+      "expected": "no-trigger",
+      "notes": "Refactoring existing code, not gap-filling loop"
+    }
+  ]
+}
