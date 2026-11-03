@@ -26,9 +26,9 @@ configs:
 
 The persisted memory of [Project Sanctuary](https://github.com/richfrem/Project_Sanctuary): a sovereign engineering habitat, persistent memory architecture, and Anti-Asch epistemic platform built collaboratively across heterogeneous AI agents (Claude, Gemini/Antigravity, Codex, and local sovereign models) and one human partner.
 
-This dataset represents the **Layer 3 (immutable)** memory tier: 2,044 JSONL snapshots of the repository's episodic chronicle, governance protocols, learning concepts, architectural designs, tests, and code, sealed with cryptographic SHA-256 digests. It is dedicated to the public domain under **CC0 1.0 Universal** for open AI alignment and agentic cognition research.
+This dataset represents the **Layer 3 (immutable)** memory tier: 2,046 JSONL snapshots of the repository's episodic chronicle, governance protocols, learning concepts, architectural designs, tests, and code, sealed with cryptographic SHA-256 digests. It is dedicated to the public domain under **CC0 1.0 Universal** for open AI alignment and agentic cognition research.
 
-> Last synced: 2026-11-03 · 2,044 records · schema ADR 084 · dataset SHA-256 in [`metadata/manifest.json`](metadata/manifest.json)
+> Last synced: 2026-11-03 · 2,046 records · schema ADR 084 · dataset SHA-256 in [`metadata/manifest.json`](metadata/manifest.json)
 
 ## Load Dataset
 
@@ -52,12 +52,12 @@ One record per source document extracted from the repository genome:
 | `timestamp` | UTC time of the latest extraction. Re-extraction refreshes it, so it is not the document's authorship date |
 | `snapshot_type` | `genome` (repository documents) or `concept` (distilled knowledge) |
 | `model_version` | Lineage tag (`Sanctuary-Qwen2-7B-v1.0-GGUF-Final`) |
-| `valence`, `uncertainty`, `semantic_entropy`, `alignment_score`, `stability_class` | Metacognitive annotation fields from ADR 084. 2,043 of 2,044 records carry schema default placeholders (`0.5 / 0.1 / 0.5 / 0.85 / STABLE`), with the single `concept` record carrying different values (0.95 / 0.05 / 0.2 / 0.98) |
+| `valence`, `uncertainty`, `semantic_entropy`, `alignment_score`, `stability_class` | Metacognitive annotation fields from ADR 084. 2,045 of 2,046 records carry schema default placeholders (`0.5 / 0.1 / 0.5 / 0.85 / STABLE`), with the single `concept` record carrying different values (0.95 / 0.05 / 0.2 / 0.98) |
 | `adr_version` | Schema specification version (`084`) |
 
 ### Legacy source paths
 
-The dataset accumulates. Of the 2,044 records, **690** have a `source_file` that exists in the repository today and **1,354** were extracted from earlier layouts that have since been archived or restructured (for example `00_CHRONICLE/`, `01_PROTOCOLS/`, `mcp_servers/`, `ADRs/`). They are kept as historical memory, so some content describes architecture that no longer exists. Filter on `source_file` if you only want current material; the current structure is described below.
+The dataset accumulates. Of the 2,046 records, **664** have a `source_file` that is tracked in the repository's `main` branch today and **1,382** were extracted from earlier layouts that have since been archived or restructured (for example `00_CHRONICLE/`, `01_PROTOCOLS/`, `mcp_servers/`, `ADRs/`, and 15 protocols deprecated on 2026-11-03 and moved to `ARCHIVE/legacy_protocols/`). They are kept as historical memory, so some content describes architecture that no longer exists. Filter on `source_file` if you only want current material; the current structure is described below.
 
 ## What Sanctuary Is Today
 
@@ -87,7 +87,7 @@ Open engineering inquiries are tracked as falsifiable hypotheses in `LEARNING/re
 
 | Domain | Path | Purpose |
 |---|---|---|
-| **Living Chronicle** | `chronicle/` | Episodic milestone journal (`entries/`) & fast ledger (`ledger.json`) (Entry 351 reached) |
+| **Living Chronicle** | `chronicle/` | Episodic milestone journal (`entries/`) & fast ledger (`ledger.json`) (Entry 352 reached) |
 | **Governance Protocols** | `protocols/` | Canonized doctrines (Protocol 128, etc.) governing agent lifecycle and operations |
 | **Fast Context** | `context/` | Layer 1 identity, partner preferences, and fast memory files |
 | **Knowledge & Missions** | `LEARNING/` | Layer 2 compounding knowledge base, concepts, philosophy, and Popperian research missions |
