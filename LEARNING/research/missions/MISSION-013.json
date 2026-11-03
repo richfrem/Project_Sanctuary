@@ -17,6 +17,17 @@
   "priority_score": 4.0,
   "hypothesis": "Multi-agent teams assigned distinct experimental strategies will solve at least 15% more held-out problems than an equal-budget repeated-sampling solo agent.",
   "falsification_criteria": "Problem-solving advantage is below 15%, or vanishes when compared against equal-budget independent sampling followed by selection.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "multi-vendor-pool",
+    "cli_target": "cli-agent",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "gpt-6-luna",
+      "claude-sonnet-3.5",
+      "gemini-pro"
+    ]
+  },
   "verdict": null,
   "human_gate_required": true,
   "issue_ref": null,

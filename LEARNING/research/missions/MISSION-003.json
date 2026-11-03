@@ -17,6 +17,15 @@
   "priority_score": 200.0,
   "hypothesis": "A 7B local Qwen2 model fine-tuned on soul_traces.jsonl can execute Protocol 128 orientation and basic code reviews offline with 0 API tokens.",
   "falsification_criteria": "Fine-tuned model hallucinates fake commands or fails basic Anti-Asch sycophancy tests compared to base model.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-gguf",
+    "cli_target": "llama.cpp / ollama",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "local-llama"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

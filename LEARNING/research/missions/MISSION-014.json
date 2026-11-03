@@ -17,6 +17,15 @@
   "priority_score": 45.0,
   "hypothesis": "Selecting experiments by estimated information gain per unit cost reaches fixed predictive accuracy with at least 30% fewer queries than random selection or preregistered novelty heuristics.",
   "falsification_criteria": "Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "claude-haiku-5.5"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

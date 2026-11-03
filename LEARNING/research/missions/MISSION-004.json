@@ -17,6 +17,16 @@
   "priority_score": 100.0,
   "hypothesis": "Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40% under consensus pressure, while decreasing acceptance of valid peer corrections by no more than 5 percentage points.",
   "falsification_criteria": "Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "gpt-6-luna"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

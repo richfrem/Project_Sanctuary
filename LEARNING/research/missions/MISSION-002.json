@@ -17,6 +17,16 @@
   "priority_score": 100.0,
   "hypothesis": "A native multi-CLI fallback chain or lightweight proxy probe in cli-agent can automatically rotate between paid subscriptions (Claude Pro -> Gemini Pro -> ChatGPT Plus) upon rate limiting without running local M1 models, and pre-flight verify routing readiness before task dispatch.",
   "falsification_criteria": "CLI fails to rotate upon 429 rate limit, attempts to execute slow local LLM inference on M1, violates Copilot work boundary, or lacks pre-flight routing check.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gpt-6-luna"
+    ]
+  },
   "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,

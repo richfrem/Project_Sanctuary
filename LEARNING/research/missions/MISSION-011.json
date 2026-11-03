@@ -17,6 +17,15 @@
   "priority_score": 62.5,
   "hypothesis": "Fine-tuning a 7B local model on verified failure\u2013correction\u2013outcome traces will improve task success on unseen domains by at least 10 percentage points over both base models and positive-only trace training, with at most 3pp regression on general controls.",
   "falsification_criteria": "Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

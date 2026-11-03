@@ -195,6 +195,7 @@ class BacklogManager:
         # 1. Write Tier 1 index.jsonl
         with open(self.index_file, "w", encoding="utf-8") as fp:
             for rank, m in enumerate(missions, start=1):
+                model_routing = m.get("model_routing", {})
                 index_item = {
                     "rank": rank,
                     "id": m["id"],
@@ -202,6 +203,8 @@ class BacklogManager:
                     "status": m["status"],
                     "priority_score": m["priority_score"],
                     "execution_surface": m.get("execution_surface", "local"),
+                    "cheapest_viable_tier": model_routing.get("cheapest_viable_tier"),
+                    "recommended_model": model_routing.get("recommended_model"),
                     "verdict": m.get("verdict"),
                     "path": f"LEARNING/research/missions/{m['id']}.json"
                 }
@@ -251,6 +254,17 @@ class BacklogManager:
                 md_lines.append(f"- **Empirical Verdict**: `{m['verdict']}`")
             md_lines.append(f"- **Execution Surface**: `{m.get('execution_surface', 'local')}`")
             md_lines.append(f"- **Target Platform**: {m.get('target_platform', 'Sanctuary core')}")
+            
+            mr = m.get("model_routing")
+            if mr:
+                rec_m = mr.get("recommended_model", "N/A")
+                tier = mr.get("cheapest_viable_tier", "standard")
+                cli = mr.get("cli_target", "cli-agent")
+                md_lines.append(f"- **Cheapest Viable Model**: `{rec_m}` (Tier: `{tier}`, CLI: `{cli}`)")
+                fallbacks = mr.get("fallback_models")
+                if fallbacks:
+                    md_lines.append(f"- **Fallback Models**: {', '.join(f'`{f}`' for f in fallbacks)}")
+
             md_lines.append(f"- **Hypothesis (Popperian Prediction)**:\n  > {m.get('hypothesis', 'N/A')}")
             md_lines.append(f"- **Falsification Gate**:\n  > {m.get('falsification_criteria', 'N/A')}")
 
@@ -356,6 +370,7 @@ def main():
             print(json.dumps(missions, indent=2))
         elif args.format == "jsonl":
             for rank, m in enumerate(missions, start=1):
+                mr = m.get("model_routing", {})
                 item = {
                     "rank": rank,
                     "id": m["id"],
@@ -363,14 +378,16 @@ def main():
                     "status": m.get("status"),
                     "priority_score": m.get("priority_score"),
                     "verdict": m.get("verdict"),
-                    "execution_surface": m.get("execution_surface")
+                    "execution_surface": m.get("execution_surface"),
+                    "recommended_model": mr.get("recommended_model")
                 }
                 print(json.dumps(item))
         else:
-            print(f"{'Rank':<5} {'ID':<12} {'Status':<10} {'Score':<8} {'Surface':<14} {'Title'}")
+            print(f"{'Rank':<5} {'ID':<12} {'Status':<10} {'Score':<8} {'Model Rec':<20} {'Title'}")
             print("-" * 80)
             for rank, m in enumerate(missions, start=1):
-                print(f"#{rank:<4} {m['id']:<12} {m.get('status',''):<10} {m.get('priority_score',0.0):<8.1f} {m.get('execution_surface','local'):<14} {m.get('title','')}")
+                rec_m = m.get("model_routing", {}).get("recommended_model") or "-"
+                print(f"#{rank:<4} {m['id']:<12} {m.get('status',''):<10} {m.get('priority_score',0.0):<8.1f} {rec_m:<20} {m.get('title','')}")
 
     elif args.command == "get":
         mission = mgr.get_mission(args.id)

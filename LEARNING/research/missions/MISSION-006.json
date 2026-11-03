@@ -17,6 +17,15 @@
   "priority_score": 100.0,
   "hypothesis": "Memory entries containing cryptographic provenance, explicit uncertainty levels, and falsification conditions reduce agent acceptance of planted false claims by at least 30% relative to narrative-only memory, with no more than a 5 percentage point drop in correct application of true claims.",
   "falsification_criteria": "On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

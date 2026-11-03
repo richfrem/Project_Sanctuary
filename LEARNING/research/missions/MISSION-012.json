@@ -17,6 +17,15 @@
   "priority_score": 40.0,
   "hypothesis": "Memory selected for decision relevance and counterexamples retains at least 95% of full-history task performance using no more than 20% of retrieved tokens, outperforming equal-budget recency selection by at least 10 percentage points.",
   "falsification_criteria": "Task performance retention drops below 95% or comparative advantage over recency is below 10pp.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "claude-haiku-5.5"
+    ]
+  },
   "verdict": null,
   "human_gate_required": false,
   "issue_ref": null,

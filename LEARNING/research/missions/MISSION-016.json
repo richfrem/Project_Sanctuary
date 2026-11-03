@@ -1,0 +1,43 @@
+{
+  "id": "MISSION-016",
+  "title": "Cheapest-Viable Model Routing & Token-Return Optimization",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "managing-sovereign-memory / manage_backlog.py & cli-agent",
+  "created_at": "2026-11-03T03:30:00Z",
+  "updated_at": "2026-11-03T03:30:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 1,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "Explicitly proposing and constraining tasks to their cheapest viable model tier (e.g. Gemini 3.8 Flash @ 0.1x, Claude Haiku 5.5 @ 0.2x, Codex Luna @ 1.0x) in mission manifests will reduce overall token/credit expenditure by at least 60% across autonomous research tasks without reducing task pass rate by more than 5 percentage points.",
+  "falsification_criteria": "Autonomous dispatch fails to achieve >= 60% token savings compared to frontier-default dispatch, or task success rate degrades by > 5 percentage points on benchmark evaluations.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.1,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gpt-6-luna"
+    ],
+    "frontier_escalation_condition": "Only escalate to astra/opus if verification test fails > 2 times"
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "token-economy",
+    "model-routing",
+    "cheapest-viable-model",
+    "quota-conservation",
+    "subscription-pooling"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
