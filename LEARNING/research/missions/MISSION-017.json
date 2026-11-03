@@ -1,11 +1,11 @@
 {
   "id": "MISSION-017",
   "title": "Local SSD Space Reclamation & External Storage Archive Pipeline",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "macOS M1 (APFS / External USB-C Storage)",
   "created_at": "2026-11-03T04:12:00Z",
-  "updated_at": "2026-11-03T04:12:00Z",
+  "updated_at": "2026-11-03T04:30:00Z",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,

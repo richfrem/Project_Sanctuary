@@ -185,8 +185,43 @@ Expected output:
 
 ---
 
-## 6. Optional: ML Training Environment (Phoenix Forge)
+## 6. Optional: ML Environments (Apple Silicon MLX & Phoenix Forge)
 
+### 1. Apple Silicon (M1/M2/M3/M4) Local Sovereign Inference via Apple MLX
+For native, offline execution on macOS Apple Silicon unified memory without swap thrashing:
+
+- **Requirements**: Python >= 3.11, Apple Silicon (arm64), `mlx`, `mlx-lm`
+- **Recommended Model**: `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (~4.3 GB footprint; fits within 6 GB RAM with zero swap)
+- **Alternative General Model**: `mlx-community/Qwen3-8B-4bit` (~4.6 GB footprint)
+
+```bash
+# 1. Test offline mlx-lm inference with benchmark metrics
+uvx --from mlx-lm mlx_lm.generate \
+  --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit \
+  --prompt "What is the capital of France?" \
+  --max-tokens 50 \
+  --verbose True
+```
+
+Expected Output:
+```text
+==========
+The capital of France is Paris.
+==========
+Prompt: 36 tokens, ~37 tokens-per-sec
+Generation: 8 tokens, ~14 tokens-per-sec
+Peak memory: ~4.43 GB
+```
+
+```bash
+# 2. Clean output mode (answers directly without verbose metrics)
+uvx --from mlx-lm mlx_lm.generate \
+  --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit \
+  --prompt "What is the capital of France?"
+```
+*(Note: The first run downloads the ~4.3 GB weights to `~/.cache/huggingface/hub`; all subsequent runs load instantly from local disk with 0 network calls and 0 cloud tokens).*
+
+### 2. Windows WSL2/CUDA ML Training Environment (Phoenix Forge)
 If you intend to run local model fine-tuning (`Sanctuary-Qwen2-7B-v1.0`), prepare the isolated CUDA ML environment following the surgical instructions preserved in [`forging-sovereign-models`](plugins/sanctuary-core/.apm/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md):
 
 ```bash
