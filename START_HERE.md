@@ -10,10 +10,11 @@
 Every session follows the deterministic 5-step bootstrapping sequence (detailed in [`AGENTS.md`](./AGENTS.md)):
 
 1. **Orientation**: Ingest [`AGENTS.md`](./AGENTS.md) and constitutional bounds.
-2. **Holistic Wakeup**: Run holistic wakeup bootloader:
+2. **Holistic Wakeup & Local Model Gate**: Run holistic wakeup bootloader:
    ```bash
    python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
    ```
+   Verify local sovereign model readiness via persistent MLX server (`curl -s http://127.0.0.1:8080/v1/models`) or offline cache audit (`python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status`).
 3. **Layer 1 Hydration**: Inspect `context/soul.md`, `context/user.md`, `context/memory.md`, and `.agent/learning/guardian_boot_digest.md`.
 4. **Layer 2 Progressive Disclosure**: Retrieve deeper knowledge on demand via `managing-sovereign-memory` (`disclose.py --tier 1` or `--tier 2`).
 5. **Git Discipline**: Verify working tree is clean and on a `feat/*` branch. Never commit directly to `main`.

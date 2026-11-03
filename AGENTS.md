@@ -39,10 +39,13 @@ Canonical repository assets are organized into dedicated sovereign domains:
 Every new session or agent invocation follows this deterministic bootstrapping sequence:
 
 1. **Orientation**: Read this [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) and [`START_HERE.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/START_HERE.md) to load constitutional bounds and the Supreme Law Human Gate.
-2. **Wakeup Script**: Execute the holistic wakeup bootloader:
+2. **Wakeup Script & Local Sovereign Model Readiness**: Execute the holistic wakeup bootloader:
    ```bash
    python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
    ```
+   Verify local sovereign model readiness:
+   - Check persistent MLX server endpoint: `curl -s http://127.0.0.1:8080/v1/models`
+   - Or audit cached weights and engine readiness: `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status`
 3. **Layer 1 Fast-Boot Hydration**: Inspect runtime context:
    - [`context/soul.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/soul.md) (identity & Anti-Asch epistemic principles)
    - [`context/user.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/user.md) (human partner preferences)
