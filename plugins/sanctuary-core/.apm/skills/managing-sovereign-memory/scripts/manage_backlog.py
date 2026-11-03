@@ -43,6 +43,35 @@ def get_research_dir(root: Optional[Path] = None) -> Path:
     return base / "LEARNING" / "research"
 
 
+def hypothesis_brief(hypothesis: str, limit: int = 220) -> str:
+    """First sentence of a hypothesis, capped at ``limit`` chars, so agents can triage from the index alone."""
+    text = " ".join((hypothesis or "").split())
+    if not text:
+        return ""
+    first = re.split(r"(?<=[.!?])\s", text, maxsplit=1)[0]
+    return first if len(first) <= limit else first[: limit - 1].rstrip() + "\u2026"
+
+
+def build_index_item(rank: int, m: Dict[str, Any]) -> Dict[str, Any]:
+    """Single source of truth for one Tier 1 index line (used by `compile` and `list --format jsonl`)."""
+    mr = m.get("model_routing", {})
+    return {
+        "rank": rank,
+        "id": m["id"],
+        "title": m["title"],
+        "status": m.get("status"),
+        "priority_score": m.get("priority_score"),
+        "execution_surface": m.get("execution_surface", "local"),
+        "cheapest_viable_tier": mr.get("cheapest_viable_tier"),
+        "recommended_model": mr.get("recommended_model"),
+        "verdict": m.get("verdict"),
+        "hypothesis_brief": hypothesis_brief(m.get("hypothesis", "")),
+        "tags": m.get("tags", []),
+        "updated_at": m.get("updated_at"),
+        "path": f"LEARNING/research/missions/{m['id']}.json",
+    }
+
+
 def calculate_priority_score(leverage: int, depth: int, cost: float, friction: int) -> float:
     """Calculates priority score: (leverage * depth) / (cost * friction)."""
     if cost <= 0:
@@ -288,19 +317,7 @@ class BacklogManager:
         # 1. Write Tier 1 index.jsonl
         with open(self.index_file, "w", encoding="utf-8") as fp:
             for rank, m in enumerate(missions, start=1):
-                model_routing = m.get("model_routing", {})
-                index_item = {
-                    "rank": rank,
-                    "id": m["id"],
-                    "title": m["title"],
-                    "status": m["status"],
-                    "priority_score": m["priority_score"],
-                    "execution_surface": m.get("execution_surface", "local"),
-                    "cheapest_viable_tier": model_routing.get("cheapest_viable_tier"),
-                    "recommended_model": model_routing.get("recommended_model"),
-                    "verdict": m.get("verdict"),
-                    "path": f"LEARNING/research/missions/{m['id']}.json"
-                }
+                index_item = build_index_item(rank, m)
                 fp.write(json.dumps(index_item) + "\n")
 
         # 2. Write Human-Readable backlog.md
@@ -476,17 +493,7 @@ def main():
             print(json.dumps(missions, indent=2))
         elif args.format == "jsonl":
             for rank, m in enumerate(missions, start=1):
-                mr = m.get("model_routing", {})
-                item = {
-                    "rank": rank,
-                    "id": m["id"],
-                    "title": m["title"],
-                    "status": m.get("status"),
-                    "priority_score": m.get("priority_score"),
-                    "verdict": m.get("verdict"),
-                    "execution_surface": m.get("execution_surface"),
-                    "recommended_model": mr.get("recommended_model")
-                }
+                item = build_index_item(rank, m)
                 print(json.dumps(item))
         else:
             print(f"{'Rank':<5} {'ID':<12} {'Status':<10} {'Score':<8} {'Model Rec':<20} {'Title'}")
