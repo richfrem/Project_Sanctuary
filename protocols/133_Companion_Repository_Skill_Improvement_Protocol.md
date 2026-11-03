@@ -1,8 +1,8 @@
-# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.0)
+# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.1)
 
 **Status:** PROPOSED  
 **Classification:** Operational Framework  
-**Version:** 1.0  
+**Version:** 1.1 (first used 2026-11-03; see Section 7)  
 **Authority:** Project owner directive (2026-11-03); drafted by Claude Code. Ratify by changing Status to CANONICAL.  
 **Linked Protocols:** Protocol 128 (Hardened Learning Loop)
 
@@ -42,11 +42,11 @@ Human Gate applies to every state-changing step; "Proceed" is required before th
 4. **Verify before committing**, because step 6 skips the push hook. At minimum run the upstream audit on the changed skill:
    `python3 plugins/agent-extension-authoring/.apm/skills/authoring-skills/scripts/audit_skill.py <skill-path> --mode source`
    plus the skill's own tests or scripts that exercise the change.
-5. **Commit** with explicitly staged paths and a `fix(<skill>)` / `feat(<skill>)` message.
-6. **Push without the hook, as directed by the owner:** `git push --no-verify -u origin feat/<topic>`. Understand what this skips: the clone's `pre-push` runs `pre-push-review-guard`, which blocks pushes from an active task branch until the control-plane task is `DONE`. Using `--no-verify` is an owner decision for this workflow; it is never a way around a failed audit, and it never authorises skipping a human signature gate.
+5. **Commit** with explicitly staged paths and a `fix(<skill>)` / `feat(<skill>)` message. The clone's `pre-commit-evolution-guard` **blocks any commit touching `plugins/`** unless `references/map-debt.md` (or a plugin `references/evolution-log.md`) is staged too: log the friction there, as `DEBT-<date>-<slug> (RESOLVED)` with the section fields used by existing entries. The escape `Evolution-Check: none` commit trailer is enforced in CI, so use it only when there really is no friction to log. The `pre-commit-pipeline-guard` only warns when no control-plane task is registered; that does not block.
+6. **Push without the hook, as directed by the owner:** `git push --no-verify -u origin feat/<topic>` (only after the commit has actually succeeded: a push with no new commit just creates an empty remote branch at `main`). `--no-verify` skips the **pre-push** hook only; the pre-commit hooks in step 5 still run. Understand what it skips: the clone's `pre-push` runs `pre-push-review-guard`, which blocks pushes from an active task branch until the control-plane task is `DONE`. Using `--no-verify` is an owner decision for this workflow; it is never a way around a failed audit, and it never authorises skipping a human signature gate.
 7. **PR and merge:** `gh pr create --repo richfrem/agent-plugins-skills --base main`, then squash-merge on the human's go-ahead.
 8. **Return the clone to main:** `git checkout main && git pull origin main`. Do this **before** installing so the installed state equals merged `main`, not the feature branch.
-9. **Reinstall globally** from the clone: `apm install --global` (re-reads every installed plugin from the clone), or for a single plugin `apm install "$PWD/plugins/<plugin>" --global --target claude,copilot,codex,agy` with an absolute path. Confirm with `apm deps list --global`, and check the result, for example `diff -rq ~/.claude/skills/<skill> plugins/<plugin>/.apm/skills/<skill>` shows no differences. To undo, use the clone's `apm_consumer.py list-backups` and `rollback`.
+9. **Reinstall globally** from the clone. Prefer the single-plugin form, which limits the blast radius to the plugin you changed: `apm install "$PWD/plugins/<plugin>" --global --target claude,copilot,codex,antigravity` (absolute path; on APM below 0.35.0 the target is `antigravity`, `agy` needs 0.35.0+). `apm install --global` with no arguments re-reads every installed plugin and is for a deliberate full refresh. Do a `--dry-run` first, and copy `~/.apm/apm.yml` and `apm.lock.yaml` somewhere safe before the real run (undo: restore them, or the clone's `apm_consumer.py list-backups` / `rollback`). Expect about 40 seconds and possible "lossy agent compilation" warnings (Codex drops an agent's `tools` field); read them. Verify: `apm deps list --global`; `diff -rq` each installed copy (`~/.claude/skills/<skill>`, `~/.agents/skills/<skill>`, `~/.gemini/antigravity-cli/skills/<skill>`) against `plugins/<plugin>/.apm/skills/<skill>` shows no differences; and run the changed behaviour from the installed path.
 10. **Clean up:** `git branch -D feat/<topic>` and `git push origin --delete feat/<topic>`.
 11. **Record in Sanctuary** (chronicle entry or note) what changed upstream and why, and update any Sanctuary document that described the old behaviour.
 
@@ -61,3 +61,8 @@ Antigravity (`agy`) global installs do not deploy hooks; hook-dependent behaviou
 ## 6. Relationship to Protocol 128
 
 An upstream skill change is Stage 2 work (execution on a branch, human-gated) and its record belongs in Stage 3 (retrospective) and Stage 4 (chronicle, score). Do not start the work during Stage 1 unless a boot-time check shows an installed skill is broken.
+
+## 7. First use (2026-11-03)
+
+- **Change:** `managing-huggingface-assets/scripts/hf_upload.py` documented `--file`/`--remote-path` but had no command line; run as documented it exited 0 silently and uploaded nothing. Added the CLI with 8 tests, a docs update and a `DEBT-20261103-HF-UPLOAD-NO-CLI (RESOLVED)` map-debt entry. Upstream PR #746 (squash-merged), then the single-plugin global install of `dev-utils` with zero differences across the three install directories.
+- **What the run taught (now folded into Section 4):** the evolution guard requires a map-debt entry for any `plugins/` commit; `--no-verify` skips only the pre-push hook; push after the commit succeeds; use the single-plugin install form with `antigravity` on APM 0.33.0; back up `~/.apm/` first; verify all three install directories.

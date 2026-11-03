@@ -16,6 +16,6 @@ The authoritative definition is [`protocols/128_Hardened_Learning_Loop_v3.0.md`]
 
 Earlier versions of this file listed eight phases. They map onto the five stages: Phase I -> Stage 1; Phases II-IV (formulation, execution, inner loop and review) -> Stage 2, with the pre-completion checks in Stage 4; Phase V -> Stage 3; Phase VI -> Stage 4; Phases VII-VIII (persistence, closure) -> Stage 5.
 
-## Known gaps
+## Notes
 
-- `persist_soul.py` fails: it depends on a removed `plugins/huggingface-utils/` plugin. Use `trace_extractor.py` plus `sync_soul_dataset.py` until it is repaired.
+- `persist_soul.py` uploads one sealed snapshot via the global `managing-huggingface-assets` skill (`--dry-run` first); for the whole dataset use `trace_extractor.py` plus `sync_soul_dataset.py`. It was repaired on 2026-11-03.
