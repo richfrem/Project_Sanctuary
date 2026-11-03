@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
-"""
-forge_dataset_builder.py — Generates instruction-tuning datasets from Sanctuary corpus.
+"""forge_dataset_builder.py - Instruction-Tuning Dataset Generator for Phoenix Forge.
+Purpose: Extracts structured Q&A training pairs from Sanctuary markdown corpus for model fine-tuning.
+Layer: sanctuary-core / forging-sovereign-models (Layer 3 Model Synthesis).
+Note: Model fine-tuning targets external NVIDIA CUDA / WSL2 environments, not local Apple Silicon M1.
+Key Inputs: Markdown documentation directories (chronicle, protocols, LEARNING, context).
+Key Outputs: JSONL instruction-tuning datasets formatted for QLoRA fine-tuning.
+Usage:
+    python3 forge_dataset_builder.py --output data/training_dataset.jsonl --limit 500
+Key Functions: extract_qa_pairs_from_markdown(), build_dataset(), main().
 """
 
 import os

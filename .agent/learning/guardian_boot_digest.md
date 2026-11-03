@@ -1,7 +1,7 @@
 # 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)
 **System Status:** GREEN - Layer 1 Fast-Boot Hydrated
-**Git Environment:** Branch `feat/mission-018-mlx-local-runner` (DIRTY)
-**Generated Time:** 2026-11-03 05:02:44 UTC
+**Git Environment:** Branch `feat/forge-scripts-standards-and-m1-clarity` (DIRTY)
+**Generated Time:** 2026-11-03 05:04:51 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.

@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
-"""
-generate_modelfile.py — Generates canonical Ollama Modelfile for Sanctuary-Qwen2-7B.
+"""generate_modelfile.py - Ollama Modelfile Generator for Sovereign GGUF Models.
+Purpose: Generates canonical Ollama Modelfile declarations for sovereign GGUF quantized models.
+Layer: sanctuary-core / forging-sovereign-models (Layer 3 Model Distribution).
+Key Inputs: Path to GGUF quantized model weights (--gguf), system prompt (--system), context length (--ctx).
+Key Outputs: Standard Ollama Modelfile with ChatML formatting, stop tokens, and system identity.
+Usage:
+    python3 generate_modelfile.py --gguf models/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf --output Modelfile
+Key Functions: generate_modelfile(), main().
 """
 
 import argparse
