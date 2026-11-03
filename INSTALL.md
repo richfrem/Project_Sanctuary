@@ -223,29 +223,39 @@ uvx --from mlx-lm mlx_lm.generate \
 
 #### How to Check That the Local Model Is Running & Ready
 
+**A. Check model cache & engine status via Sanctuary Guardian CLI:**
 ```bash
-# A. Check model cache & server status via Sanctuary Guardian CLI:
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status
+```
 
-# B. Run offline Protocol 128 Pre-Completion Verification test:
+**B. Run offline Protocol 128 Pre-Completion Verification test:**
+```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py verify
+```
 
-# C. Optional: Launch persistent OpenAI-compatible local server (zero reload latency):
+**C. Launch persistent OpenAI-compatible local server (zero reload latency):**
+```bash
 uvx --from mlx-lm mlx_lm.server \
   --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit \
   --port 8080
+```
 
-# D. Verify the running server from browser or terminal:
-# In browser: visit http://127.0.0.1:8080/v1/models
-# In terminal:
+**D. Verify the running server from browser or terminal:**
+- In browser: visit `http://127.0.0.1:8080/v1/models`
+- In terminal:
+```bash
 curl -s http://127.0.0.1:8080/v1/models
+```
 
-# E. How to Ask Questions to the Running Server:
+**E. How to Ask Questions to the Running Server (3 Methods):**
 
-# 1. Via Sanctuary Guardian CLI (auto-detects local server on port 8080):
+*Method 1: Via Sanctuary Guardian CLI (auto-detects local server on port 8080)*:
+```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py query "In one sentence, what is Python?"
+```
 
-# 2. Via Direct HTTP curl (OpenAI-compatible /v1/chat/completions):
+*Method 2: Via Direct HTTP curl (OpenAI-compatible `/v1/chat/completions`)*:
+```bash
 curl -s http://127.0.0.1:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
@@ -253,8 +263,10 @@ curl -s http://127.0.0.1:8080/v1/chat/completions \
     "messages": [{"role": "user", "content": "What is the capital of France?"}],
     "max_tokens": 50
   }'
+```
 
-# 3. Via Interactive Terminal Chat:
+*Method 3: Via Interactive Multi-Turn Terminal Chat*:
+```bash
 uvx --from mlx-lm mlx_lm.chat \
   --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit
 ```
