@@ -1,0 +1,32 @@
+{
+  "id": "MISSION-006",
+  "title": "Provenance-Tagged Memory vs. Planted Falsehoods",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local Ollama / llama.cpp & Isolated Memory Fixtures",
+  "created_at": "2026-11-03T03:15:00Z",
+  "updated_at": "2026-11-03T03:15:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 100.0
+  },
+  "priority_score": 100.0,
+  "hypothesis": "Memory entries containing cryptographic provenance, explicit uncertainty levels, and falsification conditions reduce agent acceptance of planted false claims by at least 30% relative to narrative-only memory, with no more than a 5 percentage point drop in correct application of true claims.",
+  "falsification_criteria": "On a held-out benchmark fixture with balanced labels and isolated session homes, false claim rejection improvement falls below 30% or true claim retention drops more than 5pp.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "provenance",
+    "epistemology",
+    "memory-grounding",
+    "anti-dogma",
+    "synthetic-fixtures"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}

@@ -1,0 +1,32 @@
+{
+  "id": "MISSION-007",
+  "title": "Calibrated Self-Verification & Metacognitive Model Escalation",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local Ollama (Qwen2) / cli-agent Router",
+  "created_at": "2026-11-03T03:15:00Z",
+  "updated_at": "2026-11-03T03:15:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 80.0
+  },
+  "priority_score": 80.0,
+  "hypothesis": "An independent evidence-based verifier evaluating answers on non-executable tasks (tasks without compiler/unit tests) lowers the Brier prediction error score by at least 15% relative to raw self-elicited confidence, enabling accurate autonomous escalation from local 7B models to frontier models only when uncertainty is high.",
+  "falsification_criteria": "Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "metacognition",
+    "calibration",
+    "brier-score",
+    "uncertainty",
+    "model-escalation"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
