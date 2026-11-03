@@ -221,6 +221,24 @@ uvx --from mlx-lm mlx_lm.generate \
 ```
 *(Note: The first run downloads the ~4.3 GB weights to `~/.cache/huggingface/hub`; all subsequent runs load instantly from local disk with 0 network calls and 0 cloud tokens).*
 
+#### How to Check That the Local Model Is Running & Ready
+
+```bash
+# A. Check model cache & server status via Sanctuary Guardian CLI:
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status
+
+# B. Run offline Protocol 128 Pre-Completion Verification test:
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py verify
+
+# C. Optional: Launch persistent OpenAI-compatible local server (zero reload latency):
+uvx --from mlx-lm mlx_lm.server \
+  --model mlx-community/Qwen2.5-Coder-7B-Instruct-4bit \
+  --port 8080
+
+# D. Verify the running server from another terminal or probe script:
+curl http://127.0.0.1:8080/v1/models
+```
+
 ### 2. Windows WSL2/CUDA ML Training Environment (Phoenix Forge)
 If you intend to run local model fine-tuning (`Sanctuary-Qwen2-7B-v1.0`), prepare the isolated CUDA ML environment following the surgical instructions preserved in [`forging-sovereign-models`](plugins/sanctuary-core/.apm/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md):
 
