@@ -1,0 +1,43 @@
+{
+  "id": "MISSION-020",
+  "title": "Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation",
+  "status": "PROPOSED",
+  "execution_surface": "multi-repo",
+  "target_platform": "richfrem/agent-plugins-skills (cli-agent) & Global APM Harness",
+  "created_at": "2026-11-03T05:10:00Z",
+  "updated_at": "2026-11-03T05:10:00Z",
+  "confidence_reviewed": "2026-11-03",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 200.0
+  },
+  "priority_score": 200.0,
+  "hypothesis": "Documenting the Apple Silicon MLX native model setup (mlx-lm, mlx_lm.generate, mlx_lm.server, Qwen2.5-Coder-7B-4bit) as an official reference in richfrem/agent-plugins-skills/plugins/agent-orchestration/skills/cli-agent, completing feature branch PR merge, and running global APM reinstallation (apm install --global) standardizes zero-swap sovereign local intelligence across all repositories on this Mac.",
+  "falsification_criteria": "Upstream cli-agent skill fails APM validation, breaks existing llama-server or ollama references, or global APM install fails to update ~/.gemini/antigravity-cli/skills.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cli_target": "agy",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gpt-6-luna"
+    ]
+  },
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "agent-plugins-skills",
+    "cli-agent",
+    "mlx-lm",
+    "apple-silicon-m1",
+    "apm-global",
+    "upstream-propagation"
+  ],
+  "evidence": [],
+  "lessons_learned": []
+}
