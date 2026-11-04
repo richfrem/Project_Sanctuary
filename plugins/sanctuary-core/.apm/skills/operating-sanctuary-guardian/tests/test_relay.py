@@ -105,7 +105,7 @@ def test_open_work_and_inbox(project):
 
 def test_empty_project(tmp_path):
     r = relay.build_relay(tmp_path)
-    assert r == {"handovers": [], "established": [], "open": [], "inbox_items": 0}
+    assert r == {"handovers": [], "established": [], "open": [], "inbox_items": 0, "dispatchable": []}
     assert "When you finish" in relay.render_markdown(r)
 
 
@@ -115,6 +115,7 @@ def test_render_budget(project):
                        "pr": 289, "handoff": "y" * (relay.MAX_HANDOFF_SHOWN if i < relay.FULL_HANDOFFS else relay.MAX_HANDOFF_OLDER)} for i in range(5)]
     r["established"] = [{"id": f"MISSION-0{i:02d}", "verdict": "CORROBORATED", "pointer": f"LEARNING/research/experiments/mission-0{i:02d}/README.md"}
                         for i in range(10)]
+    r["dispatchable"] = ["MISSION-031", "MISSION-023", "MISSION-030"]
     text = relay.render_markdown(r)
     assert len(text.splitlines()) <= 40 and len(text) <= 3500, (len(text.splitlines()), len(text))
     assert "no handoff note" in relay.render_markdown(relay.build_relay(project))

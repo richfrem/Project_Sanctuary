@@ -43,6 +43,30 @@ def get_research_dir(root: Optional[Path] = None) -> Path:
     return base / "LEARNING" / "research"
 
 
+def validate_projected_impact(raw: Any) -> List[str]:
+    """Schema errors for an optional `projected_impact` declaration (MISSION-031); empty if absent or valid.
+
+    Shape: {"paths": [repo-relative files, directories or globs], "resources": [ids], "shared_generated": [paths]}. A malformed declaration
+    would silently under-lock a mission on the flight board, so it is rejected here.
+    """
+    if raw is None:
+        return []
+    if not isinstance(raw, dict):
+        return ["projected_impact must be an object"]
+    errors: List[str] = []
+    paths = raw.get("paths")
+    if not isinstance(paths, list) or not paths or not all(isinstance(p, str) and p.strip() for p in paths):
+        errors.append("projected_impact.paths must be a non-empty list of path strings")
+    else:
+        for p in paths:
+            if p.startswith("/") or ".." in p.replace("\\", "/").split("/"):
+                errors.append(f"projected_impact path must be repo-relative and inside the repository: {p}")
+    for key in ("resources", "shared_generated"):
+        if key in raw and not (isinstance(raw[key], list) and all(isinstance(x, str) for x in raw[key])):
+            errors.append(f"projected_impact.{key} must be a list of strings")
+    return errors
+
+
 def hypothesis_brief(hypothesis: str, limit: int = 220) -> str:
     """First sentence of a hypothesis, capped at ``limit`` chars, so agents can triage from the index alone."""
     text = " ".join((hypothesis or "").split())
@@ -412,6 +436,8 @@ class BacklogManager:
                 errors.append(f"[{mid}] Missing hypothesis (Popperian prediction required)")
             if not m.get("falsification_criteria"):
                 errors.append(f"[{mid}] Missing falsification criteria")
+
+            errors.extend(f"[{mid}] {e}" for e in validate_projected_impact(m.get("projected_impact")))
 
             scores = m.get("scores", {})
             leverage = scores.get("strategic_leverage", m.get("strategic_leverage"))

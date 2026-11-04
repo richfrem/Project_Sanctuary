@@ -112,3 +112,26 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 This protocol synthesizes battle-tested patterns from `github.com/richfrem/agent-plugins-skills`:
 - **`running-control-plane`**: Pre-worktree dirty state reconciliation (`worktree-reconciliation-and-multi-worktree-practices.md`), clean base branching from `origin/main`, and non-overlapping path ownership.
 - **`orchestrating-agent-work`**: Confinement and redirection, isolated worktree provisioning (`.worktrees/task-<id>`), and supervisor verification gates.
+
+---
+
+## Projected impact, the overlap matrix and parallel dispatch (MISSION-031)
+
+A mission declares what it will touch in its manifest, so the board can lock exactly that without the agent typing `--targets`:
+
+```json
+"projected_impact": {
+  "paths": ["dir/", "dir/file.py", "dir/**/*.md"],
+  "resources": ["local-model-memory"],
+  "shared_generated": []
+}
+```
+
+- **Checkout takes the locks from the manifest.** `manage_coordination.py checkout --mission ID --agent you --create-worktree` needs no `--targets` for a registered mission; `--targets`/`--resources` are added on top. A mission with no declaration and no targets or resources is **refused** (an unlocked lease can never conflict, so it protects nobody); `--allow-unlocked` overrides. The lease records `impact_source` (`manifest`, `manual`, `manifest+manual`, `unlocked`).
+- **Conservative overlap.** Files, directories and globs are compared component by component; ambiguity counts as overlap (a mission waits) and never the other way, except that a path that names a file (has an extension) has no children. Extension-less names may be directories.
+- **Shared generated files are not locks.** `index.jsonl`, `backlog.md`, `cognitive_ledger.json`, `events.jsonl`, `chronicle/ledger.json` and the coordination files are rewritten by every mission. They are reported after checkout as `regenerate_after_merge`: when merging, regenerate them (`manage_backlog.py compile`, ledger reconciliation), do not hand-merge. They WILL still conflict in git when two branches both rewrite them; the board flags this, it does not remove it.
+- **`suggest --count N`** lists up to N open missions that are free of active leases and mutually disjoint, by priority (the incoming agent also sees this in the briefing's Predecessor Relay). **`matrix`** prints which open missions conflict with which; `unregistered` lists missions without a declaration.
+- **`verify --mission ID`** compares the declaration with the files the worktree actually changed (committed against `origin/main`, staged, unstaged, untracked). A mission's own manifest and shared generated files are implicitly allowed. Run it before opening a PR; an undeclared edit means the declaration was wrong and the no-conflict guarantee does not hold for that file.
+- **Checkout marks the manifest `IN_PROGRESS` in the new worktree's copy**, not in the main tree, so the main tree stays clean and `git pull` keeps working.
+- `projected_impact` is validated by `manage_backlog.py validate` (non-empty repo-relative `paths`, list-typed `resources`/`shared_generated`).
+

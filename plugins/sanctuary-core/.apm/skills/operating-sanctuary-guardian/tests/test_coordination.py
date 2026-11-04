@@ -128,7 +128,8 @@ def test_heartbeat_extends_lease(temp_project_root: Path):
         temp_project_root,
         mission="MISSION-026",
         agent="antigravity",
-        ttl_minutes=10
+        ttl_minutes=10,
+        allow_unlocked=True  # this test only exercises the heartbeat; a lease with no locks must now be requested explicitly
     )
     res = mc.heartbeat(temp_project_root, mission="MISSION-026", agent="antigravity", extend_minutes=45)
     assert res["status"] == "success"

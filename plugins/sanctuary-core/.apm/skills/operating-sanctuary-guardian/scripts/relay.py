@@ -87,11 +87,21 @@ def build_relay(root: Path, handovers: int = 5, results: int = 10) -> Dict[str, 
     index = _read_jsonl(root / "LEARNING/research/index.jsonl")
     open_ = sorted([x for x in index if x.get("status") != "RESOLVED"], key=lambda x: -float(x.get("priority_score") or 0))[:3]
     inbox = len(_read_jsonl(root / "LEARNING/research/inbox.jsonl"))
-    return {"handovers": recent, "established": established,
+    return {"handovers": recent, "established": established, "dispatchable": _dispatchable(root),
             "open": [{"id": x["id"], "score": x.get("priority_score"), "status": x.get("status")} for x in open_], "inbox_items": inbox}
 
 
-def render_markdown(relay: Dict[str, Any]) -> str:
+def _dispatchable(root: Path, count: int = 3) -> List[str]:
+    """Open missions that can run in parallel now (disjoint from active leases and each other); empty if the flight board is unavailable."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import manage_coordination
+        return manage_coordination.suggest(Path(root), count)["selected"]
+    except Exception:
+        return []
+
+
+def render_markdown(relay: Dict[str, Any]) -> str:  # relay: the dict from build_relay
     """Render the relay as a briefing section (kept to roughly 3 KB)."""
     lines = ["## III-B. Predecessor Relay (read before choosing work; cite results, do not re-run them)"]
     if relay["handovers"]:
@@ -107,6 +117,8 @@ def render_markdown(relay: Dict[str, Any]) -> str:
     if relay["open"]:
         top = "; ".join(f"{o['id']} ({o['score']}, {o['status']})" for o in relay["open"])
         lines.append(f"* **Open work by priority:** {top} | captured ideas in inbox: {relay['inbox_items']}")
+    if relay.get("dispatchable"):
+        lines.append("* **Dispatchable in parallel now (disjoint from active leases and each other; `manage_coordination.py suggest`):** " + ", ".join(relay["dispatchable"]))
     lines.append("* **When you finish:** `manage_coordination.py checkin --mission <ID> --agent <you> --handoff \"what you did, decisions, what NOT to redo, next step (keep it under about 400 characters)\"`")
     return "\n".join(lines)
 
