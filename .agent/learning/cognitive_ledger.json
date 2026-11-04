@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "updated_at": "2026-11-04T06:14:30.254070+00:00",
-  "total_assessments": 11,
-  "cumulative_score": 157,
-  "average_fitness": 0.952,
+  "total_assessments": 12,
+  "cumulative_score": 172,
+  "average_fitness": 0.956,
   "dimension_totals": {
-    "useful_outcome": 31,
-    "learning_depth": 33,
-    "verification_rigor": 33,
-    "token_economy": 27,
-    "anti_asch_integrity": 33
+    "useful_outcome": 34,
+    "learning_depth": 36,
+    "verification_rigor": 36,
+    "token_economy": 30,
+    "anti_asch_integrity": 36
   },
   "agents": {
     "astra": {
@@ -33,8 +33,8 @@
       "average_fitness": 1.0
     },
     "antigravity": {
-      "assessments": 1,
-      "cumulative_score": 15,
+      "assessments": 2,
+      "cumulative_score": 30,
       "average_fitness": 1.0
     }
   },
