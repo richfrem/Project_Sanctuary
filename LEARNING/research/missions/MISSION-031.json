@@ -1,0 +1,46 @@
+{
+  "id": "MISSION-031",
+  "title": "Automated Blast-Radius & Projected Impact Analysis for Multi-Agent Worktree Concurrency",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "macOS / Python 3.11+ / Git Worktrees & Coordination Flight Board",
+  "created_at": "2026-11-04T06:02:00Z",
+  "updated_at": "2026-11-04T06:02:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 1,
+    "priority_score": 400.0
+  },
+  "hypothesis": "Augmenting mission manifests with native 'projected_impact' declarations and extending manage_coordination.py with an automated overlap matrix enables the flight board to automatically acquire exact target leases, surface disjoint parallel dispatches to incoming agents, and eliminate 100% of concurrent worktree merge conflicts without manual target path configuration.",
+  "falsification_criteria": "An agent is able to check out a mission that silently conflicts with an active lease, manual --targets are still required at CLI checkout for registered missions, or collision detection overhead exceeds 500ms.",
+  "baseline_evidence": "MISSION-026 established decentralized optimistic file leases and the flight board; however, target paths currently require manual agent declaration at checkout, introducing risk of under-locking or coarse-locking during parallel dispatches.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if cross-repository AST import graph traversal is required."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "multi-agent-concurrency",
+    "blast-radius",
+    "worktree-isolation",
+    "flight-board",
+    "coordination",
+    "protocol-128",
+    "spawned-by-user-insight"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "priority_score": 400.0
+}
