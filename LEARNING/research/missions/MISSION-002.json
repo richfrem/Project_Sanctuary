@@ -48,5 +48,8 @@
     "Commercial consumer OAuth subscriptions cannot be pooled via local HTTP reverse proxy servers without raw API keys.",
     "Direct CLI process failover (claude -> codex -> agy) provides zero-daemon, zero-RAM pooling without violating provider terms of service.",
     "Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-035": "EXTENDS: 002's readiness probe and failover chain know which CLIs are installed and logged in; 035 adds measured 5-hour/weekly window state and per-task token deltas so failover and assignment can use real headroom instead of installed-or-not."
+  }
 }

@@ -5,7 +5,7 @@
   "execution_surface": "hybrid",
   "target_platform": "Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board",
   "created_at": "2026-11-04T07:30:00Z",
-  "updated_at": "2026-11-04T07:30:00Z",
+  "updated_at": "2026-11-04T09:00:00Z",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 5,
@@ -29,7 +29,8 @@
     "Resource scheduling: at most one mission that loads the local 7B model at a time on a 16 GB machine (flight-board resource lock).",
     "Orchestrator owns mission and chronicle ID allocation, merge order, regeneration of index.jsonl/backlog.md, and reconciliation of ledger aggregates.",
     "Inner worker loops never run git write commands; commits and merges stay with the caller (upstream Loop Isolation).",
-    "Consume MISSION-031's projected_impact and overlap matrix for mission independence and lease targets; the orchestrator adds selection policy and review, not a second collision detector."
+    "Consume MISSION-031's projected_impact and overlap matrix for mission independence and lease targets; the orchestrator adds selection policy and review, not a second collision detector.",
+    "Usage and budget awareness: before dispatching workers, the orchestrator checks backend headroom (5-hour and weekly windows) through MISSION-035's probe and treats a nearly exhausted window as a hard constraint on worker assignment; after completion it records measured deltas, not estimates, once 035 is available."
   ],
   "baseline_evidence": "Two-agent session 2026-11-03/04 (Claude Code and Antigravity in parallel worktrees): collisions and reconciliation work the orchestrator would own: mission IDs 030/031 and chronicle 355 allocated concurrently; index.jsonl, backlog.md and the cognitive ledger collide on merge; one agent's score existed only as an uncommitted edit in the main tree and its events entry was never committed; manage_coordination checkout dirties the main tree and breaks git pull; merge order mattered (agy merged first). All scores were self-assessed.",
   "model_routing": {
@@ -83,7 +84,8 @@
     "MISSION-026": "BUILDS ON (corroborated): flight board, leases and worktree isolation are the coordination substrate.",
     "MISSION-025": "BUILDS ON: workers' checkin --handoff notes are read by the orchestrator during review and carried into the next batch.",
     "MISSION-032": "INFORMED BY: shows which incoming agents (frontier vs local) reliably follow a briefing, which informs worker routing.",
-    "MISSION-028": "INFORMED BY: signal-triggered escalation policy for choosing a cheaper or stronger worker."
+    "MISSION-028": "INFORMED BY: signal-triggered escalation policy for choosing a cheaper or stronger worker.",
+    "MISSION-035": "PROVIDER: measured usage telemetry (before/after token and quota-window snapshots, per-task-class cost predictor, headroom check). The orchestrator calls its snapshot and recommend commands for worker assignment and to measure its own token overhead; do not build a second usage tracker. Until 035 lands, the pilot records usage manually via track_budget.py."
   },
   "projected_impact": {
     "paths": [
