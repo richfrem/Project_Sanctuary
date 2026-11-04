@@ -6,10 +6,14 @@ Key Inputs: .agent/coordination/board.json, .agent/coordination/leases.jsonl, LE
 Key Outputs: Active coordination board, lease tokens, worktree management, and collision prevention alerts.
 Usage:
     python3 manage_coordination.py checkout --mission MISSION-026 --agent antigravity --targets "scripts/manage_coordination.py"
+    python3 manage_coordination.py checkout --mission MISSION-031 --agent claude-code --create-worktree   # locks come from the manifest's projected_impact
+    python3 manage_coordination.py suggest --count 3      # missions that can run in parallel now (disjoint from leases and each other)
+    python3 manage_coordination.py matrix                 # pairwise overlap of open missions
+    python3 manage_coordination.py verify --mission MISSION-031 --worktree .worktrees/mission-031   # declared impact vs files actually changed
     python3 manage_coordination.py board
     python3 manage_coordination.py heartbeat --mission MISSION-026 --agent antigravity
     python3 manage_coordination.py checkin --mission MISSION-026 --agent antigravity --status COMPLETED --pr 278
-Key Functions: get_project_root(), load_board(), save_board(), normalize_handoff(), checkout(), checkin(), get_active_board(), heartbeat(), clean_stale(), main().
+Key Functions: get_project_root(), load_board(), save_board(), normalize_handoff(), checkout(), checkin(), suggest(), build_matrix(), verify_impact(), get_active_board(), heartbeat(), clean_stale(), main().
 """
 
 import os
@@ -21,6 +25,9 @@ import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional, Dict, List, Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import impact  # noqa: E402  (projected impact and overlap analysis, MISSION-031)
 
 
 def get_project_root() -> Path:
@@ -85,11 +92,7 @@ def check_conflicts(active_leases: List[Dict[str, Any]], targets: List[str],
         leased_resources = lease.get("exclusive_resources", [])
 
         # Target overlap check
-        matched_targets = []
-        for t in targets:
-            for lt in leased_targets:
-                if t == lt or t.startswith(lt.rstrip("/") + "/") or lt.startswith(t.rstrip("/") + "/"):
-                    matched_targets.append(t)
+        matched_targets = [t for t in targets if any(impact.paths_overlap(t, lt) for lt in leased_targets)]
 
         # Resource overlap check
         matched_resources = [r for r in resources if r in leased_resources]
@@ -109,11 +112,27 @@ def check_conflicts(active_leases: List[Dict[str, Any]], targets: List[str],
 
 def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] = None,
              resources: Optional[List[str]] = None, worktree: Optional[str] = None,
-             ttl_minutes: int = 60, force: bool = False, create_worktree: bool = False) -> Dict[str, Any]:
-    """Check out a mission, register locks on flight board, and optionally create worktree."""
+             ttl_minutes: int = 60, force: bool = False, create_worktree: bool = False,
+             allow_unlocked: bool = False) -> Dict[str, Any]:
+    """Check out a mission, register locks on flight board, and optionally create worktree.
+
+    Locks come from the mission manifest's `projected_impact` (paths and resources) plus any manual --targets/--resources. A mission with
+    neither a declaration nor any targets or resources is refused (an unlocked lease can never conflict, which defeats the board) unless allow_unlocked.
+    Shared generated files (index.jsonl, ledgers, ...) are never locked; they are regenerated after merging.
+    """
     board = load_board(root)
-    targets = [t.strip() for t in (targets or []) if t.strip()]
-    resources = [r.strip() for r in (resources or []) if r.strip()]
+    manual_targets = [t.strip() for t in (targets or []) if t.strip()]
+    manual_resources = [r.strip() for r in (resources or []) if r.strip()]
+    declared = impact.load_manifest_impact(root, mission)
+    if declared is None and not manual_targets and not manual_resources and not allow_unlocked:
+        return {"status": "error", "mission": mission,
+                "error": (f"{mission} has no projected_impact in LEARNING/research/missions/{mission}.json and no --targets were given; "
+                          "refusing an unlocked lease (it could never conflict, so it would not protect anyone). Declare projected_impact, "
+                          "pass --targets or --resources, or pass --allow-unlocked.")}
+    extra_generated = declared.get("shared_generated", []) if declared else []
+    targets = impact.lock_set((declared["paths"] if declared else []) + manual_targets, extra_generated)
+    resources = list(dict.fromkeys((declared["resources"] if declared else []) + manual_resources))
+    impact_source = ("manifest+manual" if declared and manual_targets else "manifest" if declared else "manual" if manual_targets else "unlocked")
 
     now = time.time()
     expires_at = now + (ttl_minutes * 60)
@@ -152,6 +171,7 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
         "worktree": worktree_path,
         "locked_targets": targets,
         "exclusive_resources": resources,
+        "impact_source": impact_source,
         "checked_out_at": datetime.now(timezone.utc).isoformat(),
         "checked_out_timestamp": now,
         "last_heartbeat": now,
@@ -167,8 +187,11 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
     event["event_type"] = "CHECKOUT"
     append_lease_event(root, event)
 
-    # Update mission status in backlog if files exist
-    mission_file = root / "LEARNING" / "research" / "missions" / f"{mission}.json"
+    # Mark the mission in progress. Write into the NEW worktree's copy when there is one, so the main tree is not left dirty
+    # (a dirty main tree aborts `git pull` and collides with the mission's own PR); fall back to this tree for lease-only checkouts.
+    rel = Path("LEARNING") / "research" / "missions" / f"{mission}.json"
+    wt_copy = root / worktree_path / rel
+    mission_file = wt_copy if wt_copy.exists() else root / rel
     if mission_file.exists():
         try:
             with open(mission_file, "r", encoding="utf-8") as f:
@@ -189,6 +212,8 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
         "worktree": worktree_path,
         "locked_targets": targets,
         "exclusive_resources": resources,
+        "impact_source": impact_source,
+        "regenerate_after_merge": list(impact.SHARED_GENERATED),
         "expires_at": datetime.fromtimestamp(expires_at, timezone.utc).isoformat()
     }
 
@@ -248,6 +273,63 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
         "pr_number": pr,
         "handoff": note
     }
+
+
+def _open_candidates(root: Path) -> List[Dict[str, Any]]:
+    """Open missions (PROPOSED/STAGED) with their priority and normalised projected impact (None if undeclared)."""
+    out = []
+    mdir = root / "LEARNING" / "research" / "missions"
+    for p in sorted(mdir.glob("MISSION-*.json")) if mdir.exists() else []:
+        try:
+            m = json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if m.get("status") in impact.OPEN_STATUSES:
+            out.append({"id": m["id"], "priority": m.get("priority_score", 0), "title": m.get("title", ""),
+                        "impact": impact.normalise_impact(m.get("projected_impact"))})
+    return out
+
+
+def suggest(root: Path, count: int = 3) -> Dict[str, Any]:
+    """Up to `count` open, registered missions that are free of active leases and mutually disjoint, by priority."""
+    active = get_active_board(root)
+    cands = _open_candidates(root)
+    res = impact.dispatchable(cands, active, count)
+    titles = {c["id"]: c["title"] for c in cands}
+    res["selected_titles"] = {i: titles.get(i, "") for i in res["selected"]}
+    res["active_leases"] = [l.get("mission_id") for l in active]
+    return res
+
+
+def build_matrix(root: Path) -> Dict[str, Any]:
+    """Pairwise overlap of the open missions that declare projected_impact."""
+    cands = _open_candidates(root)
+    impacts = {c["id"]: c["impact"] for c in cands if c["impact"]}
+    return {"registered": sorted(impacts), "conflicts": impact.overlap_matrix(impacts),
+            "unregistered": sorted(c["id"] for c in cands if not c["impact"])}
+
+
+def verify_impact(root: Path, mission: str, worktree: Optional[str] = None, base: str = "origin/main") -> Dict[str, Any]:
+    """Compare the declared impact with the files a worktree actually changed (committed against `base`, staged, unstaged, untracked)."""
+    declared = impact.load_manifest_impact(root, mission)
+    lease = next((l for l in load_board(root).get("leases", []) if l.get("mission_id") == mission), None)
+    if declared is None and lease:
+        declared = {"paths": list(lease.get("locked_targets", [])), "resources": [], "shared_generated": []}
+    if declared is None:
+        return {"status": "error", "error": f"{mission} has no projected_impact and no active lease to compare against."}
+    wt = root / (worktree or (lease or {}).get("worktree") or ".")
+    changed: List[str] = []
+    for cmd in (["git", "diff", "--name-only", f"{base}...HEAD"], ["git", "diff", "--name-only", "HEAD"],
+                ["git", "ls-files", "--others", "--exclude-standard"]):
+        res = subprocess.run(cmd, cwd=wt, capture_output=True, text=True)
+        if res.returncode == 0:
+            changed += [l for l in res.stdout.splitlines() if l.strip()]
+    changed = sorted(set(changed))
+    own = {"paths": declared["paths"] + [f"LEARNING/research/missions/{mission}.json"],   # a mission always edits its own manifest
+           "shared_generated": declared.get("shared_generated", [])}
+    undeclared = impact.undeclared_changes(own, changed)
+    return {"status": "success", "mission": mission, "declared_paths": declared["paths"], "changed_files": changed,
+            "undeclared": undeclared, "ok": not undeclared}
 
 
 def heartbeat(root: Path, mission: str, agent: str, extend_minutes: int = 30) -> Dict[str, Any]:
@@ -359,6 +441,7 @@ def main():
     p_co.add_argument("--create-worktree", action="store_true", help="Automatically create git worktree")
     p_co.add_argument("--ttl", type=int, default=60, help="Lease time-to-live in minutes")
     p_co.add_argument("--force", action="store_true", help="Force checkout despite target conflicts")
+    p_co.add_argument("--allow-unlocked", action="store_true", help="Allow a lease with no declared impact and no --targets (it protects nobody)")
     p_co.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
 
     # Checkin
@@ -370,6 +453,18 @@ def main():
     p_ci.add_argument("--handoff", help="Note for the successor agent: what you did, decisions, what NOT to redo, next step")
     p_ci.add_argument("--clean-worktree", action="store_true", help="Remove git worktree directory")
     p_ci.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
+
+    # Impact analysis (MISSION-031)
+    p_mx = subparsers.add_parser("matrix", help="Pairwise overlap of open missions that declare projected_impact")
+    p_mx.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
+    p_sg = subparsers.add_parser("suggest", help="Open missions that can be dispatched in parallel now (disjoint from leases and each other)")
+    p_sg.add_argument("--count", type=int, default=3, help="How many missions to suggest")
+    p_sg.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
+    p_vf = subparsers.add_parser("verify", help="Compare declared projected_impact with the files a worktree changed")
+    p_vf.add_argument("--mission", required=True, help="Mission identifier")
+    p_vf.add_argument("--worktree", help="Worktree path relative to the project root (default: the lease's worktree)")
+    p_vf.add_argument("--base", default="origin/main", help="Base ref to diff against")
+    p_vf.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
 
     # Board
     p_bd = subparsers.add_parser("board", help="View active agent flight board")
@@ -398,16 +493,56 @@ def main():
         resources = [r.strip() for r in args.resources.split(",")] if args.resources else []
         res = checkout(root, args.mission, args.agent, targets=targets, resources=resources,
                        worktree=args.worktree, ttl_minutes=args.ttl, force=args.force,
-                       create_worktree=args.create_worktree)
+                       create_worktree=args.create_worktree, allow_unlocked=args.allow_unlocked)
         if args.format == "json":
             print(json.dumps(res, indent=2))
         else:
             if res.get("status") == "conflict":
                 print(f"❌ CHECKOUT BLOCKED by conflict:\n{json.dumps(res['conflicts'], indent=2)}")
-                sys.exit(1)
-            print(f"✅ Checked out [{args.mission}] for agent [{args.agent}]")
-            print(f"   Worktree: {res['worktree']}")
-            print(f"   Expires:  {res['expires_at']}")
+            elif res.get("status") == "error":
+                print(f"❌ CHECKOUT REFUSED: {res.get('error')}")
+            else:
+                print(f"✅ Checked out [{args.mission}] for agent [{args.agent}]")
+                print(f"   Worktree: {res['worktree']}")
+                print(f"   Locks:    {', '.join(res['locked_targets']) or '(none)'}  [{res['impact_source']}]")
+                print(f"   Expires:  {res['expires_at']}")
+                print(f"   After merging, regenerate (do not hand-merge): {', '.join(res['regenerate_after_merge'])}")
+        if res.get("status") in ("conflict", "error"):
+            sys.exit(1)
+
+    elif args.subcommand == "matrix":
+        res = build_matrix(root)
+        if args.format == "json":
+            print(json.dumps(res, indent=2))
+        else:
+            print(f"Registered open missions: {len(res['registered'])} | unregistered (no projected_impact): {len(res['unregistered'])}")
+            for mid in res["registered"]:
+                print(f"  {mid}: conflicts with {', '.join(res['conflicts'][mid]) or '-'}")
+
+    elif args.subcommand == "suggest":
+        res = suggest(root, args.count)
+        if args.format == "json":
+            print(json.dumps(res, indent=2))
+        else:
+            print(f"Dispatchable in parallel now ({len(res['selected'])}):")
+            for mid in res["selected"]:
+                print(f"  - {mid}  {res['selected_titles'].get(mid, '')[:80]}")
+            for b in res["blocked"][:8]:
+                print(f"  x {b['id']} blocked by {b['by']}")
+            print(f"Unregistered (declare projected_impact to include): {len(res['unregistered'])}")
+
+    elif args.subcommand == "verify":
+        res = verify_impact(root, args.mission, args.worktree, args.base)
+        if args.format == "json":
+            print(json.dumps(res, indent=2))
+        elif res["status"] == "error":
+            print(f"❌ {res['error']}")
+        elif res["ok"]:
+            print(f"✅ [{args.mission}] changed {len(res['changed_files'])} file(s), all inside the declared impact.")
+        else:
+            print(f"❌ [{args.mission}] changed files OUTSIDE the declared impact:\n  " + "\n  ".join(res["undeclared"]))
+        if res["status"] == "error" or not res.get("ok"):
+            sys.exit(1)
 
     elif args.subcommand == "checkin":
         res = checkin(root, args.mission, args.agent, status=args.status, pr=args.pr,

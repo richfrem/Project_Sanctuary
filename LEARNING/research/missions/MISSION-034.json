@@ -1,0 +1,62 @@
+{
+  "id": "MISSION-034",
+  "title": "Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "git worktrees / merge workflow; backlog index, chronicle ledger, cognitive ledger and events log",
+  "created_at": "2026-11-04T09:00:00Z",
+  "updated_at": "2026-11-04T09:00:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 3,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 120.0
+  },
+  "hypothesis": "A merge-prep step that regenerates the shared generated files from their sources (index.jsonl and backlog.md from the mission manifests, the chronicle ledger from the entries, the cognitive-ledger aggregate from events.jsonl) and treats the append-only logs with a union merge lets 100% of 60 two-branch merges that both rewrite these files complete with zero manual conflict resolution, with every regenerated file byte-identical to a from-scratch regeneration, and it reports (not silently repairs) any aggregate that does not equal what its events imply.",
+  "falsification_criteria": "Any of the 60 merges needs a manual resolution or leaves a regenerated file different from a from-scratch regeneration; or an aggregate that disagrees with its events is silently adjusted instead of reported; or merge-prep takes longer than 2 s per merge; or it modifies a file outside the declared shared-generated set.",
+  "baseline_evidence": "MISSION-031: `index.jsonl` conflicted in 60 of 60 real two-branch merges because every mission regenerates it (flagged by the board, not eliminated). Real incidents on 2026-11-03/04: index.jsonl and backlog.md collided on every mission PR; agy's MISSION-024 score existed only as an uncommitted edit to the cognitive-ledger aggregate while its events.jsonl entry was never committed, so the aggregate could not be rebuilt from events and had to be reconciled by hand.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate only if ledger semantics require judgement about which of two conflicting scores is authoritative."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "merge-queue",
+    "generated-files",
+    "regeneration",
+    "ledger-integrity",
+    "worktree-isolation",
+    "spawned-by-mission-031",
+    "feeds-mission-033"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-031": "SPAWNED BY: found the 60/60 index.jsonl conflict boundary.",
+    "MISSION-033": "FEEDS: the orchestrator runs merge-prep when it merges workers' PRs in order."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-034/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_merge_prep.py",
+      ".gitattributes",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py"
+    ],
+    "resources": [],
+    "basis": "Declared 2026-11-04 by claude-code from the hypothesis; confirm with `manage_coordination.py verify`."
+  },
+  "priority_score": 120.0
+}

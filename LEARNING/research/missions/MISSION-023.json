@@ -38,5 +38,17 @@
     "sovereign-intelligence"
   ],
   "evidence": [],
-  "lessons_learned": []
+  "lessons_learned": [],
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-023/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md"
+    ],
+    "resources": [
+      "local-model-memory"
+    ],
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
 }

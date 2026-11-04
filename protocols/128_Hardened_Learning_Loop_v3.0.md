@@ -29,7 +29,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 - **Local model gate** (when local inference is in scope): confirm the MLX server on `:8080` or run `forge_llm.py status`.
 - **Hydrate Layer 1**: `context/soul.md`, `context/user.md`, `context/memory.md`, and the boot digest, including its **Predecessor Relay** (last handovers with vendor, established results with evidence pointers, open work, handoff notes). Cite established results; do not re-run them.
 - **Progressive disclosure (Layer 2)**: use `managing-sovereign-memory` (`disclose.py --tier 1|2`). Search `LEARNING/research/index.jsonl` first (it carries each mission's title, status, verdict, `hypothesis_brief` and tags) and open a manifest only when needed.
-- **Git and concurrency**: tree clean, on a `feat/*` branch, never on `main`. When other agents may be active, check `manage_coordination.py board`, then `checkout --create-worktree` an isolated worktree and lease your target files; `checkin` when done. Note: `checkout --mission <ID>` also marks that mission's manifest `IN_PROGRESS` (adding `assignee` and `worktree`) in the directory you ran it from, which leaves that tree dirty and conflicts with your own PR's version of the file; before pulling, discard it (`git checkout -- LEARNING/research/missions/<ID>.json`) or let the PR carry the final manifest.
+- **Git and concurrency**: tree clean, on a `feat/*` branch, never on `main`. When other agents may be active, check `manage_coordination.py board`, then `suggest` to see which open missions can run in parallel without colliding, and `checkout --mission <ID> --create-worktree` an isolated worktree: the locks come from the mission manifest's `projected_impact` (no `--targets` needed; a mission with no declaration is refused). Before opening the PR run `verify --mission <ID>`: an edit outside the declared impact means the no-conflict guarantee does not hold for that file. `checkin` when done. Note: `checkout --mission <ID>` also marks that mission's manifest `IN_PROGRESS` (adding `assignee` and `worktree`) in the directory you ran it from, which leaves that tree dirty and conflicts with your own PR's version of the file; before pulling, discard it (`git checkout -- LEARNING/research/missions/<ID>.json`) or let the PR carry the final manifest.
 
 ### Stage 2: Sovereign Execution
 - **Tracks**: A (deterministic skill or script runs), B (exploratory research and doctrine work in `LEARNING/` and `protocols/`), C (micro-fix with immediate gating).
@@ -87,6 +87,7 @@ Note: the dataset accumulates. Records extracted from earlier repository layouts
 
 ## 5. Changelog
 
+- **v3.1.4 (2026-11-04)**: Stage 1 uses `suggest`, manifest-driven checkout (`projected_impact`) and `verify` (MISSION-031).
 - **v3.1.3 (2026-11-04)**: Predecessor Relay in the boot digest and `checkin --handoff` (MISSION-025).
 - **v3.1.2 (2026-11-03)**: Stage 1 notes that mission checkout edits the manifest in the main tree; Stage 5 gains the local-model release step; MLX server teardown and idle reaping hardened (MISSION-027).
 - **v3.1.1 (2026-11-03)**: `persist_soul.py` repaired and its known-gap note removed; `protocol_manager.py update` now edits the Status line in place.

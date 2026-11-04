@@ -168,3 +168,28 @@ class TestIndexEnrichment(unittest.TestCase):
         import manage_backlog as mb
         m = {"id": "MISSION-026", "title": "T", "upstream_skill_dependencies": ["x"], "reference_doctrines": ["y"]}
         self.assertEqual(mb.build_index_item(1, m)["id"], "MISSION-026")
+
+
+class TestProjectedImpactValidation(unittest.TestCase):
+    def test_validate_projected_impact(self):
+        import manage_backlog as mb
+        self.assertEqual(mb.validate_projected_impact(None), [])
+        self.assertEqual(mb.validate_projected_impact({"paths": ["a/b.py", "docs/"], "resources": ["p:1"], "shared_generated": []}), [])
+        for bad in ("x", {}, {"paths": []}, {"paths": [""]}, {"paths": [1]}, {"paths": ["/abs"]}, {"paths": ["../up"]},
+                    {"paths": ["a"], "resources": "no"}, {"paths": ["a"], "shared_generated": [1]}):
+            self.assertTrue(mb.validate_projected_impact(bad), f"should reject {bad!r}")
+
+    def test_manager_validate_reports_bad_declaration(self):
+        root = Path(tempfile.mkdtemp())
+        try:
+            mdir = root / "LEARNING" / "research" / "missions"
+            mdir.mkdir(parents=True)
+            base = {"title": "t", "hypothesis": "h", "falsification_criteria": "f", "status": "PROPOSED",
+                    "scores": {"strategic_leverage": 1, "epistemic_depth": 1, "cost_weight": 1.0, "operational_friction": 1}, "priority_score": 1.0}
+            (mdir / "MISSION-901.json").write_text(json.dumps({**base, "id": "MISSION-901", "projected_impact": {"paths": ["/abs"]}}))
+            (mdir / "MISSION-902.json").write_text(json.dumps({**base, "id": "MISSION-902", "projected_impact": {"paths": ["a/b.py"]}}))
+            errors = BacklogManager(root).validate()
+            self.assertTrue(any("MISSION-901" in e and "projected_impact" in e for e in errors), errors)
+            self.assertFalse(any("MISSION-902" in e for e in errors), errors)
+        finally:
+            shutil.rmtree(root, ignore_errors=True)
