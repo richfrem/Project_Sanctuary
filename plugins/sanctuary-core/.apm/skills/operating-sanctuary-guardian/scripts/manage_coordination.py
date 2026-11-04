@@ -469,7 +469,7 @@ def main():
     p_ci.add_argument("--tokens", type=int, help="Vendor-reported tokens used (required to record non-claude agents)")
     p_ci.add_argument("--quality", type=int, choices=[0, 1, 2, 3], help="Outcome quality 0-3 (e.g. from score_contribution)")
     p_ci.add_argument("--retries", type=int, default=0, help="Retries or restarts needed")
-    p_ci.add_argument("--model", help="Model used (enables dollar cost when its price is in references/model-prices.json)")
+    p_ci.add_argument("--model", help="Exact model id (enables dollar cost when it is in the cli-agent model catalog)")
     p_ci.add_argument("--no-usage", action="store_true", help="Skip the usage snapshot and measured record")
     p_ci.add_argument("--handoff", help="Note for the successor agent: what you did, decisions, what NOT to redo, next step")
     p_ci.add_argument("--clean-worktree", action="store_true", help="Remove git worktree directory")

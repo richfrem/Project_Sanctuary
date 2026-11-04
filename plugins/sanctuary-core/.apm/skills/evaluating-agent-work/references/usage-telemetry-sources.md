@@ -20,11 +20,12 @@ Do not rank models by price per credit alone: a very cheap-per-credit model can 
 
 ## How records flow
 1. `manage_coordination.py checkout` stores a zero-token snapshot on the lease and caches it for the boot briefing (`.agent/learning/usage_latest.json`, gitignored).
-2. `manage_coordination.py checkin` takes a second snapshot and records a measured entry (`track_budget.py record --source measured`: tokens, task class, wall seconds, retries, quality, window deltas, `concurrent`, and `cost_usd` when `--model` has a known price in `model-prices.json`). Pass `--task-class`, `--tokens` (non-claude agents), `--quality`, `--model`.
+2. `manage_coordination.py checkin` takes a second snapshot and records a measured entry (`track_budget.py record --source measured`: tokens, task class, wall seconds, retries, quality, window deltas, `concurrent`, and `cost_usd` when `--model` is an exact id in the cli-agent catalog). Pass `--task-class`, `--tokens` (non-claude agents), `--quality`, `--model`.
 3. Failures never block a checkout/checkin; disable with `--no-usage` or `SANCTUARY_NO_USAGE=1`.
 
 ## Reading the gauge honestly
 - Windows are account-wide: a delta taken while another session was active is flagged `concurrent` and excluded from calibration.
 - Vendors give percentages, not tokens. `usage_probe.py calibrate` estimates tokens-per-percent of the claude 5-hour window by summing tokens and percent over many non-concurrent tasks (single tasks are too coarse); until enough data exists it says `insufficient_data` rather than guessing a runway.
-- Dollar cost uses `model-prices.json`; unknown prices stay `null`. With vendor-total tokens only (no in/out split) a dollar figure is a lower bound.
+- Prices and model capabilities are NOT kept here: they come from the installed **cli-agent skill's catalogs** (`~/.claude/skills/cli-agent/references/{claude,codex,agy,copilot}-models.json`, maintained per its `model-catalog-maintenance.md`; override the location with `SANCTUARY_CLI_AGENT_REFERENCES`). `usage_probe.py` reads them (`load_prices`) and prices a task only for an EXACT catalog model id, including cache-read and cache-write rates; a model absent from the catalog gets `cost_usd: null`, never a price borrowed from a similarly named model. With vendor-total tokens only (no in/out split) a dollar figure is a lower bound.
+- **Catalog gap found 2026-11-04** (catalog verified 2026-09-09): it has `claude-sonnet-5` but this session runs `claude-sonnet-5-5`, and `gpt-5.6-luna` but codex config says `gpt-6-luna`; their costs stay null. Using the `claude-sonnet-5` prices as a stand-in priced the real session at $44.79 against the $29.55 Claude reported (+52%), which is why no proxy pricing is allowed. Fix belongs upstream in the cli-agent catalog (Protocol 133), not here.
 - Never read auth files (e.g. `~/.codex/auth.json`); every record passes `assert_no_secrets`.
