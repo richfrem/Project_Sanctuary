@@ -242,6 +242,16 @@ def get_preflight_brief(project_root: Path) -> str:
             f"* Living Chronicle indexed: {entry_count} entries recorded in `chronicle/ledger.json`.")
 
 
+def get_relay_section(project_root: Path) -> str:
+    """Predecessor Relay section for the briefing (MISSION-025); empty string if the relay module or its data is unavailable."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import relay
+        return relay.render_markdown(relay.build_relay(project_root))
+    except Exception:
+        return ""
+
+
 def main():
     parser = argparse.ArgumentParser(description="Generate Guardian Boot Digest (Protocol 128)")
     parser.add_argument("--mode", type=str, default="HOLISTIC", help="Wakeup mode")
@@ -271,6 +281,8 @@ def main():
         "",
         "## III. Pre-Flight Brief (Sovereign Memory Engine)",
         get_preflight_brief(project_root),
+        "",
+        get_relay_section(project_root),
         "",
         "## IV. Layer 1 Integrity Health Checks",
     ]

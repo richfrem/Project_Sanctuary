@@ -9,7 +9,7 @@ Usage:
     python3 manage_coordination.py board
     python3 manage_coordination.py heartbeat --mission MISSION-026 --agent antigravity
     python3 manage_coordination.py checkin --mission MISSION-026 --agent antigravity --status COMPLETED --pr 278
-Key Functions: get_project_root(), load_board(), save_board(), checkout(), checkin(), get_active_board(), heartbeat(), clean_stale(), main().
+Key Functions: get_project_root(), load_board(), save_board(), normalize_handoff(), checkout(), checkin(), get_active_board(), heartbeat(), clean_stale(), main().
 """
 
 import os
@@ -193,9 +193,24 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
     }
 
 
+MAX_HANDOFF_CHARS = 600
+
+
+def normalize_handoff(text: Optional[str]) -> Optional[str]:
+    """Collapse whitespace and cap a handoff note so one line of the ledger stays readable (None if empty)."""
+    cleaned = " ".join((text or "").split())
+    if not cleaned:
+        return None
+    return cleaned if len(cleaned) <= MAX_HANDOFF_CHARS else cleaned[: MAX_HANDOFF_CHARS - 1].rstrip() + "\u2026"
+
+
 def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
-            pr: Optional[int] = None, clean_worktree: bool = False) -> Dict[str, Any]:
-    """Check in a mission, release locks, and optionally tear down git worktree."""
+            pr: Optional[int] = None, clean_worktree: bool = False, handoff: Optional[str] = None) -> Dict[str, Any]:
+    """Check in a mission, release locks, and optionally tear down git worktree.
+
+    `handoff` is an optional note for the successor (what was done, decisions, what NOT to redo, next step). It is stored on the CHECKIN
+    event and surfaced by the boot briefing's Predecessor Relay (see relay.py).
+    """
     board = load_board(root)
     now = time.time()
     matching_leases = [l for l in board.get("leases", []) if l.get("agent_id") == agent and l.get("mission_id") == mission]
@@ -212,6 +227,9 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
         "pr_number": pr,
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
+    note = normalize_handoff(handoff)
+    if note:
+        event["handoff"] = note
     append_lease_event(root, event)
 
     if clean_worktree and matching_leases:
@@ -227,7 +245,8 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
         "mission": mission,
         "agent": agent,
         "released_locks": matching_leases[0].get("locked_targets", []) if matching_leases else [],
-        "pr_number": pr
+        "pr_number": pr,
+        "handoff": note
     }
 
 
@@ -348,6 +367,7 @@ def main():
     p_ci.add_argument("--agent", required=True, help="Agent identifier")
     p_ci.add_argument("--status", default="COMPLETED", choices=["COMPLETED", "CANCELLED", "ABANDONED"])
     p_ci.add_argument("--pr", type=int, help="Merged PR number")
+    p_ci.add_argument("--handoff", help="Note for the successor agent: what you did, decisions, what NOT to redo, next step")
     p_ci.add_argument("--clean-worktree", action="store_true", help="Remove git worktree directory")
     p_ci.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
 
@@ -391,7 +411,7 @@ def main():
 
     elif args.subcommand == "checkin":
         res = checkin(root, args.mission, args.agent, status=args.status, pr=args.pr,
-                      clean_worktree=args.clean_worktree)
+                      clean_worktree=args.clean_worktree, handoff=args.handoff)
         if args.format == "json":
             print(json.dumps(res, indent=2))
         else:

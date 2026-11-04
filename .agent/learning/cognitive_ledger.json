@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-03T15:59:06.623089+00:00",
-  "total_assessments": 10,
-  "cumulative_score": 144,
-  "average_fitness": 0.96,
+  "updated_at": "2026-11-04T06:14:30.254070+00:00",
+  "total_assessments": 11,
+  "cumulative_score": 157,
+  "average_fitness": 0.952,
   "dimension_totals": {
-    "useful_outcome": 29,
-    "learning_depth": 30,
-    "verification_rigor": 30,
-    "token_economy": 25,
-    "anti_asch_integrity": 30
+    "useful_outcome": 31,
+    "learning_depth": 33,
+    "verification_rigor": 33,
+    "token_economy": 27,
+    "anti_asch_integrity": 33
   },
   "agents": {
     "astra": {
@@ -23,9 +23,9 @@
       "average_fitness": 0.967
     },
     "claude": {
-      "assessments": 5,
-      "cumulative_score": 71,
-      "average_fitness": 0.947
+      "assessments": 6,
+      "cumulative_score": 84,
+      "average_fitness": 0.933
     },
     "claude-haiku-5.5": {
       "assessments": 1,
@@ -39,6 +39,15 @@
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "5ebc3bc5-5268-4c5a-bf56-6af7505ca561",
+      "timestamp": "2026-11-04T06:14:30.253312+00:00",
+      "task_id": "MISSION-025",
+      "agent_id": "claude",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Feature shipped with a pre-registered A/B showing +45.5 points but missing the 90% bar; verdict FALSIFIED by my own rule, with every miss traced. Caught and fixed a syntax artifact that would have inflated the control gap; discarded the first control run. Useful=2: working feature with measured benefit, hypothesis not met. Economy 2: ~2h of local inference plus long session. Self-assessed."
+    },
     {
       "assessment_id": "58145028-ee49-4317-9468-3c74aa1ffdc4",
       "timestamp": "2026-11-03T15:59:06.622490+00:00",

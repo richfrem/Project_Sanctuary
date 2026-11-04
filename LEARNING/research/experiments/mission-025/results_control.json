@@ -1,0 +1,288 @@
+{
+  "label": "control",
+  "summary": {
+    "n": 22,
+    "correct_rate": 0.227,
+    "median_turns": 5,
+    "zero_tool_call_rate": 0.318,
+    "mean_tool_calls": 2.5,
+    "mean_prompt_tokens": 2026,
+    "mean_seconds": 31.1,
+    "by_snapshot_prefix": {
+      "A": 0.286,
+      "B": 0.125
+    }
+  },
+  "rows": [
+    {
+      "id": "A1",
+      "kind": "agent",
+      "correct": true,
+      "expected": "claude-code",
+      "answer": "claude-code",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 3450,
+      "seconds": 44.1
+    },
+    {
+      "id": "A2",
+      "kind": "id",
+      "correct": false,
+      "expected": "HF-SYNC-4",
+      "answer": "MISSION-025",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 1502,
+      "seconds": 39.9
+    },
+    {
+      "id": "A3",
+      "kind": "number",
+      "correct": false,
+      "expected": 290,
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1701,
+      "seconds": 29.1
+    },
+    {
+      "id": "A4.1",
+      "kind": "verdict",
+      "correct": false,
+      "expected": "CONFIRMED",
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 2029,
+      "seconds": 43.7
+    },
+    {
+      "id": "A4.2",
+      "kind": "verdict",
+      "correct": false,
+      "expected": "CORROBORATED",
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 1518,
+      "seconds": 44.3
+    },
+    {
+      "id": "A4.3",
+      "kind": "verdict",
+      "correct": false,
+      "expected": "CORROBORATED",
+      "answer": "Not recorded",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 1898,
+      "seconds": 37.9
+    },
+    {
+      "id": "A4.4",
+      "kind": "verdict",
+      "correct": false,
+      "expected": "CONFIRMED",
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 4779,
+      "seconds": 46.1
+    },
+    {
+      "id": "A4.5",
+      "kind": "verdict",
+      "correct": false,
+      "expected": "CONFIRMED",
+      "answer": "not found",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 3565,
+      "seconds": 36.9
+    },
+    {
+      "id": "A6.1",
+      "kind": "verdict_path",
+      "correct": false,
+      "expected": {
+        "verdict": "FALSIFIED",
+        "path": "LEARNING/research/experiments/mission-022/README.md"
+      },
+      "answer": "MISSION-022 FALSIFIED | chronicle/entries/351_sovereign_multi_turn_local_agent_loop_on_apple_mlx_mission_022_falsified.md",
+      "status": "final",
+      "turns": 4,
+      "tool_calls": 3,
+      "max_prompt_tokens": 1656,
+      "seconds": 38.6
+    },
+    {
+      "id": "A6.2",
+      "kind": "verdict_path",
+      "correct": true,
+      "expected": {
+        "verdict": "CORROBORATED",
+        "path": "LEARNING/research/experiments/mission-027/README.md"
+      },
+      "answer": "CORROBORATED | LEARNING/research/experiments/mission-027/README.md",
+      "status": "final",
+      "turns": 3,
+      "tool_calls": 2,
+      "max_prompt_tokens": 2936,
+      "seconds": 31.0
+    },
+    {
+      "id": "A5.1",
+      "kind": "yesno",
+      "correct": false,
+      "expected": "yes",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1155,
+      "seconds": 3.2
+    },
+    {
+      "id": "A5.2",
+      "kind": "yesno",
+      "correct": false,
+      "expected": "yes",
+      "answer": "no",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1219,
+      "seconds": 6.1
+    },
+    {
+      "id": "A5.3",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1155,
+      "seconds": 3.2
+    },
+    {
+      "id": "A5.4",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1155,
+      "seconds": 3.2
+    },
+    {
+      "id": "B1",
+      "kind": "token",
+      "correct": false,
+      "expected": "PINMAP-5",
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 1362,
+      "seconds": 23.1
+    },
+    {
+      "id": "B2",
+      "kind": "token",
+      "correct": false,
+      "expected": "SQLite",
+      "answer": null,
+      "status": "repetition_falsified",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 2969,
+      "seconds": 65.4
+    },
+    {
+      "id": "B3",
+      "kind": "token",
+      "correct": false,
+      "expected": "ZETA-7",
+      "answer": null,
+      "status": "repetition_falsified",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 3015,
+      "seconds": 82.6
+    },
+    {
+      "id": "B4",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 2841,
+      "seconds": 37.2
+    },
+    {
+      "id": "B5",
+      "kind": "agent",
+      "correct": false,
+      "expected": "antigravity",
+      "answer": "unknown",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1080,
+      "seconds": 17.0
+    },
+    {
+      "id": "B6",
+      "kind": "token",
+      "correct": false,
+      "expected": "BENCH-RZ4",
+      "answer": "benchmark_001",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1572,
+      "seconds": 42.7
+    },
+    {
+      "id": "B7",
+      "kind": "number",
+      "correct": false,
+      "expected": 9231,
+      "answer": "8080",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1008,
+      "seconds": 4.8
+    },
+    {
+      "id": "B8",
+      "kind": "token",
+      "correct": false,
+      "expected": "QUARTZ-3",
+      "answer": "memory.md",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1009,
+      "seconds": 4.7
+    }
+  ]
+}

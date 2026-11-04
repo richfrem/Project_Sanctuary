@@ -101,8 +101,10 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
   --mission MISSION-026 \
   --agent antigravity \
   --status COMPLETED \
-  --pr 278
+  --pr 278 \
+  --handoff "Did X; decided Y over Z because ...; do NOT re-run benchmark B (see experiments/mission-026); next: run T-9 before merging."
 ```
+`--handoff` is optional (capped at 600 characters, whitespace collapsed). It is stored on the CHECKIN event and shown to the next agent, whatever its vendor, in the **Predecessor Relay** section of the boot briefing (`relay.py show`). Write what the successor cannot read off the code: decisions and why, results not to repeat, and the next step.
 
 ---
 

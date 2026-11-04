@@ -27,7 +27,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 - **Orient**: read `AGENTS.md` and `START_HERE.md` (constitutional bounds, Human Gate).
 - **Wake up**: `guardian_wakeup.py --mode HOLISTIC` verifies Layer 1 health and writes `.agent/learning/guardian_boot_digest.md` (sub-second; measured ~0.1 s). It surfaces the highest-priority incomplete mission from `LEARNING/research/index.jsonl` and the **flight board**.
 - **Local model gate** (when local inference is in scope): confirm the MLX server on `:8080` or run `forge_llm.py status`.
-- **Hydrate Layer 1**: `context/soul.md`, `context/user.md`, `context/memory.md`, and the boot digest.
+- **Hydrate Layer 1**: `context/soul.md`, `context/user.md`, `context/memory.md`, and the boot digest, including its **Predecessor Relay** (last handovers with vendor, established results with evidence pointers, open work, handoff notes). Cite established results; do not re-run them.
 - **Progressive disclosure (Layer 2)**: use `managing-sovereign-memory` (`disclose.py --tier 1|2`). Search `LEARNING/research/index.jsonl` first (it carries each mission's title, status, verdict, `hypothesis_brief` and tags) and open a manifest only when needed.
 - **Git and concurrency**: tree clean, on a `feat/*` branch, never on `main`. When other agents may be active, check `manage_coordination.py board`, then `checkout --create-worktree` an isolated worktree and lease your target files; `checkin` when done. Note: `checkout --mission <ID>` also marks that mission's manifest `IN_PROGRESS` (adding `assignee` and `worktree`) in the directory you ran it from, which leaves that tree dirty and conflicts with your own PR's version of the file; before pulling, discard it (`git checkout -- LEARNING/research/missions/<ID>.json`) or let the PR carry the final manifest.
 
@@ -47,6 +47,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 - **Verify**: run the test suites of every touched skill; the pre-commit cognitive gate must pass. Audits of plugin or skill structure come from the upstream APM authoring skills when a plugin changed.
 - **Pre-Completion Gate**: emit the gate defined verbatim in `AGENTS.md`: a capability check plus four numbered questions (failed or bypassed capability; guessed or corrected process; next-agent hazard; investment evaluation).
 - **Score**: `score_contribution.py` for the turn's cognitive value (0-3 per dimension). Score honestly; a negative result can still score high on learning and rigor.
+- **Hand off**: when you check your lease in, leave a note for the next agent, which may be another vendor: `manage_coordination.py checkin --mission <ID> --agent <you> --pr <N> --handoff "what you did, decisions, what NOT to redo, next step"` (shown in the next boot's Predecessor Relay).
 - **Record**: `chronicle_manager.py create` for a milestone entry; `capture_snapshot.py --type seal` for the session snapshot when a snapshot is required.
 - **Commit**: stage files explicitly (never `git add -A` when other agents share the repo), commit on the `feat/*` branch, open a PR. Merge to `main` only with human approval.
 
@@ -86,6 +87,7 @@ Note: the dataset accumulates. Records extracted from earlier repository layouts
 
 ## 5. Changelog
 
+- **v3.1.3 (2026-11-04)**: Predecessor Relay in the boot digest and `checkin --handoff` (MISSION-025).
 - **v3.1.2 (2026-11-03)**: Stage 1 notes that mission checkout edits the manifest in the main tree; Stage 5 gains the local-model release step; MLX server teardown and idle reaping hardened (MISSION-027).
 - **v3.1.1 (2026-11-03)**: `persist_soul.py` repaired and its known-gap note removed; `protocol_manager.py update` now edits the Status line in place.
 - **v3.1 (2026-11-03)**: Layer 2 corrected from the removed `wiki/` to `LEARNING/`; closure gate updated to the current form (capability check + 4 questions); added local-model gate, index-first retrieval, flight board and worktree isolation, Popperian execution discipline, cost accounting, mission recording and replenishment, working soul-persistence path, and invariants 5-8; removed the claimed sub-10 ms wakeup and three audit scripts that do not exist in the repository; declared this file the single source of truth for the lifecycle.

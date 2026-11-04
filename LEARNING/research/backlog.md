@@ -23,7 +23,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#2** | `MISSION-018` | **Offline Sovereign Agent Fast-Boot & Protocol 128 Local Verification via Apple MLX Engine** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
 | **#3** | `MISSION-019` | **On-Demand MLX Local Server Lifecycle Controller & Zero-Latency Agent Calling** | 5 | 4 | 0.05x | 1 | **400.0** | `RESOLVED` | `CONFIRMED` |
 | **#4** | `MISSION-031` | **Automated Blast-Radius & Projected Impact Analysis for Multi-Agent Worktree Concurrency** | 5 | 4 | 0.05x | 1 | **400.0** | `PROPOSED` | - |
-| **#5** | `MISSION-025` | **Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX)** | 5 | 5 | 0.05x | 2 | **250.0** | `PROPOSED` | - |
+| **#5** | `MISSION-025` | **Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX)** | 5 | 5 | 0.05x | 2 | **250.0** | `RESOLVED` | `FALSIFIED` |
 | **#6** | `MISSION-003` | **Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#7** | `MISSION-016` | **Cheapest-Viable Model Routing & Token-Return Optimization** | 5 | 4 | 0.1x | 1 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#8** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
@@ -45,11 +45,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#24** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
 | **#25** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
 | **#26** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#27** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#28** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#29** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#30** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#31** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#27** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#28** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#29** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#30** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#31** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#32** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -128,7 +129,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > An agent is able to check out a mission that silently conflicts with an active lease, manual --targets are still required at CLI checkout for registered missions, or collision detection overhead exceeds 500ms.
 
 ### MISSION-025: Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX) (Rank #5)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: macOS / Project Sanctuary Sovereign Memory Engine across AGY, Claude Code, Codex, and Apple MLX
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -137,6 +139,14 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Surfacing explicit cross-model relay telemetry and predecessor agent provenance in guardian_wakeup.py and START_HERE.md eliminates amnesiac re-derivation across heterogeneous frontier CLI agents (Google Gemini/AGY, Anthropic Claude Code, OpenAI Codex, and sovereign Apple MLX Qwen2.5), achieving >= 90% decision consistency across model handovers with 0 repetitive briefing turns.
 - **Falsification Gate**:
   > A successor agent from a different vendor contradicts an established architectural invariant, repeats a previously verified benchmark without citation, or requires human intervention to discover the preceding model's work.
+- **Empirical Evidence & Trials**:
+  * `2026-11-04T06:14:17.223817+00:00` [claude-code] (LEARNING/research/experiments/mission-025/README.md): Pre-registered A/B on 22 questions (14 from real ledgers, 8 from a synthetic Codex->Gemini->Claude handover chain), local Qwen2.5-Coder-7B as the incoming agent, temperature 0, same loop and tools in both conditions. Control (briefing without relay): 5/22 = 22.7% correct, median 5 turns, 2.5 tool calls per question. Treatment (Predecessor Relay in the briefing): 15/22 = 68.2% (+45.5 points), median 2 turns, 1.27 tool calls, 14.6 s vs 31.1 s per question. Pre-registered bar (>= 90% correct, zero tool calls on >= 90% of questions, no contradicting answers) not met, and the decision rule (treatment < 80% -> FALSIFIED) applies. All 7 treatment misses had the answer present in the relay: the agent ignored the briefing and dug with tools (4), copied a format placeholder (1), confused ids in one note (2). Relay size held (20 lines, 1,957 characters live; 3,245 worst case). Feature shipped: relay.py, guardian_wakeup integration, manage_coordination checkin --handoff, docs, 26 tests. Limits: one weak incoming agent, n=22, single run; frontier successors and handoff adoption untested.
+- **Lessons Learned & Epistemic Compounding**:
+  * Surfacing a predecessor relay in the boot briefing triples a 7B incoming agent's correctness and halves its discovery work, but does not by itself reach 90%: the weak agent often ignores the briefing and digs with tools; the answers were present every time.
+  * Measure the incoming agent's tool-call syntax before attributing control failures to missing information: a control run failed four turns in a row on <search_text>query</search_text>, a parse artifact that would have inflated the relay's value; the shared loop now accepts that form.
+  * A handoff note states the next step last, so a short display cap hides the most important part; show recent notes up to two thirds of the storage cap and keep the whole section under a fixed budget.
+  * Only 2 of 10 resolved missions cite a file path as evidence; the relay falls back to the experiment log or the mission manifest. Record-result callers should pass --citation with a path.
+  * Format placeholders in a question (VERDICT | path) can be copied literally by a small model; use a worked example or JSON in the answer format. Test frontier incoming agents and relay-first placement next (MISSION-032).
 
 ### MISSION-003: Offline Sovereign Model Quantization & Inference via Apple MLX & GGUF (Rank #6)
 - **Status**: `RESOLVED`
@@ -438,7 +448,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #27)
+### MISSION-032: Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency (Rank #27)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Claude Haiku 5.5 / Gemini 3.8 Flash via cli-agent as incoming agents; local Qwen2.5-Coder-7B via MLX for the placement arm
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`, `qwen2-7b-mlx-4bit`
+- **Hypothesis (Popperian Prediction)**:
+  > On fresh held-out handover questions (new seed, same generators), a frontier incoming agent (Claude Haiku 5.5 or Gemini 3.8 Flash) given the Predecessor Relay in its boot briefing answers >= 90% correctly with zero tool calls on >= 90% of questions, against <= 55% for the same agent without the relay; and placing the relay at the top of the briefing lifts the local 7B from 68.2% (MISSION-025) to >= 80%.
+- **Falsification Gate**:
+  > A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).
+
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #28)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -449,7 +470,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #28)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #29)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -460,7 +481,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #29)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #30)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -471,7 +492,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #30)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #31)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -482,7 +503,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #31)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #32)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

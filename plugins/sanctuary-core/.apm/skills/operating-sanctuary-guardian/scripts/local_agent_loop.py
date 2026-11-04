@@ -189,9 +189,29 @@ FINAL_RE = re.compile(r"<final_answer>([\s\S]*?)(?:</final_answer>|$)", re.IGNOR
 SCRATCH_RE = re.compile(r"<scratchpad>([\s\S]*?)</scratchpad>", re.IGNORECASE)
 
 
+TAG_TOOL_ARG = {"list_dir": "path", "read_file": "path", "find_files": "pattern", "search_text": "query"}
+TAG_CALL_RE = re.compile(r"<(list_dir|read_file|find_files|search_text)>\s*([\s\S]*?)\s*</\1>", re.IGNORECASE)
+
+
+def _tag_call(text: str) -> List[dict]:
+    """Accept the tag-per-tool form some models prefer: <search_text>query</search_text> (or a JSON object of arguments inside the tag)."""
+    m = TAG_CALL_RE.search(text)
+    if not m:
+        return []
+    name, body = m.group(1).lower(), m.group(2).strip()
+    if body.startswith("{"):
+        try:
+            args = json.loads(body)
+        except json.JSONDecodeError:
+            return []
+        return [{"name": name, "arguments": args}] if isinstance(args, dict) else []
+    return [{"name": name, "arguments": {TAG_TOOL_ARG[name]: body}}] if body else []
+
+
 def extract_calls(text: str) -> List[dict]:
     """Tool calls from a reply. Falls back to scanning for bare JSON objects because the MLX
-    server strips the special ``<tool_call>`` token, leaving e.g. '<{"name": ..., "arguments": {...}}'."""
+    server strips the special ``<tool_call>`` token, leaving e.g. '<{"name": ..., "arguments": {...}}';
+    then to the tag-per-tool form `<search_text>query</search_text>`."""
     calls = parse_tool_calls_from_text(text)
     if calls:
         return calls
@@ -203,7 +223,7 @@ def extract_calls(text: str) -> List[dict]:
             continue
         if isinstance(obj, dict) and isinstance(obj.get("name"), str) and isinstance(obj.get("arguments", {}), dict):
             return [{"name": obj["name"], "arguments": obj.get("arguments", {})}]
-    return []
+    return _tag_call(text)
 
 
 @dataclass
@@ -272,7 +292,8 @@ def run_agent(task: str, sandbox: ReadOnlySandbox, chat_fn: Optional[Callable[[L
         messages.append({"role": "assistant", "content": text})
         if not calls:
             res.malformed_replies += 1
-            obs = "ERROR: reply with exactly one <tool_call>{...}</tool_call> or a <final_answer>...</final_answer>."
+            obs = ("ERROR: reply with exactly one <tool_call>{...}</tool_call> or a <final_answer>...</final_answer>. Example: "
+                   '<tool_call>{"name": "search_text", "arguments": {"query": "MISSION-021", "path": "LEARNING/research/missions"}}</tool_call>')
         else:
             name, args = calls[0]["name"], calls[0]["arguments"]
             key = (name, json.dumps(args, sort_keys=True))
