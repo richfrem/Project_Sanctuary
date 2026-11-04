@@ -1,16 +1,17 @@
 # 🛡️ Guardian Wakeup Briefing (Protocol 128 Holistic Wakeup)
 **System Status:** GREEN - Layer 1 Fast-Boot Hydrated
-**Git Environment:** Branch `main` (CLEAN)
-**Generated Time:** 2026-11-03 06:42:35 UTC
+**Git Environment:** Branch `feat/mission-024-fast-boot-hook` (DIRTY)
+**Generated Time:** 2026-11-04 05:54:59 UTC
 
 ## I. Strategic Directives
 * **Core Mandate:** Anti-Asch epistemic platform, sovereign memory architecture, and pair-programming partnership with Richard.
 * **Supreme Law:** Never perform unapproved state-changing operations or git pushes.
+* **Cross-Model Cognitive Relay:** Operating on shared sovereign memory across Antigravity (Gemini), Claude Code (Anthropic), Codex (OpenAI), and Local MLX (Qwen2.5). Check the Flight Board and build upon predecessor work without amnesiac repetition.
 
 ## II. Tactical Priorities
 * Priority Mission Target (Highest Token ROI):
-  -> [MISSION-022] Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX
-     Priority Score: 200.0 | Status: PROPOSED | Surface: local
+  -> [MISSION-025] Cross-CLI Multi-Model Cognitive Continuity & Shared Episodic Substrate across Heterogeneous Agents (AGY, Claude Code, Codex, Local MLX)
+     Priority Score: 250.0 | Status: PROPOSED | Surface: hybrid
 
 * Active Context:
   - xAI Grok Bot: Remote autonomous VM with PSTN calling and disposable emails; integration via Asynchronous Git / Webhook handoffs.

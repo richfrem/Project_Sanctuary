@@ -1,11 +1,11 @@
 {
   "id": "MISSION-024",
   "title": "Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "macOS / APM Lifecycle Hooks (SessionStart) for Claude Code, Codex & AGY",
   "created_at": "2026-11-03T06:45:00Z",
-  "updated_at": "2026-11-03T06:45:00Z",
+  "updated_at": "2026-11-04T05:55:30.451893+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Escalate to frontier model only if cross-platform lifecycle hook specification requires multi-agent orchestration"
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -39,6 +39,15 @@
     "zero-turn-hydration",
     "apm"
   ],
-  "evidence": [],
-  "lessons_learned": []
+  "evidence": [
+    {
+      "timestamp": "2026-11-04T05:55:30.451893+00:00",
+      "agent": "antigravity",
+      "citation": "LEARNING/research/experiments/mission-024/test_session_start_hook.py",
+      "details": "Configured APM SessionStart lifecycle hook in plugins/sanctuary-core/.apm/hooks/hooks.json calling session_start_wakeup.py. Tested 5/5 test suite passing in 2.27s: schema valid, context guard exits 0 silently outside repo context, .agent/learning/guardian_boot_digest.md persisted reliably, valid Claude Code hookSpecificOutput JSON emitted with additionalContext, and empirical latency averaged 544.6ms (555.2ms, 588.2ms, 490.4ms), safely under the 1,500ms falsification ceiling."
+    }
+  ],
+  "lessons_learned": [
+    "In-process bootloader execution eliminates secondary python interpreter spawn overhead. Traversal for project root must anchor on current working directory or harness env vars rather than hook file location to respect isolated context guards."
+  ]
 }

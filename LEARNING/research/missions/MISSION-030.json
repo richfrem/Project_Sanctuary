@@ -1,0 +1,45 @@
+{
+  "id": "MISSION-030",
+  "title": "Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "macOS / APM Lifecycle Hooks (PreCompact) for Claude Code, Codex & AGY",
+  "created_at": "2026-11-04T05:55:00Z",
+  "updated_at": "2026-11-04T05:55:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "priority_score": 160.0
+  },
+  "hypothesis": "Configuring an APM PreCompact lifecycle hook (.apm/hooks/hooks.json) that triggers automatically prior to context compaction captures uncommitted scratch conclusions, extracts session friction, and persists a provisional memory snapshot to Layer 2/3 before context amnesia occurs, preserving continuity with under 2,500ms execution latency.",
+  "falsification_criteria": "A context compaction event occurs without invoking the hook, the hook fails to record an uncommitted session trace to memory, or execution latency exceeds 2,500ms.",
+  "baseline_evidence": "MISSION-024 established deterministic SessionStart lifecycle hooks in plugins/sanctuary-core/.apm/hooks/hooks.json with 544.6ms average startup latency and reliable Layer 1 hydration.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.05,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to frontier model only if cross-platform lifecycle hook specification requires multi-agent orchestration."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "lifecycle-hooks",
+    "pre-compact",
+    "memory-preservation",
+    "protocol-128",
+    "context-continuity",
+    "spawned-by-mission-024"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "priority_score": 160.0
+}
