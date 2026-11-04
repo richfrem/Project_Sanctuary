@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-04T06:39:56.221287+00:00",
-  "total_assessments": 13,
-  "cumulative_score": 186,
-  "average_fitness": 0.954,
+  "updated_at": "2026-11-04T14:27:44.721250+00:00",
+  "total_assessments": 14,
+  "cumulative_score": 197,
+  "average_fitness": 0.938,
   "dimension_totals": {
-    "useful_outcome": 37,
-    "learning_depth": 39,
-    "verification_rigor": 39,
-    "token_economy": 32,
-    "anti_asch_integrity": 39
+    "useful_outcome": 39,
+    "learning_depth": 42,
+    "verification_rigor": 41,
+    "token_economy": 33,
+    "anti_asch_integrity": 42
   },
   "agents": {
     "astra": {
@@ -36,9 +36,23 @@
       "assessments": 2,
       "cumulative_score": 30,
       "average_fitness": 1.0
+    },
+    "claude-code": {
+      "assessments": 1,
+      "cumulative_score": 11,
+      "average_fitness": 0.733
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "7ed063d9-ff30-4014-8de8-e418939f53a3",
+      "timestamp": "2026-11-04T14:27:44.720537+00:00",
+      "task_id": "MISSION-035-draft",
+      "agent_id": "claude-code",
+      "raw_score": 11,
+      "fitness": 0.733,
+      "notes": "Drafted from live probes of every backend; cost: 18k-token codex misprobe and near-redeem via blind TUI keystrokes; PR left unmerged until prompted"
+    },
     {
       "assessment_id": "0f0c820a-d872-4ad4-8dc7-ac26d9f24e84",
       "timestamp": "2026-11-04T06:39:56.220619+00:00",

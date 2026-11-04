@@ -51,8 +51,9 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#30** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#31** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
 | **#32** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#33** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#34** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#33** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `PROPOSED` | - |
+| **#34** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#35** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -525,7 +526,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #33)
+### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #33)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`, `codex`
+- **Hypothesis (Popperian Prediction)**:
+  > A deterministic usage probe run by the orchestrator (not self-reported by the worker model) that snapshots each backend's own usage surfaces before and after every mission, and stores the delta with the task class, model and outcome in the evaluating-agent-work ledger, yields: (a) measurable per-task token deltas for >= 3 of the 4 backends (claude, codex, agy, local) agreeing within +/-10% with the vendor's own session totals; (b) where a backend exposes quota-window state (e.g. a 5-hour and a weekly window), a before/after window-percent reading that is flagged as noisy whenever other sessions were active; (c) after >= 12 recorded tasks, a cost-per-task-class predictor whose mean absolute percentage error on held-out tasks is <= 30% and at least 20% lower than the current static token estimates in track_budget.py; and (d) a model-assignment recommendation (which backend/model for which task class under the remaining window budget) that the orchestrator can query before dispatch, with zero credentials, auth tokens or prompt contents written to any tracked file.
+- **Falsification Gate**:
+  > Fewer than 3 backends yield a measurable per-task delta; any delta deviates > 10% from the vendor-reported session total; the held-out MAPE is > 30% or not >= 20% better than the static estimates; a quota-window reading cannot be attributed (other sessions' usage swamps the mission's own delta) and no mitigation restores attribution; any auth token, API key or prompt text appears in a tracked file or log; the probe reaches Copilot (a corporate account the cli-agent skill marks work-only) without explicit per-run human approval and usage-query-only scope; or obtaining a backend's quota state requires scraping an undocumented private endpoint or violating its terms (then record that backend as unmeasurable, not hacked). If worker self-report proves as accurate as orchestrator measurement, the measured path is not justified and the result is recorded as such.
+
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #34)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -536,7 +548,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #34)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #35)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

@@ -1,0 +1,93 @@
+{
+  "id": "MISSION-035",
+  "title": "Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill",
+  "created_at": "2026-11-04T08:30:00Z",
+  "updated_at": "2026-11-04T08:30:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.5,
+    "operational_friction": 3,
+    "priority_score": 13.33
+  },
+  "hypothesis": "A deterministic usage probe run by the orchestrator (not self-reported by the worker model) that snapshots each backend's own usage surfaces before and after every mission, and stores the delta with the task class, model and outcome in the evaluating-agent-work ledger, yields: (a) measurable per-task token deltas for >= 3 of the 4 backends (claude, codex, agy, local) agreeing within +/-10% with the vendor's own session totals; (b) where a backend exposes quota-window state (e.g. a 5-hour and a weekly window), a before/after window-percent reading that is flagged as noisy whenever other sessions were active; (c) after >= 12 recorded tasks, a cost-per-task-class predictor whose mean absolute percentage error on held-out tasks is <= 30% and at least 20% lower than the current static token estimates in track_budget.py; and (d) a model-assignment recommendation (which backend/model for which task class under the remaining window budget) that the orchestrator can query before dispatch, with zero credentials, auth tokens or prompt contents written to any tracked file.",
+  "falsification_criteria": "Fewer than 3 backends yield a measurable per-task delta; any delta deviates > 10% from the vendor-reported session total; the held-out MAPE is > 30% or not >= 20% better than the static estimates; a quota-window reading cannot be attributed (other sessions' usage swamps the mission's own delta) and no mitigation restores attribution; any auth token, API key or prompt text appears in a tracked file or log; the probe reaches Copilot (a corporate account the cli-agent skill marks work-only) without explicit per-run human approval and usage-query-only scope; or obtaining a backend's quota state requires scraping an undocumented private endpoint or violating its terms (then record that backend as unmeasurable, not hacked). If worker self-report proves as accurate as orchestrator measurement, the measured path is not justified and the result is recorded as such.",
+  "phases": [
+    "P1 Verify and extend discovery (largely pre-answered, so confirm rather than assume): re-run the zero-token probes (`agy -p /usage --output-format json`, `claude -p /usage`) and assert they cost 0 tokens each time; parse them into the common schema; check `codex doctor`, `codex debug` and `codex agents` for a free usage surface, and confirm which codex rollout field is freshest and how stale rate_limits can be; discover whether claude's usage view exposes per-model tokens headlessly or only interactively; probe copilot only under the human-approved exception. Pre-register a per-backend prediction (measurable yes/no, source, cost of the probe) before running.",
+    "P2 Build usage_probe.py in evaluating-agent-work: snapshot/diff per backend with a common schema (backend, model, tokens in/out/cached/reasoning, window percents and reset times where available, source, timestamp, concurrent-session flag); read only the named fields (never auth.json or credentials); redaction test; write to a gitignored raw store plus an aggregate committed ledger.",
+    "P3 Attribution: separate the mission's own tokens (from its session transcript or headless output, primary signal) from window-percent deltas (secondary, shared with every other session on the account); define the concurrent-activity flag and a minimum-delta rule; validate against synthetic and real runs.",
+    "P4 Wire into the mission cycle: the orchestrator (human-run today, MISSION-033's orchestrator later) calls snapshot before dispatch and after completion; extend track_budget.py record to ingest measured deltas with source=measured versus estimated, task class and outcome; the existing score_contribution token-economy dimension reads measured cost when present.",
+    "P5 Pilot and learn: run >= 12 small real tasks across the 4 backends (bounded, cheap, spanning at least 3 task classes), record deltas, fit the per-class predictor with a train/held-out split, and compare against static estimates; the Copilot probe runs once, only with explicit human approval and no repo content.",
+    "P6 Recommender and docs: add a `recommend --task-class X --budget-remaining` query returning ranked backend/model with evidence counts and confidence, never overriding the human or the fallback-chain rules; update token-budget-profiles.md, cli-agent routing guidance and the flight-board reference; record the verdict with per-backend measurability table."
+  ],
+  "design_constraints": [
+    "Measured over self-reported: a model cannot see its own account quota; the orchestrator queries the vendor surfaces deterministically before and after. Worker self-report is recorded only as a comparison arm.",
+    "Secret hygiene: never read, copy or log auth files (e.g. ~/.codex/auth.json), API keys or tokens; the probe reads named usage fields only; a test greps the ledger and logs for credential patterns.",
+    "Corporate boundary: Copilot is work-only in the cli-agent skill. It is excluded by default; a Copilot usage probe needs explicit per-run human approval, sends no repo or mission content (usage query only), and is dropped if the human declines. Copilot results never feed Sanctuary routing decisions for sovereign research.",
+    "Attribution honesty: window percentages are account-wide; any reading taken while another session was active is flagged noisy and excluded from the predictor unless the mission's own token count corroborates it.",
+    "Supported interfaces only: no scraping of private endpoints or reverse-engineering of undocumented APIs; a backend with no supported usage surface is recorded as unmeasurable.",
+    "Cheap to run: pilot tasks are small and bounded (token_budget declared per task); the pilot must not exhaust the user's weekly windows; stop and report if any window passes 80%.",
+    "Single source of truth: extend track_budget.py and score_contribution.py rather than adding a parallel ledger.",
+    "Human Gate: the human approves the Copilot exception, the pilot budget, and any change to routing defaults; the recommender only advises.",
+    "The probe itself must be free: the claude and agy usage queries are verified 0-token commands and a test asserts it; never probe a backend with a prompt that goes to the model (the codex /status attempt spent 18,369 tokens, so a codex probe reads rollout files, not the model).",
+    "Dispatch guard: the recommender must treat a window below a floor (for example agy Gemini weekly at 12% remaining) as a hard constraint when assigning work, and report which backends are currently constrained.",
+    "Freshness: a usage source is admissible for before/after deltas only if its staleness is measured and below the mission's duration; delayed or relative-unit dashboards (the codex Usage tab, up to 6 hours late) are recorded as trend context, never as delta sources.",
+    "Read-only TUI driving: if a probe must drive an interactive TUI (codex /usage), it navigates only by reading the screen first, sends no digit or Enter that could select an action (model change, reset redemption, billing), aborts on any confirmation dialog, and a test asserts the codex config and credits are unchanged afterwards; prefer a supported non-interactive surface wherever one exists."
+  ],
+  "baseline_evidence": "track_budget.py today holds 221,249 tokens across 6 tasks, all hand-entered estimates (--tokens-est), with no before/after measurement and no quota-window data. Probed 2026-11-04 (human screenshots + headless runs): (1) agy: `agy -p \"/usage\" [--output-format json]` returns quota groups with weekly and five-hour remaining percent and reset timestamps (Gemini models weekly 12% remaining, Claude and GPT models via agy 50%, Gemini 4 Argon 97%) at 0 tokens (num_turns 0, usage.total_tokens 0); the Gemini weekly window being 12% remaining is already a live dispatch constraint. (2) claude: `claude -p \"/usage\"` returns current-session (5-hour) and weekly percent used with reset times at total_cost_usd 0; the interactive /usage view adds per-model session tokens and cost (this session: $29.55, sonnet-5-5 4.0k in / 592.9k out / 175.5m cache read / 1.5m cache write); the usage breakdown is approximate and covers this machine only, while the window percentages are account-wide. (3) codex: the interactive Usage view (Plus plan: lifetime tokens 1.9B, token activity heatmap, per-day and per-skill stats, tabs Overview/Usage/Messages/Plugins/Skills/Chats) exists, and its Usage tab (7d/30d, by day and by feature) is labelled relative units, approximate, may be delayed up to 6 hours, with the peak day normalised to 100 (so it is unusable for before/after deltas); no headless command for it was found among `codex --help` subcommands (doctor, debug, agents are candidates to check in P1); rollout files in ~/.codex/sessions carry rate_limits (primary 300-minute, secondary 10080-minute used_percent) and total_token_usage; `/status` is NOT a slash command under `codex exec` (it was sent to the model and cost 18,369 tokens), so codex must be read from rollouts, and this install currently fails to spawn its code-mode host (missing codex-code-mode-host binary), a separate defect. (4) copilot: exposes --usage-output-file; its billing command was not reachable non-interactively; unprobed and gated. (5) local MLX: the response usage field; no quota. The mission-cycle model_routing field is still a static judgment with no measured cost-per-task-class behind it. Interactive-TUI findings 2026-11-04: codex `/usage` opens a menu (View analytics, Redeem reset) and `codex` can be driven over a pty with no tmux, but the menus use digit keys as selections, so blind keystrokes can trigger state changes (a blind '2','3' sequence reached the 'Use this reset?' confirmation, backed out unconfirmed); codex also holds consumable free usage-limit resets (3 available, expiring 6 Nov, 30 Nov, 1 Dec) that are themselves a budget resource. Copilot's Current tab shows plan usage in AI credits (AIC: 2,388 / 6,000, 39% used) and a per-session AIC counter, and `copilot --usage-output-file` writes final usage JSON. Codex /usage > View analytics (read-only, screen-guarded) tab 6 Chats lists per-chat Weekly % and 5-hour % of the limit (estimates, 'may exceed 100%', recent activity may be delayed; e.g. one chat 30.3% weekly / 193.9% 5-hour), i.e. a per-task attribution signal that complements window snapshots; Messages tab (per model) and Skills tab report 'Updated Nov 3 11:35 PM UTC', confirming staleness of the dashboard views.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.5,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "codex"
+    ],
+    "frontier_escalation_condition": "P3 attribution design and P6 recommender statistics need a frontier model; P1 discovery and P2 plumbing are cheap-tier work. The pilot deliberately spans backends, so its worker assignment follows the experiment design, not cost."
+  },
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "token-telemetry",
+    "quota-windows",
+    "model-routing",
+    "evaluating-agent-work",
+    "cli-agent",
+    "cost-attribution",
+    "measured-vs-estimated",
+    "multi-vendor",
+    "protocol-128"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "upstream_skill_dependencies": [
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/cli-agent",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work"
+  ],
+  "reference_doctrines": [
+    "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/token-budget-profiles.md",
+    "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/SKILL.md"
+  ],
+  "priority_score": 13.33,
+  "related_missions": {
+    "MISSION-033": "CONSUMER: the single-orchestrator mission calls snapshot before dispatch and after completion and uses recommend for worker assignment; this mission can run first (human as orchestrator) and makes 033's token-overhead and cost claims measurable.",
+    "MISSION-031": "Uses its projected_impact and suggest to choose independent missions; telemetry attaches to the lease lifecycle (checkout/checkin) rather than a new mechanism."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-035/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/token-budget-profiles.md",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/SKILL.md"
+    ],
+    "resources": [],
+    "basis": "Declared 2026-11-04 at creation by claude-code from the phases; refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}
