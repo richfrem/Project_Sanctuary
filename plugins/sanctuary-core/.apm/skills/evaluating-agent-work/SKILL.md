@@ -76,5 +76,6 @@ python3 tests/test_evaluating_agent_work.py
 ## References
 
 - [Evaluation Rubric](references/evaluation-rubric.md) — Detailed anchor criteria and anti-slop guidelines.
-- [Token Budget Profiles](references/token-budget-profiles.md) — Real-world subscription boundaries.
+- [Token Budget Profiles](references/token-budget-profiles.md) — Real-world subscription boundaries (static estimates; measured data supersedes them).
+- [Usage Telemetry](references/usage-telemetry-sources.md) — Fuel gauge (5-hour/weekly windows) and measured efficiency per model, collected at every real mission checkout/checkin (`scripts/usage_probe.py`).
 - [Reinforcement Learning Analogy](references/reinforcement-learning-analogy.md) — AlphaGo MCTS analogy and cognitive value policies.

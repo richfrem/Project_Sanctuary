@@ -258,3 +258,6 @@ START_HERE.local.md
 
 # APM dependencies
 apm_modules/
+
+# Ephemeral usage snapshot cache (MISSION-035), read by the boot briefing
+.agent/learning/usage_latest.json

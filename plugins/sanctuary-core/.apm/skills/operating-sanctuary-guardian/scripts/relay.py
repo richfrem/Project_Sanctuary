@@ -87,8 +87,22 @@ def build_relay(root: Path, handovers: int = 5, results: int = 10) -> Dict[str, 
     index = _read_jsonl(root / "LEARNING/research/index.jsonl")
     open_ = sorted([x for x in index if x.get("status") != "RESOLVED"], key=lambda x: -float(x.get("priority_score") or 0))[:3]
     inbox = len(_read_jsonl(root / "LEARNING/research/inbox.jsonl"))
-    return {"handovers": recent, "established": established, "dispatchable": _dispatchable(root),
+    return {"handovers": recent, "established": established, "dispatchable": _dispatchable(root), "fuel": _fuel(root),
             "open": [{"id": x["id"], "score": x.get("priority_score"), "status": x.get("status")} for x in open_], "inbox_items": inbox}
+
+
+def _fuel(root: Path) -> Optional[Dict[str, Any]]:
+    """Fuel gauge from the cached usage snapshot (no CLI calls at boot); None when absent or older than 6 hours."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import usage_hook
+        snap = usage_hook.load_latest(Path(root))
+        mod = usage_hook._probe()
+        if not snap or mod is None:
+            return None
+        return {"as_of": snap.get("timestamp", "?")[:16].replace("T", " "), "gauges": mod.headroom_report(snap)}
+    except Exception:
+        return None
 
 
 def _dispatchable(root: Path, count: int = 3) -> List[str]:
@@ -117,6 +131,15 @@ def render_markdown(relay: Dict[str, Any]) -> str:  # relay: the dict from build
     if relay["open"]:
         top = "; ".join(f"{o['id']} ({o['score']}, {o['status']})" for o in relay["open"])
         lines.append(f"* **Open work by priority:** {top} | captured ideas in inbox: {relay['inbox_items']}")
+    fuel = relay.get("fuel")
+    if fuel:
+        gauges = " · ".join(f"{g['backend']} {'?' if g['tightest_remaining_pct'] is None else str(int(g['tightest_remaining_pct'])) + '%'}"
+                            + (" LOW" if g["constrained"] else "") for g in fuel["gauges"])
+        low = [g["backend"] for g in fuel["gauges"] if g["constrained"]]
+        hint = f" | LOW ({', '.join(low)}): prefer other backends" if low else ""
+        lines.append(f"* **Fuel gauge** (tightest window left, {fuel['as_of']}; `usage_probe.py headroom`): {gauges}{hint}")
+    else:
+        lines.append("* **Fuel gauge:** no reading under 6 h old; run `usage_probe.py headroom` (evaluating-agent-work) before dispatching")
     if relay.get("dispatchable"):
         lines.append("* **Dispatchable in parallel now (disjoint from active leases and each other; `manage_coordination.py suggest`):** " + ", ".join(relay["dispatchable"]))
     lines.append("* **When you finish:** `manage_coordination.py checkin --mission <ID> --agent <you> --handoff \"what you did, decisions, what NOT to redo, next step (keep it under about 400 characters)\"`")
