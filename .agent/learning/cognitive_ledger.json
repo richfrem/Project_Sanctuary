@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-04T14:27:44.721250+00:00",
-  "total_assessments": 14,
-  "cumulative_score": 197,
-  "average_fitness": 0.938,
+  "updated_at": "2026-11-04T15:12:18.548802+00:00",
+  "total_assessments": 15,
+  "cumulative_score": 210,
+  "average_fitness": 0.933,
   "dimension_totals": {
-    "useful_outcome": 39,
-    "learning_depth": 42,
-    "verification_rigor": 41,
-    "token_economy": 33,
-    "anti_asch_integrity": 42
+    "useful_outcome": 41,
+    "learning_depth": 45,
+    "verification_rigor": 44,
+    "token_economy": 35,
+    "anti_asch_integrity": 45
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 1,
-      "cumulative_score": 11,
-      "average_fitness": 0.733
+      "assessments": 2,
+      "cumulative_score": 24,
+      "average_fitness": 0.8
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "b40ae69d-b43e-461f-8669-2954e0beab39",
+      "timestamp": "2026-11-04T15:12:18.548003+00:00",
+      "task_id": "MISSION-035-build",
+      "agent_id": "claude-code",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Built probe, hooks, gauge and cost fields with pre-registration, real fixtures and 179 tests; outcome claims await real-mission data; test-suite slowness incident found and fixed"
+    },
     {
       "assessment_id": "7ed063d9-ff30-4014-8de8-e418939f53a3",
       "timestamp": "2026-11-04T14:27:44.720537+00:00",

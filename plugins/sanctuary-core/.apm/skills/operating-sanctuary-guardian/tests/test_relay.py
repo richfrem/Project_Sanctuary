@@ -105,7 +105,7 @@ def test_open_work_and_inbox(project):
 
 def test_empty_project(tmp_path):
     r = relay.build_relay(tmp_path)
-    assert r == {"handovers": [], "established": [], "open": [], "inbox_items": 0, "dispatchable": []}
+    assert r == {"handovers": [], "established": [], "open": [], "inbox_items": 0, "dispatchable": [], "fuel": None}
     assert "When you finish" in relay.render_markdown(r)
 
 
@@ -116,8 +116,12 @@ def test_render_budget(project):
     r["established"] = [{"id": f"MISSION-0{i:02d}", "verdict": "CORROBORATED", "pointer": f"LEARNING/research/experiments/mission-0{i:02d}/README.md"}
                         for i in range(10)]
     r["dispatchable"] = ["MISSION-031", "MISSION-023", "MISSION-030"]
+    for fuel in (None, {"as_of": "2026-11-04 10:00", "gauges": [{"backend": b, "tightest_remaining_pct": 9.0, "constrained": True} for b in ("claude", "agy", "codex")]}):
+        r["fuel"] = fuel
+        text = relay.render_markdown(r)
+        assert len(text.splitlines()) <= 40 and len(text) <= 3700, (fuel is not None, len(text.splitlines()), len(text))
     text = relay.render_markdown(r)
-    assert len(text.splitlines()) <= 40 and len(text) <= 3500, (len(text.splitlines()), len(text))
+    assert len(text.splitlines()) <= 40 and len(text) <= 3700, (len(text.splitlines()), len(text))
     assert "no handoff note" in relay.render_markdown(relay.build_relay(project))
 
 

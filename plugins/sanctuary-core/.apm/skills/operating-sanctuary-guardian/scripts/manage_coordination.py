@@ -28,6 +28,7 @@ from typing import Optional, Dict, List, Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import impact  # noqa: E402  (projected impact and overlap analysis, MISSION-031)
+import usage_hook  # noqa: E402  (measured usage telemetry at checkout/checkin, MISSION-035)
 
 
 def get_project_root() -> Path:
@@ -113,7 +114,7 @@ def check_conflicts(active_leases: List[Dict[str, Any]], targets: List[str],
 def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] = None,
              resources: Optional[List[str]] = None, worktree: Optional[str] = None,
              ttl_minutes: int = 60, force: bool = False, create_worktree: bool = False,
-             allow_unlocked: bool = False) -> Dict[str, Any]:
+             allow_unlocked: bool = False, no_usage: bool = False) -> Dict[str, Any]:
     """Check out a mission, register locks on flight board, and optionally create worktree.
 
     Locks come from the mission manifest's `projected_impact` (paths and resources) plus any manual --targets/--resources. A mission with
@@ -178,12 +179,17 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
         "expires_at": expires_at,
         "ttl_minutes": ttl_minutes
     }
+    usage_start = usage_hook.start_snapshot(no_usage)
+    if usage_start:
+        lease_record["usage_start"] = usage_start
+        usage_hook.save_latest(root, usage_start)
     active_leases.append(lease_record)
     board["leases"] = active_leases
     save_board(root, board)
 
     # Append to immutable event log
     event = dict(lease_record)
+    event.pop("usage_start", None)  # keep the append-only log small; the snapshot lives on the lease until checkin
     event["event_type"] = "CHECKOUT"
     append_lease_event(root, event)
 
@@ -214,6 +220,7 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
         "exclusive_resources": resources,
         "impact_source": impact_source,
         "regenerate_after_merge": list(impact.SHARED_GENERATED),
+        "usage_headroom_warnings": usage_hook.headroom_warnings(usage_start, agent),
         "expires_at": datetime.fromtimestamp(expires_at, timezone.utc).isoformat()
     }
 
@@ -230,7 +237,9 @@ def normalize_handoff(text: Optional[str]) -> Optional[str]:
 
 
 def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
-            pr: Optional[int] = None, clean_worktree: bool = False, handoff: Optional[str] = None) -> Dict[str, Any]:
+            pr: Optional[int] = None, clean_worktree: bool = False, handoff: Optional[str] = None,
+            task_class: str = "mission", tokens: Optional[int] = None, quality: Optional[int] = None,
+            retries: int = 0, no_usage: bool = False, model: Optional[str] = None) -> Dict[str, Any]:
     """Check in a mission, release locks, and optionally tear down git worktree.
 
     `handoff` is an optional note for the successor (what was done, decisions, what NOT to redo, next step). It is stored on the CHECKIN
@@ -255,6 +264,10 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
     note = normalize_handoff(handoff)
     if note:
         event["handoff"] = note
+    usage = usage_hook.finish(root, matching_leases[0] if matching_leases else {}, mission, agent, task_class=task_class,
+                              tokens=tokens, quality=quality, retries=retries, no_usage=no_usage, model=model)
+    if usage:
+        event["usage"] = usage
     append_lease_event(root, event)
 
     if clean_worktree and matching_leases:
@@ -271,7 +284,8 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
         "agent": agent,
         "released_locks": matching_leases[0].get("locked_targets", []) if matching_leases else [],
         "pr_number": pr,
-        "handoff": note
+        "handoff": note,
+        "usage": usage
     }
 
 
@@ -441,6 +455,7 @@ def main():
     p_co.add_argument("--create-worktree", action="store_true", help="Automatically create git worktree")
     p_co.add_argument("--ttl", type=int, default=60, help="Lease time-to-live in minutes")
     p_co.add_argument("--force", action="store_true", help="Force checkout despite target conflicts")
+    p_co.add_argument("--no-usage", action="store_true", help="Skip the zero-token usage snapshot stored on the lease")
     p_co.add_argument("--allow-unlocked", action="store_true", help="Allow a lease with no declared impact and no --targets (it protects nobody)")
     p_co.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
 
@@ -450,6 +465,12 @@ def main():
     p_ci.add_argument("--agent", required=True, help="Agent identifier")
     p_ci.add_argument("--status", default="COMPLETED", choices=["COMPLETED", "CANCELLED", "ABANDONED"])
     p_ci.add_argument("--pr", type=int, help="Merged PR number")
+    p_ci.add_argument("--task-class", default="mission", help="Task class for measured-usage records (e.g. mission, drafting, refactor, review)")
+    p_ci.add_argument("--tokens", type=int, help="Vendor-reported tokens used (required to record non-claude agents)")
+    p_ci.add_argument("--quality", type=int, choices=[0, 1, 2, 3], help="Outcome quality 0-3 (e.g. from score_contribution)")
+    p_ci.add_argument("--retries", type=int, default=0, help="Retries or restarts needed")
+    p_ci.add_argument("--model", help="Model used (enables dollar cost when its price is in references/model-prices.json)")
+    p_ci.add_argument("--no-usage", action="store_true", help="Skip the usage snapshot and measured record")
     p_ci.add_argument("--handoff", help="Note for the successor agent: what you did, decisions, what NOT to redo, next step")
     p_ci.add_argument("--clean-worktree", action="store_true", help="Remove git worktree directory")
     p_ci.add_argument("--format", choices=["text", "json"], default="text", help="Output format")
@@ -493,7 +514,8 @@ def main():
         resources = [r.strip() for r in args.resources.split(",")] if args.resources else []
         res = checkout(root, args.mission, args.agent, targets=targets, resources=resources,
                        worktree=args.worktree, ttl_minutes=args.ttl, force=args.force,
-                       create_worktree=args.create_worktree, allow_unlocked=args.allow_unlocked)
+                       create_worktree=args.create_worktree, allow_unlocked=args.allow_unlocked,
+                       no_usage=args.no_usage)
         if args.format == "json":
             print(json.dumps(res, indent=2))
         else:
@@ -546,7 +568,9 @@ def main():
 
     elif args.subcommand == "checkin":
         res = checkin(root, args.mission, args.agent, status=args.status, pr=args.pr,
-                      clean_worktree=args.clean_worktree, handoff=args.handoff)
+                      clean_worktree=args.clean_worktree, handoff=args.handoff, task_class=args.task_class,
+                      tokens=args.tokens, quality=args.quality, retries=args.retries, no_usage=args.no_usage,
+                      model=args.model)
         if args.format == "json":
             print(json.dumps(res, indent=2))
         else:

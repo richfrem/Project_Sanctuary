@@ -125,6 +125,18 @@ def main():
     record_parser.add_argument("--tokens-est", type=int, required=True, help="Estimated or reported tokens used")
     record_parser.add_argument("--turns", type=int, default=1, help="Turns consumed")
     record_parser.add_argument("--summary", default="", help="Task turn summary")
+    record_parser.add_argument("--source", choices=["estimated", "measured"], default="estimated",
+                               help="measured = taken from the vendor's own usage output (MISSION-035)")
+    record_parser.add_argument("--task-class", default="", help="Task class for the cost predictor (e.g. summarize, edit, review)")
+    record_parser.add_argument("--outcome", default="", help="Outcome label (ok, failed, partial)")
+    record_parser.add_argument("--tokens-in", type=int, default=None, help="Measured input tokens")
+    record_parser.add_argument("--tokens-out", type=int, default=None, help="Measured output tokens")
+    record_parser.add_argument("--window-delta", default="", help="JSON of window-percent deltas from usage_probe diff")
+    record_parser.add_argument("--cost-usd", type=float, default=None, help="Dollar cost when the model price is known (never guessed)")
+    record_parser.add_argument("--wall-seconds", type=int, default=None, help="Wall-clock seconds the task took")
+    record_parser.add_argument("--retries", type=int, default=None, help="Retries or restarts needed")
+    record_parser.add_argument("--quality", type=int, choices=[0, 1, 2, 3], default=None, help="Outcome quality 0-3")
+    record_parser.add_argument("--concurrent", action="store_true", help="Other sessions were active; window deltas are noisy")
     record_parser.add_argument("--format", choices=["text", "json"], default="text")
 
     # Check
@@ -165,6 +177,28 @@ def main():
             "turns": args.turns,
             "summary": args.summary
         }
+        if args.source == "measured" or args.task_class:
+            record_entry["source"] = args.source
+            if args.task_class:
+                record_entry["task_class"] = args.task_class
+            if args.outcome:
+                record_entry["outcome"] = args.outcome
+            if args.tokens_in is not None:
+                record_entry["tokens_in"] = args.tokens_in
+            if args.tokens_out is not None:
+                record_entry["tokens_out"] = args.tokens_out
+            if args.window_delta:
+                record_entry["window_delta"] = json.loads(args.window_delta)
+            if args.cost_usd is not None:
+                record_entry["cost_usd"] = args.cost_usd
+            if args.wall_seconds is not None:
+                record_entry["wall_seconds"] = args.wall_seconds
+            if args.retries is not None:
+                record_entry["retries"] = args.retries
+            if args.quality is not None:
+                record_entry["quality"] = args.quality
+            if args.concurrent:
+                record_entry["concurrent"] = True
 
         recent = data.setdefault("recent_records", [])
         recent.insert(0, record_entry)

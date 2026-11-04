@@ -17,3 +17,8 @@ AI services are governed by monthly subscription plans with finite rate limits:
 2. **Context Progressive Disclosure**: Retrieve Tier 1 and Tier 2 summaries instead of dumping multi-megabyte files into active context.
 3. **Tripwire Bounds**: Never allow an agent or subagent to loop more than 3 times without observable code mutation or new information gain.
 4. **Clean Checkpointing**: When quota limits are approached, pause cleanly rather than rushing a half-baked commit.
+
+---
+
+## 3. Measured data supersedes these estimates
+The tiers above are static estimates. Real windows and per-task usage are measured at every mission checkout/checkin (see [usage-telemetry-sources.md](usage-telemetry-sources.md)); check the live gauge with `scripts/usage_probe.py headroom` before dispatching.
