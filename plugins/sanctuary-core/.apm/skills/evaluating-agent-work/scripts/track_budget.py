@@ -134,6 +134,7 @@ def main():
     record_parser.add_argument("--window-delta", default="", help="JSON of window-percent deltas from usage_probe diff")
     record_parser.add_argument("--tokens-cache-read", type=int, default=None, help="Measured cache-read tokens (priced at the cached-input rate)")
     record_parser.add_argument("--tokens-cache-write", type=int, default=None, help="Measured cache-write tokens")
+    record_parser.add_argument("--tokens-cache-write-1h", type=int, default=None, help="Measured 1-hour-TTL cache-write tokens")
     record_parser.add_argument("--cost-usd", type=float, default=None, help="Dollar cost when the model price is known (never guessed)")
     record_parser.add_argument("--wall-seconds", type=int, default=None, help="Wall-clock seconds the task took")
     record_parser.add_argument("--retries", type=int, default=None, help="Retries or restarts needed")
@@ -195,6 +196,8 @@ def main():
                 record_entry["tokens_cache_read"] = args.tokens_cache_read
             if args.tokens_cache_write is not None:
                 record_entry["tokens_cache_write"] = args.tokens_cache_write
+            if args.tokens_cache_write_1h is not None:
+                record_entry["tokens_cache_write_1h"] = args.tokens_cache_write_1h
             if args.cost_usd is not None:
                 record_entry["cost_usd"] = args.cost_usd
             if args.wall_seconds is not None:

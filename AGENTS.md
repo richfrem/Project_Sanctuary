@@ -81,7 +81,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/man
 ## Companion Repository & Global Skills
 
 - **What it is**: `richfrem/agent-plugins-skills` (MIT), cloned next to this repository (`../agent-plugins-skills`). It provides the global APM skills Sanctuary relies on (memory, orchestration, dev-utils, authoring, agentic-os; list in [`architecture.md`](architecture.md) section 2). Sanctuary's own skills are in `plugins/sanctuary-core/`.
-- **How it is installed**: the global manifest `~/.apm/apm.yml` points at plugin folders inside the clone, so the installed skills equal whatever the clone's working tree holds when `apm install --global` runs. Keep the clone on a clean, up-to-date `main` at install time. Check with `apm deps list --global`.
+- **How it is installed**: `~/.apm/apm.yml` lists both plugin folders in the clone and the GitHub dependency `richfrem/agent-plugins-skills` (pinned by the lockfile). An upstream change reaches `~/.claude/skills` etc. only after the PR is merged to GitHub `main` and `apm update --global` has run (preview with `--dry-run`); `apm install --global` alone left the installed copy stale (observed 2026-11-04). Keep the clone on a clean, up-to-date `main`. Check with `apm deps list --global` and by diffing the installed skill against the plugin.
 - **Changing it**: use Protocol 133. Sanctuary-specific behaviour belongs in `plugins/sanctuary-core/`, not upstream. Read the clone's own `AGENTS.md` before editing it.
 
 ## On-Demand Capabilities & APM Skills

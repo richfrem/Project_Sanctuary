@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-04T15:12:18.548802+00:00",
-  "total_assessments": 15,
-  "cumulative_score": 210,
+  "updated_at": "2026-11-04T15:36:12.256483+00:00",
+  "total_assessments": 16,
+  "cumulative_score": 224,
   "average_fitness": 0.933,
   "dimension_totals": {
-    "useful_outcome": 41,
-    "learning_depth": 45,
-    "verification_rigor": 44,
-    "token_economy": 35,
-    "anti_asch_integrity": 45
+    "useful_outcome": 44,
+    "learning_depth": 48,
+    "verification_rigor": 47,
+    "token_economy": 37,
+    "anti_asch_integrity": 48
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 2,
-      "cumulative_score": 24,
-      "average_fitness": 0.8
+      "assessments": 3,
+      "cumulative_score": 38,
+      "average_fitness": 0.844
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "3c406161-1cbf-458a-834b-df822170d4ff",
+      "timestamp": "2026-11-04T15:36:12.255737+00:00",
+      "task_id": "MISSION-035-catalog-refresh",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Upstream catalog refresh with evidence, real-session cost cross-check (29.49 vs 29.55), select_model fix, TDD, protocol correction (apm update); two OPEN upstream debts reported"
+    },
     {
       "assessment_id": "b40ae69d-b43e-461f-8669-2954e0beab39",
       "timestamp": "2026-11-04T15:12:18.548003+00:00",
