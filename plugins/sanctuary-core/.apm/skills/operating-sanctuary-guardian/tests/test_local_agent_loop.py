@@ -109,6 +109,21 @@ def test_bare_json_and_tagged_calls_both_parse():
     assert lal.extract_calls("no call here {not json}") == []
 
 
+def test_tag_per_tool_calls_are_accepted():
+    """A model that writes <search_text>query</search_text> instead of the JSON form must not burn turns on parse errors."""
+    assert lal.extract_calls("<scratchpad>x</scratchpad>\n<search_text>MISSION-021 verdict</search_text>") == [
+        {"name": "search_text", "arguments": {"query": "MISSION-021 verdict"}}]
+    assert lal.extract_calls("<read_file>LEARNING/research/missions/MISSION-021.json</read_file>")[0]["arguments"] == {"path": "LEARNING/research/missions/MISSION-021.json"}
+    assert lal.extract_calls('<find_files>{"pattern": "**/*.md"}</find_files>')[0]["arguments"] == {"pattern": "**/*.md"}
+    assert lal.extract_calls("<find_files>{not json}</find_files>") == [] and lal.extract_calls("<list_dir></list_dir>") == []
+
+
+def test_malformed_reply_feedback_shows_an_example(sb):
+    chat = scripted("<unknown>x</unknown>", FINAL)
+    lal.run_agent("t", sb, chat_fn=chat)
+    assert '"name": "search_text"' in chat.state["seen"][1][-1]["content"]
+
+
 def test_turn_ceiling_is_hard_capped_at_five(sb):
     chat = scripted(*[call("list_dir", path=f"d{i}") for i in range(50)])
     r = lal.run_agent("t", sb, chat_fn=chat, max_turns=99)

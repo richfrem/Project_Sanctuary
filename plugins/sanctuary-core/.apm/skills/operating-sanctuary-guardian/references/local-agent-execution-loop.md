@@ -43,6 +43,7 @@ scaffolding, and a score that depends on them is a statement about model + harne
 
 - The MLX server strips the `<tool_call>` special token; the model emits `<{"name": ..., "arguments": {...}}`.
   `extract_calls` handles tagged and bare JSON.
+- Models also write tag-per-tool calls such as `<search_text>MISSION-021 verdict</search_text>`; `extract_calls` accepts them (added 2026-11-04, MISSION-025, after a control run failed 4 turns in a row on this syntax). A malformed reply now returns an example call. The MISSION-022 evaluation predates this and stands as recorded.
 - Left alone, the model tends to repeat its first tool call instead of answering (observed 3/5 in the first experiment).
 
 ## Evaluation methodology

@@ -50,7 +50,7 @@ Every new session or agent invocation follows this deterministic bootstrapping s
    - [`context/soul.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/soul.md) (identity & Anti-Asch epistemic principles)
    - [`context/user.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/user.md) (human partner preferences)
    - [`context/memory.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/context/memory.md) (recent institutional decisions & insights)
-   - [`.agent/learning/guardian_boot_digest.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/guardian_boot_digest.md) (active tasks & environment telemetry)
+   - [`.agent/learning/guardian_boot_digest.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/guardian_boot_digest.md) (active tasks, environment telemetry, and the **Predecessor Relay**: who did what last, established results to cite instead of re-running, and handoff notes; leave yours with `manage_coordination.py checkin --handoff`)
 4. **Layer 2 Progressive Disclosure**: Retrieve deeper knowledge on-demand using [`managing-sovereign-memory`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/managing-sovereign-memory) (`disclose.py --tier 1` or `--tier 2`).
 5. **Git Discipline**: Verify working tree is clean and operating on a feature branch (`feat/*`). Never commit directly to `main`.
 
