@@ -26,6 +26,7 @@ Function Index:
 """
 import argparse
 import json
+import os
 import re
 import statistics
 import subprocess
@@ -387,22 +388,66 @@ def headroom_report(snap: Dict[str, Any], floor: float = DEFAULT_FLOOR_PCT) -> L
     return out
 
 
-def load_prices(path: Optional[Path] = None) -> Dict[str, Any]:
-    """Price table (USD per million tokens) from references/model-prices.json. Unknown prices are null."""
-    path = path or Path(__file__).resolve().parent.parent / "references" / "model-prices.json"
-    try:
-        return json.loads(path.read_text(encoding="utf-8")).get("models", {})
-    except (OSError, ValueError):
-        return {}
+CATALOG_DIRS = [
+    Path.home() / ".claude" / "skills" / "cli-agent" / "references",
+    Path.home() / ".agents" / "skills" / "cli-agent" / "references",
+    Path.home() / ".gemini" / "antigravity-cli" / "skills" / "cli-agent" / "references",
+]
 
 
-def cost_usd(model: str, tokens_in: int, tokens_out: int, prices: Optional[Dict[str, Any]] = None) -> Optional[float]:
-    """Dollar cost when the model has a known price; None otherwise (never guessed)."""
+def find_catalog_dir() -> Optional[Path]:
+    """The installed cli-agent skill's model catalogs (single source of truth for prices and capabilities)."""
+    env = os.environ.get("SANCTUARY_CLI_AGENT_REFERENCES")
+    for d in ([Path(env)] if env else []) + CATALOG_DIRS:
+        if (d / "claude-models.json").exists():
+            return d
+    return None
+
+
+def load_prices(catalog_dir: Optional[Path] = None) -> Dict[str, Any]:
+    """Per-model prices (USD per million tokens) read from the cli-agent catalogs; nothing is duplicated here.
+
+    Keys are exact cli_ids from claude/codex/agy catalogs (direct API prices); Copilot entries are keyed
+    'copilot:<cli_id>' and carry credits_per_mtok. A model absent from the catalog is simply absent:
+    callers get None, never a price borrowed from a similarly named model.
+    """
+    catalog_dir = catalog_dir or find_catalog_dir()
+    out: Dict[str, Any] = {}
+    if catalog_dir is None:
+        return out
+    for fname, prefix in (("claude-models.json", ""), ("codex-models.json", ""), ("agy-models.json", ""), ("copilot-models.json", "copilot:")):
+        try:
+            cat = json.loads((catalog_dir / fname).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        meta = cat.get("_meta", {})
+        for m in cat.get("models", []):
+            pr = m.get("pricing_usd_per_1m") or {}
+            entry = {"input_per_mtok": pr.get("input"), "output_per_mtok": pr.get("output"),
+                     "cached_input_per_mtok": pr.get("cached_input"), "cache_write_per_mtok": pr.get("cache_write"),
+                     "credits_per_mtok": m.get("credits_per_1m"), "status": m.get("status"),
+                     "catalog": fname, "catalog_updated": meta.get("updated")}
+            out.setdefault(prefix + m["cli_id"], entry)
+    return out
+
+
+def cost_usd(model: str, tokens_in: int, tokens_out: int, prices: Optional[Dict[str, Any]] = None,
+             cache_read: int = 0, cache_write: int = 0) -> Optional[float]:
+    """Dollar cost for an EXACT catalog model id; None when absent or any needed price is null (never guessed).
+
+    tokens_in excludes cache reads/writes, which are priced at their own catalog rates.
+    """
     prices = load_prices() if prices is None else prices
-    p = prices.get(model) or {}
-    if p.get("input_per_mtok") is None or p.get("output_per_mtok") is None:
+    p = prices.get(model)
+    if not p or p.get("input_per_mtok") is None or p.get("output_per_mtok") is None:
         return None
-    return round(tokens_in / 1e6 * p["input_per_mtok"] + tokens_out / 1e6 * p["output_per_mtok"], 6)
+    total = tokens_in / 1e6 * p["input_per_mtok"] + tokens_out / 1e6 * p["output_per_mtok"]
+    for tokens, key in ((cache_read, "cached_input_per_mtok"), (cache_write, "cache_write_per_mtok")):
+        if tokens:
+            if p.get(key) is None:
+                return None
+            total += tokens / 1e6 * p[key]
+    return round(total, 6)
 
 
 # --------------------------------------------------------------------------- CLI

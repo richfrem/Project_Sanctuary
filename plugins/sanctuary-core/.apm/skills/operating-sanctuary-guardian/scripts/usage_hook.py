@@ -143,27 +143,31 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
         elif backend == "claude":
             start_iso = datetime.fromtimestamp(started, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             end_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-            tot = {"input_tokens": 0, "output_tokens": 0, "cache_creation_input_tokens": 0}
+            tot = {"input_tokens": 0, "output_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0}
             for d in claude_project_dirs(root, projects_dir):
                 r = mod.claude_tokens_between(d, start_iso, end_iso)
                 concurrent = concurrent or r["concurrent"]
                 for k in tot:
                     tot[k] += r[k]
             summary.update(tokens=tot["input_tokens"] + tot["output_tokens"] + tot["cache_creation_input_tokens"],
-                           tokens_in=tot["input_tokens"] + tot["cache_creation_input_tokens"],
-                           tokens_out=tot["output_tokens"], tokens_source="claude_transcripts")
+                           tokens_in=tot["input_tokens"], tokens_out=tot["output_tokens"],
+                           tokens_cache_write=tot["cache_creation_input_tokens"],
+                           tokens_cache_read=tot["cache_read_input_tokens"], tokens_source="claude_transcripts")
         summary["concurrent"] = concurrent
         if model:
             summary["model"] = model
-            cost = mod.cost_usd(model, summary.get("tokens_in", summary.get("tokens", 0)) or 0, summary.get("tokens_out", 0) or 0)
-            summary["cost_usd"] = cost  # None when the model has no known price (never guessed)
+            cost = mod.cost_usd(model, summary.get("tokens_in", summary.get("tokens", 0)) or 0, summary.get("tokens_out", 0) or 0,
+                                cache_read=summary.get("tokens_cache_read", 0), cache_write=summary.get("tokens_cache_write", 0))
+            summary["cost_usd"] = cost  # None when the model is not in the cli-agent catalog (never guessed)
         mod.assert_no_secrets(summary)
         if record and summary.get("tokens"):
             cmd = [sys.executable, str(_BUDGET), "record", "--task-id", mission, "--backend", backend or "unknown",
                    "--tokens-est", str(summary["tokens"]), "--source", "measured", "--task-class", task_class,
                    "--outcome", "completed", "--wall-seconds", str(wall), "--retries", str(retries)]
             if summary.get("tokens_in") is not None:
-                cmd += ["--tokens-in", str(summary["tokens_in"]), "--tokens-out", str(summary["tokens_out"])]
+                cmd += ["--tokens-in", str(summary["tokens_in"]), "--tokens-out", str(summary["tokens_out"]),
+                        "--tokens-cache-read", str(summary.get("tokens_cache_read", 0)),
+                        "--tokens-cache-write", str(summary.get("tokens_cache_write", 0))]
             if quality is not None:
                 cmd += ["--quality", str(quality)]
             if model:

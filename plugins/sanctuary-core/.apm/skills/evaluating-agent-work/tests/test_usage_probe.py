@@ -254,16 +254,40 @@ class TestFuelGauge(unittest.TestCase):
         self.assertTrue(rep["agy"]["constrained"])
         self.assertFalse(rep["claude"]["constrained"])
 
-    def test_cost_known_and_unknown_prices(self):
-        prices = {"m1": {"input_per_mtok": 1.0, "output_per_mtok": 5.0}, "m2": {"input_per_mtok": None, "output_per_mtok": None}}
-        self.assertEqual(up.cost_usd("m1", 1_000_000, 200_000, prices), 2.0)
-        self.assertIsNone(up.cost_usd("m2", 1000, 1000, prices))
-        self.assertIsNone(up.cost_usd("missing", 1000, 1000, prices))
+    def _catalog(self, d):
+        d = Path(d)
+        for name, models in (("claude-models.json", [{"cli_id": "m-known", "status": "GA", "pricing_usd_per_1m": {
+                                "input": 2.0, "output": 10.0, "cached_input": 0.2, "cache_write": 2.5}},
+                               {"cli_id": "m-noprice", "status": "available", "pricing_usd_per_1m": {"input": None, "output": None}}]),
+                             ("codex-models.json", []), ("agy-models.json", []),
+                             ("copilot-models.json", [{"cli_id": "m-known", "status": "GA", "pricing_usd_per_1m": {
+                                "input": 9.0, "output": 9.0}, "credits_per_1m": {"input": 900}}])):
+            (d / name).write_text(json.dumps({"_meta": {"updated": "2026-09-13"}, "models": models}))
+        return d
 
-    def test_shipped_price_table_never_guesses(self):
+    def test_prices_come_from_cli_agent_catalog_not_a_local_table(self):
+        with tempfile.TemporaryDirectory() as d:
+            prices = up.load_prices(self._catalog(d))
+        self.assertEqual(prices["m-known"]["input_per_mtok"], 2.0)
+        self.assertEqual(prices["copilot:m-known"]["credits_per_mtok"], {"input": 900})  # copilot never shadows direct API
+        self.assertNotIn("m-missing", prices)
+
+    def test_cost_exact_id_with_cache_rates_and_never_guessed(self):
+        with tempfile.TemporaryDirectory() as d:
+            prices = up.load_prices(self._catalog(d))
+        # 1M in*$2 + 0.5M out*$10 + 2M cache-read*$0.2 + 1M cache-write*$2.5 = 2 + 5 + 0.4 + 2.5
+        self.assertAlmostEqual(up.cost_usd("m-known", 1_000_000, 500_000, prices, cache_read=2_000_000, cache_write=1_000_000), 9.9)
+        self.assertIsNone(up.cost_usd("m-noprice", 1000, 1000, prices))
+        self.assertIsNone(up.cost_usd("m-known-5", 1000, 1000, prices))  # similar name is not a match
+
+    def test_no_local_price_table_shipped(self):
+        self.assertFalse((HERE.parent / "references" / "model-prices.json").exists())
+
+    @unittest.skipUnless(up.find_catalog_dir(), "cli-agent catalog not installed")
+    def test_real_catalog_loads(self):
         prices = up.load_prices()
-        self.assertIn("claude-haiku-4-5", prices)
-        self.assertIsNone(prices["claude-sonnet-5-5"]["input_per_mtok"])
+        self.assertGreater(len(prices), 10)
+        self.assertEqual(prices["claude-haiku-4-5"]["output_per_mtok"], 5.0)
 
 
 if __name__ == "__main__":
