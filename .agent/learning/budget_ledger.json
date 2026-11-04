@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-03T03:14:55.833697+00:00",
-  "total_tokens_consumed": 221249,
-  "total_turns": 7,
+  "updated_at": "2026-11-04T15:12:57.046998+00:00",
+  "total_tokens_consumed": 524733,
+  "total_turns": 8,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -39,9 +39,33 @@
       "turns": 1,
       "last_backend": "claude",
       "last_model": "claude-opus"
+    },
+    "MISSION-035": {
+      "tokens_consumed": 303484,
+      "turns": 1,
+      "last_backend": "claude",
+      "last_model": "claude-sonnet-5-5"
     }
   },
   "recent_records": [
+    {
+      "record_id": "066329d0-52e7-435a-879b-25655bf6263f",
+      "timestamp": "2026-11-04T15:12:57.047019+00:00",
+      "task_id": "MISSION-035",
+      "backend": "claude",
+      "model": "claude-sonnet-5-5",
+      "tokens_est": 303484,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "build",
+      "outcome": "completed",
+      "tokens_in": 164102,
+      "tokens_out": 139382,
+      "wall_seconds": 1224,
+      "retries": 0,
+      "quality": 3
+    },
     {
       "record_id": "e1a22820-77d8-4f32-93a6-e9a318668375",
       "timestamp": "2026-11-03T03:14:55.833725+00:00",
