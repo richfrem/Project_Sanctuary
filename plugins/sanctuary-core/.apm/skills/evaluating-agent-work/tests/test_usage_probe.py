@@ -88,6 +88,13 @@ def _tx(path, rows):
                               "cache_read_input_tokens": 0, "output_tokens": o}}}) + "\n")
 
 
+def _tx_cache(path, ts, cw_total, cw_1h, cread):
+    with open(path, "w") as f:
+        f.write(json.dumps({"type": "assistant", "timestamp": ts, "message": {"role": "assistant", "usage": {
+            "input_tokens": 1, "output_tokens": 1, "cache_creation_input_tokens": cw_total, "cache_read_input_tokens": cread,
+            "cache_creation": {"ephemeral_1h_input_tokens": cw_1h, "ephemeral_5m_input_tokens": cw_total - cw_1h}}}}) + "\n")
+
+
 class TestClaudeTranscripts(unittest.TestCase):
     def test_sums_tokens_in_interval_only(self):
         with tempfile.TemporaryDirectory() as d:
@@ -114,6 +121,64 @@ class TestClaudeTranscripts(unittest.TestCase):
             _tx(d / "s1.jsonl", [("2026-11-04T10:10:00Z", 100, 50)])
             r = up.claude_tokens_between(d, "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z", own_session="s1")
             self.assertFalse(r["concurrent"])
+
+
+def _tc2(ts, total, inp=None, cached=0, out=0):
+    return {"timestamp": ts, "type": "event_msg", "payload": {"type": "token_count", "info": {"total_token_usage": {
+        "input_tokens": inp if inp is not None else total, "cached_input_tokens": cached, "output_tokens": out, "total_tokens": total}}}}
+
+
+class TestCodexTokensBetween(unittest.TestCase):
+    def test_delta_of_cumulative_totals_within_interval(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "2026/11/04").mkdir(parents=True)
+            _rollout(d / "2026/11/04/rollout-a.jsonl", [_tc2("2026-11-04T10:00:00Z", 1000), _tc2("2026-11-04T10:10:00Z", 5000),
+                                                         _tc2("2026-11-04T10:20:00Z", 9000)])
+            r = up.codex_tokens_between(d, "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")
+        self.assertEqual(r["total_tokens"], 4000)  # 5000 at end minus 1000 at start
+        self.assertFalse(r["concurrent"])
+
+    def test_session_started_inside_interval_counts_from_zero_and_two_sessions_flag_concurrent(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "2026/11/04").mkdir(parents=True)
+            _rollout(d / "2026/11/04/rollout-a.jsonl", [_tc2("2026-11-04T10:06:00Z", 700), _tc2("2026-11-04T10:09:00Z", 1200)])
+            _rollout(d / "2026/11/04/rollout-b.jsonl", [_tc2("2026-11-04T10:07:00Z", 50)])
+            r = up.codex_tokens_between(d, "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")
+        self.assertEqual(r["total_tokens"], 1250)
+        self.assertTrue(r["concurrent"])
+
+    def test_no_activity_returns_zero(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = up.codex_tokens_between(Path(d), "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")
+        self.assertEqual(r["total_tokens"], 0)
+        self.assertFalse(r["concurrent"])
+
+
+class TestCacheSplit(unittest.TestCase):
+    def test_transcript_splits_cache_write_by_ttl(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            _tx_cache(d / "s1.jsonl", "2026-11-04T10:10:00Z", cw_total=1000, cw_1h=700, cread=5000)
+            r = up.claude_tokens_between(d, "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")
+        self.assertEqual(r["cache_creation_input_tokens"], 1000)
+        self.assertEqual(r["cache_write_1h_tokens"], 700)
+        self.assertEqual(r["cache_read_input_tokens"], 5000)
+
+    def test_cost_prices_1h_cache_write_at_its_own_rate(self):
+        prices = {"m": {"input_per_mtok": 2.0, "output_per_mtok": 10.0, "cached_input_per_mtok": 0.1,
+                        "cache_write_per_mtok": 2.5, "cache_write_1h_per_mtok": 4.0}}
+        # 1M 5m-write*2.5 + 1M 1h-write*4.0
+        self.assertAlmostEqual(up.cost_usd("m", 0, 0, prices, cache_write=1_000_000, cache_write_1h=1_000_000), 6.5)
+        prices["m"]["cache_write_1h_per_mtok"] = None
+        self.assertIsNone(up.cost_usd("m", 0, 0, prices, cache_write_1h=1000))
+
+    @unittest.skipUnless(up.find_catalog_dir() and "claude-sonnet-5-5" in up.load_prices(), "catalog with claude-sonnet-5-5 not installed")
+    def test_real_session_cost_matches_vendor_reported_total(self):
+        # Real Claude Code session on claude-sonnet-5-5 reported $29.55 (4.0k in, 592.9k out, 175.5M cache read, 1.5M cache write at the 1h TTL).
+        c = up.cost_usd("claude-sonnet-5-5", 4000, 592_900, cache_read=175_500_000, cache_write_1h=1_500_000)
+        self.assertLess(abs(c - 29.55) / 29.55, 0.01)
 
 
 class TestSnapshotDiffAndSecrets(unittest.TestCase):

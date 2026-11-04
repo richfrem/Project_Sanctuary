@@ -1,8 +1,8 @@
-# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.1)
+# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.2)
 
 **Status:** PROPOSED  
 **Classification:** Operational Framework  
-**Version:** 1.1 (first used 2026-11-03; see Section 7)  
+**Version:** 1.2 (first used 2026-11-03; corrected 2026-11-04 after the catalog refresh; see Section 7)  
 **Authority:** Project owner directive (2026-11-03); drafted by Claude Code. Ratify by changing Status to CANONICAL.  
 **Linked Protocols:** Protocol 128 (Hardened Learning Loop)
 
@@ -22,7 +22,7 @@ Project Sanctuary does not own the generic agent skills it depends on. They live
 | Installed copies (generated, never edited) | `~/.claude/skills/` (Claude), `~/.agents/skills/` (Copilot, Codex), `~/.gemini/antigravity-cli/skills/` (Antigravity) |
 
 Consequences:
-- The installed version of an upstream skill is **whatever the clone's working tree holds when `apm install --global` runs**. A clone sitting on a feature branch or with uncommitted edits installs that state.
+- The installed version of an upstream skill depends on **which dependency entry wins in `~/.apm/apm.yml`**. The global manifest lists both local clone paths and the GitHub dependency `richfrem/agent-plugins-skills`; the GitHub entry is pinned to a commit in `~/.apm/apm.lock.yaml`. Observed 2026-11-04: `apm install --global` refreshed `~/.apm/apm_modules/_local` from the clone but left `~/.claude/skills/cli-agent` at the pinned GitHub commit; only `apm update --global` (after the PR was merged to GitHub `main`) moved the installed skills. So an upstream change reaches the installed skills only **after it is merged and `apm update --global` has run**.
 - Installed copies are outputs. Never edit them by hand (upstream Iron Law); the next install overwrites them.
 - Sanctuary does not pin the upstream version in `apm.lock.yaml`; the clone's commit is the effective pin.
 
@@ -46,7 +46,7 @@ Human Gate applies to every state-changing step; "Proceed" is required before th
 6. **Push without the hook, as directed by the owner:** `git push --no-verify -u origin feat/<topic>` (only after the commit has actually succeeded: a push with no new commit just creates an empty remote branch at `main`). `--no-verify` skips the **pre-push** hook only; the pre-commit hooks in step 5 still run. Understand what it skips: the clone's `pre-push` runs `pre-push-review-guard`, which blocks pushes from an active task branch until the control-plane task is `DONE`. Using `--no-verify` is an owner decision for this workflow; it is never a way around a failed audit, and it never authorises skipping a human signature gate.
 7. **PR and merge:** `gh pr create --repo richfrem/agent-plugins-skills --base main`, then squash-merge on the human's go-ahead.
 8. **Return the clone to main:** `git checkout main && git pull origin main`. Do this **before** installing so the installed state equals merged `main`, not the feature branch.
-9. **Reinstall globally** from the clone. Prefer the single-plugin form, which limits the blast radius to the plugin you changed: `apm install "$PWD/plugins/<plugin>" --global --target claude,copilot,codex,antigravity` (absolute path; on APM below 0.35.0 the target is `antigravity`, `agy` needs 0.35.0+). `apm install --global` with no arguments re-reads every installed plugin and is for a deliberate full refresh. Do a `--dry-run` first, and copy `~/.apm/apm.yml` and `apm.lock.yaml` somewhere safe before the real run (undo: restore them, or the clone's `apm_consumer.py list-backups` / `rollback`). Expect about 40 seconds and possible "lossy agent compilation" warnings (Codex drops an agent's `tools` field); read them. Verify: `apm deps list --global`; `diff -rq` each installed copy (`~/.claude/skills/<skill>`, `~/.agents/skills/<skill>`, `~/.gemini/antigravity-cli/skills/<skill>`) against `plugins/<plugin>/.apm/skills/<skill>` shows no differences; and run the changed behaviour from the installed path.
+9. **Reinstall globally.** First `apm update --global --dry-run` (it lists every package and file that will move, because the GitHub pin may be many commits behind `main`), then `apm update --global --yes`; this is what actually changes `~/.claude/skills`. The single-plugin local install below only refreshes the `_local` copies. Previous single-plugin guidance, kept for a clone-only setup: Prefer the single-plugin form, which limits the blast radius to the plugin you changed: `apm install "$PWD/plugins/<plugin>" --global --target claude,copilot,codex,antigravity` (absolute path; on APM below 0.35.0 the target is `antigravity`, `agy` needs 0.35.0+). `apm install --global` with no arguments re-reads every installed plugin and is for a deliberate full refresh. Do a `--dry-run` first, and copy `~/.apm/apm.yml` and `apm.lock.yaml` somewhere safe before the real run (undo: restore them, or the clone's `apm_consumer.py list-backups` / `rollback`). Expect about 40 seconds and possible "lossy agent compilation" warnings (Codex drops an agent's `tools` field); read them. Verify: `apm deps list --global`; `diff -rq` each installed copy (`~/.claude/skills/<skill>`, `~/.agents/skills/<skill>`, `~/.gemini/antigravity-cli/skills/<skill>`) against `plugins/<plugin>/.apm/skills/<skill>` shows no differences; and run the changed behaviour from the installed path.
 10. **Clean up:** `git branch -D feat/<topic>` and `git push origin --delete feat/<topic>`.
 11. **Record in Sanctuary** (chronicle entry or note) what changed upstream and why, and update any Sanctuary document that described the old behaviour.
 
@@ -66,3 +66,6 @@ An upstream skill change is Stage 2 work (execution on a branch, human-gated) an
 
 - **Change:** `managing-huggingface-assets/scripts/hf_upload.py` documented `--file`/`--remote-path` but had no command line; run as documented it exited 0 silently and uploaded nothing. Added the CLI with 8 tests, a docs update and a `DEBT-20261103-HF-UPLOAD-NO-CLI (RESOLVED)` map-debt entry. Upstream PR #746 (squash-merged), then the single-plugin global install of `dev-utils` with zero differences across the three install directories.
 - **What the run taught (now folded into Section 4):** the evolution guard requires a map-debt entry for any `plugins/` commit; `--no-verify` skips only the pre-push hook; push after the commit succeeds; use the single-plugin install form with `antigravity` on APM 0.33.0; back up `~/.apm/` first; verify all three install directories.
+
+## Revision note (2026-11-04, v1.2)
+The first catalog refresh (companion repo PR 747) showed that `apm install --global` alone did not update the installed skills because of the pinned GitHub dependency; steps 9 and the install note above were corrected, and the verification there (`diff -rq` of installed copies against the plugin) is what caught it. The update moved 7 packages from 3f0c0ba to 6bb64dc and reported one interrupted-install backup item it could not remove.

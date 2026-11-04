@@ -70,6 +70,26 @@ class TestHook(unittest.TestCase):
         finally:
             os.environ["SANCTUARY_NO_USAGE"] = old
 
+    def test_finish_codex_tokens_from_rollouts(self):
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                sd = Path(d) / "sessions" / "2026" / "11" / "04"
+                sd.mkdir(parents=True)
+                started = time.time() - 600
+                import datetime as dt
+                iso = lambda t: dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                with open(sd / "rollout-x.jsonl", "w") as f:
+                    f.write(json.dumps({"timestamp": iso(started + 60), "type": "event_msg", "payload": {"type": "token_count", "info": {
+                        "total_token_usage": {"total_tokens": 7777, "input_tokens": 7000, "output_tokens": 777}}}}) + "\n")
+                lease = {"usage_start": _snap("t0"), "checked_out_timestamp": started}
+                out = usage_hook.finish(Path(d), lease, "M", "codex-astra", snapshot_fn=lambda b: _snap("t1"), record=False,
+                                        codex_sessions_dir=Path(d) / "sessions")
+            self.assertEqual(out["tokens"], 7777)
+            self.assertEqual(out["tokens_source"], "codex_rollouts")
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+
     def test_finish_cost_known_and_unknown_model(self):
         old = os.environ.pop("SANCTUARY_NO_USAGE")
         try:

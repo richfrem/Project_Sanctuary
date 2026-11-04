@@ -156,7 +156,7 @@ def claude_tokens_between(project_dir: Path, start: str, end: str,
     """
     t0, t1 = _parse_ts(start), _parse_ts(end)
     tot = {"input_tokens": 0, "output_tokens": 0, "cache_creation_input_tokens": 0,
-           "cache_read_input_tokens": 0}
+           "cache_read_input_tokens": 0, "cache_write_1h_tokens": 0}
     active = set()
     for f in project_dir.glob("*.jsonl"):
         sid = f.stem
@@ -177,11 +177,51 @@ def claude_tokens_between(project_dir: Path, start: str, end: str,
                     if own_session is None or sid == own_session:
                         for k in tot:
                             tot[k] += int(usage.get(k, 0) or 0)
+                        tot["cache_write_1h_tokens"] += int((usage.get("cache_creation") or {}).get("ephemeral_1h_input_tokens", 0) or 0)
         except OSError:
             continue
     # Without a known own session, two or more active transcripts means shared activity.
     others = active - {own_session} if own_session else (active if len(active) > 1 else set())
     return {**tot, "concurrent": bool(others), "other_active_sessions": len(others)}
+
+
+def codex_tokens_between(sessions_dir: Optional[Path], start: str, end: str) -> Dict[str, Any]:
+    """Codex tokens used in [start, end]: per rollout, the cumulative total at the end minus the total at start.
+
+    A session that began inside the interval counts from zero. concurrent=True when more than one rollout
+    recorded token usage in the interval (window percents are then shared and must be treated as noisy).
+    """
+    sessions_dir = sessions_dir or Path.home() / ".codex" / "sessions"
+    t0, t1 = _parse_ts(start), _parse_ts(end)
+    total = 0
+    active = 0
+    for f in sessions_dir.glob("**/rollout-*.jsonl"):
+        before = None
+        last_in = None
+        try:
+            with open(f, "r", encoding="utf-8") as fh:
+                for line in fh:
+                    if '"token_count"' not in line:
+                        continue
+                    try:
+                        rec = json.loads(line)
+                    except ValueError:
+                        continue
+                    p = rec.get("payload") or {}
+                    ts = _parse_ts(rec.get("timestamp", ""))
+                    tot = ((p.get("info") or {}).get("total_token_usage") or {}).get("total_tokens")
+                    if p.get("type") != "token_count" or ts is None or tot is None:
+                        continue
+                    if ts < t0:
+                        before = tot
+                    elif ts <= t1:
+                        last_in = tot
+        except OSError:
+            continue
+        if last_in is not None:
+            total += max(0, last_in - (before or 0))
+            active += 1
+    return {"total_tokens": total, "concurrent": active > 1, "active_sessions": active}
 
 
 # --------------------------------------------------------------------------- snapshot / diff
@@ -425,6 +465,7 @@ def load_prices(catalog_dir: Optional[Path] = None) -> Dict[str, Any]:
             pr = m.get("pricing_usd_per_1m") or {}
             entry = {"input_per_mtok": pr.get("input"), "output_per_mtok": pr.get("output"),
                      "cached_input_per_mtok": pr.get("cached_input"), "cache_write_per_mtok": pr.get("cache_write"),
+                     "cache_write_1h_per_mtok": pr.get("cache_write_1h"),
                      "credits_per_mtok": m.get("credits_per_1m"), "status": m.get("status"),
                      "catalog": fname, "catalog_updated": meta.get("updated")}
             out.setdefault(prefix + m["cli_id"], entry)
@@ -432,17 +473,19 @@ def load_prices(catalog_dir: Optional[Path] = None) -> Dict[str, Any]:
 
 
 def cost_usd(model: str, tokens_in: int, tokens_out: int, prices: Optional[Dict[str, Any]] = None,
-             cache_read: int = 0, cache_write: int = 0) -> Optional[float]:
+             cache_read: int = 0, cache_write: int = 0, cache_write_1h: int = 0) -> Optional[float]:
     """Dollar cost for an EXACT catalog model id; None when absent or any needed price is null (never guessed).
 
-    tokens_in excludes cache reads/writes, which are priced at their own catalog rates.
+    tokens_in excludes cache reads/writes, which are priced at their own catalog rates: cache_write is the
+    5-minute TTL write, cache_write_1h the 1-hour TTL write (Claude Code uses the 1-hour TTL).
     """
     prices = load_prices() if prices is None else prices
     p = prices.get(model)
     if not p or p.get("input_per_mtok") is None or p.get("output_per_mtok") is None:
         return None
     total = tokens_in / 1e6 * p["input_per_mtok"] + tokens_out / 1e6 * p["output_per_mtok"]
-    for tokens, key in ((cache_read, "cached_input_per_mtok"), (cache_write, "cache_write_per_mtok")):
+    for tokens, key in ((cache_read, "cached_input_per_mtok"), (cache_write, "cache_write_per_mtok"),
+                        (cache_write_1h, "cache_write_1h_per_mtok")):
         if tokens:
             if p.get(key) is None:
                 return None
