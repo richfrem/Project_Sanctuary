@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-04T06:14:30.254070+00:00",
-  "total_assessments": 12,
-  "cumulative_score": 172,
-  "average_fitness": 0.956,
+  "updated_at": "2026-11-04T06:39:56.221287+00:00",
+  "total_assessments": 13,
+  "cumulative_score": 186,
+  "average_fitness": 0.954,
   "dimension_totals": {
-    "useful_outcome": 34,
-    "learning_depth": 36,
-    "verification_rigor": 36,
-    "token_economy": 30,
-    "anti_asch_integrity": 36
+    "useful_outcome": 37,
+    "learning_depth": 39,
+    "verification_rigor": 39,
+    "token_economy": 32,
+    "anti_asch_integrity": 39
   },
   "agents": {
     "astra": {
@@ -23,8 +23,8 @@
       "average_fitness": 0.967
     },
     "claude": {
-      "assessments": 6,
-      "cumulative_score": 84,
+      "assessments": 7,
+      "cumulative_score": 98,
       "average_fitness": 0.933
     },
     "claude-haiku-5.5": {
@@ -39,6 +39,15 @@
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "0f0c820a-d872-4ad4-8dc7-ac26d9f24e84",
+      "timestamp": "2026-11-04T06:39:56.220619+00:00",
+      "task_id": "MISSION-031",
+      "agent_id": "claude",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Pre-registered; RED on old code loaded from git; independent brute-force ground truth; real-git validation; reported the 60/60 generated-file conflict boundary against the hypothesis wording; dogfooded verify and found own undeclared edit. Economy 2: long autonomous session. Self-assessed."
+    },
     {
       "assessment_id": "5ebc3bc5-5268-4c5a-bf56-6af7505ca561",
       "timestamp": "2026-11-04T06:14:30.253312+00:00",

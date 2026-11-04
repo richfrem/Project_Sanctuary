@@ -1,0 +1,95 @@
+{
+  "e1_random_pairs": {
+    "pairs": 500,
+    "overlapping_truth": 284,
+    "new_false_negatives": 0,
+    "new_false_positives": 15,
+    "new_true_positives": 284,
+    "old_silent_conflicts": 284,
+    "manual_targets_needed": 0,
+    "examples_fp": [
+      {
+        "a": [
+          "**/*.py"
+        ],
+        "b": [
+          "**/*.md"
+        ]
+      },
+      {
+        "a": [
+          "area1/**/*.py"
+        ],
+        "b": [
+          "area1/**/g?.md",
+          "plugins/p5/**",
+          "plugins/p4/tests/**/*.py"
+        ]
+      },
+      {
+        "a": [
+          "area2/**/g?.md",
+          "area2/**/g?.md"
+        ],
+        "b": [
+          "plugins/p3/scripts/f3.md",
+          "plugins/",
+          "**/*.py"
+        ]
+      },
+      {
+        "a": [
+          "area0/*.md",
+          "docs/guide/"
+        ],
+        "b": [
+          "plugins/p3/**",
+          "**/*.py"
+        ]
+      },
+      {
+        "a": [
+          "**/*.py",
+          "plugins/*/scripts/"
+        ],
+        "b": [
+          "area1/**/g?.md",
+          "area3/f4.md"
+        ]
+      }
+    ],
+    "new_false_positive_rate": 0.069,
+    "old_silent_conflict_rate": 1.0
+  },
+  "e2_real_git": {
+    "pairs": 60,
+    "predicted_disjoint": 23,
+    "predicted_disjoint_real_conflicts": 0,
+    "predicted_overlap": 37,
+    "predicted_overlap_real_conflicts": 2,
+    "real_conflicts_total": 2,
+    "real_conflicts_not_predicted": 0,
+    "undeclared_planted": 20,
+    "undeclared_flagged": 20,
+    "declared_edits_unflagged": 0,
+    "generated_file_conflicts": 60
+  },
+  "e3_latency": {
+    "registry_missions": 20,
+    "registry_matrix_plus_suggest_ms_p95": 5.589,
+    "registry_ms_max": 5.737,
+    "synthetic_200_missions_20_leases_per_mission_check_ms_p95": 0.19,
+    "synthetic_200_full_matrix_ms": 174.7
+  },
+  "e4_live_registry": {
+    "suggested": [
+      "MISSION-031",
+      "MISSION-023",
+      "MISSION-030"
+    ],
+    "mutually_disjoint": true,
+    "registered": 20,
+    "unregistered": 0,
+    "max_parallel_set_size_greedy": 13
+  }
+}

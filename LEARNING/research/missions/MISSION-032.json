@@ -40,5 +40,17 @@
   ],
   "evidence": [],
   "lessons_learned": [],
-  "priority_score": 40.0
+  "priority_score": 40.0,
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-032/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/relay.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/relay_eval.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_relay.py"
+    ],
+    "resources": [
+      "local-model-memory"
+    ],
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
 }

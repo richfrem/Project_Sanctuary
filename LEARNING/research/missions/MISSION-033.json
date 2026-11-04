@@ -84,5 +84,14 @@
     "MISSION-025": "BUILDS ON: workers' checkin --handoff notes are read by the orchestrator during review and carried into the next batch.",
     "MISSION-032": "INFORMED BY: shows which incoming agents (frontier vs local) reliably follow a briefing, which informs worker routing.",
     "MISSION-028": "INFORMED BY: signal-triggered escalation policy for choosing a cheaper or stronger worker."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-033/",
+      "plugins/sanctuary-core/.apm/skills/orchestrating-sanctuary-missions/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md"
+    ],
+    "resources": [],
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
   }
 }
