@@ -49,5 +49,8 @@
     "Automated algorithmic routing prevents agents from burning expensive frontier subscription pools on routine reconnaissance, inspection, and formatting tasks.",
     "Requiring at least 2 verified failures before frontier escalation provides a natural rate limiter that preserves quota while ensuring difficult roadblocks still receive frontier reasoning power.",
     "Local MLX execution offers the ultimate floor (0.05x cost weight) for offline inspection, test running, and local schema validation."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-035": "EVIDENCE PROVIDER: 016's cheapest-viable routing tiers are static judgments; 035 measures cost per task class per backend so the routing table can be validated or corrected with data (recommend compares against the static model_routing)."
+  }
 }

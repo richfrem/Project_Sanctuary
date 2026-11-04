@@ -51,7 +51,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#30** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#31** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
 | **#32** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#33** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `PROPOSED` | - |
+| **#33** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `IN_PROGRESS` | - |
 | **#34** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
 | **#35** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
@@ -527,7 +527,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
 ### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #33)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
