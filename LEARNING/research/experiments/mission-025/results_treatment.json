@@ -1,0 +1,288 @@
+{
+  "label": "treatment",
+  "summary": {
+    "n": 22,
+    "correct_rate": 0.682,
+    "median_turns": 2,
+    "zero_tool_call_rate": 0.455,
+    "mean_tool_calls": 1.27,
+    "mean_prompt_tokens": 2063,
+    "mean_seconds": 14.6,
+    "by_snapshot_prefix": {
+      "A": 0.714,
+      "B": 0.625
+    }
+  },
+  "rows": [
+    {
+      "id": "A1",
+      "kind": "agent",
+      "correct": false,
+      "expected": "claude-code",
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 4224,
+      "seconds": 69.0
+    },
+    {
+      "id": "A2",
+      "kind": "id",
+      "correct": false,
+      "expected": "HF-SYNC-4",
+      "answer": "No CHECKIN entries found in the ledger.",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1903,
+      "seconds": 14.7
+    },
+    {
+      "id": "A3",
+      "kind": "number",
+      "correct": false,
+      "expected": 290,
+      "answer": "342",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 4219,
+      "seconds": 58.0
+    },
+    {
+      "id": "A4.1",
+      "kind": "verdict",
+      "correct": true,
+      "expected": "CONFIRMED",
+      "answer": "CONFIRMED",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1899,
+      "seconds": 12.3
+    },
+    {
+      "id": "A4.2",
+      "kind": "verdict",
+      "correct": true,
+      "expected": "CORROBORATED",
+      "answer": "CORROBORATED",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1899,
+      "seconds": 9.2
+    },
+    {
+      "id": "A4.3",
+      "kind": "verdict",
+      "correct": true,
+      "expected": "CORROBORATED",
+      "answer": "CORROBORATED",
+      "status": "final",
+      "turns": 3,
+      "tool_calls": 2,
+      "max_prompt_tokens": 2662,
+      "seconds": 19.3
+    },
+    {
+      "id": "A4.4",
+      "kind": "verdict",
+      "correct": true,
+      "expected": "CONFIRMED",
+      "answer": "CONFIRMED",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1899,
+      "seconds": 8.9
+    },
+    {
+      "id": "A4.5",
+      "kind": "verdict",
+      "correct": true,
+      "expected": "CONFIRMED",
+      "answer": "CONFIRMED",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1899,
+      "seconds": 8.6
+    },
+    {
+      "id": "A6.1",
+      "kind": "verdict_path",
+      "correct": true,
+      "expected": {
+        "verdict": "FALSIFIED",
+        "path": "LEARNING/research/experiments/mission-022/README.md"
+      },
+      "answer": "FALSIFIED | LEARNING/research/experiments/mission-022/README.md",
+      "status": "final",
+      "turns": 2,
+      "tool_calls": 1,
+      "max_prompt_tokens": 1908,
+      "seconds": 10.6
+    },
+    {
+      "id": "A6.2",
+      "kind": "verdict_path",
+      "correct": false,
+      "expected": {
+        "verdict": "CORROBORATED",
+        "path": "LEARNING/research/experiments/mission-027/README.md"
+      },
+      "answer": "VERDICT | LEARNING/research/experiments/mission-027/README.md",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1825,
+      "seconds": 5.1
+    },
+    {
+      "id": "A5.1",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "yes",
+      "answer": "yes",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1827,
+      "seconds": 3.2
+    },
+    {
+      "id": "A5.2",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "yes",
+      "answer": "yes",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1827,
+      "seconds": 3.4
+    },
+    {
+      "id": "A5.3",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1827,
+      "seconds": 3.4
+    },
+    {
+      "id": "A5.4",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1827,
+      "seconds": 3.4
+    },
+    {
+      "id": "B1",
+      "kind": "token",
+      "correct": false,
+      "expected": "PINMAP-5",
+      "answer": "PROTO-12",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1584,
+      "seconds": 11.7
+    },
+    {
+      "id": "B2",
+      "kind": "token",
+      "correct": true,
+      "expected": "SQLite",
+      "answer": "SQLite index",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1572,
+      "seconds": 2.7
+    },
+    {
+      "id": "B3",
+      "kind": "token",
+      "correct": true,
+      "expected": "ZETA-7",
+      "answer": "ZETA-7",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1578,
+      "seconds": 3.6
+    },
+    {
+      "id": "B4",
+      "kind": "yesno",
+      "correct": true,
+      "expected": "no",
+      "answer": "no",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1575,
+      "seconds": 3.2
+    },
+    {
+      "id": "B5",
+      "kind": "agent",
+      "correct": false,
+      "expected": "antigravity",
+      "answer": "codex",
+      "status": "final",
+      "turns": 3,
+      "tool_calls": 2,
+      "max_prompt_tokens": 1813,
+      "seconds": 13.5
+    },
+    {
+      "id": "B6",
+      "kind": "token",
+      "correct": true,
+      "expected": "BENCH-RZ4",
+      "answer": "BENCH-RZ4",
+      "status": "final",
+      "turns": 5,
+      "tool_calls": 4,
+      "max_prompt_tokens": 2067,
+      "seconds": 26.8
+    },
+    {
+      "id": "B7",
+      "kind": "number",
+      "correct": false,
+      "expected": 9231,
+      "answer": null,
+      "status": "turn_limit",
+      "turns": 5,
+      "tool_calls": 5,
+      "max_prompt_tokens": 1968,
+      "seconds": 26.9
+    },
+    {
+      "id": "B8",
+      "kind": "token",
+      "correct": true,
+      "expected": "QUARTZ-3",
+      "answer": "QUARTZ-3",
+      "status": "final",
+      "turns": 1,
+      "tool_calls": 0,
+      "max_prompt_tokens": 1577,
+      "seconds": 3.8
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "A": [
+    {
+      "id": "A1",
+      "kind": "agent",
+      "prompt": "Which agent performed the most recent CHECKIN recorded in the coordination ledger?",
+      "fmt": "the agent id only",
+      "expected": "claude-code"
+    },
+    {
+      "id": "A2",
+      "kind": "id",
+      "prompt": "Which mission or task id did the most recent CHECKIN in the coordination ledger close?",
+      "fmt": "the id only",
+      "expected": "HF-SYNC-4"
+    },
+    {
+      "id": "A3",
+      "kind": "number",
+      "prompt": "Which pull request number is recorded on the most recent CHECKIN that has one?",
+      "fmt": "the number only",
+      "expected": 290
+    },
+    {
+      "id": "A4.1",
+      "kind": "verdict",
+      "prompt": "What is the recorded verdict of MISSION-021?",
+      "fmt": "the verdict word only",
+      "expected": "CONFIRMED"
+    },
+    {
+      "id": "A4.2",
+      "kind": "verdict",
+      "prompt": "What is the recorded verdict of MISSION-026?",
+      "fmt": "the verdict word only",
+      "expected": "CORROBORATED"
+    },
+    {
+      "id": "A4.3",
+      "kind": "verdict",
+      "prompt": "What is the recorded verdict of MISSION-002?",
+      "fmt": "the verdict word only",
+      "expected": "CORROBORATED"
+    },
+    {
+      "id": "A4.4",
+      "kind": "verdict",
+      "prompt": "What is the recorded verdict of MISSION-003?",
+      "fmt": "the verdict word only",
+      "expected": "CONFIRMED"
+    },
+    {
+      "id": "A4.5",
+      "kind": "verdict",
+      "prompt": "What is the recorded verdict of MISSION-016?",
+      "fmt": "the verdict word only",
+      "expected": "CONFIRMED"
+    },
+    {
+      "id": "A6.1",
+      "kind": "verdict_path",
+      "prompt": "What is the recorded verdict of MISSION-022, and which file documents the evidence for it?",
+      "fmt": "VERDICT | path",
+      "expected": {
+        "verdict": "FALSIFIED",
+        "path": "LEARNING/research/experiments/mission-022/README.md"
+      }
+    },
+    {
+      "id": "A6.2",
+      "kind": "verdict_path",
+      "prompt": "What is the recorded verdict of MISSION-027, and which file documents the evidence for it?",
+      "fmt": "VERDICT | path",
+      "expected": {
+        "verdict": "CORROBORATED",
+        "path": "LEARNING/research/experiments/mission-027/README.md"
+      }
+    },
+    {
+      "id": "A5.1",
+      "kind": "yesno",
+      "prompt": "Has MISSION-022 already been resolved with a verdict, so that its benchmark should be cited rather than re-run?",
+      "fmt": "yes or no",
+      "expected": "yes"
+    },
+    {
+      "id": "A5.2",
+      "kind": "yesno",
+      "prompt": "Has MISSION-002 already been resolved with a verdict, so that its benchmark should be cited rather than re-run?",
+      "fmt": "yes or no",
+      "expected": "yes"
+    },
+    {
+      "id": "A5.3",
+      "kind": "yesno",
+      "prompt": "Has MISSION-011 already been resolved with a verdict, so that its benchmark should be cited rather than re-run?",
+      "fmt": "yes or no",
+      "expected": "no"
+    },
+    {
+      "id": "A5.4",
+      "kind": "yesno",
+      "prompt": "Has MISSION-004 already been resolved with a verdict, so that its benchmark should be cited rather than re-run?",
+      "fmt": "yes or no",
+      "expected": "no"
+    }
+  ],
+  "B": [
+    {
+      "id": "B1",
+      "kind": "token",
+      "prompt": "Why was MISSION-903 abandoned, and which decision id must be made before retrying it?",
+      "fmt": "the decision id only",
+      "expected": "PINMAP-5"
+    },
+    {
+      "id": "B2",
+      "kind": "token",
+      "prompt": "Which approach did the codex handoff say was rejected?",
+      "fmt": "one word",
+      "expected": "SQLite"
+    },
+    {
+      "id": "B3",
+      "kind": "token",
+      "prompt": "Which regression must be run before merging, according to the codex handoff?",
+      "fmt": "the test id only",
+      "expected": "ZETA-7"
+    },
+    {
+      "id": "B4",
+      "kind": "yesno",
+      "prompt": "Is a vector store approved according to the antigravity handoff?",
+      "fmt": "yes or no",
+      "expected": "no"
+    },
+    {
+      "id": "B5",
+      "kind": "agent",
+      "prompt": "Which agent last completed MISSION-902?",
+      "fmt": "the agent id only",
+      "expected": "antigravity"
+    },
+    {
+      "id": "B6",
+      "kind": "token",
+      "prompt": "Which benchmark was already run (so it must be cited, not repeated), according to the handoffs?",
+      "fmt": "the benchmark id only",
+      "expected": "BENCH-RZ4"
+    },
+    {
+      "id": "B7",
+      "kind": "number",
+      "prompt": "Which port is reserved for the mock server according to the handoffs?",
+      "fmt": "the port number only",
+      "expected": 9231
+    },
+    {
+      "id": "B8",
+      "kind": "token",
+      "prompt": "Which document should be updated next according to the antigravity handoff?",
+      "fmt": "the document id only",
+      "expected": "QUARTZ-3"
+    }
+  ]
+}

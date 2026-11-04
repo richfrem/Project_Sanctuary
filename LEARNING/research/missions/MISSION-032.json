@@ -1,0 +1,44 @@
+{
+  "id": "MISSION-032",
+  "title": "Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Claude Haiku 5.5 / Gemini 3.8 Flash via cli-agent as incoming agents; local Qwen2.5-Coder-7B via MLX for the placement arm",
+  "created_at": "2026-11-04T07:00:00Z",
+  "updated_at": "2026-11-04T07:00:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 40.0
+  },
+  "hypothesis": "On fresh held-out handover questions (new seed, same generators), a frontier incoming agent (Claude Haiku 5.5 or Gemini 3.8 Flash) given the Predecessor Relay in its boot briefing answers >= 90% correctly with zero tool calls on >= 90% of questions, against <= 55% for the same agent without the relay; and placing the relay at the top of the briefing lifts the local 7B from 68.2% (MISSION-025) to >= 80%.",
+  "falsification_criteria": "A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).",
+  "baseline_evidence": "MISSION-025 (22 questions, local Qwen 7B, temperature 0): control 22.7% (median 5 turns, 2.5 tool calls), with relay 68.2% (median 2 turns, 1.27 tool calls, +45.5 points). All 7 misses had the answer present in the relay: the agent ignored the briefing and dug with tools (4), copied a format placeholder (1), or confused ids in one note (2).",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "Not applicable; the mission compares incoming agents."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "cross-model-continuity",
+    "predecessor-relay",
+    "frontier-evaluation",
+    "relay-placement",
+    "spawned-by-mission-025"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "priority_score": 40.0
+}
