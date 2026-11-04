@@ -1,0 +1,88 @@
+{
+  "id": "MISSION-033",
+  "title": "Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board",
+  "created_at": "2026-11-04T07:30:00Z",
+  "updated_at": "2026-11-04T07:30:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.3,
+    "operational_friction": 3,
+    "priority_score": 22.22
+  },
+  "hypothesis": "A Sanctuary mission-orchestrator skill, a thin wrapper over the globally installed orchestrating-agent-work skill that adds (a) mission selection by priority and independence, (b) dispatch of up to 3 missions in parallel to 3 different CLIs, each in its own leased worktree, (c) independent review and scoring of each delivery against its falsifiable promises, (d) a continuously improving evaluation rubric, and (e) orchestrator-run merging in dependency order including ID allocation and recompilation of generated files, delivers a pilot batch of 3 missions with: wall-clock <= 60% of running the same missions sequentially; 0 file clobbering and <= 1 conflict-resolution round per PR; orchestrator token overhead <= 25% of the workers' total; review scores within +/-1 of an independent re-score on >= 80% of dimensions; and >= 1 genuine delivery defect caught that the worker's self-score missed.",
+  "falsification_criteria": "Any pilot threshold missed (wall-clock > 60% of sequential, clobbering or > 1 conflict round per PR, token overhead > 25%, review agreement < 80%, zero defects caught); or one worker corrupts another's worktree or files; or an orchestrator-run merge leaves main failing its tests; or the orchestrator merges, pushes or signs anything without the human approval its policy requires; or Phase 1 shows the existing upstream skill already covers selection, dispatch, review and merge with configuration alone (then no new skill is warranted and the result is recorded as such).",
+  "phases": [
+    "P1 Evaluate the upstream orchestration skills (SKILL.md plus references: Graph/DAG, Dual-Loop, Parallel Swarm, Red-Team Review, topology rules, routing and closure, CLI-agent executor) with a written rubric: mission selection, worktree confinement, parallel dispatch to different CLIs, delivery review against falsifiable promises, merge handling, human gates; list the gaps.",
+    "P2 Design the Sanctuary wrapper skill in plugins/sanctuary-core (generic gaps go upstream under Protocol 133); define the policies: merge authority, reviewer independence, resource scheduling, ID and generated-file ownership.",
+    "P3 Pilot (after MISSION-031, or with manual --targets): 3 low-risk missions in parallel on 3 CLIs in leased worktrees; baseline = the same work done sequentially and the 2026-11-03/04 two-agent session metrics.",
+    "P4 Independent re-score of every delivery by a different vendor than the worker; compare with the orchestrator's review and the workers' self-scores.",
+    "P5 Record the result, feed rubric improvements back into the evaluation skill, replenish the backlog."
+  ],
+  "design_constraints": [
+    "Human Gate: the orchestrator prepares commits, PRs and merges but only performs them under the approval policy the human sets per batch; it never self-signs manifests (upstream rule).",
+    "Reviewer independence: the reviewer of a delivery is a different vendor than its worker where possible.",
+    "Resource scheduling: at most one mission that loads the local 7B model at a time on a 16 GB machine (flight-board resource lock).",
+    "Orchestrator owns mission and chronicle ID allocation, merge order, regeneration of index.jsonl/backlog.md, and reconciliation of ledger aggregates.",
+    "Inner worker loops never run git write commands; commits and merges stay with the caller (upstream Loop Isolation).",
+    "Consume MISSION-031's projected_impact and overlap matrix for mission independence and lease targets; the orchestrator adds selection policy and review, not a second collision detector."
+  ],
+  "baseline_evidence": "Two-agent session 2026-11-03/04 (Claude Code and Antigravity in parallel worktrees): collisions and reconciliation work the orchestrator would own: mission IDs 030/031 and chronicle 355 allocated concurrently; index.jsonl, backlog.md and the cognitive ledger collide on merge; one agent's score existed only as an uncommitted edit in the main tree and its events entry was never committed; manage_coordination checkout dirties the main tree and breaks git pull; merge order mattered (agy merged first). All scores were self-assessed.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.3,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "codex"
+    ],
+    "frontier_escalation_condition": "The orchestrator and the independent reviewer run on a frontier model; escalate workers only for missions the orchestrator marks high-risk."
+  },
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "orchestration",
+    "multi-agent",
+    "parallel-missions",
+    "worktree-isolation",
+    "delivery-review",
+    "merge-queue",
+    "skill-creation",
+    "cross-vendor-review",
+    "protocol-128",
+    "protocol-133"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "upstream_skill_dependencies": [
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/cli-agent",
+    "agent-plugins-skills/plugins/agent-agentic-os/.apm/skills/running-control-plane"
+  ],
+  "reference_doctrines": [
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/PATTERN_GUIDE.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/topology-rules.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/graph-planning.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/strategy-dual-loop.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/strategy-agent-swarm.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/strategy-red-team-review.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/routing-and-closure.md",
+    "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/cli-agent-executor.md",
+    "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md",
+    "protocols/133_Companion_Repository_Skill_Improvement_Protocol.md"
+  ],
+  "priority_score": 22.22,
+  "related_missions": {
+    "MISSION-031": "DEPENDS ON: projected_impact declarations and the flight-board overlap matrix are the orchestrator's input for choosing independent missions and acquiring exact leases; do not build a second overlap detector. Land 031 first or run the pilot with manual --targets.",
+    "MISSION-026": "BUILDS ON (corroborated): flight board, leases and worktree isolation are the coordination substrate.",
+    "MISSION-025": "BUILDS ON: workers' checkin --handoff notes are read by the orchestrator during review and carried into the next batch.",
+    "MISSION-032": "INFORMED BY: shows which incoming agents (frontier vs local) reliably follow a briefing, which informs worker routing.",
+    "MISSION-028": "INFORMED BY: signal-triggered escalation policy for choosing a cheaper or stronger worker."
+  }
+}

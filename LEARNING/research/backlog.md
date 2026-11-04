@@ -47,10 +47,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#26** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#27** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#28** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#29** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#30** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#31** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#32** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#29** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
+| **#30** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#31** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#32** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#33** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -470,7 +471,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #29)
+### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #29)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`, `codex`
+- **Hypothesis (Popperian Prediction)**:
+  > A Sanctuary mission-orchestrator skill, a thin wrapper over the globally installed orchestrating-agent-work skill that adds (a) mission selection by priority and independence, (b) dispatch of up to 3 missions in parallel to 3 different CLIs, each in its own leased worktree, (c) independent review and scoring of each delivery against its falsifiable promises, (d) a continuously improving evaluation rubric, and (e) orchestrator-run merging in dependency order including ID allocation and recompilation of generated files, delivers a pilot batch of 3 missions with: wall-clock <= 60% of running the same missions sequentially; 0 file clobbering and <= 1 conflict-resolution round per PR; orchestrator token overhead <= 25% of the workers' total; review scores within +/-1 of an independent re-score on >= 80% of dimensions; and >= 1 genuine delivery defect caught that the worker's self-score missed.
+- **Falsification Gate**:
+  > Any pilot threshold missed (wall-clock > 60% of sequential, clobbering or > 1 conflict round per PR, token overhead > 25%, review agreement < 80%, zero defects caught); or one worker corrupts another's worktree or files; or an orchestrator-run merge leaves main failing its tests; or the orchestrator merges, pushes or signs anything without the human approval its policy requires; or Phase 1 shows the existing upstream skill already covers selection, dispatch, review and merge with configuration alone (then no new skill is warranted and the result is recorded as such).
+
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #30)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -481,7 +493,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #30)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #31)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -492,7 +504,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #31)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #32)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -503,7 +515,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #32)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #33)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI
