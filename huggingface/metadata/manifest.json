@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "last_updated": "2026-11-03T16:00:55Z",
-  "snapshot_count": 1023,
-  "dataset_sha256": "bc3b7b54f021001ce307cef5499d2c06a2d10fd404ab7668570f73400a41a134",
+  "last_updated": "2026-11-04T06:16:45Z",
+  "snapshot_count": 1025,
+  "dataset_sha256": "856c80875b0eb01e4a7c181e547a4e0deea2151fd8da9af755263d0820621755",
   "model_lineage": "Sanctuary-Qwen2-7B-v1.0-GGUF-Final",
   "schema_compliance": "ADR_084_CANONICAL"
 }
