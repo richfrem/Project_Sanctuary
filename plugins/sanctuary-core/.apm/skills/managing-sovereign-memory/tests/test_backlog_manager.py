@@ -14,7 +14,7 @@ import sys
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 
-from manage_backlog import BacklogManager, calculate_priority_score
+from manage_backlog import BacklogManager, calculate_priority_score, related_missions
 
 
 class TestBacklogManager(unittest.TestCase):
@@ -193,3 +193,55 @@ class TestProjectedImpactValidation(unittest.TestCase):
             self.assertFalse(any("MISSION-902" in e for e in errors), errors)
         finally:
             shutil.rmtree(root, ignore_errors=True)
+
+
+def _m(mid, title, hyp, tags=(), related=None):
+    return {"id": mid, "title": title, "hypothesis": hyp, "tags": list(tags),
+            "status": "PROPOSED", "related_missions": related or {}}
+
+
+class TestRelatedMissions(unittest.TestCase):
+    def setUp(self):
+        self.corpus = [
+            _m("MISSION-001", "Quota window telemetry for model routing",
+               "Measure token usage per backend to improve model routing decisions.", ["routing", "tokens"]),
+            _m("MISSION-002", "Failover routing across subscriptions",
+               "Route requests across subscription backends when a token quota is exhausted.", ["routing"]),
+            _m("MISSION-003", "Chronicle formatting cleanup",
+               "Normalise markdown headings in chronicle entries.", ["docs"]),
+            _m("MISSION-004", "Image thumbnail generation",
+               "Generate thumbnails for archived screenshots.", ["media"]),
+        ]
+
+    def test_ranks_similar_first_and_excludes_self(self):
+        out = related_missions(self.corpus, target_id="MISSION-001", top=3)
+        ids = [r["id"] for r in out]
+        self.assertNotIn("MISSION-001", ids)
+        self.assertEqual(ids[0], "MISSION-002")
+        self.assertEqual(sorted((r["score"] for r in out), reverse=True), [r["score"] for r in out])
+
+    def test_shared_terms_reported(self):
+        out = related_missions(self.corpus, target_id="MISSION-001", top=1)
+        self.assertTrue({"routing", "token"} & set(out[0]["shared_terms"]))
+
+    def test_link_state_unlinked_one_way_and_mutual(self):
+        out = {r["id"]: r["link"] for r in related_missions(self.corpus, target_id="MISSION-001", top=3)}
+        self.assertEqual(out["MISSION-002"], "unlinked")
+        self.corpus[0]["related_missions"] = {"MISSION-002": "x"}
+        out = {r["id"]: r["link"] for r in related_missions(self.corpus, target_id="MISSION-001", top=3)}
+        self.assertEqual(out["MISSION-002"], "one-way")
+        self.corpus[1]["related_missions"] = {"MISSION-001": "y"}
+        out = {r["id"]: r["link"] for r in related_missions(self.corpus, target_id="MISSION-001", top=3)}
+        self.assertEqual(out["MISSION-002"], "linked")
+
+    def test_text_mode_for_undrafted_idea(self):
+        out = related_missions(self.corpus, text="failover across subscription backends when token quota is exhausted", top=2)
+        self.assertEqual(out[0]["id"], "MISSION-002")
+
+    def test_unknown_target_raises(self):
+        with self.assertRaises(KeyError):
+            related_missions(self.corpus, target_id="MISSION-999")
+
+    def test_zero_overlap_scores_zero_and_is_omitted(self):
+        out = related_missions(self.corpus, target_id="MISSION-004", top=5)
+        self.assertEqual(out, [])

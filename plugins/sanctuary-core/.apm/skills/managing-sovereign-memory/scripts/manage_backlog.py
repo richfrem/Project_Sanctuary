@@ -9,6 +9,7 @@ Usage:
     python3 manage_backlog.py route <TASK_DESCRIPTION> [--type TYPE] [--failures N] [--format json|text]
     python3 manage_backlog.py get <MISSION-ID>
     python3 manage_backlog.py capture --idea "..." [--author AGENT] [--tags ...]
+    python3 manage_backlog.py related (--id <MISSION-ID> | --text "draft idea" [--tags ...]) [--top N] [--format text|json]
     python3 manage_backlog.py compile
     python3 manage_backlog.py validate
     python3 manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED|ABANDONED --evidence "..." [--citation "..."] [--lessons "..."]
@@ -65,6 +66,86 @@ def validate_projected_impact(raw: Any) -> List[str]:
         if key in raw and not (isinstance(raw[key], list) and all(isinstance(x, str) for x in raw[key])):
             errors.append(f"projected_impact.{key} must be a list of strings")
     return errors
+
+
+_STOPWORDS = frozenset(
+    "the and for that with from this are was were has have had not but can will would should could into onto over "
+    "than then them they their its via per any all each both more most less such only also when where which what "
+    "while within without across between about after before during under using used use based new existing mission "
+    "missions agent agents".split()
+)
+
+
+def _terms(text: str) -> List[str]:
+    """Lowercase word tokens (len >= 3), stopwords removed, plural 's' stripped."""
+    out: List[str] = []
+    for w in re.findall(r"[a-z0-9]+", text.lower()):
+        if len(w) < 3 or w in _STOPWORDS:
+            continue
+        if len(w) > 4 and w.endswith("s") and not w.endswith("ss"):
+            w = w[:-1]
+        out.append(w)
+    return out
+
+
+def _mission_text(m: Dict[str, Any]) -> str:
+    return " ".join([m.get("title", ""), m.get("hypothesis", ""), " ".join(m.get("tags", []))])
+
+
+def related_missions(missions: List[Dict[str, Any]], target_id: Optional[str] = None,
+                     text: Optional[str] = None, tags: Optional[List[str]] = None,
+                     top: int = 10) -> List[Dict[str, Any]]:
+    """Rank other missions by lexical relatedness to a mission (target_id) or a draft idea (text).
+
+    Score = TF-IDF cosine of title+hypothesis+tags, plus 0.3 x tag Jaccard. Lexical only: it suggests
+    candidates for a human/agent to judge; it does not prove a relationship. Missions scoring 0 are omitted.
+    Each result carries link state: linked (mutual), one-way, or unlinked.
+    """
+    import math
+    from collections import Counter
+
+    target: Optional[Dict[str, Any]] = None
+    if target_id is not None:
+        target = next((m for m in missions if m.get("id") == target_id), None)
+        if target is None:
+            raise KeyError(target_id)
+        qtext, qtags = _mission_text(target), set(target.get("tags", []))
+    else:
+        qtext, qtags = text or "", set(tags or [])
+
+    docs = {m["id"]: Counter(_terms(_mission_text(m))) for m in missions}
+    df = Counter(t for c in docs.values() for t in c)
+    n = len(missions) + 1
+    idf = {t: math.log((n + 1) / (d + 1)) + 1.0 for t, d in df.items()}
+
+    def vec(c: "Counter[str]") -> Dict[str, float]:
+        return {t: (1 + math.log(f)) * idf.get(t, math.log(n + 1) + 1.0) for t, f in c.items()}
+
+    def cos(a: Dict[str, float], b: Dict[str, float]) -> float:
+        dot = sum(w * b[t] for t, w in a.items() if t in b)
+        na = math.sqrt(sum(w * w for w in a.values()))
+        nb = math.sqrt(sum(w * w for w in b.values()))
+        return dot / (na * nb) if na and nb else 0.0
+
+    qvec = vec(Counter(_terms(qtext)))
+    results: List[Dict[str, Any]] = []
+    for m in missions:
+        if m.get("id") == target_id:
+            continue
+        mvec = vec(docs[m["id"]])
+        mtags = set(m.get("tags", []))
+        jac = len(qtags & mtags) / len(qtags | mtags) if (qtags | mtags) else 0.0
+        score = cos(qvec, mvec) + 0.3 * jac
+        if score <= 0:
+            continue
+        shared = sorted((t for t in qvec if t in mvec), key=lambda t: -(qvec[t] * mvec[t]))[:5]
+        fwd = target is not None and m["id"] in (target.get("related_missions") or {})
+        back = target is not None and target_id in (m.get("related_missions") or {})
+        link = "linked" if fwd and back else "one-way" if fwd or back else "unlinked"
+        results.append({"id": m["id"], "status": m.get("status", ""), "score": round(score, 3),
+                        "shared_terms": shared, "link": link, "title": m.get("title", "")})
+    results.sort(key=lambda r: (-r["score"], r["id"]))
+    return results[:top]
 
 
 def hypothesis_brief(hypothesis: str, limit: int = 220) -> str:
@@ -483,6 +564,14 @@ def main():
     cap_p.add_argument("--author", default="agent", help="Author/agent identifier")
     cap_p.add_argument("--tags", nargs="*", help="Tags")
 
+    # related
+    rel_p = subparsers.add_parser("related", help="Suggest related missions for a mission or a draft idea (lexical)")
+    rel_p.add_argument("--id", help="Existing mission ID to compare against")
+    rel_p.add_argument("--text", help="Draft title/hypothesis text for a mission not yet created")
+    rel_p.add_argument("--tags", nargs="*", help="Tags of the draft (with --text)")
+    rel_p.add_argument("--top", type=int, default=10, help="Number of candidates")
+    rel_p.add_argument("--format", choices=["text", "json"], default="text")
+
     # compile
     subparsers.add_parser("compile", help="Compile manifests into index.jsonl and backlog.md")
 
@@ -534,6 +623,24 @@ def main():
             print(f"Mission '{args.id}' not found.", file=sys.stderr)
             sys.exit(1)
         print(json.dumps(mission, indent=2))
+
+    elif args.command == "related":
+        if bool(args.id) == bool(args.text):
+            print("Provide exactly one of --id or --text.", file=sys.stderr)
+            sys.exit(2)
+        try:
+            found = related_missions(mgr.load_missions(), target_id=args.id, text=args.text,
+                                     tags=args.tags, top=args.top)
+        except KeyError:
+            print(f"Mission '{args.id}' not found.", file=sys.stderr)
+            sys.exit(1)
+        if args.format == "json":
+            print(json.dumps(found, indent=2))
+        else:
+            print(f"{'ID':<12} {'Status':<11} {'Score':<6} {'Link':<9} Shared terms | Title")
+            for r in found:
+                print(f"{r['id']:<12} {r['status']:<11} {r['score']:<6.2f} {r['link']:<9} {', '.join(r['shared_terms'])} | {r['title'][:60]}")
+            print("Lexical suggestions only: judge each, then add bidirectional related_missions links.")
 
     elif args.command == "capture":
         entry = mgr.capture_inbox(args.idea, author=args.author, tags=args.tags)

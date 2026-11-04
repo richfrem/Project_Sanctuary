@@ -1,7 +1,7 @@
 {
   "id": "MISSION-035",
   "title": "Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment",
-  "status": "IN_PROGRESS",
+  "status": "PROPOSED",
   "execution_surface": "hybrid",
   "target_platform": "Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill",
   "created_at": "2026-11-04T08:30:00Z",
