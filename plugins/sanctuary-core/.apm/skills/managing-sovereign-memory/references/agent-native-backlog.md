@@ -59,6 +59,17 @@ PARKED (decay > 30d or blocked)
 
 ---
 
+## 4a. Creating a Mission (required checklist)
+
+Whenever an agent drafts a new mission (including replenishment missions), do these in order:
+
+1. **Allocate the ID from `origin/main`**: fetch first; other agents allocate concurrently.
+2. **Related-mission scan (required)**: run `manage_backlog.py related --text "<draft title + hypothesis>" --tags <tags>` (or `--id MISSION-NNN` once the file exists) and read the top candidates. The helper is lexical, so it finds topical overlap (shared terms such as routing, token, quota) but misses mechanism-level relations (a mission that attaches to the same lease, ledger or hook). Also ask: *which existing system or mission does this plug into, feed, or depend on?* and check those by hand.
+3. **Link bidirectionally**: for each real relation add a `related_missions` entry in the new manifest AND in the related manifest, stating the relationship (DEPENDS ON, CONSUMER, PROVIDER, EXTENDS, VALIDATES, SUPPLIES DATA TO) and whether it is a hard dependency. Declare the edited related manifests in the new mission's `projected_impact`. Do not link on keyword noise alone; a link is a judgement.
+4. **Declare `projected_impact`** (paths the mission will touch) so the flight board can lease and detect overlap.
+5. **Score** (leverage, depth, cost, friction), run `validate` and `compile`, and commit the manifest plus regenerated `index.jsonl` and `backlog.md` together.
+6. **Status discipline**: a drafted mission stays `PROPOSED`. A flight-board checkout marks the worktree's manifest `IN_PROGRESS`; if you only drafted or researched, restore `PROPOSED` before committing (see MISSION-035's PR #299, which shipped the marker by mistake).
+
 ## 5. CLI Tooling
 
 ```bash
@@ -67,6 +78,10 @@ python3 manage_backlog.py list --format jsonl
 
 # Table inspection
 python3 manage_backlog.py list
+
+# Suggest related missions before linking (lexical; judge each)
+python3 manage_backlog.py related --text "draft title and hypothesis" --tags routing tokens
+python3 manage_backlog.py related --id MISSION-035 --top 10
 
 # Frictionless capture from any session/agent
 python3 manage_backlog.py capture --idea "Add SHA-256 integrity check to GGUF model downloader" --author qwen

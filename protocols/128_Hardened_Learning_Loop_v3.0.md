@@ -41,7 +41,7 @@ Detailed in `START_HERE.md` (the 5-step bootstrap is the expanded form of this s
 ### Stage 3: Retrospective
 - **Asymmetric Persistence Rule**: when work fails, code may roll back but insights, friction points and edge cases are never rolled back.
 - **Layer 2 update**: distill findings into `LEARNING/` (`concepts/`, `topics/`, `research/`), tagging confidence (`CONFIRMED`, `OBSERVED`, `HYPOTHESIS`).
-- **Missions**: record outcomes with `manage_backlog.py record-result` (verdicts: CORROBORATED, FALSIFIED, ABANDONED) and run `compile`. For every mission resolved, create at least one new falsifiable inquiry (replenishment invariant). Check the shared mission IDs and chronicle numbers on `origin/main` before allocating new ones; other agents allocate concurrently.
+- **Missions**: record outcomes with `manage_backlog.py record-result` (verdicts: CORROBORATED, FALSIFIED, ABANDONED) and run `compile`. For every mission resolved, create at least one new falsifiable inquiry (replenishment invariant). Check the shared mission IDs and chronicle numbers on `origin/main` before allocating new ones; other agents allocate concurrently. New missions follow the creation checklist in `managing-sovereign-memory/references/agent-native-backlog.md` §4a (related-mission scan and bidirectional links).
 
 ### Stage 4: Technical Seal
 - **Verify**: run the test suites of every touched skill; the pre-commit cognitive gate must pass. Audits of plugin or skill structure come from the upstream APM authoring skills when a plugin changed.
