@@ -85,7 +85,8 @@
     "MISSION-025": "BUILDS ON: workers' checkin --handoff notes are read by the orchestrator during review and carried into the next batch.",
     "MISSION-032": "INFORMED BY: shows which incoming agents (frontier vs local) reliably follow a briefing, which informs worker routing.",
     "MISSION-028": "INFORMED BY: signal-triggered escalation policy for choosing a cheaper or stronger worker.",
-    "MISSION-035": "PROVIDER: measured usage telemetry (before/after token and quota-window snapshots, per-task-class cost predictor, headroom check). The orchestrator calls its snapshot and recommend commands for worker assignment and to measure its own token overhead; do not build a second usage tracker. Until 035 lands, the pilot records usage manually via track_budget.py."
+    "MISSION-035": "PROVIDER: measured usage telemetry (before/after token and quota-window snapshots, per-task-class cost predictor, headroom check). The orchestrator calls its snapshot and recommend commands for worker assignment and to measure its own token overhead; do not build a second usage tracker. Until 035 lands, the pilot records usage manually via track_budget.py.",
+    "MISSION-052": "EXTENDED BY: MISSION-052 runs one four-worker batch with the existing stack only; its result is evidence for whether the wrapper skill 033 proposes is warranted."
   },
   "projected_impact": {
     "paths": [

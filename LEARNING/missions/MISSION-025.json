@@ -53,5 +53,8 @@
     "A handoff note states the next step last, so a short display cap hides the most important part; show recent notes up to two thirds of the storage cap and keep the whole section under a fixed budget.",
     "Only 2 of 10 resolved missions cite a file path as evidence; the relay falls back to the experiment log or the mission manifest. Record-result callers should pass --citation with a path.",
     "Format placeholders in a question (VERDICT | path) can be copied literally by a small model; use a worked example or JSON in the answer format. Test frontier incoming agents and relay-first placement next (MISSION-032)."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-052": "CONSUMER: MISSION-052 leaves and reads handoffs across four workers and an incoming session."
+  }
 }

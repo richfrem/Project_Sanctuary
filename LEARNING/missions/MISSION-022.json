@@ -52,5 +52,8 @@
     "Loop-health signals flag 19/60 tasks and catch 10/13 failures but miss silent confident errors (letter-filtered directory lists); needs a verifier (MISSION-007) and an escalation policy (MISSION-028).",
     "Tool error hints can mislead small models: 'use find_files' sent the model back to the glob; hints should show the corrected call. Fix requires a new frozen harness and fresh held-out run.",
     "MLX server strips the <tool_call> special token; parse bare JSON calls."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-052": "CONSTRAINT APPLIED: MISSION-052 gives the local worker a bounded, read-only, independently checkable task."
+  }
 }

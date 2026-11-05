@@ -399,7 +399,7 @@ dependencies:
     .agents/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
     .agents/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
     .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
-    .agents/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
+    .agents/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:ba683fec5a576731221f14b5570ca41b789a4f584ceebc82519a040a514bd045
     .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .agents/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
@@ -544,7 +544,7 @@ dependencies:
     .claude/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
     .claude/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
     .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
-    .claude/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
+    .claude/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:ba683fec5a576731221f14b5570ca41b789a4f584ceebc82519a040a514bd045
     .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .claude/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
@@ -1328,7 +1328,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
+  content_hash: sha256:ba683fec5a576731221f14b5570ca41b789a4f584ceebc82519a040a514bd045
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py
@@ -2696,7 +2696,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
+  content_hash: sha256:ba683fec5a576731221f14b5570ca41b789a4f584ceebc82519a040a514bd045
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py

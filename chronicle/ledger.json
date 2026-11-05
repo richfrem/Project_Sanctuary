@@ -1,6 +1,13 @@
 {
-  "total_entries": 369,
+  "total_entries": 370,
   "entries": [
+    {
+      "id": 378,
+      "title": "MISSION-052 created: the four-worker orchestration batch as a startable mission, with a brief for a clean session",
+      "filename": "378_mission_052_created_the_four_worker_orchestration_batch_as_a_startable_mission_with_a_brief_for_a_clean_session.md",
+      "date": "2026-11-05",
+      "status": "draft"
+    },
     {
       "id": 377,
       "title": "Reinstalling the plugin exposed the held-out evaluation generator to the local-agent sandbox; fixed by hiding it by name",

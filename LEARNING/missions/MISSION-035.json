@@ -99,7 +99,8 @@
     "MISSION-002": "EXTENDED BY THIS: adds measured window state to the readiness probe and failover routing.",
     "MISSION-016": "VALIDATES: replaces static cheapest-viable tiers with measured cost per task class.",
     "MISSION-028": "SUPPLIES DATA TO: the local-to-haiku escalation decision.",
-    "MISSION-051": "SPAWNED: follow-up testing size buckets, resolvable window readings and a same-bucket cross-model effort ratio after this mission was falsified at N=14."
+    "MISSION-051": "SPAWNED: follow-up testing size buckets, resolvable window readings and a same-bucket cross-model effort ratio after this mission was falsified at N=14.",
+    "MISSION-052": "CONSUMER: MISSION-052 produces the first concurrent multi-worker usage data, including the Codex-pair attribution gap."
   },
   "projected_impact": {
     "paths": [

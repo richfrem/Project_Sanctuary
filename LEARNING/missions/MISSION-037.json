@@ -46,7 +46,8 @@
     "MISSION-006": "EXTENDS provenance with applicability after legitimate code change; planted falsehood detection remains distinct.",
     "MISSION-032": "PROVIDER of validity annotations for the predecessor relay.",
     "MISSION-035": "CONSUMER of existing measured-cost telemetry rather than building a separate cost ledger.",
-    "MISSION-036": "CONSUMER of claim identifiers and evidence scope; hard dependency for integrated deployment."
+    "MISSION-036": "CONSUMER of claim identifiers and evidence scope; hard dependency for integrated deployment.",
+    "MISSION-052": "CONTEXT: MISSION-052 notes which inherited claims it relies on and checks their current status."
   },
   "projected_impact": {
     "paths": [

@@ -209,3 +209,32 @@ class TestRetiredTreeReferences(unittest.TestCase):
     def test_the_forge_output_workspace_is_gitignored_so_generated_training_data_is_not_committed(self):
         r = subprocess.run(["git", "check-ignore", *self.FORGE_OUTPUTS], cwd=str(REPO), capture_output=True, text=True)
         self.assertEqual(sorted(r.stdout.split()), sorted(self.FORGE_OUTPUTS), r.stdout)
+
+
+class TestMission052Brief(unittest.TestCase):
+    """The orchestration brief is a live instruction for a clean session: every path and mission link in it must resolve."""
+
+    BRIEF = REPO / "LEARNING" / "experiments" / "mission-052" / "brief.md"
+
+    def test_mission_folder_is_complete_and_the_manifest_points_at_it(self):
+        import json
+        m = json.loads((REPO / "LEARNING" / "missions" / "MISSION-052.json").read_text(encoding="utf-8"))
+        self.assertTrue((REPO / m["experiment"]).exists())
+        self.assertTrue(self.BRIEF.exists())
+        self.assertIn("Results", (REPO / "LEARNING/experiments/mission-052/README.md").read_text(encoding="utf-8"))
+
+    def test_every_mission_link_and_repo_path_in_the_brief_resolves(self):
+        text = self.BRIEF.read_text(encoding="utf-8")
+        broken = [t for t in re.findall(r"\]\((\.\./\.\./missions/[^)\s]+)\)", text) if not (self.BRIEF.parent / t).exists()]
+        for m in REPO_PATH_RX.findall(text):
+            p = m.rstrip("/.,;:)`'\"")
+            if any(x in p for x in ("NNN", "<", "*", "{")) or p == "LEARNING/research/missions":  # the last is the documented path correction
+                continue
+            if not (REPO / p).exists():
+                broken.append(p)
+        self.assertEqual(broken, [], broken)
+
+    def test_the_brief_carries_no_retired_mission_path_and_keeps_the_human_gate(self):
+        text = self.BRIEF.read_text(encoding="utf-8")
+        self.assertNotIn("LEARNING/research/missions", text.replace("`LEARNING/research/missions/` is now", ""))
+        self.assertIn("Do not push, merge into protected `main`", text)

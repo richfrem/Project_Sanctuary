@@ -46,7 +46,8 @@
     "MISSION-026": "EXTENDS existing lease and worktree coordination; hard dependency.",
     "MISSION-031": "CONSUMES existing overlap detection; hard dependency, no replacement detector.",
     "MISSION-033": "PROVIDER of recovery guarantees for parallel mission delivery.",
-    "MISSION-008": "PROVIDER of durable handoff storage; distinct from testing whether checkpoint content improves agent comprehension."
+    "MISSION-008": "PROVIDER of durable handoff storage; distinct from testing whether checkpoint content improves agent comprehension.",
+    "MISSION-052": "CONTEXT: MISSION-052 records any lease or crash incident as evidence for what 038 must handle."
   },
   "projected_impact": {
     "paths": [
