@@ -310,3 +310,27 @@ def test_live_real_model_lifecycle(tmp_path, monkeypatch):
         assert not r["client_pid_returned"] and r["status_pid_is_worker"], r
         assert r["stop_status"] == "stopped" and r["verified"] and r["processes_gone"] and not r["listeners_after"], r
         assert r["free_pct_before_running_after"][2] >= r["free_pct_before_running_after"][1] + 10, r
+
+
+def test_default_idle_timeout_is_at_most_five_minutes(monkeypatch):
+    """MISSION-029: measured cold start p95 4.97 s and 3.6 GiB returned per reap, so the default reap threshold is 300 s."""
+    import importlib
+    monkeypatch.delenv("MLX_IDLE_TIMEOUT_SEC", raising=False)
+    fresh = importlib.reload(msm)
+    try:
+        assert fresh.DEFAULT_IDLE_TIMEOUT <= 300
+    finally:
+        monkeypatch.setenv("MLX_IDLE_TIMEOUT_SEC", "900")
+        importlib.reload(msm)
+        monkeypatch.delenv("MLX_IDLE_TIMEOUT_SEC", raising=False)
+        importlib.reload(msm)
+
+
+def test_default_reap_leaves_unmanaged_server_alone_even_with_tiny_timeout(monkeypatch):
+    """MISSION-029 finding: an unmanaged server reports idle_sec 0.0, so even `reap --timeout 1` with default flags cannot stop it."""
+    calls = []
+    monkeypatch.setattr(msm, "stop_server", lambda port, force: calls.append(port) or {"status": "stopped"})
+    monkeypatch.setattr(msm, "get_status", lambda host, port: {"is_active": True, "managed": False, "idle_sec": 0.0,
+                                                               "idle_timeout_sec": 900, "pid": 42})
+    res = msm.reap_if_idle(port=8080, idle_timeout_sec=1)
+    assert res["status"] == "active" and not calls

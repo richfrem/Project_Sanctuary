@@ -32,7 +32,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#11** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
 | **#12** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#13** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
-| **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `PROPOSED` | - |
+| **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `RESOLVED` | `CORROBORATED` |
 | **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `RESOLVED` | `CORROBORATED` |
 | **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
@@ -309,7 +309,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Git worktree isolation combined with atomic zero-daemon flight board leases enables safe concurrent multi-agent pairing with zero file clobbering.
 
 ### MISSION-029: Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server (Rank #14)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB Unified Memory) via Apple MLX
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -318,6 +319,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > With teardown now verified (MISSION-027), reaping an idle managed MLX server after at most 5 minutes and restarting it on demand adds at most 10 seconds to the first request (p95 over 20 cold starts, boot to first generated token) with zero failed requests, while returning at least 3 GiB of the 16 GiB to the system, so an aggressive idle timeout is net-positive on a 16 GB machine.
 - **Falsification Gate**:
   > p95 cold-start-to-first-token exceeds 10 s, or any request fails during a reap/restart cycle, or free system memory recovers by less than 3 GiB after a reap, or a reap kills a server the manager did not start.
+- **Empirical Evidence & Trials**:
+  * `2026-11-05T04:44:35.171601+00:00` [claude-code] (LEARNING/research/experiments/mission-029/README.md): 20 managed stop/start cycles ended by the real reap path on a 16 GB M1 with a human-owned server resident and swap saturated: 0 failed requests; first token median 4.0 s, p95 4.97 s, max 5.77 s (limit 10 s); 3.6 GiB resident per server; system-available memory recovered median 4.34 GiB (limit 3). Reap never touched the unmanaged :8080 server; an unmanaged decoy survived default and --only-managed reap. Default idle threshold changed 900 s -> 300 s. LIMIT: cold process with warm OS page cache, one machine and model, 2 s test threshold, 1-token requests.
+- **Lessons Learned & Epistemic Compounding**:
+  * Measure cold starts on a separate port; never reap the human's server.
+  * Free swap is not a limit on macOS (it grows on demand): gate on memory-free percent and disk.
+  * Unmanaged servers report idle_sec 0.0, so default reap cannot stop them, but pass --only-managed anyway.
 
 ### MISSION-030: Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook (Rank #15)
 - **Status**: `RESOLVED`
