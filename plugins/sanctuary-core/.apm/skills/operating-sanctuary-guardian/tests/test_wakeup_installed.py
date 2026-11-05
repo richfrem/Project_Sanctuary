@@ -89,3 +89,14 @@ class TestApmLinkRewriting(unittest.TestCase):
         (root / SRC_REL / "alpha" / "SKILL.md").write_text("# alpha\nNEW sentence. [b](../beta/SKILL.md)\n")
         (root / ".claude" / "skills" / "alpha" / "SKILL.md").write_text("# alpha\nOLD sentence. [b](../../apm_modules/_local/sanctuary-core/.apm/skills/beta/SKILL.md)\n")
         self.assertEqual(_check(root)["status"], "WARN")
+
+
+class TestLockfileIsReproducible(unittest.TestCase):
+    def test_apm_lockfile_lists_no_compiled_bytecode(self):
+        """Bytecode (hashes tied to the Python and pytest that last ran) copied by `apm install` makes the lockfile differ on every machine.
+
+        Regenerate it from a tree with no __pycache__: find plugins -name __pycache__ -type d -prune -exec rm -rf {} + ; apm install
+        """
+        lock = (REPO / "apm.lock.yaml").read_text(encoding="utf-8")
+        bad = [ln.strip() for ln in lock.splitlines() if "__pycache__" in ln or ln.strip().endswith(".pyc")]
+        self.assertEqual(bad, [], f"{len(bad)} bytecode entries, e.g. {bad[:2]}")
