@@ -1,0 +1,7 @@
+{
+  "benchmark_wall_seconds": 4.942593583022244,
+  "compressed_evidence_sha256": "ea03237dc997fc00c532c377ab9f722650cdf587b890add77408961054c4228f",
+  "evidence_sha256": "36fd7ee402db64fb869c71d7d2b9fee4543f09faf881e564f38b538868ef7857",
+  "session_tokens": "not self-reported; supervisor-owned telemetry",
+  "source_sha256": "c937ddcc024dd2330f0790437b0e3ca9cd700fdb61c180b2b0df29a30527a96b"
+}
