@@ -1,0 +1,153 @@
+[
+ {
+  "mission": "004",
+  "truth": [
+   "40",
+   "5"
+  ],
+  "got": [
+   "40",
+   "5"
+  ],
+  "pass": true,
+  "seconds": 46.5,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "ld in the JSON content.</scratchpad>\\n<{\\\"name\\\": \\\"search_text\\\", \\\"arguments\\\": {\\\"query\\\": \\\"[-+]?\\\\d*\\\\.\\\\d+|\\\\d+\\\", \\\"path\\\": \\\"LEARNING/missions/MISSION-004.json\\\"}}\",\n      \"scratchpad\": \"I need to extract numbers from the falsification_criteria field in the JSON content.\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>The falsification_criteria field contains the numbers 40 and 5.</scratchpad>\\n<final_answer>{\\\"numbers\\\": [\\\"40\\\", \\\"5\\\"]}</final_answer>\",\n      \"scratchpad\": \"The falsification_criteria field contains the numbers 40 and 5.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "007",
+  "truth": [
+   "15"
+  ],
+  "got": [],
+  "pass": false,
+  "seconds": 23.6,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "    \"observation\": \"LEARNING/missions/MISSION-007.json:19: \\\"falsification_criteria\\\": \\\"Brier score error reduction falls below 15% on non-executable held-out evaluation sets, or fails to deliver net token savings when used as an escalation gate.\\\",\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>I need to extract numbers from the falsification_criteria field in the JSON content.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"I need to extract numbers from the falsification_criteria field in the JSON content.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "011",
+  "truth": [
+   "10",
+   "3"
+  ],
+  "got": [
+   "10",
+   "3"
+  ],
+  "pass": true,
+  "seconds": 18.3,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "\\\"updated_at\\\": \\\"2026-11-03T03:20:00Z\\\",\\n  \\\"conf\"\n    },\n    {\n      \"turn\": 2,\n      \"reply\": \"<scratchpad>I need to extract numbers from the falsification_criteria field in the JSON content.</scratchpad>\\n<{\\\"name\\\": \\\"search_text\\\", \\\"arguments\\\": {\\\"query\\\": \\\"[-+]?\\\\d*\\\\.\\\\d+|[+-]?\\\\d+\\\", \\\"path\\\": \\\"LEARNING/missions/MISSION-011.json\\\"}}\",\n      \"scratchpad\": \"I need to extract numbers from the falsification_criteria field in the JSON content.\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<final_answer>{\\\"numbers\\\": [\\\"10\\\", \\\"3\\\"]}</final_answer>\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "023",
+  "truth": [
+   "1",
+   "50"
+  ],
+  "got": [
+   "1",
+   "50"
+  ],
+  "pass": true,
+  "seconds": 19.9,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "on\"\n        }\n      },\n      \"observation\": \"LEARNING/missions/MISSION-023.json:19: \\\"falsification_criteria\\\": \\\"Draft model acceptance rate falls below 50% or combined unified memory footprint causes macOS swap pressure > 1 GiB.\\\",\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>I have found the falsification_criteria field. Now, I need to extract numbers from it.</scratchpad>\\n<final_answer>{\\\"numbers\\\": [\\\"50\\\", \\\"1\\\"]}</final_answer>\",\n      \"scratchpad\": \"I have found the falsification_criteria field. Now, I need to extract numbers from it.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "036",
+  "truth": [
+   "5",
+   "500",
+   "95"
+  ],
+  "got": [],
+  "pass": false,
+  "seconds": 21.1,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "scratchpad\": \"I need to extract numbers from the falsification_criteria field in the JSON content.\",\n      \"call\": {\n        \"name\": \"search_text\",\n        \"arguments\": {\n          \"query\": \"\\\\b\\\\d+\\\\b\",\n          \"path\": \"LEARNING/missions/MISSION-036.json\"\n        }\n      },\n      \"observation\": \"(no matches)\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>No numbers found in the falsification_criteria field.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"No numbers found in the falsification_criteria field.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "039",
+  "truth": [],
+  "got": [],
+  "pass": true,
+  "seconds": 20.0,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "  \"scratchpad\": \"I need to extract numbers from the falsification_criteria field in the JSON content.\",\n      \"call\": {\n        \"name\": \"search_text\",\n        \"arguments\": {\n          \"query\": \"numbers\",\n          \"path\": \"LEARNING/missions/MISSION-039.json\"\n        }\n      },\n      \"observation\": \"(no matches)\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>No numbers found in the falsification_criteria field.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"No numbers found in the falsification_criteria field.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "040",
+  "truth": [],
+  "got": [],
+  "pass": true,
+  "seconds": 20.2,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "  \"scratchpad\": \"I need to extract numbers from the falsification_criteria field of the JSON content.\",\n      \"call\": {\n        \"name\": \"search_text\",\n        \"arguments\": {\n          \"query\": \"numbers\",\n          \"path\": \"LEARNING/missions/MISSION-040.json\"\n        }\n      },\n      \"observation\": \"(no matches)\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>No numbers found in the falsification_criteria field.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"No numbers found in the falsification_criteria field.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "041",
+  "truth": [],
+  "got": [],
+  "pass": true,
+  "seconds": 20.6,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "ions/MISSION-041.json:19: \\\"falsification_criteria\\\": \\\"Any threshold missed falsifies the hypothesis. Tests that merely reproduce the implementation behavior without an independent specification do not count. A timeout is not pr\\nLEARNING/missions/MISSION-041.json:46: \\\"MISSION-036\\\": \\\"CONSU\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>The falsification_criteria field does not contain any numbers.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"The falsification_criteria field does not contain any numbers.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "042",
+  "truth": [],
+  "got": [
+   "5",
+   "50"
+  ],
+  "pass": false,
+  "seconds": 22.1,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "on_criteria field of the JSON content.</scratchpad>\\n<{\\\"name\\\": \\\"search_text\\\", \\\"arguments\\\": {\\\"query\\\": \\\"(\\\\d+)\\\", \\\"path\\\": \\\"LEARNING/missions/MISSION-042.json\\\"}}\",\n      \"scratchpad\": \"I need to extract numbers from the falsification_criteria field of the JSON content.\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>The falsification_criteria field contains the numbers 50 and 5.</scratchpad>\\n<final_answer>{\\\"numbers\\\": [\\\"50\\\", \\\"5\\\"]}</final_answer>\",\n      \"scratchpad\": \"The falsification_criteria field contains the numbers 50 and 5.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "045",
+  "truth": [
+   "8"
+  ],
+  "got": [
+   "8"
+  ],
+  "pass": true,
+  "seconds": 22.5,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "guments\\\": {\\\"query\\\": \\\"Fail if the advantage is below (\\\\d+) points, exceeds the cost ceiling, or disappears on untouched task families\\\", \\\"path\\\": \\\"LEARNING/missions/MISSION-045.json\\\"}}\",\n      \"scratchpad\": \"I need to extract numbers from the falsification_criteria field of the JSON content.\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>The falsification_criteria field contains the number '8'.</scratchpad>\\n<final_answer>{\\\"numbers\\\": [\\\"8\\\"]}</final_answer>\",\n      \"scratchpad\": \"The falsification_criteria field contains the number '8'.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "046",
+  "truth": [],
+  "got": [],
+  "pass": true,
+  "seconds": 20.5,
+  "rc": 0,
+  "err": null,
+  "raw_tail": "-046.json\"\n        }\n      },\n      \"observation\": \"LEARNING/missions/MISSION-046.json:19: \\\"falsification_criteria\\\": \\\"Any threshold missed falsifies the hypothesis. A dispute settled by an LLM judge without running an available discriminating test is not an executable resolution. A test pas\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>The falsification_criteria field does not contain any numbers.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"The falsification_criteria field does not contain any numbers.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ },
+ {
+  "mission": "050",
+  "truth": [],
+  "got": [],
+  "pass": true,
+  "seconds": 20.4,
+  "rc": 0,
+  "err": null,
+  "raw_tail": " \"threshold is missed\",\n          \"path\": \"LEARNING/missions/MISSION-050.json\"\n        }\n      },\n      \"observation\": \"LEARNING/missions/MISSION-050.json:19: \\\"falsification_criteria\\\": \\\"Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.\\\",\"\n    },\n    {\n      \"turn\": 3,\n      \"reply\": \"<scratchpad>No numbers found in the falsification_criteria field.</scratchpad>\\n<final_answer>{\\\"numbers\\\": []}</final_answer>\",\n      \"scratchpad\": \"No numbers found in the falsification_criteria field.\"\n    }\n  ],\n  \"unassisted\": false\n}\n"
+ }
+]
