@@ -58,17 +58,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
-| **#40** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
-| **#41** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#42** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#43** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
-| **#44** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
-| **#45** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#46** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#47** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
-| **#48** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `IN_PROGRESS` | - |
-| **#49** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#50** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#40** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
+| **#41** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
+| **#42** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#43** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
+| **#44** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#45** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#46** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#47** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#48** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
+| **#49** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
+| **#50** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#51** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -644,7 +645,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.
 
-### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #40)
+### MISSION-051: Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio (Rank #40)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: evaluating-agent-work usage ledger (claude, codex, agy) and the flight-board checkout/checkin hooks
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
+- **Fallback Models**: `gemini-3.8-flash`, `gpt-6-luna`
+- **Hypothesis (Popperian Prediction)**:
+  > If agents declare one of three size buckets (small, medium, large) at checkout instead of a free-text task class, and the percent-to-token calibration is fitted only on measurements where the window moved by at least 3 percentage points (or on tasks pooled to that size), then once 40 measured tasks exist with at least 8 per bucket: (a) the held-out token MAPE of the per-bucket median predictor is at most 30% and at least 20% below the static per-task ceilings; (b) the calibrated percent-to-token estimate lands within +/-50% on at least 8 of 10 held-out measurements; and (c) for at least one bucket run on two models, the measured effort ratio (wall time, cost, retries) differs from 1.0 by more than the run-to-run spread of the cheaper model.
+- **Falsification Gate**:
+  > With >= 40 measured tasks and >= 8 per bucket: held-out MAPE > 30% or not >= 20% better than the static ceilings; or fewer than 8 of 10 held-out window predictions within +/-50%; or no bucket has two models and a ratio outside the run-to-run spread (then the effort multiplier is noise at this scale); or bucket assignment by the agent disagrees with the measured size bucket on more than 30% of tasks (then declared buckets are not usable).
+
+### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #41)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local deterministic curriculum scheduler; evaluating-agent-work; cheap learner (ceiling 750k tokens)
@@ -655,7 +667,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if target is not reached within 60 episodes, episode savings are below 30%, or retention fails. Choosing easier evaluation tasks after observing failures invalidates the run.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #41)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #42)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -666,7 +678,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #42)
+### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #43)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board
@@ -677,7 +689,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any pilot threshold missed (wall-clock > 60% of sequential, clobbering or > 1 conflict round per PR, token overhead > 25%, review agreement < 80%, zero defects caught); or one worker corrupts another's worktree or files; or an orchestrator-run merge leaves main failing its tests; or the orchestrator merges, pushes or signs anything without the human approval its policy requires; or Phase 1 shows the existing upstream skill already covers selection, dispatch, review and merge with configuration alone (then no new skill is warranted and the result is recorded as such).
 
-### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #43)
+### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #44)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Multi-vendor CLI agent pool (OpenAI, Anthropic, Google); evaluating-agent-work; usage telemetry (ceiling 1.2M tokens)
@@ -688,7 +700,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if the advantage is below 8 points, exceeds the cost ceiling, or disappears on untouched task families. Selection using held-out answers invalidates the experiment. Vendor diversity is not assumed to be epistemic independence.
 
-### MISSION-046: Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges (Rank #44)
+### MISSION-046: Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges (Rank #45)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Hybrid multi-model debate harness; evaluating-agent-work; deterministic Python/shell execution sandbox (ceiling 900k tokens, 6 CPU-hours)
@@ -699,7 +711,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any threshold missed falsifies the hypothesis. A dispute settled by an LLM judge without running an available discriminating test is not an executable resolution. A test passing in one isolated environment does not prove a universal claim.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #45)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #46)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -710,7 +722,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #46)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #47)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -721,7 +733,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-043: Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates (Rank #47)
+### MISSION-043: Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates (Rank #48)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB) MLX LoRA training; forging-sovereign-models; 10 GiB RAM ceiling
@@ -732,8 +744,9 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if any update violates capability or retention thresholds, a regressive adapter is promoted, or resource limits cannot be met. A smaller model or easier task substitution after evaluation begins requires a new hypothesis.
 
-### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #48)
-- **Status**: `IN_PROGRESS`
+### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #49)
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
@@ -742,8 +755,15 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A deterministic usage probe run by the orchestrator (not self-reported by the worker model) that snapshots each backend's own usage surfaces at every real mission checkout and checkin, and stores the measured delta with task class, model, wall-clock time, turns, retries and outcome quality in the evaluating-agent-work ledger, yields: (a) measurable per-task token deltas for >= 3 of the 4 backends (claude, codex, agy, local) agreeing within +/-10% with the vendor's own session totals; (b) where a backend exposes quota-window state (5-hour and weekly), a before/after window reading flagged noisy whenever other sessions were active; (c) after >= 12 real measured tasks, a per-task-class predictor whose held-out MAPE on tokens is <= 30% and >= 20% lower than the static per-task ceilings in track_budget.py; (d) a measured effort multiplier per (backend/model, task class): cost, wall-clock time and retry rate relative to a reference model, so that 'cheap per credit' models are not recommended on price alone when they cost several times the time and effort on a task class; and (e) a model-assignment recommendation that weighs expected cost, time, success rate and remaining 5-hour/weekly headroom, and shifts load to a backend with headroom when another is constrained, with zero credentials, auth tokens or prompt contents written to any tracked file. (f) A fuel gauge visible at boot and at checkout flags any backend whose tightest window is under 15% remaining, and a calibrated percent-to-token estimate predicts the next window percent movement within +/-50% once >= 5 non-concurrent percent points of data exist.
 - **Falsification Gate**:
   > Fewer than 3 backends yield a measurable per-task delta; any delta deviates > 10% from the vendor-reported session total; the held-out MAPE is > 30% or not >= 20% better than the static estimates; a quota-window reading cannot be attributed (other sessions' usage swamps the mission's own delta) and no mitigation restores attribution; any auth token, API key or prompt text appears in a tracked file or log; the probe reaches Copilot (a corporate account the cli-agent skill marks work-only) without explicit per-run human approval and usage-query-only scope; or obtaining a backend's quota state requires scraping an undocumented private endpoint or violating its terms (then record that backend as unmeasurable, not hacked). If worker self-report proves as accurate as orchestrator measurement, the measured path is not justified and the result is recorded as such. Also falsified if, with >= 12 real tasks, the measured data shows no usable difference in effective cost or time between models within a task class (the effort multiplier is noise), or the recommender's top choice is outperformed on effective cost by a random choice among unconstrained backends on held-out tasks. Also falsified if the calibrated percent-to-token estimate misses subsequent percent movement by more than 50% on >= 3 held-out measurements, or if a backend reaches 0% remaining without the gauge having flagged it LOW beforehand.
+- **Empirical Evidence & Trials**:
+  * `2026-11-05T05:42:18.438430+00:00` [claude-code] (LEARNING/research/experiments/mission-035/results-n14.md): N=14 measured tasks (11 claude, 1 codex, 2 agy). (c) per-class token predictor: held-out MAPE 122.3% vs static 166.2% (limit 30%; relative improvement 26.4% passes the 20% leg). (f) percent-to-token calibration 56,349 tokens/pct; leave-one-out 5 of 8 within +/-50%, 3 misses = the falsification threshold (misses are 1-2 pct tasks where integer rounding alone is 25-50%). (a) met for 3 of 4 backends with exact tokens; (b) partly met; (d) and (e) not testable at this N. Survived: exact tokens, catalog-based cost, fuel gauge, delegation recorder.
+- **Lessons Learned & Epistemic Compounding**:
+  * Free-text task classes are too fine for 14 tasks: use a few size buckets.
+  * The claude window percent is an integer: calibrate on tasks that move it by >= 3 points or pool them.
+  * A same-backend delegate shares the account window with its orchestrator: its window delta is unattributable.
+  * Reasoning tokens bill as output: a cheap model's output count can be 8x its visible answer.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #49)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #50)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -754,7 +774,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #50)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #51)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

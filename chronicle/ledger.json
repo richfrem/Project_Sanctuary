@@ -1,6 +1,13 @@
 {
-  "total_entries": 360,
+  "total_entries": 361,
   "entries": [
+    {
+      "id": 369,
+      "title": "MISSION-035 closed FALSIFIED at 14 measured tasks; what survived; MISSION-051 follow-up",
+      "filename": "369_mission_035_closed_falsified_at_14_measured_tasks_what_survived_mission_051_follow_up.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 368,
       "title": "Fifteen new missions (036-050) committed after passing the schema validator; the bootstrapper now validates mission manifests",
