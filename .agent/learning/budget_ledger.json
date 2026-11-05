@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:54:29.706150+00:00",
-  "total_tokens_consumed": 5117316,
-  "total_turns": 31,
+  "updated_at": "2026-11-05T06:59:30.567728+00:00",
+  "total_tokens_consumed": 5179356,
+  "total_turns": 32,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -153,9 +153,77 @@
       "turns": 1,
       "last_backend": "claude",
       "last_model": "claude-sonnet-5-5"
+    },
+    "TASK-RETIRED-REFS": {
+      "tokens_consumed": 62040,
+      "turns": 1,
+      "last_backend": "claude",
+      "last_model": "claude-sonnet-5-5"
     }
   },
   "recent_records": [
+    {
+      "record_id": "eb21025b-7227-493c-af4a-ed548f75ccc4",
+      "timestamp": "2026-11-05T06:59:30.567747+00:00",
+      "task_id": "TASK-RETIRED-REFS",
+      "backend": "claude",
+      "model": "claude-sonnet-5-5",
+      "tokens_est": 62040,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "refactor",
+      "outcome": "completed",
+      "tokens_in": 28,
+      "tokens_out": 23697,
+      "window_delta": {
+        "from": "2026-11-05T06:57:28Z",
+        "to": "2026-11-05T06:59:23Z",
+        "claude": {
+          "session_pct_delta": 2,
+          "week_pct_delta": 1
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ],
+        "codex": {
+          "five_hour_pct_delta": 0.0,
+          "weekly_pct_delta": 0.0,
+          "stale": true
+        }
+      },
+      "tokens_cache_read": 12510907,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 38315,
+      "cost_usd": 1.641377,
+      "wall_seconds": 121,
+      "retries": 1,
+      "quality": 3
+    },
     {
       "record_id": "840e88e8-eafa-41f3-8883-987dedc28ee3",
       "timestamp": "2026-11-05T06:54:29.706167+00:00",
@@ -1558,16 +1626,6 @@
       "tokens_est": 42328,
       "turns": 1,
       "summary": ""
-    },
-    {
-      "record_id": "5750b1dd-f90b-4ad5-bd30-10573f585a76",
-      "timestamp": "2026-11-02T06:59:04.174304+00:00",
-      "task_id": "task-automaton-review",
-      "backend": "codex",
-      "model": "gpt-6-astra",
-      "tokens_est": 55658,
-      "turns": 1,
-      "summary": "Codex Astra architectural critique of Automaton and tripartite economic decoupling"
     }
   ]
 }
