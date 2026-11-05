@@ -15,6 +15,7 @@ Guards (all counted in the result so callers can tell model behaviour from scaff
 Usage (via forge_llm.py):
     python3 forge_llm.py loop "Which files are in context/?" --max-turns 5
 """
+import fnmatch
 import json
 import re
 import sys
@@ -57,17 +58,37 @@ Example turn that finishes:
 Rules: one tool call per turn; never repeat a call whose result you already have; as soon as the observations contain the answer, give the final answer containing only the requested values."""
 
 
-class ReadOnlySandbox:
-    """Read-only tools confined to ``root`` with an optional deny list of relative prefixes."""
+# The held-out task generator and its recorded results must never be visible to the model under test. They are hidden BY NAME, wherever
+# they sit: APM installs whole skill folders (tests included) into .claude/skills, .agents/skills and apm_modules/_local, so a prefix list
+# naming only the source folder leaves the installed copies readable.
+DEFAULT_DENY_NAMES = ["agent_eval_tasks.py", "heldout_results*.json"]
+# The guardian skill's whole tests/ folder (eval generators and the tests that import them) is hidden wherever it is copied.
+DEFAULT_DENY_GLOBS = ["*operating-sanctuary-guardian/tests"]
 
-    def __init__(self, root: Path, deny: Optional[List[str]] = None, max_chars: int = MAX_OBS_CHARS):
+
+class ReadOnlySandbox:
+    """Read-only tools confined to ``root`` with a deny list of relative prefixes and of file-name patterns (``deny_names``)."""
+
+    def __init__(self, root: Path, deny: Optional[List[str]] = None, max_chars: int = MAX_OBS_CHARS,
+                 deny_names: Optional[List[str]] = None, deny_globs: Optional[List[str]] = None):
         self.root = Path(root).resolve()
         self.deny = [(self.root / d).resolve() for d in (deny or [])]
+        self.deny_names = list(DEFAULT_DENY_NAMES if deny_names is None else deny_names)
+        self.deny_globs = list(DEFAULT_DENY_GLOBS if deny_globs is None else deny_globs)
         self.max_chars = max_chars
 
     # -- path handling ------------------------------------------------------------
     def _denied(self, p: Path) -> bool:
-        return any(p == d or d in p.parents for d in self.deny)
+        if any(p == d or d in p.parents for d in self.deny) or any(fnmatch.fnmatch(p.name, pat) for pat in self.deny_names):
+            return True
+        if self.deny_globs:  # the path or any parent below the root matches a relative-path glob
+            for q in (p, *p.parents):
+                if q == self.root or self.root not in q.parents:
+                    continue
+                rel = q.relative_to(self.root).as_posix()
+                if any(fnmatch.fnmatch(rel, pat) for pat in self.deny_globs):
+                    return True
+        return False
 
     def resolve(self, arg) -> Path:
         if not isinstance(arg, str):
@@ -325,7 +346,7 @@ def run_agent(task: str, sandbox: ReadOnlySandbox, chat_fn: Optional[Callable[[L
 
 def run_cli(args) -> int:
     root = Path(args.root).resolve()
-    sandbox = ReadOnlySandbox(root, deny=args.deny or [])
+    sandbox = ReadOnlySandbox(root, deny=args.deny or [])  # the held-out name/folder denies in DEFAULT_DENY_* always apply
     chat = lambda m: mlx_chat(m, host=args.host, model=args.model, temperature=args.temp)  # noqa: E731
     result = run_agent(args.prompt, sandbox, chat_fn=chat, max_turns=args.max_turns)
     print(json.dumps(result.to_dict() if args.json else
