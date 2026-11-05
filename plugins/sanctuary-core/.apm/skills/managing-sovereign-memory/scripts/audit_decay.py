@@ -7,12 +7,13 @@ Key Outputs: Decay detection audit reports and in-place status downgrades (CONFI
 Usage:
     python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py --check
     python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py --apply
-Key Functions: get_project_root(), parse_date(), audit_concepts(), main().
+Key Functions: get_project_root(), parse_date(), last_touched(), audit_concepts(), main().
 """
 
 import re
 import sys
 import argparse
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -32,6 +33,21 @@ def parse_date(date_str: str) -> datetime | None:
         except ValueError:
             continue
     return None
+
+
+def last_touched(md_file: Path, root: Path) -> datetime:
+    """When the dossier last changed: its last git commit date, else (untracked or no git) its mtime.
+
+    The mtime of a checked-out file is the checkout time, which made every undated dossier look new and the decay audit vacuous.
+    """
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", str(md_file)], cwd=str(root), capture_output=True,
+                             text=True, timeout=10).stdout.strip()
+        if out:
+            return datetime.strptime(out, "%Y-%m-%d")
+    except (OSError, ValueError, subprocess.SubprocessError):
+        pass
+    return datetime.fromtimestamp(md_file.stat().st_mtime)
 
 
 def audit_concepts(root: Path, apply_fixes: bool = False) -> int:
@@ -60,9 +76,8 @@ def audit_concepts(root: Path, apply_fixes: bool = False) -> int:
 
         date_match = date_pattern.search(content)
         if not date_match:
-            # If no verification date is present, check file mtime
-            file_time = datetime.fromtimestamp(md_file.stat().st_mtime)
-            age_days = (now - file_time).days
+            # No verification date: age from the last git commit (mtime only for untracked files or outside git)
+            age_days = (now - last_touched(md_file, root)).days
         else:
             v_date = parse_date(date_match.group(1))
             age_days = (now - v_date).days if v_date else 0

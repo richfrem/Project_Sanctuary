@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T05:49:03.086574+00:00",
-  "total_assessments": 26,
-  "cumulative_score": 361,
-  "average_fitness": 0.926,
+  "updated_at": "2026-11-05T06:00:18.026588+00:00",
+  "total_assessments": 27,
+  "cumulative_score": 376,
+  "average_fitness": 0.928,
   "dimension_totals": {
-    "useful_outcome": 72,
-    "learning_depth": 72,
-    "verification_rigor": 77,
-    "token_economy": 62,
-    "anti_asch_integrity": 78
+    "useful_outcome": 75,
+    "learning_depth": 75,
+    "verification_rigor": 80,
+    "token_economy": 65,
+    "anti_asch_integrity": 81
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 13,
-      "cumulative_score": 175,
-      "average_fitness": 0.897
+      "assessments": 14,
+      "cumulative_score": 190,
+      "average_fitness": 0.905
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "19697f8a-8d27-4992-baa9-724929b85e5e",
+      "timestamp": "2026-11-05T06:00:18.025859+00:00",
+      "task_id": "TASK-LEARNING-NAV",
+      "agent_id": "claude-code",
+      "raw_score": 15,
+      "fitness": 1.0,
+      "notes": "Reviewed read-only first; found the decay audit was vacuous; turned the standing path rule into a failing-first test; caught and disclosed that my own name-based triage was wrong before acting on it"
+    },
     {
       "assessment_id": "aaaf622e-ae14-49ac-a7b5-874bd3ca22ce",
       "timestamp": "2026-11-05T05:49:03.085752+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 13,
       "fitness": 0.867,
       "notes": "Hypothesis FALSIFIED (47/60=78.3%, run5 73.3%<75%). Useful=2: reusable loop, tests and eval method shipped, but target not met. Learning=3: negative result, scaffold-dependence, trigger analysis, MISSION-028. Rigor=3: pre-registration, held-out generated tasks, agy review adopted, unit tests. Token economy=2: many local iterations and two ~11min runs. Anti-Asch=3: did not record the scripted CORROBORATED; discarded own tuned 80% as evidence; found and reported own tool defects. Self-assessed."
-    },
-    {
-      "assessment_id": "75d4535b-dfdb-423c-9dea-1528630f8433",
-      "timestamp": "2026-11-03T14:38:21.470320+00:00",
-      "task_id": "MISSION-026",
-      "agent_id": "antigravity",
-      "raw_score": 15,
-      "fitness": 1.0,
-      "notes": "Implemented decentralized multi-agent concurrency flight board with optimistic file leases, worktree isolation, and guardian wakeup integration; 7/7 tests pass."
     }
   ]
 }

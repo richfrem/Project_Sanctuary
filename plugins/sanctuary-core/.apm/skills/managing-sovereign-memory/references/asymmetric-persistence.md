@@ -29,7 +29,7 @@ The fundamental flaw in traditional git-based workflows is that when an experime
 
 1. Agent encounters unexpected compiler error, broken dependency, or test failure.
 2. Before rolling back code, agent runs `record_insight.py` with `--type friction`.
-3. The insight is appended to `context/memory.md` and `LEARNING/friction/` or `LEARNING/concepts/`.
+3. The insight is appended to `context/memory.md` and recorded as a concept note in `LEARNING/concepts/` (`record_insight.py`).
 4. The failed git branch is discarded; the lesson survives permanently.
 
 ## CLI Operations

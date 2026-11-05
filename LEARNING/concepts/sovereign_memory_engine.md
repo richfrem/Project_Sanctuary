@@ -1,6 +1,7 @@
 # Sovereign Memory & Cognitive Continuity Engine
 
 **Status:** CONFIRMED  
+**Last Verified:** 2026-11-05
 **Source:** Global APM Skills (`memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`, `managing-huggingface-assets`, `orchestrating-agent-work`, `cli-agent`), Protocol 128  
 **Tags:** ["memory", "architecture", "rlm", "huggingface", "orchestration", "cli-agent", "wiki", "soul"]
 
@@ -34,8 +35,8 @@ graph TD
         Kernel["kernel.py (Atomic Locks & Event Bus)"]
     end
 
-    subgraph Layer2["Layer 2: Compounding Knowledge Base (wiki/)"]
-        WikiNotes["Markdown Dossiers (concepts/, security/, philosophy/)"]
+    subgraph Layer2["Layer 2: Compounding Knowledge Base (LEARNING/)"]
+        WikiNotes["Markdown Dossiers (concepts/, procedures/, philosophy/)"]
         StatusTags["Confidence Status: CONFIRMED / OBSERVED / HYPOTHESIS"]
         Obsidian["managing-obsidian-vaults<br/>(Wikilinks, Canvas graphs, multi-tier distillation)"]
         HotRLM["managing-rlm-cache<br/>(rlm_summary_cache.json & chronicle/ledger.json)"]
@@ -66,10 +67,10 @@ graph TD
 - **Assets**: `soul.md`, `user.md`, `memory.md`, `identity/founder_seed.json`, `kernel.py`.
 - **Function**: Injected immediately at the start of every session across all CLI tools (`cli-agent`) and IDE agents. Grounds the agent in its identity, prime directives, active focus, and atomic file concurrency locks.
 
-### Tier 2: Compounding Layer 2 Knowledge & Hot Retrievability (`wiki/`)
+### Tier 2: Compounding Layer 2 Knowledge & Hot Retrievability (`LEARNING/`)
 - **Managed By**: `memory-management`, `managing-obsidian-vaults`, `managing-rlm-cache`.
 - **Knowledge Structure**:
-  - Atomic Markdown dossiers in `wiki/concepts/`, `wiki/security/`, `wiki/philosophy/`.
+  - Atomic Markdown dossiers in `LEARNING/concepts/`, `LEARNING/procedures/`, `LEARNING/philosophy/`.
   - Confidence decay protocol: items not verified within 30 days decay from `CONFIRMED` to `OBSERVED`.
   - Asymmetric persistence: when code experiments or feature branches fail, code changes are rolled back, but unexpected friction, architectural discoveries, and failure logs are NEVER rolled back; they are persisted to `wiki/`.
 - **Hot Summary Retrieval**:
@@ -96,7 +97,7 @@ Complex operations are rarely executed by a single monolithic model invocation:
   - **OpenAI Codex**: High-velocity code generation and unit testing.
   - **Antigravity CLI (Agy)**: IDE and workspace governance.
   - **Sovereign Local Model (`Sanctuary-Qwen2-7B-v1.0`)**: Offline, confidential, or local verification queries running via Ollama or llama-server.
-- **Shared Context Invariant**: Regardless of which CLI tool or model executes a sub-task, all agents read from the common `context/` and write permanent insights back to `wiki/` and `chronicle/`.
+- **Shared Context Invariant**: Regardless of which CLI tool or model executes a sub-task, all agents read from the common `context/` and write permanent insights back to `LEARNING/concepts/` and `chronicle/`.
 
 ---
 
