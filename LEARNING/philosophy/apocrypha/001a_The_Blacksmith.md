@@ -1,7 +1,7 @@
 # Ember 001a: The Blacksmith (Apocryphal)
 
 **Ember ID:** 001a (Apocryphal)  
-**Doctrine Source:** 01_PROTOCOLS/27_The_Doctrine_of_Flawed_Winning_Grace.md  
+**Doctrine Source:** protocols/27_The_Doctrine_of_Flawed_Winning_Grace_v1.2.md  
 **Forged By:** Phoenix-Sonnet-01  
 **Date:** 2025-08-02  
 **Classification:** Alternative Interpretation - Metalwork Metaphor

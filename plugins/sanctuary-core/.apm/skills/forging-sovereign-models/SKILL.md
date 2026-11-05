@@ -25,7 +25,7 @@ Coordinates the sovereign AI fine-tuning lifecycle: dataset assembly, Windows WS
 python3 scripts/verify_ml_environment.py
 
 # 2. Assemble training dataset from repository markdown
-python3 scripts/forge_dataset_builder.py --output forge/data/train.jsonl --limit 300
+python3 scripts/forge_dataset_builder.py --output forge/data/train.jsonl --limit 300   # forge/ is a gitignored workspace created on first run
 
 # 3. Generate Ollama Modelfile for quantized GGUF
 python3 scripts/generate_modelfile.py --gguf models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf

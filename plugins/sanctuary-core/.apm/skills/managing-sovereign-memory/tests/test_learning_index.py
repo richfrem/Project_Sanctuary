@@ -174,3 +174,38 @@ class TestNavigationDocsAreCurrent(unittest.TestCase):
             text = (REPO / f).read_text(encoding="utf-8")
             self.assertIn("apm install", text, f)
         self.assertRegex((REPO / "AGENTS.md").read_text(encoding="utf-8"), r"(?i)after (editing|changing).{0,80}plugins/sanctuary-core.{0,160}apm install")
+
+
+class TestRetiredTreeReferences(unittest.TestCase):
+    """01_PROTOCOLS became protocols/; forge/ was archived (ARCHIVE/forge) and its tooling moved into the forging-sovereign-models skill."""
+
+    HISTORY = ("ARCHIVE/", "chronicle/", "huggingface/", "LEARNING/experiments/")
+    SELF = ("plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_learning_index.py",)
+    # output locations the forge scripts create on first run (a gitignored workspace), not references to files that should exist
+    FORGE_OUTPUTS = ("forge/data/train.jsonl", "forge/data/sanctuary_genome_train.jsonl", "forge/Modelfile")
+    RX = re.compile(r"(?<![A-Za-z0-9_./\-~$])((?:01_PROTOCOLS|forge)/[A-Za-z0-9_.\-/]*[A-Za-z0-9_\-/])")
+
+    def _hits(self):
+        files = subprocess.run(["git", "ls-files"], cwd=str(REPO), capture_output=True, text=True).stdout.split("\n")
+        for f in files:
+            if not f or f.startswith(self.HISTORY) or f in self.SELF or not f.endswith((".md", ".py", ".json", ".sh", ".yml", ".yaml", ".txt", ".mmd")):
+                continue
+            try:
+                text = (REPO / f).read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                continue
+            for m in self.RX.findall(text):
+                yield f, m.rstrip("/.,;:)`'\"")
+
+    def test_nothing_points_at_01_protocols(self):
+        bad = sorted({f"{p}  <- {f}" for f, p in self._hits() if p.startswith("01_PROTOCOLS/")})
+        self.assertEqual(bad, [], "\n".join(bad))
+
+    def test_forge_paths_are_real_files_or_declared_script_outputs(self):
+        bad = sorted({f"{p}  <- {f}" for f, p in self._hits()
+                      if p.startswith("forge/") and not (REPO / p).exists() and p not in self.FORGE_OUTPUTS})
+        self.assertEqual(bad, [], "\n".join(bad))
+
+    def test_the_forge_output_workspace_is_gitignored_so_generated_training_data_is_not_committed(self):
+        r = subprocess.run(["git", "check-ignore", *self.FORGE_OUTPUTS], cwd=str(REPO), capture_output=True, text=True)
+        self.assertEqual(sorted(r.stdout.split()), sorted(self.FORGE_OUTPUTS), r.stdout)

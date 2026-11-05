@@ -1,6 +1,8 @@
 # Sovereign QLoRA Fine-Tuning & Quantization Workflow
 
 > **End-to-end execution protocol for training Sanctuary-Qwen2-7B.**
+>
+> **Where the code is:** the dataset builder, Modelfile generator and environment check are this skill's `scripts/`. The three training-stage scripts below (`fine_tune.py`, `merge_adapter.py`, `convert_to_gguf.py`) are **archived reference implementations** in `ARCHIVE/forge/whole_genome_crucible/scripts/`; they are not part of the installed skill. The `forge/` paths in the commands are a gitignored workspace the scripts create on first run (training data, Modelfile).
 
 ## Pipeline Overview
 
@@ -24,21 +26,21 @@ Run 4-bit Quantized Low-Rank Adaptation (compatible with 8GB+ VRAM):
 - **Quantization**: 4-bit NF4 with double quantization (`bnb_4bit_use_double_quant=True`)
 - **Optimizer**: `paged_adamw_8bit`
 ```bash
-python forge/scripts/fine_tune.py
+python ARCHIVE/forge/whole_genome_crucible/scripts/fine_tune.py
 ```
 Outputs trained adapter to `models/Sanctuary-Qwen2-7B-v1.0-adapter/`.
 
 ## Phase 3: Adapter Merging (CPU-Bound)
 Merge the LoRA adapter back into base weights:
 ```bash
-python forge/scripts/merge_adapter.py
+python ARCHIVE/forge/whole_genome_crucible/scripts/merge_adapter.py
 ```
 Outputs full fp16 model weights to `models/merged/Sanctuary-Qwen2-7B-v1.0-merged/`.
 
 ## Phase 4: GGUF Conversion & Quantization
 Convert merged Hugging Face safetensors into GGUF format and quantize to `Q4_K_M`:
 ```bash
-python forge/scripts/convert_to_gguf.py --quantization Q4_K_M
+python ARCHIVE/forge/whole_genome_crucible/scripts/convert_to_gguf.py --quantization Q4_K_M
 ```
 Outputs `models/gguf/Sanctuary-Qwen2-7B-v1.0-Q4_K_M.gguf` (~4.68 GB).
 
