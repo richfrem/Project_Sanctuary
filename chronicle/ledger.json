@@ -1,6 +1,13 @@
 {
-  "total_entries": 367,
+  "total_entries": 368,
   "entries": [
+    {
+      "id": 376,
+      "title": "Stale-reference sweep: installed skill copies were stale; navigation docs, context and .agent corrected; drift check added",
+      "filename": "376_stale_reference_sweep_installed_skill_copies_were_stale_navigation_docs_context_and_agent_corrected_drift_check_added.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 375,
       "title": "LEARNING restructure: mission system at the LEARNING root, topics renamed research, procedures emptied",

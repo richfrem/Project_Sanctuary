@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:27:06.214307+00:00",
-  "total_assessments": 31,
-  "cumulative_score": 428,
-  "average_fitness": 0.92,
+  "updated_at": "2026-11-05T06:38:07.750217+00:00",
+  "total_assessments": 32,
+  "cumulative_score": 442,
+  "average_fitness": 0.921,
   "dimension_totals": {
-    "useful_outcome": 86,
-    "learning_depth": 83,
-    "verification_rigor": 92,
-    "token_economy": 74,
-    "anti_asch_integrity": 93
+    "useful_outcome": 89,
+    "learning_depth": 86,
+    "verification_rigor": 95,
+    "token_economy": 76,
+    "anti_asch_integrity": 96
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 18,
-      "cumulative_score": 242,
-      "average_fitness": 0.896
+      "assessments": 19,
+      "cumulative_score": 256,
+      "average_fitness": 0.898
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "cc8dde21-c15c-47f0-aa53-a7d8d48bfd40",
+      "timestamp": "2026-11-05T06:38:07.749520+00:00",
+      "task_id": "TASK-STALE-REFS",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Did not assert that references matched: audited four ways, which found the installed copies were stale; turned each finding into a failing test first; separated what the moves caused from pre-existing rot and reported both without editing doctrine"
+    },
     {
       "assessment_id": "a2f25d2b-8d62-458c-9833-d599a5e20b63",
       "timestamp": "2026-11-05T06:27:06.213556+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 14,
       "fitness": 0.933,
       "notes": "Pre-registered; RED on old code loaded from git; independent brute-force ground truth; real-git validation; reported the 60/60 generated-file conflict boundary against the hypothesis wording; dogfooded verify and found own undeclared edit. Economy 2: long autonomous session. Self-assessed."
-    },
-    {
-      "assessment_id": "reconstructed-antigravity-MISSION-024",
-      "timestamp": "2026-11-04T06:14:30.254070+00:00",
-      "task_id": "MISSION-024",
-      "agent_id": "antigravity",
-      "raw_score": 15,
-      "fitness": 1.0,
-      "notes": "RECONSTRUCTED. The antigravity MISSION-024 assessment was added to the cognitive_ledger.json aggregate by hand in f96e10701 (#293) with no events.jsonl entry. That commit raised the aggregate by exactly one assessment, 15 points and +3 on each of the five dimensions, so the dimensions below are what git shows; the assessor, model and original notes were not recorded and are unknown. The timestamp is the aggregate's updated_at at that commit (approximate)."
     }
   ]
 }

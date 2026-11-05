@@ -109,8 +109,8 @@ Project_Sanctuary/
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
 ├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, identity/, kernel.py)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
-├── plugins/         # sanctuary-core plugin (chronicle, protocols, guardian, forge, soul, memory)
-├── LEARNING/        # Comprehensive knowledge base, concepts, research papers, and think tank dossiers
+├── plugins/         # sanctuary-core plugin (7 skills: chronicle, protocols, guardian, forge, soul traces, memory, evaluation)
+├── LEARNING/        # Layer 2: concepts/procedures/philosophy canon, the mission system (missions/, experiments/, index.jsonl, backlog.md, inbox.jsonl) and research/ dossiers
 └── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
 
@@ -130,7 +130,7 @@ Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovere
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │ Layer 2: Compounding Knowledge Base (LEARNING/ & chronicle/)    │
-│ concepts/ • missions/ • topics/ • index.jsonl • ledger │
+│ concepts/ • missions/ • experiments/ • research/ • index.jsonl   │
 │ Structured dossiers with progressive disclosure (Tier 1/2/3).   │
 │ Asymmetric persistence across rollbacks; 30-day confidence decay│
 └───────────────────────────────┬─────────────────────────────────┘

@@ -98,6 +98,53 @@ def check_mission_manifests(project_root: Path) -> "dict | None":
     return entry
 
 
+def check_installed_skills(project_root: Path) -> "dict | None":
+    """Compare the installed copies of the Sanctuary skills (.claude/skills, .agents/skills) with plugins/sanctuary-core.
+
+    APM installs real copies, so editing the plugin leaves them stale until `apm install` is run again, and agents then run old scripts.
+    None when there is no source or no install folder. Never raises: a problem is reported as WARN so it cannot break the boot.
+    """
+    import hashlib
+    src = project_root / "plugins" / "sanctuary-core" / ".apm" / "skills"
+    if not src.is_dir():
+        return None
+    installs = [project_root / d for d in (".claude/skills", ".agents/skills") if (project_root / d).is_dir()]
+    if not installs:
+        return None
+    entry = {"path": "installed-skills", "status": "WARN", "size_bytes": 0, "description": ""}
+    skip = ("__pycache__", ".pyc", ".DS_Store")
+
+    def files(base: Path) -> dict:
+        out = {}
+        for f in base.rglob("*"):
+            if f.is_file() and not any(x in str(f) for x in skip):
+                out[str(f.relative_to(base))] = hashlib.sha256(f.read_bytes()).hexdigest()
+        return out
+
+    try:
+        drift = []
+        skills = sorted(d.name for d in src.iterdir() if d.is_dir())
+        for inst in installs:
+            for name in skills:
+                a = files(src / name)
+                b = files(inst / name) if (inst / name).is_dir() else None
+                if b is None:
+                    drift.append(f"{inst.parent.name}: {name} (not installed)")
+                    continue
+                n = len([k for k in set(a) | set(b) if a.get(k) != b.get(k)])
+                if n:
+                    drift.append(f"{inst.parent.name}: {name} ({n} file(s))")
+        where = ", ".join(i.parent.name for i in installs)
+        if drift:
+            shown = "; ".join(drift[:4]) + (f" (+{len(drift) - 4} more)" if len(drift) > 4 else "")
+            entry["description"] = f"Installed skills differ from plugins/sanctuary-core [{shown}]. Run `apm install` at the repo root."
+        else:
+            entry.update(status="PASS", description=f"Installed skills match plugins/sanctuary-core [{len(skills)} skills in {where}]")
+    except Exception as e:  # noqa: BLE001 - boot must not fail on a drift-check problem
+        entry["description"] = f"Installed-skills check could not run [{e.__class__.__name__}: {e}]"
+    return entry
+
+
 def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     """Inspect presence and structural integrity of Layer 1 fast-boot context files."""
     checks = []
@@ -145,6 +192,9 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     mission_check = check_mission_manifests(project_root)
     if mission_check:
         checks.append(mission_check)  # informational: does not decide GREEN/YELLOW (that is the context files)
+    installed_check = check_installed_skills(project_root)
+    if installed_check:
+        checks.append(installed_check)  # informational as well
 
     health_status = "GREEN" if all_passed else "YELLOW"
     return health_status, checks
