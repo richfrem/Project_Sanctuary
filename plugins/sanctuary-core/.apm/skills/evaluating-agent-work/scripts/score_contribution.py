@@ -141,12 +141,16 @@ def fold_assessment(data: dict, assessment: dict) -> dict:
 
 
 def rebuild_projection(assessments: list) -> dict:
-    """Deterministically rebuild the projection from events (updated_at = last event time, not now)."""
+    """Deterministically rebuild the projection from events (updated_at = last event time, not now).
+
+    Events are folded in (timestamp, assessment_id) order, so the result does not depend on the order of lines in
+    events.jsonl (a union merge of two branches can interleave them)."""
+    ordered = sorted(assessments, key=lambda a: (a["timestamp"], a["assessment_id"]))
     data = empty_projection()
-    for a in assessments:
+    for a in ordered:
         fold_assessment(data, a)
-    if assessments:
-        data["updated_at"] = assessments[-1]["timestamp"]
+    if ordered:
+        data["updated_at"] = ordered[-1]["timestamp"]
     return data
 
 

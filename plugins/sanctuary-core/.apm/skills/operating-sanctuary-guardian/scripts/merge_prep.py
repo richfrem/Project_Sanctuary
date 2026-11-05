@@ -4,6 +4,7 @@
 Regenerates from their sources:
   * LEARNING/research/index.jsonl and backlog.md  <- mission manifests (manage_backlog compile)
   * .agent/learning/cognitive_ledger.json          <- .agent/learning/events.jsonl (CONTRIBUTION_ASSESSED events)
+  * chronicle/ledger.json                          <- chronicle/entries/*.md
 Append-only logs (events.jsonl, leases.jsonl) merge with git's `union` driver (see .gitattributes).
 
 The ledger is a projection. If the stored ledger claims MORE than its events imply (an orphaned score that was
@@ -19,15 +20,18 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 SKILLS = Path(__file__).resolve().parents[2]
-for _p in (SKILLS / "evaluating-agent-work" / "scripts", SKILLS / "managing-sovereign-memory" / "scripts"):
+for _p in (SKILLS / "evaluating-agent-work" / "scripts", SKILLS / "managing-sovereign-memory" / "scripts",
+           SKILLS / "managing-chronicles" / "scripts"):
     sys.path.insert(0, str(_p))
 import score_contribution  # noqa: E402
 import manage_backlog  # noqa: E402
+import chronicle_manager  # noqa: E402
 
 LEDGER_REL = ".agent/learning/cognitive_ledger.json"
 EVENTS_REL = ".agent/learning/events.jsonl"
 UNION_LOGS = [".agent/learning/events.jsonl", ".agent/coordination/leases.jsonl"]
-GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", LEDGER_REL]
+CHRONICLE_LEDGER_REL = "chronicle/ledger.json"
+GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
 
 
 def find_root(start: Path = None) -> Path:
@@ -162,6 +166,11 @@ def regenerate(root: Path, apply: bool = True) -> Dict[str, Any]:
         report["generated"] += ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md"]
     after = _hash_dir(root / "LEARNING" / "research" / "missions")
     report["manifests_changed"] = [Path(k).name for k in after if before.get(k) != after[k]]
+
+    entries_dir = root / "chronicle" / "entries"
+    if apply and entries_dir.exists():
+        chronicle_manager.write_ledger(entries_dir)
+        report["generated"].append(CHRONICLE_LEDGER_REL)
     report["union_rules_missing"] = missing_union_rules(root)
     return report
 

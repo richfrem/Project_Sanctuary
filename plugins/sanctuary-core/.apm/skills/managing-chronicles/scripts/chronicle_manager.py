@@ -19,6 +19,7 @@ Usage:
 import os
 import re
 import sys
+import json
 import argparse
 from pathlib import Path
 from datetime import date
@@ -151,6 +152,33 @@ def _parse_entry(content: str, number: int) -> Dict[str, Any]:
     }
 
 
+def build_ledger(entries_dir: Path) -> Dict[str, Any]:
+    """Build the chronicle index (chronicle/ledger.json) from the entry files. Newest first; pure function of the files."""
+    entries = []
+    if entries_dir.exists():
+        for f in sorted(entries_dir.iterdir()):
+            match = re.match(r"(\d{3})_", f.name)
+            if not match or not f.name.endswith(".md"):
+                continue
+            number = int(match.group(1))
+            try:
+                e = _parse_entry(f.read_text(encoding="utf-8"), number)
+            except Exception:
+                continue
+            entries.append({"id": number, "title": e["title"], "filename": f.name,
+                            "date": e["date"], "status": e["status"]})
+    entries.sort(key=lambda e: (-e["id"], e["filename"]))
+    return {"total_entries": len(entries), "entries": entries}
+
+
+def write_ledger(entries_dir: Path = None) -> Path:
+    """Rewrite chronicle/ledger.json next to the entries directory."""
+    entries_dir = entries_dir or CHRONICLE_DIR
+    path = entries_dir.parent / "ledger.json"
+    path.write_text(json.dumps(build_ledger(entries_dir), indent=2) + "\n", encoding="utf-8")
+    return path
+
+
 # --- Operations ---
 
 def create_entry(title: str, content: str, author: str = "Guardian",
@@ -174,6 +202,7 @@ def create_entry(title: str, content: str, author: str = "Guardian",
     filepath.write_text(file_content, encoding='utf-8')
     print(f"✅ Created Chronicle Entry {number:03d}: {title}")
     print(f"   Path: {filepath}")
+    print(f"   Ledger: {write_ledger(CHRONICLE_DIR)}")
 
 
 def list_entries(limit: int = 10):
@@ -261,6 +290,8 @@ def main():
     get_p = subparsers.add_parser("get", help="View entry")
     get_p.add_argument("number", type=int, help="Entry number")
 
+    subparsers.add_parser("ledger", help="Rebuild chronicle/ledger.json from the entry files")
+
     search_p = subparsers.add_parser("search", help="Search entries")
     search_p.add_argument("query", help="Search query")
 
@@ -275,6 +306,8 @@ def main():
         list_entries(args.limit)
     elif args.command == "get":
         get_entry(args.number)
+    elif args.command == "ledger":
+        print(f"✅ Rebuilt {write_ledger(CHRONICLE_DIR)}")
     elif args.command == "search":
         search_entries(args.query)
 

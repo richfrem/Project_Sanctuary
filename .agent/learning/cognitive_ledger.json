@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T01:14:10.132660+00:00",
-  "total_assessments": 17,
-  "cumulative_score": 237,
-  "average_fitness": 0.929,
+  "updated_at": "2026-11-05T02:45:29.172098+00:00",
+  "total_assessments": 18,
+  "cumulative_score": 250,
+  "average_fitness": 0.926,
   "dimension_totals": {
-    "useful_outcome": 47,
-    "learning_depth": 50,
-    "verification_rigor": 50,
-    "token_economy": 39,
-    "anti_asch_integrity": 51
+    "useful_outcome": 50,
+    "learning_depth": 52,
+    "verification_rigor": 53,
+    "token_economy": 41,
+    "anti_asch_integrity": 54
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 4,
-      "cumulative_score": 51,
-      "average_fitness": 0.85
+      "assessments": 5,
+      "cumulative_score": 64,
+      "average_fitness": 0.853
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "f5fcb8fe-5689-4b66-b59d-9a74233fcc28",
+      "timestamp": "2026-11-05T02:45:29.171263+00:00",
+      "task_id": "MISSION-034-followup",
+      "agent_id": "claude-code",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Traced the orphan to f96e10701 and logged it as an explicitly reconstructed event instead of inventing notes; rebuild made order-independent; chronicle ledger rebuildable; 035 lease narrowed. Limits stated: assessor/notes unknown, 264b entry not listed."
+    },
     {
       "assessment_id": "c070aa05-4c29-476e-9f61-418638ee13b1",
       "timestamp": "2026-11-05T01:14:10.131943+00:00",
@@ -88,6 +97,15 @@
       "raw_score": 14,
       "fitness": 0.933,
       "notes": "Pre-registered; RED on old code loaded from git; independent brute-force ground truth; real-git validation; reported the 60/60 generated-file conflict boundary against the hypothesis wording; dogfooded verify and found own undeclared edit. Economy 2: long autonomous session. Self-assessed."
+    },
+    {
+      "assessment_id": "reconstructed-antigravity-MISSION-024",
+      "timestamp": "2026-11-04T06:14:30.254070+00:00",
+      "task_id": "MISSION-024",
+      "agent_id": "antigravity",
+      "raw_score": 15,
+      "fitness": 1.0,
+      "notes": "RECONSTRUCTED. The antigravity MISSION-024 assessment was added to the cognitive_ledger.json aggregate by hand in f96e10701 (#293) with no events.jsonl entry. That commit raised the aggregate by exactly one assessment, 15 points and +3 on each of the five dimensions, so the dimensions below are what git shows; the assessor, model and original notes were not recorded and are unknown. The timestamp is the aggregate's updated_at at that commit (approximate)."
     },
     {
       "assessment_id": "5ebc3bc5-5268-4c5a-bf56-6af7505ca561",
