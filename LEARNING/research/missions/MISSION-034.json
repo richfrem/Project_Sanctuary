@@ -1,11 +1,11 @@
 {
   "id": "MISSION-034",
   "title": "Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "git worktrees / merge workflow; backlog index, chronicle ledger, cognitive ledger and events log",
   "created_at": "2026-11-04T09:00:00Z",
-  "updated_at": "2026-11-04T09:00:00Z",
+  "updated_at": "2026-11-05T01:14:00.610727+00:00",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 4,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Escalate only if ledger semantics require judgement about which of two conflicting scores is authoritative."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -40,8 +40,19 @@
     "spawned-by-mission-031",
     "feeds-mission-033"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-05T01:14:00.610727+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-034/README.md",
+      "details": "60 two-branch merges: plain git merge conflicted 60/60; with merge=union on the append-only logs plus merge_prep.py regenerate, 0 needed human resolution, 0 differed from a from-scratch regeneration, max 0.026 s per merge, 0 manifests touched. Real-repo ledger drift (stored 16/224 vs events 15/209, one antigravity assessment with no event) is reported and left unchanged. Git still marks the three regenerated files conflicted until they are re-added."
+    }
+  ],
+  "lessons_learned": [
+    "Union-merge append-only logs and rebuild projections from them instead of hand-merging.",
+    "A projection that claims more than its events imply must be reported, never auto-adjusted.",
+    "The MISSION-024 antigravity assessment is an orphan aggregate score and needs agy or a human to log or retract it."
+  ],
   "related_missions": {
     "MISSION-031": "SPAWNED BY: found the 60/60 index.jsonl conflict boundary.",
     "MISSION-033": "FEEDS: the orchestrator runs merge-prep when it merges workers' PRs in order."
@@ -53,10 +64,13 @@
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_merge_prep.py",
       ".gitattributes",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",
-      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py"
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py",
+      "chronicle/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/merge-prep.md",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py"
     ],
     "resources": [],
-    "basis": "Declared 2026-11-04 by claude-code from the hypothesis; confirm with `manage_coordination.py verify`."
+    "basis": "Declared 2026-11-04 by claude-code from the hypothesis; confirm with `manage_coordination.py verify`. Added at close: chronicle entry 362, merge-prep reference, checkout message pointing at merge_prep."
   },
   "priority_score": 120.0
 }

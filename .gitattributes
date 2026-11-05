@@ -12,3 +12,8 @@ GEMINI.md merge=ours
 node_modules/** linguist-generated=true
 ast_utilities/js_transformer/node_modules/** linguist-generated=true
 ARCHIVE/07_COUNCIL_AGENTS/** linguist-generated=true
+
+# MISSION-034: append-only logs merge by keeping both sides' lines; generated files are rebuilt, never hand-merged.
+# After any merge run: python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py regenerate
+.agent/learning/events.jsonl merge=union
+.agent/coordination/leases.jsonl merge=union

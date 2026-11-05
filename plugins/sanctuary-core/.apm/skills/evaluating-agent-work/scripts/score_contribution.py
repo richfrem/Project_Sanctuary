@@ -85,13 +85,10 @@ def get_model_cost_weight(model_name: str) -> float:
     return 1.0
 
 
-def update_ledger_projection(root: Path, assessment: dict) -> Path:
-    ledger_path = root / ".agent" / "learning" / "cognitive_ledger.json"
-    ledger_path.parent.mkdir(parents=True, exist_ok=True)
-
-    data = {
+def empty_projection() -> dict:
+    return {
         "schema_version": 1,
-        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": None,
         "total_assessments": 0,
         "cumulative_score": 0,
         "average_fitness": 0.0,
@@ -106,24 +103,18 @@ def update_ledger_projection(root: Path, assessment: dict) -> Path:
         "recent_assessments": []
     }
 
-    if ledger_path.exists():
-        try:
-            with open(ledger_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception:
-            pass
 
+def fold_assessment(data: dict, assessment: dict) -> dict:
+    """Apply one CONTRIBUTION_ASSESSED event to the projection (shared by the live scorer and the rebuild)."""
     data["total_assessments"] = data.get("total_assessments", 0) + 1
     raw = assessment["raw_score"]
     data["cumulative_score"] = data.get("cumulative_score", 0) + raw
     data["average_fitness"] = round(data["cumulative_score"] / (data["total_assessments"] * 15.0), 3)
 
-    # Dimension totals
     dim_totals = data.setdefault("dimension_totals", {})
     for dim, val in assessment["dimensions"].items():
         dim_totals[dim] = dim_totals.get(dim, 0) + val
 
-    # Agent breakdown
     agent_id = assessment["agent_id"]
     agents = data.setdefault("agents", {})
     agent_stat = agents.setdefault(agent_id, {
@@ -135,7 +126,6 @@ def update_ledger_projection(root: Path, assessment: dict) -> Path:
     agent_stat["cumulative_score"] += raw
     agent_stat["average_fitness"] = round(agent_stat["cumulative_score"] / (agent_stat["assessments"] * 15.0), 3)
 
-    # Recent list (keep last 20)
     recent = data.setdefault("recent_assessments", [])
     recent.insert(0, {
         "assessment_id": assessment["assessment_id"],
@@ -147,6 +137,32 @@ def update_ledger_projection(root: Path, assessment: dict) -> Path:
         "notes": assessment["notes"]
     })
     data["recent_assessments"] = recent[:20]
+    return data
+
+
+def rebuild_projection(assessments: list) -> dict:
+    """Deterministically rebuild the projection from events (updated_at = last event time, not now)."""
+    data = empty_projection()
+    for a in assessments:
+        fold_assessment(data, a)
+    if assessments:
+        data["updated_at"] = assessments[-1]["timestamp"]
+    return data
+
+
+def update_ledger_projection(root: Path, assessment: dict) -> Path:
+    ledger_path = root / ".agent" / "learning" / "cognitive_ledger.json"
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+
+    data = empty_projection()
+    if ledger_path.exists():
+        try:
+            with open(ledger_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            pass
+
+    fold_assessment(data, assessment)
     data["updated_at"] = datetime.now(timezone.utc).isoformat()
 
     with open(ledger_path, "w", encoding="utf-8") as f:

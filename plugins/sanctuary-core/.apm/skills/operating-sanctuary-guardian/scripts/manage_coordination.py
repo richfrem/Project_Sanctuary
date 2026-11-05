@@ -529,6 +529,7 @@ def main():
                 print(f"   Locks:    {', '.join(res['locked_targets']) or '(none)'}  [{res['impact_source']}]")
                 print(f"   Expires:  {res['expires_at']}")
                 print(f"   After merging, regenerate (do not hand-merge): {', '.join(res['regenerate_after_merge'])}")
+                print("   Run: python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py regenerate")
         if res.get("status") in ("conflict", "error"):
             sys.exit(1)
 
