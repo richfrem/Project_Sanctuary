@@ -83,3 +83,27 @@ def test_hooks_json_registers_both_events():
     assert {"SessionStart", "PreCompact"} <= set(d)
     cmd = d["PreCompact"][0]["hooks"][0]
     assert cmd["type"] == "command" and "pre_compact_snapshot.py" in cmd["command"]
+
+
+def test_session_start_injects_the_predecessor_relay_with_the_latest_handoff(tmp_path):
+    """The hook builds its own digest; a fresh session must receive the same handoffs the manual wakeup shows."""
+    root = _project(tmp_path)
+    (root / ".agent" / "learning").mkdir(parents=True)
+    (root / ".agent" / "learning" / "events.jsonl").write_text(json.dumps({
+        "event_type": "CHECKIN", "agent_id": "codex", "mission_id": "TASK-X", "outcome_status": "COMPLETED", "pr_number": 9,
+        "timestamp": "2026-11-05T01:00:00+00:00", "handoff": "ZETA-handoff: do not redo the schema; next step is Y"}) + "\n")
+    env = {**os.environ, "PROJECT_ROOT": str(root)}
+    r = subprocess.run([sys.executable, str(WAKEUP)], input=json.dumps({"source": "startup"}), capture_output=True, text=True,
+                       cwd=str(root), env=env, timeout=30)
+    ctx = json.loads(r.stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "Predecessor Relay" in ctx and "ZETA-handoff" in ctx, ctx[-600:]
+
+
+def test_session_start_still_works_when_the_relay_cannot_be_built(tmp_path):
+    root = _project(tmp_path)
+    (root / ".agent" / "learning").mkdir(parents=True)
+    (root / ".agent" / "learning" / "events.jsonl").write_text("not json at all\n")
+    env = {**os.environ, "PROJECT_ROOT": str(root)}
+    r = subprocess.run([sys.executable, str(WAKEUP)], input=json.dumps({"source": "startup"}), capture_output=True, text=True,
+                       cwd=str(root), env=env, timeout=30)
+    assert r.returncode == 0 and "hookSpecificOutput" in r.stdout
