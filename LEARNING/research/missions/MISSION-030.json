@@ -1,11 +1,11 @@
 {
   "id": "MISSION-030",
   "title": "Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "macOS / APM Lifecycle Hooks (PreCompact) for Claude Code, Codex & AGY",
   "created_at": "2026-11-04T05:55:00Z",
-  "updated_at": "2026-11-04T05:55:00Z",
+  "updated_at": "2026-11-05T04:28:19.087173+00:00",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 4,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Escalate to frontier model only if cross-platform lifecycle hook specification requires multi-agent orchestration."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -39,16 +39,38 @@
     "context-continuity",
     "spawned-by-mission-024"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-05T04:28:19.087173+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-030/README.md",
+      "details": "PreCompact handler: median 61 ms, max 67 ms over 30 runs on a 20.6 MB transcript (ceiling 2500 ms); snapshot lists uncommitted files, last conclusions and friction; planted secrets redacted; exits 0 on malformed input and outside a Sanctuary checkout; fired on a real manual /compact in a scratch Claude Code session (18 ms). LIMIT: the auto (context-full) trigger was not exercised, and the hook runs only where the plugin hooks are installed."
+    }
+  ],
+  "lessons_learned": [
+    "A hook that can block compaction is worse than none: always exit 0, print nothing.",
+    "Test hook firing for real with a throwaway session and --settings, not only by simulating the payload.",
+    "Codex can write a passing test file from a spec, but extraction of its output needs care (log lines leak into captured output)."
+  ],
   "priority_score": 160.0,
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-030/",
       "plugins/sanctuary-core/.apm/hooks/",
-      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py"
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py",
+      "plugins/sanctuary-core/.apm/hooks/tests/",
+      ".gitignore",
+      "chronicle/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/precompact-hook.md",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/usage_hook.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_usage_probe.py",
+      ".agent/learning/budget_ledger.json"
     ],
     "resources": [],
-    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
-  }
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`. Added at close: tests, gitignore, reference doc, chronicle, and the codex input/output split in usage_probe/usage_hook found while recording the first Codex measurement."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-030"
 }

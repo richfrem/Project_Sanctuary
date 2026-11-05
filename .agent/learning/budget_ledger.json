@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T02:45:58.419708+00:00",
-  "total_tokens_consumed": 901917,
-  "total_turns": 12,
+  "updated_at": "2026-11-05T04:27:12.865488+00:00",
+  "total_tokens_consumed": 929860,
+  "total_turns": 13,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -57,9 +57,46 @@
       "turns": 1,
       "last_backend": "claude",
       "last_model": "claude-sonnet-5-5"
+    },
+    "MISSION-030": {
+      "tokens_consumed": 27943,
+      "turns": 1,
+      "last_backend": "codex",
+      "last_model": "gpt-6-luna"
     }
   },
   "recent_records": [
+    {
+      "record_id": "79785652-0647-4a2d-aeef-1ff9808b5f7c",
+      "timestamp": "2026-11-05T04:27:12.865508+00:00",
+      "task_id": "MISSION-030",
+      "backend": "codex",
+      "model": "gpt-6-luna",
+      "tokens_est": 27943,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "test-writing",
+      "outcome": "completed",
+      "tokens_in": 26893,
+      "tokens_out": 1050,
+      "window_delta": {
+        "from": "2026-11-05T04:24:10Z",
+        "to": "2026-11-05T04:27:08Z",
+        "codex": {
+          "five_hour_pct_delta": 11.0,
+          "weekly_pct_delta": 2.0,
+          "stale": false
+        }
+      },
+      "tokens_cache_read": 0,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 0,
+      "cost_usd": 0.003214,
+      "wall_seconds": 181,
+      "retries": 0,
+      "quality": 2
+    },
     {
       "record_id": "d1487824-927f-4c7b-9cc6-453ae24385ed",
       "timestamp": "2026-11-05T02:45:58.419729+00:00",

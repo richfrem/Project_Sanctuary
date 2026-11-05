@@ -162,7 +162,10 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
             r = mod.codex_tokens_between(codex_sessions_dir, start_iso, end_iso)
             concurrent = r["concurrent"]
             if r["total_tokens"]:
-                summary.update(tokens=r["total_tokens"], tokens_source="codex_rollouts")
+                cached = r.get("cached_input_tokens", 0)
+                summary.update(tokens=r["total_tokens"], tokens_source="codex_rollouts",
+                               tokens_in=max(0, r.get("input_tokens", 0) - cached), tokens_out=r.get("output_tokens", 0),
+                               tokens_cache_read=cached)
         summary["concurrent"] = concurrent
         if model:
             summary["model"] = model

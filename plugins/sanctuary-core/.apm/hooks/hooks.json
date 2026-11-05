@@ -10,6 +10,17 @@
           }
         ]
       }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\" || python \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\""
+          }
+        ]
+      }
     ]
   }
 }
