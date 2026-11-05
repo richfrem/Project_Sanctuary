@@ -117,7 +117,8 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
            tokens: Optional[int] = None, quality: Optional[int] = None, retries: int = 0,
            no_usage: bool = False, snapshot_fn: Optional[Callable] = None,
            projects_dir: Optional[Path] = None, record: bool = True, model: Optional[str] = None,
-           codex_sessions_dir: Optional[Path] = None) -> Optional[Dict[str, Any]]:
+           codex_sessions_dir: Optional[Path] = None,
+           token_split: Optional[Dict[str, int]] = None) -> Optional[Dict[str, Any]]:
     """Second snapshot, deltas, wall-clock and tokens; records a measured budget entry when tokens are known."""
     if _disabled(no_usage) or not lease:
         return None
@@ -141,6 +142,9 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
         backend = summary["backend"]
         if tokens is not None:
             summary.update(tokens=int(tokens), tokens_source="vendor_reported")
+            if token_split:  # e.g. parse_agy_json_usage(): input/output/cache-read reported by the vendor for this task
+                summary.update(tokens_in=int(token_split.get("input_tokens", 0)), tokens_out=int(token_split.get("output_tokens", 0)),
+                               tokens_cache_read=int(token_split.get("cache_read_tokens", 0)))
         elif backend == "claude":
             start_iso = datetime.fromtimestamp(started, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             end_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -197,3 +201,59 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
         return summary
     except Exception as exc:  # noqa: BLE001 - never block a checkin
         return {"error": type(exc).__name__}
+
+
+def record_delegated(root: Path, backend: str, task_id: str, task_class: str, before: Dict[str, Any],
+                     agy_json: Optional[str] = None, seconds: Optional[int] = None, quality: Optional[int] = None,
+                     retries: int = 0, model: Optional[str] = None, snapshot_fn: Optional[Callable] = None,
+                     record: bool = True, codex_sessions_dir: Optional[Path] = None) -> Optional[Dict[str, Any]]:
+    """Record the measured usage of work delegated to another CLI (agy or codex) by the orchestrating agent.
+
+    agy: pass its `--output-format json` output (exact vendor-reported split); unusable output records no tokens.
+    codex: tokens come from the rollout files since the `before` snapshot. `seconds` = the dispatch duration for wall time."""
+    if backend not in ("agy", "codex"):
+        raise ValueError(f"unsupported delegated backend: {backend}")
+    mod = _probe()
+    if mod is None:
+        return None
+    agent = "antigravity" if backend == "agy" else "codex"
+    started = time.time() - (seconds if seconds is not None else 0)
+    if seconds is None and before.get("timestamp"):
+        started = datetime.strptime(before["timestamp"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).timestamp()
+    lease = {"usage_start": before, "checked_out_timestamp": started}
+    kw: Dict[str, Any] = {}
+    if backend == "agy":
+        u = mod.parse_agy_json_usage(agy_json or "")
+        if u:
+            kw.update(tokens=u["total_tokens"], token_split=u)
+    return finish(root, lease, task_id, agent, task_class=task_class, quality=quality, retries=retries, model=model,
+                  snapshot_fn=snapshot_fn, record=record, codex_sessions_dir=codex_sessions_dir, **kw)
+
+
+def main(argv=None) -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description="Record measured usage of delegated agy/codex work (MISSION-035)")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    d = sub.add_parser("delegated", help="Record one delegated task")
+    d.add_argument("--backend", choices=["agy", "codex"], required=True)
+    d.add_argument("--task-id", required=True)
+    d.add_argument("--task-class", required=True)
+    d.add_argument("--before", required=True, help="snapshot JSON taken before the dispatch (usage_probe.py snapshot --out FILE)")
+    d.add_argument("--agy-json", help="file with the agy --output-format json output (agy only)")
+    d.add_argument("--seconds", type=int, help="dispatch duration; default = time since the snapshot")
+    d.add_argument("--quality", type=int, choices=[0, 1, 2, 3])
+    d.add_argument("--retries", type=int, default=0)
+    d.add_argument("--model")
+    d.add_argument("--root", default=".")
+    a = ap.parse_args(argv)
+    before = json.loads(Path(a.before).read_text(encoding="utf-8"))
+    raw = Path(a.agy_json).read_text(encoding="utf-8") if a.agy_json else None
+    res = record_delegated(Path(a.root).resolve(), a.backend, a.task_id, a.task_class, before, agy_json=raw, seconds=a.seconds,
+                           quality=a.quality, retries=a.retries, model=a.model)
+    print(json.dumps({k: (res or {}).get(k) for k in ("backend", "tokens", "tokens_in", "tokens_out", "tokens_cache_read",
+                                                       "tokens_source", "cost_usd", "wall_seconds", "concurrent")}))
+    return 0 if res and res.get("tokens") else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

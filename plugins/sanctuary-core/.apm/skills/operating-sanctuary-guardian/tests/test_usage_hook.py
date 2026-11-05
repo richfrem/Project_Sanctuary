@@ -132,3 +132,48 @@ class TestFuelGaugeInBoot(unittest.TestCase):
             self.assertIn("no reading under 6 h old", relay.render_markdown(relay.build_relay(root)))
             usage_hook.save_latest(root, _snap("t"))
             self.assertIsNone(usage_hook.load_latest(root, now=time.time() + 7 * 3600))
+
+
+class TestTokenSplit(unittest.TestCase):
+    def test_vendor_reported_split_is_recorded(self):
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                root = Path(d)
+                lease = {"usage_start": _snap("2026-11-04T10:00:00Z"), "checked_out_timestamp": time.time() - 20}
+                res = usage_hook.finish(root, lease, "M-1", "antigravity", task_class="inspection", tokens=6012, quality=3,
+                                        token_split={"input_tokens": 5510, "output_tokens": 502, "cache_read_tokens": 33091},
+                                        snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False)
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+        self.assertEqual((res["tokens"], res["tokens_in"], res["tokens_out"], res["tokens_cache_read"]), (6012, 5510, 502, 33091))
+        self.assertEqual(res["tokens_source"], "vendor_reported")
+
+
+class TestDelegated(unittest.TestCase):
+    RAW = ('{"status":"SUCCESS","response":"x","duration_seconds":14.2,"num_turns":1,'
+           '"usage":{"input_tokens":5510,"output_tokens":502,"thinking_tokens":0,"cache_read_tokens":33091,"total_tokens":6012}}')
+
+    def _run(self, **kw):
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                return usage_hook.record_delegated(Path(d), snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False, **kw)
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+
+    def test_agy_json_output_gives_exact_split_and_attributes_to_agy(self):
+        res = self._run(backend="agy", task_id="T", task_class="inspection", before=_snap("2026-11-04T10:00:00Z"),
+                        agy_json=self.RAW, seconds=16, quality=3, model="gemini-3.8-flash-low")
+        self.assertEqual((res["backend"], res["tokens"], res["tokens_in"], res["tokens_out"], res["tokens_cache_read"]),
+                         ("agy", 6012, 5510, 502, 33091))
+        self.assertEqual(res["wall_seconds"], 16)
+
+    def test_agy_without_usable_json_records_nothing_rather_than_guessing(self):
+        res = self._run(backend="agy", task_id="T", task_class="inspection", before=_snap("2026-11-04T10:00:00Z"),
+                        agy_json="plain text", seconds=16)
+        self.assertIsNone(res.get("tokens"))
+
+    def test_unknown_backend_is_rejected(self):
+        with self.assertRaises(ValueError):
+            usage_hook.record_delegated(Path("."), backend="grok", task_id="T", task_class="x", before={})
