@@ -110,6 +110,8 @@ def execute_bootloader_in_process(project_root: Path) -> tuple[int, str, float]:
             "## III. Pre-Flight Brief (Sovereign Memory Engine)",
             gw.get_preflight_brief(project_root),
             "",
+            gw.get_relay_section(project_root),  # Predecessor Relay + fuel gauge: the same handoffs the manual wakeup prints (empty string if it cannot be built)
+            "",
             "## IV. Layer 1 Integrity Health Checks",
         ]
 

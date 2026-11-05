@@ -73,3 +73,16 @@ class TestWakeupMissionCheck(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestChronicleCount(unittest.TestCase):
+    def test_chronicle_line_reports_the_number_of_entries_not_the_number_of_keys(self):
+        root = _root(with_schema=False, manifests=0)
+        (root / "context").mkdir(exist_ok=True)
+        for n in ("soul.md", "user.md", "memory.md"):
+            (root / "context" / n).write_text("# x\n")
+        (root / "chronicle").mkdir()
+        (root / "chronicle" / "ledger.json").write_text(json.dumps({"total_entries": 3, "entries": [{"id": 1}, {"id": 2}, {"id": 3}]}))
+        _, checks = gw.check_layer1_health(root)
+        line = next(c for c in checks if c["path"] == "chronicle/ledger.json")
+        self.assertIn("3 entries", line["description"])

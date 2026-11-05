@@ -185,7 +185,10 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
                 if ftype == "json":
                     data = json.loads(content)
                     valid = isinstance(data, (dict, list))
-                    detail = f"{len(data)} entries" if isinstance(data, (dict, list)) else "invalid shape"
+                    if isinstance(data, dict) and isinstance(data.get("entries"), list):
+                        detail = f"{len(data['entries'])} entries"  # the chronicle ledger is {"total_entries", "entries"}: count the entries, not the keys
+                    else:
+                        detail = f"{len(data)} entries" if isinstance(data, (dict, list)) else "invalid shape"
                 elif ftype == "markdown":
                     valid = any(line.strip().startswith("#") for line in content.splitlines())
                     detail = "valid headers" if valid else "missing headers"
