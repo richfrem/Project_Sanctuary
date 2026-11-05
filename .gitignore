@@ -270,3 +270,6 @@ apm_modules/
 
 # APM project install output for the copilot target (generated hooks and script copies); machine-local like .claude/ and .agents/
 .github/hooks/
+
+# Forge workspace: training data and Modelfile written by forging-sovereign-models scripts on first run (the old tree is ARCHIVE/forge). Never commit generated training data.
+/forge/

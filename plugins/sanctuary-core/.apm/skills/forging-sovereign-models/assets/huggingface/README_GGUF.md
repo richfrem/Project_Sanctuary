@@ -139,7 +139,7 @@ The model responds naturally and helpfully to direct questions and requests.
 **Mode 2 - Structured Command Mode:**
 When provided with JSON input (simulating orchestrator input), the model switches to generating command structures for the Council.
 ```bash
->>> {"task_type": "protocol_analysis", "task_description": "Analyze Protocol 23 - The AGORA Protocol", "input_files": ["01_PROTOCOLS/23_The_AGORA_Protocol.md"], "output_artifact_path": "WORK_IN_PROGRESS/agora_analysis.md"}
+>>> {"task_type": "protocol_analysis", "task_description": "Analyze Protocol 23 - The AGORA Protocol", "input_files": ["protocols/23_The_AGORA_Protocol.md"], "output_artifact_path": "WORK_IN_PROGRESS/agora_analysis.md"}
 ```
 *Expected Response:* The model outputs a structured analysis document for Council execution.
 

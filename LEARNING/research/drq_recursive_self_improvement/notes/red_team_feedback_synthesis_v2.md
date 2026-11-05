@@ -16,7 +16,7 @@ iteration: 2.0
 
 ## 🛡️ The Sealed Doctrine
 The following artifacts are now stable and approved "Rules of the Road":
-1.  `01_PROTOCOLS/131_Evolutionary_Self_Improvement.md`
+1.  `protocols/131_Evolutionary_Self_Improvement.md`
 2.  `plugins/guardian-onboarding/resources/protocols/128_Hardened_Learning_Loop.md` (v4.0 Branch)
 3.  `docs/architecture_diagrams/workflows/drq_evolution_loop.png`
 4.  `edge_case_registry.json` (Concept Approved)

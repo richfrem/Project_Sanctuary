@@ -344,14 +344,14 @@ dependencies:
     .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
     .agents/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
     .agents/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
-    .agents/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
+    .agents/skills/forging-sovereign-models/SKILL.md: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
     .agents/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .agents/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
     .agents/skills/forging-sovereign-models/assets/configs/gguf_config.yaml: sha256:b66fec6af6b2ca1cbda451816f100a6bf9946b25ea2ca2bac92454042af32feb
     .agents/skills/forging-sovereign-models/assets/configs/inference_config.yaml: sha256:57f61b9a12f9090332ca6a9b86549709bee3e9e3912900468878954776ccf4e8
     .agents/skills/forging-sovereign-models/assets/configs/merge_config.yaml: sha256:218b31d56c55fb84841098716609269542bb23b36866530002ec758a390602e9
     .agents/skills/forging-sovereign-models/assets/configs/training_config.yaml: sha256:1dcf0a0fd6b503969cf3d257ee538eb28120f4a0efe920f8fe74693e3d72e9ad
-    .agents/skills/forging-sovereign-models/assets/huggingface/README_GGUF.md: sha256:5db5e3100b698a4acd8b8ae6b81a92d163f9ec46a05b2bc0a8fc600be5e7b5c4
+    .agents/skills/forging-sovereign-models/assets/huggingface/README_GGUF.md: sha256:de7c6ef2be61658af029ec30ad3e98eeec37e648f2abd1fe7a257fbe0affd22a
     .agents/skills/forging-sovereign-models/assets/huggingface/README_LORA.md: sha256:75674af52dd6bd3df09529083a7db61a283f10a7ed1f9fa78bb78ec95af96d4b
     .agents/skills/forging-sovereign-models/evals/evals.json: sha256:59ad99677497cb81d2b401778a36aad0c475497358bc60c75ad8d3dd251ae004
     .agents/skills/forging-sovereign-models/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
@@ -360,7 +360,7 @@ dependencies:
     .agents/skills/forging-sovereign-models/references/colab-whole-genome-forge.md: sha256:1633023e821449b2875f9bdb3d2b84d40f8921c885e19f90f38f8f568747a636
     .agents/skills/forging-sovereign-models/references/huggingface-integration.md: sha256:747c50ae902d319d11e152296f49780c45ff519bc498d1b67e1cf5a0435b29ad
     .agents/skills/forging-sovereign-models/references/model-specifications.md: sha256:417806209df4c028da202b96dd326c8683df5525f81a40e517baaeb9d1c76317
-    .agents/skills/forging-sovereign-models/references/qlora-workflow.md: sha256:43f5251b420b648036e53e7ecedb4e58556d00bec0431259132fe1140832b154
+    .agents/skills/forging-sovereign-models/references/qlora-workflow.md: sha256:9896dec52816a41f7f52de6fa92ab15035a74b0ca914571e9d7cdc76ef942244
     .agents/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md: sha256:572d327423108ddff9cf5380265036e4ebdb562806fa18b9dd90d0773bc5e71c
     .agents/skills/forging-sovereign-models/scripts/forge_dataset_builder.py: sha256:58ab53b0f6b8b93a9977315068a7101f6b9f6367a1057e4cbebe99a768edb471
     .agents/skills/forging-sovereign-models/scripts/generate_modelfile.py: sha256:1c82961fe8ae25052035e6eab733e8a59b3d112fd948355eeff93ded91802e56
@@ -399,7 +399,7 @@ dependencies:
     .agents/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
     .agents/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
     .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
-    .agents/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+    .agents/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
     .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .agents/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
@@ -489,14 +489,14 @@ dependencies:
     .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
     .claude/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
     .claude/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
-    .claude/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
+    .claude/skills/forging-sovereign-models/SKILL.md: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
     .claude/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .claude/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
     .claude/skills/forging-sovereign-models/assets/configs/gguf_config.yaml: sha256:b66fec6af6b2ca1cbda451816f100a6bf9946b25ea2ca2bac92454042af32feb
     .claude/skills/forging-sovereign-models/assets/configs/inference_config.yaml: sha256:57f61b9a12f9090332ca6a9b86549709bee3e9e3912900468878954776ccf4e8
     .claude/skills/forging-sovereign-models/assets/configs/merge_config.yaml: sha256:218b31d56c55fb84841098716609269542bb23b36866530002ec758a390602e9
     .claude/skills/forging-sovereign-models/assets/configs/training_config.yaml: sha256:1dcf0a0fd6b503969cf3d257ee538eb28120f4a0efe920f8fe74693e3d72e9ad
-    .claude/skills/forging-sovereign-models/assets/huggingface/README_GGUF.md: sha256:5db5e3100b698a4acd8b8ae6b81a92d163f9ec46a05b2bc0a8fc600be5e7b5c4
+    .claude/skills/forging-sovereign-models/assets/huggingface/README_GGUF.md: sha256:de7c6ef2be61658af029ec30ad3e98eeec37e648f2abd1fe7a257fbe0affd22a
     .claude/skills/forging-sovereign-models/assets/huggingface/README_LORA.md: sha256:75674af52dd6bd3df09529083a7db61a283f10a7ed1f9fa78bb78ec95af96d4b
     .claude/skills/forging-sovereign-models/evals/evals.json: sha256:59ad99677497cb81d2b401778a36aad0c475497358bc60c75ad8d3dd251ae004
     .claude/skills/forging-sovereign-models/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
@@ -505,7 +505,7 @@ dependencies:
     .claude/skills/forging-sovereign-models/references/colab-whole-genome-forge.md: sha256:1633023e821449b2875f9bdb3d2b84d40f8921c885e19f90f38f8f568747a636
     .claude/skills/forging-sovereign-models/references/huggingface-integration.md: sha256:747c50ae902d319d11e152296f49780c45ff519bc498d1b67e1cf5a0435b29ad
     .claude/skills/forging-sovereign-models/references/model-specifications.md: sha256:417806209df4c028da202b96dd326c8683df5525f81a40e517baaeb9d1c76317
-    .claude/skills/forging-sovereign-models/references/qlora-workflow.md: sha256:43f5251b420b648036e53e7ecedb4e58556d00bec0431259132fe1140832b154
+    .claude/skills/forging-sovereign-models/references/qlora-workflow.md: sha256:9896dec52816a41f7f52de6fa92ab15035a74b0ca914571e9d7cdc76ef942244
     .claude/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md: sha256:572d327423108ddff9cf5380265036e4ebdb562806fa18b9dd90d0773bc5e71c
     .claude/skills/forging-sovereign-models/scripts/forge_dataset_builder.py: sha256:58ab53b0f6b8b93a9977315068a7101f6b9f6367a1057e4cbebe99a768edb471
     .claude/skills/forging-sovereign-models/scripts/generate_modelfile.py: sha256:1c82961fe8ae25052035e6eab733e8a59b3d112fd948355eeff93ded91802e56
@@ -544,7 +544,7 @@ dependencies:
     .claude/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
     .claude/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
     .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
-    .claude/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+    .claude/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
     .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
     .claude/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
@@ -806,7 +806,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
+  content_hash: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
 - kind: project-relative
   target: antigravity
   value: .agents/skills/forging-sovereign-models/assets/Modelfile.template
@@ -869,7 +869,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5db5e3100b698a4acd8b8ae6b81a92d163f9ec46a05b2bc0a8fc600be5e7b5c4
+  content_hash: sha256:de7c6ef2be61658af029ec30ad3e98eeec37e648f2abd1fe7a257fbe0affd22a
 - kind: project-relative
   target: antigravity
   value: .agents/skills/forging-sovereign-models/assets/huggingface/README_LORA.md
@@ -950,7 +950,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:43f5251b420b648036e53e7ecedb4e58556d00bec0431259132fe1140832b154
+  content_hash: sha256:9896dec52816a41f7f52de6fa92ab15035a74b0ca914571e9d7cdc76ef942244
 - kind: project-relative
   target: antigravity
   value: .agents/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md
@@ -1328,7 +1328,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+  content_hash: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py
@@ -2174,7 +2174,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
+  content_hash: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
 - kind: project-relative
   target: claude
   value: .claude/skills/forging-sovereign-models/assets/Modelfile.template
@@ -2237,7 +2237,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5db5e3100b698a4acd8b8ae6b81a92d163f9ec46a05b2bc0a8fc600be5e7b5c4
+  content_hash: sha256:de7c6ef2be61658af029ec30ad3e98eeec37e648f2abd1fe7a257fbe0affd22a
 - kind: project-relative
   target: claude
   value: .claude/skills/forging-sovereign-models/assets/huggingface/README_LORA.md
@@ -2318,7 +2318,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:43f5251b420b648036e53e7ecedb4e58556d00bec0431259132fe1140832b154
+  content_hash: sha256:9896dec52816a41f7f52de6fa92ab15035a74b0ca914571e9d7cdc76ef942244
 - kind: project-relative
   target: claude
   value: .claude/skills/forging-sovereign-models/references/windows-wsl-cuda-setup.md
@@ -2696,7 +2696,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+  content_hash: sha256:c1157e7560abc4c976531c9ed843176e95d97d97b2039b78034f89146a86153b
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py
