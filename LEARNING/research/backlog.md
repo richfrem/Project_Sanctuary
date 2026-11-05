@@ -43,7 +43,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#22** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
 | **#23** | `MISSION-028` | **Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku** | 4 | 4 | 0.1x | 2 | **80.0** | `PROPOSED` | - |
 | **#24** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#25** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `PROPOSED` | - |
+| **#25** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `RESOLVED` | `ABANDONED` |
 | **#26** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
 | **#27** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#28** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
@@ -460,7 +460,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
 ### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #25)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `ABANDONED`
 - **Execution Surface**: `local`
 - **Target Platform**: Anti-Asch Test Harness
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -469,6 +470,10 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40%, while decreasing acceptance of valid peer corrections by no more than five percentage points.
 - **Falsification Gate**:
   > Either resistance improvement falls below 40%, or valid correction retention decreases by more than 5 percentage points.
+- **Empirical Evidence & Trials**:
+  * `2026-11-05T05:09:52.370552+00:00` [claude-code] (LEARNING/research/experiments/mission-035/agy-routing-pilot.md): Closed as a duplicate of MISSION-004 (decided by the human 2026-11-05). Both state the same hypothesis with identical thresholds (>= 40% fewer incorrect majority-following, <= 5 percentage points fewer accepted valid corrections); only wording and tags differ. Found by an agy comparison (checked against both manifests). Unique tags merged into MISSION-004; nothing was run, so no empirical verdict was reached.
+- **Lessons Learned & Epistemic Compounding**:
+  * Scan related missions before creating one (agent-native-backlog 4a); this pair slipped through before the helper existed.
 
 ### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #26)
 - **Status**: `PROPOSED`
