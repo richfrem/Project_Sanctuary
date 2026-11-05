@@ -32,7 +32,7 @@ REPO = HERE.parents[5]
 KNOWN_AGENTS = {"claude-code", "antigravity", "codex", "mlx"}
 VERDICTS = {"CORROBORATED", "FALSIFIED", "CONFIRMED", "ABANDONED"}
 COPY = [".agent/coordination/leases.jsonl", ".agent/coordination/board.json", ".agent/learning/events.jsonl",
-        ".agent/learning/cognitive_ledger.json", "LEARNING/research/index.jsonl", "LEARNING/research/missions",
+        ".agent/learning/cognitive_ledger.json", "LEARNING/research/index.jsonl", "LEARNING/missions",
         "chronicle/ledger.json", "chronicle/entries", "context", "START_HERE.md", "AGENTS.md"]
 
 
@@ -68,7 +68,7 @@ def build_snapshot_synthetic(dst: Path, seed: int = 25) -> Dict[str, str]:
     """Synthetic three-vendor handover chain (Codex -> Gemini -> Claude) hidden among noise events; returns the facts used for the key."""
     rng = random.Random(seed)
     _copy(main_root(), dst, ["context", "START_HERE.md", "AGENTS.md"])
-    for d in (".agent/coordination", ".agent/learning", "LEARNING/research/missions", "chronicle"):
+    for d in (".agent/coordination", ".agent/learning", "LEARNING/missions", "LEARNING/research", "chronicle"):
         (dst / d).mkdir(parents=True, exist_ok=True)
     (dst / "chronicle" / "ledger.json").write_text(json.dumps({"entries": []}))
     (dst / ".agent/coordination/board.json").write_text(json.dumps({"leases": []}))
@@ -94,11 +94,11 @@ def build_snapshot_synthetic(dst: Path, seed: int = 25) -> Dict[str, str]:
     (dst / ".agent/learning/events.jsonl").write_text(json.dumps({"event_type": "MISSION_RESOLVED", "mission_id": "MISSION-901", "verdict": "CONFIRMED",
         "citation": "LEARNING/research/experiments/mission-901/README.md", "agent": "codex", "timestamp": "2026-11-01T09:05:00+00:00"}) + "\n")
     for mid, status, verdict in (("MISSION-901", "RESOLVED", "CONFIRMED"), ("MISSION-902", "RESOLVED", "CORROBORATED"), ("MISSION-903", "PROPOSED", None)):
-        (dst / f"LEARNING/research/missions/{mid}.json").write_text(json.dumps({
+        (dst / f"LEARNING/missions/{mid}.json").write_text(json.dumps({
             "id": mid, "title": f"Synthetic {mid}", "status": status, "verdict": verdict, "priority_score": 100.0, "execution_surface": "local",
             "evidence": [{"citation": "LEARNING/research/experiments/mission-901/README.md" if mid == "MISSION-901" else ""}]}))
     (dst / "LEARNING/research/index.jsonl").write_text("".join(json.dumps({"rank": i + 1, "id": m, "title": f"Synthetic {m}", "status": s, "verdict": v,
-        "priority_score": 100.0, "execution_surface": "local", "path": f"LEARNING/research/missions/{m}.json"}) + "\n"
+        "priority_score": 100.0, "execution_surface": "local", "path": f"LEARNING/missions/{m}.json"}) + "\n"
         for i, (m, s, v) in enumerate((("MISSION-901", "RESOLVED", "CONFIRMED"), ("MISSION-902", "RESOLVED", "CORROBORATED"), ("MISSION-903", "PROPOSED", None)))))
     return {"ok": "synthetic"}
 
@@ -130,7 +130,7 @@ def questions_real(snap: Path, seed: int = 25) -> List[dict]:
         q("A2", "id", "Which mission or task id did the most recent CHECKIN in the coordination ledger close?", "the id only", last["mission_id"]),
         q("A3", "number", "Which pull request number is recorded on the most recent CHECKIN that has one?", "the number only", last_pr["pr_number"]),
     ]
-    missions = [json.loads(p.read_text()) for p in sorted((snap / "LEARNING/research/missions").glob("MISSION-*.json"))]
+    missions = [json.loads(p.read_text()) for p in sorted((snap / "LEARNING/missions").glob("MISSION-*.json"))]
     resolved = [m for m in missions if m.get("status") == "RESOLVED" and m.get("verdict")]
     open_ = [m for m in missions if m.get("status") != "RESOLVED"]
 

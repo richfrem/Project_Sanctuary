@@ -50,7 +50,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-036/",
-      "LEARNING/research/missions/MISSION-036.json",
+      "LEARNING/missions/MISSION-036.json",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_backlog_manager.py",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/agent-native-backlog.md",

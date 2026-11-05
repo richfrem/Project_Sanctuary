@@ -2,7 +2,7 @@
 """manage_coordination.py - Multi-Agent Concurrency Control & Flight Board CLI.
 Purpose: Coordinates parallel execution across heterogeneous AI CLI agents (AGY, Claude Code, Codex, MLX) via optimistic file leases, worktree tracking, and flight board status.
 Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Multi-Agent Concurrency & Leases).
-Key Inputs: .agent/coordination/board.json, .agent/coordination/leases.jsonl, LEARNING/research/missions/*.json, index.jsonl.
+Key Inputs: .agent/coordination/board.json, .agent/coordination/leases.jsonl, LEARNING/missions/*.json, index.jsonl.
 Key Outputs: Active coordination board, lease tokens, worktree management, and collision prevention alerts.
 Usage:
     python3 manage_coordination.py checkout --mission MISSION-026 --agent antigravity --targets "scripts/manage_coordination.py"
@@ -163,7 +163,7 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
     declared = impact.load_manifest_impact(root, mission)
     if declared is None and not manual_targets and not manual_resources and not allow_unlocked:
         return {"status": "error", "mission": mission,
-                "error": (f"{mission} has no projected_impact in LEARNING/research/missions/{mission}.json and no --targets were given; "
+                "error": (f"{mission} has no projected_impact in LEARNING/missions/{mission}.json and no --targets were given; "
                           "refusing an unlocked lease (it could never conflict, so it would not protect anyone). Declare projected_impact, "
                           "pass --targets or --resources, or pass --allow-unlocked.")}
     extra_generated = declared.get("shared_generated", []) if declared else []
@@ -231,7 +231,7 @@ def checkout(root: Path, mission: str, agent: str, targets: Optional[List[str]] 
 
     # Mark the mission in progress. Write into the NEW worktree's copy when there is one, so the main tree is not left dirty
     # (a dirty main tree aborts `git pull` and collides with the mission's own PR); fall back to this tree for lease-only checkouts.
-    rel = Path("LEARNING") / "research" / "missions" / f"{mission}.json"
+    rel = Path("LEARNING") / "missions" / f"{mission}.json"
     wt_copy = root / worktree_path / rel
     mission_file = wt_copy if wt_copy.exists() else root / rel
     if mission_file.exists():
@@ -329,7 +329,7 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
 def _open_candidates(root: Path) -> List[Dict[str, Any]]:
     """Open missions (PROPOSED/STAGED) with their priority and normalised projected impact (None if undeclared)."""
     out = []
-    mdir = root / "LEARNING" / "research" / "missions"
+    mdir = root / "LEARNING" / "missions"
     for p in sorted(mdir.glob("MISSION-*.json")) if mdir.exists() else []:
         try:
             m = json.loads(p.read_text(encoding="utf-8"))
@@ -376,7 +376,7 @@ def verify_impact(root: Path, mission: str, worktree: Optional[str] = None, base
         if res.returncode == 0:
             changed += [l for l in res.stdout.splitlines() if l.strip()]
     changed = sorted(set(changed))
-    own = {"paths": declared["paths"] + [f"LEARNING/research/missions/{mission}.json"],   # a mission always edits its own manifest
+    own = {"paths": declared["paths"] + [f"LEARNING/missions/{mission}.json"],   # a mission always edits its own manifest
            "shared_generated": declared.get("shared_generated", [])}
     undeclared = impact.undeclared_changes(own, changed)
     return {"status": "success", "mission": mission, "declared_paths": declared["paths"], "changed_files": changed,

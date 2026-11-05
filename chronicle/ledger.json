@@ -1,6 +1,13 @@
 {
-  "total_entries": 364,
+  "total_entries": 365,
   "entries": [
+    {
+      "id": 373,
+      "title": "LEARNING restructure step 1: mission manifests and schema moved to LEARNING/missions",
+      "filename": "373_learning_restructure_step_1_mission_manifests_and_schema_moved_to_learningmissions.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 372,
       "title": "LEARNING archive: 8 topic dossiers, security and two loose files moved after a read-based triage by two models",

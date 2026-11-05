@@ -49,8 +49,8 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-009/",
-      "LEARNING/research/missions/MISSION-004.json",
-      "LEARNING/research/missions/MISSION-009.json",
+      "LEARNING/missions/MISSION-004.json",
+      "LEARNING/missions/MISSION-009.json",
       ".agent/learning/events.jsonl"
     ],
     "resources": [],

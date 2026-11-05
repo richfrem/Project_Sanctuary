@@ -22,7 +22,7 @@ import re
 import sys
 from typing import Any
 
-SCHEMA_RELPATH = os.path.join("LEARNING", "research", "mission.schema.json")
+SCHEMA_RELPATH = os.path.join("LEARNING", "missions", "mission.schema.json")
 SCHEMA_FILENAME = "mission.schema.json"
 
 
@@ -155,7 +155,7 @@ def validate_manifest(manifest: dict, schema: dict) -> list[str]:
 
 
 def _find_schema() -> str:
-    """Search upward from this script for LEARNING/research/mission.schema.json."""
+    """Search upward from this script for LEARNING/missions/mission.schema.json."""
     here = os.path.dirname(os.path.abspath(__file__))
     current = here
     while True:
@@ -181,13 +181,13 @@ def load_schema(path: str | None = None) -> dict:
 
 
 def find_missions_dir() -> str:
-    """LEARNING/research/missions found by searching upward from this script (and from the working directory)."""
+    """LEARNING/missions found by searching upward from this script (and from the working directory)."""
     for start in (Path(__file__).resolve().parent, Path.cwd().resolve()):
         for parent in [start, *start.parents]:
-            cand = parent / "LEARNING" / "research" / "missions"
+            cand = parent / "LEARNING" / "missions"
             if cand.is_dir():
                 return str(cand)
-    raise FileNotFoundError("could not find LEARNING/research/missions above the script or the working directory")
+    raise FileNotFoundError("could not find LEARNING/missions above the script or the working directory")
 
 
 def _manifest_files(missions_dir: str) -> list[str]:
@@ -223,7 +223,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--missions-dir",
         default=None,
-        help="Directory containing mission manifests (default: LEARNING/research/missions, found by upward search).",
+        help="Directory containing mission manifests (default: LEARNING/missions, found by upward search).",
     )
     parser.add_argument("--schema", default=None, help="Path to mission.schema.json (default: upward search).")
     args = parser.parse_args(argv)

@@ -78,12 +78,12 @@ def test_deny_list_blocks_reads_and_hides_entries(sb):
 
 
 def test_search_text_and_find_files(sb):
-    assert "MISSION-021.json" in sb.search_text("Local Tool Use", "LEARNING/research/missions")
-    assert "LEARNING/research/missions/MISSION-001.json" in sb.find_files("LEARNING/research/missions/*.json")
+    assert "MISSION-021.json" in sb.search_text("Local Tool Use", "LEARNING/missions")
+    assert "LEARNING/missions/MISSION-001.json" in sb.find_files("LEARNING/missions/*.json")
 
 
 def test_search_text_rejects_glob_and_missing_paths(sb):
-    assert "ERROR" in sb.search_text("x", "LEARNING/research/missions/*.json")
+    assert "ERROR" in sb.search_text("x", "LEARNING/missions/*.json")
     assert "ERROR: path not found" in sb.search_text("x", "no/such/dir")
 
 
@@ -113,7 +113,7 @@ def test_tag_per_tool_calls_are_accepted():
     """A model that writes <search_text>query</search_text> instead of the JSON form must not burn turns on parse errors."""
     assert lal.extract_calls("<scratchpad>x</scratchpad>\n<search_text>MISSION-021 verdict</search_text>") == [
         {"name": "search_text", "arguments": {"query": "MISSION-021 verdict"}}]
-    assert lal.extract_calls("<read_file>LEARNING/research/missions/MISSION-021.json</read_file>")[0]["arguments"] == {"path": "LEARNING/research/missions/MISSION-021.json"}
+    assert lal.extract_calls("<read_file>LEARNING/missions/MISSION-021.json</read_file>")[0]["arguments"] == {"path": "LEARNING/missions/MISSION-021.json"}
     assert lal.extract_calls('<find_files>{"pattern": "**/*.md"}</find_files>')[0]["arguments"] == {"pattern": "**/*.md"}
     assert lal.extract_calls("<find_files>{not json}</find_files>") == [] and lal.extract_calls("<list_dir></list_dir>") == []
 

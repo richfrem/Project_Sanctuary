@@ -2,7 +2,7 @@
 """manage_backlog.py - Agent-Native Cognitive Backlog & Investment Tracker.
 Purpose: Sovereign, agent-first backlog and falsifiable mission tracker for Project Sanctuary. Provides Tier 1 machine indices, append-only inbox capture, structured mission manifests, cheapest-viable model routing (MISSION-016), and deterministic compilation to human Markdown views.
 Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Epistemic Backlog & Mission Governance).
-Key Input Dependencies: LEARNING/research/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
+Key Input Dependencies: LEARNING/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
 Key Outputs: LEARNING/research/index.jsonl (Tier 1 fast index), LEARNING/research/backlog.md (human view).
 Usage:
     python3 manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
@@ -173,7 +173,7 @@ def build_index_item(rank: int, m: Dict[str, Any]) -> Dict[str, Any]:
         "hypothesis_brief": hypothesis_brief(m.get("hypothesis", "")),
         "tags": m.get("tags", []),
         "updated_at": m.get("updated_at"),
-        "path": f"LEARNING/research/missions/{m['id']}.json",
+        "path": f"LEARNING/missions/{m['id']}.json",
     }
 
 
@@ -255,7 +255,7 @@ class BacklogManager:
     def __init__(self, root_dir: Optional[Path] = None):
         self.root_dir = root_dir or get_project_root()
         self.research_dir = self.root_dir / "LEARNING" / "research"
-        self.missions_dir = self.research_dir / "missions"
+        self.missions_dir = self.root_dir / "LEARNING" / "missions"
         self.inbox_file = self.research_dir / "inbox.jsonl"
         self.index_file = self.research_dir / "index.jsonl"
         self.markdown_file = self.research_dir / "backlog.md"
@@ -270,7 +270,7 @@ class BacklogManager:
         if not self.missions_dir.exists():
             return missions
 
-        for f in sorted(self.missions_dir.glob("*.json")):
+        for f in sorted(self.missions_dir.glob("MISSION-*.json")):  # not mission.schema.json, which lives beside the manifests
             try:
                 with open(f, "r", encoding="utf-8") as fp:
                     data = json.load(fp)
@@ -535,11 +535,20 @@ class BacklogManager:
                     errors.append(f"[{mid}] Stored priority score ({actual}) != calculated ({expected})")
 
         errors.extend(self._schema_errors(missions))
+        errors.extend(self._stale_location_errors())
         return errors
 
+    def _stale_location_errors(self) -> List[str]:
+        """The manifests moved from LEARNING/research/missions to LEARNING/missions; a file left (or newly written) at the old path would be silently ignored."""
+        old = self.root_dir / "LEARNING" / "research" / "missions"
+        if not old.is_dir():
+            return []
+        stray = sorted(p.name for p in old.iterdir() if not p.name.startswith("."))
+        return [f"[location] {len(stray)} file(s) at LEARNING/research/missions/ ({', '.join(stray[:3])}...): mission manifests now live in LEARNING/missions/; move them with git mv"] if stray else []
+
     def _schema_errors(self, missions: List[Dict[str, Any]]) -> List[str]:
-        """Structural errors from LEARNING/research/mission.schema.json (via validate_missions.py); none if the root has no schema."""
-        schema_path = self.research_dir / "mission.schema.json"
+        """Structural errors from LEARNING/missions/mission.schema.json (via validate_missions.py); none if the root has no schema."""
+        schema_path = self.missions_dir / "mission.schema.json"
         if not schema_path.exists():
             return []
         import importlib.util

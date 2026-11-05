@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Dict, List, Set
 
 IGNORED = {".git", "__pycache__", ".DS_Store"}
-MISSIONS = "LEARNING/research/missions"
+MISSIONS = "LEARNING/missions"
 MAX_MISSION = 21          # missions >21 are being edited by this experiment; excluded
 SCALAR_FIELDS = ["status", "priority_score", "execution_surface"]
 STOP = set("the and for with via vs into from that this offline local sovereign".split())

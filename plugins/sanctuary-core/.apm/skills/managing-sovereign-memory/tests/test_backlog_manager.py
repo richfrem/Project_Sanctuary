@@ -182,7 +182,7 @@ class TestProjectedImpactValidation(unittest.TestCase):
     def test_manager_validate_reports_bad_declaration(self):
         root = Path(tempfile.mkdtemp())
         try:
-            mdir = root / "LEARNING" / "research" / "missions"
+            mdir = root / "LEARNING" / "missions"
             mdir.mkdir(parents=True)
             base = {"title": "t", "hypothesis": "h", "falsification_criteria": "f", "status": "PROPOSED",
                     "scores": {"strategic_leverage": 1, "epistemic_depth": 1, "cost_weight": 1.0, "operational_friction": 1}, "priority_score": 1.0}
@@ -199,10 +199,10 @@ class TestProjectedImpactValidation(unittest.TestCase):
         repo = Path(__file__).resolve().parents[6]
         root = Path(tempfile.mkdtemp())
         try:
-            res = root / "LEARNING" / "research"
+            res = root / "LEARNING"
             (res / "missions").mkdir(parents=True)
-            shutil.copy(repo / "LEARNING" / "research" / "mission.schema.json", res / "mission.schema.json")
-            good = json.loads((repo / "LEARNING" / "research" / "missions" / "MISSION-034.json").read_text())
+            shutil.copy(repo / "LEARNING" / "missions" / "mission.schema.json", res / "missions" / "mission.schema.json")
+            good = json.loads((repo / "LEARNING" / "missions" / "MISSION-034.json").read_text())
             bad = {**good, "id": "MISSION-902", "status": "DONE"}
             (res / "missions" / "MISSION-034.json").write_text(json.dumps(good))
             (res / "missions" / "MISSION-902.json").write_text(json.dumps(bad))

@@ -8,7 +8,7 @@ Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 fast-boot context)
 Key Input Dependencies (all optional; missing files just shorten the section):
     - .agent/learning/events.jsonl          CHECKIN events (tracked; the durable copy) and
     - .agent/coordination/leases.jsonl      CHECKIN events (untracked local log): agent_id, mission_id, outcome_status, pr_number, timestamp, handoff
-    - LEARNING/research/missions/*.json     verdict, evidence, updated_at
+    - LEARNING/missions/*.json     verdict, evidence, updated_at
     - LEARNING/research/index.jsonl         open missions by priority
     - LEARNING/research/inbox.jsonl         captured ideas (count only)
 Key Outputs: a dict (build_relay) and a markdown section (render_markdown), about 3 KB, used by guardian_wakeup.py.
@@ -61,7 +61,7 @@ def _pointer(root: Path, mission: Dict[str, Any]) -> str:
     exp = f"LEARNING/research/experiments/mission-{num}/README.md"
     if num and (root / exp).exists():
         return exp
-    return f"LEARNING/research/missions/{mission.get('id')}.json"
+    return f"LEARNING/missions/{mission.get('id')}.json"
 
 
 def _checkins(root: Path) -> List[Dict[str, Any]]:
@@ -97,7 +97,7 @@ def build_relay(root: Path, handovers: int = 5, results: int = 10) -> Dict[str, 
               for i, e in enumerate(checkins[:handovers])]
 
     missions: List[Dict[str, Any]] = []
-    mdir = root / "LEARNING/research/missions"
+    mdir = root / "LEARNING/missions"
     if mdir.exists():
         for p in sorted(mdir.glob("MISSION-*.json")):
             try:

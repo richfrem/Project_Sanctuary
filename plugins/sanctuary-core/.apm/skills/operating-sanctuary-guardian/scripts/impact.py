@@ -4,7 +4,7 @@
 Purpose: let a mission declare what it will touch (`projected_impact` in its manifest) so the flight board can lock exactly that, refuse
     overlapping missions, and tell an incoming agent which missions can run in parallel without colliding.
 Layer: sanctuary-core / operating-sanctuary-guardian (coordination).
-Key Input Dependencies: LEARNING/research/missions/*.json (optional `projected_impact`), the board's active leases. Standard library only.
+Key Input Dependencies: LEARNING/missions/*.json (optional `projected_impact`), the board's active leases. Standard library only.
 Manifest shape (all keys optional except paths for a registered mission):
     "projected_impact": {"paths": ["dir/", "dir/file.py", "dir/**/*.md"], "resources": ["mlx-server:8099"], "shared_generated": ["extra/file"]}
 Conservatism rule: an ambiguous comparison counts as OVERLAP. False positives are allowed (a mission waits); false negatives (a silent collision) are not.
@@ -109,7 +109,7 @@ def lock_set(paths: Iterable[str], extra_generated: Iterable[str] = ()) -> List[
 
 def load_manifest_impact(root: Path, mission_id: str) -> Optional[Dict[str, List[str]]]:
     """Normalised projected_impact of a mission manifest, or None if the mission has no declaration."""
-    manifest = Path(root) / "LEARNING" / "research" / "missions" / f"{mission_id}.json"
+    manifest = Path(root) / "LEARNING" / "missions" / f"{mission_id}.json"
     if not manifest.exists():
         return None
     try:

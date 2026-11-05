@@ -22,7 +22,7 @@ def git(cwd, *a, check=True):
 def seed(union: bool) -> Path:
     root = Path(tempfile.mkdtemp(prefix="m34-"))
     git(root, "init", "-q", "-b", "main"); git(root, "config", "user.email", "t@t"); git(root, "config", "user.name", "t")
-    shutil.copytree(REPO / "LEARNING/research/missions", root / "LEARNING/research/missions")
+    shutil.copytree(REPO / "LEARNING/missions", root / "LEARNING/missions")
     (root / ".agent/learning").mkdir(parents=True); (root / ".agent/coordination").mkdir(parents=True)
     ev = [json.loads(l) for l in (REPO / ".agent/learning/events.jsonl").read_text().splitlines() if l.strip()]
     (root / ".agent/learning/events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in ev))
@@ -35,10 +35,10 @@ def seed(union: bool) -> Path:
 
 
 def work(root: Path, tag: str, i: int):
-    tpl = json.loads((root / "LEARNING/research/missions/MISSION-034.json").read_text())
+    tpl = json.loads((root / "LEARNING/missions/MISSION-034.json").read_text())
     mid = f"MISSION-{900 + (i if tag == 'a' else 100 + i)}"
     tpl["id"] = mid; tpl["title"] = f"synthetic {tag}{i}"
-    (root / f"LEARNING/research/missions/{mid}.json").write_text(json.dumps(tpl, indent=2))
+    (root / f"LEARNING/missions/{mid}.json").write_text(json.dumps(tpl, indent=2))
     BacklogManager(root).compile()
     a = {"event_type": "CONTRIBUTION_ASSESSED", "assessment_id": f"{tag}{i}", "timestamp": f"2026-11-05T00:{i % 60:02d}:{'0' if tag == 'a' else '3'}0+00:00",
          "task_id": mid, "agent_id": f"agent-{tag}", "raw_score": 10 + (i % 5), "cognitive_fitness": 0.7, "notes": "",

@@ -51,7 +51,7 @@
             "note": "Project Constitution V5.1, Supreme Law Human Gate, and Zero-Trust Git"
         },
         {
-            "path": "LEARNING/research/mission.schema.json",
+            "path": "LEARNING/missions/mission.schema.json",
             "note": "JSON Schema for mission manifests; read before creating or editing a mission (validated at wakeup and by the pre-commit gate)"
         },
         {

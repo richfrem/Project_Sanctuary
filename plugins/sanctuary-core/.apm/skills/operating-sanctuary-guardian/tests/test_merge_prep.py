@@ -27,10 +27,10 @@ def _make_root(n_events=3, with_missions=True):
     events = [_assessment(i) for i in range(n_events)]
     (learn / "events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in events))
     if with_missions:
-        md = root / "LEARNING" / "research" / "missions"
+        md = root / "LEARNING" / "missions"
         md.mkdir(parents=True)
         for name in ("MISSION-033.json", "MISSION-034.json"):
-            shutil.copy(REPO / "LEARNING" / "research" / "missions" / name, md / name)
+            shutil.copy(REPO / "LEARNING" / "missions" / name, md / name)
     return root, events
 
 

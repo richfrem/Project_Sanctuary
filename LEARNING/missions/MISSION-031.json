@@ -68,7 +68,7 @@
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_backlog_manager.py",
-      "LEARNING/research/missions/",
+      "LEARNING/missions/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_relay.py",
       "protocols/128_Hardened_Learning_Loop_v3.0.md",
       "chronicle/entries/"
