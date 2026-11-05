@@ -1,0 +1,23 @@
+# MISSION-034 experiment: merge-time regeneration of shared generated files
+
+Pre-registered 2026-11-04 by claude-code, before any code was written.
+
+## Predictions (Popperian; each can fail)
+- P1. In 60 simulated two-branch merges that both rewrite `index.jsonl`, `backlog.md`, the cognitive-ledger projection and `events.jsonl`, plain `git merge` conflicts in at least 50 of 60 (the 031 baseline was 60/60).
+- P2. After `merge_prep.py regenerate`, 60 of 60 merges finish with zero manual resolution and every regenerated file is byte-identical to a from-scratch regeneration.
+- P3. The live repo's ledger is reported as DRIFT (stored 16 assessments / 224 points vs 15 / 209 implied by events) and is NOT modified by regenerate.
+- P4. `regenerate` takes under 2 s per merge on the real repo.
+- P5. `regenerate` changes no file outside the declared shared-generated set.
+
+## Results
+Run: `python3 LEARNING/research/experiments/mission-034/run_merge_harness.py` (scratch git repo seeded with the real 35 mission manifests and real events; 60 merges per arm; both branches add a mission, rerun compile, log an assessment, update the ledger and append a lease).
+
+| Prediction | Result |
+|---|---|
+| P1 plain merge conflicts in >=50/60 | **Held**: 60/60 (all five shared files conflicted every time) |
+| P2 60/60 zero manual resolution, regenerated files byte-identical to from-scratch | **Held with a qualification**: 60/60, 0 manual, 0 not-identical, no conflict markers left. `union` removed the conflicts on `events.jsonl` and `leases.jsonl` entirely. Git still *marks* `index.jsonl`, `backlog.md` and the ledger as conflicted until the script has rewritten them and they are `git add`ed (60/60), so the claim is "no human resolution", not "git reports no conflict". |
+| P3 real repo reports DRIFT 16/224 vs 15/209, file untouched | **Held**: `merge_prep.py check` prints DRIFT and exits 3. The orphan is one `antigravity` assessment (15 points) from the MISSION-024 work that exists only in the aggregate; its dimensions and notes are not in git, so it cannot be rebuilt as an event. Left for agy or a human. |
+| P4 < 2 s per merge | **Held**: mean 0.011 s, max 0.026 s (35-mission repo) |
+| P5 no file outside the declared set changed | **Held**: compile changed 0 manifests in 60/60 |
+
+Limits: the harness uses synthetic missions and a consistent starting ledger, so it does not exercise drift mid-merge (covered by unit tests `test_drift_is_reported_and_file_untouched` and `test_conflicted_ledger_with_one_drifting_side_is_not_overwritten`). It does not test the chronicle ledger: `chronicle/ledger.json` is stale (335 entries, last id 342 vs 361 entry files) and nothing maintains it, so it is not a conflict source; that is a separate open item.

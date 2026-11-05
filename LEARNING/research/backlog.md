@@ -35,7 +35,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `PROPOSED` | - |
 | **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `PROPOSED` | - |
 | **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
-| **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `PROPOSED` | - |
+| **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
 | **#18** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
 | **#19** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
 | **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
@@ -342,7 +342,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 GiB of storage.
 
 ### MISSION-034: Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches (Rank #17)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: git worktrees / merge workflow; backlog index, chronicle ledger, cognitive ledger and events log
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -351,6 +352,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A merge-prep step that regenerates the shared generated files from their sources (index.jsonl and backlog.md from the mission manifests, the chronicle ledger from the entries, the cognitive-ledger aggregate from events.jsonl) and treats the append-only logs with a union merge lets 100% of 60 two-branch merges that both rewrite these files complete with zero manual conflict resolution, with every regenerated file byte-identical to a from-scratch regeneration, and it reports (not silently repairs) any aggregate that does not equal what its events imply.
 - **Falsification Gate**:
   > Any of the 60 merges needs a manual resolution or leaves a regenerated file different from a from-scratch regeneration; or an aggregate that disagrees with its events is silently adjusted instead of reported; or merge-prep takes longer than 2 s per merge; or it modifies a file outside the declared shared-generated set.
+- **Empirical Evidence & Trials**:
+  * `2026-11-05T01:14:00.610727+00:00` [claude-code] (LEARNING/research/experiments/mission-034/README.md): 60 two-branch merges: plain git merge conflicted 60/60; with merge=union on the append-only logs plus merge_prep.py regenerate, 0 needed human resolution, 0 differed from a from-scratch regeneration, max 0.026 s per merge, 0 manifests touched. Real-repo ledger drift (stored 16/224 vs events 15/209, one antigravity assessment with no event) is reported and left unchanged. Git still marks the three regenerated files conflicted until they are re-added.
+- **Lessons Learned & Epistemic Compounding**:
+  * Union-merge append-only logs and rebuild projections from them instead of hand-merging.
+  * A projection that claims more than its events imply must be reported, never auto-adjusted.
+  * The MISSION-024 antigravity assessment is an orphan aggregate score and needs agy or a human to log or retract it.
 
 ### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #18)
 - **Status**: `STAGED`
