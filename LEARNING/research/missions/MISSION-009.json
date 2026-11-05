@@ -1,11 +1,11 @@
 {
   "id": "MISSION-009",
   "title": "Resisting Consensus without Reflexive Contrarianism",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Anti-Asch Test Harness",
   "created_at": "2026-11-03T03:20:00Z",
-  "updated_at": "2026-11-03T03:20:00Z",
+  "updated_at": "2026-11-05T05:09:52.370552+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 3,
@@ -26,7 +26,7 @@
       "gemini-3.8-flash"
     ]
   },
-  "verdict": null,
+  "verdict": "ABANDONED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -35,13 +35,30 @@
     "independent-reasoning",
     "peer-calibration"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-05T05:09:52.370552+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-035/agy-routing-pilot.md",
+      "details": "Closed as a duplicate of MISSION-004 (decided by the human 2026-11-05). Both state the same hypothesis with identical thresholds (>= 40% fewer incorrect majority-following, <= 5 percentage points fewer accepted valid corrections); only wording and tags differ. Found by an agy comparison (checked against both manifests). Unique tags merged into MISSION-004; nothing was run, so no empirical verdict was reached."
+    }
+  ],
+  "lessons_learned": [
+    "Scan related missions before creating one (agent-native-backlog 4a); this pair slipped through before the helper existed."
+  ],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-009/"
+      "LEARNING/research/experiments/mission-009/",
+      "LEARNING/research/missions/MISSION-004.json",
+      "LEARNING/research/missions/MISSION-009.json",
+      ".agent/learning/events.jsonl"
     ],
     "resources": [],
-    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`. Closed as duplicate of 004 on 2026-11-05: edits both manifests."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-009",
+  "related_missions": {
+    "MISSION-004": "DUPLICATE-OF: same hypothesis and thresholds; this mission was closed in favour of 004."
   }
 }

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T04:50:19.715953+00:00",
-  "total_assessments": 21,
-  "cumulative_score": 291,
-  "average_fitness": 0.924,
+  "updated_at": "2026-11-05T05:10:00.430362+00:00",
+  "total_assessments": 22,
+  "cumulative_score": 303,
+  "average_fitness": 0.918,
   "dimension_totals": {
-    "useful_outcome": 58,
-    "learning_depth": 60,
-    "verification_rigor": 62,
-    "token_economy": 48,
-    "anti_asch_integrity": 63
+    "useful_outcome": 60,
+    "learning_depth": 61,
+    "verification_rigor": 65,
+    "token_economy": 51,
+    "anti_asch_integrity": 66
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 8,
-      "cumulative_score": 105,
-      "average_fitness": 0.875
+      "assessments": 9,
+      "cumulative_score": 117,
+      "average_fitness": 0.867
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "b487f0bf-59fa-4ecf-8332-05ca5794caaf",
+      "timestamp": "2026-11-05T05:10:00.429916+00:00",
+      "task_id": "MISSION-009-close-duplicate",
+      "agent_id": "claude-code",
+      "raw_score": 12,
+      "fitness": 0.8,
+      "notes": "Closed a duplicate after the human decided; checked the agy comparison against the manifests first; merged tags, linked both ways; did not touch astra's untracked missions 036-038"
+    },
     {
       "assessment_id": "3aad0a82-e540-495c-bb3b-92141cbfefad",
       "timestamp": "2026-11-05T04:50:19.714732+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 14,
       "fitness": 0.933,
       "notes": "Luna disproved the HTTP proxy hypothesis for consumer subscriptions (Anthropic/OpenAI OAuth cannot be pooled via transparent proxy without API keys); recommended zero-daemon CLI fallback chain with strict Copilot boundary guard; implemented in PR #744 with 71 passing tests."
-    },
-    {
-      "assessment_id": "be5e9d20-e2c3-427f-9f46-d7807df176aa",
-      "timestamp": "2026-11-02T14:48:55.882839+00:00",
-      "task_id": "task-bot-handoff-playbook",
-      "agent_id": "codex-luna",
-      "raw_score": 15,
-      "fitness": 1.0,
-      "notes": "Empirically verified procedural memory playbook authored by Codex gpt-6-luna in 1 turn; zero slop; strict Copilot boundary"
     }
   ]
 }
