@@ -45,7 +45,7 @@
   "priority_score": 80.0,
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-028/",
+      "LEARNING/experiments/mission-028/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_escalation_policy.py"

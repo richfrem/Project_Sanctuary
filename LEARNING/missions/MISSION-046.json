@@ -50,7 +50,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-046/",
+      "LEARNING/experiments/mission-046/",
       "LEARNING/missions/MISSION-046.json",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/challenge_runner.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_challenge_runner.py",

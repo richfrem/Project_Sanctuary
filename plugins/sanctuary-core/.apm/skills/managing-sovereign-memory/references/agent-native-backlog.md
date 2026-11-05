@@ -113,5 +113,5 @@ data, so any agent or bundle reading the folder sees it. `scripts/validate_missi
 - To change a rule, edit the schema and add a case to `tests/test_validate_missions*.py`; the schema must keep validating every
   existing manifest.
 - Origin: written by Claude Haiku 5.5 through the cli-agent skill from field statistics, then integrated and fixed (see
-  `LEARNING/research/experiments/mission-schema/README.md`).
+  `LEARNING/experiments/mission-schema/README.md`).
 

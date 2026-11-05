@@ -43,7 +43,7 @@
     {
       "timestamp": "2026-11-05T04:28:19.087173+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-030/README.md",
+      "citation": "LEARNING/experiments/mission-030/README.md",
       "details": "PreCompact handler: median 61 ms, max 67 ms over 30 runs on a 20.6 MB transcript (ceiling 2500 ms); snapshot lists uncommitted files, last conclusions and friction; planted secrets redacted; exits 0 on malformed input and outside a Sanctuary checkout; fired on a real manual /compact in a scratch Claude Code session (18 ms). LIMIT: the auto (context-full) trigger was not exercised, and the hook runs only where the plugin hooks are installed."
     }
   ],
@@ -55,7 +55,7 @@
   "priority_score": 160.0,
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-030/",
+      "LEARNING/experiments/mission-030/",
       "plugins/sanctuary-core/.apm/hooks/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py",
       "plugins/sanctuary-core/.apm/hooks/tests/",

@@ -209,7 +209,7 @@ def check_runtime_telemetry() -> list[dict[str, str]]:
 
 def get_top_mission(project_root: Path) -> dict | None:
     """Retrieves highest-priority incomplete research mission from index.jsonl."""
-    index_file = project_root / "LEARNING" / "research" / "index.jsonl"
+    index_file = project_root / "LEARNING" / "index.jsonl"
     if not index_file.exists():
         return None
     try:

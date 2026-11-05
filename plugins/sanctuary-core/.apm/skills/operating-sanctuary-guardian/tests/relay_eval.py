@@ -32,7 +32,7 @@ REPO = HERE.parents[5]
 KNOWN_AGENTS = {"claude-code", "antigravity", "codex", "mlx"}
 VERDICTS = {"CORROBORATED", "FALSIFIED", "CONFIRMED", "ABANDONED"}
 COPY = [".agent/coordination/leases.jsonl", ".agent/coordination/board.json", ".agent/learning/events.jsonl",
-        ".agent/learning/cognitive_ledger.json", "LEARNING/research/index.jsonl", "LEARNING/missions",
+        ".agent/learning/cognitive_ledger.json", "LEARNING/index.jsonl", "LEARNING/missions",
         "chronicle/ledger.json", "chronicle/entries", "context", "START_HERE.md", "AGENTS.md"]
 
 
@@ -82,7 +82,7 @@ def build_snapshot_synthetic(dst: Path, seed: int = 25) -> Dict[str, str]:
     chain = [
         {"agent_id": "codex", "mission_id": "MISSION-901", "outcome_status": "COMPLETED", "pr_number": 701, "timestamp": "2026-11-01T09:00:00+00:00",
          "handoff": "Rejected the SQLite index approach (it locks under concurrent worktrees). Benchmark BENCH-RZ4 is already run: 12.4 ms p95, "
-                    "evidence in LEARNING/research/experiments/mission-901/README.md; cite it, do not repeat it. Next: the successor must run the ZETA-7 regression before merging."},
+                    "evidence in LEARNING/experiments/mission-901/README.md; cite it, do not repeat it. Next: the successor must run the ZETA-7 regression before merging."},
         {"agent_id": "antigravity", "mission_id": "MISSION-902", "outcome_status": "COMPLETED", "pr_number": 702, "timestamp": "2026-11-02T10:00:00+00:00",
          "handoff": "Decision: JSONL stays the source of truth; a vector store is NOT approved. Port 9231 is reserved for the mock server. Next: update the QUARTZ-3 document."},
         {"agent_id": "claude-code", "mission_id": "MISSION-903", "outcome_status": "ABANDONED", "pr_number": None, "timestamp": "2026-11-03T11:00:00+00:00",
@@ -92,12 +92,12 @@ def build_snapshot_synthetic(dst: Path, seed: int = 25) -> Dict[str, str]:
         events.append({"event_type": "CHECKIN", **c})
     (dst / ".agent/coordination/leases.jsonl").write_text("".join(json.dumps(e) + "\n" for e in events))
     (dst / ".agent/learning/events.jsonl").write_text(json.dumps({"event_type": "MISSION_RESOLVED", "mission_id": "MISSION-901", "verdict": "CONFIRMED",
-        "citation": "LEARNING/research/experiments/mission-901/README.md", "agent": "codex", "timestamp": "2026-11-01T09:05:00+00:00"}) + "\n")
+        "citation": "LEARNING/experiments/mission-901/README.md", "agent": "codex", "timestamp": "2026-11-01T09:05:00+00:00"}) + "\n")
     for mid, status, verdict in (("MISSION-901", "RESOLVED", "CONFIRMED"), ("MISSION-902", "RESOLVED", "CORROBORATED"), ("MISSION-903", "PROPOSED", None)):
         (dst / f"LEARNING/missions/{mid}.json").write_text(json.dumps({
             "id": mid, "title": f"Synthetic {mid}", "status": status, "verdict": verdict, "priority_score": 100.0, "execution_surface": "local",
-            "evidence": [{"citation": "LEARNING/research/experiments/mission-901/README.md" if mid == "MISSION-901" else ""}]}))
-    (dst / "LEARNING/research/index.jsonl").write_text("".join(json.dumps({"rank": i + 1, "id": m, "title": f"Synthetic {m}", "status": s, "verdict": v,
+            "evidence": [{"citation": "LEARNING/experiments/mission-901/README.md" if mid == "MISSION-901" else ""}]}))
+    (dst / "LEARNING/index.jsonl").write_text("".join(json.dumps({"rank": i + 1, "id": m, "title": f"Synthetic {m}", "status": s, "verdict": v,
         "priority_score": 100.0, "execution_surface": "local", "path": f"LEARNING/missions/{m}.json"}) + "\n"
         for i, (m, s, v) in enumerate((("MISSION-901", "RESOLVED", "CONFIRMED"), ("MISSION-902", "RESOLVED", "CORROBORATED"), ("MISSION-903", "PROPOSED", None)))))
     return {"ok": "synthetic"}

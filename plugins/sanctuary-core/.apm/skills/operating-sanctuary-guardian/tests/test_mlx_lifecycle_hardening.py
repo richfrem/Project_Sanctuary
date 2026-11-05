@@ -245,7 +245,7 @@ def test_wakeup_reaps_idle_managed_server_only(monkeypatch):
 
 # ---- live validation with the real model (gated) -----------------------------------------------------------------
 LIVE_PORT = 8099
-LIVE_RESULTS = Path(__file__).resolve().parents[6] / "LEARNING" / "research" / "experiments" / "mission-027" / "live_results.json"
+LIVE_RESULTS = Path(__file__).resolve().parents[6] / "LEARNING" / "experiments" / "mission-027" / "live_results.json"
 
 
 def _free_memory_pct() -> int:

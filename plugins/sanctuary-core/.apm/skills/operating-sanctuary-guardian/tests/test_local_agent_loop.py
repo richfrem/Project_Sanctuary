@@ -21,8 +21,8 @@ import local_agent_loop as lal  # noqa: E402
 import agent_eval_tasks as aet  # noqa: E402
 
 DENY = ["plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests",
-        "LEARNING/research/experiments"]
-RESULTS_PATH = REPO / "LEARNING/research/experiments/mission-022/heldout_results.json"
+        "LEARNING/experiments"]
+RESULTS_PATH = REPO / "LEARNING/experiments/mission-022/heldout_results.json"
 
 
 def scripted(*replies):

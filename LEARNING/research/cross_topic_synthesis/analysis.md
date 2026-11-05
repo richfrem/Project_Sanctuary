@@ -1,7 +1,7 @@
 # Cross-Topic Research Synthesis
 **Date:** 2026-01-05
 **Researcher:** Claude (Antigravity)
-**Purpose:** Map connections between all research topics in LEARNING/topics/
+**Purpose:** Map connections between all research topics in LEARNING/research/
 
 ---
 

@@ -1,6 +1,13 @@
 {
-  "total_entries": 366,
+  "total_entries": 367,
   "entries": [
+    {
+      "id": 375,
+      "title": "LEARNING restructure: mission system at the LEARNING root, topics renamed research, procedures emptied",
+      "filename": "375_learning_restructure_mission_system_at_the_learning_root_topics_renamed_research_procedures_emptied.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 374,
       "title": "LEARNING restructure step 2: backlog.md moved to the LEARNING root",

@@ -131,7 +131,7 @@ class TestRegenerate(unittest.TestCase):
     def test_backlog_is_regenerated_and_idempotent(self):
         root, _ = _make_root(1)
         merge_prep.regenerate(root)
-        idx = root / "LEARNING" / "research" / "index.jsonl"
+        idx = root / "LEARNING" / "index.jsonl"
         first = idx.read_bytes()
         self.assertEqual(len(first.splitlines()), 2)
         merge_prep.regenerate(root)
@@ -153,7 +153,7 @@ class TestRegenerate(unittest.TestCase):
         a, _ = _make_root(3)
         b, _ = _make_root(3)
         merge_prep.regenerate(a); merge_prep.regenerate(b)
-        for rel in (".agent/learning/cognitive_ledger.json", "LEARNING/research/index.jsonl", "LEARNING/backlog.md"):
+        for rel in (".agent/learning/cognitive_ledger.json", "LEARNING/index.jsonl", "LEARNING/backlog.md"):
             self.assertEqual((a / rel).read_bytes(), (b / rel).read_bytes(), rel)
 
 

@@ -67,7 +67,7 @@ Top skills follow a 3-tier loading pattern:
 This maps directly to our memory-management architecture:
 - Tier 1 = Hot cache (cognitive_primer.md)
 - Tier 2 = Boot files (guardian_boot_digest.md)
-- Tier 3 = Deep storage (LEARNING/topics/)
+- Tier 3 = Deep storage (LEARNING/research/)
 
 ### 3.3 Confidence-Based Code Review
 The code-review plugin introduced a powerful pattern:

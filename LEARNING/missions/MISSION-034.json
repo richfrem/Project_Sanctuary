@@ -44,7 +44,7 @@
     {
       "timestamp": "2026-11-05T01:14:00.610727+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-034/README.md",
+      "citation": "LEARNING/experiments/mission-034/README.md",
       "details": "60 two-branch merges: plain git merge conflicted 60/60; with merge=union on the append-only logs plus merge_prep.py regenerate, 0 needed human resolution, 0 differed from a from-scratch regeneration, max 0.026 s per merge, 0 manifests touched. Real-repo ledger drift (stored 16/224 vs events 15/209, one antigravity assessment with no event) is reported and left unchanged. Git still marks the three regenerated files conflicted until they are re-added."
     }
   ],
@@ -59,7 +59,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-034/",
+      "LEARNING/experiments/mission-034/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_merge_prep.py",
       ".gitattributes",

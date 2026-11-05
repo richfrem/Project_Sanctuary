@@ -68,7 +68,7 @@ The **Autonomous Cognitive Engine** is Project Sanctuary's sovereign mechanism f
 
 Prior to this architecture, agent backlogs were often entangled in human-oriented markdown or external issue trackers, creating context bloating and parsing latency. The sovereign backlog operates across three distinct tiers:
 
-1. **Tier 1: Fast Agent Index (`LEARNING/research/index.jsonl`) & Candidate Inbox (`inbox.jsonl`)**
+1. **Tier 1: Fast Agent Index (`LEARNING/index.jsonl`) & Candidate Inbox (`inbox.jsonl`)**
    - High-density, machine-parseable JSON Lines records.
    - Provides $O(1)$ lookup for agent bootloaders, filtering missions by priority score, status (`PROPOSED`, `ACTIVE`, `RESOLVED`, `REJECTED`), and assigned agent.
    - Allows agents to ingest and rank the entire research portfolio in under 1,000 tokens.
@@ -128,7 +128,7 @@ $$\text{Priority Score} = \frac{\text{Impact} \times 2.0 + \text{Urgency} \times
 ## 5. Startup Bootloader Integration (`guardian_wakeup.py`)
 
 Under Protocol 128, the guardian bootloader automatically executes at session start:
-- Reads the canonical index `LEARNING/research/index.jsonl`.
+- Reads the canonical index `LEARNING/index.jsonl`.
 - Identifies the highest-scoring incomplete mission (`status != "RESOLVED"` and `status != "REJECTED"`).
 - Emits telemetry in `.agent/learning/guardian_boot_digest.md`:
   - `top_incomplete_mission.id`: Mission ID (e.g. `MISSION-004`).

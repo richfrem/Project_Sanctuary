@@ -18,7 +18,7 @@ import subprocess
 from pathlib import Path
 import pytest
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 HOOK_SCRIPT = REPO_ROOT / "plugins" / "sanctuary-core" / ".apm" / "hooks" / "session_start_wakeup.py"
 HOOK_JSON = REPO_ROOT / "plugins" / "sanctuary-core" / ".apm" / "hooks" / "hooks.json"
 

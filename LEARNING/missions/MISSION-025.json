@@ -43,7 +43,7 @@
     {
       "timestamp": "2026-11-04T06:14:17.223817+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-025/README.md",
+      "citation": "LEARNING/experiments/mission-025/README.md",
       "details": "Pre-registered A/B on 22 questions (14 from real ledgers, 8 from a synthetic Codex->Gemini->Claude handover chain), local Qwen2.5-Coder-7B as the incoming agent, temperature 0, same loop and tools in both conditions. Control (briefing without relay): 5/22 = 22.7% correct, median 5 turns, 2.5 tool calls per question. Treatment (Predecessor Relay in the briefing): 15/22 = 68.2% (+45.5 points), median 2 turns, 1.27 tool calls, 14.6 s vs 31.1 s per question. Pre-registered bar (>= 90% correct, zero tool calls on >= 90% of questions, no contradicting answers) not met, and the decision rule (treatment < 80% -> FALSIFIED) applies. All 7 treatment misses had the answer present in the relay: the agent ignored the briefing and dug with tools (4), copied a format placeholder (1), confused ids in one note (2). Relay size held (20 lines, 1,957 characters live; 3,245 worst case). Feature shipped: relay.py, guardian_wakeup integration, manage_coordination checkin --handoff, docs, 26 tests. Limits: one weak incoming agent, n=22, single run; frontier successors and handoff adoption untested."
     }
   ],

@@ -24,7 +24,7 @@ Every session follows the deterministic 5-step bootstrapping sequence (detailed 
 - **THE SUPREME LAW: HUMAN GATE**: Never execute ANY state-changing operation (writes, git mutations) without EXPLICIT user approval ("Proceed", "Go", "Execute").
 - **Zero-Trust Git Discipline**: Never commit directly to `main`, and NEVER run `git push` without fresh, explicit human instruction.
 - **Protocol 128 Lifecycle**: Every session follows the unbroken learning loop: Boot Orientation -> Execution -> Retrospective -> Technical Seal -> Soul Persistence.
-- **Highest ROI & Replenishment Invariant**: Wakeup orientation targets the highest-priority incomplete mission in `LEARNING/research/index.jsonl`. For every mission completed (`RESOLVED`), agents must create or generate at least 1 new research inquiry to maintain an evergreen compounding pipeline.
+- **Highest ROI & Replenishment Invariant**: Wakeup orientation targets the highest-priority incomplete mission in `LEARNING/index.jsonl`. For every mission completed (`RESOLVED`), agents must create or generate at least 1 new research inquiry to maintain an evergreen compounding pipeline.
 
 ## 3. Core Capabilities (APM Ecosystem)
 

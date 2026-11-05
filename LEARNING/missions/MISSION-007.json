@@ -41,14 +41,14 @@
     {
       "timestamp": "2026-11-03T15:27:45.104106+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-022/README.md (runs 4-5, 60 held-out tasks)",
+      "citation": "LEARNING/experiments/mission-022/README.md (runs 4-5, 60 held-out tasks)",
       "details": "Baseline for local-to-frontier escalation from MISSION-022. Local Qwen2.5-Coder-7B agent loop: 47/60 correct (78.3%). A loop-health trigger (no final answer, >=4 turns, repeat intervention, malformed reply, or forced final turn) flags 19/60 tasks and catches 10/13 failures, but 9 of the 19 flagged tasks were already correct (wasted escalations) and the 3 misses were silent confident errors (letter-filtered directory listings answered wrongly in 2 turns with no intervention). Loop-health signals alone therefore cannot replace an independent verifier of the kind this mission proposes; signal-triggered escalation to Haiku is tracked separately as MISSION-028 (child of this mission)."
     }
   ],
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-007/",
+      "LEARNING/experiments/mission-007/",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/"
     ],
     "resources": [],

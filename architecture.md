@@ -153,8 +153,8 @@ Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovere
    - **Tier 3 (Deep Dossier)**: Reads specific markdown sections only when actively needed for implementation.
 4. **Zero Vector DB Overhead**: By relying on clean markdown structures, wikilink graph traversal (`query_graph.py`), and indexed JSON ledgers, Sanctuary eliminates the CPU, latency, and dependency bloat of local vector databases.
 5. **Agent-Native Cognitive Backlog & Popperian Mission Tracking**: Research and engineering investments are managed via `manage_backlog.py`:
-   - **Tier 1 Fast Index (`LEARNING/research/index.jsonl`)**: Dense, single-line JSON items (< 15 tokens/item, < 100 tokens total orientation cost).
-   - **Frictionless Inbox (`LEARNING/research/inbox.jsonl`)**: Append-only capture for unvetted ideas across sessions, including offline local Qwen2 GGUF runs.
+   - **Tier 1 Fast Index (`LEARNING/index.jsonl`)**: Dense, single-line JSON items (< 15 tokens/item, < 100 tokens total orientation cost).
+   - **Frictionless Inbox (`LEARNING/inbox.jsonl`)**: Append-only capture for unvetted ideas across sessions, including offline local Qwen2 GGUF runs.
    - **Popperian Manifests (`LEARNING/missions/*.json`)**: Enforces explicit hypotheses, objective falsification criteria, empirical trial evidence, and verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
    - **Automated Human Projection (`LEARNING/backlog.md`)**: Compiled deterministically; never hand-edited.
    - **One-Directional Cloud Mirrors**: Outward advisory mirrors to GitHub Issues are created solely for remote cloud workers (`execution_surface: cloud-worker`), never as a bidirectional sync.

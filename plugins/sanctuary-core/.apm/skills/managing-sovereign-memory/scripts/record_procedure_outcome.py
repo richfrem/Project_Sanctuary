@@ -5,8 +5,8 @@ Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Procedural Memory Out
 Key Inputs: Markdown procedure files in LEARNING/procedures/*.md, .agent/learning/events.jsonl.
 Key Outputs: Mutated procedure frontmatter with updated execution stats and appended events in events.jsonl.
 Usage:
-    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --id proc-git-feature-branch --outcome success
-    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --file LEARNING/procedures/git/create_feature_branch.md --outcome failure --reason "Merge conflict"
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --id <procedure-id> --outcome success
+    python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py --file LEARNING/procedures/<name>.md --outcome failure --reason "Merge conflict"
 Key Functions: get_project_root(), find_procedure_file(), parse_frontmatter(), main().
 """
 
@@ -85,7 +85,7 @@ def parse_frontmatter(content: str) -> tuple[dict, str, str]:
 
 def main():
     parser = argparse.ArgumentParser(description="Record Procedural Memory Execution Outcomes")
-    parser.add_argument("--id", help="Procedure ID (e.g. proc-git-feature-branch)")
+    parser.add_argument("--id", help="Procedure ID (the `id:` in the procedure frontmatter)")
     parser.add_argument("--file", help="Path to procedure markdown file")
     parser.add_argument("--outcome", choices=["success", "failure", "blocked"], required=True, help="Execution outcome")
     parser.add_argument("--environment", default=f"{platform.system().lower()}-{platform.machine().lower()}", help="Runtime environment")

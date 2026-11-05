@@ -49,9 +49,9 @@ scaffolding, and a score that depends on them is a statement about model + harne
 ## Evaluation methodology
 
 `tests/agent_eval_tasks.py` generates 30 tasks with answers computed from the repo (scalar / locate / dirset),
-graded by exact value or exact set equality. The tests directory and `LEARNING/research/experiments` are on the sandbox
+graded by exact value or exact set equality. The tests directory and `LEARNING/experiments` are on the sandbox
 deny list so the agent cannot read the answer key. Run: `RUN_LIVE_AGENT_EVAL=1 python3 -m pytest .../tests/test_local_agent_loop.py -k live -s`.
-Pre-registration, run history and caveats: `LEARNING/research/experiments/mission-022/README.md`.
+Pre-registration, run history and caveats: `LEARNING/experiments/mission-022/README.md`.
 
 ## Results
 

@@ -15,7 +15,7 @@ REPO = HERE.parents[6]
 OLD = ("LEARNING/research/missions", "LEARNING/research/mission.schema.json")
 # history and the documents that describe the move are allowed to name the old path
 # experiment folders are dated records and recorded data: their paths describe what was true when they ran (only their scripts must keep working)
-ALLOWED_PREFIXES = ("chronicle/", "huggingface/", "ARCHIVE/", "LEARNING/research/experiments/", "LEARNING/experiments/")
+ALLOWED_PREFIXES = ("chronicle/", "huggingface/", "ARCHIVE/", "LEARNING/experiments/")
 ALLOWED_FILES = ("plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_mission_paths.py",
                  "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",  # the stray-file guard names the old path on purpose
                  "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_learning_index.py",  # RETIRED_ON_PURPOSE
@@ -52,7 +52,7 @@ class TestMissionPaths(unittest.TestCase):
         old = root / "LEARNING" / "research" / "missions"; old.mkdir(parents=True)
         (old / "MISSION-999.json").write_text("{}")
         errors = BacklogManager(root).validate()
-        self.assertTrue(any("LEARNING/research/missions" in e and "LEARNING/missions" in e for e in errors), errors)
+        self.assertTrue(any("LEARNING/research" in e and "missions" in e and "git mv" in e for e in errors), errors)
 
 
 if __name__ == "__main__":
@@ -80,3 +80,50 @@ class TestBacklogViewPath(unittest.TestCase):
         self.assertEqual(mgr.markdown_file.resolve(), (root / "LEARNING" / "backlog.md").resolve())
         self.assertIn("MISSION-034", (root / "LEARNING" / "backlog.md").read_text())
         self.assertFalse((root / "LEARNING" / "research" / "backlog.md").exists())
+
+
+EXPECTED_ROOT = {"INDEX.md", "README.md", "backlog.md", "index.jsonl", "inbox.jsonl", "concepts", "procedures", "philosophy", "missions", "experiments", "research"}
+MISSION_SYSTEM_NAMES = ("missions", "experiments", "index.jsonl", "inbox.jsonl", "backlog.md", "mission.schema.json")
+RETIRED = ("LEARNING/research/experiments", "LEARNING/research/index.jsonl", "LEARNING/research/inbox.jsonl", "LEARNING/topics")
+
+
+class TestFinalLayout(unittest.TestCase):
+    """Steps 1-4 done: the mission system is at the LEARNING root and research/ holds the research dossiers (the former topics/)."""
+
+    def test_learning_root_has_exactly_the_expected_entries(self):
+        got = {p.name for p in (REPO / "LEARNING").iterdir() if not p.name.startswith(".")}
+        self.assertEqual(got, EXPECTED_ROOT)
+
+    def test_research_holds_dossiers_and_none_of_the_mission_system(self):
+        research = REPO / "LEARNING" / "research"
+        self.assertTrue((research / "README.md").exists())
+        self.assertTrue((research / "quantum_error_correction").is_dir())
+        self.assertEqual([n for n in MISSION_SYSTEM_NAMES if (research / n).exists()], [])
+        self.assertFalse((REPO / "LEARNING" / "topics").exists())
+
+    def test_no_tracked_file_names_a_retired_path(self):
+        args = ["git", "grep", "-l", "-F"]
+        for r in RETIRED:
+            args += ["-e", r]
+        files = subprocess.run(args, cwd=str(REPO), capture_output=True, text=True).stdout.split()
+        offenders = [f for f in files if not f.startswith(ALLOWED_PREFIXES) and f not in ALLOWED_FILES]
+        self.assertEqual(offenders, [], offenders)
+
+    def test_manager_uses_the_root_files_and_compile_writes_the_index_there(self):
+        root = Path(tempfile.mkdtemp())
+        mdir = root / "LEARNING" / "missions"; mdir.mkdir(parents=True)
+        (mdir / "MISSION-034.json").write_text((REPO / "LEARNING" / "missions" / "MISSION-034.json").read_text())
+        mgr = BacklogManager(root)
+        self.assertEqual(mgr.index_file.resolve(), (root / "LEARNING" / "index.jsonl").resolve())
+        self.assertEqual(mgr.inbox_file.resolve(), (root / "LEARNING" / "inbox.jsonl").resolve())
+        mgr.compile()
+        self.assertTrue((root / "LEARNING" / "index.jsonl").exists())
+        self.assertFalse((root / "LEARNING" / "research").exists())
+
+    def test_mission_system_files_left_inside_research_are_reported(self):
+        root = Path(tempfile.mkdtemp())
+        (root / "LEARNING" / "missions").mkdir(parents=True)
+        r = root / "LEARNING" / "research"; r.mkdir(parents=True)
+        (r / "index.jsonl").write_text("{}\n"); (r / "inbox.jsonl").write_text("{}\n"); (r / "experiments").mkdir()
+        errors = BacklogManager(root).validate()
+        self.assertTrue(any("LEARNING/research" in e and "index.jsonl" in e for e in errors), errors)

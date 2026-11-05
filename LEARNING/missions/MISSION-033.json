@@ -89,7 +89,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-033/",
+      "LEARNING/experiments/mission-033/",
       "plugins/sanctuary-core/.apm/skills/orchestrating-sanctuary-missions/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md"
     ],

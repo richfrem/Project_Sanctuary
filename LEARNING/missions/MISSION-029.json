@@ -42,7 +42,7 @@
     {
       "timestamp": "2026-11-05T04:44:35.171601+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-029/README.md",
+      "citation": "LEARNING/experiments/mission-029/README.md",
       "details": "20 managed stop/start cycles ended by the real reap path on a 16 GB M1 with a human-owned server resident and swap saturated: 0 failed requests; first token median 4.0 s, p95 4.97 s, max 5.77 s (limit 10 s); 3.6 GiB resident per server; system-available memory recovered median 4.34 GiB (limit 3). Reap never touched the unmanaged :8080 server; an unmanaged decoy survived default and --only-managed reap. Default idle threshold changed 900 s -> 300 s. LIMIT: cold process with warm OS page cache, one machine and model, 2 s test threshold, 1-token requests."
     }
   ],
@@ -54,7 +54,7 @@
   "priority_score": 180.0,
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-029/",
+      "LEARNING/experiments/mission-029/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py",

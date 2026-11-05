@@ -270,37 +270,37 @@
 > These are prior research topics from Project Sanctuary that directly inform this work.
 
 ### [13] QEC → Semantic Entropy Pivot
-- **Path:** `LEARNING/topics/quantum_error_correction/pivot_to_empirical_ecc.md`
+- **Path:** `LEARNING/research/quantum_error_correction/pivot_to_empirical_ecc.md`
 - **Date:** 2025-12-29
 - **Verified:** ✅ Internal file
 - **Connection:** SE threshold concept (0.79) → now Dual Threshold (T1=0.35, T2=0.75)
 
 ### [14] Knowledge Preservation Red Team (5 Rounds)
-- **Path:** `LEARNING/topics/knowledge_preservation_red_team/`
+- **Path:** `LEARNING/research/knowledge_preservation_red_team/`
 - **Date:** 2025-12-28
 - **Verified:** ✅ Internal directory (11 files)
 - **Connection:** Multi-model Red Team methodology → refined for current rounds
 
 ### [15] RAPTOR RAG Architecture
-- **Path:** `LEARNING/topics/raptor_rag.md`
+- **Path:** `LEARNING/research/raptor_rag.md`
 - **Date:** 2025-12-23
 - **Verified:** ✅ Internal file
 - **Connection:** Hierarchical tree summaries → Cortex implementation opportunity
 
 ### [16] Autonomous Curiosity: Strange Loops
-- **Path:** `LEARNING/topics/autonomous_curiosity_exploration_2024-12-27.md`
+- **Path:** `LEARNING/research/autonomous_curiosity_exploration_2024-12-27.md`
 - **Date:** 2024-12-27
 - **Verified:** ✅ Internal file
 - **Connection:** Hofstadter self-reference → predicts HINDSIGHT Reflect operation
 
 ### [17] Subliminal Learning (arXiv:2507.14805)
-- **Path:** `LEARNING/topics/knowledge_preservation_red_team/validated_research.md`
+- **Path:** `LEARNING/research/knowledge_preservation_red_team/validated_research.md`
 - **Authors:** Alex Cloud, Minh Le, James Chua, et al.
 - **Verified:** ✅ Validated in KP research
 - **Connection:** Trait propagation risk → validates MINJA memory injection concerns
 
 ### [18] Liquid Neural Networks
-- **Path:** `LEARNING/topics/liquid_neural_networks/`
+- **Path:** `LEARNING/research/liquid_neural_networks/`
 - **Date:** 2025-12-22
 - **Verified:** ✅ Internal directory
 - **Connection:** ODE-based adaptive dynamics → future Attention Dispersion (Hα) computation

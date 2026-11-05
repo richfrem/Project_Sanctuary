@@ -43,3 +43,18 @@ The human's layout: `missions/`, `experiments/`, `index.jsonl`, `backlog.md` and
 
 ### Step 2: `backlog.md` to the LEARNING root (2026-11-05)
 The generated human view moved from `LEARNING/research/backlog.md` to `LEARNING/backlog.md` (manager, pre-commit hook, merge-prep and impact lists, docs, tests; the merge-harness expected-files set too). Three tests first (red), 324 pass after. No stale-write guard: the file is generated, so compile just writes it in the new place. Same history rule as step 1.
+
+## PR 3 as shipped (2026-11-05): the whole mission-system move, then references
+After step 2 the human changed the method: "do all moves first, then fix references". The branch was allowed to be broken in the middle (nothing merged until the tests passed again), which avoids rewriting the same documents four times. Final layout:
+
+```
+LEARNING/  INDEX.md README.md  backlog.md index.jsonl inbox.jsonl      (generated view, generated index, idea inbox)
+           concepts/ procedures/ philosophy/                           knowledge
+           missions/ (MISSION-NNN.json + mission.schema.json)   experiments/
+           research/ (the 17 research dossiers; formerly topics/, with its README status table)
+```
+- Moves: `research/experiments`, `index.jsonl`, `inbox.jsonl` to the root; the contents of `topics/` into the emptied `research/`; the empty `topics/` removed. 110 renames, history kept by `git mv`.
+- References: tests first (3 red: layout, no retired path named anywhere, manager uses the root files), then one rewrite with a fixed order (mission-system paths first, then `topics` to `research`, so the new `research/` paths were not remapped). 84 files plus the manager rewritten by hand (`research_dir` became `learning_dir`). History untouched as before: chronicle, dataset, archive, the append-only events log, and experiment records and recorded data.
+- Things a blind rewrite would have broken: four experiment scripts find the repo root by counting folders up and moved one level (`parents[4]` to `parents[3]`); `.gitignore` hid a local `drq_repo` clone under the old `topics/` path; the stale-write guard now reports any mission-system item left inside `research/`; test and archive-README restore recipes used the old names.
+- `procedures/` reviewed on request: `git/` deleted (superseded by `checkout --create-worktree`), `orchestration/` and `architecture/` archived (superseded by `cli-agent` and the orchestration skills). The folder stays as the home of the mechanism because three open missions (042, 047, 049) build on it and five core docs advertise it; only two outcome events were ever recorded, both on 2026-11-02.
+- Answered, not changed: `philosophy/` and `concepts/` stay separate (immutable source doctrine vs confidence-tracked, script-written canon); a `concepts/philosophy/` subfolder would work but the graph and disclosure tools recurse and would start listing the 12 texts.

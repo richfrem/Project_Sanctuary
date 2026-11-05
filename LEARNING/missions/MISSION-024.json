@@ -43,7 +43,7 @@
     {
       "timestamp": "2026-11-04T05:55:30.451893+00:00",
       "agent": "antigravity",
-      "citation": "LEARNING/research/experiments/mission-024/test_session_start_hook.py",
+      "citation": "LEARNING/experiments/mission-024/test_session_start_hook.py",
       "details": "Configured APM SessionStart lifecycle hook in plugins/sanctuary-core/.apm/hooks/hooks.json calling session_start_wakeup.py. Tested 5/5 test suite passing in 2.27s: schema valid, context guard exits 0 silently outside repo context, .agent/learning/guardian_boot_digest.md persisted reliably, valid Claude Code hookSpecificOutput JSON emitted with additionalContext, and empirical latency averaged 544.6ms (555.2ms, 588.2ms, 490.4ms), safely under the 1,500ms falsification ceiling."
     }
   ],

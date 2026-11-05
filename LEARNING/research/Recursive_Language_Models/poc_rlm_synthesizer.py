@@ -1,5 +1,5 @@
 """
-LEARNING/topics/Recursive_Language_Models/poc_rlm_synthesizer.py
+LEARNING/research/Recursive_Language_Models/poc_rlm_synthesizer.py
 
 Proof of Concept: Recursive Language Model (RLM) Synthesizer
 Implements Protocol 132 logic for generating the 'Cognitive Hologram'.
@@ -70,7 +70,7 @@ class RLMSynthesizer:
         """
         Main entry point for Protocol 132.
         """
-        roots = ["01_PROTOCOLS", "ADRs", "LEARNING/topics"]
+        roots = ["01_PROTOCOLS", "ADRs", "LEARNING/research"]
         
         # 1. Map
         print(f"🔄 RLM Phase 1: Mapping {roots}...")

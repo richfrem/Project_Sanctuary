@@ -76,11 +76,11 @@ MOVED = ["security", "associative_architecture_brief.md", "calibration_log.json"
 
 
 class TestTopicsAndArchive(unittest.TestCase):
-    def test_every_topic_folder_has_a_status_row_in_topics_readme(self):
-        readme = (LEARNING / "topics" / "README.md").read_text(encoding="utf-8")
-        topics = [p.name for p in sorted((LEARNING / "topics").iterdir()) if p.is_dir()]
+    def test_every_research_dossier_has_a_status_row_in_the_research_readme(self):
+        readme = (LEARNING / "research" / "README.md").read_text(encoding="utf-8")
+        topics = [p.name for p in sorted((LEARNING / "research").iterdir()) if p.is_dir()]
         missing = [t for t in topics if f"`{t}`" not in readme]
-        self.assertEqual(missing, [], f"topics/README.md has no row for: {missing}")
+        self.assertEqual(missing, [], f"research/README.md has no row for: {missing}")
         for line in readme.splitlines():
             if line.startswith("| `"):
                 self.assertTrue(any(s in line for s in ("| KEEP |", "| HISTORICAL |")), line)
@@ -88,8 +88,9 @@ class TestTopicsAndArchive(unittest.TestCase):
     def test_moved_material_is_in_the_archive_with_a_map_and_not_in_learning(self):
         readme = (ARCHIVE_ROOT / "README.md").read_text(encoding="utf-8")
         for item in MOVED:
+            live = LEARNING / item.replace("topics/", "research/", 1)  # the dossiers folder was renamed topics -> research; the archive keeps the old layout
             self.assertTrue((ARCHIVE_ROOT / item).exists(), f"archive is missing {item}")
-            self.assertFalse((LEARNING / item).exists(), f"{item} is still under LEARNING/")
+            self.assertFalse(live.exists(), f"{item} is still under LEARNING/")
             self.assertIn(item, readme, f"archive README does not map {item}")
 
     def test_archived_files_are_tracked_by_git(self):
@@ -98,7 +99,7 @@ class TestTopicsAndArchive(unittest.TestCase):
 
     def test_no_kept_document_links_into_material_that_moved_to_the_archive(self):
         """Pasted external links in historical dossiers are already broken (not our concern); links INTO moved paths are the regression to catch."""
-        moved_abs = [(LEARNING / m).resolve() for m in MOVED]
+        moved_abs = [(LEARNING / m.replace("topics/", "research/", 1)).resolve() for m in MOVED]
         offenders = []
         for md in LEARNING.rglob("*.md"):
             if "/research/" in str(md):
@@ -110,3 +111,21 @@ class TestTopicsAndArchive(unittest.TestCase):
                 if any(dest == m or m in dest.parents for m in moved_abs):
                     offenders.append(f"{md.relative_to(REPO)} -> {target}")
         self.assertEqual(offenders, [], "\n".join(offenders[:15]))
+
+
+class TestProceduresFolder(unittest.TestCase):
+    """procedures/ is the home of the procedural-memory mechanism (record_procedure_outcome.py, three open missions); the three seed procedures were retired."""
+
+    def test_the_retired_seed_procedures_are_gone_and_the_format_readme_stays(self):
+        proc = LEARNING / "procedures"
+        self.assertTrue((proc / "README.md").exists())
+        self.assertEqual([p.name for p in proc.iterdir() if p.name != "README.md"], [])
+        for retired in ("procedures/orchestration", "procedures/architecture"):
+            self.assertTrue((ARCHIVE_ROOT / retired).exists(), retired)
+            self.assertIn(retired, (ARCHIVE_ROOT / "README.md").read_text(encoding="utf-8"))
+        self.assertFalse((ARCHIVE_ROOT / "procedures" / "git").exists())  # deleted, not archived
+
+    def test_the_outcome_recorder_does_not_cite_a_deleted_procedure_in_its_examples(self):
+        text = (REPO / "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py").read_text(encoding="utf-8")
+        self.assertNotIn("create_feature_branch", text)
+        self.assertNotIn("proc-git-feature-branch", text)

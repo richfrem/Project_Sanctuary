@@ -17,7 +17,7 @@ Upon `cortex_seal`, the system triggers the **RLM Synthesizer**.
 The Synthesizer iterates through the "Context Roots":
 1.  `protocols/` (Constitution)
 2.  `ADRs/` (Decisions)
-3.  `LEARNING/topics/` (Active Memory)
+3.  `LEARNING/research/` (Active Memory)
 4.  `mcp_servers/` (Capabilities)
 
 ### Phase B: Recursive Summarization (The Crunch)

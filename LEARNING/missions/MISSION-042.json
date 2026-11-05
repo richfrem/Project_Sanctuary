@@ -50,7 +50,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-042/",
+      "LEARNING/experiments/mission-042/",
       "LEARNING/missions/MISSION-042.json",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/procedure_executor.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py",

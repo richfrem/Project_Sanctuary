@@ -2,8 +2,8 @@
 """manage_backlog.py - Agent-Native Cognitive Backlog & Investment Tracker.
 Purpose: Sovereign, agent-first backlog and falsifiable mission tracker for Project Sanctuary. Provides Tier 1 machine indices, append-only inbox capture, structured mission manifests, cheapest-viable model routing (MISSION-016), and deterministic compilation to human Markdown views.
 Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Epistemic Backlog & Mission Governance).
-Key Input Dependencies: LEARNING/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
-Key Outputs: LEARNING/research/index.jsonl (Tier 1 fast index), LEARNING/backlog.md (human view).
+Key Input Dependencies: LEARNING/missions/*.json (mission manifests), LEARNING/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
+Key Outputs: LEARNING/index.jsonl (Tier 1 fast index), LEARNING/backlog.md (human view).
 Usage:
     python3 manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
     python3 manage_backlog.py route <TASK_DESCRIPTION> [--type TYPE] [--failures N] [--format json|text]
@@ -15,7 +15,7 @@ Usage:
     python3 manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED|ABANDONED --evidence "..." [--citation "..."] [--lessons "..."]
 
 Function Index:
-    get_project_root, get_research_dir, calculate_priority_score,
+    get_project_root, get_learning_dir, calculate_priority_score,
     recommend_model_routing, is_free_local_task, run_route,
     BacklogManager (load_missions, get_mission, save_mission, capture_inbox,
     record_result, compile, validate, complete_model_routing), main
@@ -39,9 +39,10 @@ def get_project_root() -> Path:
     return Path.cwd()
 
 
-def get_research_dir(root: Optional[Path] = None) -> Path:
+def get_learning_dir(root: Optional[Path] = None) -> Path:
+    """The LEARNING/ root, which holds the mission system: missions/, experiments/, index.jsonl, backlog.md, inbox.jsonl."""
     base = root or get_project_root()
-    return base / "LEARNING" / "research"
+    return base / "LEARNING"
 
 
 def validate_projected_impact(raw: Any) -> List[str]:
@@ -254,15 +255,15 @@ def run_route(args: argparse.Namespace) -> None:
 class BacklogManager:
     def __init__(self, root_dir: Optional[Path] = None):
         self.root_dir = root_dir or get_project_root()
-        self.research_dir = self.root_dir / "LEARNING" / "research"
+        self.learning_dir = self.root_dir / "LEARNING"
         self.missions_dir = self.root_dir / "LEARNING" / "missions"
-        self.inbox_file = self.research_dir / "inbox.jsonl"
-        self.index_file = self.research_dir / "index.jsonl"
+        self.inbox_file = self.learning_dir / "inbox.jsonl"
+        self.index_file = self.learning_dir / "index.jsonl"
         self.markdown_file = self.root_dir / "LEARNING" / "backlog.md"
         self.events_file = self.root_dir / ".agent" / "learning" / "events.jsonl"
 
         self.missions_dir.mkdir(parents=True, exist_ok=True)
-        self.research_dir.mkdir(parents=True, exist_ok=True)
+        self.learning_dir.mkdir(parents=True, exist_ok=True)
 
     def load_missions(self) -> List[Dict[str, Any]]:
         """Loads all mission JSON manifests from missions_dir."""
@@ -539,12 +540,20 @@ class BacklogManager:
         return errors
 
     def _stale_location_errors(self) -> List[str]:
-        """The manifests moved from LEARNING/research/missions to LEARNING/missions; a file left (or newly written) at the old path would be silently ignored."""
-        old = self.root_dir / "LEARNING" / "research" / "missions"
-        if not old.is_dir():
+        """The mission system moved out of LEARNING/research/ to the LEARNING root; anything left (or newly written) there would be silently ignored.
+
+        LEARNING/research/ now holds research dossiers only, so a manifest, index, inbox, backlog, schema or experiments folder in it is a stray.
+        """
+        research = self.root_dir / "LEARNING" / "research"
+        if not research.is_dir():
             return []
-        stray = sorted(p.name for p in old.iterdir() if not p.name.startswith("."))
-        return [f"[location] {len(stray)} file(s) at LEARNING/research/missions/ ({', '.join(stray[:3])}...): mission manifests now live in LEARNING/missions/; move them with git mv"] if stray else []
+        moved = {"missions": "missions/", "experiments": "experiments/", "index.jsonl": "index.jsonl", "inbox.jsonl": "inbox.jsonl",
+                 "backlog.md": "backlog.md", "mission.schema.json": "missions/mission.schema.json"}
+        stray = sorted(n for n in moved if (research / n).exists())
+        if not stray:
+            return []
+        return [f"[location] LEARNING/research/ contains mission-system item(s) {', '.join(stray)}: "
+                f"they now live at the LEARNING root (LEARNING/{', LEARNING/'.join(moved[n] for n in stray)}); move them with git mv"]
 
     def _schema_errors(self, missions: List[Dict[str, Any]]) -> List[str]:
         """Structural errors from LEARNING/missions/mission.schema.json (via validate_missions.py); none if the root has no schema."""

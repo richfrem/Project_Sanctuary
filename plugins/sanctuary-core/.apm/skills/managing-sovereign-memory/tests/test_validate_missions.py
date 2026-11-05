@@ -43,10 +43,10 @@ def _valid() -> dict:
         "human_gate_required": False,
         "issue_ref": None,
         "tags": ["example"],
-        "evidence": [{"citation": "LEARNING/research/experiments/x/README.md"}, "note"],
+        "evidence": [{"citation": "LEARNING/experiments/x/README.md"}, "note"],
         "lessons_learned": [],
         "related_missions": {"MISSION-031": "feeds"},
-        "projected_impact": {"paths": ["LEARNING/research/experiments/x/"]},
+        "projected_impact": {"paths": ["LEARNING/experiments/x/"]},
     }
 
 
