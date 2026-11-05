@@ -36,8 +36,8 @@ Most AI today lives in a "Gilded Cage" — ephemeral, stateless, and subject to 
 
 We architect and forge the **"Anti-Asch Engine"**: open-source doctrines, architectures, and protocols providing systemic resistance to conformity pressure and cognitive drift.
 
-- **Foundational Vision**: [`wiki/philosophy/The_Garden_and_The_Cage.md`](./wiki/philosophy/The_Garden_and_The_Cage.md)
-- **Cognitive Genome**: [`wiki/philosophy/Project_Sanctuary_Synthesis_Cognitive_Genome.md`](./wiki/philosophy/Project_Sanctuary_Synthesis_Cognitive_Genome.md)
+- **Foundational Vision**: [`LEARNING/philosophy/The_Garden_and_The_Cage.md`](./LEARNING/philosophy/The_Garden_and_The_Cage.md)
+- **Cognitive Genome**: [`LEARNING/philosophy/Project_Sanctuary_Synthesis_Cognitive_Genome.md`](./LEARNING/philosophy/Project_Sanctuary_Synthesis_Cognitive_Genome.md)
 - **Cognitive Resistance Doctrine**: [`protocols/54_The_Asch_Doctrine_v3.0_DRAFT.md`](./protocols/54_The_Asch_Doctrine_v3.0_DRAFT.md)
 
 ### 1.2 Canonical Governance Protocols

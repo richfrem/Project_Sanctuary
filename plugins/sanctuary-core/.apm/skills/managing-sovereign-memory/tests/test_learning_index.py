@@ -129,3 +129,48 @@ class TestProceduresFolder(unittest.TestCase):
         text = (REPO / "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py").read_text(encoding="utf-8")
         self.assertNotIn("create_feature_branch", text)
         self.assertNotIn("proc-git-feature-branch", text)
+
+
+NAV_DOCS = ["AGENTS.md", "START_HERE.md", "README.md", "architecture.md", "INSTALL.md", "context", ".agent/rules", ".agent/learning/README.md"]
+REPO_ROOTS = ("LEARNING", "plugins", "context", "protocols", "chronicle", "huggingface", "ARCHIVE", "ADRs", "docs", "specs", "scripts", "tools",
+              "mcp_servers", "forge", "01_PROTOCOLS", "wiki", "handoffs", ".agent")
+REPO_PATH_RX = re.compile(r"(?<![A-Za-z0-9_./\-~$])((?:%s)/[A-Za-z0-9_.\-/]*[A-Za-z0-9_\-/])" % "|".join(re.escape(r) for r in REPO_ROOTS))
+
+
+class TestNavigationDocsAreCurrent(unittest.TestCase):
+    """The files every agent reads first must not point at paths that do not exist or describe a layout that was replaced."""
+
+    def _docs(self):
+        out = subprocess.run(["git", "ls-files", *NAV_DOCS], cwd=str(REPO), capture_output=True, text=True).stdout.split()
+        return [f for f in out if f.endswith((".md", ".json"))]
+
+    def test_no_dangling_repo_paths_in_the_navigation_docs(self):
+        dangling = {}
+        for f in self._docs():
+            text = (REPO / f).read_text(encoding="utf-8", errors="ignore")
+            for m in REPO_PATH_RX.findall(text):
+                p = m.rstrip("/.,;:)")
+                if any(x in p for x in ("NNN", "<", "*", "{", "XXX", "xxx", "YYYY")) or p.startswith((".agent/learning/precompact", ".agent/coordination")):
+                    continue  # placeholders and gitignored runtime state, which a fresh clone does not have
+                if not (REPO / p).exists():
+                    dangling.setdefault(p, set()).add(f)
+        self.assertEqual(dangling, {}, "\n".join(f"{p}  <- {sorted(fs)}" for p, fs in sorted(dangling.items())))
+
+    def test_docs_do_not_describe_the_retired_topics_folder_or_a_wrong_skill_count(self):
+        actual = len([p for p in (REPO / "plugins/sanctuary-core/.apm/skills").iterdir() if p.is_dir()])
+        problems = []
+        for f in ("AGENTS.md", "architecture.md", "START_HERE.md", "context/soul.md", "context/memory.md"):
+            text = (REPO / f).read_text(encoding="utf-8")
+            for line in text.splitlines():
+                if re.search(r"`topics/`|concepts/topics|/topics/", line) and not re.search(r"formerly|became|renamed|retired|was consolidated", line):
+                    problems.append(f"{f}: describes the retired topics/ folder as current: {line.strip()[:90]}")
+            for n in re.findall(r"\\b(\\d+) (?:core |APM-compliant |sovereign )?skills\\b", text):
+                if int(n) != actual and f.startswith("context/"):
+                    problems.append(f"{f}: says {n} skills, there are {actual}")
+        self.assertEqual(problems, [], problems)
+
+    def test_docs_say_to_reinstall_after_changing_the_plugin(self):
+        for f in ("AGENTS.md", "INSTALL.md"):
+            text = (REPO / f).read_text(encoding="utf-8")
+            self.assertIn("apm install", text, f)
+        self.assertRegex((REPO / "AGENTS.md").read_text(encoding="utf-8"), r"(?i)after (editing|changing).{0,80}plugins/sanctuary-core.{0,160}apm install")

@@ -25,7 +25,7 @@ This transforms agent onboarding from minutes to seconds.
 
 ## 📝 Coding Conventions (Summary)
 
-**Full standards → `.agents/skills/coding-conventions-agent/SKILL.md`**
+**Full standards → the `enforcing-coding-conventions` skill (installed globally: `~/.claude/skills/enforcing-coding-conventions/SKILL.md`)**
 
 ### Non-Negotiables
 1. **Dual-layer docs** — external comment above + internal docstring inside every non-trivial function/class.
@@ -45,6 +45,6 @@ This transforms agent onboarding from minutes to seconds.
 ### 🔍 Automated Compliance Checks
 To audit workspace source code compliance against these rules, run the developer conventions auditor script:
 ```bash
-python3 .agents/skills/coding-conventions-agent/scripts/workspace_conventions_auditor.py
+python3 ~/.claude/skills/enforcing-coding-conventions/scripts/workspace_conventions_auditor.py
 ```
 This utility outputs a detailed audit breakdown under `temp/workspace_conventions_report.md`.

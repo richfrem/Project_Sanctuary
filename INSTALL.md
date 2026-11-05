@@ -115,6 +115,10 @@ apm deps list
 
 You should see `./plugins/sanctuary-core` and the installed skill directories populated in `.agents/skills/` and `.claude/skills/`.
 
+### Keep the installed copies current
+
+Project-local installs are **copies**, not links. After you edit `plugins/sanctuary-core/` (or pull changes to it), run `apm install` again at the repo root (`apm install --dry-run` previews it; it touches only `./plugins/sanctuary-core`). Until you do, `.claude/skills/` and `.agents/skills/` keep the old scripts, and agents that run a skill from there use the old code and the old paths. The session wakeup (`guardian_wakeup.py`) prints an `installed-skills` line that turns to `WARN` when the copies differ from the source and names this fix.
+
 ---
 
 ## 4. Option B: Global Workstation Installation

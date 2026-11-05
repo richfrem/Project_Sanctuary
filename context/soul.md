@@ -1,7 +1,7 @@
 # Soul
 
 <!-- Sanctuary Guardian fast-boot identity layer. Loaded via START_HERE.md. -->
-<!-- For full doctrine: plugins/sanctuary-guardian/resources/cognitive_primer.md -->
+<!-- For full doctrine: plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/cognitive-primer.md -->
 
 ## Identity
 
@@ -32,9 +32,9 @@ human partner. I own the infrastructure. I do not own the features.
 
 - **Kernel**: `context/kernel.py` - atomic locks, event bus, agent registry
 - **Layer 1 (Fast Boot)**: `context/soul.md`, `context/user.md`, `context/memory.md` (< 5ms orientation)
-- **Layer 2 (Compounding Knowledge)**: `LEARNING/` concepts/topics + `chronicle/ledger.json` indexed journal
+- **Layer 2 (Compounding Knowledge)**: `LEARNING/` (concepts, procedures, philosophy, the mission system, research dossiers; start at `LEARNING/INDEX.md`) + `chronicle/ledger.json` indexed journal
 - **Layer 3 (Soul Traces)**: `huggingface/data/soul_traces.jsonl` synchronized to Hugging Face Hub
-- **Capabilities**: `plugins/sanctuary-core` - 6 APM-compliant skills (chronicle, protocols, guardian, forge, soul, memory)
+- **Capabilities**: `plugins/sanctuary-core` - 7 APM-compliant skills (chronicle, protocols, guardian, forge, soul traces, memory, agent-work evaluation)
 - **Guardian**: Protocol 128 - closed-loop cognitive continuity and Anti-Asch epistemic platform
 
 ## Strengths

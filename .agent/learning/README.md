@@ -18,7 +18,7 @@ This directory (`.agent/learning/`) maintains the active manifests and runtime b
 | **`guardian_manifest.json`** | Canonical manifest file defining core assets for session bootstrap. |
 | **`guardian_boot_digest.md`** | Generated high-priority bootstrap digest compiled in < 5ms by `guardian_wakeup.py`. |
 | **`bootstrap_manifest.json`** | Turnkey context bundle manifest used by the `bundling-context` skill (`bundle.py`). |
-| **`learning_manifest.json`** | File inclusion/exclusion definitions for repository learning audits. |
+| ~~`learning_manifest.json`~~ | Retired; kept in `ARCHIVE/legacy_agent_learning/`. |
 
 ---
 
@@ -34,5 +34,5 @@ This directory (`.agent/learning/`) maintains the active manifests and runtime b
   ```
 - **Memory Progressive Disclosure**:
   ```bash
-  python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --level summary --file wiki/concepts/sovereign_memory_engine.md
+  python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --level summary --file LEARNING/concepts/sovereign_memory_engine.md
   ```
