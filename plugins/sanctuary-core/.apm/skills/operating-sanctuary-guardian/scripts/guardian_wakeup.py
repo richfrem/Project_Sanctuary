@@ -114,11 +114,27 @@ def check_installed_skills(project_root: Path) -> "dict | None":
     entry = {"path": "installed-skills", "status": "WARN", "size_bytes": 0, "description": ""}
     skip = ("__pycache__", ".pyc", ".DS_Store")
 
+    import re
+    names = sorted(d.name for d in src.iterdir() if d.is_dir())
+    # APM rewrites relative links between skills on install ("../beta/x.md" becomes "../../apm_modules/_local/sanctuary-core/.apm/skills/beta/x.md"):
+    # map both forms to one neutral prefix before hashing so that is not reported as drift, while any real text change still is.
+    rewritten = re.compile(r"(?:\.\./)+apm_modules/_local/sanctuary-core/\.apm/skills/")
+    sibling = re.compile(r"(?:\.\./)+(?=(?:%s)/)" % "|".join(re.escape(n) for n in names)) if names else None
+
+    def digest(f: Path) -> str:
+        data = f.read_bytes()
+        if f.suffix == ".md":
+            text = rewritten.sub("<SKILLS>/", data.decode("utf-8", errors="replace"))
+            if sibling:
+                text = sibling.sub("<SKILLS>/", text)
+            data = text.encode("utf-8")
+        return hashlib.sha256(data).hexdigest()
+
     def files(base: Path) -> dict:
         out = {}
         for f in base.rglob("*"):
             if f.is_file() and not any(x in str(f) for x in skip):
-                out[str(f.relative_to(base))] = hashlib.sha256(f.read_bytes()).hexdigest()
+                out[str(f.relative_to(base))] = digest(f)
         return out
 
     try:

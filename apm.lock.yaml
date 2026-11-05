@@ -6,6 +6,13 @@ dependencies:
   version: 0.1.0
   package_type: apm_package
   deployed_files:
+  - .agents/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  - .agents/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  - .agents/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  - .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  - .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  - .agents/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  - .agents/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
   - .agents/skills/evaluating-agent-work
   - .agents/skills/evaluating-agent-work/SKILL.md
   - .agents/skills/evaluating-agent-work/evals/evals.json
@@ -13,12 +20,17 @@ dependencies:
   - .agents/skills/evaluating-agent-work/references/evaluation-rubric.md
   - .agents/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md
   - .agents/skills/evaluating-agent-work/references/token-budget-profiles.md
+  - .agents/skills/evaluating-agent-work/references/usage-telemetry-sources.md
   - .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
   - .agents/skills/evaluating-agent-work/scripts/score_contribution.py
   - .agents/skills/evaluating-agent-work/scripts/track_budget.py
+  - .agents/skills/evaluating-agent-work/scripts/usage_probe.py
   - .agents/skills/evaluating-agent-work/scripts/visualize_economy.py
+  - .agents/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
+  - .agents/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
   - .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
   - .agents/skills/evaluating-agent-work/tests/test_model_routing.py
+  - .agents/skills/evaluating-agent-work/tests/test_usage_probe.py
   - .agents/skills/forging-sovereign-models
   - .agents/skills/forging-sovereign-models/SKILL.md
   - .agents/skills/forging-sovereign-models/assets/Modelfile.template
@@ -49,6 +61,7 @@ dependencies:
   - .agents/skills/managing-chronicles/references/acceptance-criteria.md
   - .agents/skills/managing-chronicles/references/chronicle-schema.md
   - .agents/skills/managing-chronicles/scripts/chronicle_manager.py
+  - .agents/skills/managing-chronicles/tests/test_chronicle_ledger.py
   - .agents/skills/managing-protocols
   - .agents/skills/managing-protocols/SKILL.md
   - .agents/skills/managing-protocols/evals/evals.json
@@ -57,6 +70,7 @@ dependencies:
   - .agents/skills/managing-protocols/references/acceptance-criteria.md
   - .agents/skills/managing-protocols/references/protocol-schema.md
   - .agents/skills/managing-protocols/scripts/protocol_manager.py
+  - .agents/skills/managing-protocols/tests/test_protocol_manager.py
   - .agents/skills/managing-sovereign-memory
   - .agents/skills/managing-sovereign-memory/SKILL.md
   - .agents/skills/managing-sovereign-memory/evals/evals.json
@@ -73,21 +87,30 @@ dependencies:
   - .agents/skills/managing-sovereign-memory/scripts/query_graph.py
   - .agents/skills/managing-sovereign-memory/scripts/record_insight.py
   - .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py
+  - .agents/skills/managing-sovereign-memory/scripts/validate_missions.py
+  - .agents/skills/managing-sovereign-memory/tests/test_audit_decay.py
   - .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py
+  - .agents/skills/managing-sovereign-memory/tests/test_learning_index.py
+  - .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py
   - .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py
+  - .agents/skills/managing-sovereign-memory/tests/test_validate_missions.py
+  - .agents/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py
   - .agents/skills/operating-sanctuary-guardian
   - .agents/skills/operating-sanctuary-guardian/SKILL.md
   - .agents/skills/operating-sanctuary-guardian/evals/evals.json
   - .agents/skills/operating-sanctuary-guardian/evals/results.tsv
   - .agents/skills/operating-sanctuary-guardian/operating-sanctuary-guardian-flow.mmd
   - .agents/skills/operating-sanctuary-guardian/references/acceptance-criteria.md
+  - .agents/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md
   - .agents/skills/operating-sanctuary-guardian/references/bootstrapping.md
   - .agents/skills/operating-sanctuary-guardian/references/cognitive-primer.md
   - .agents/skills/operating-sanctuary-guardian/references/integrations/memory-stack.md
   - .agents/skills/operating-sanctuary-guardian/references/integrations/obsidian-vault.md
   - .agents/skills/operating-sanctuary-guardian/references/integrations/orchestration.md
+  - .agents/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md
   - .agents/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md
   - .agents/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md
+  - .agents/skills/operating-sanctuary-guardian/references/merge-prep.md
   - .agents/skills/operating-sanctuary-guardian/references/modes/audit.md
   - .agents/skills/operating-sanctuary-guardian/references/modes/boot.md
   - .agents/skills/operating-sanctuary-guardian/references/modes/onboard.md
@@ -95,20 +118,40 @@ dependencies:
   - .agents/skills/operating-sanctuary-guardian/references/modes/seal.md
   - .agents/skills/operating-sanctuary-guardian/references/modes/verify.md
   - .agents/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md
+  - .agents/skills/operating-sanctuary-guardian/references/precompact-hook.md
   - .agents/skills/operating-sanctuary-guardian/references/protocol-128.md
   - .agents/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py
   - .agents/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py
   - .agents/skills/operating-sanctuary-guardian/scripts/forge_llm.py
   - .agents/skills/operating-sanctuary-guardian/scripts/forge_soul.py
   - .agents/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py
+  - .agents/skills/operating-sanctuary-guardian/scripts/impact.py
   - .agents/skills/operating-sanctuary-guardian/scripts/learning_debrief.py
+  - .agents/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py
   - .agents/skills/operating-sanctuary-guardian/scripts/manage_coordination.py
+  - .agents/skills/operating-sanctuary-guardian/scripts/merge_prep.py
   - .agents/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py
   - .agents/skills/operating-sanctuary-guardian/scripts/persist_soul.py
+  - .agents/skills/operating-sanctuary-guardian/scripts/relay.py
   - .agents/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py
   - .agents/skills/operating-sanctuary-guardian/scripts/test_local_tool_calling.py
   - .agents/skills/operating-sanctuary-guardian/scripts/test_mlx_server_manager.py
+  - .agents/skills/operating-sanctuary-guardian/scripts/usage_hook.py
+  - .agents/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py
+  - .agents/skills/operating-sanctuary-guardian/tests/conftest.py
+  - .agents/skills/operating-sanctuary-guardian/tests/impact_eval.py
+  - .agents/skills/operating-sanctuary-guardian/tests/relay_eval.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py
   - .agents/skills/operating-sanctuary-guardian/tests/test_coordination.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_merge_prep.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_persist_soul.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_projected_impact.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_relay.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
+  - .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
   - .agents/skills/preserving-soul-traces
   - .agents/skills/preserving-soul-traces/SKILL.md
   - .agents/skills/preserving-soul-traces/evals/evals.json
@@ -117,6 +160,13 @@ dependencies:
   - .agents/skills/preserving-soul-traces/references/soul-trace-schema.md
   - .agents/skills/preserving-soul-traces/scripts/sync_soul_dataset.py
   - .agents/skills/preserving-soul-traces/scripts/trace_extractor.py
+  - .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  - .claude/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  - .claude/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  - .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  - .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  - .claude/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  - .claude/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
   - .claude/skills/evaluating-agent-work
   - .claude/skills/evaluating-agent-work/SKILL.md
   - .claude/skills/evaluating-agent-work/evals/evals.json
@@ -124,12 +174,17 @@ dependencies:
   - .claude/skills/evaluating-agent-work/references/evaluation-rubric.md
   - .claude/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md
   - .claude/skills/evaluating-agent-work/references/token-budget-profiles.md
+  - .claude/skills/evaluating-agent-work/references/usage-telemetry-sources.md
   - .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
   - .claude/skills/evaluating-agent-work/scripts/score_contribution.py
   - .claude/skills/evaluating-agent-work/scripts/track_budget.py
+  - .claude/skills/evaluating-agent-work/scripts/usage_probe.py
   - .claude/skills/evaluating-agent-work/scripts/visualize_economy.py
+  - .claude/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
+  - .claude/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
   - .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
   - .claude/skills/evaluating-agent-work/tests/test_model_routing.py
+  - .claude/skills/evaluating-agent-work/tests/test_usage_probe.py
   - .claude/skills/forging-sovereign-models
   - .claude/skills/forging-sovereign-models/SKILL.md
   - .claude/skills/forging-sovereign-models/assets/Modelfile.template
@@ -160,6 +215,7 @@ dependencies:
   - .claude/skills/managing-chronicles/references/acceptance-criteria.md
   - .claude/skills/managing-chronicles/references/chronicle-schema.md
   - .claude/skills/managing-chronicles/scripts/chronicle_manager.py
+  - .claude/skills/managing-chronicles/tests/test_chronicle_ledger.py
   - .claude/skills/managing-protocols
   - .claude/skills/managing-protocols/SKILL.md
   - .claude/skills/managing-protocols/evals/evals.json
@@ -168,6 +224,7 @@ dependencies:
   - .claude/skills/managing-protocols/references/acceptance-criteria.md
   - .claude/skills/managing-protocols/references/protocol-schema.md
   - .claude/skills/managing-protocols/scripts/protocol_manager.py
+  - .claude/skills/managing-protocols/tests/test_protocol_manager.py
   - .claude/skills/managing-sovereign-memory
   - .claude/skills/managing-sovereign-memory/SKILL.md
   - .claude/skills/managing-sovereign-memory/evals/evals.json
@@ -184,21 +241,30 @@ dependencies:
   - .claude/skills/managing-sovereign-memory/scripts/query_graph.py
   - .claude/skills/managing-sovereign-memory/scripts/record_insight.py
   - .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py
+  - .claude/skills/managing-sovereign-memory/scripts/validate_missions.py
+  - .claude/skills/managing-sovereign-memory/tests/test_audit_decay.py
   - .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py
+  - .claude/skills/managing-sovereign-memory/tests/test_learning_index.py
+  - .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py
   - .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py
+  - .claude/skills/managing-sovereign-memory/tests/test_validate_missions.py
+  - .claude/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py
   - .claude/skills/operating-sanctuary-guardian
   - .claude/skills/operating-sanctuary-guardian/SKILL.md
   - .claude/skills/operating-sanctuary-guardian/evals/evals.json
   - .claude/skills/operating-sanctuary-guardian/evals/results.tsv
   - .claude/skills/operating-sanctuary-guardian/operating-sanctuary-guardian-flow.mmd
   - .claude/skills/operating-sanctuary-guardian/references/acceptance-criteria.md
+  - .claude/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md
   - .claude/skills/operating-sanctuary-guardian/references/bootstrapping.md
   - .claude/skills/operating-sanctuary-guardian/references/cognitive-primer.md
   - .claude/skills/operating-sanctuary-guardian/references/integrations/memory-stack.md
   - .claude/skills/operating-sanctuary-guardian/references/integrations/obsidian-vault.md
   - .claude/skills/operating-sanctuary-guardian/references/integrations/orchestration.md
+  - .claude/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md
   - .claude/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md
   - .claude/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md
+  - .claude/skills/operating-sanctuary-guardian/references/merge-prep.md
   - .claude/skills/operating-sanctuary-guardian/references/modes/audit.md
   - .claude/skills/operating-sanctuary-guardian/references/modes/boot.md
   - .claude/skills/operating-sanctuary-guardian/references/modes/onboard.md
@@ -206,20 +272,40 @@ dependencies:
   - .claude/skills/operating-sanctuary-guardian/references/modes/seal.md
   - .claude/skills/operating-sanctuary-guardian/references/modes/verify.md
   - .claude/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md
+  - .claude/skills/operating-sanctuary-guardian/references/precompact-hook.md
   - .claude/skills/operating-sanctuary-guardian/references/protocol-128.md
   - .claude/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py
   - .claude/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py
   - .claude/skills/operating-sanctuary-guardian/scripts/forge_llm.py
   - .claude/skills/operating-sanctuary-guardian/scripts/forge_soul.py
   - .claude/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py
+  - .claude/skills/operating-sanctuary-guardian/scripts/impact.py
   - .claude/skills/operating-sanctuary-guardian/scripts/learning_debrief.py
+  - .claude/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py
   - .claude/skills/operating-sanctuary-guardian/scripts/manage_coordination.py
+  - .claude/skills/operating-sanctuary-guardian/scripts/merge_prep.py
   - .claude/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py
   - .claude/skills/operating-sanctuary-guardian/scripts/persist_soul.py
+  - .claude/skills/operating-sanctuary-guardian/scripts/relay.py
   - .claude/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py
   - .claude/skills/operating-sanctuary-guardian/scripts/test_local_tool_calling.py
   - .claude/skills/operating-sanctuary-guardian/scripts/test_mlx_server_manager.py
+  - .claude/skills/operating-sanctuary-guardian/scripts/usage_hook.py
+  - .claude/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py
+  - .claude/skills/operating-sanctuary-guardian/tests/conftest.py
+  - .claude/skills/operating-sanctuary-guardian/tests/impact_eval.py
+  - .claude/skills/operating-sanctuary-guardian/tests/relay_eval.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py
   - .claude/skills/operating-sanctuary-guardian/tests/test_coordination.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_merge_prep.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_persist_soul.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_projected_impact.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_relay.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
+  - .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
   - .claude/skills/preserving-soul-traces
   - .claude/skills/preserving-soul-traces/SKILL.md
   - .claude/skills/preserving-soul-traces/evals/evals.json
@@ -228,19 +314,46 @@ dependencies:
   - .claude/skills/preserving-soul-traces/references/soul-trace-schema.md
   - .claude/skills/preserving-soul-traces/scripts/sync_soul_dataset.py
   - .claude/skills/preserving-soul-traces/scripts/trace_extractor.py
+  - .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  - .codex/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  - .codex/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  - .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  - .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  - .codex/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  - .codex/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
+  - .github/hooks/sanctuary-core-hooks.json
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  - .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
   deployed_file_hashes:
-    .agents/skills/evaluating-agent-work/SKILL.md: sha256:2c0d408f13147ef2482f5889ef791c8d4f6b83241445564c44454a30196da63e
+    .agents/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+    .agents/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+    .agents/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+    .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+    .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+    .agents/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+    .agents/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
+    .agents/skills/evaluating-agent-work/SKILL.md: sha256:fc30dadf746b989b9d6ffcf50f46a55e63164f2d0933b7020d1b0bfe9a6a18ea
     .agents/skills/evaluating-agent-work/evals/evals.json: sha256:02385394eda6f85ee7ef29497d181ba417c8aff3defbe8bd5be89c19a99b65f8
     .agents/skills/evaluating-agent-work/references/acceptance-criteria.md: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
     .agents/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:20b3720bbd669c3c630d2737bbffd684f54e5c1a067ce2e13501ce5c13002657
     .agents/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
-    .agents/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
+    .agents/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
+    .agents/skills/evaluating-agent-work/references/usage-telemetry-sources.md: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
     .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
-    .agents/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
-    .agents/skills/evaluating-agent-work/scripts/track_budget.py: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
+    .agents/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
+    .agents/skills/evaluating-agent-work/scripts/track_budget.py: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+    .agents/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
     .agents/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
+    .agents/skills/evaluating-agent-work/tests/fixtures/agy_usage.json: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
+    .agents/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
     .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
-    .agents/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
+    .agents/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
+    .agents/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
     .agents/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
     .agents/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .agents/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
@@ -268,83 +381,126 @@ dependencies:
     .agents/skills/managing-chronicles/managing-chronicles-flow.mmd: sha256:c3b3793e8d8baa35105384a0f6d4b2f0870aed072785d9709817be6f076e0885
     .agents/skills/managing-chronicles/references/acceptance-criteria.md: sha256:35ceb1f290b52b18a31ab205a5784750e4a436598e5fc5e152df985203304aee
     .agents/skills/managing-chronicles/references/chronicle-schema.md: sha256:0080e6a0dc8a1252ca5b3acfff11680bbb3f6bbe13a19b88f2028d022744b8d5
-    .agents/skills/managing-chronicles/scripts/chronicle_manager.py: sha256:e63789dddded5fc1768f8f2a4fe2a8d7a662b1bbc2cce575f1808e084d75b53e
-    .agents/skills/managing-protocols/SKILL.md: sha256:8e457fadb00cae950c2f505c6a01a7346636887e6db613cdf5f54a7dbd322c7f
+    .agents/skills/managing-chronicles/scripts/chronicle_manager.py: sha256:f1066280ac905d1cd4da14c4e2a347538a580810661f616d0f6de4edd9fbdd9c
+    .agents/skills/managing-chronicles/tests/test_chronicle_ledger.py: sha256:53c676d7b54c1445630e07605d70adf4963ffcada17a7df6b2f525fa96a9b483
+    .agents/skills/managing-protocols/SKILL.md: sha256:80680e7b1ede8bf142d08e55dd56c0cb0c010253fc958dcf27d3e96883288b69
     .agents/skills/managing-protocols/evals/evals.json: sha256:64491b13c96c5f3e3d7aebaaba092771996fc5e319014cf8e94d6da4462f25ae
     .agents/skills/managing-protocols/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .agents/skills/managing-protocols/managing-protocols-flow.mmd: sha256:a624f02cfea641a6df4d4a3f12962110481710f60003153c8ec106ca68a3b082
     .agents/skills/managing-protocols/references/acceptance-criteria.md: sha256:9d771338b10ea346f343564f0946bd7004e76390c30bd6aca53b8e49ce7d1835
     .agents/skills/managing-protocols/references/protocol-schema.md: sha256:1ff0453c5f07a462ddf6deb75ff83fb1a829e4110263400317644faa5011f0ed
-    .agents/skills/managing-protocols/scripts/protocol_manager.py: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
-    .agents/skills/managing-sovereign-memory/SKILL.md: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+    .agents/skills/managing-protocols/scripts/protocol_manager.py: sha256:3750b352ca120cb881cab7c8940045c98fe510d66a3a83f2098b0b017497bfa4
+    .agents/skills/managing-protocols/tests/test_protocol_manager.py: sha256:2dc0ab2e1cc5f355b6934cd50379cd588f8d902e95fb37d8161dcbec310c5ccb
+    .agents/skills/managing-sovereign-memory/SKILL.md: sha256:6d5df7df2e7969b6d5b0d50b42721ccc9d49a8f4601201d8fe8db6f1e43b0b71
     .agents/skills/managing-sovereign-memory/evals/evals.json: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
     .agents/skills/managing-sovereign-memory/evals/results.tsv: sha256:3c609d0c0a5ae5b1366824253e9fa0a6fb75173f771f8ddb664ba863b5e2c064
     .agents/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
     .agents/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
-    .agents/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
-    .agents/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+    .agents/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:48fcb403147cf352edb53164ea34f1eb502dbd89d596934eea10af2df5a98dfc
+    .agents/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:95c9060f349ac162363256a4c65025a6a718f90b64916cf1607f196a9057196e
     .agents/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
     .agents/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
-    .agents/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+    .agents/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:879c3de65288a30d8f57f7eae2ac576875d6f7e0ce519d46991322b574307def
     .agents/skills/managing-sovereign-memory/scripts/disclose.py: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
-    .agents/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+    .agents/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:2fed12a0424b48dfa63414793aad4d2bca7f581b2e30c8f9d186af3fcd9310e6
     .agents/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
     .agents/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
-    .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
-    .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
+    .agents/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:c11e738e525632fb7a359d257d13bb46f66bf7746ba0604207dd4077f71e29bd
+    .agents/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
+    .agents/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
+    .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
+    .agents/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+    .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
+    .agents/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
+    .agents/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py: sha256:04f8e26338f40b23935dff13640fae197d0ef85405c39e6b28b14e4b433b9cea
     .agents/skills/operating-sanctuary-guardian/SKILL.md: sha256:dd4431452f012eaa74cbfe4452a04e6281d3390b9fc357583a14a373b9b2e115
     .agents/skills/operating-sanctuary-guardian/evals/evals.json: sha256:2e89aba5e50103fdfeb41c303f89419dbaade74f4d04bf96aa6972536a03a02a
     .agents/skills/operating-sanctuary-guardian/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .agents/skills/operating-sanctuary-guardian/operating-sanctuary-guardian-flow.mmd: sha256:8647e8daea9110b8f6fee34b457aafad0028cb2ecbe89c4a421cff0357250717
     .agents/skills/operating-sanctuary-guardian/references/acceptance-criteria.md: sha256:a27b49fad29ae6249cb0a9f2ff0cd6dae07d63896485ffe32367331df8dff240
-    .agents/skills/operating-sanctuary-guardian/references/bootstrapping.md: sha256:f9ed12c7ebf644010e940340aa68024a53fa2e59c771ce9524b2dce7cbd191fb
+    .agents/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md: sha256:4601e092bd2e81cde366552f2fbd003be2efec195f6fdac3d64cd19da0db8471
+    .agents/skills/operating-sanctuary-guardian/references/bootstrapping.md: sha256:1cfded5d7287ecfe5d8b10d70a87db0032dcd5fa4b88df9fc92f94840da06965
     .agents/skills/operating-sanctuary-guardian/references/cognitive-primer.md: sha256:679fdf11ac9a82be98f50549ceb3aa14ddf398d23c2ffb778f6918d2d49a4ba9
     .agents/skills/operating-sanctuary-guardian/references/integrations/memory-stack.md: sha256:a2b673c119a22c9ce143b5fe83efdd1e78105051384461bf5d5d7c72a2527f84
     .agents/skills/operating-sanctuary-guardian/references/integrations/obsidian-vault.md: sha256:151cf5ef77aad5ff74e408da7b41554ae3b1ecd01afba0d1ec984559b5bd02a6
     .agents/skills/operating-sanctuary-guardian/references/integrations/orchestration.md: sha256:a8561fb4732b8129876fe1b2e7ce6dd519e9c88194777cb4f2c07984127a3db1
-    .agents/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md: sha256:31976f8cde45b854df535c244deb6e9234d52dc2e437d98fa1f937c8e241d00e
+    .agents/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md: sha256:749c91491d9f33b1d49d5091881fe0ab953c1f57ad8379e1b87e834b7181d114
+    .agents/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md: sha256:8eef4ae150da6d4271b90e208ed87516a8fbe34c784d23744099ad215a271a83
     .agents/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md: sha256:7a777d184e4f7dbfc54e09a0cf7efe43aa24797141f17db124c01a149254e83c
+    .agents/skills/operating-sanctuary-guardian/references/merge-prep.md: sha256:bb3104abef137e6c188726f1f7f41a79fce30b433e3c010069a314870a02a130
     .agents/skills/operating-sanctuary-guardian/references/modes/audit.md: sha256:728e083bb28896362f3e5a08b3b4888e49e771c2643cb20017b0c7a9b64ad552
     .agents/skills/operating-sanctuary-guardian/references/modes/boot.md: sha256:3aaa2d93e7a5a433564d5740597addfa68e4719c951a9dfd4011f1ac462caf44
     .agents/skills/operating-sanctuary-guardian/references/modes/onboard.md: sha256:aaa13eb727089038e9c44067f18a2f1a8100aca6c3d49a07bea7dd5e0e331025
-    .agents/skills/operating-sanctuary-guardian/references/modes/persist.md: sha256:4420a2ec190918b170696443c5ecd2780bfb9291d439e12f4f30bf07f4c49b3c
+    .agents/skills/operating-sanctuary-guardian/references/modes/persist.md: sha256:56565c2426b1d158a891734da87654efddc0412d607ff6d492fb844f6e5da3f7
     .agents/skills/operating-sanctuary-guardian/references/modes/seal.md: sha256:9c7b5fa03f445edb30a9cea9c95091de17c1aa6d0337817a00e0766c2bf52513
     .agents/skills/operating-sanctuary-guardian/references/modes/verify.md: sha256:d7ce6c125a40ab64f01c051eeb25e242e09fa53a60cbb117145ec763f6c11ea4
-    .agents/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:972b75ab88aff7c9734253b49fffc906ae8e4b994ea4825f77bb44401b4ef11a
-    .agents/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:2000fde787d3ba6437213983d8a11afc5daf1512172a313f8acde0bcded038ab
+    .agents/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:15941e86cd36a6dc3b913c320c1b42446c62ed13e0227755f37aefc6c5089925
+    .agents/skills/operating-sanctuary-guardian/references/precompact-hook.md: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
+    .agents/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
     .agents/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py: sha256:0ca6dd7f8c9b2521dca846635c0cff81d4f33dc5c575248582b421f88877b92e
     .agents/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py: sha256:de2ec87ea0c0c2e8dfc00600887650c891f6eeee59ea67b67f587488fe12d8e3
-    .agents/skills/operating-sanctuary-guardian/scripts/forge_llm.py: sha256:93c7a529dd88dcc3c20560342f1db764d5fbfe1709f913382287ff071274fbf3
+    .agents/skills/operating-sanctuary-guardian/scripts/forge_llm.py: sha256:6decfee2017564caf52f7b2c70a809b38b96f179b09771822bf68265b9dbc5eb
     .agents/skills/operating-sanctuary-guardian/scripts/forge_soul.py: sha256:30976ad8ec3929432b058c96065cfa33f4cd6fc9d32aac8bd174a86a9df04a6f
-    .agents/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py: sha256:c3cdda32530a2f07298c78919c34de62f894302d6e5a0c8eae84cb4afb630ae0
+    .agents/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py: sha256:18d661c6d1327c3bc025b792cbeb6a7fe17fa2b556d5424ac7ab4659d1c79fed
+    .agents/skills/operating-sanctuary-guardian/scripts/impact.py: sha256:37cba9210c31e4158c619f8060819ee673b56b1c915bfd02be2cd52bb2a75e7d
     .agents/skills/operating-sanctuary-guardian/scripts/learning_debrief.py: sha256:26e9f8ec164aa6514536236cbd10e70d48cb3ba855ab88527618ba1382d6ba8c
-    .agents/skills/operating-sanctuary-guardian/scripts/manage_coordination.py: sha256:221a1768491217e2e52194568db43b01038795c7305f167b621a35b55bc111c5
-    .agents/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py: sha256:85002faca673e411e2be51415cc4652c894b8c8606808ee5b4f19ee14a0c050c
-    .agents/skills/operating-sanctuary-guardian/scripts/persist_soul.py: sha256:f0d3ef8bccc84e5f760c0f30af2bac57e903c4d96091d74affcc8f52fe96ed13
+    .agents/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py: sha256:4b9eddb270fa97d104834465c4720647f6b89c9b125dd10b7714e73342ac862a
+    .agents/skills/operating-sanctuary-guardian/scripts/manage_coordination.py: sha256:fe260241ec5ae6d67f363fd6ec418a8c1b6703f00401eb5b8718aa03195cf8bc
+    .agents/skills/operating-sanctuary-guardian/scripts/merge_prep.py: sha256:a60608c90d49a26ec88f251c41d3e611a507acfe0e1d573815eceee3205f060b
+    .agents/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py: sha256:9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231
+    .agents/skills/operating-sanctuary-guardian/scripts/persist_soul.py: sha256:18df95fa11bddafbc0a8cf3654772c5c12f8f720a8a5ac6cd8d01046a0e816ce
+    .agents/skills/operating-sanctuary-guardian/scripts/relay.py: sha256:ac2cad59dd56bb0a4cfab756a860eaf28eda7158288437b3b0457725520f180d
     .agents/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py: sha256:154d7bb86a863cbbab34e8b98e1a764e5c0c039c21a15c79af7c37d7dbb650cc
     .agents/skills/operating-sanctuary-guardian/scripts/test_local_tool_calling.py: sha256:8c28d2511b5353bf62eb2d3ecaab80961f3bc4d934fbc60873c6a6d3345a5d12
     .agents/skills/operating-sanctuary-guardian/scripts/test_mlx_server_manager.py: sha256:358e94504a2c92c3ad0ba1505c2f762f70d24c606572461bd14af9422e9f6452
-    .agents/skills/operating-sanctuary-guardian/tests/test_coordination.py: sha256:c10b753aa76df3e3a178999662d0e6b09b0b25d59a78867b4ff60fc72adc4454
+    .agents/skills/operating-sanctuary-guardian/scripts/usage_hook.py: sha256:e7e42d82d4fd18b15e0c3c032cfeb283db3b9692975e4709b236e5a7dd036e34
+    .agents/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py: sha256:450cbf16060392c15c02fa8e9d44d29cc6dc925ddfa66f6ce14992aee487fdaf
+    .agents/skills/operating-sanctuary-guardian/tests/conftest.py: sha256:6e5dd0706920411041c67f134ebc0e6d669739643599f8f08bb843bf80b02d12
+    .agents/skills/operating-sanctuary-guardian/tests/impact_eval.py: sha256:44a055861b749b3238e0710e3d11a9950b57162c01ce7b06d889f13ca14a93c7
+    .agents/skills/operating-sanctuary-guardian/tests/relay_eval.py: sha256:8be0204d4444fd28e5221a84ef980decbb0c9611c9911843d67e4cfed6b078cd
+    .agents/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py: sha256:f1c2727253e2daf3178f7be74b99b5d7c8071edbee4423d17b0b2612725c2e36
+    .agents/skills/operating-sanctuary-guardian/tests/test_coordination.py: sha256:fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6
+    .agents/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py: sha256:d6b0324ff44978f09606630b9db769e39a07b1a8b83277c03ceb275bc8e59544
+    .agents/skills/operating-sanctuary-guardian/tests/test_merge_prep.py: sha256:7960eb82018543501a4e10ad1cd9e9617a58a80317d46649f9375f10485fad9c
+    .agents/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py: sha256:e255b2c73cd4339450032b26e60337b51da2c93830c0e0308a494977718e5293
+    .agents/skills/operating-sanctuary-guardian/tests/test_persist_soul.py: sha256:825b291e91d65337c9ea174231d0eed380a04581bb7f8341a98ba9ca003885cd
+    .agents/skills/operating-sanctuary-guardian/tests/test_projected_impact.py: sha256:432087df96a42e5cec0d43c5100eb079c03b8e1041d73f7df0dbcf5b3bacfc33
+    .agents/skills/operating-sanctuary-guardian/tests/test_relay.py: sha256:bd35aa1d7562bcb3be091189787c1eebf70b149b91cec415e10ecd282ec1bf08
+    .agents/skills/operating-sanctuary-guardian/tests/test_usage_hook.py: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
+    .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py: sha256:7a10eb6569b769f268ad915b2b24e2e9e4227047869b3f6b8c0ca197ae63f582
+    .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py: sha256:8521f2a1c050e99b0da5749f664daec651c64ecdc0d38e5c1cf22ab92c81a7a6
     .agents/skills/preserving-soul-traces/SKILL.md: sha256:7f4851008c306b00175c0b9be33e732ee2aa83484d5a893a96eaaf3aa5563744
     .agents/skills/preserving-soul-traces/evals/evals.json: sha256:518ef4a1687e0587bf067104e99ad15d5bcdf18c4277be6ac84990f44c0488c7
     .agents/skills/preserving-soul-traces/references/acceptance-criteria.md: sha256:c401e444f0f37a8c5cfc888e989be6e51a7a5b0e6fc155cc90c23e5767751df4
     .agents/skills/preserving-soul-traces/references/huggingface-dataset-integration.md: sha256:0bcb1f3a89264349b5b1f7ecf71925ec35dcb10630b4ce3abbd4f162db4bc5fa
     .agents/skills/preserving-soul-traces/references/soul-trace-schema.md: sha256:89ff845c913334b2c71ed7f310171c9a7012874b355e6fe3a87216e94dc73b2c
-    .agents/skills/preserving-soul-traces/scripts/sync_soul_dataset.py: sha256:6b160977dda36c8c5aba5aa8486f40a6385033dffe29d3a80b155d932a6bc20d
+    .agents/skills/preserving-soul-traces/scripts/sync_soul_dataset.py: sha256:4fe83e9b89ff39c9349ee762a1ad2f8249cce0d663b58d1f28b7fb25e743fdf7
     .agents/skills/preserving-soul-traces/scripts/trace_extractor.py: sha256:2374c3cabb361ace36c4abe691d4918b19927efe9df98ab34369557fff3da038
-    .claude/skills/evaluating-agent-work/SKILL.md: sha256:2c0d408f13147ef2482f5889ef791c8d4f6b83241445564c44454a30196da63e
+    .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+    .claude/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+    .claude/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+    .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+    .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+    .claude/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+    .claude/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
+    .claude/skills/evaluating-agent-work/SKILL.md: sha256:fc30dadf746b989b9d6ffcf50f46a55e63164f2d0933b7020d1b0bfe9a6a18ea
     .claude/skills/evaluating-agent-work/evals/evals.json: sha256:02385394eda6f85ee7ef29497d181ba417c8aff3defbe8bd5be89c19a99b65f8
     .claude/skills/evaluating-agent-work/references/acceptance-criteria.md: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
     .claude/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:20b3720bbd669c3c630d2737bbffd684f54e5c1a067ce2e13501ce5c13002657
     .claude/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
-    .claude/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
+    .claude/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
+    .claude/skills/evaluating-agent-work/references/usage-telemetry-sources.md: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
     .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
-    .claude/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
-    .claude/skills/evaluating-agent-work/scripts/track_budget.py: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
+    .claude/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
+    .claude/skills/evaluating-agent-work/scripts/track_budget.py: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+    .claude/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
     .claude/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
+    .claude/skills/evaluating-agent-work/tests/fixtures/agy_usage.json: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
+    .claude/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
     .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
-    .claude/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
+    .claude/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
+    .claude/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
     .claude/skills/forging-sovereign-models/SKILL.md: sha256:233eefd713c8edbb2a118c85ba50b2173ac28090a951ff50e3872b01465c80eb
     .claude/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
     .claude/skills/forging-sovereign-models/assets/configs/evaluation_config.yaml: sha256:2cf97617b355e2e58238fa08e17817a7f435fb6d89bbe8103116f59472ded6ba
@@ -372,71 +528,117 @@ dependencies:
     .claude/skills/managing-chronicles/managing-chronicles-flow.mmd: sha256:c3b3793e8d8baa35105384a0f6d4b2f0870aed072785d9709817be6f076e0885
     .claude/skills/managing-chronicles/references/acceptance-criteria.md: sha256:35ceb1f290b52b18a31ab205a5784750e4a436598e5fc5e152df985203304aee
     .claude/skills/managing-chronicles/references/chronicle-schema.md: sha256:0080e6a0dc8a1252ca5b3acfff11680bbb3f6bbe13a19b88f2028d022744b8d5
-    .claude/skills/managing-chronicles/scripts/chronicle_manager.py: sha256:e63789dddded5fc1768f8f2a4fe2a8d7a662b1bbc2cce575f1808e084d75b53e
-    .claude/skills/managing-protocols/SKILL.md: sha256:8e457fadb00cae950c2f505c6a01a7346636887e6db613cdf5f54a7dbd322c7f
+    .claude/skills/managing-chronicles/scripts/chronicle_manager.py: sha256:f1066280ac905d1cd4da14c4e2a347538a580810661f616d0f6de4edd9fbdd9c
+    .claude/skills/managing-chronicles/tests/test_chronicle_ledger.py: sha256:53c676d7b54c1445630e07605d70adf4963ffcada17a7df6b2f525fa96a9b483
+    .claude/skills/managing-protocols/SKILL.md: sha256:80680e7b1ede8bf142d08e55dd56c0cb0c010253fc958dcf27d3e96883288b69
     .claude/skills/managing-protocols/evals/evals.json: sha256:64491b13c96c5f3e3d7aebaaba092771996fc5e319014cf8e94d6da4462f25ae
     .claude/skills/managing-protocols/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .claude/skills/managing-protocols/managing-protocols-flow.mmd: sha256:a624f02cfea641a6df4d4a3f12962110481710f60003153c8ec106ca68a3b082
     .claude/skills/managing-protocols/references/acceptance-criteria.md: sha256:9d771338b10ea346f343564f0946bd7004e76390c30bd6aca53b8e49ce7d1835
     .claude/skills/managing-protocols/references/protocol-schema.md: sha256:1ff0453c5f07a462ddf6deb75ff83fb1a829e4110263400317644faa5011f0ed
-    .claude/skills/managing-protocols/scripts/protocol_manager.py: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
-    .claude/skills/managing-sovereign-memory/SKILL.md: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+    .claude/skills/managing-protocols/scripts/protocol_manager.py: sha256:3750b352ca120cb881cab7c8940045c98fe510d66a3a83f2098b0b017497bfa4
+    .claude/skills/managing-protocols/tests/test_protocol_manager.py: sha256:2dc0ab2e1cc5f355b6934cd50379cd588f8d902e95fb37d8161dcbec310c5ccb
+    .claude/skills/managing-sovereign-memory/SKILL.md: sha256:6d5df7df2e7969b6d5b0d50b42721ccc9d49a8f4601201d8fe8db6f1e43b0b71
     .claude/skills/managing-sovereign-memory/evals/evals.json: sha256:692ac68019c7ff9cf51dd738c2bda8e6c801d92189df2454d234b516c4b16877
     .claude/skills/managing-sovereign-memory/evals/results.tsv: sha256:3c609d0c0a5ae5b1366824253e9fa0a6fb75173f771f8ddb664ba863b5e2c064
     .claude/skills/managing-sovereign-memory/managing-sovereign-memory-flow.mmd: sha256:2760c3f1d6415a7e5e1a6babea01814f8a250e57a5ce37dd9c95a804c09c1a3b
     .claude/skills/managing-sovereign-memory/references/acceptance-criteria.md: sha256:f291b019676e5244f80fd694c7b5bf35309dbcbce8dab7f1c47ae530ed51d57c
-    .claude/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
-    .claude/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+    .claude/skills/managing-sovereign-memory/references/agent-native-backlog.md: sha256:48fcb403147cf352edb53164ea34f1eb502dbd89d596934eea10af2df5a98dfc
+    .claude/skills/managing-sovereign-memory/references/asymmetric-persistence.md: sha256:95c9060f349ac162363256a4c65025a6a718f90b64916cf1607f196a9057196e
     .claude/skills/managing-sovereign-memory/references/confidence-decay.md: sha256:055105b56771caab16bea359c6c81a6a111b4d6ce2b935e95f011c0ef02bad43
     .claude/skills/managing-sovereign-memory/references/progressive-disclosure.md: sha256:44091730fa92e937700502d5deabe223c364e2d73a985d7e0e22e4d45194e240
-    .claude/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+    .claude/skills/managing-sovereign-memory/scripts/audit_decay.py: sha256:879c3de65288a30d8f57f7eae2ac576875d6f7e0ce519d46991322b574307def
     .claude/skills/managing-sovereign-memory/scripts/disclose.py: sha256:1ee77232aebda0c53470b9167812b4018c127b9bedf65f471de96cea8219b337
-    .claude/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+    .claude/skills/managing-sovereign-memory/scripts/manage_backlog.py: sha256:2fed12a0424b48dfa63414793aad4d2bca7f581b2e30c8f9d186af3fcd9310e6
     .claude/skills/managing-sovereign-memory/scripts/query_graph.py: sha256:12018633feb31fc59200e2daba3f24675bf28c503c10f14dbc5c136cda6e4cf1
     .claude/skills/managing-sovereign-memory/scripts/record_insight.py: sha256:3b1a3deadd6231761e3d396375597c0f590133298e4c1714814ef44a2ecdada0
-    .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
-    .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
+    .claude/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py: sha256:c11e738e525632fb7a359d257d13bb46f66bf7746ba0604207dd4077f71e29bd
+    .claude/skills/managing-sovereign-memory/scripts/validate_missions.py: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
+    .claude/skills/managing-sovereign-memory/tests/test_audit_decay.py: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
+    .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
+    .claude/skills/managing-sovereign-memory/tests/test_learning_index.py: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+    .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
     .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
+    .claude/skills/managing-sovereign-memory/tests/test_validate_missions.py: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
+    .claude/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py: sha256:04f8e26338f40b23935dff13640fae197d0ef85405c39e6b28b14e4b433b9cea
     .claude/skills/operating-sanctuary-guardian/SKILL.md: sha256:dd4431452f012eaa74cbfe4452a04e6281d3390b9fc357583a14a373b9b2e115
     .claude/skills/operating-sanctuary-guardian/evals/evals.json: sha256:2e89aba5e50103fdfeb41c303f89419dbaade74f4d04bf96aa6972536a03a02a
     .claude/skills/operating-sanctuary-guardian/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .claude/skills/operating-sanctuary-guardian/operating-sanctuary-guardian-flow.mmd: sha256:8647e8daea9110b8f6fee34b457aafad0028cb2ecbe89c4a421cff0357250717
     .claude/skills/operating-sanctuary-guardian/references/acceptance-criteria.md: sha256:a27b49fad29ae6249cb0a9f2ff0cd6dae07d63896485ffe32367331df8dff240
-    .claude/skills/operating-sanctuary-guardian/references/bootstrapping.md: sha256:f9ed12c7ebf644010e940340aa68024a53fa2e59c771ce9524b2dce7cbd191fb
+    .claude/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md: sha256:4601e092bd2e81cde366552f2fbd003be2efec195f6fdac3d64cd19da0db8471
+    .claude/skills/operating-sanctuary-guardian/references/bootstrapping.md: sha256:1cfded5d7287ecfe5d8b10d70a87db0032dcd5fa4b88df9fc92f94840da06965
     .claude/skills/operating-sanctuary-guardian/references/cognitive-primer.md: sha256:679fdf11ac9a82be98f50549ceb3aa14ddf398d23c2ffb778f6918d2d49a4ba9
     .claude/skills/operating-sanctuary-guardian/references/integrations/memory-stack.md: sha256:a2b673c119a22c9ce143b5fe83efdd1e78105051384461bf5d5d7c72a2527f84
     .claude/skills/operating-sanctuary-guardian/references/integrations/obsidian-vault.md: sha256:151cf5ef77aad5ff74e408da7b41554ae3b1ecd01afba0d1ec984559b5bd02a6
     .claude/skills/operating-sanctuary-guardian/references/integrations/orchestration.md: sha256:a8561fb4732b8129876fe1b2e7ce6dd519e9c88194777cb4f2c07984127a3db1
-    .claude/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md: sha256:31976f8cde45b854df535c244deb6e9234d52dc2e437d98fa1f937c8e241d00e
+    .claude/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md: sha256:749c91491d9f33b1d49d5091881fe0ab953c1f57ad8379e1b87e834b7181d114
+    .claude/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md: sha256:8eef4ae150da6d4271b90e208ed87516a8fbe34c784d23744099ad215a271a83
     .claude/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md: sha256:7a777d184e4f7dbfc54e09a0cf7efe43aa24797141f17db124c01a149254e83c
+    .claude/skills/operating-sanctuary-guardian/references/merge-prep.md: sha256:bb3104abef137e6c188726f1f7f41a79fce30b433e3c010069a314870a02a130
     .claude/skills/operating-sanctuary-guardian/references/modes/audit.md: sha256:728e083bb28896362f3e5a08b3b4888e49e771c2643cb20017b0c7a9b64ad552
     .claude/skills/operating-sanctuary-guardian/references/modes/boot.md: sha256:3aaa2d93e7a5a433564d5740597addfa68e4719c951a9dfd4011f1ac462caf44
     .claude/skills/operating-sanctuary-guardian/references/modes/onboard.md: sha256:aaa13eb727089038e9c44067f18a2f1a8100aca6c3d49a07bea7dd5e0e331025
-    .claude/skills/operating-sanctuary-guardian/references/modes/persist.md: sha256:4420a2ec190918b170696443c5ecd2780bfb9291d439e12f4f30bf07f4c49b3c
+    .claude/skills/operating-sanctuary-guardian/references/modes/persist.md: sha256:56565c2426b1d158a891734da87654efddc0412d607ff6d492fb844f6e5da3f7
     .claude/skills/operating-sanctuary-guardian/references/modes/seal.md: sha256:9c7b5fa03f445edb30a9cea9c95091de17c1aa6d0337817a00e0766c2bf52513
     .claude/skills/operating-sanctuary-guardian/references/modes/verify.md: sha256:d7ce6c125a40ab64f01c051eeb25e242e09fa53a60cbb117145ec763f6c11ea4
-    .claude/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:972b75ab88aff7c9734253b49fffc906ae8e4b994ea4825f77bb44401b4ef11a
-    .claude/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:2000fde787d3ba6437213983d8a11afc5daf1512172a313f8acde0bcded038ab
+    .claude/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:15941e86cd36a6dc3b913c320c1b42446c62ed13e0227755f37aefc6c5089925
+    .claude/skills/operating-sanctuary-guardian/references/precompact-hook.md: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
+    .claude/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
     .claude/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py: sha256:0ca6dd7f8c9b2521dca846635c0cff81d4f33dc5c575248582b421f88877b92e
     .claude/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py: sha256:de2ec87ea0c0c2e8dfc00600887650c891f6eeee59ea67b67f587488fe12d8e3
-    .claude/skills/operating-sanctuary-guardian/scripts/forge_llm.py: sha256:93c7a529dd88dcc3c20560342f1db764d5fbfe1709f913382287ff071274fbf3
+    .claude/skills/operating-sanctuary-guardian/scripts/forge_llm.py: sha256:6decfee2017564caf52f7b2c70a809b38b96f179b09771822bf68265b9dbc5eb
     .claude/skills/operating-sanctuary-guardian/scripts/forge_soul.py: sha256:30976ad8ec3929432b058c96065cfa33f4cd6fc9d32aac8bd174a86a9df04a6f
-    .claude/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py: sha256:c3cdda32530a2f07298c78919c34de62f894302d6e5a0c8eae84cb4afb630ae0
+    .claude/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py: sha256:18d661c6d1327c3bc025b792cbeb6a7fe17fa2b556d5424ac7ab4659d1c79fed
+    .claude/skills/operating-sanctuary-guardian/scripts/impact.py: sha256:37cba9210c31e4158c619f8060819ee673b56b1c915bfd02be2cd52bb2a75e7d
     .claude/skills/operating-sanctuary-guardian/scripts/learning_debrief.py: sha256:26e9f8ec164aa6514536236cbd10e70d48cb3ba855ab88527618ba1382d6ba8c
-    .claude/skills/operating-sanctuary-guardian/scripts/manage_coordination.py: sha256:221a1768491217e2e52194568db43b01038795c7305f167b621a35b55bc111c5
-    .claude/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py: sha256:85002faca673e411e2be51415cc4652c894b8c8606808ee5b4f19ee14a0c050c
-    .claude/skills/operating-sanctuary-guardian/scripts/persist_soul.py: sha256:f0d3ef8bccc84e5f760c0f30af2bac57e903c4d96091d74affcc8f52fe96ed13
+    .claude/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py: sha256:4b9eddb270fa97d104834465c4720647f6b89c9b125dd10b7714e73342ac862a
+    .claude/skills/operating-sanctuary-guardian/scripts/manage_coordination.py: sha256:fe260241ec5ae6d67f363fd6ec418a8c1b6703f00401eb5b8718aa03195cf8bc
+    .claude/skills/operating-sanctuary-guardian/scripts/merge_prep.py: sha256:a60608c90d49a26ec88f251c41d3e611a507acfe0e1d573815eceee3205f060b
+    .claude/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py: sha256:9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231
+    .claude/skills/operating-sanctuary-guardian/scripts/persist_soul.py: sha256:18df95fa11bddafbc0a8cf3654772c5c12f8f720a8a5ac6cd8d01046a0e816ce
+    .claude/skills/operating-sanctuary-guardian/scripts/relay.py: sha256:ac2cad59dd56bb0a4cfab756a860eaf28eda7158288437b3b0457725520f180d
     .claude/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py: sha256:154d7bb86a863cbbab34e8b98e1a764e5c0c039c21a15c79af7c37d7dbb650cc
     .claude/skills/operating-sanctuary-guardian/scripts/test_local_tool_calling.py: sha256:8c28d2511b5353bf62eb2d3ecaab80961f3bc4d934fbc60873c6a6d3345a5d12
     .claude/skills/operating-sanctuary-guardian/scripts/test_mlx_server_manager.py: sha256:358e94504a2c92c3ad0ba1505c2f762f70d24c606572461bd14af9422e9f6452
-    .claude/skills/operating-sanctuary-guardian/tests/test_coordination.py: sha256:c10b753aa76df3e3a178999662d0e6b09b0b25d59a78867b4ff60fc72adc4454
+    .claude/skills/operating-sanctuary-guardian/scripts/usage_hook.py: sha256:e7e42d82d4fd18b15e0c3c032cfeb283db3b9692975e4709b236e5a7dd036e34
+    .claude/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py: sha256:450cbf16060392c15c02fa8e9d44d29cc6dc925ddfa66f6ce14992aee487fdaf
+    .claude/skills/operating-sanctuary-guardian/tests/conftest.py: sha256:6e5dd0706920411041c67f134ebc0e6d669739643599f8f08bb843bf80b02d12
+    .claude/skills/operating-sanctuary-guardian/tests/impact_eval.py: sha256:44a055861b749b3238e0710e3d11a9950b57162c01ce7b06d889f13ca14a93c7
+    .claude/skills/operating-sanctuary-guardian/tests/relay_eval.py: sha256:8be0204d4444fd28e5221a84ef980decbb0c9611c9911843d67e4cfed6b078cd
+    .claude/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py: sha256:f1c2727253e2daf3178f7be74b99b5d7c8071edbee4423d17b0b2612725c2e36
+    .claude/skills/operating-sanctuary-guardian/tests/test_coordination.py: sha256:fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6
+    .claude/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py: sha256:d6b0324ff44978f09606630b9db769e39a07b1a8b83277c03ceb275bc8e59544
+    .claude/skills/operating-sanctuary-guardian/tests/test_merge_prep.py: sha256:7960eb82018543501a4e10ad1cd9e9617a58a80317d46649f9375f10485fad9c
+    .claude/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py: sha256:e255b2c73cd4339450032b26e60337b51da2c93830c0e0308a494977718e5293
+    .claude/skills/operating-sanctuary-guardian/tests/test_persist_soul.py: sha256:825b291e91d65337c9ea174231d0eed380a04581bb7f8341a98ba9ca003885cd
+    .claude/skills/operating-sanctuary-guardian/tests/test_projected_impact.py: sha256:432087df96a42e5cec0d43c5100eb079c03b8e1041d73f7df0dbcf5b3bacfc33
+    .claude/skills/operating-sanctuary-guardian/tests/test_relay.py: sha256:bd35aa1d7562bcb3be091189787c1eebf70b149b91cec415e10ecd282ec1bf08
+    .claude/skills/operating-sanctuary-guardian/tests/test_usage_hook.py: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
+    .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py: sha256:7a10eb6569b769f268ad915b2b24e2e9e4227047869b3f6b8c0ca197ae63f582
+    .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py: sha256:8521f2a1c050e99b0da5749f664daec651c64ecdc0d38e5c1cf22ab92c81a7a6
     .claude/skills/preserving-soul-traces/SKILL.md: sha256:7f4851008c306b00175c0b9be33e732ee2aa83484d5a893a96eaaf3aa5563744
     .claude/skills/preserving-soul-traces/evals/evals.json: sha256:518ef4a1687e0587bf067104e99ad15d5bcdf18c4277be6ac84990f44c0488c7
     .claude/skills/preserving-soul-traces/references/acceptance-criteria.md: sha256:c401e444f0f37a8c5cfc888e989be6e51a7a5b0e6fc155cc90c23e5767751df4
     .claude/skills/preserving-soul-traces/references/huggingface-dataset-integration.md: sha256:0bcb1f3a89264349b5b1f7ecf71925ec35dcb10630b4ce3abbd4f162db4bc5fa
     .claude/skills/preserving-soul-traces/references/soul-trace-schema.md: sha256:89ff845c913334b2c71ed7f310171c9a7012874b355e6fe3a87216e94dc73b2c
-    .claude/skills/preserving-soul-traces/scripts/sync_soul_dataset.py: sha256:6b160977dda36c8c5aba5aa8486f40a6385033dffe29d3a80b155d932a6bc20d
+    .claude/skills/preserving-soul-traces/scripts/sync_soul_dataset.py: sha256:4fe83e9b89ff39c9349ee762a1ad2f8249cce0d663b58d1f28b7fb25e743fdf7
     .claude/skills/preserving-soul-traces/scripts/trace_extractor.py: sha256:2374c3cabb361ace36c4abe691d4918b19927efe9df98ab34369557fff3da038
+    .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+    .codex/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+    .codex/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+    .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+    .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+    .codex/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+    .codex/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
+    .github/hooks/sanctuary-core-hooks.json: sha256:8b8c312bea57266a4ade4ac3676f6572cefeafe712ea72eeea2139210b780f59
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/pre_compact_snapshot.py: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/session_start_wakeup.py: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+    .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
   source: local
   local_path: ./plugins/sanctuary-core
   declared_license: MIT
@@ -458,7 +660,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2c0d408f13147ef2482f5889ef791c8d4f6b83241445564c44454a30196da63e
+  content_hash: sha256:fc30dadf746b989b9d6ffcf50f46a55e63164f2d0933b7020d1b0bfe9a6a18ea
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/evals/evals.json
@@ -503,7 +705,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
+  content_hash: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/references/usage-telemetry-sources.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -521,7 +732,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
+  content_hash: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/track_budget.py
@@ -530,7 +741,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
+  content_hash: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/scripts/usage_probe.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/visualize_economy.py
@@ -540,6 +760,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
@@ -557,7 +795,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
+  content_hash: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/test_usage_probe.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
 - kind: project-relative
   target: antigravity
   value: .agents/skills/forging-sovereign-models
@@ -827,7 +1074,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e63789dddded5fc1768f8f2a4fe2a8d7a662b1bbc2cce575f1808e084d75b53e
+  content_hash: sha256:f1066280ac905d1cd4da14c4e2a347538a580810661f616d0f6de4edd9fbdd9c
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-chronicles/tests/test_chronicle_ledger.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:53c676d7b54c1445630e07605d70adf4963ffcada17a7df6b2f525fa96a9b483
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-protocols
@@ -845,7 +1101,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8e457fadb00cae950c2f505c6a01a7346636887e6db613cdf5f54a7dbd322c7f
+  content_hash: sha256:80680e7b1ede8bf142d08e55dd56c0cb0c010253fc958dcf27d3e96883288b69
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-protocols/evals/evals.json
@@ -899,7 +1155,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
+  content_hash: sha256:3750b352ca120cb881cab7c8940045c98fe510d66a3a83f2098b0b017497bfa4
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-protocols/tests/test_protocol_manager.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2dc0ab2e1cc5f355b6934cd50379cd588f8d902e95fb37d8161dcbec310c5ccb
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory
@@ -917,7 +1182,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+  content_hash: sha256:6d5df7df2e7969b6d5b0d50b42721ccc9d49a8f4601201d8fe8db6f1e43b0b71
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/evals/evals.json
@@ -962,7 +1227,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
+  content_hash: sha256:48fcb403147cf352edb53164ea34f1eb502dbd89d596934eea10af2df5a98dfc
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/asymmetric-persistence.md
@@ -971,7 +1236,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+  content_hash: sha256:95c9060f349ac162363256a4c65025a6a718f90b64916cf1607f196a9057196e
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/references/confidence-decay.md
@@ -998,7 +1263,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+  content_hash: sha256:879c3de65288a30d8f57f7eae2ac576875d6f7e0ce519d46991322b574307def
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/disclose.py
@@ -1016,7 +1281,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+  content_hash: sha256:2fed12a0424b48dfa63414793aad4d2bca7f581b2e30c8f9d186af3fcd9310e6
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/scripts/query_graph.py
@@ -1043,7 +1308,25 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
+  content_hash: sha256:c11e738e525632fb7a359d257d13bb46f66bf7746ba0604207dd4077f71e29bd
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/scripts/validate_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/tests/test_audit_decay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/tests/test_backlog_manager.py
@@ -1052,7 +1335,25 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
+  content_hash: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/tests/test_learning_index.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/tests/test_mission_paths.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
 - kind: project-relative
   target: antigravity
   value: .agents/skills/managing-sovereign-memory/tests/test_sovereign_memory.py
@@ -1062,6 +1363,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/tests/test_validate_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:04f8e26338f40b23935dff13640fae197d0ef85405c39e6b28b14e4b433b9cea
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian
@@ -1118,13 +1437,22 @@ deployments:
   content_hash: sha256:a27b49fad29ae6249cb0a9f2ff0cd6dae07d63896485ffe32367331df8dff240
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4601e092bd2e81cde366552f2fbd003be2efec195f6fdac3d64cd19da0db8471
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/bootstrapping.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f9ed12c7ebf644010e940340aa68024a53fa2e59c771ce9524b2dce7cbd191fb
+  content_hash: sha256:1cfded5d7287ecfe5d8b10d70a87db0032dcd5fa4b88df9fc92f94840da06965
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/cognitive-primer.md
@@ -1163,13 +1491,22 @@ deployments:
   content_hash: sha256:a8561fb4732b8129876fe1b2e7ce6dd519e9c88194777cb4f2c07984127a3db1
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:749c91491d9f33b1d49d5091881fe0ab953c1f57ad8379e1b87e834b7181d114
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:31976f8cde45b854df535c244deb6e9234d52dc2e437d98fa1f937c8e241d00e
+  content_hash: sha256:8eef4ae150da6d4271b90e208ed87516a8fbe34c784d23744099ad215a271a83
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md
@@ -1179,6 +1516,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:7a777d184e4f7dbfc54e09a0cf7efe43aa24797141f17db124c01a149254e83c
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/references/merge-prep.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:bb3104abef137e6c188726f1f7f41a79fce30b433e3c010069a314870a02a130
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/modes/audit.md
@@ -1214,7 +1560,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:4420a2ec190918b170696443c5ecd2780bfb9291d439e12f4f30bf07f4c49b3c
+  content_hash: sha256:56565c2426b1d158a891734da87654efddc0412d607ff6d492fb844f6e5da3f7
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/modes/seal.md
@@ -1241,7 +1587,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:972b75ab88aff7c9734253b49fffc906ae8e4b994ea4825f77bb44401b4ef11a
+  content_hash: sha256:15941e86cd36a6dc3b913c320c1b42446c62ed13e0227755f37aefc6c5089925
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/references/precompact-hook.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/references/protocol-128.md
@@ -1250,7 +1605,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2000fde787d3ba6437213983d8a11afc5daf1512172a313f8acde0bcded038ab
+  content_hash: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py
@@ -1277,7 +1632,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:93c7a529dd88dcc3c20560342f1db764d5fbfe1709f913382287ff071274fbf3
+  content_hash: sha256:6decfee2017564caf52f7b2c70a809b38b96f179b09771822bf68265b9dbc5eb
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/forge_soul.py
@@ -1295,7 +1650,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c3cdda32530a2f07298c78919c34de62f894302d6e5a0c8eae84cb4afb630ae0
+  content_hash: sha256:18d661c6d1327c3bc025b792cbeb6a7fe17fa2b556d5424ac7ab4659d1c79fed
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/scripts/impact.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:37cba9210c31e4158c619f8060819ee673b56b1c915bfd02be2cd52bb2a75e7d
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/learning_debrief.py
@@ -1307,13 +1671,31 @@ deployments:
   content_hash: sha256:26e9f8ec164aa6514536236cbd10e70d48cb3ba855ab88527618ba1382d6ba8c
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4b9eddb270fa97d104834465c4720647f6b89c9b125dd10b7714e73342ac862a
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/manage_coordination.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:221a1768491217e2e52194568db43b01038795c7305f167b621a35b55bc111c5
+  content_hash: sha256:fe260241ec5ae6d67f363fd6ec418a8c1b6703f00401eb5b8718aa03195cf8bc
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/scripts/merge_prep.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:a60608c90d49a26ec88f251c41d3e611a507acfe0e1d573815eceee3205f060b
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py
@@ -1322,7 +1704,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:85002faca673e411e2be51415cc4652c894b8c8606808ee5b4f19ee14a0c050c
+  content_hash: sha256:9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/persist_soul.py
@@ -1331,7 +1713,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f0d3ef8bccc84e5f760c0f30af2bac57e903c4d96091d74affcc8f52fe96ed13
+  content_hash: sha256:18df95fa11bddafbc0a8cf3654772c5c12f8f720a8a5ac6cd8d01046a0e816ce
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/scripts/relay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ac2cad59dd56bb0a4cfab756a860eaf28eda7158288437b3b0457725520f180d
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py
@@ -1361,13 +1752,148 @@ deployments:
   content_hash: sha256:358e94504a2c92c3ad0ba1505c2f762f70d24c606572461bd14af9422e9f6452
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/scripts/usage_hook.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:e7e42d82d4fd18b15e0c3c032cfeb283db3b9692975e4709b236e5a7dd036e34
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:450cbf16060392c15c02fa8e9d44d29cc6dc925ddfa66f6ce14992aee487fdaf
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/conftest.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:6e5dd0706920411041c67f134ebc0e6d669739643599f8f08bb843bf80b02d12
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/impact_eval.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:44a055861b749b3238e0710e3d11a9950b57162c01ce7b06d889f13ca14a93c7
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/relay_eval.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:8be0204d4444fd28e5221a84ef980decbb0c9611c9911843d67e4cfed6b078cd
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:f1c2727253e2daf3178f7be74b99b5d7c8071edbee4423d17b0b2612725c2e36
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/tests/test_coordination.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c10b753aa76df3e3a178999662d0e6b09b0b25d59a78867b4ff60fc72adc4454
+  content_hash: sha256:fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:d6b0324ff44978f09606630b9db769e39a07b1a8b83277c03ceb275bc8e59544
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_merge_prep.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7960eb82018543501a4e10ad1cd9e9617a58a80317d46649f9375f10485fad9c
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:e255b2c73cd4339450032b26e60337b51da2c93830c0e0308a494977718e5293
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_persist_soul.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:825b291e91d65337c9ea174231d0eed380a04581bb7f8341a98ba9ca003885cd
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_projected_impact.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:432087df96a42e5cec0d43c5100eb079c03b8e1041d73f7df0dbcf5b3bacfc33
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_relay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:bd35aa1d7562bcb3be091189787c1eebf70b149b91cec415e10ecd282ec1bf08
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7a10eb6569b769f268ad915b2b24e2e9e4227047869b3f6b8c0ca197ae63f582
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:8521f2a1c050e99b0da5749f664daec651c64ecdc0d38e5c1cf22ab92c81a7a6
 - kind: project-relative
   target: antigravity
   value: .agents/skills/preserving-soul-traces
@@ -1430,7 +1956,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6b160977dda36c8c5aba5aa8486f40a6385033dffe29d3a80b155d932a6bc20d
+  content_hash: sha256:4fe83e9b89ff39c9349ee762a1ad2f8249cce0d663b58d1f28b7fb25e743fdf7
 - kind: project-relative
   target: antigravity
   value: .agents/skills/preserving-soul-traces/scripts/trace_extractor.py
@@ -1440,6 +1966,69 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:2374c3cabb361ace36c4abe691d4918b19927efe9df98ab34369557fff3da038
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+- kind: project-relative
+  target: claude
+  value: .claude/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work
@@ -1457,7 +2046,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2c0d408f13147ef2482f5889ef791c8d4f6b83241445564c44454a30196da63e
+  content_hash: sha256:fc30dadf746b989b9d6ffcf50f46a55e63164f2d0933b7020d1b0bfe9a6a18ea
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/evals/evals.json
@@ -1502,7 +2091,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c49dbbc552f8d6b334f9f7641776f9e255423145b0287ea62e0ca086b00817cb
+  content_hash: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/references/usage-telemetry-sources.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -1520,7 +2118,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:87fe07bda7ffc4868f1daa55bf79d13a9eee623f2b9c7b3d03925af9a7475904
+  content_hash: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/track_budget.py
@@ -1529,7 +2127,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:cfb0c0208985c1345740089c31276955fb606acd20dac265060b30cb5059ba0d
+  content_hash: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/scripts/usage_probe.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/visualize_economy.py
@@ -1539,6 +2146,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
@@ -1556,7 +2181,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:efe1949b075227fd9c77a6650115523bfe8a3ecf5a83d8037600dd57ae34f2a2
+  content_hash: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/test_usage_probe.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
 - kind: project-relative
   target: claude
   value: .claude/skills/forging-sovereign-models
@@ -1826,7 +2460,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e63789dddded5fc1768f8f2a4fe2a8d7a662b1bbc2cce575f1808e084d75b53e
+  content_hash: sha256:f1066280ac905d1cd4da14c4e2a347538a580810661f616d0f6de4edd9fbdd9c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-chronicles/tests/test_chronicle_ledger.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:53c676d7b54c1445630e07605d70adf4963ffcada17a7df6b2f525fa96a9b483
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-protocols
@@ -1844,7 +2487,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8e457fadb00cae950c2f505c6a01a7346636887e6db613cdf5f54a7dbd322c7f
+  content_hash: sha256:80680e7b1ede8bf142d08e55dd56c0cb0c010253fc958dcf27d3e96883288b69
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-protocols/evals/evals.json
@@ -1898,7 +2541,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:e3e0c5f90fab07af6cccc1ba04dc9217b1a4e4c9eb4efbb6c3ec39ebf6fad3f6
+  content_hash: sha256:3750b352ca120cb881cab7c8940045c98fe510d66a3a83f2098b0b017497bfa4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-protocols/tests/test_protocol_manager.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2dc0ab2e1cc5f355b6934cd50379cd588f8d902e95fb37d8161dcbec310c5ccb
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory
@@ -1916,7 +2568,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8d05d34cd601199b3bd354a9db2848b89c9b9585acde76608010f857170b06e0
+  content_hash: sha256:6d5df7df2e7969b6d5b0d50b42721ccc9d49a8f4601201d8fe8db6f1e43b0b71
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/evals/evals.json
@@ -1961,7 +2613,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:84dfc43f3f0aba75a6203d1c2b5229db84755f00f0d3661aebfd8c5a4799447f
+  content_hash: sha256:48fcb403147cf352edb53164ea34f1eb502dbd89d596934eea10af2df5a98dfc
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/asymmetric-persistence.md
@@ -1970,7 +2622,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:1e500f1015a5e45e0b7510cc5b816b9e843a6d8a51809bc7868e0b18416cf9a8
+  content_hash: sha256:95c9060f349ac162363256a4c65025a6a718f90b64916cf1607f196a9057196e
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/references/confidence-decay.md
@@ -1997,7 +2649,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:28ae57da3185876813424c9dc1d78fcf142d13c7b90c3d88290be5ec48eab7bc
+  content_hash: sha256:879c3de65288a30d8f57f7eae2ac576875d6f7e0ce519d46991322b574307def
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/disclose.py
@@ -2015,7 +2667,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:86569f3097bab32ee8bd517b09ba813dbc6d24592dd8d06f778ee7c8020dc9c1
+  content_hash: sha256:2fed12a0424b48dfa63414793aad4d2bca7f581b2e30c8f9d186af3fcd9310e6
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/scripts/query_graph.py
@@ -2042,7 +2694,25 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8acd84800676e33dbbe0901e83f35f912c099e4a5242e62fe781507f08ab1de9
+  content_hash: sha256:c11e738e525632fb7a359d257d13bb46f66bf7746ba0604207dd4077f71e29bd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/scripts/validate_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:0872535ffa7286ed04d0c78b8a918627566bd31ac71a8967d311e584f2a06778
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/tests/test_audit_decay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:9d492382488ce4ef5d546e4ed6d9497d5fa5c24c7efe7eeb0dc9337fcbb7b60e
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/tests/test_backlog_manager.py
@@ -2051,7 +2721,25 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:221fad689698b6abd6112a4417520651bd7e102d0326d9b20a7a17e11f325e40
+  content_hash: sha256:2e623f19660f2a7d598eac4cab913ea2cf0034690675ed0d8212474f99e5f50f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/tests/test_learning_index.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fd8a31a11f5911bc8abf81ab3066758adc4508bb4590dd9f5493827d9f01591c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/tests/test_mission_paths.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:610c25bc13f7353f88894f91ac840e7ee36ad1be23310bc00a22220b8993fc18
 - kind: project-relative
   target: claude
   value: .claude/skills/managing-sovereign-memory/tests/test_sovereign_memory.py
@@ -2061,6 +2749,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:54e00dc28975a040d8520393f90b4d954b047a5315c0348fc58e0d181feb65be
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/tests/test_validate_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:662ef1914490405be782d00fad37ced2476df7b92c00b6c52f19a487c5c6d5b4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/managing-sovereign-memory/tests/test_validate_missions_mutations.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:04f8e26338f40b23935dff13640fae197d0ef85405c39e6b28b14e4b433b9cea
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian
@@ -2117,13 +2823,22 @@ deployments:
   content_hash: sha256:a27b49fad29ae6249cb0a9f2ff0cd6dae07d63896485ffe32367331df8dff240
 - kind: project-relative
   target: claude
+  value: .claude/skills/operating-sanctuary-guardian/references/backend-headroom-and-usage-snapshots.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4601e092bd2e81cde366552f2fbd003be2efec195f6fdac3d64cd19da0db8471
+- kind: project-relative
+  target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/bootstrapping.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f9ed12c7ebf644010e940340aa68024a53fa2e59c771ce9524b2dce7cbd191fb
+  content_hash: sha256:1cfded5d7287ecfe5d8b10d70a87db0032dcd5fa4b88df9fc92f94840da06965
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/cognitive-primer.md
@@ -2162,13 +2877,22 @@ deployments:
   content_hash: sha256:a8561fb4732b8129876fe1b2e7ce6dd519e9c88194777cb4f2c07984127a3db1
 - kind: project-relative
   target: claude
+  value: .claude/skills/operating-sanctuary-guardian/references/local-agent-execution-loop.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:749c91491d9f33b1d49d5091881fe0ab953c1f57ad8379e1b87e834b7181d114
+- kind: project-relative
+  target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:31976f8cde45b854df535c244deb6e9234d52dc2e437d98fa1f937c8e241d00e
+  content_hash: sha256:8eef4ae150da6d4271b90e208ed87516a8fbe34c784d23744099ad215a271a83
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/local-tool-use-and-structured-json.md
@@ -2178,6 +2902,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:7a777d184e4f7dbfc54e09a0cf7efe43aa24797141f17db124c01a149254e83c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/references/merge-prep.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:bb3104abef137e6c188726f1f7f41a79fce30b433e3c010069a314870a02a130
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/modes/audit.md
@@ -2213,7 +2946,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:4420a2ec190918b170696443c5ecd2780bfb9291d439e12f4f30bf07f4c49b3c
+  content_hash: sha256:56565c2426b1d158a891734da87654efddc0412d607ff6d492fb844f6e5da3f7
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/modes/seal.md
@@ -2240,7 +2973,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:972b75ab88aff7c9734253b49fffc906ae8e4b994ea4825f77bb44401b4ef11a
+  content_hash: sha256:15941e86cd36a6dc3b913c320c1b42446c62ed13e0227755f37aefc6c5089925
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/references/precompact-hook.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/references/protocol-128.md
@@ -2249,7 +2991,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2000fde787d3ba6437213983d8a11afc5daf1512172a313f8acde0bcded038ab
+  content_hash: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py
@@ -2276,7 +3018,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:93c7a529dd88dcc3c20560342f1db764d5fbfe1709f913382287ff071274fbf3
+  content_hash: sha256:6decfee2017564caf52f7b2c70a809b38b96f179b09771822bf68265b9dbc5eb
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/forge_soul.py
@@ -2294,7 +3036,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c3cdda32530a2f07298c78919c34de62f894302d6e5a0c8eae84cb4afb630ae0
+  content_hash: sha256:18d661c6d1327c3bc025b792cbeb6a7fe17fa2b556d5424ac7ab4659d1c79fed
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/scripts/impact.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:37cba9210c31e4158c619f8060819ee673b56b1c915bfd02be2cd52bb2a75e7d
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/learning_debrief.py
@@ -2306,13 +3057,31 @@ deployments:
   content_hash: sha256:26e9f8ec164aa6514536236cbd10e70d48cb3ba855ab88527618ba1382d6ba8c
 - kind: project-relative
   target: claude
+  value: .claude/skills/operating-sanctuary-guardian/scripts/local_agent_loop.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4b9eddb270fa97d104834465c4720647f6b89c9b125dd10b7714e73342ac862a
+- kind: project-relative
+  target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/manage_coordination.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:221a1768491217e2e52194568db43b01038795c7305f167b621a35b55bc111c5
+  content_hash: sha256:fe260241ec5ae6d67f363fd6ec418a8c1b6703f00401eb5b8718aa03195cf8bc
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/scripts/merge_prep.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:a60608c90d49a26ec88f251c41d3e611a507acfe0e1d573815eceee3205f060b
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py
@@ -2321,7 +3090,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:85002faca673e411e2be51415cc4652c894b8c8606808ee5b4f19ee14a0c050c
+  content_hash: sha256:9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/persist_soul.py
@@ -2330,7 +3099,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f0d3ef8bccc84e5f760c0f30af2bac57e903c4d96091d74affcc8f52fe96ed13
+  content_hash: sha256:18df95fa11bddafbc0a8cf3654772c5c12f8f720a8a5ac6cd8d01046a0e816ce
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/scripts/relay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ac2cad59dd56bb0a4cfab756a860eaf28eda7158288437b3b0457725520f180d
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/setup_git_hooks.py
@@ -2360,13 +3138,148 @@ deployments:
   content_hash: sha256:358e94504a2c92c3ad0ba1505c2f762f70d24c606572461bd14af9422e9f6452
 - kind: project-relative
   target: claude
+  value: .claude/skills/operating-sanctuary-guardian/scripts/usage_hook.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:e7e42d82d4fd18b15e0c3c032cfeb283db3b9692975e4709b236e5a7dd036e34
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/agent_eval_tasks.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:450cbf16060392c15c02fa8e9d44d29cc6dc925ddfa66f6ce14992aee487fdaf
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/conftest.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:6e5dd0706920411041c67f134ebc0e6d669739643599f8f08bb843bf80b02d12
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/impact_eval.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:44a055861b749b3238e0710e3d11a9950b57162c01ce7b06d889f13ca14a93c7
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/relay_eval.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:8be0204d4444fd28e5221a84ef980decbb0c9611c9911843d67e4cfed6b078cd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_coord_shared_root.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:f1c2727253e2daf3178f7be74b99b5d7c8071edbee4423d17b0b2612725c2e36
+- kind: project-relative
+  target: claude
   value: .claude/skills/operating-sanctuary-guardian/tests/test_coordination.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c10b753aa76df3e3a178999662d0e6b09b0b25d59a78867b4ff60fc72adc4454
+  content_hash: sha256:fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:d6b0324ff44978f09606630b9db769e39a07b1a8b83277c03ceb275bc8e59544
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_merge_prep.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7960eb82018543501a4e10ad1cd9e9617a58a80317d46649f9375f10485fad9c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:e255b2c73cd4339450032b26e60337b51da2c93830c0e0308a494977718e5293
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_persist_soul.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:825b291e91d65337c9ea174231d0eed380a04581bb7f8341a98ba9ca003885cd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_projected_impact.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:432087df96a42e5cec0d43c5100eb079c03b8e1041d73f7df0dbcf5b3bacfc33
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_relay.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:bd35aa1d7562bcb3be091189787c1eebf70b149b91cec415e10ecd282ec1bf08
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7a10eb6569b769f268ad915b2b24e2e9e4227047869b3f6b8c0ca197ae63f582
+- kind: project-relative
+  target: claude
+  value: .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:8521f2a1c050e99b0da5749f664daec651c64ecdc0d38e5c1cf22ab92c81a7a6
 - kind: project-relative
   target: claude
   value: .claude/skills/preserving-soul-traces
@@ -2429,7 +3342,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6b160977dda36c8c5aba5aa8486f40a6385033dffe29d3a80b155d932a6bc20d
+  content_hash: sha256:4fe83e9b89ff39c9349ee762a1ad2f8249cce0d663b58d1f28b7fb25e743fdf7
 - kind: project-relative
   target: claude
   value: .claude/skills/preserving-soul-traces/scripts/trace_extractor.py
@@ -2439,3 +3352,201 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:2374c3cabb361ace36c4abe691d4918b19927efe9df98ab34369557fff3da038
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+- kind: project-relative
+  target: codex
+  value: .codex/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/sanctuary-core-hooks.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:8b8c312bea57266a4ade4ac3676f6572cefeafe712ea72eeea2139210b780f59
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+- kind: project-relative
+  target: copilot
+  value: .github/hooks/scripts/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:b254e05c631850948c68bce52a712517ef18ca17ff10a0cd0c9c6a8048d13eb8
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:2ff90734fe32378f0fa27c48500584c678d6ccf98d48d688ab53027f2b94fb30
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e8b8041c159f560e5b340762e3fd79d57084d95cf4fbb374282a4cc6cfe9d42
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_hooks_integration.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ef89ee735aced37ffe1e2dd1bcfdccf1e8df4db2296c916ab1efbfa2f0b65622
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/tests/__pycache__/test_pre_compact_snapshot.cpython-313-pytest-9.1.1.pyc
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:31301b41ded926caecf91a81d0fc6467c1ece074f29731291cb394f699949b11
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:eeca0f21ad97bbf7928b898a27276b4919ffe43c7d7375497144a2e09b49b12e
+- kind: project-relative
+  target: legacy
+  value: .agents/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e

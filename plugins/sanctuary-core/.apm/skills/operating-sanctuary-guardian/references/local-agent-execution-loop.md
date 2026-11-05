@@ -23,7 +23,7 @@ Each turn the model writes a `<scratchpad>` plan, then either one tool call or `
 | `find_files(pattern)` | case-sensitive glob relative to root |
 | `search_text(query, path)` | case-insensitive substring search, `file:line: text` |
 
-All tools are confined to `--root`, reject path escapes, and honour a `--deny` prefix list (hidden from listings and search).
+All tools are confined to `--root`, reject path escapes, and honour a `--deny` prefix list (hidden from listings and search). The held-out task generator (`agent_eval_tasks.py`), recorded `heldout_results*.json` and the guardian skill's whole `tests/` folder are hidden **by default, wherever they are copied** (`DEFAULT_DENY_NAMES`, `DEFAULT_DENY_GLOBS`): `apm install` puts full copies of every skill, tests included, in `.claude/skills/`, `.agents/skills/` and `apm_modules/_local/`, so a prefix list naming only the source folder is not enough.
 `.git`, `__pycache__`, `.DS_Store` are not listed.
 
 ## Guards and why each is counted

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:38:07.750217+00:00",
-  "total_assessments": 32,
-  "cumulative_score": 442,
+  "updated_at": "2026-11-05T06:44:53.310495+00:00",
+  "total_assessments": 33,
+  "cumulative_score": 456,
   "average_fitness": 0.921,
   "dimension_totals": {
-    "useful_outcome": 89,
-    "learning_depth": 86,
-    "verification_rigor": 95,
-    "token_economy": 76,
-    "anti_asch_integrity": 96
+    "useful_outcome": 92,
+    "learning_depth": 89,
+    "verification_rigor": 98,
+    "token_economy": 78,
+    "anti_asch_integrity": 99
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 19,
-      "cumulative_score": 256,
-      "average_fitness": 0.898
+      "assessments": 20,
+      "cumulative_score": 270,
+      "average_fitness": 0.9
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "43227819-5390-446b-b2b0-d32e460de684",
+      "timestamp": "2026-11-05T06:44:53.310013+00:00",
+      "task_id": "TASK-STALE-REFS-2",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Treated a newly failing test as a signal, not noise; traced it to installed copies exposing the held-out generator; checked the previous lockfile to establish past results were not exposed; fixed by name not by path; caught my own drift-check false positive and a test assertion that was too blunt"
+    },
     {
       "assessment_id": "cc8dde21-c15c-47f0-aa53-a7d8d48bfd40",
       "timestamp": "2026-11-05T06:38:07.749520+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 11,
       "fitness": 0.733,
       "notes": "Drafted from live probes of every backend; cost: 18k-token codex misprobe and near-redeem via blind TUI keystrokes; PR left unmerged until prompted"
-    },
-    {
-      "assessment_id": "0f0c820a-d872-4ad4-8dc7-ac26d9f24e84",
-      "timestamp": "2026-11-04T06:39:56.220619+00:00",
-      "task_id": "MISSION-031",
-      "agent_id": "claude",
-      "raw_score": 14,
-      "fitness": 0.933,
-      "notes": "Pre-registered; RED on old code loaded from git; independent brute-force ground truth; real-git validation; reported the 60/60 generated-file conflict boundary against the hypothesis wording; dogfooded verify and found own undeclared edit. Economy 2: long autonomous session. Self-assessed."
     }
   ]
 }

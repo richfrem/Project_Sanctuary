@@ -117,7 +117,7 @@ You should see `./plugins/sanctuary-core` and the installed skill directories po
 
 ### Keep the installed copies current
 
-Project-local installs are **copies**, not links. After you edit `plugins/sanctuary-core/` (or pull changes to it), run `apm install` again at the repo root (`apm install --dry-run` previews it; it touches only `./plugins/sanctuary-core`). Until you do, `.claude/skills/` and `.agents/skills/` keep the old scripts, and agents that run a skill from there use the old code and the old paths. The session wakeup (`guardian_wakeup.py`) prints an `installed-skills` line that turns to `WARN` when the copies differ from the source and names this fix.
+Project-local installs are **copies**, not links. After you edit `plugins/sanctuary-core/` (or pull changes to it), run `apm install` again at the repo root (`apm install --dry-run` previews it; it touches only `./plugins/sanctuary-core`). Until you do, `.claude/skills/` and `.agents/skills/` keep the old scripts, and agents that run a skill from there use the old code and the old paths. The session wakeup (`guardian_wakeup.py`) prints an `installed-skills` line that turns to `WARN` when the copies differ from the source and names this fix. The install copies each skill's whole folder, **tests included**, into `.claude/skills/`, `.agents/skills/` and `apm_modules/_local/`; the local-agent sandbox hides the held-out evaluation generator by name so those copies cannot leak it (see `references/local-agent-execution-loop.md`).
 
 ---
 

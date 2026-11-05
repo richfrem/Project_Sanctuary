@@ -70,3 +70,22 @@ class TestInstalledSkillsDrift(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestApmLinkRewriting(unittest.TestCase):
+    """APM rewrites relative links between skills on install; that is not drift."""
+
+    def test_a_rewritten_cross_skill_link_is_not_reported_as_drift(self):
+        root = _project()
+        src_doc = root / SRC_REL / "alpha" / "SKILL.md"
+        src_doc.write_text("# alpha\nSee [beta](../beta/SKILL.md) and [ref](../../beta/SKILL.md).\n")
+        inst_doc = root / ".claude" / "skills" / "alpha" / "SKILL.md"
+        inst_doc.write_text("# alpha\nSee [beta](../../apm_modules/_local/sanctuary-core/.apm/skills/beta/SKILL.md) and "
+                            "[ref](../../../../apm_modules/_local/sanctuary-core/.apm/skills/beta/SKILL.md).\n")
+        self.assertEqual(_check(root)["status"], "PASS")
+
+    def test_a_real_text_change_next_to_a_rewritten_link_is_still_drift(self):
+        root = _project()
+        (root / SRC_REL / "alpha" / "SKILL.md").write_text("# alpha\nNEW sentence. [b](../beta/SKILL.md)\n")
+        (root / ".claude" / "skills" / "alpha" / "SKILL.md").write_text("# alpha\nOLD sentence. [b](../../apm_modules/_local/sanctuary-core/.apm/skills/beta/SKILL.md)\n")
+        self.assertEqual(_check(root)["status"], "WARN")

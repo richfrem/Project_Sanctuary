@@ -1,6 +1,13 @@
 {
-  "total_entries": 368,
+  "total_entries": 369,
   "entries": [
+    {
+      "id": 377,
+      "title": "Reinstalling the plugin exposed the held-out evaluation generator to the local-agent sandbox; fixed by hiding it by name",
+      "filename": "377_reinstalling_the_plugin_exposed_the_held_out_evaluation_generator_to_the_local_agent_sandbox_fixed_by_hiding_it_by_name.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 376,
       "title": "Stale-reference sweep: installed skill copies were stale; navigation docs, context and .agent corrected; drift check added",

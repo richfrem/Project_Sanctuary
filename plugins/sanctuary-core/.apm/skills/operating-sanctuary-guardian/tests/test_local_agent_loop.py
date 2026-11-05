@@ -74,7 +74,9 @@ def test_deny_list_blocks_reads_and_hides_entries(sb):
     assert "ERROR" in sb.run("read_file", {"path": DENY[0] + "/agent_eval_tasks.py"})
     assert "tests/" not in sb.list_dir("plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian").splitlines()
     assert "agent_eval_tasks" not in sb.find_files("**/agent_eval_tasks.py")
-    assert "agent_eval_tasks" not in sb.search_text("held-out task generator")
+    # a hit's PATH must never point into a denied file (documentation that merely names the generator is fine)
+    hits = sb.search_text("held-out task generator")
+    assert not [ln for ln in hits.splitlines() if "agent_eval_tasks" in ln.split(":", 1)[0] or "operating-sanctuary-guardian/tests" in ln.split(":", 1)[0]], hits
 
 
 def test_search_text_and_find_files(sb):
@@ -239,3 +241,42 @@ def test_live_heldout_discovery_completion_rate():
     print(json.dumps(summary, indent=2))
     assert summary["repetition_falsified"] == 0
     assert summary["correct_rate"] >= 0.85
+
+
+def test_held_out_generator_is_hidden_wherever_it_is_copied_without_listing_every_copy(tmp_path):
+    """APM installs whole skill folders (tests included) into .claude/skills and .agents/skills; the held-out generator must stay hidden there too."""
+    for d in ("plugins/x/tests", ".claude/skills/x/tests", ".agents/skills/x/tests"):
+        (tmp_path / d).mkdir(parents=True)
+        (tmp_path / d / "agent_eval_tasks.py").write_text("held-out task generator SECRET-ANSWERS\n")
+        (tmp_path / d / "other.py").write_text("ok\n")
+    sb = lal.ReadOnlySandbox(tmp_path)  # no deny prefixes at all: the default name deny is what protects it
+    assert "agent_eval_tasks" not in sb.find_files("**/*.py")
+    assert "ERROR" in sb.run("read_file", {"path": ".claude/skills/x/tests/agent_eval_tasks.py"})
+    assert "ERROR" in sb.run("read_file", {"path": ".agents/skills/x/tests/agent_eval_tasks.py"})
+    assert "SECRET-ANSWERS" not in sb.search_text("held-out task generator")
+    assert "agent_eval_tasks.py" not in sb.list_dir(".agents/skills/x/tests")
+    assert "other.py" in sb.find_files("**/other.py")  # unrelated files stay visible
+    assert "agent_eval_tasks" in lal.ReadOnlySandbox(tmp_path, deny_names=[]).find_files("**/*.py")  # and it really is the guard that hides it
+
+
+def test_recorded_held_out_results_are_hidden_by_name_too(tmp_path):
+    (tmp_path / "LEARNING" / "elsewhere").mkdir(parents=True)
+    (tmp_path / "LEARNING" / "elsewhere" / "heldout_results_seed1.json").write_text('{"answers": 1}')
+    assert "heldout_results" not in lal.ReadOnlySandbox(tmp_path).find_files("**/*.json")
+
+
+def test_the_whole_guardian_tests_folder_is_hidden_in_every_installed_copy(tmp_path):
+    """The source tests/ folder is denied as a whole (it holds the eval generators and the tests that import them); so must its installed copies."""
+    for d in ("plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests", ".claude/skills/operating-sanctuary-guardian/tests",
+              "apm_modules/_local/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests"):
+        (tmp_path / d).mkdir(parents=True)
+        (tmp_path / d / "test_local_agent_loop.py").write_text("import agent_eval_tasks  # held-out task generator internals\n")
+    other = tmp_path / ".claude/skills/managing-chronicles/tests"
+    other.mkdir(parents=True)
+    (other / "test_x.py").write_text("held-out task generator is not mentioned here but this other skill's tests stay visible\n")
+    sb = lal.ReadOnlySandbox(tmp_path)
+    assert "operating-sanctuary-guardian/tests" not in sb.find_files("**/test_local_agent_loop.py")
+    assert "(no matches)" == sb.find_files("**/test_local_agent_loop.py")
+    assert "ERROR" in sb.run("read_file", {"path": ".claude/skills/operating-sanctuary-guardian/tests/test_local_agent_loop.py"})
+    assert "operating-sanctuary-guardian/tests" not in sb.search_text("held-out task generator")
+    assert "test_x.py" in sb.find_files("**/test_x.py")  # other skills' tests are not affected
