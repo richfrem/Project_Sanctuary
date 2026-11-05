@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T04:44:35.753735+00:00",
-  "total_assessments": 20,
-  "cumulative_score": 277,
-  "average_fitness": 0.923,
+  "updated_at": "2026-11-05T04:50:19.715953+00:00",
+  "total_assessments": 21,
+  "cumulative_score": 291,
+  "average_fitness": 0.924,
   "dimension_totals": {
-    "useful_outcome": 55,
-    "learning_depth": 58,
-    "verification_rigor": 59,
-    "token_economy": 45,
-    "anti_asch_integrity": 60
+    "useful_outcome": 58,
+    "learning_depth": 60,
+    "verification_rigor": 62,
+    "token_economy": 48,
+    "anti_asch_integrity": 63
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 7,
-      "cumulative_score": 91,
-      "average_fitness": 0.867
+      "assessments": 8,
+      "cumulative_score": 105,
+      "average_fitness": 0.875
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "3aad0a82-e540-495c-bb3b-92141cbfefad",
+      "timestamp": "2026-11-05T04:50:19.714732+00:00",
+      "task_id": "MISSION-035-agy-pilot",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Verified agy's answer against the manifests before trusting it; found text mode hides usage and repeated in JSON mode; disclosed the unmeasured first dispatch; caught that I had edited main outside a lease and moved the work; did not close MISSION-009 unasked"
+    },
     {
       "assessment_id": "a5312b50-9094-44de-b539-cad1cd228ff4",
       "timestamp": "2026-11-05T04:44:35.753232+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 15,
       "fitness": 1.0,
       "notes": "Empirically verified procedural memory playbook authored by Codex gpt-6-luna in 1 turn; zero slop; strict Copilot boundary"
-    },
-    {
-      "assessment_id": "53e414d9-1a69-407d-be4d-504a7a256de3",
-      "timestamp": "2026-11-02T06:59:04.266886+00:00",
-      "task_id": "task-automaton-review",
-      "agent_id": "astra",
-      "raw_score": 14,
-      "fitness": 0.933,
-      "notes": "Empirical audit uncovering 59ms wakeup latency, tripartite system separation, and procedural memory model"
     }
   ]
 }

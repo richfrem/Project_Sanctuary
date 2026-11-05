@@ -1,6 +1,13 @@
 {
-  "total_entries": 357,
+  "total_entries": 358,
   "entries": [
+    {
+      "id": 366,
+      "title": "MISSION-035: first agy measured record (a local-model-sized task routed to agy) and a delegated-usage recorder",
+      "filename": "366_mission_035_first_agy_measured_record_a_local_model_sized_task_routed_to_agy_and_a_delegated_usage_recorder.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 365,
       "title": "MISSION-029 corroborated: idle-reap default cut from 15 to 5 minutes; cold start p95 4.97 s, 3.6 GiB returned",

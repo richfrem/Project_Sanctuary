@@ -98,7 +98,8 @@
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_usage_probe.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/usage-telemetry-sources.md",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/usage_hook.py",
-      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py"
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py",
+      ".agent/learning/budget_ledger.json"
     ],
     "resources": [],
     "basis": "Declared 2026-11-04 at creation by claude-code from the phases; refine at checkout and confirm with `manage_coordination.py verify`. Also edits related-mission links in the manifests of MISSION-002, 016, 028 and 033 (found by a keyword scan of all missions at drafting). Updated 2026-11-04 at build time to add the guardian hook files (usage_hook.py, manage_coordination.py, relay.py, tests) and .gitignore. model-prices.json (added then deleted 2026-11-04) stays declared because its deletion is part of the diff. Narrowed 2026-11-05 by claude-code: the build phases (probe, hooks, fuel gauge, catalog costs) are merged (#302-#307), so the lease no longer needs whole skill directories. It remains for evidence collection, the evaluate/calibrate run and the verdict; it blocked 034 and its follow-up for no reason."

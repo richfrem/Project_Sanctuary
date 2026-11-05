@@ -367,3 +367,17 @@ class TestFuelGauge(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAgyJsonUsage(unittest.TestCase):
+    RAW = ('{"conversation_id":"c","status":"SUCCESS","response":"x","duration_seconds":14.2,"num_turns":1,'
+           '"usage":{"input_tokens":5510,"output_tokens":502,"thinking_tokens":0,"cache_read_tokens":33091,"total_tokens":6012}}')
+
+    def test_parses_split_from_agy_json_output(self):
+        u = up.parse_agy_json_usage(self.RAW)
+        self.assertEqual((u["total_tokens"], u["input_tokens"], u["output_tokens"], u["cache_read_tokens"]), (6012, 5510, 502, 33091))
+
+    def test_returns_none_for_text_failure_or_missing_usage(self):
+        self.assertIsNone(up.parse_agy_json_usage("plain text answer"))
+        self.assertIsNone(up.parse_agy_json_usage('{"status":"ERROR"}'))
+        self.assertIsNone(up.parse_agy_json_usage(""))

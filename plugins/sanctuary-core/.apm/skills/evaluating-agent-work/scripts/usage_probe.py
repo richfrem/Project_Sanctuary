@@ -185,6 +185,21 @@ def claude_tokens_between(project_dir: Path, start: str, end: str,
     return {**tot, "concurrent": bool(others), "other_active_sessions": len(others)}
 
 
+def parse_agy_json_usage(raw: str) -> Optional[Dict[str, int]]:
+    """Token usage from `agy -p ... --output-format json` output; None for text output, failures or no usage block.
+
+    total_tokens excludes cache_read_tokens (it is input + output + thinking)."""
+    try:
+        d = json.loads(raw)
+        if d.get("status") != "SUCCESS":
+            return None
+        u = d["usage"]
+        return {"total_tokens": int(u["total_tokens"]), "input_tokens": int(u.get("input_tokens", 0)),
+                "output_tokens": int(u.get("output_tokens", 0)), "cache_read_tokens": int(u.get("cache_read_tokens", 0))}
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return None
+
+
 def codex_tokens_between(sessions_dir: Optional[Path], start: str, end: str) -> Dict[str, Any]:
     """Codex tokens used in [start, end]: per rollout, the cumulative totals at the end minus the totals at start.
 
