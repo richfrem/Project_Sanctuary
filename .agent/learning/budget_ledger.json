@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T05:17:19.172940+00:00",
-  "total_tokens_consumed": 1324856,
-  "total_turns": 18,
+  "updated_at": "2026-11-05T05:33:53.395553+00:00",
+  "total_tokens_consumed": 1426748,
+  "total_turns": 19,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -87,9 +87,46 @@
       "turns": 1,
       "last_backend": "agy",
       "last_model": "gemini-3.8-flash-low"
+    },
+    "TASK-MISSION-SCHEMA": {
+      "tokens_consumed": 101892,
+      "turns": 1,
+      "last_backend": "claude",
+      "last_model": "claude-haiku-5-5"
     }
   },
   "recent_records": [
+    {
+      "record_id": "36fcb498-7b6d-4149-96e8-82d0ec9db1c4",
+      "timestamp": "2026-11-05T05:33:53.395571+00:00",
+      "task_id": "TASK-MISSION-SCHEMA",
+      "backend": "claude",
+      "model": "claude-haiku-5-5",
+      "tokens_est": 101892,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "drafting",
+      "outcome": "completed",
+      "tokens_in": 4,
+      "tokens_out": 51544,
+      "window_delta": {
+        "from": "2026-11-05T05:26:20Z",
+        "to": "2026-11-05T05:33:47Z",
+        "claude": {
+          "session_pct_delta": 5,
+          "week_pct_delta": 1
+        }
+      },
+      "tokens_cache_read": 17580,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 50344,
+      "cost_usd": 0.036017,
+      "wall_seconds": 97,
+      "retries": 0,
+      "quality": 2,
+      "concurrent": true
+    },
     {
       "record_id": "47f256a5-c2a3-4300-9579-ad29f86563da",
       "timestamp": "2026-11-05T05:17:19.172967+00:00",

@@ -195,6 +195,28 @@ class TestProjectedImpactValidation(unittest.TestCase):
             shutil.rmtree(root, ignore_errors=True)
 
 
+    def test_manager_validate_applies_the_json_schema_when_the_root_has_one(self):
+        repo = Path(__file__).resolve().parents[6]
+        root = Path(tempfile.mkdtemp())
+        try:
+            res = root / "LEARNING" / "research"
+            (res / "missions").mkdir(parents=True)
+            shutil.copy(repo / "LEARNING" / "research" / "mission.schema.json", res / "mission.schema.json")
+            good = json.loads((repo / "LEARNING" / "research" / "missions" / "MISSION-034.json").read_text())
+            bad = {**good, "id": "MISSION-902", "status": "DONE"}
+            (res / "missions" / "MISSION-034.json").write_text(json.dumps(good))
+            (res / "missions" / "MISSION-902.json").write_text(json.dumps(bad))
+            errors = BacklogManager(root).validate()
+            self.assertTrue(any("MISSION-902" in e and "status" in e for e in errors), errors)
+            self.assertFalse(any("MISSION-034" in e for e in errors), errors)
+        finally:
+            shutil.rmtree(root, ignore_errors=True)
+
+    def test_repo_manifests_pass_both_the_schema_and_the_invariants(self):
+        repo = Path(__file__).resolve().parents[6]
+        self.assertEqual(BacklogManager(repo).validate(), [])
+
+
 def _m(mid, title, hyp, tags=(), related=None):
     return {"id": mid, "title": title, "hypothesis": hyp, "tags": list(tags),
             "status": "PROPOSED", "related_missions": related or {}}

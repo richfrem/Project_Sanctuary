@@ -1,6 +1,13 @@
 {
-  "total_entries": 358,
+  "total_entries": 359,
   "entries": [
+    {
+      "id": 367,
+      "title": "Mission manifests get a JSON Schema and validator: drafted by Claude Haiku 5.5 via cli-agent, integrated and fixed",
+      "filename": "367_mission_manifests_get_a_json_schema_and_validator_drafted_by_claude_haiku_55_via_cli_agent_integrated_and_fixed.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 366,
       "title": "MISSION-035: first agy measured record (a local-model-sized task routed to agy) and a delegated-usage recorder",

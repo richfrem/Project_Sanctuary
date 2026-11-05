@@ -118,7 +118,8 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
            no_usage: bool = False, snapshot_fn: Optional[Callable] = None,
            projects_dir: Optional[Path] = None, record: bool = True, model: Optional[str] = None,
            codex_sessions_dir: Optional[Path] = None,
-           token_split: Optional[Dict[str, int]] = None) -> Optional[Dict[str, Any]]:
+           token_split: Optional[Dict[str, int]] = None, wall_seconds: Optional[int] = None,
+           force_concurrent: bool = False) -> Optional[Dict[str, Any]]:
     """Second snapshot, deltas, wall-clock and tokens; records a measured budget entry when tokens are known."""
     if _disabled(no_usage) or not lease:
         return None
@@ -131,7 +132,7 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
         after = snapshot_fn(["claude", "agy", "codex"])
         save_latest(root, after)
         started = lease.get("checked_out_timestamp") or time.time()
-        wall = int(time.time() - started)
+        wall = int(wall_seconds) if wall_seconds is not None else int(time.time() - started)
         summary: Dict[str, Any] = {"task_class": task_class, "wall_seconds": wall, "retries": retries,
                                    "backend": backend_for_agent(agent), "tokens_source": None}
         if quality is not None:
@@ -170,6 +171,7 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
                 summary.update(tokens=r["total_tokens"], tokens_source="codex_rollouts",
                                tokens_in=max(0, r.get("input_tokens", 0) - cached), tokens_out=r.get("output_tokens", 0),
                                tokens_cache_read=cached)
+        concurrent = concurrent or force_concurrent
         summary["concurrent"] = concurrent
         if model:
             summary["model"] = model
@@ -206,20 +208,28 @@ def finish(root: Path, lease: Dict[str, Any], mission: str, agent: str, task_cla
 def record_delegated(root: Path, backend: str, task_id: str, task_class: str, before: Dict[str, Any],
                      agy_json: Optional[str] = None, seconds: Optional[int] = None, quality: Optional[int] = None,
                      retries: int = 0, model: Optional[str] = None, snapshot_fn: Optional[Callable] = None,
-                     record: bool = True, codex_sessions_dir: Optional[Path] = None) -> Optional[Dict[str, Any]]:
-    """Record the measured usage of work delegated to another CLI (agy or codex) by the orchestrating agent.
+                     record: bool = True, codex_sessions_dir: Optional[Path] = None,
+                     projects_dir: Optional[Path] = None, shared_window: bool = True) -> Optional[Dict[str, Any]]:
+    """Record the measured usage of work delegated to another CLI (agy, codex or a separate claude run) by the orchestrating agent.
+
+    claude: run the delegate from a directory whose Claude project folder holds no other session (e.g. a dedicated worktree) and pass
+    that directory as `root`; only that folder's transcripts are summed. The orchestrator's own session must live elsewhere. A claude delegate
+    shares the 5-hour/weekly window with its (claude) orchestrator, so its record is flagged concurrent (window deltas are not attributable)
+    unless shared_window=False.
 
     agy: pass its `--output-format json` output (exact vendor-reported split); unusable output records no tokens.
     codex: tokens come from the rollout files since the `before` snapshot. `seconds` = the dispatch duration for wall time."""
-    if backend not in ("agy", "codex"):
+    if backend not in ("agy", "codex", "claude"):
         raise ValueError(f"unsupported delegated backend: {backend}")
     mod = _probe()
     if mod is None:
         return None
-    agent = "antigravity" if backend == "agy" else "codex"
-    started = time.time() - (seconds if seconds is not None else 0)
-    if seconds is None and before.get("timestamp"):
+    agent = {"agy": "antigravity", "codex": "codex", "claude": "claude-delegate"}[backend]
+    # The measuring window starts at the pre-dispatch snapshot; `seconds` is only the wall time to record.
+    if before.get("timestamp"):
         started = datetime.strptime(before["timestamp"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).timestamp()
+    else:
+        started = time.time() - (seconds or 0)
     lease = {"usage_start": before, "checked_out_timestamp": started}
     kw: Dict[str, Any] = {}
     if backend == "agy":
@@ -227,7 +237,9 @@ def record_delegated(root: Path, backend: str, task_id: str, task_class: str, be
         if u:
             kw.update(tokens=u["total_tokens"], token_split=u)
     return finish(root, lease, task_id, agent, task_class=task_class, quality=quality, retries=retries, model=model,
-                  snapshot_fn=snapshot_fn, record=record, codex_sessions_dir=codex_sessions_dir, **kw)
+                  snapshot_fn=snapshot_fn, record=record, codex_sessions_dir=codex_sessions_dir,
+                  projects_dir=projects_dir, wall_seconds=seconds,
+                  force_concurrent=(backend == "claude" and shared_window), **kw)
 
 
 def main(argv=None) -> int:
@@ -235,7 +247,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Record measured usage of delegated agy/codex work (MISSION-035)")
     sub = ap.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("delegated", help="Record one delegated task")
-    d.add_argument("--backend", choices=["agy", "codex"], required=True)
+    d.add_argument("--backend", choices=["agy", "codex", "claude"], required=True)
     d.add_argument("--task-id", required=True)
     d.add_argument("--task-class", required=True)
     d.add_argument("--before", required=True, help="snapshot JSON taken before the dispatch (usage_probe.py snapshot --out FILE)")
@@ -244,12 +256,13 @@ def main(argv=None) -> int:
     d.add_argument("--quality", type=int, choices=[0, 1, 2, 3])
     d.add_argument("--retries", type=int, default=0)
     d.add_argument("--model")
-    d.add_argument("--root", default=".")
+    d.add_argument("--own-window", action="store_true", help="claude delegate whose orchestrator is NOT claude (window deltas attributable)")
+    d.add_argument("--root", default=".", help="for --backend claude: the delegate's working directory (its own project folder)")
     a = ap.parse_args(argv)
     before = json.loads(Path(a.before).read_text(encoding="utf-8"))
     raw = Path(a.agy_json).read_text(encoding="utf-8") if a.agy_json else None
     res = record_delegated(Path(a.root).resolve(), a.backend, a.task_id, a.task_class, before, agy_json=raw, seconds=a.seconds,
-                           quality=a.quality, retries=a.retries, model=a.model)
+                           quality=a.quality, retries=a.retries, model=a.model, shared_window=not a.own_window)
     print(json.dumps({k: (res or {}).get(k) for k in ("backend", "tokens", "tokens_in", "tokens_out", "tokens_cache_read",
                                                        "tokens_source", "cost_usd", "wall_seconds", "concurrent")}))
     return 0 if res and res.get("tokens") else 1
