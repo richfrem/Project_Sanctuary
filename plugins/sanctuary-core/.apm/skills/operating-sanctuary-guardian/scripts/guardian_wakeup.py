@@ -230,6 +230,12 @@ def get_top_mission(project_root: Path) -> dict | None:
 def get_tactical_priorities(project_root: Path, top_mission: dict | None = None) -> str:
     parts = []
     board_file = project_root / ".agent" / "coordination" / "board.json"
+    try:  # untracked runtime state lives in the main checkout; resolve it from a worktree too
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import manage_coordination
+        board_file = manage_coordination.shared_root(project_root) / ".agent" / "coordination" / "board.json"
+    except Exception:  # noqa: BLE001
+        pass
     if board_file.exists():
         try:
             with open(board_file, "r", encoding="utf-8") as f:

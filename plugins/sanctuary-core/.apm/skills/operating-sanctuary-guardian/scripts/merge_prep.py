@@ -5,7 +5,7 @@ Regenerates from their sources:
   * LEARNING/research/index.jsonl and backlog.md  <- mission manifests (manage_backlog compile)
   * .agent/learning/cognitive_ledger.json          <- .agent/learning/events.jsonl (CONTRIBUTION_ASSESSED events)
   * chronicle/ledger.json                          <- chronicle/entries/*.md
-Append-only logs (events.jsonl, leases.jsonl) merge with git's `union` driver (see .gitattributes).
+The append-only log events.jsonl merges with git's `union` driver (see .gitattributes). The flight-board files are untracked runtime state.
 
 The ledger is a projection. If the stored ledger claims MORE than its events imply (an orphaned score that was
 edited into the aggregate but never logged as an event), this tool REPORTS it and leaves the file unchanged.
@@ -29,7 +29,7 @@ import chronicle_manager  # noqa: E402
 
 LEDGER_REL = ".agent/learning/cognitive_ledger.json"
 EVENTS_REL = ".agent/learning/events.jsonl"
-UNION_LOGS = [".agent/learning/events.jsonl", ".agent/coordination/leases.jsonl"]
+UNION_LOGS = [".agent/learning/events.jsonl"]
 CHRONICLE_LEDGER_REL = "chronicle/ledger.json"
 GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
 

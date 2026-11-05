@@ -6,7 +6,8 @@ Purpose: turn the continuity data the repository already records (lease CHECKIN 
     re-run it), what is open, and any explicit handoff note a predecessor left via `manage_coordination.py checkin --handoff`.
 Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 fast-boot context).
 Key Input Dependencies (all optional; missing files just shorten the section):
-    - .agent/coordination/leases.jsonl      CHECKIN events: agent_id, mission_id, outcome_status, pr_number, timestamp, handoff
+    - .agent/learning/events.jsonl          CHECKIN events (tracked; the durable copy) and
+    - .agent/coordination/leases.jsonl      CHECKIN events (untracked local log): agent_id, mission_id, outcome_status, pr_number, timestamp, handoff
     - LEARNING/research/missions/*.json     verdict, evidence, updated_at
     - LEARNING/research/index.jsonl         open missions by priority
     - LEARNING/research/inbox.jsonl         captured ideas (count only)
@@ -63,10 +64,32 @@ def _pointer(root: Path, mission: Dict[str, Any]) -> str:
     return f"LEARNING/research/missions/{mission.get('id')}.json"
 
 
+def _checkins(root: Path) -> List[Dict[str, Any]]:
+    """CHECKIN events from the tracked events log and the (untracked, possibly shared-root) leases log, de-duplicated."""
+    sources = [root / ".agent/learning/events.jsonl"]
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import manage_coordination
+        sources.append(manage_coordination.shared_root(root) / ".agent/coordination/leases.jsonl")
+    except Exception:  # noqa: BLE001 - the relay must still render without the coordination module
+        sources.append(root / ".agent/coordination/leases.jsonl")
+    seen, out = set(), []
+    for src in sources:
+        for e in _read_jsonl(src):
+            if e.get("event_type") != "CHECKIN":
+                continue
+            key = (e.get("mission_id"), e.get("agent_id"), e.get("timestamp"))
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(e)
+    return out
+
+
 def build_relay(root: Path, handovers: int = 5, results: int = 10) -> Dict[str, Any]:
     """Collect the relay data for a project root."""
     root = Path(root)
-    checkins = [e for e in _read_jsonl(root / ".agent/coordination/leases.jsonl") if e.get("event_type") == "CHECKIN"]
+    checkins = _checkins(root)
     checkins.sort(key=lambda e: e.get("timestamp", ""), reverse=True)
     recent = [{"when": (e.get("timestamp") or "")[:16].replace("T", " "), "agent": e.get("agent_id"), "vendor": vendor_of(e.get("agent_id", "")),
                "mission": e.get("mission_id"), "outcome": e.get("outcome_status"), "pr": e.get("pr_number"),
