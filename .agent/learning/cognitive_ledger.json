@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:06:43.617204+00:00",
-  "total_assessments": 28,
-  "cumulative_score": 390,
-  "average_fitness": 0.929,
+  "updated_at": "2026-11-05T06:17:44.244847+00:00",
+  "total_assessments": 29,
+  "cumulative_score": 403,
+  "average_fitness": 0.926,
   "dimension_totals": {
-    "useful_outcome": 78,
-    "learning_depth": 78,
-    "verification_rigor": 83,
-    "token_economy": 67,
-    "anti_asch_integrity": 84
+    "useful_outcome": 81,
+    "learning_depth": 80,
+    "verification_rigor": 86,
+    "token_economy": 69,
+    "anti_asch_integrity": 87
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 15,
-      "cumulative_score": 204,
-      "average_fitness": 0.907
+      "assessments": 16,
+      "cumulative_score": 217,
+      "average_fitness": 0.904
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "78cb3aee-d0d2-4e36-b5d2-264bec36a2c8",
+      "timestamp": "2026-11-05T06:17:44.244021+00:00",
+      "task_id": "TASK-MOVE-MISSIONS",
+      "agent_id": "claude-code",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Followed the human's one-folder-at-a-time order; tests first; caught that a blind path rewrite would have altered recorded experiment evidence and reverted it; added a guard against stale writes; fixed three real bugs the move exposed"
+    },
     {
       "assessment_id": "ada0b655-8cb9-4bc8-a2b1-f7b2c101da3a",
       "timestamp": "2026-11-05T06:06:43.616597+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 14,
       "fitness": 0.933,
       "notes": "Pre-registered; RED/GREEN; real-model validation on a spare port without touching the persistent server; reported own misses (fresh footprint, ps RSS) and the amended measurement point; corrected the mission's invalid lsof command. Economy 2: long session. Self-assessed."
-    },
-    {
-      "assessment_id": "27976e1e-5896-4286-b21c-a3a28ee3fbf6",
-      "timestamp": "2026-11-03T15:42:58.034762+00:00",
-      "task_id": "DEBT-ARCHIVE-133",
-      "agent_id": "claude",
-      "raw_score": 14,
-      "fitness": 0.933,
-      "notes": "First use of Protocol 133 (upstream PR 746, merged, installed, verified); persist_soul.py repaired; protocol_manager update made in-place; 58 archive docs preserved. 24 new tests. Mistakes caught and reported: pushed before the commit landed (created an empty remote branch), used an empty probe commit; both harmless and fixed. Economy 2: long session with several tangents. Self-assessed."
     }
   ]
 }

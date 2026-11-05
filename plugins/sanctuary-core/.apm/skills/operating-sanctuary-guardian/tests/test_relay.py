@@ -42,7 +42,7 @@ def project(tmp_path):
         {"event_type": "CHECKIN", "agent_id": "someone-new", "mission_id": "MISSION-903", "outcome_status": "COMPLETED", "pr_number": 9,
          "timestamp": "2026-11-03T11:00:00+00:00", "handoff": "  line one\n\n  line   two "},
     ])
-    mdir = tmp_path / "LEARNING/research/missions"
+    mdir = tmp_path / "LEARNING/missions"
     mdir.mkdir(parents=True)
     (mdir / "MISSION-901.json").write_text(json.dumps({"id": "MISSION-901", "status": "RESOLVED", "verdict": "CONFIRMED", "updated_at": "2026-11-01",
         "evidence": [{"citation": "LEARNING/research/experiments/mission-901/README.md"}]}))
@@ -94,7 +94,7 @@ def test_established_pointers(project):
     est = {e["id"]: e for e in relay.build_relay(project)["established"]}
     assert est["MISSION-901"]["pointer"] == "LEARNING/research/experiments/mission-901/README.md"        # path citation
     assert est["MISSION-910"]["pointer"] == "LEARNING/research/experiments/mission-910/README.md"        # experiment log fallback
-    assert est["MISSION-902"]["pointer"] == "LEARNING/research/missions/MISSION-902.json"                # manifest fallback
+    assert est["MISSION-902"]["pointer"] == "LEARNING/missions/MISSION-902.json"                # manifest fallback
     assert [e["id"] for e in relay.build_relay(project)["established"]][0] == "MISSION-910"              # newest update first
 
 

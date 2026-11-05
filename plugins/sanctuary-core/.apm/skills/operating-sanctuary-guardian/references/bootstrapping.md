@@ -38,7 +38,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 - Verifies local sovereign model readiness:
   - Check persistent MLX server endpoint: `curl -s http://127.0.0.1:8080/v1/models`
   - Or audit cached weights and engine readiness: `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status`
-- Validates every mission manifest in `LEARNING/research/missions/` against `LEARNING/research/mission.schema.json` and reports one line (`PASS [N manifests valid]`, or `WARN` naming the first problems). A WARN never turns Layer 1 red or stops the boot; fix it before you commit, because the pre-commit gate enforces the same schema.
+- Validates every mission manifest in `LEARNING/missions/` against `LEARNING/missions/mission.schema.json` and reports one line (`PASS [N manifests valid]`, or `WARN` naming the first problems). A WARN never turns Layer 1 red or stops the boot; fix it before you commit, because the pre-commit gate enforces the same schema.
 - Outputs structured JSON or formatted markdown (`--format markdown`).
 
 ### Step 3: Layer 1 Fast-Boot Hydration
@@ -64,7 +64,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/que
 ```
 
 #### Mission manifests are schema-validated
-Before you create or edit any `LEARNING/research/missions/MISSION-NNN.json`, read `LEARNING/research/mission.schema.json` (required keys, status/verdict/surface/tier enums, ID patterns, score ranges; unknown extra keys are allowed). Then check your work:
+Before you create or edit any `LEARNING/missions/MISSION-NNN.json`, read `LEARNING/missions/mission.schema.json` (required keys, status/verdict/surface/tier enums, ID patterns, score ranges; unknown extra keys are allowed). Then check your work:
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/validate_missions.py   # structure only; exit 1 on any problem, and on an empty folder
 python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py validate   # schema + score and projected_impact invariants

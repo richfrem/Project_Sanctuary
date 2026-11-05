@@ -50,7 +50,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-049/",
-      "LEARNING/research/missions/MISSION-049.json",
+      "LEARNING/missions/MISSION-049.json",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_procedure_repair.py",
       "LEARNING/procedures/"

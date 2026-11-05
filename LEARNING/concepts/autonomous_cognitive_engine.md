@@ -78,7 +78,7 @@ Prior to this architecture, agent backlogs were often entangled in human-oriente
    - Generated deterministically by `manage_backlog.py compile` to provide the human partner with instant transparency.
    - Never edited directly; the JSON manifests remain the canonical source of truth.
 
-3. **Tier 3: Canonical Popperian Mission Manifests (`LEARNING/research/missions/MISSION-*.json`)**
+3. **Tier 3: Canonical Popperian Mission Manifests (`LEARNING/missions/MISSION-*.json`)**
    - Deep, individual JSON contracts defining the research inquiry.
    - Structured around falsifiable hypotheses:
      - `hypothesis`: The precise epistemic claim being tested.

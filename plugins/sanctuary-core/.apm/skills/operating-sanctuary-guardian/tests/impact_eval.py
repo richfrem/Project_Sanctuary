@@ -106,7 +106,7 @@ def load_old_module(rev: str):
 
 
 def _write_manifest(root: Path, mid: str, paths: List[str]) -> None:
-    d = root / "LEARNING" / "research" / "missions"
+    d = root / "LEARNING" / "missions"
     d.mkdir(parents=True, exist_ok=True)
     (d / f"{mid}.json").write_text(json.dumps({"id": mid, "title": mid, "status": "PROPOSED", "priority_score": 1.0,
                                                "projected_impact": {"paths": paths, "resources": []}}))

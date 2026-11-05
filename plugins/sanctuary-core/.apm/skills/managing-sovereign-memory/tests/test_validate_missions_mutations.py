@@ -16,7 +16,7 @@ sys.path.insert(0, str(SCRIPTS))
 import validate_missions as vm  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[6]
-MISSIONS = REPO / "LEARNING" / "research" / "missions"
+MISSIONS = REPO / "LEARNING" / "missions"
 SCHEMA = vm.load_schema()
 BASE = json.loads((MISSIONS / "MISSION-034.json").read_text())
 

@@ -16,6 +16,10 @@ SCAN_SUFFIXES = (".md", ".py", ".json", ".sh", ".mmd", ".yml", ".yaml", ".txt")
 # tests and evals build their own fixture trees; their LEARNING/ paths are not references to this repository
 SKIP_PARTS = ("/tests/", "relay_eval.py", "impact_eval.py", "agent_eval_tasks.py", "/evals/")
 PATH_RX = re.compile(r"LEARNING/[A-Za-z0-9_\-./]+")
+# retired paths that a file names on purpose (the stale-location guard reports them); everything else must exist
+RETIRED_ON_PURPOSE = {
+    "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py": ("LEARNING/research/missions",),
+}
 
 
 def _tracked(paths):
@@ -54,6 +58,8 @@ class TestLearningIndex(unittest.TestCase):
                 p = m.rstrip(".,;:)").rstrip("/")
                 if p.endswith("-") or any(x in p for x in ("NNN", "XXX", "xxx", "<", "*", "{")):
                     continue  # partial or placeholder
+                if p in RETIRED_ON_PURPOSE.get(f, ()):
+                    continue
                 if not (REPO / p).exists():
                     dangling.setdefault(p, set()).add(f)
         self.assertEqual(dangling, {}, "\n".join(f"{p}  <- {sorted(fs)}" for p, fs in sorted(dangling.items())))

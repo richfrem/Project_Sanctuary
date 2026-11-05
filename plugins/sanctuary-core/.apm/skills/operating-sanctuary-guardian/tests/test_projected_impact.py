@@ -29,7 +29,7 @@ import impact_eval as ev  # noqa: E402
 
 
 def write_missions(root: Path, missions: dict) -> None:
-    d = root / "LEARNING" / "research" / "missions"
+    d = root / "LEARNING" / "missions"
     d.mkdir(parents=True, exist_ok=True)
     for mid, spec in missions.items():
         body = {"id": mid, "title": f"Mission {mid}", "status": "PROPOSED", "priority_score": spec.get("score", 100.0)}
@@ -152,10 +152,10 @@ def test_checkout_marks_manifest_in_worktree_not_main_tree(tmp_path):
     write_missions(tmp_path, {"MISSION-A": {"impact": {"paths": ["x/"]}}})
     wt = tmp_path / ".worktrees" / "wt-a"
     write_missions(wt, {"MISSION-A": {"impact": {"paths": ["x/"]}}})                       # the worktree's own copy of the manifest
-    main_copy = (tmp_path / "LEARNING/research/missions/MISSION-A.json").read_text()
+    main_copy = (tmp_path / "LEARNING/missions/MISSION-A.json").read_text()
     assert mc.checkout(tmp_path, "MISSION-A", "a", worktree=".worktrees/wt-a")["status"] == "success"
-    assert (tmp_path / "LEARNING/research/missions/MISSION-A.json").read_text() == main_copy, "main tree manifest was modified"
-    assert json.loads((wt / "LEARNING/research/missions/MISSION-A.json").read_text())["status"] == "IN_PROGRESS"
+    assert (tmp_path / "LEARNING/missions/MISSION-A.json").read_text() == main_copy, "main tree manifest was modified"
+    assert json.loads((wt / "LEARNING/missions/MISSION-A.json").read_text())["status"] == "IN_PROGRESS"
 
 
 def test_cli_exit_codes(root):

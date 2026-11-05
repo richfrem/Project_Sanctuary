@@ -51,7 +51,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-038/",
-      "LEARNING/research/missions/MISSION-038.json",
+      "LEARNING/missions/MISSION-038.json",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_coordination.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md"

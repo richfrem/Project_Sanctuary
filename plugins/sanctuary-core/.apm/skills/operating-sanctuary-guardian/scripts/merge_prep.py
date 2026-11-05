@@ -160,11 +160,11 @@ def regenerate(root: Path, apply: bool = True) -> Dict[str, Any]:
         action = "unchanged-ok"
     report["ledger"] = {"status": status, "action": action}
 
-    before = _hash_dir(root / "LEARNING" / "research" / "missions")
-    if apply and (root / "LEARNING" / "research" / "missions").exists():
+    before = _hash_dir(root / "LEARNING" / "missions")
+    if apply and (root / "LEARNING" / "missions").exists():
         manage_backlog.BacklogManager(root).compile()
         report["generated"] += ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md"]
-    after = _hash_dir(root / "LEARNING" / "research" / "missions")
+    after = _hash_dir(root / "LEARNING" / "missions")
     report["manifests_changed"] = [Path(k).name for k in after if before.get(k) != after[k]]
 
     entries_dir = root / "chronicle" / "entries"

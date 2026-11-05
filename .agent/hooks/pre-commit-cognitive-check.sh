@@ -34,7 +34,7 @@ if [ -f "$BACKLOG_SCRIPT" ]; then
 fi
 
 # 2. Check for desynchronized mission staging
-STAGED_MISSIONS=$(git diff --cached --name-only | grep -E '^LEARNING/research/missions/' || true)
+STAGED_MISSIONS=$(git diff --cached --name-only | grep -E '^LEARNING/missions/' || true)
 if [ -n "$STAGED_MISSIONS" ]; then
     # Recompile check to test if index.jsonl or backlog.md would change
     TMP_INDEX=$(mktemp)

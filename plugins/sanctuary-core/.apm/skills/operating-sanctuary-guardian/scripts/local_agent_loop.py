@@ -293,7 +293,7 @@ def run_agent(task: str, sandbox: ReadOnlySandbox, chat_fn: Optional[Callable[[L
         if not calls:
             res.malformed_replies += 1
             obs = ("ERROR: reply with exactly one <tool_call>{...}</tool_call> or a <final_answer>...</final_answer>. Example: "
-                   '<tool_call>{"name": "search_text", "arguments": {"query": "MISSION-021", "path": "LEARNING/research/missions"}}</tool_call>')
+                   '<tool_call>{"name": "search_text", "arguments": {"query": "MISSION-021", "path": "LEARNING/missions"}}</tool_call>')
         else:
             name, args = calls[0]["name"], calls[0]["arguments"]
             key = (name, json.dumps(args, sort_keys=True))

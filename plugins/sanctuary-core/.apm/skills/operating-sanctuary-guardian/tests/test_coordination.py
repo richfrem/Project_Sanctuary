@@ -23,7 +23,7 @@ import manage_coordination as mc
 @pytest.fixture
 def temp_project_root(tmp_path: Path) -> Path:
     """Prepare a temporary project structure with missions and coordination dirs."""
-    missions_dir = tmp_path / "LEARNING" / "research" / "missions"
+    missions_dir = tmp_path / "LEARNING" / "missions"
     missions_dir.mkdir(parents=True, exist_ok=True)
     sample_mission = {
         "id": "MISSION-026",
@@ -57,7 +57,7 @@ def test_checkout_creates_lease_and_updates_board(temp_project_root: Path):
     assert "mlx-server:8080" in lease["exclusive_resources"]
 
     # Verify mission manifest was updated to IN_PROGRESS
-    mission_file = temp_project_root / "LEARNING" / "research" / "missions" / "MISSION-026.json"
+    mission_file = temp_project_root / "LEARNING" / "missions" / "MISSION-026.json"
     data = json.loads(mission_file.read_text())
     assert data["status"] == "IN_PROGRESS"
     assert data["assignee"] == "antigravity"

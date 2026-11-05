@@ -49,7 +49,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-047/",
-      "LEARNING/research/missions/MISSION-047.json",
+      "LEARNING/missions/MISSION-047.json",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py",
       "LEARNING/concepts/",

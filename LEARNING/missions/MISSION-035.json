@@ -104,7 +104,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-035/",
-      "LEARNING/research/missions/MISSION-035.json",
+      "LEARNING/missions/MISSION-035.json",
       "chronicle/",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/track_budget.py",
@@ -113,9 +113,9 @@
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/usage_hook.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py",
       ".agent/learning/budget_ledger.json",
-      "LEARNING/research/missions/MISSION-016.json",
-      "LEARNING/research/missions/MISSION-045.json",
-      "LEARNING/research/missions/MISSION-051.json",
+      "LEARNING/missions/MISSION-016.json",
+      "LEARNING/missions/MISSION-045.json",
+      "LEARNING/missions/MISSION-051.json",
       "LEARNING/research/experiments/mission-051/",
       ".agent/learning/events.jsonl",
       "LEARNING/research/index.jsonl",

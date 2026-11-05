@@ -50,7 +50,7 @@
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-039/",
-      "LEARNING/research/missions/MISSION-039.json",
+      "LEARNING/missions/MISSION-039.json",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/preference_probe.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_preference_probe.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/anti-sycophancy-eval.md"
