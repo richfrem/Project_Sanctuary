@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T07:03:10.846552+00:00",
-  "total_tokens_consumed": 5222153,
-  "total_turns": 33,
+  "updated_at": "2026-11-05T07:08:38.997864+00:00",
+  "total_tokens_consumed": 5369552,
+  "total_turns": 34,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -165,9 +165,77 @@
       "turns": 1,
       "last_backend": "claude",
       "last_model": "claude-sonnet-5-5"
+    },
+    "TASK-CREATE-MISSION-052": {
+      "tokens_consumed": 147399,
+      "turns": 1,
+      "last_backend": "claude",
+      "last_model": "claude-sonnet-5-5"
     }
   },
   "recent_records": [
+    {
+      "record_id": "1069be6f-5977-4837-ae0f-ba4b3734c053",
+      "timestamp": "2026-11-05T07:08:38.997890+00:00",
+      "task_id": "TASK-CREATE-MISSION-052",
+      "backend": "claude",
+      "model": "claude-sonnet-5-5",
+      "tokens_est": 147399,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "drafting",
+      "outcome": "completed",
+      "tokens_in": 42,
+      "tokens_out": 68069,
+      "window_delta": {
+        "from": "2026-11-05T07:05:06Z",
+        "to": "2026-11-05T07:08:32Z",
+        "claude": {
+          "session_pct_delta": 4,
+          "week_pct_delta": 1
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ],
+        "codex": {
+          "five_hour_pct_delta": 0.0,
+          "weekly_pct_delta": 0.0,
+          "stale": true
+        }
+      },
+      "tokens_cache_read": 19833991,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 79288,
+      "cost_usd": 2.981325,
+      "wall_seconds": 213,
+      "retries": 1,
+      "quality": 3
+    },
     {
       "record_id": "9c92a791-f9ae-4f6b-ad38-e109fcbae656",
       "timestamp": "2026-11-05T07:03:10.846570+00:00",
@@ -1674,16 +1742,6 @@
       "tokens_est": 3500,
       "turns": 1,
       "summary": "Consultation with Claude Opus on agent backlog architecture"
-    },
-    {
-      "record_id": "29d87710-3e05-48fa-b753-81a2f9abcf4c",
-      "timestamp": "2026-11-03T02:43:02.741002+00:00",
-      "task_id": "task-native-fallback-router",
-      "backend": "codex",
-      "model": "gpt-6-luna",
-      "tokens_est": 57771,
-      "turns": 2,
-      "summary": "Codex consultation on multi-subscription pooling: disproved HTTP proxy for OAuth subscriptions, designed CLI fallback chain"
     }
   ]
 }
