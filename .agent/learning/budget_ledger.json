@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T05:33:53.395553+00:00",
-  "total_tokens_consumed": 1426748,
-  "total_turns": 19,
+  "updated_at": "2026-11-05T05:35:27.908740+00:00",
+  "total_tokens_consumed": 1760682,
+  "total_turns": 20,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -89,13 +89,75 @@
       "last_model": "gemini-3.8-flash-low"
     },
     "TASK-MISSION-SCHEMA": {
-      "tokens_consumed": 101892,
-      "turns": 1,
+      "tokens_consumed": 435826,
+      "turns": 2,
       "last_backend": "claude",
-      "last_model": "claude-haiku-5-5"
+      "last_model": "claude-sonnet-5-5"
     }
   },
   "recent_records": [
+    {
+      "record_id": "194aa61b-6688-4118-9b12-49d677669bb8",
+      "timestamp": "2026-11-05T05:35:27.908758+00:00",
+      "task_id": "TASK-MISSION-SCHEMA",
+      "backend": "claude",
+      "model": "claude-sonnet-5-5",
+      "tokens_est": 333934,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "feature",
+      "outcome": "completed",
+      "tokens_in": 200,
+      "tokens_out": 154967,
+      "window_delta": {
+        "from": "2026-11-05T05:25:34Z",
+        "to": "2026-11-05T05:35:21Z",
+        "claude": {
+          "session_pct_delta": 6,
+          "week_pct_delta": 1
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ],
+        "codex": {
+          "five_hour_pct_delta": 0.0,
+          "weekly_pct_delta": 0.0,
+          "stale": true
+        }
+      },
+      "tokens_cache_read": 33266068,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 178767,
+      "cost_usd": 5.591745,
+      "wall_seconds": 593,
+      "retries": 1,
+      "quality": 3
+    },
     {
       "record_id": "36fcb498-7b6d-4149-96e8-82d0ec9db1c4",
       "timestamp": "2026-11-05T05:33:53.395571+00:00",
