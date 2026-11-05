@@ -10,3 +10,25 @@ Human request: review the LEARNING folder, decide what to archive, update or lea
 
 ## A correction to my own first triage
 I first sorted `topics/` from names, age and reference counts and listed 14 folders as "confident archive". Cross-checking against protocols, ADRs, context and plugins showed at least four were wrong: `quantum_error_correction` is the evidence base for PROPOSED Protocol 126; `knowledge_preservation_red_team` holds the ADR 079 draft behind the Hugging Face soul persistence; `attention_sinks_context_compression` backs a CONFIRMED insight in `context/memory.md`; `forge_v5_evolution` is a verified ADR 075 synthesis. So no topic is archived from its name: every one gets a read-based classification in PR 2.
+
+## PR 2: read-based topic triage and archive (2026-11-05)
+Method: a digest per topic (title, status/date lines, opening paragraph, who cites it) went to two models with the same rubric (KEEP / HISTORICAL / ARCHIVE / HUMAN; "if a topic is recent or cited it cannot be ARCHIVE"), and I checked every disagreement against the repository before deciding.
+
+| | agy `gemini-3.8-flash-low` | Haiku 5.5 |
+|---|---|---|
+| Agreement with my final calls | 17 / 24 | 15 / 24 |
+| Of my 8 ARCHIVE calls matched | 2 | 1 |
+| Answered HUMAN (no call) | 1 | 6 |
+| Would have archived something I kept | none | `llm_reasoning_diversity` |
+| Tokens (measured) | 23,564 (1,056 out) | 57,228 (11,734 out, mostly reasoning) |
+| Cost | $0.022 | $0.015 |
+| Wall time | 13 s | 28 s |
+| Quality (1-3, mine) | 2 | 2 |
+
+Both under-archived and neither was usable as-is; their misses came from evidence the digest lacked (for example Protocol 131 cites the DRQ dossier). First same-task, two-model pair for MISSION-051: Haiku was cheaper in dollars but 2.2x the time and 2.4x the tokens (n = 1, so not a ratio yet).
+
+Two "cited by" signals turned out to be loose name matches and were corrected by reading the match: the `astra_architectural_review` hit in `visualize_economy.py` is a chart label, and the `soul_persistence` hits are the concept in core docs, not the draft heuristics file. `astra_architectural_review` stays KEEP because it is recent (added 2026-11-01); `soul_persistence` is HISTORICAL.
+
+Result: 8 topic dossiers, `security/` and two loose files (53 files, about 280 KB) moved by `git mv` to `ARCHIVE/LEARNING_pre_2026-11/` with a map and restore instructions; `research/2026-02-12/` joined `topics/` as `arxiv_2602_deep_dive`; `topics/README.md` marks the 17 remaining topics KEEP (6) or HISTORICAL (11). New guard tests: every topic has a status row, every moved item is in the archive and mapped, archived files are tracked, and no kept document links into moved paths. ARCHIVE matches an ignore rule and its existing exception is ineffective, so the move relies on `git mv` keeping files tracked.
+
+Not done: the 134 broken relative links inside `topics/` are pasted links from external repositories (for example in `astra_automaton_opinion.md`), not internal links; left as they are.

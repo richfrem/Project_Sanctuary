@@ -61,3 +61,46 @@ class TestLearningIndex(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+ARCHIVE_ROOT = REPO / "ARCHIVE" / "LEARNING_pre_2026-11"
+MOVED = ["security", "associative_architecture_brief.md", "calibration_log.json",
+         "topics/scholarly_discourse", "topics/openclaw_moltbook_ecosystem", "topics/safe_agent_zero", "topics/documentation_link_remediation",
+         "topics/protocol_128_remediation", "topics/liquid_neural_networks", "topics/forge_v5_evolution", "topics/knowledge_preservation_red_team"]
+
+
+class TestTopicsAndArchive(unittest.TestCase):
+    def test_every_topic_folder_has_a_status_row_in_topics_readme(self):
+        readme = (LEARNING / "topics" / "README.md").read_text(encoding="utf-8")
+        topics = [p.name for p in sorted((LEARNING / "topics").iterdir()) if p.is_dir()]
+        missing = [t for t in topics if f"`{t}`" not in readme]
+        self.assertEqual(missing, [], f"topics/README.md has no row for: {missing}")
+        for line in readme.splitlines():
+            if line.startswith("| `"):
+                self.assertTrue(any(s in line for s in ("| KEEP |", "| HISTORICAL |")), line)
+
+    def test_moved_material_is_in_the_archive_with_a_map_and_not_in_learning(self):
+        readme = (ARCHIVE_ROOT / "README.md").read_text(encoding="utf-8")
+        for item in MOVED:
+            self.assertTrue((ARCHIVE_ROOT / item).exists(), f"archive is missing {item}")
+            self.assertFalse((LEARNING / item).exists(), f"{item} is still under LEARNING/")
+            self.assertIn(item, readme, f"archive README does not map {item}")
+
+    def test_archived_files_are_tracked_by_git(self):
+        tracked = subprocess.run(["git", "ls-files", "ARCHIVE/LEARNING_pre_2026-11"], cwd=str(REPO), capture_output=True, text=True).stdout.split()
+        self.assertGreater(len(tracked), 40)
+
+    def test_no_kept_document_links_into_material_that_moved_to_the_archive(self):
+        """Pasted external links in historical dossiers are already broken (not our concern); links INTO moved paths are the regression to catch."""
+        moved_abs = [(LEARNING / m).resolve() for m in MOVED]
+        offenders = []
+        for md in LEARNING.rglob("*.md"):
+            if "/research/" in str(md):
+                continue
+            for target in re.findall(r"\]\((?!https?:|#|mailto:)([^)\s#]+)", md.read_text(encoding="utf-8", errors="ignore")):
+                if target.startswith(("/", "file:")):
+                    continue
+                dest = (md.parent / target).resolve()
+                if any(dest == m or m in dest.parents for m in moved_abs):
+                    offenders.append(f"{md.relative_to(REPO)} -> {target}")
+        self.assertEqual(offenders, [], "\n".join(offenders[:15]))

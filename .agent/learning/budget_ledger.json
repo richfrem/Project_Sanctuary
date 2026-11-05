@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:07:44.399521+00:00",
-  "total_tokens_consumed": 4088698,
-  "total_turns": 25,
+  "updated_at": "2026-11-05T06:07:44.399547+00:00",
+  "total_tokens_consumed": 4169490,
+  "total_turns": 27,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -106,6 +106,18 @@
       "last_backend": "claude",
       "last_model": "claude-sonnet-5-5"
     },
+    "TASK-LEARNING-TRIAGE-agy": {
+      "tokens_consumed": 23564,
+      "turns": 1,
+      "last_backend": "agy",
+      "last_model": "gemini-3.8-flash-low"
+    },
+    "TASK-LEARNING-TRIAGE-haiku": {
+      "tokens_consumed": 57228,
+      "turns": 1,
+      "last_backend": "claude",
+      "last_model": "claude-haiku-5-5"
+    },
     "TASK-LEARNING-NAV": {
       "tokens_consumed": 169905,
       "turns": 1,
@@ -181,6 +193,121 @@
       "wall_seconds": 370,
       "retries": 1,
       "quality": 3
+    },
+    {
+      "record_id": "5d71dada-0f3c-4f19-b0f3-51e0f03a1bfa",
+      "timestamp": "2026-11-05T06:04:28.511210+00:00",
+      "task_id": "TASK-LEARNING-TRIAGE-haiku",
+      "backend": "claude",
+      "model": "claude-haiku-5-5",
+      "tokens_est": 57228,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "inspection",
+      "outcome": "completed",
+      "tokens_in": 4,
+      "tokens_out": 11734,
+      "window_delta": {
+        "from": "2026-11-05T06:01:48Z",
+        "to": "2026-11-05T06:04:22Z",
+        "claude": {
+          "session_pct_delta": 3,
+          "week_pct_delta": 0
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": -0.022
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": -0.074
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ]
+      },
+      "tokens_cache_read": 22074,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 45490,
+      "cost_usd": 0.015186,
+      "wall_seconds": 28,
+      "retries": 0,
+      "quality": 2,
+      "concurrent": true
+    },
+    {
+      "record_id": "fdf5e087-958e-415c-b098-680ccc91ea03",
+      "timestamp": "2026-11-05T06:04:22.471375+00:00",
+      "task_id": "TASK-LEARNING-TRIAGE-agy",
+      "backend": "agy",
+      "model": "gemini-3.8-flash-low",
+      "tokens_est": 23564,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "inspection",
+      "outcome": "completed",
+      "tokens_in": 22508,
+      "tokens_out": 1056,
+      "window_delta": {
+        "from": "2026-11-05T06:01:48Z",
+        "to": "2026-11-05T06:04:16Z",
+        "claude": {
+          "session_pct_delta": 3,
+          "week_pct_delta": 0
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": -0.022
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": -0.074
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ]
+      },
+      "tokens_cache_read": 18155,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 0,
+      "cost_usd": 0.022203,
+      "wall_seconds": 13,
+      "retries": 0,
+      "quality": 2
     },
     {
       "record_id": "40e5c8da-b0e9-4df0-9e18-94414daaefea",

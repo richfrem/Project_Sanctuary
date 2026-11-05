@@ -10,11 +10,10 @@
 | [`procedures/`](./procedures/) | Executable procedures with recorded outcomes (`record_procedure_outcome.py`). | live |
 | [`philosophy/`](./philosophy/) | Identity doctrine: the Garden and the Cage, the Cognitive Genome synthesis, Meta-Embers. | stable |
 | [`research/`](./research/) | **The mission system**: backlog, manifests, experiments (see below). | live |
-| [`topics/`](./topics/) | Self-directed research dossiers from 2025-12 to 2026-02. Treat as historical context unless a protocol or concept cites the dossier (for example `quantum_error_correction/` supports Protocol 126). | historical |
-| [`security/`](./security/) | 2025 defensive doctrine and Chimera-era briefings. | historical |
-| [`associative_architecture_brief.md`](./associative_architecture_brief.md) | Theory brief on nested learning loops (January 2026). | historical |
-| [`calibration_log.json`](./calibration_log.json) | Epistemic calibration metrics from December 2025. | historical |
+| [`topics/`](./topics/) | Self-directed research dossiers (17), each marked KEEP or HISTORICAL in [`topics/README.md`](./topics/README.md). Six are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. | mixed |
 | [`README.md`](./README.md) | Pointer to this file. | - |
+
+Retired material (2025 security briefings, eight retired topic dossiers, two loose files) lives in [`ARCHIVE/LEARNING_pre_2026-11/`](../ARCHIVE/LEARNING_pre_2026-11/README.md), with a map of what moved and why.
 
 ## Concept dossiers (`concepts/`)
 

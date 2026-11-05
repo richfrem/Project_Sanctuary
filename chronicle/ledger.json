@@ -1,6 +1,13 @@
 {
-  "total_entries": 363,
+  "total_entries": 364,
   "entries": [
+    {
+      "id": 372,
+      "title": "LEARNING archive: 8 topic dossiers, security and two loose files moved after a read-based triage by two models",
+      "filename": "372_learning_archive_8_topic_dossiers_security_and_two_loose_files_moved_after_a_read_based_triage_by_two_models.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 371,
       "title": "LEARNING navigation fixed, decay audit made real, and a path-integrity test added; my first archive triage was wrong",
