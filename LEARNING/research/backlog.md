@@ -33,7 +33,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#12** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#13** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `PROPOSED` | - |
-| **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `PROPOSED` | - |
+| **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `RESOLVED` | `CORROBORATED` |
 | **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
 | **#18** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
@@ -320,7 +320,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > p95 cold-start-to-first-token exceeds 10 s, or any request fails during a reap/restart cycle, or free system memory recovers by less than 3 GiB after a reap, or a reap kills a server the manager did not start.
 
 ### MISSION-030: Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook (Rank #15)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS / APM Lifecycle Hooks (PreCompact) for Claude Code, Codex & AGY
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -329,6 +330,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Configuring an APM PreCompact lifecycle hook (.apm/hooks/hooks.json) that triggers automatically prior to context compaction captures uncommitted scratch conclusions, extracts session friction, and persists a provisional memory snapshot to Layer 2/3 before context amnesia occurs, preserving continuity with under 2,500ms execution latency.
 - **Falsification Gate**:
   > A context compaction event occurs without invoking the hook, the hook fails to record an uncommitted session trace to memory, or execution latency exceeds 2,500ms.
+- **Empirical Evidence & Trials**:
+  * `2026-11-05T04:28:19.087173+00:00` [claude-code] (LEARNING/research/experiments/mission-030/README.md): PreCompact handler: median 61 ms, max 67 ms over 30 runs on a 20.6 MB transcript (ceiling 2500 ms); snapshot lists uncommitted files, last conclusions and friction; planted secrets redacted; exits 0 on malformed input and outside a Sanctuary checkout; fired on a real manual /compact in a scratch Claude Code session (18 ms). LIMIT: the auto (context-full) trigger was not exercised, and the hook runs only where the plugin hooks are installed.
+- **Lessons Learned & Epistemic Compounding**:
+  * A hook that can block compaction is worse than none: always exit 0, print nothing.
+  * Test hook firing for real with a throwaway session and --settings, not only by simulating the payload.
+  * Codex can write a passing test file from a spec, but extraction of its output needs care (log lines leak into captured output).
 
 ### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #16)
 - **Status**: `IN_PROGRESS`

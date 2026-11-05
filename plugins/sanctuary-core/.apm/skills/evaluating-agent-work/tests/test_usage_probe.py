@@ -149,6 +149,16 @@ class TestCodexTokensBetween(unittest.TestCase):
         self.assertEqual(r["total_tokens"], 1250)
         self.assertTrue(r["concurrent"])
 
+    def test_input_cached_and_output_are_split_across_the_interval(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "2026/11/04").mkdir(parents=True)
+            _rollout(d / "2026/11/04/rollout-a.jsonl", [_tc2("2026-11-04T10:00:00Z", 1000, inp=900, cached=100, out=100),
+                                                         _tc2("2026-11-04T10:10:00Z", 6000, inp=5400, cached=2100, out=600)])
+            r = up.codex_tokens_between(d, "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")
+        self.assertEqual(r["total_tokens"], 5000)
+        self.assertEqual((r["input_tokens"], r["cached_input_tokens"], r["output_tokens"]), (4500, 2000, 500))
+
     def test_no_activity_returns_zero(self):
         with tempfile.TemporaryDirectory() as d:
             r = up.codex_tokens_between(Path(d), "2026-11-04T10:05:00Z", "2026-11-04T10:15:00Z")

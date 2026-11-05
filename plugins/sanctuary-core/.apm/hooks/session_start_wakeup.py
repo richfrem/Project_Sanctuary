@@ -138,6 +138,21 @@ def execute_bootloader_in_process(project_root: Path) -> tuple[int, str, float]:
         return 1, f"In-process execution failed: {e}", elapsed_ms
 
 
+def precompact_pointer(project_root: Path, raw_payload: str) -> str:
+    """After a compaction (SessionStart source == "compact"), point at the snapshot taken by pre_compact_snapshot.py."""
+    try:
+        if json.loads(raw_payload or "{}").get("source") != "compact":
+            return ""
+        d = project_root / ".agent" / "learning" / "precompact"
+        latest = json.loads((d / "latest.json").read_text(encoding="utf-8"))
+        if (d / latest["file"]).exists():
+            return (f"\n\n## Pre-compaction snapshot\nContext was just compacted. A provisional snapshot of uncommitted work, "
+                    f"recent conclusions and friction was saved to `.agent/learning/precompact/{latest['file']}` - read it first.")
+    except Exception:
+        pass
+    return ""
+
+
 def main() -> int:
     """Run the SessionStart hook handler."""
     # Read stdin payload if provided by the harness
@@ -162,6 +177,7 @@ def main() -> int:
         f"<!-- Protocol 128 Fast-Boot Hook: Zero-Turn Context Hydration -->\n"
         f"<!-- Total Hook Overhead: {total_hook_ms:.1f}ms (In-Process Wakeup: {wakeup_elapsed_ms:.1f}ms) -->\n\n"
         f"{digest_text}"
+        f"{precompact_pointer(project_root, raw_payload)}"
     )
 
     output_payload = {

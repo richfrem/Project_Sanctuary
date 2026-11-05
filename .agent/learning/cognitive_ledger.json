@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T02:45:29.172098+00:00",
-  "total_assessments": 18,
-  "cumulative_score": 250,
+  "updated_at": "2026-11-05T04:28:19.773471+00:00",
+  "total_assessments": 19,
+  "cumulative_score": 264,
   "average_fitness": 0.926,
   "dimension_totals": {
-    "useful_outcome": 50,
-    "learning_depth": 52,
-    "verification_rigor": 53,
-    "token_economy": 41,
-    "anti_asch_integrity": 54
+    "useful_outcome": 53,
+    "learning_depth": 55,
+    "verification_rigor": 56,
+    "token_economy": 43,
+    "anti_asch_integrity": 57
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 5,
-      "cumulative_score": 64,
-      "average_fitness": 0.853
+      "assessments": 6,
+      "cumulative_score": 78,
+      "average_fitness": 0.867
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "f6d6b15f-9b9e-40b1-a2ad-372b787f8e13",
+      "timestamp": "2026-11-05T04:28:19.772898+00:00",
+      "task_id": "MISSION-030",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Pre-registered 7 predictions; tested firing for real with a throwaway session; delegated tests to Codex and reported the extraction fix and the one-line patch; found and fixed two measurement defects; auto trigger honestly left unverified"
+    },
     {
       "assessment_id": "f5fcb8fe-5689-4b66-b59d-9a74233fcc28",
       "timestamp": "2026-11-05T02:45:29.171263+00:00",

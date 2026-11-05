@@ -186,14 +186,16 @@ def claude_tokens_between(project_dir: Path, start: str, end: str,
 
 
 def codex_tokens_between(sessions_dir: Optional[Path], start: str, end: str) -> Dict[str, Any]:
-    """Codex tokens used in [start, end]: per rollout, the cumulative total at the end minus the total at start.
+    """Codex tokens used in [start, end]: per rollout, the cumulative totals at the end minus the totals at start.
 
-    A session that began inside the interval counts from zero. concurrent=True when more than one rollout
-    recorded token usage in the interval (window percents are then shared and must be treated as noisy).
+    Returns total_tokens plus the split input_tokens / cached_input_tokens / output_tokens (codex's input_tokens
+    includes the cached part). A session that began inside the interval counts from zero. concurrent=True when more
+    than one rollout recorded token usage in the interval (window percents are then shared and must be treated as noisy).
     """
     sessions_dir = sessions_dir or Path.home() / ".codex" / "sessions"
     t0, t1 = _parse_ts(start), _parse_ts(end)
-    total = 0
+    keys = ("total_tokens", "input_tokens", "cached_input_tokens", "output_tokens")
+    sums = {k: 0 for k in keys}
     active = 0
     for f in sessions_dir.glob("**/rollout-*.jsonl"):
         before = None
@@ -209,19 +211,20 @@ def codex_tokens_between(sessions_dir: Optional[Path], start: str, end: str) -> 
                         continue
                     p = rec.get("payload") or {}
                     ts = _parse_ts(rec.get("timestamp", ""))
-                    tot = ((p.get("info") or {}).get("total_token_usage") or {}).get("total_tokens")
-                    if p.get("type") != "token_count" or ts is None or tot is None:
+                    use = (p.get("info") or {}).get("total_token_usage") or {}
+                    if p.get("type") != "token_count" or ts is None or use.get("total_tokens") is None:
                         continue
                     if ts < t0:
-                        before = tot
+                        before = use
                     elif ts <= t1:
-                        last_in = tot
+                        last_in = use
         except OSError:
             continue
         if last_in is not None:
-            total += max(0, last_in - (before or 0))
+            for k in keys:
+                sums[k] += max(0, (last_in.get(k) or 0) - ((before or {}).get(k) or 0))
             active += 1
-    return {"total_tokens": total, "concurrent": active > 1, "active_sessions": active}
+    return {**sums, "concurrent": active > 1, "active_sessions": active}
 
 
 # --------------------------------------------------------------------------- snapshot / diff
