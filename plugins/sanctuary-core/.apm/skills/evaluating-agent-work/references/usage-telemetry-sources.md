@@ -41,7 +41,9 @@ agy --model <id> -p @prompt.txt --output-format json > /tmp/agy.json            
 python3 $S/operating-sanctuary-guardian/scripts/usage_hook.py delegated --backend agy --task-id <ID> --task-class inspection \
     --before /tmp/before.json --agy-json /tmp/agy.json --seconds 16 --quality 3 --model <id>
 # codex: same, with --backend codex and no --agy-json (tokens come from its rollout files since the snapshot)
+# claude: --backend claude --root <the delegate's own working directory> (e.g. a dedicated worktree, so its transcripts are alone in their project folder)
 ```
 
 Unusable agy output (text mode, failure) records nothing; it never guesses a token count.
 
+A claude delegate shares the 5-hour and weekly window with its claude orchestrator, so its record is flagged `concurrent` and its window delta must not be used (token counts are still exact). Reasoning tokens count as output: a 6k-token visible answer from Haiku 5.5 billed 51.5k output tokens.

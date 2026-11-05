@@ -67,7 +67,7 @@ Whenever an agent drafts a new mission (including replenishment missions), do th
 2. **Related-mission scan (required)**: run `manage_backlog.py related --text "<draft title + hypothesis>" --tags <tags>` (or `--id MISSION-NNN` once the file exists) and read the top candidates. The helper is lexical, so it finds topical overlap (shared terms such as routing, token, quota) but misses mechanism-level relations (a mission that attaches to the same lease, ledger or hook). Also ask: *which existing system or mission does this plug into, feed, or depend on?* and check those by hand.
 3. **Link bidirectionally**: for each real relation add a `related_missions` entry in the new manifest AND in the related manifest, stating the relationship (DEPENDS ON, CONSUMER, PROVIDER, EXTENDS, VALIDATES, SUPPLIES DATA TO) and whether it is a hard dependency. Declare the edited related manifests in the new mission's `projected_impact`. Do not link on keyword noise alone; a link is a judgement.
 4. **Declare `projected_impact`** (paths the mission will touch) so the flight board can lease and detect overlap.
-5. **Score** (leverage, depth, cost, friction), run `validate` and `compile`, and commit the manifest plus regenerated `index.jsonl` and `backlog.md` together.
+5. **Score** (leverage, depth, cost, friction), run `validate` (structure from `LEARNING/research/mission.schema.json`, then score and `projected_impact` invariants) and `compile`, and commit the manifest plus regenerated `index.jsonl` and `backlog.md` together.
 6. **Status discipline**: a drafted mission stays `PROPOSED`. A flight-board checkout marks the worktree's manifest `IN_PROGRESS`; if you only drafted or researched, restore `PROPOSED` before committing (see MISSION-035's PR #299, which shipped the marker by mistake).
 
 ## 5. CLI Tooling
@@ -99,3 +99,19 @@ python3 manage_backlog.py compile
 # Invariant validation
 python3 manage_backlog.py validate
 ```
+
+## Manifest schema
+
+`LEARNING/research/mission.schema.json` (JSON Schema, draft 2020-12 subset) describes one mission manifest and sits beside the
+data, so any agent or bundle reading the folder sees it. `scripts/validate_missions.py` is its zero-dependency validator
+(`python3 validate_missions.py [--missions-dir DIR] [--schema FILE]`; exit 1 on any error, and an empty folder is an error, never
+`OK`). `manage_backlog.py validate` applies it automatically when the root has a schema.
+
+- Unknown optional keys are allowed (drafts must not break); required keys, enums (status, verdict, execution surface, routing tier),
+  ID/key patterns, score ranges and types are enforced. File name must equal the manifest `id`.
+- `verdict: CONFIRMED` is a LEGACY value (6 resolved missions); `record-result` writes CORROBORATED / FALSIFIED / ABANDONED.
+- To change a rule, edit the schema and add a case to `tests/test_validate_missions*.py`; the schema must keep validating every
+  existing manifest.
+- Origin: written by Claude Haiku 5.5 through the cli-agent skill from field statistics, then integrated and fixed (see
+  `LEARNING/research/experiments/mission-schema/README.md`).
+

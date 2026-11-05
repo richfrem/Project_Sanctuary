@@ -534,7 +534,27 @@ class BacklogManager:
                 if actual is not None and abs(actual - expected) > 0.05:
                     errors.append(f"[{mid}] Stored priority score ({actual}) != calculated ({expected})")
 
+        errors.extend(self._schema_errors(missions))
         return errors
+
+    def _schema_errors(self, missions: List[Dict[str, Any]]) -> List[str]:
+        """Structural errors from LEARNING/research/mission.schema.json (via validate_missions.py); none if the root has no schema."""
+        schema_path = self.research_dir / "mission.schema.json"
+        if not schema_path.exists():
+            return []
+        import importlib.util
+        script = Path(__file__).resolve().parent / "validate_missions.py"
+        try:
+            spec = importlib.util.spec_from_file_location("validate_missions", str(script))
+            vm = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(vm)
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, ImportError, AttributeError) as exc:
+            return [f"[schema] mission.schema.json exists but could not be applied: {exc}"]
+        out: List[str] = []
+        for m in missions:
+            out.extend(vm.validate_manifest(m, schema))
+        return out
 
 
 def main():

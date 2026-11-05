@@ -177,3 +177,104 @@ class TestDelegated(unittest.TestCase):
     def test_unknown_backend_is_rejected(self):
         with self.assertRaises(ValueError):
             usage_hook.record_delegated(Path("."), backend="grok", task_id="T", task_class="x", before={})
+
+
+class TestDelegatedClaude(unittest.TestCase):
+    def test_claude_delegate_reads_only_its_own_project_folder_with_cache_split(self):
+        import re
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as pd:
+                root = Path(d)
+                mine = Path(pd) / re.sub(r"[^A-Za-z0-9]", "-", str(root))
+                other = Path(pd) / "-some-other-project"
+                mine.mkdir(); other.mkdir()
+                now = time.time()
+                ts = lambda off: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now + off))
+                rec = lambda t, i, o, cr, cw, w1: json.dumps({"timestamp": t, "message": {"model": "claude-haiku-5-5", "usage": {
+                    "input_tokens": i, "output_tokens": o, "cache_read_input_tokens": cr, "cache_creation_input_tokens": cw,
+                    "cache_creation": {"ephemeral_1h_input_tokens": w1}}}})
+                (mine / "s1.jsonl").write_text(rec(ts(-5), 1000, 200, 300, 100, 40) + "\n")
+                (other / "s2.jsonl").write_text(rec(ts(-5), 9999, 9999, 0, 0, 0) + "\n")  # must not be counted
+                res = usage_hook.record_delegated(root, "claude", "T", "drafting", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-60)}, seconds=60, quality=3, model="claude-haiku-5-5",
+                                                  snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False, projects_dir=Path(pd))
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+        self.assertIsNotNone(res)
+        self.assertEqual(res.get("backend"), "claude", res)
+        self.assertEqual((res["tokens_in"], res["tokens_out"], res["tokens_cache_read"]), (1000, 200, 300))
+        self.assertEqual((res["tokens_cache_write"], res["tokens_cache_write_1h"]), (60, 40))
+        self.assertEqual(res["tokens_source"], "claude_transcripts")
+
+
+class TestDelegatedWindow(unittest.TestCase):
+    def test_window_starts_at_the_before_snapshot_but_wall_is_the_dispatch_duration(self):
+        import re
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as pd:
+                root = Path(d)
+                mine = Path(pd) / re.sub(r"[^A-Za-z0-9]", "-", str(root)); mine.mkdir()
+                now = time.time()
+                ts = lambda off: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now + off))
+                # the delegate ran 20 minutes ago (97 s long); the snapshot was taken just before it
+                (mine / "s1.jsonl").write_text(json.dumps({"timestamp": ts(-1150), "message": {"usage": {
+                    "input_tokens": 500, "output_tokens": 50, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0}}}) + "\n")
+                res = usage_hook.record_delegated(root, "claude", "T", "drafting", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-1200)},
+                                                  seconds=97, snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False,
+                                                  projects_dir=Path(pd))
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+        self.assertEqual((res["tokens_in"], res["tokens_out"]), (500, 50))
+        self.assertEqual(res["wall_seconds"], 97)
+
+
+class TestSharedWindow(unittest.TestCase):
+    def test_claude_delegate_is_flagged_concurrent_because_the_orchestrator_shares_the_window(self):
+        import re
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        try:
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as pd:
+                root = Path(d)
+                mine = Path(pd) / re.sub(r"[^A-Za-z0-9]", "-", str(root)); mine.mkdir()
+                now = time.time()
+                ts = lambda off: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now + off))
+                (mine / "s1.jsonl").write_text(json.dumps({"timestamp": ts(-5), "message": {"usage": {
+                    "input_tokens": 10, "output_tokens": 5, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0}}}) + "\n")
+                shared = usage_hook.record_delegated(root, "claude", "T", "x", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-60)},
+                                                     seconds=30, snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False,
+                                                     projects_dir=Path(pd))
+                alone = usage_hook.record_delegated(root, "claude", "T", "x", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-60)},
+                                                    seconds=30, snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), record=False,
+                                                    projects_dir=Path(pd), shared_window=False)
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+        self.assertTrue(shared["concurrent"])
+        self.assertFalse(alone["concurrent"])
+
+
+class TestSharedWindowReachesTheLedger(unittest.TestCase):
+    def test_recorded_command_carries_the_concurrent_flag_for_a_claude_delegate(self):
+        import re
+        from unittest import mock
+        old = os.environ.pop("SANCTUARY_NO_USAGE")
+        calls = []
+        try:
+            with tempfile.TemporaryDirectory() as d, tempfile.TemporaryDirectory() as pd:
+                root = Path(d)
+                mine = Path(pd) / re.sub(r"[^A-Za-z0-9]", "-", str(root)); mine.mkdir()
+                now = time.time()
+                ts = lambda off: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now + off))
+                (mine / "s1.jsonl").write_text(json.dumps({"timestamp": ts(-5), "message": {"usage": {
+                    "input_tokens": 10, "output_tokens": 5, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0}}}) + "\n")
+                with mock.patch.object(usage_hook.subprocess, "run", side_effect=lambda cmd, **k: calls.append(cmd)):
+                    usage_hook.record_delegated(root, "claude", "T", "x", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-60)},
+                                                seconds=30, snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), projects_dir=Path(pd))
+                    usage_hook.record_delegated(root, "claude", "T", "x", {**_snap("2026-11-04T10:00:00Z"), "timestamp": ts(-60)},
+                                                seconds=30, snapshot_fn=lambda b: _snap("2026-11-04T10:01:00Z"), projects_dir=Path(pd),
+                                                shared_window=False)
+        finally:
+            os.environ["SANCTUARY_NO_USAGE"] = old
+        self.assertEqual(len(calls), 2)
+        self.assertIn("--concurrent", calls[0])
+        self.assertNotIn("--concurrent", calls[1])
