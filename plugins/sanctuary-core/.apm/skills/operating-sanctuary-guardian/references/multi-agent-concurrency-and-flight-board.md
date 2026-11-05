@@ -41,6 +41,8 @@ Provides decentralized, zero-daemon concurrency control, optimistic file leases,
 - **Board State** (`.agent/coordination/board.json`): Active leases, holding agents, locked target paths, exclusive resources (e.g. `:8080`), worktree locations, and TTLs.
 - **Audit Event Journal** (`.agent/coordination/leases.jsonl`): Immutable append-only log of every `CHECKOUT`, `CHECKIN`, `HEARTBEAT`, and `EXPIRE` event.
 
+**Where the state lives (untracked).** `board.json` and `leases.jsonl` are per-machine runtime state: they are gitignored (they used to be tracked, which left the working tree permanently dirty and shipped two stale `EXECUTING` leases to every fresh clone). The scripts always read and write the copy in the **main checkout**, even when run from a worktree (`manage_coordination.shared_root`), so every agent on the machine sees one board. The durable part, each `CHECKIN` with its handoff note, is also written to the tracked, union-merged `.agent/learning/events.jsonl` (`mirror_checkin_to_events`), which is what the predecessor relay reads after a clone. A different machine does not see this machine's live leases by design.
+
 ### 2. Worktree Isolation Standard
 - Concurrent agents NEVER mutate the root working tree simultaneously.
 - When an agent checks out a non-trivial mission, it operates within an isolated git worktree:

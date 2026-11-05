@@ -262,3 +262,8 @@ apm_modules/
 # Ephemeral usage snapshot cache (MISSION-035), read by the boot briefing
 .agent/learning/usage_latest.json
 .agent/learning/precompact/
+
+# Flight board: per-machine runtime state, not history. Handoff notes are mirrored into the tracked .agent/learning/events.jsonl
+# (see manage_coordination.mirror_checkin_to_events); scripts resolve the shared copy in the main checkout from any worktree.
+.agent/coordination/board.json
+.agent/coordination/leases.jsonl

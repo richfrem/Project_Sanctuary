@@ -1,6 +1,13 @@
 {
-  "total_entries": 361,
+  "total_entries": 362,
   "entries": [
+    {
+      "id": 370,
+      "title": "Flight-board files untracked: shared root from any worktree, handoffs durable in events.jsonl, 34 check-ins rescued",
+      "filename": "370_flight_board_files_untracked_shared_root_from_any_worktree_handoffs_durable_in_eventsjsonl_34_check_ins_rescued.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 369,
       "title": "MISSION-035 closed FALSIFIED at 14 measured tasks; what survived; MISSION-051 follow-up",

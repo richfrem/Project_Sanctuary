@@ -9,7 +9,8 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 | File | How it is handled |
 |---|---|
-| `.agent/learning/events.jsonl`, `.agent/coordination/leases.jsonl` | Append-only logs: `merge=union` in `.gitattributes` keeps both sides' lines (no conflict). |
+| `.agent/learning/events.jsonl` | Append-only log: `merge=union` in `.gitattributes` keeps both sides' lines (no conflict). |
+| `.agent/coordination/board.json`, `leases.jsonl` | Not in git any more (gitignored runtime state), so they cannot conflict; check-in handoffs are mirrored into `events.jsonl`. |
 | `LEARNING/research/index.jsonl`, `backlog.md` | Rebuilt from `missions/*.json` by `manage_backlog.py compile`. |
 | `.agent/learning/cognitive_ledger.json` | Rebuilt from the `CONTRIBUTION_ASSESSED` events, using the same arithmetic as `score_contribution.py`. Events are folded in (timestamp, id) order, so line order after a union merge does not matter. |
 | `chronicle/ledger.json` | Rebuilt from `chronicle/entries/*.md` (`chronicle_manager.py ledger`; `create` also refreshes it). Entries whose filename lacks a 3-digit prefix (e.g. `264b_...`) are outside the numbering scheme and not listed. |

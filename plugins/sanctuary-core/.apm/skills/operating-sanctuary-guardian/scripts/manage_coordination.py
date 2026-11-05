@@ -42,9 +42,32 @@ def get_project_root() -> Path:
     return Path.cwd()
 
 
+def shared_root(root: Path) -> Path:
+    """The main working tree when `root` is a linked git worktree, else `root` itself.
+
+    board.json and leases.jsonl are untracked runtime state shared by every agent on this machine, so a script run from a worktree
+    must still read and write the main checkout's copy (a per-worktree board would be empty and invisible to the others).
+    """
+    root = Path(root)
+    git = root / ".git"
+    try:
+        if git.is_file():
+            gitdir = Path(git.read_text(encoding="utf-8").split("gitdir:", 1)[1].strip())
+            if not gitdir.is_absolute():
+                gitdir = (root / gitdir).resolve()
+            commondir = gitdir / "commondir"
+            common = (gitdir / commondir.read_text(encoding="utf-8").strip()).resolve() if commondir.exists() else gitdir.parent.parent
+            main = common.parent
+            if (main / ".git").is_dir():
+                return main
+    except (OSError, IndexError, ValueError):
+        pass
+    return root
+
+
 def get_coordination_paths(root: Path) -> tuple[Path, Path]:
-    """Return paths to board.json and leases.jsonl, ensuring parent directories exist."""
-    coord_dir = root / ".agent" / "coordination"
+    """Return paths to board.json and leases.jsonl (in the shared main checkout), ensuring parent directories exist."""
+    coord_dir = shared_root(root) / ".agent" / "coordination"
     coord_dir.mkdir(parents=True, exist_ok=True)
     return coord_dir / "board.json", coord_dir / "leases.jsonl"
 
@@ -68,6 +91,19 @@ def save_board(root: Path, board: Dict[str, Any]) -> None:
     with open(temp_file, "w", encoding="utf-8") as f:
         json.dump(board, f, indent=2)
     temp_file.replace(board_file)
+
+
+def mirror_checkin_to_events(root: Path, event: Dict[str, Any]) -> None:
+    """Also record a CHECKIN (with its handoff note) in the TRACKED .agent/learning/events.jsonl.
+
+    leases.jsonl is untracked local state; the predecessor relay's handoff memory must survive a clone, so it lives in the committed,
+    union-merged events log. The bulky `usage` block is left out (BUDGET_CONSUMED already records it).
+    """
+    slim = {k: v for k, v in event.items() if k != "usage"}
+    path = Path(root) / ".agent" / "learning" / "events.jsonl"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(slim) + "\n")
 
 
 def append_lease_event(root: Path, event: Dict[str, Any]) -> None:
@@ -269,6 +305,7 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
     if usage:
         event["usage"] = usage
     append_lease_event(root, event)
+    mirror_checkin_to_events(root, event)
 
     if clean_worktree and matching_leases:
         wt_path = matching_leases[0].get("worktree")
