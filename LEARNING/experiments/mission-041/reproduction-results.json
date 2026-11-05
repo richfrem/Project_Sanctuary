@@ -1,0 +1,1890 @@
+{
+  "component_seconds": 600,
+  "components": [
+    {
+      "elapsed_seconds": 0.776864374987781,
+      "id": "lease",
+      "mutants": [
+        {
+          "example": {
+            "elapsed_seconds": 0.044624833040870726,
+            "mode": "example",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 64,
+            "trial_budget": 64
+          },
+          "id": "lease_strict_expiry",
+          "mutant_witness": {
+            "actual": false,
+            "case": [
+              5,
+              5,
+              false
+            ],
+            "elapsed_seconds": 0.0428388329455629,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "strict_expiry",
+          "property": {
+            "actual": false,
+            "case": [
+              24,
+              24,
+              false
+            ],
+            "elapsed_seconds": 0.04311629198491573,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04281683289445937,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": false,
+            "case": [
+              24,
+              21,
+              false
+            ],
+            "elapsed_seconds": 0.042868916993029416,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "lease_conjunction",
+          "mutant_witness": {
+            "actual": false,
+            "case": [
+              2,
+              5,
+              true
+            ],
+            "elapsed_seconds": 0.0428027919260785,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "conjunction",
+          "property": {
+            "actual": false,
+            "case": [
+              24,
+              24,
+              false
+            ],
+            "elapsed_seconds": 0.04306983295828104,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04627245897427201,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": false,
+            "case": [
+              24,
+              21,
+              false
+            ],
+            "elapsed_seconds": 0.041874167043715715,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "lease_reversed_expiry",
+          "mutant_witness": {
+            "actual": true,
+            "case": [
+              2,
+              5,
+              false
+            ],
+            "elapsed_seconds": 0.04235945793334395,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "reversed_expiry",
+          "property": {
+            "actual": true,
+            "case": [
+              15,
+              16,
+              false
+            ],
+            "elapsed_seconds": 0.04432020802050829,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04095824994146824,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": false,
+            "case": [
+              10,
+              24,
+              true
+            ],
+            "elapsed_seconds": 0.0442760840523988,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 2,
+            "trial_budget": 64
+          },
+          "id": "lease_owner_omission",
+          "mutant_witness": {
+            "actual": false,
+            "case": [
+              2,
+              5,
+              true
+            ],
+            "elapsed_seconds": 0.04161645798012614,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "owner_omission",
+          "property": {
+            "actual": false,
+            "case": [
+              4,
+              5,
+              true
+            ],
+            "elapsed_seconds": 0.04347654199227691,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 9,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04075658298097551,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.04474979196675122,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.04256904195062816,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.7842992499936372,
+      "id": "path",
+      "mutants": [
+        {
+          "example": {
+            "actual": "/c/b/b/c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.041432667057961226,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "path_preserve_dot",
+          "mutant_witness": {
+            "actual": "/.",
+            "case": [
+              "."
+            ],
+            "elapsed_seconds": 0.04334837500937283,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "preserve_dot",
+          "property": {
+            "actual": "/c/b/b/c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.04346795903984457,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04365595802664757,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "/c/b/b/c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.04298129107337445,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "path_no_parent_pop",
+          "mutant_witness": {
+            "actual": "/a",
+            "case": [
+              "a",
+              ".."
+            ],
+            "elapsed_seconds": 0.04314745799638331,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "no_parent_pop",
+          "property": {
+            "actual": "/c/b/b/c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.04171387501992285,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04274866601917893,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "/..",
+            "case": [
+              "..",
+              "a",
+              ".."
+            ],
+            "elapsed_seconds": 0.04356183297932148,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 8,
+            "trial_budget": 64
+          },
+          "id": "path_escape_root",
+          "mutant_witness": {
+            "actual": "/..",
+            "case": [
+              ".."
+            ],
+            "elapsed_seconds": 0.052239625016227365,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "escape_root",
+          "property": {
+            "actual": "/..",
+            "case": [
+              "..",
+              "a",
+              ".."
+            ],
+            "elapsed_seconds": 0.04705074999947101,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 8,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.041373791988007724,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "/c//b//c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.04217333404812962,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "path_wrong_separator",
+          "mutant_witness": {
+            "actual": "/a//b",
+            "case": [
+              "a",
+              "b"
+            ],
+            "elapsed_seconds": 0.04155674995854497,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "wrong_separator",
+          "property": {
+            "actual": "/c//b//c",
+            "case": [
+              "c",
+              "b",
+              "b",
+              ".",
+              "..",
+              "c"
+            ],
+            "elapsed_seconds": 0.041845250059850514,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04415229195728898,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.04432433401234448,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.04205554095096886,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.812406999990344,
+      "id": "replay",
+      "mutants": [
+        {
+          "example": {
+            "actual": 10,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.042661708081141114,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "replay_last_wins",
+          "mutant_witness": {
+            "actual": 3,
+            "case": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ],
+            "elapsed_seconds": 0.041466290946118534,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "last_wins",
+          "property": {
+            "actual": 10,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.04787358397152275,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.042150791035965085,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": 20,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.05377366696484387,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "replay_no_deduplication",
+          "mutant_witness": {
+            "actual": 5,
+            "case": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ]
+            ],
+            "elapsed_seconds": 0.04145154100842774,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "no_deduplication",
+          "property": {
+            "actual": 20,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.047155417036265135,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.042648207978345454,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": 27,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.04311279207468033,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "replay_discard_negative",
+          "mutant_witness": {
+            "actual": 0,
+            "case": [
+              [
+                1,
+                -2
+              ]
+            ],
+            "elapsed_seconds": 0.04519650002475828,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "discard_negative",
+          "property": {
+            "actual": 27,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.04385524999815971,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04550529201515019,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": 13,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.0436297080013901,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "replay_discard_zero_key",
+          "mutant_witness": {
+            "actual": 0,
+            "case": [
+              [
+                0,
+                2
+              ]
+            ],
+            "elapsed_seconds": 0.0468480420531705,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "discard_zero_key",
+          "property": {
+            "actual": 13,
+            "case": [
+              [
+                5,
+                -6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                4,
+                15
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                0,
+                -5
+              ],
+              [
+                0,
+                8
+              ]
+            ],
+            "elapsed_seconds": 0.04589945904444903,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04145008395425975,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.05157537502236664,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.044532792060635984,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.8214290000032634,
+      "id": "accounting",
+      "mutants": [
+        {
+          "example": {
+            "actual": 9,
+            "case": [
+              9,
+              9,
+              20
+            ],
+            "elapsed_seconds": 0.04823083395604044,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 5,
+            "trial_budget": 64
+          },
+          "id": "accounting_strict_balance",
+          "mutant_witness": {
+            "actual": 5,
+            "case": [
+              5,
+              5,
+              8
+            ],
+            "elapsed_seconds": 0.049968875013291836,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "strict_balance",
+          "property": {
+            "actual": 1,
+            "case": [
+              1,
+              1,
+              9
+            ],
+            "elapsed_seconds": 0.04453654191456735,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 3,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.046283582923933864,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "elapsed_seconds": 0.049729417078197,
+            "mode": "example",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 64,
+            "trial_budget": 64
+          },
+          "id": "accounting_strict_limit",
+          "mutant_witness": {
+            "actual": 8,
+            "case": [
+              8,
+              5,
+              5
+            ],
+            "elapsed_seconds": 0.04262804193422198,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "strict_limit",
+          "property": {
+            "actual": 18,
+            "case": [
+              18,
+              17,
+              17
+            ],
+            "elapsed_seconds": 0.04690108296927065,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 2,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04454808298032731,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": -13,
+            "case": [
+              15,
+              1,
+              28
+            ],
+            "elapsed_seconds": 0.04488629102706909,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "id": "accounting_subtract_limit",
+          "mutant_witness": {
+            "actual": 3,
+            "case": [
+              8,
+              2,
+              5
+            ],
+            "elapsed_seconds": 0.04416820907499641,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "subtract_limit",
+          "property": {
+            "actual": -8,
+            "case": [
+              1,
+              1,
+              9
+            ],
+            "elapsed_seconds": 0.04478120803833008,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 3,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04314245900604874,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": 13,
+            "case": [
+              15,
+              1,
+              28
+            ],
+            "elapsed_seconds": 0.04461395903490484,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "id": "accounting_fee_off_by_one",
+          "mutant_witness": {
+            "actual": 5,
+            "case": [
+              8,
+              2,
+              5
+            ],
+            "elapsed_seconds": 0.04589608404785395,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "fee_off_by_one",
+          "property": {
+            "actual": 0,
+            "case": [
+              18,
+              17,
+              17
+            ],
+            "elapsed_seconds": 0.0445156249916181,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 2,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04419787507504225,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.046236333088018,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.044412916991859674,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.8593117500422522,
+      "id": "schema",
+      "mutants": [
+        {
+          "example": {
+            "actual": "closed",
+            "case": [
+              "closed",
+              "reset"
+            ],
+            "elapsed_seconds": 0.04431966703850776,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 13,
+            "trial_budget": 64
+          },
+          "id": "schema_remove_reset",
+          "mutant_witness": {
+            "actual": "closed",
+            "case": [
+              "closed",
+              "reset"
+            ],
+            "elapsed_seconds": 0.04476983402855694,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "remove_reset",
+          "property": {
+            "actual": "closed",
+            "case": [
+              "closed",
+              "reset"
+            ],
+            "elapsed_seconds": 0.046197458053939044,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 13,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04518462496344,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "active",
+            "case": [
+              "new",
+              "close"
+            ],
+            "elapsed_seconds": 0.05701508396305144,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 9,
+            "trial_budget": 64
+          },
+          "id": "schema_invalid_new_close",
+          "mutant_witness": {
+            "actual": "active",
+            "case": [
+              "new",
+              "close"
+            ],
+            "elapsed_seconds": 0.04382212494965643,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "invalid_new_close",
+          "property": {
+            "actual": "active",
+            "case": [
+              "new",
+              "close"
+            ],
+            "elapsed_seconds": 0.04662891605403274,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 9,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.042943499982357025,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "new",
+            "case": [
+              "active",
+              "open"
+            ],
+            "elapsed_seconds": 0.04387583408970386,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 21,
+            "trial_budget": 64
+          },
+          "id": "schema_invalid_active_open",
+          "mutant_witness": {
+            "actual": "new",
+            "case": [
+              "active",
+              "open"
+            ],
+            "elapsed_seconds": 0.04792683303821832,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "invalid_active_open",
+          "property": {
+            "actual": "new",
+            "case": [
+              "active",
+              "open"
+            ],
+            "elapsed_seconds": 0.04455750004854053,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 21,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.044776457943953574,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": "active",
+            "case": [
+              "closed",
+              "close"
+            ],
+            "elapsed_seconds": 0.054082625079900026,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "id": "schema_revive_closed",
+          "mutant_witness": {
+            "actual": "active",
+            "case": [
+              "closed",
+              "close"
+            ],
+            "elapsed_seconds": 0.0455586250172928,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "revive_closed",
+          "property": {
+            "actual": "active",
+            "case": [
+              "closed",
+              "close"
+            ],
+            "elapsed_seconds": 0.058681749971583486,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04798979207407683,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.04815595899708569,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.05106625007465482,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.8584822909906507,
+      "id": "clamp",
+      "mutants": [
+        {
+          "example": {
+            "actual": 11,
+            "case": [
+              -3,
+              10,
+              16
+            ],
+            "elapsed_seconds": 0.05845470796339214,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "clamp_raise_floor",
+          "mutant_witness": {
+            "actual": 1,
+            "case": [
+              -1,
+              0,
+              4
+            ],
+            "elapsed_seconds": 0.04887433291878551,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "raise_floor",
+          "property": {
+            "actual": 11,
+            "case": [
+              -3,
+              10,
+              16
+            ],
+            "elapsed_seconds": 0.05071254202630371,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.042435500072315335,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": -2,
+            "case": [
+              24,
+              -30,
+              -1
+            ],
+            "elapsed_seconds": 0.053747166064567864,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "id": "clamp_lower_ceiling",
+          "mutant_witness": {
+            "actual": 3,
+            "case": [
+              5,
+              0,
+              4
+            ],
+            "elapsed_seconds": 0.05447208404075354,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "lower_ceiling",
+          "property": {
+            "actual": -14,
+            "case": [
+              8,
+              -13,
+              -13
+            ],
+            "elapsed_seconds": 0.04862212506122887,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 4,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04617454099934548,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": -11,
+            "case": [
+              4,
+              -11,
+              17
+            ],
+            "elapsed_seconds": 0.04524579201824963,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 2,
+            "trial_budget": 64
+          },
+          "id": "clamp_discard_interior",
+          "mutant_witness": {
+            "actual": 0,
+            "case": [
+              2,
+              0,
+              4
+            ],
+            "elapsed_seconds": 0.04444204200990498,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "discard_interior",
+          "property": {
+            "actual": -25,
+            "case": [
+              0,
+              -25,
+              0
+            ],
+            "elapsed_seconds": 0.04265454108826816,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 5,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04434670798946172,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        },
+        {
+          "example": {
+            "actual": 16,
+            "case": [
+              -3,
+              10,
+              16
+            ],
+            "elapsed_seconds": 0.04535274999216199,
+            "mode": "example",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "id": "clamp_reverse_clamps",
+          "mutant_witness": {
+            "actual": 4,
+            "case": [
+              2,
+              0,
+              4
+            ],
+            "elapsed_seconds": 0.04950795799959451,
+            "mode": "witness",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 1
+          },
+          "non_equivalent": true,
+          "operator": "reverse_clamps",
+          "property": {
+            "actual": 16,
+            "case": [
+              -3,
+              10,
+              16
+            ],
+            "elapsed_seconds": 0.04601570894010365,
+            "mode": "property",
+            "reason": "property_rejected",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "trial_budget": 64
+          },
+          "reference_witness": {
+            "elapsed_seconds": 0.04191104194615036,
+            "mode": "witness",
+            "note": "No counterexample found; not proof of correctness.",
+            "seconds_budget": 2.0,
+            "seed": 41,
+            "status": "EXHAUSTED",
+            "tested": 1,
+            "trial_budget": 1
+          }
+        }
+      ],
+      "references": {
+        "example": {
+          "elapsed_seconds": 0.04966525000054389,
+          "mode": "example",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        },
+        "property": {
+          "elapsed_seconds": 0.0442574160406366,
+          "mode": "property",
+          "note": "No counterexample found; not proof of correctness.",
+          "seconds_budget": 2.0,
+          "seed": 41,
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "trial_budget": 64
+        }
+      }
+    }
+  ],
+  "schema_version": 1,
+  "search_seconds": 2.0,
+  "seed": 41,
+  "sha256": {
+    "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-a-mission-041/plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/counterexample_eval.py": "2355651b4e36cfafb53ce2c849c020c3e967b1cc3dcbbe53e7fd26aebdd3dfdf",
+    "claim_accounting.py": "d9531b84139589a23e29964097985c901f2cc11b08515e72e96e714a669294cf",
+    "claim_clamp.py": "4cc857c1f8131ef096975376cc7c1a3ec991234ce2a94af77f19509b43640ef1",
+    "claim_lease.py": "cc6cabe9c1c4cfbc29324091bb85bdb62a95650e0d99557e8453ef0ad12a8a14",
+    "claim_path.py": "41c7c04e7f72b4ffbba4d7ee75e4302783493477249178898506295d73ee9159",
+    "claim_replay.py": "18a1912be9179c2424ff0f66f99474bebd9ed3d3d55d74e432c1a0d2f959e5f2",
+    "claim_schema.py": "d47ab1b3a3769a64b29d44e5b8ee4e9b7ab4c3adc81d3b9938019038b2f697e4",
+    "development.py": "4020e1b0494502c0907e270d9c5cd878b50c4b203d31854c613c14d707643e73",
+    "heldout.py": "f958bba26b9647ac6d3b3a358dcc434779591c865df2ae24a345802f83edd027",
+    "manifest.json": "52c4d36ccdc0b5b9784985e5c614cee4300ac9f7faed81303af7703dd8919d9a",
+    "references.py": "d5dec4166440dd51126c3f85650d3480c3042517e2022bba483743f1f7705853"
+  },
+  "split": "heldout",
+  "summary": {
+    "components": 6,
+    "delta_pp": 8.333333333333329,
+    "errors": 0,
+    "example_detection_percent": 91.66666666666667,
+    "max_component_seconds": 0.8593117500422522,
+    "mutants": 24,
+    "property_detection_percent": 100.0,
+    "reference_false_alarm_percent": 0.0,
+    "scoped_verdict": "FALSIFIED",
+    "thresholds": {
+      "component_runtime_le_600s": true,
+      "delta_ge_20pp": false,
+      "detection_ge_80": true,
+      "false_alarm_le_5": true
+    },
+    "timeouts": 0,
+    "valid_measurement": true
+  },
+  "trials": 64
+}

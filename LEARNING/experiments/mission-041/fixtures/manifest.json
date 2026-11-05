@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "id": "lease",
+      "reference": "references.py:lease",
+      "claim": "claim_lease.py",
+      "mutants": [
+        {
+          "id": "lease_strict_expiry",
+          "operator": "strict_expiry",
+          "target": "heldout.py:lease_strict_expiry",
+          "split": "heldout",
+          "witness": [
+            5,
+            5,
+            false
+          ]
+        },
+        {
+          "id": "lease_conjunction",
+          "operator": "conjunction",
+          "target": "heldout.py:lease_conjunction",
+          "split": "heldout",
+          "witness": [
+            2,
+            5,
+            true
+          ]
+        },
+        {
+          "id": "lease_reversed_expiry",
+          "operator": "reversed_expiry",
+          "target": "heldout.py:lease_reversed_expiry",
+          "split": "heldout",
+          "witness": [
+            2,
+            5,
+            false
+          ]
+        },
+        {
+          "id": "lease_owner_omission",
+          "operator": "owner_omission",
+          "target": "heldout.py:lease_owner_omission",
+          "split": "heldout",
+          "witness": [
+            2,
+            5,
+            true
+          ]
+        },
+        {
+          "id": "lease_constant",
+          "operator": "constant_return",
+          "target": "development.py:lease_constant",
+          "split": "development",
+          "witness": [
+            5,
+            5,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "id": "path",
+      "reference": "references.py:path",
+      "claim": "claim_path.py",
+      "mutants": [
+        {
+          "id": "path_preserve_dot",
+          "operator": "preserve_dot",
+          "target": "heldout.py:path_preserve_dot",
+          "split": "heldout",
+          "witness": [
+            "."
+          ]
+        },
+        {
+          "id": "path_no_parent_pop",
+          "operator": "no_parent_pop",
+          "target": "heldout.py:path_no_parent_pop",
+          "split": "heldout",
+          "witness": [
+            "a",
+            ".."
+          ]
+        },
+        {
+          "id": "path_escape_root",
+          "operator": "escape_root",
+          "target": "heldout.py:path_escape_root",
+          "split": "heldout",
+          "witness": [
+            ".."
+          ]
+        },
+        {
+          "id": "path_wrong_separator",
+          "operator": "wrong_separator",
+          "target": "heldout.py:path_wrong_separator",
+          "split": "heldout",
+          "witness": [
+            "a",
+            "b"
+          ]
+        },
+        {
+          "id": "path_constant",
+          "operator": "constant_return",
+          "target": "development.py:path_constant",
+          "split": "development",
+          "witness": [
+            "."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replay",
+      "reference": "references.py:replay",
+      "claim": "claim_replay.py",
+      "mutants": [
+        {
+          "id": "replay_last_wins",
+          "operator": "last_wins",
+          "target": "heldout.py:replay_last_wins",
+          "split": "heldout",
+          "witness": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "replay_no_deduplication",
+          "operator": "no_deduplication",
+          "target": "heldout.py:replay_no_deduplication",
+          "split": "heldout",
+          "witness": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "replay_discard_negative",
+          "operator": "discard_negative",
+          "target": "heldout.py:replay_discard_negative",
+          "split": "heldout",
+          "witness": [
+            [
+              1,
+              -2
+            ]
+          ]
+        },
+        {
+          "id": "replay_discard_zero_key",
+          "operator": "discard_zero_key",
+          "target": "heldout.py:replay_discard_zero_key",
+          "split": "heldout",
+          "witness": [
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "replay_constant",
+          "operator": "constant_return",
+          "target": "development.py:replay_constant",
+          "split": "development",
+          "witness": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "reference": "references.py:accounting",
+      "claim": "claim_accounting.py",
+      "mutants": [
+        {
+          "id": "accounting_strict_balance",
+          "operator": "strict_balance",
+          "target": "heldout.py:accounting_strict_balance",
+          "split": "heldout",
+          "witness": [
+            5,
+            5,
+            8
+          ]
+        },
+        {
+          "id": "accounting_strict_limit",
+          "operator": "strict_limit",
+          "target": "heldout.py:accounting_strict_limit",
+          "split": "heldout",
+          "witness": [
+            8,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "accounting_subtract_limit",
+          "operator": "subtract_limit",
+          "target": "heldout.py:accounting_subtract_limit",
+          "split": "heldout",
+          "witness": [
+            8,
+            2,
+            5
+          ]
+        },
+        {
+          "id": "accounting_fee_off_by_one",
+          "operator": "fee_off_by_one",
+          "target": "heldout.py:accounting_fee_off_by_one",
+          "split": "heldout",
+          "witness": [
+            8,
+            2,
+            5
+          ]
+        },
+        {
+          "id": "accounting_constant",
+          "operator": "constant_return",
+          "target": "development.py:accounting_constant",
+          "split": "development",
+          "witness": [
+            5,
+            5,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schema",
+      "reference": "references.py:schema",
+      "claim": "claim_schema.py",
+      "mutants": [
+        {
+          "id": "schema_remove_reset",
+          "operator": "remove_reset",
+          "target": "heldout.py:schema_remove_reset",
+          "split": "heldout",
+          "witness": [
+            "closed",
+            "reset"
+          ]
+        },
+        {
+          "id": "schema_invalid_new_close",
+          "operator": "invalid_new_close",
+          "target": "heldout.py:schema_invalid_new_close",
+          "split": "heldout",
+          "witness": [
+            "new",
+            "close"
+          ]
+        },
+        {
+          "id": "schema_invalid_active_open",
+          "operator": "invalid_active_open",
+          "target": "heldout.py:schema_invalid_active_open",
+          "split": "heldout",
+          "witness": [
+            "active",
+            "open"
+          ]
+        },
+        {
+          "id": "schema_revive_closed",
+          "operator": "revive_closed",
+          "target": "heldout.py:schema_revive_closed",
+          "split": "heldout",
+          "witness": [
+            "closed",
+            "close"
+          ]
+        },
+        {
+          "id": "schema_constant",
+          "operator": "constant_return",
+          "target": "development.py:schema_constant",
+          "split": "development",
+          "witness": [
+            "closed",
+            "reset"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clamp",
+      "reference": "references.py:clamp",
+      "claim": "claim_clamp.py",
+      "mutants": [
+        {
+          "id": "clamp_raise_floor",
+          "operator": "raise_floor",
+          "target": "heldout.py:clamp_raise_floor",
+          "split": "heldout",
+          "witness": [
+            -1,
+            0,
+            4
+          ]
+        },
+        {
+          "id": "clamp_lower_ceiling",
+          "operator": "lower_ceiling",
+          "target": "heldout.py:clamp_lower_ceiling",
+          "split": "heldout",
+          "witness": [
+            5,
+            0,
+            4
+          ]
+        },
+        {
+          "id": "clamp_discard_interior",
+          "operator": "discard_interior",
+          "target": "heldout.py:clamp_discard_interior",
+          "split": "heldout",
+          "witness": [
+            2,
+            0,
+            4
+          ]
+        },
+        {
+          "id": "clamp_reverse_clamps",
+          "operator": "reverse_clamps",
+          "target": "heldout.py:clamp_reverse_clamps",
+          "split": "heldout",
+          "witness": [
+            2,
+            0,
+            4
+          ]
+        },
+        {
+          "id": "clamp_constant",
+          "operator": "constant_return",
+          "target": "development.py:clamp_constant",
+          "split": "development",
+          "witness": [
+            -1,
+            0,
+            4
+          ]
+        }
+      ]
+    }
+  ]
+}

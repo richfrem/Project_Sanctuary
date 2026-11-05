@@ -1,0 +1,9 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-a-mission-041
+collected 21 items
+
+plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_counterexample_eval.py . [  4%]
+....................                                                     [100%]
+
+============================== 21 passed in 2.36s ==============================
