@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:00:18.026588+00:00",
-  "total_assessments": 27,
-  "cumulative_score": 376,
-  "average_fitness": 0.928,
+  "updated_at": "2026-11-05T06:06:43.617204+00:00",
+  "total_assessments": 28,
+  "cumulative_score": 390,
+  "average_fitness": 0.929,
   "dimension_totals": {
-    "useful_outcome": 75,
-    "learning_depth": 75,
-    "verification_rigor": 80,
-    "token_economy": 65,
-    "anti_asch_integrity": 81
+    "useful_outcome": 78,
+    "learning_depth": 78,
+    "verification_rigor": 83,
+    "token_economy": 67,
+    "anti_asch_integrity": 84
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 14,
-      "cumulative_score": 190,
-      "average_fitness": 0.905
+      "assessments": 15,
+      "cumulative_score": 204,
+      "average_fitness": 0.907
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "ada0b655-8cb9-4bc8-a2b1-f7b2c101da3a",
+      "timestamp": "2026-11-05T06:06:43.616597+00:00",
+      "task_id": "TASK-LEARNING-ARCHIVE",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Triaged from a read, not from names, after my first pass was wrong; used two cheap models with one rubric and checked every disagreement; caught two loose citation matches; moved with git mv and guard tests; reported the models' scores honestly"
+    },
     {
       "assessment_id": "19697f8a-8d27-4992-baa9-724929b85e5e",
       "timestamp": "2026-11-05T06:00:18.025859+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 14,
       "fitness": 0.933,
       "notes": "First use of Protocol 133 (upstream PR 746, merged, installed, verified); persist_soul.py repaired; protocol_manager update made in-place; 58 archive docs preserved. 24 new tests. Mistakes caught and reported: pushed before the commit landed (created an empty remote branch), used an empty probe commit; both harmless and fixed. Economy 2: long session with several tangents. Self-assessed."
-    },
-    {
-      "assessment_id": "2ff30505-8aad-4b08-b1fc-91e72a9eb9c2",
-      "timestamp": "2026-11-03T14:44:18.886535+00:00",
-      "task_id": "MISSION-022",
-      "agent_id": "claude",
-      "raw_score": 13,
-      "fitness": 0.867,
-      "notes": "Hypothesis FALSIFIED (47/60=78.3%, run5 73.3%<75%). Useful=2: reusable loop, tests and eval method shipped, but target not met. Learning=3: negative result, scaffold-dependence, trigger analysis, MISSION-028. Rigor=3: pre-registration, held-out generated tasks, agy review adopted, unit tests. Token economy=2: many local iterations and two ~11min runs. Anti-Asch=3: did not record the scripted CORROBORATED; discarded own tuned 80% as evidence; found and reported own tool defects. Self-assessed."
     }
   ]
 }
