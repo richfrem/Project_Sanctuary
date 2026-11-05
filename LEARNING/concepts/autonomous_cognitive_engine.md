@@ -73,7 +73,7 @@ Prior to this architecture, agent backlogs were often entangled in human-oriente
    - Provides $O(1)$ lookup for agent bootloaders, filtering missions by priority score, status (`PROPOSED`, `ACTIVE`, `RESOLVED`, `REJECTED`), and assigned agent.
    - Allows agents to ingest and rank the entire research portfolio in under 1,000 tokens.
 
-2. **Tier 2: Human Markdown Projection (`LEARNING/research/backlog.md`)**
+2. **Tier 2: Human Markdown Projection (`LEARNING/backlog.md`)**
    - Read-only, automatically compiled view of the active mission portfolio.
    - Generated deterministically by `manage_backlog.py compile` to provide the human partner with instant transparency.
    - Never edited directly; the JSON manifests remain the canonical source of truth.

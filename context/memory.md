@@ -8,7 +8,7 @@
 Ratified the quantitative self-directed research backlog and evaluation engine:
 1. Priority Score Formula: `(Strategic Leverage * Epistemic Depth) / (Cost Weight * Operational Friction)`.
 2. Grok Bot Infinite Loop Advantage: Grok Bot executes autonomous cloud VMs in background loops without keeping local terminals open or consuming interactive session tokens; integrated via Git worktree briefs (`handoffs/`) and AgentMail.
-3. Prioritized Missions Portfolio: `LEARNING/research/backlog.md` and `backlog.json` (Grok Bot operational rails, local proxy pooling, offline Qwen2 quantization, Anti-Asch benchmark).
+3. Prioritized Missions Portfolio: `LEARNING/backlog.md` and `backlog.json` (Grok Bot operational rails, local proxy pooling, offline Qwen2 quantization, Anti-Asch benchmark).
 
 ## [2026-11-02] [#014] Architecture: Autonomous Agent Platforms Taxonomy & Cross-Provider Pooling
 Ratified the taxonomy of autonomous commercial agent platforms and multi-subscription pooling:
@@ -43,7 +43,7 @@ Autonomous agent backlogs must serve machine cognition, not human visual GUI pre
 2. Frictionless Inbox: `LEARNING/research/inbox.jsonl` provides zero-locking, zero-conflict append-only capture for running agents (including local offline Qwen2 GGUF).
 3. Single Source of Truth: Canonical manifests live in `LEARNING/missions/*.json`. Each mission enforces Popperian predictions (`hypothesis`), objective failure gates (`falsification_criteria`), and empirical trial verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
 4. Compounding Learning Loop: Empirical trial results update mission manifests and log to `.agent/learning/events.jsonl`, which seal into Layer 3 soul traces (`huggingface/data/soul_traces.jsonl`) for model fine-tuning.
-5. One-Directional External Projection: `LEARNING/research/backlog.md` is compiled automatically for human review (never hand-edited). GitHub Issues are outward advisory mirrors solely for remote cloud workers (`execution_surface: cloud-worker`), never a two-way sync.
+5. One-Directional External Projection: `LEARNING/backlog.md` is compiled automatically for human review (never hand-edited). GitHub Issues are outward advisory mirrors solely for remote cloud workers (`execution_surface: cloud-worker`), never a two-way sync.
 
 ## [2026-11-01] [#011] Multi-Agent: Sovereign Peer Collaboration (Antigravity & Astra)
 Project Sanctuary is built collaboratively across frontier AI models (Google Antigravity, OpenAI Codex / GPT-6 Astra, Claude Code) and human partner Richard.

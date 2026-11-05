@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence
 
 SHARED_GENERATED = (
-    "LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", ".agent/learning/cognitive_ledger.json",
+    "LEARNING/research/index.jsonl", "LEARNING/backlog.md", ".agent/learning/cognitive_ledger.json",
     ".agent/learning/events.jsonl", "chronicle/ledger.json",
 )
 GLOB_CHARS = set("*?[")
