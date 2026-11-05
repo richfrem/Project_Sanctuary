@@ -1,0 +1,63 @@
+{
+  "id": "MISSION-047",
+  "title": "Transfer and Compose Procedures Through Evidence-Linked Concept Graphs",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic graph traverser; query_graph.py; disclose.py; cheap LLM synthesizer (ceiling 600k tokens)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.25,
+    "operational_friction": 3,
+    "priority_score": 33.33
+  },
+  "priority_score": 33.33,
+  "hypothesis": "Retrieval over typed concept relationships (preconditions, mechanisms, counterexamples, outcomes) followed by procedure synthesis will: (a) improve success on unseen composed tasks by >= 15 percentage points over the stronger of lexical retrieval and untyped graph traversal; (b) retain >= 95% accuracy on familiar control tasks; and (c) stay within an identical 6,000-token retrieval budget per task.",
+  "falsification_criteria": "Fail if any threshold is missed, or if improvement depends on answer-bearing links inserted after seeing held-out tasks. Causality must not be inferred solely from a wikilink.",
+  "experiment": "Build a frozen corpus from 30 validated procedures/concepts. Construct 60 held-out tasks requiring combinations of 2 or 3 mechanisms absent as complete examples in the corpus. Match model, tools, context budget, and task order. Ablate edge types to determine whether typed semantics add value beyond connectivity.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.25,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models are excluded; graph algorithms are deterministic Python and procedure synthesis is bounded cheap tier."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "concept-graphs",
+    "procedural-transfer",
+    "compositional-reasoning",
+    "managing-sovereign-memory",
+    "proposed-by-astra",
+    "astra-epoch-n09"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-010": "EXTENDS: applies causal reasoning mechanisms to active procedure graph traversal.",
+    "MISSION-012": "EXTENDS: combines graph topology with aggressive token retrieval compression.",
+    "MISSION-042": "SUPPLIES DATA TO: feeds synthesized multi-step plans into the local FSM procedure executor."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-047/",
+      "LEARNING/research/missions/MISSION-047.json",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py",
+      "LEARNING/concepts/",
+      "LEARNING/procedures/"
+    ],
+    "resources": [
+      "fixture knowledge graph, max 600k inference tokens"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N09. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

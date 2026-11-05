@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-050",
+  "title": "Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Multi-agent coordination harness; manage_coordination.py; relay.py; evaluating-agent-work telemetry (ceiling 1M tokens, 12 execution-hours)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 33.33
+  },
+  "priority_score": 33.33,
+  "hypothesis": "A checkpoint policy using measured interruption risk, progress value, and checkpoint cost will: (a) produce >= 20% more verified completed subgoals per fixed resource budget than the best fixed-interval policy on development data; (b) lose <= 5% of acknowledged progress; (c) keep checkpoint overhead <= 10% of inference tokens; and (d) lose no more than 3% throughput in interruption-free controls.",
+  "falsification_criteria": "Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.",
+  "experiment": "Run 30 multi-stage tasks under frozen interruption schedules (context reset, worker termination, simulated quota denial, vendor handoff). Compare fixed-step checkpoints, fixed-time checkpoints, end-only persistence, and the adaptive policy. Score independently verified subgoals, not self-reported completion.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models are limited to participating in multi-vendor handoff tests under the 1M token ceiling."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "checkpointing",
+    "interruption-recovery",
+    "cognitive-continuity",
+    "adaptive-scheduling",
+    "operating-sanctuary-guardian",
+    "proposed-by-astra",
+    "astra-epoch-n12"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-008": "CONSUMES: reuses structured checkpoint schema (hypotheses, evidence, next experiments).",
+    "MISSION-030": "CONSUMES: binds to pre-compact snapshot hooks for state preservation.",
+    "MISSION-035": "CONSUMES: reads real-time quota-window exhaustion risks to predict interruptions.",
+    "MISSION-038": "CONSUMES: relies on monotonic lease fencing and crash-safe coordination transitions."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-050/",
+      "LEARNING/research/missions/MISSION-050.json",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_adaptive_checkpoint.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/adaptive-interruption-policy.md"
+    ],
+    "resources": [
+      "isolated coordination board, bounded backend quotas, disposable worktrees; ceiling 1M tokens"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N12. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

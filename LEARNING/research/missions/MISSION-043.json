@@ -1,0 +1,63 @@
+{
+  "id": "MISSION-043",
+  "title": "Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Apple Silicon M1 (16GB) MLX LoRA training; forging-sovereign-models; 10 GiB RAM ceiling",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.4,
+    "operational_friction": 4,
+    "priority_score": 15.62
+  },
+  "priority_score": 15.62,
+  "hypothesis": "Across three sequential domain updates, a replay-based LoRA adapter pipeline will: (a) improve newest-domain success by >= 10 percentage points over the frozen initial model after each update; (b) lose <= 3 percentage points on every earlier domain (catastrophic forgetting prevention); (c) reject 100% of deliberately regressive candidate adapters in the promotion gate; and (d) complete each update within 6 hours, using <= 10 GiB process-tree memory and <= 1 GiB incremental swap on 16GB Apple Silicon.",
+  "falsification_criteria": "Fail if any update violates capability or retention thresholds, a regressive adapter is promoted, or resource limits cannot be met. A smaller model or easier task substitution after evaluation begins requires a new hypothesis.",
+  "experiment": "Run a feasibility pilot, then freeze one model small enough for the hardware budget. Evaluate three sequential domains with untouched held-outs and three training seeds. Compare frozen weights, naive sequential tuning, and replay plus promotion gates. Include retrieval-assisted frozen-model results as an economic comparator.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.4,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to bounded standard review solely for validating promotion test manifests (ceiling 250k cloud tokens, 54 training hours)."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "sovereign-intelligence",
+    "local-fine-tuning",
+    "continual-learning",
+    "catastrophic-forgetting",
+    "adapter-gating",
+    "forging-sovereign-models",
+    "proposed-by-astra",
+    "astra-epoch-n05"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-011": "EXTENDS: advances one-shot fine-tuning transfer to sequential multi-domain capability retention.",
+    "MISSION-036": "CONSUMES: relies on formal evidence contracts to gate candidate adapter promotions.",
+    "MISSION-037": "CONSUMES: tracks adapter applicability across model weight updates and runtime environments."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-043/",
+      "LEARNING/research/missions/MISSION-043.json",
+      "plugins/sanctuary-core/.apm/skills/forging-sovereign-models/",
+      "huggingface/data/soul_traces.jsonl"
+    ],
+    "resources": [
+      "exclusive local model memory (10 GiB ceiling), local disk, 54 training hours across seeds"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N05. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

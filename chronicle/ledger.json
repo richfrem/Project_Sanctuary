@@ -1,6 +1,13 @@
 {
-  "total_entries": 359,
+  "total_entries": 360,
   "entries": [
+    {
+      "id": 368,
+      "title": "Fifteen new missions (036-050) committed after passing the schema validator; the bootstrapper now validates mission manifests",
+      "filename": "368_fifteen_new_missions_036_050_committed_after_passing_the_schema_validator_the_bootstrapper_now_validates_mission_manifests.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 367,
       "title": "Mission manifests get a JSON Schema and validator: drafted by Claude Haiku 5.5 via cli-agent, integrated and fixed",

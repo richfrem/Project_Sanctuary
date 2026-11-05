@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-040",
+  "title": "Prevent Evidence Duplication from Manufacturing Confidence Across Accumulated Memory",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic graph processor; query_graph.py; disclose.py; cheap LLM evaluator (ceiling 400k tokens, 4 local hours)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.15,
+    "operational_friction": 2,
+    "priority_score": 66.67
+  },
+  "priority_score": 66.67,
+  "hypothesis": "Tracking derivation relationships and grouping evidence by originating observation will: (a) reduce false acceptance caused by duplicated evidence by >= 50% versus ordinary provenance-tagged retrieval; (b) preserve correct use of genuinely independent corroboration within 3 percentage points; (c) add <= 15% retrieved-context tokens; and (d) correctly identify >= 95% of known derivative relationships in held-out fixtures.",
+  "falsification_criteria": "Fail if any threshold is missed, or if the system labels independently collected evidence as derivative solely because its wording is similar. Missing provenance must reduce confidence in independence rather than trigger invented lineage.",
+  "experiment": "Build 100 evidence families with known lineage (paraphrases, circular citations, shared upstream sources, conflicting observations, and genuinely independent measurements). Compare narrative memory, provenance-tagged memory (MISSION-006), and provenance plus explicit derivation grouping. Include missing-lineage cases where the correct output is 'independence unknown'.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.15,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier escalation is prohibited; graph derivation grouping is strictly deterministic graph algorithms."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "truth-sovereignty",
+    "evidence-lineage",
+    "derivation-graph",
+    "anti-hallucination",
+    "managing-sovereign-memory",
+    "proposed-by-astra",
+    "astra-epoch-n02"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-006": "EXTENDS: adds explicit derivative observation grouping to basic content/provenance hashing.",
+    "MISSION-036": "CONSUMES: relies on claim identities to bind evidential support clusters.",
+    "MISSION-013": "SUPPLIES DATA TO: prevents collective debates from treating echo-chamber repetitions as multiple votes."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-040/",
+      "LEARNING/research/missions/MISSION-040.json",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/query_graph.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_evidence_derivation.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/evidence-lineage-schema.md"
+    ],
+    "resources": [
+      "local deterministic fixture stores; max 400k tokens and 4 local CPU hours"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N02. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

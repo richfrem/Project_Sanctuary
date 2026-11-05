@@ -105,7 +105,7 @@ python3 manage_backlog.py validate
 `LEARNING/research/mission.schema.json` (JSON Schema, draft 2020-12 subset) describes one mission manifest and sits beside the
 data, so any agent or bundle reading the folder sees it. `scripts/validate_missions.py` is its zero-dependency validator
 (`python3 validate_missions.py [--missions-dir DIR] [--schema FILE]`; exit 1 on any error, and an empty folder is an error, never
-`OK`). `manage_backlog.py validate` applies it automatically when the root has a schema.
+`OK`). `manage_backlog.py validate` applies it automatically when the root has a schema, and the session wakeup (`guardian_wakeup.py`) reports one `PASS`/`WARN` line for it.
 
 - Unknown optional keys are allowed (drafts must not break); required keys, enums (status, verdict, execution surface, routing tier),
   ID/key patterns, score ranges and types are enforced. File name must equal the manifest `id`.

@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-045",
+  "title": "Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Multi-vendor CLI agent pool (OpenAI, Anthropic, Google); evaluating-agent-work; usage telemetry (ceiling 1.2M tokens)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.5,
+    "operational_friction": 3,
+    "priority_score": 16.67
+  },
+  "priority_score": 16.67,
+  "hypothesis": "A team selector trained on development-set error patterns will achieve >= 8 percentage points higher task success than the strongest preregistered control (best individual model repeated sampling, random cross-vendor teams, fixed asymmetric roles) while staying within the same measured inference-cost ceiling.",
+  "falsification_criteria": "Fail if the advantage is below 8 points, exceeds the cost ceiling, or disappears on untouched task families. Selection using held-out answers invalidates the experiment. Vendor diversity is not assumed to be epistemic independence.",
+  "experiment": "Collect blinded outputs from fixed OpenAI, Anthropic, and Google endpoints on 80 development problems. Estimate complementary errors by task class. Freeze selection rules and evaluate 120 held-out problems. Keep aggregation rules constant across arms so the experiment isolates team selection.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "multi-vendor-pool",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.5,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "claude-haiku-5.5"
+    ],
+    "frontier_escalation_condition": "Frontier models are explicitly evaluated as team participants; total experiment ceiling is 1.2M tokens."
+  },
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "collective-intelligence",
+    "cross-vendor",
+    "complementary-errors",
+    "team-selection",
+    "evaluating-agent-work",
+    "proposed-by-astra",
+    "astra-epoch-n07"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-013": "EXTENDS: replaces arbitrary role assignments with empirically measured error complementarity.",
+    "MISSION-035": "CONSUMES: relies on real-time measured token and quota telemetry across vendor backends.",
+    "MISSION-033": "SUPPLIES DATA TO: guides dynamic worker selection during parallel mission orchestrations."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-045/",
+      "LEARNING/research/missions/MISSION-045.json",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/team_selector.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_team_selector.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/complementary-errors.md"
+    ],
+    "resources": [
+      "three bounded backend cloud quotas (OpenAI, Anthropic, Google); ceiling 1.2M tokens"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N07. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-044",
+  "title": "Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic bootstrap runner; air-gapped network namespace; operating-sanctuary-guardian; forge_llm.py",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 33.33
+  },
+  "priority_score": 33.33,
+  "hypothesis": "From a sealed, locally available recovery package, a clean environment with external networking denied will: (a) restore >= 95% of a fixed 40-task capability suite; (b) complete restoration within 30 minutes; (c) preserve 100% of selected evidence artifacts byte-for-byte; (d) make zero attempted external network connections during restoration and evaluation; and (e) include at least 10 tasks requiring local MLX model execution.",
+  "falsification_criteria": "Any threshold missed falsifies the hypothesis. A reconstruction that works only because it accesses undeclared host caches or environmental secrets fails. Same-machine recovery does not establish cross-hardware portability.",
+  "experiment": "Compare a git checkout alone versus a declared sealed recovery package containing required weights, dependencies, procedures, and integrity metadata. Run 3 clean restores on declared hardware target using isolated homes and controlled dependency paths. Test missing and corrupted artifacts.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "qwen2-7b-mlx-4bit",
+    "cli_target": "mlx-lm",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models are limited to authoring recovery harness specifications (ceiling 100k dev tokens, 8 local hours)."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "operational-sovereignty",
+    "offline-resilience",
+    "disaster-recovery",
+    "air-gap-validation",
+    "operating-sanctuary-guardian",
+    "proposed-by-astra",
+    "astra-epoch-n06"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-003": "INTEGRATES: quantizes offline sovereign model weights for the bundle.",
+    "MISSION-018": "INTEGRATES: validates offline fast-boot orientation without remote calls.",
+    "MISSION-020": "INTEGRATES: packages upstream APM skills into local offline caches.",
+    "MISSION-030": "INTEGRATES: ensures pre-compact snapshots are preserved byte-for-byte."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-044/",
+      "LEARNING/research/missions/MISSION-044.json",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/disaster_recovery.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_disaster_recovery.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/offline-habitat-pack.md"
+    ],
+    "resources": [
+      "isolated user home, local disk space for full bundle, local MLX model memory"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N06. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}
