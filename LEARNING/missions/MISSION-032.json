@@ -43,7 +43,7 @@
   "priority_score": 40.0,
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-032/",
+      "LEARNING/experiments/mission-032/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/relay.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/relay_eval.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_relay.py"

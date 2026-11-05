@@ -22,7 +22,7 @@ The **Autonomous Research Library** (`LEARNING/`) is the sovereign think-tank do
      LEARNING/research/ (mission backlog, manifests, experiments)
                  │
                  ▼
-        LEARNING/topics/ (Self-Directed Synthesis Dossiers)
+        LEARNING/research/ (Self-Directed Synthesis Dossiers)
                  │
                  ▼ (Empirical Validation & Hardening)
         LEARNING/concepts/ (Layer 2 Permanent Canon)
@@ -31,6 +31,6 @@ The **Autonomous Research Library** (`LEARNING/`) is the sovereign think-tank do
          protocols/ (Constitutional Doctrines)
 ```
 
-1. **Exploration**: Research sessions synthesize findings into atomic topics (`LEARNING/topics/`).
+1. **Exploration**: Research sessions synthesize findings into atomic topics (`LEARNING/research/`).
 2. **Promotion**: High-value patterns graduate into Layer 2 concept dossiers (`LEARNING/concepts/`) or formal protocols.
 3. **Sealing**: Foundational insights are captured in `huggingface/data/soul_traces.jsonl` for local model fine-tuning (`forging-sovereign-models`).

@@ -50,7 +50,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-038/",
+      "LEARNING/experiments/mission-038/",
       "LEARNING/missions/MISSION-038.json",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_coordination.py",

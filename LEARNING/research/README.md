@@ -1,6 +1,6 @@
-# Research dossiers (`topics/`)
+# Research dossiers (`research/`, formerly `topics/`)
 
-Self-directed research by agents. Triaged on 2026-11-05 by reading each dossier plus who cites it (see `research/experiments/learning-restructure/`). Retired dossiers moved to [`ARCHIVE/LEARNING_pre_2026-11/topics/`](../../ARCHIVE/LEARNING_pre_2026-11/README.md).
+Self-directed research by agents. Triaged on 2026-11-05 by reading each dossier plus who cites it (see `experiments/learning-restructure/`). Retired dossiers moved to [`ARCHIVE/LEARNING_pre_2026-11/topics/`](../../ARCHIVE/LEARNING_pre_2026-11/README.md).
 
 - **KEEP**: live. It is recent (within 30 days of the triage), or it is the evidence base of a protocol or a CONFIRMED insight.
 - **HISTORICAL**: stays in the repository as background; older, not cited by anything live. Do not treat its claims as current without checking.

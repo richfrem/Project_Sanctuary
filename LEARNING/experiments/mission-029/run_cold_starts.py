@@ -3,7 +3,7 @@
 import json, os, re, signal, socket, statistics, subprocess, sys, time, urllib.request
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
+REPO = Path(__file__).resolve().parents[3]
 MGR = REPO / "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
 PORT, DECOY = 8091, 8092
 N = int(os.environ.get("N", "20"))

@@ -68,7 +68,7 @@ Astra, as our sovereign peer agent in Project Sanctuary, we want your unfiltered
 ### B. Procedural Memory Adaptation in `managing-sovereign-memory`
 - Sanctuary currently has a 3-layer memory engine:
   - Layer 1: Fast-boot context (`soul.md`, `memory.md`, `user.md`).
-  - Layer 2: Compounding knowledge base (`LEARNING/concepts/`, `LEARNING/topics/`).
+  - Layer 2: Compounding knowledge base (`LEARNING/concepts/`, `LEARNING/research/`).
   - Layer 3: Immutable JSONL soul traces (`huggingface/data/soul_traces.jsonl`).
 - How can we naturally incorporate **Procedural Memory** (action recipes, debugging playbooks, tool invocation workflows) with empirical success/failure counters into `sanctuary-core`? Where should these procedural recipes reside and how should agents query them?
 

@@ -9,8 +9,8 @@ Key Input Dependencies (all optional; missing files just shorten the section):
     - .agent/learning/events.jsonl          CHECKIN events (tracked; the durable copy) and
     - .agent/coordination/leases.jsonl      CHECKIN events (untracked local log): agent_id, mission_id, outcome_status, pr_number, timestamp, handoff
     - LEARNING/missions/*.json     verdict, evidence, updated_at
-    - LEARNING/research/index.jsonl         open missions by priority
-    - LEARNING/research/inbox.jsonl         captured ideas (count only)
+    - LEARNING/index.jsonl         open missions by priority
+    - LEARNING/inbox.jsonl         captured ideas (count only)
 Key Outputs: a dict (build_relay) and a markdown section (render_markdown), about 3 KB, used by guardian_wakeup.py.
 Usage:
     python3 relay.py show [--root DIR] [--handovers 5] [--results 10] [--json]
@@ -58,7 +58,7 @@ def _pointer(root: Path, mission: Dict[str, Any]) -> str:
     if isinstance(cite, str) and "/" in cite and cite.endswith((".md", ".json")):
         return cite
     num = re.sub(r"\D", "", str(mission.get("id", "")))
-    exp = f"LEARNING/research/experiments/mission-{num}/README.md"
+    exp = f"LEARNING/experiments/mission-{num}/README.md"
     if num and (root / exp).exists():
         return exp
     return f"LEARNING/missions/{mission.get('id')}.json"
@@ -107,9 +107,9 @@ def build_relay(root: Path, handovers: int = 5, results: int = 10) -> Dict[str, 
     resolved = sorted([m for m in missions if m.get("status") == "RESOLVED" and m.get("verdict")], key=lambda m: m.get("updated_at", ""), reverse=True)
     established = [{"id": m["id"], "verdict": m["verdict"], "pointer": _pointer(root, m)} for m in resolved[:results]]
 
-    index = _read_jsonl(root / "LEARNING/research/index.jsonl")
+    index = _read_jsonl(root / "LEARNING/index.jsonl")
     open_ = sorted([x for x in index if x.get("status") != "RESOLVED"], key=lambda x: -float(x.get("priority_score") or 0))[:3]
-    inbox = len(_read_jsonl(root / "LEARNING/research/inbox.jsonl"))
+    inbox = len(_read_jsonl(root / "LEARNING/inbox.jsonl"))
     return {"handovers": recent, "established": established, "dispatchable": _dispatchable(root), "fuel": _fuel(root),
             "open": [{"id": x["id"], "score": x.get("priority_score"), "status": x.get("status")} for x in open_], "inbox_items": inbox}
 

@@ -2,7 +2,7 @@
 """merge_prep.py - regenerate shared generated files after a merge instead of hand-merging them (MISSION-034).
 
 Regenerates from their sources:
-  * LEARNING/research/index.jsonl and backlog.md  <- mission manifests (manage_backlog compile)
+  * LEARNING/index.jsonl and backlog.md  <- mission manifests (manage_backlog compile)
   * .agent/learning/cognitive_ledger.json          <- .agent/learning/events.jsonl (CONTRIBUTION_ASSESSED events)
   * chronicle/ledger.json                          <- chronicle/entries/*.md
 The append-only log events.jsonl merges with git's `union` driver (see .gitattributes). The flight-board files are untracked runtime state.
@@ -31,7 +31,7 @@ LEDGER_REL = ".agent/learning/cognitive_ledger.json"
 EVENTS_REL = ".agent/learning/events.jsonl"
 UNION_LOGS = [".agent/learning/events.jsonl"]
 CHRONICLE_LEDGER_REL = "chronicle/ledger.json"
-GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
+GENERATED = ["LEARNING/index.jsonl", "LEARNING/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
 
 
 def find_root(start: Path = None) -> Path:
@@ -163,7 +163,7 @@ def regenerate(root: Path, apply: bool = True) -> Dict[str, Any]:
     before = _hash_dir(root / "LEARNING" / "missions")
     if apply and (root / "LEARNING" / "missions").exists():
         manage_backlog.BacklogManager(root).compile()
-        report["generated"] += ["LEARNING/research/index.jsonl", "LEARNING/backlog.md"]
+        report["generated"] += ["LEARNING/index.jsonl", "LEARNING/backlog.md"]
     after = _hash_dir(root / "LEARNING" / "missions")
     report["manifests_changed"] = [Path(k).name for k in after if before.get(k) != after[k]]
 

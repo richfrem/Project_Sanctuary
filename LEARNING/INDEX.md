@@ -7,11 +7,14 @@
 | Path | Role | State |
 |:---|:---|:---|
 | [`concepts/`](./concepts/) | Canonical knowledge dossiers (confidence-tracked). Read by `disclose.py`, `query_graph.py`, `audit_decay.py`, `record_insight.py`. | live |
-| [`procedures/`](./procedures/) | Executable procedures with recorded outcomes (`record_procedure_outcome.py`). | live |
+| [`procedures/`](./procedures/) | Home of procedural memory: the procedure format and outcome tracking (`record_procedure_outcome.py`). No live procedures since 2026-11-05; open missions 042, 047, 049 build on it. | mechanism only |
 | [`philosophy/`](./philosophy/) | Identity doctrine: the Garden and the Cage, the Cognitive Genome synthesis, Meta-Embers. | stable |
-| [`missions/`](./missions/) | **The mission manifests** (`MISSION-NNN.json`) and their schema. See "The mission system" below. | live |
-| [`research/`](./research/) | The rest of the mission system while it is being moved up here: Tier-1 index, inbox and experiments. | live (moving) |
-| [`topics/`](./topics/) | Self-directed research dossiers (17), each marked KEEP or HISTORICAL in [`topics/README.md`](./topics/README.md). Six are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. | mixed |
+| [`missions/`](./missions/) | **The mission manifests** (`MISSION-NNN.json`) and their JSON Schema. See "The mission system" below. | live |
+| [`experiments/`](./experiments/) | One folder per mission (or task): pre-registered predictions, scripts and results. Dated records; their paths describe the time they ran. | live |
+| [`index.jsonl`](./index.jsonl) | Tier-1 machine index of the missions. **Generated** by `manage_backlog.py compile`; not the same file as this `INDEX.md`. | generated |
+| [`backlog.md`](./backlog.md) | Human view of the same ranking. **Generated.** | generated |
+| [`inbox.jsonl`](./inbox.jsonl) | Raw ideas awaiting promotion to missions (`manage_backlog.py capture`). | live |
+| [`research/`](./research/) | Self-directed research dossiers (17), each marked KEEP or HISTORICAL in [`research/README.md`](./research/README.md). Six are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. Formerly `topics/`. | mixed |
 | [`README.md`](./README.md) | Pointer to this file. | - |
 
 Retired material (2025 security briefings, eight retired topic dossiers, two loose files) lives in [`ARCHIVE/LEARNING_pre_2026-11/`](../ARCHIVE/LEARNING_pre_2026-11/README.md), with a map of what moved and why.
@@ -33,12 +36,12 @@ Retired material (2025 security briefings, eight retired topic dossiers, two loo
 
 ## The mission system
 
-The mission system is the operational backlog, not a literature folder. It is being moved up from `research/` to the root of `LEARNING/` one item at a time; `missions/` and `backlog.md` are done.
+The mission system is the operational backlog; it sits at the root of `LEARNING/` (it used to be nested in `research/`, where it was filed in November 2026 as a "research backlog"). `research/` now means research dossiers only.
 
-- `missions/MISSION-NNN.json`: one falsifiable manifest per mission (hypothesis, falsification criteria, scores, routing, declared impact). Structure is defined by [`missions/mission.schema.json`](./missions/mission.schema.json). A manifest left at the old `research/missions/` path is reported by `validate`.
-- `research/index.jsonl` (Tier-1 index) and `backlog.md` (its human view, at this root): **generated** by `manage_backlog.py compile`; never hand-edit or hand-merge.
-- `research/inbox.jsonl`: raw ideas awaiting promotion to missions.
-- `research/experiments/<mission>/`: the pre-registered predictions, scripts and results for each mission.
+- `missions/MISSION-NNN.json`: one falsifiable manifest per mission (hypothesis, falsification criteria, scores, routing, declared impact). Structure is defined by [`missions/mission.schema.json`](./missions/mission.schema.json).
+- `index.jsonl` and `backlog.md`: **generated** by `manage_backlog.py compile`; never hand-edit or hand-merge. `inbox.jsonl`: raw ideas.
+- `experiments/<mission>/`: the pre-registered predictions, scripts and results for each mission.
+- Guard: `manage_backlog.py validate` (and so the pre-commit gate) fails if a mission-system item is left inside `research/` (for example a manifest written by an agent following an old prompt).
 - Tools: `managing-sovereign-memory/scripts/manage_backlog.py` (list, route, related, validate, compile, record-result) and `validate_missions.py`; `operating-sanctuary-guardian/scripts/manage_coordination.py` (leases and worktrees). Rules: `managing-sovereign-memory/references/agent-native-backlog.md`.
 - The session wakeup validates every manifest against the schema and prints one PASS/WARN line.
 

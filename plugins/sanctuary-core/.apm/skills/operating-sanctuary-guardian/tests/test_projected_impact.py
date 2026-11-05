@@ -87,11 +87,11 @@ def test_paths_overlap_rules(a, b, expected):
 
 
 def test_shared_generated_files_are_not_locks(tmp_path):
-    write_missions(tmp_path, {"M-1": {"impact": {"paths": ["x/a.py", "LEARNING/research/index.jsonl", ".agent/learning/cognitive_ledger.json"]}},
-                              "M-2": {"impact": {"paths": ["y/b.py", "LEARNING/research/index.jsonl"]}}})
+    write_missions(tmp_path, {"M-1": {"impact": {"paths": ["x/a.py", "LEARNING/index.jsonl", ".agent/learning/cognitive_ledger.json"]}},
+                              "M-2": {"impact": {"paths": ["y/b.py", "LEARNING/index.jsonl"]}}})
     first = mc.checkout(tmp_path, "M-1", "a")
     assert first["status"] == "success" and first["locked_targets"] == ["x/a.py"]
-    assert "LEARNING/research/index.jsonl" in first["regenerate_after_merge"]
+    assert "LEARNING/index.jsonl" in first["regenerate_after_merge"]
     assert mc.checkout(tmp_path, "M-2", "b")["status"] == "success"      # both touch index.jsonl: regenerate, not a conflict
     assert not impact.conflicts(impact.load_manifest_impact(tmp_path, "M-1"), impact.load_manifest_impact(tmp_path, "M-2"))
 
@@ -132,13 +132,13 @@ def _git(cwd, *args):
 
 def test_verify_flags_undeclared_edits(tmp_path):
     _git(tmp_path, "init", "-q", "-b", "main")
-    for f in ("plugins/x/a.py", "plugins/y/b.py", "docs/c.md", "LEARNING/research/index.jsonl"):
+    for f in ("plugins/x/a.py", "plugins/y/b.py", "docs/c.md", "LEARNING/index.jsonl"):
         (tmp_path / f).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / f).write_text("base\n")
     _git(tmp_path, "add", "."), _git(tmp_path, "commit", "-q", "-m", "base"), _git(tmp_path, "checkout", "-q", "-b", "feat")
     write_missions(tmp_path, {"MISSION-A": {"impact": {"paths": ["plugins/x/"]}}})
     (tmp_path / "plugins/x/a.py").write_text("changed\n")                               # inside the declaration
-    (tmp_path / "LEARNING/research/index.jsonl").write_text("regenerated\n")             # shared generated: allowed
+    (tmp_path / "LEARNING/index.jsonl").write_text("regenerated\n")             # shared generated: allowed
     _git(tmp_path, "commit", "-qam", "work")
     ok = mc.verify_impact(tmp_path, "MISSION-A", worktree=".", base="main")
     assert ok["ok"] and ok["undeclared"] == []
@@ -217,7 +217,7 @@ def test_eval_quick_run_has_no_false_negatives():
     assert stats["new_false_negatives"] == 0 and stats["manual_targets_needed"] == 0 and stats["overlapping_truth"] > 0
 
 
-RESULTS = Path(__file__).resolve().parents[6] / "LEARNING" / "research" / "experiments" / "mission-031" / "results.json"
+RESULTS = Path(__file__).resolve().parents[6] / "LEARNING" / "experiments" / "mission-031" / "results.json"
 
 
 @pytest.mark.skipif(not RESULTS.exists(), reason="evaluation results not recorded (run impact_eval.py --out ...)")

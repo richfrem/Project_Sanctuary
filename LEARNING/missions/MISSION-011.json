@@ -39,7 +39,7 @@
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-011/",
+      "LEARNING/experiments/mission-011/",
       "plugins/sanctuary-core/.apm/skills/forging-sovereign-models/"
     ],
     "resources": [

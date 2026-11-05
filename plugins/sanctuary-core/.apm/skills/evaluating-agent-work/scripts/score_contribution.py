@@ -18,7 +18,7 @@ Usage:
     python3 score_contribution.py --task-id task-001 --agent-id astra \
       --useful-outcome 3 --learning-depth 3 --verification-rigor 3 \
       --token-economy 2 --anti-asch-integrity 3 \
-      --evidence-refs LEARNING/topics/automaton_analysis/astra_automaton_opinion.md \
+      --evidence-refs LEARNING/research/automaton_analysis/astra_automaton_opinion.md \
       --notes "Substantive empirical audit uncovering 59ms wakeup latency."
 """
 

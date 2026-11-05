@@ -21,7 +21,7 @@ Ratified the taxonomy of autonomous commercial agent platforms and multi-subscri
    - GitHub Copilot is strictly restricted to enterprise/work projects; never used for personal/sovereign research.
    - Personal subscriptions (Claude Pro, ChatGPT Plus, Gemini Pro) power Project Sanctuary research.
    - Local proxy architecture (CLIProxyAPI / LiteLLM Proxy on `localhost:4000`) for rate-window balancing; rejected brittle web-scraping proxies (9Router).
-3. Dossier: `LEARNING/topics/autonomous_agent_platforms/`.
+3. Dossier: `LEARNING/research/autonomous_agent_platforms/`.
 
 ## [2026-11-02] [#013] Architecture: Decoupled Cognitive Economy & Procedural Memory
 Ratified the tripartite decoupling of agent economics:
@@ -39,8 +39,8 @@ Vector databases (ChromaDB) and external Obsidian runtime dependencies are disco
 
 ## [2026-11-02] [#012] Architecture: Agent-Native Cognitive Backlog & Popperian Missions
 Autonomous agent backlogs must serve machine cognition, not human visual GUI preferences.
-1. Tier 1 Fast-Boot: Machine index (`LEARNING/research/index.jsonl`) consumes < 15 tokens per item (< 100 tokens total orientation cost).
-2. Frictionless Inbox: `LEARNING/research/inbox.jsonl` provides zero-locking, zero-conflict append-only capture for running agents (including local offline Qwen2 GGUF).
+1. Tier 1 Fast-Boot: Machine index (`LEARNING/index.jsonl`) consumes < 15 tokens per item (< 100 tokens total orientation cost).
+2. Frictionless Inbox: `LEARNING/inbox.jsonl` provides zero-locking, zero-conflict append-only capture for running agents (including local offline Qwen2 GGUF).
 3. Single Source of Truth: Canonical manifests live in `LEARNING/missions/*.json`. Each mission enforces Popperian predictions (`hypothesis`), objective failure gates (`falsification_criteria`), and empirical trial verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
 4. Compounding Learning Loop: Empirical trial results update mission manifests and log to `.agent/learning/events.jsonl`, which seal into Layer 3 soul traces (`huggingface/data/soul_traces.jsonl`) for model fine-tuning.
 5. One-Directional External Projection: `LEARNING/backlog.md` is compiled automatically for human review (never hand-edited). GitHub Issues are outward advisory mirrors solely for remote cloud workers (`execution_surface: cloud-worker`), never a two-way sync.
@@ -62,7 +62,7 @@ Machine-local harnesses (`.agents/`, `.claude/`, `.codex/`, `apm_modules/`) are 
 
 ## [2026-11-01] [#009] Architecture: Asymmetric Persistence & Event Journaling
 Friction logs, test failures, and conceptual breakthroughs survive git rollbacks.
-Two-phase capture: insights are appended atomically to `.agent/learning/events.jsonl` before idempotent promotion into `context/memory.md` and `LEARNING/topics/`.
+Two-phase capture: insights are appended atomically to `.agent/learning/events.jsonl` before idempotent promotion into `context/memory.md` and `LEARNING/research/`.
 
 ## [2026-03-15] [#001] Decision: Agentic OS Kernel Adoption (ADR 100)
 Adopted Agentic OS kernel (`context/kernel.py`) as Sanctuary's foundation layer.

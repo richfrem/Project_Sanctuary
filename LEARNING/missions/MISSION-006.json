@@ -40,7 +40,7 @@
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-006/",
+      "LEARNING/experiments/mission-006/",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/"
     ],
     "resources": [],

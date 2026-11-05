@@ -171,7 +171,7 @@ def test_compile_populates_missing_model_routing(tmp_path: Path) -> None:
     assert routing["recommended_model"] == "qwen2-7b-mlx-4bit"
     assert routing["cheapest_viable_tier"] == "free-local"
     assert routing["fallback_models"]
-    index_row = json.loads((tmp_path / "LEARNING" / "research" / "index.jsonl").read_text().splitlines()[0])
+    index_row = json.loads((tmp_path / "LEARNING" / "index.jsonl").read_text().splitlines()[0])
     assert index_row["recommended_model"] == "qwen2-7b-mlx-4bit"
 
 

@@ -50,7 +50,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-050/",
+      "LEARNING/experiments/mission-050/",
       "LEARNING/missions/MISSION-050.json",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_adaptive_checkpoint.py",

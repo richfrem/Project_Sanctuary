@@ -42,7 +42,7 @@
     {
       "timestamp": "2026-11-03T14:43:53.074952+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-022/README.md",
+      "citation": "LEARNING/experiments/mission-022/README.md",
       "details": "Frozen local_agent_loop.py on Qwen2.5-Coder-7B-4bit/MLX, 30 generated held-out tasks per run, exact-match grading, temp 0, max 5 turns. Run 4 (seed 1337): 25/30=83.3% (inconclusive band). Run 5 (seed 2024, after search_text fix): 22/30=73.3% < 75% pre-registered falsification line. Combined 47/60=78.3%, never reaching the 85% claim. By tier: scalar 100%, dirset 80-90%, locate 40-60%. No repetition falsification, no context overflow (max 3050 prompt tokens). Unassisted-correct 70-77%; only 63% correct within 3 turns; 6-7 of 30 tasks needed the forced final turn. Earlier runs 1-2 (5 hand tasks, 1/5 then 4/5 after tuning on the test set) are recorded as non-evidence."
     }
   ],

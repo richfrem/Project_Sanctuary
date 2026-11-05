@@ -39,22 +39,22 @@ if [ -n "$STAGED_MISSIONS" ]; then
     # Recompile check to test if index.jsonl or backlog.md would change
     TMP_INDEX=$(mktemp)
     TMP_MD=$(mktemp)
-    cp LEARNING/research/index.jsonl "$TMP_INDEX" 2>/dev/null || true
+    cp LEARNING/index.jsonl "$TMP_INDEX" 2>/dev/null || true
     cp LEARNING/backlog.md "$TMP_MD" 2>/dev/null || true
 
     python3 "$BACKLOG_SCRIPT" compile > /dev/null 2>&1
 
-    INDEX_DIFF=$(diff -u "$TMP_INDEX" LEARNING/research/index.jsonl 2>/dev/null || true)
+    INDEX_DIFF=$(diff -u "$TMP_INDEX" LEARNING/index.jsonl 2>/dev/null || true)
     MD_DIFF=$(diff -u "$TMP_MD" LEARNING/backlog.md 2>/dev/null || true)
 
     # Restore originals if not staged
-    cp "$TMP_INDEX" LEARNING/research/index.jsonl 2>/dev/null || true
+    cp "$TMP_INDEX" LEARNING/index.jsonl 2>/dev/null || true
     cp "$TMP_MD" LEARNING/backlog.md 2>/dev/null || true
     rm -f "$TMP_INDEX" "$TMP_MD"
 
     if [ -n "$INDEX_DIFF" ] || [ -n "$MD_DIFF" ]; then
         echo "❌ COMMIT BLOCKED: Mission manifests modified without recompiling index.jsonl and backlog.md."
-        echo "   Run: python3 $BACKLOG_SCRIPT compile && git add LEARNING/research/index.jsonl LEARNING/backlog.md"
+        echo "   Run: python3 $BACKLOG_SCRIPT compile && git add LEARNING/index.jsonl LEARNING/backlog.md"
         exit 1
     fi
     echo "  ✓ Tier 1 machine index and human markdown projection in sync"

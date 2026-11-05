@@ -39,7 +39,7 @@
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-001/"
+      "LEARNING/experiments/mission-001/"
     ],
     "resources": [],
     "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."

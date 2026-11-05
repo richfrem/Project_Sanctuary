@@ -47,7 +47,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-051/",
+      "LEARNING/experiments/mission-051/",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/track_budget.py",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_usage_probe.py",

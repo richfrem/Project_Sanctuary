@@ -45,18 +45,18 @@ def project(tmp_path):
     mdir = tmp_path / "LEARNING/missions"
     mdir.mkdir(parents=True)
     (mdir / "MISSION-901.json").write_text(json.dumps({"id": "MISSION-901", "status": "RESOLVED", "verdict": "CONFIRMED", "updated_at": "2026-11-01",
-        "evidence": [{"citation": "LEARNING/research/experiments/mission-901/README.md"}]}))
+        "evidence": [{"citation": "LEARNING/experiments/mission-901/README.md"}]}))
     (mdir / "MISSION-902.json").write_text(json.dumps({"id": "MISSION-902", "status": "RESOLVED", "verdict": "FALSIFIED", "updated_at": "2026-11-02",
         "evidence": ["free text with no path"]}))
     (mdir / "MISSION-910.json").write_text(json.dumps({"id": "MISSION-910", "status": "RESOLVED", "verdict": "CORROBORATED", "updated_at": "2026-11-03",
         "evidence": [{"citation": ""}]}))
-    (tmp_path / "LEARNING/research/experiments/mission-910").mkdir(parents=True)
-    (tmp_path / "LEARNING/research/experiments/mission-910/README.md").write_text("log")
-    write_jsonl(tmp_path / "LEARNING/research/index.jsonl", [
+    (tmp_path / "LEARNING/experiments/mission-910").mkdir(parents=True)
+    (tmp_path / "LEARNING/experiments/mission-910/README.md").write_text("log")
+    write_jsonl(tmp_path / "LEARNING/index.jsonl", [
         {"id": "MISSION-901", "status": "RESOLVED", "priority_score": 900}, {"id": "MISSION-920", "status": "PROPOSED", "priority_score": 50},
         {"id": "MISSION-921", "status": "PROPOSED", "priority_score": 300}, {"id": "MISSION-922", "status": "IN_PROGRESS", "priority_score": 200},
         {"id": "MISSION-923", "status": "PROPOSED", "priority_score": 10}])
-    write_jsonl(tmp_path / "LEARNING/research/inbox.jsonl", [{"idea": "a"}, {"idea": "b"}])
+    write_jsonl(tmp_path / "LEARNING/inbox.jsonl", [{"idea": "a"}, {"idea": "b"}])
     return tmp_path
 
 
@@ -92,8 +92,8 @@ def test_next_step_at_the_end_survives_for_recent_handoffs(tmp_path):
 
 def test_established_pointers(project):
     est = {e["id"]: e for e in relay.build_relay(project)["established"]}
-    assert est["MISSION-901"]["pointer"] == "LEARNING/research/experiments/mission-901/README.md"        # path citation
-    assert est["MISSION-910"]["pointer"] == "LEARNING/research/experiments/mission-910/README.md"        # experiment log fallback
+    assert est["MISSION-901"]["pointer"] == "LEARNING/experiments/mission-901/README.md"        # path citation
+    assert est["MISSION-910"]["pointer"] == "LEARNING/experiments/mission-910/README.md"        # experiment log fallback
     assert est["MISSION-902"]["pointer"] == "LEARNING/missions/MISSION-902.json"                # manifest fallback
     assert [e["id"] for e in relay.build_relay(project)["established"]][0] == "MISSION-910"              # newest update first
 
@@ -113,7 +113,7 @@ def test_render_budget(project):
     r = relay.build_relay(project, handovers=5, results=10)
     r["handovers"] = [{"when": "2026-11-03 16:00", "agent": "claude-code", "vendor": "Anthropic", "mission": "MISSION-027", "outcome": "COMPLETED",
                        "pr": 289, "handoff": "y" * (relay.MAX_HANDOFF_SHOWN if i < relay.FULL_HANDOFFS else relay.MAX_HANDOFF_OLDER)} for i in range(5)]
-    r["established"] = [{"id": f"MISSION-0{i:02d}", "verdict": "CORROBORATED", "pointer": f"LEARNING/research/experiments/mission-0{i:02d}/README.md"}
+    r["established"] = [{"id": f"MISSION-0{i:02d}", "verdict": "CORROBORATED", "pointer": f"LEARNING/experiments/mission-0{i:02d}/README.md"}
                         for i in range(10)]
     r["dispatchable"] = ["MISSION-031", "MISSION-023", "MISSION-030"]
     for fuel in (None, {"as_of": "2026-11-04 10:00", "gauges": [{"backend": b, "tightest_remaining_pct": 9.0, "constrained": True} for b in ("claude", "agy", "codex")]}):
@@ -193,7 +193,7 @@ def test_synthetic_key_matches_snapshot(tmp_path, monkeypatch):
 
 
 # ---- recorded A/B evidence vs the pre-registered decision rule (MISSION-025) ------------------------------------------
-EXPERIMENT = Path(__file__).resolve().parents[6] / "LEARNING" / "research" / "experiments" / "mission-025"
+EXPERIMENT = Path(__file__).resolve().parents[6] / "LEARNING" / "experiments" / "mission-025"
 
 
 @pytest.mark.skipif(not (EXPERIMENT / "results_control.json").exists() or not (EXPERIMENT / "results_treatment.json").exists(),

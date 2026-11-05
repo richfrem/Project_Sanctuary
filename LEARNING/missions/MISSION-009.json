@@ -39,7 +39,7 @@
     {
       "timestamp": "2026-11-05T05:09:52.370552+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-035/agy-routing-pilot.md",
+      "citation": "LEARNING/experiments/mission-035/agy-routing-pilot.md",
       "details": "Closed as a duplicate of MISSION-004 (decided by the human 2026-11-05). Both state the same hypothesis with identical thresholds (>= 40% fewer incorrect majority-following, <= 5 percentage points fewer accepted valid corrections); only wording and tags differ. Found by an agy comparison (checked against both manifests). Unique tags merged into MISSION-004; nothing was run, so no empirical verdict was reached."
     }
   ],
@@ -48,7 +48,7 @@
   ],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-009/",
+      "LEARNING/experiments/mission-009/",
       "LEARNING/missions/MISSION-004.json",
       "LEARNING/missions/MISSION-009.json",
       ".agent/learning/events.jsonl"

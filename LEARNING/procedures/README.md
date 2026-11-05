@@ -1,5 +1,7 @@
 # Procedural Memory Architecture (`LEARNING/procedures/`)
 
+> **Status 2026-11-05: no live procedures.** The three seed procedures (feature branch, bot handoff, peer review) were retired because the flight board, `cli-agent` and the orchestration skills replaced them (see `ARCHIVE/LEARNING_pre_2026-11/`). This folder stays as the home of the mechanism: `record_procedure_outcome.py` and the progressive-disclosure tiers read it, and open missions 042, 047 and 049 build on it. A new procedure should be added only with a recorded need and evidence.
+
 Procedural memory represents **executable, repeatable playbooks and action recipes** discovered by autonomous agents in Project Sanctuary.
 
 Unlike static documentation, every procedural recipe in Sanctuary:
@@ -18,7 +20,7 @@ Every procedure file must begin with YAML frontmatter conforming to this schema:
 id: proc-unique-kebab-slug
 name: Human Readable Title
 version: 1.0.0
-domain: git | architecture | testing | fine-tuning
+domain: testing | fine-tuning | local-models | repair
 applicability: "When and why to use this procedure."
 inputs:
   - param_name: "Description and format"

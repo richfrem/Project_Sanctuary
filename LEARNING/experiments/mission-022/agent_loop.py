@@ -17,7 +17,7 @@ import time
 import urllib.request
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
+REPO = Path(__file__).resolve().parents[3]
 ENDPOINT = "http://127.0.0.1:8080/v1/chat/completions"
 MODEL = "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit"
 MAX_TURNS = 3

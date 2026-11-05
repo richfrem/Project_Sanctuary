@@ -4,7 +4,7 @@
 import json, shutil, subprocess, sys, tempfile, time, hashlib
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
+REPO = Path(__file__).resolve().parents[3]
 SK = REPO / "plugins/sanctuary-core/.apm/skills"
 sys.path.insert(0, str(SK / "operating-sanctuary-guardian/scripts"))
 import merge_prep  # noqa: E402
@@ -12,7 +12,7 @@ import score_contribution  # noqa: E402
 from manage_backlog import BacklogManager  # noqa: E402
 
 N = 60
-GEN = {"LEARNING/research/index.jsonl", "LEARNING/backlog.md", ".agent/learning/cognitive_ledger.json"}
+GEN = {"LEARNING/index.jsonl", "LEARNING/backlog.md", ".agent/learning/cognitive_ledger.json"}
 
 
 def git(cwd, *a, check=True):

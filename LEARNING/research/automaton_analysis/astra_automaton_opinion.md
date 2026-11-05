@@ -84,7 +84,7 @@ Astra, as our sovereign peer agent in Project Sanctuary, we want your unfiltered
 ### B. Procedural Memory Adaptation in `managing-sovereign-memory`
 - Sanctuary currently has a 3-layer memory engine:
   - Layer 1: Fast-boot context (`soul.md`, `memory.md`, `user.md`).
-  - Layer 2: Compounding knowledge base (`LEARNING/concepts/`, `LEARNING/topics/`).
+  - Layer 2: Compounding knowledge base (`LEARNING/concepts/`, `LEARNING/research/`).
   - Layer 3: Immutable JSONL soul traces (`huggingface/data/soul_traces.jsonl`).
 - How can we naturally incorporate **Procedural Memory** (action recipes, debugging playbooks, tool invocation workflows) with empirical success/failure counters into `sanctuary-core`? Where should these procedural recipes reside and how should agents query them?
 
@@ -258,7 +258,7 @@ exec
  succeeded in 58ms:
 /Users/richardfremmerlid/Projects/Project_Sanctuary
 ## main...origin/main
-?? LEARNING/topics/automaton_analysis/
+?? LEARNING/research/automaton_analysis/
 # Session Bootstrap - Project Sanctuary
 
 <!-- Read this at the start of every session. -->
@@ -404,7 +404,7 @@ Machine-local harnesses (`.agents/`, `.claude/`, `.codex/`, `apm_modules/`) are 
 
 ## [2026-11-01] [#009] Architecture: Asymmetric Persistence & Event Journaling
 Friction logs, test failures, and conceptual breakthroughs survive git rollbacks.
-Two-phase capture: insights are appended atomically to `.agent/learning/events.jsonl` before idempotent promotion into `context/memory.md` and `LEARNING/topics/`.
+Two-phase capture: insights are appended atomically to `.agent/learning/events.jsonl` before idempotent promotion into `context/memory.md` and `LEARNING/research/`.
 
 ## [2026-03-15] [#001] Decision: Agentic OS Kernel Adoption (ADR 100)
 Adopted Agentic OS kernel (`context/kernel.py`) as Sanctuary's foundation layer.
@@ -576,13 +576,13 @@ temp/repos/automaton/src/replication/constitution.ts
 temp/repos/automaton/src/replication/lifecycle.ts
 temp/repos/automaton/src/replication/spawn.ts
 README.md
-LEARNING/topics/drq_recursive_self_improvement/README.md
+LEARNING/research/drq_recursive_self_improvement/README.md
 plugins/sanctuary-core/README.md
 LEARNING/philosophy/README.md
 LEARNING/README.md
-LEARNING/topics/liquid_neural_networks/README.md
+LEARNING/research/liquid_neural_networks/README.md
 context/identity/README.md
-LEARNING/topics/quantum_error_correction/README.md
+LEARNING/research/quantum_error_correction/README.md
 huggingface/metadata/README.md
 huggingface/README.md
 
@@ -2667,7 +2667,7 @@ Purpose:
     Implements a two-phase architecture:
     1. Capture: Appends an atomic, immutable event to `.agent/learning/events.jsonl`.
     2. Promotion (Optional): Promotes curated insights into `context/memory.md`
-       or `LEARNING/concepts/` / `LEARNING/topics/`.
+       or `LEARNING/concepts/` / `LEARNING/research/`.
 
 Usage:
     python scripts/record_insight.py --topic "git_hooks" --type friction --insight "Pre-commit hook failed on zsh glob syntax"
@@ -3018,7 +3018,7 @@ Automaton’s five memory categories and Sanctuary’s three persistence layers 
 |---|---|
 | Working | Active session context |
 | Episodic | Chronicle and preserved traces |
-| Semantic | `LEARNING/concepts/` and `LEARNING/topics/` |
+| Semantic | `LEARNING/concepts/` and `LEARNING/research/` |
 | Procedural | Proposed `LEARNING/procedures/` |
 | Relationship | Existing collaborator context, with scoped observations |
 
@@ -3272,7 +3272,7 @@ Automaton’s five memory categories and Sanctuary’s three persistence layers 
 |---|---|
 | Working | Active session context |
 | Episodic | Chronicle and preserved traces |
-| Semantic | `LEARNING/concepts/` and `LEARNING/topics/` |
+| Semantic | `LEARNING/concepts/` and `LEARNING/research/` |
 | Procedural | Proposed `LEARNING/procedures/` |
 | Relationship | Existing collaborator context, with scoped observations |
 

@@ -121,7 +121,7 @@ During Holistic Wakeup (`guardian_wakeup.py --mode HOLISTIC`), the local server 
 
 ## 5. Hardening Notes (MISSION-027)
 
-Measured on an M1 with 16 GB and `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (details: `LEARNING/research/experiments/mission-027/`).
+Measured on an M1 with 16 GB and `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` (details: `LEARNING/experiments/mission-027/`).
 
 - **Port discovery lists LISTEN sockets only.** The correct macOS command is `lsof -nP -iTCP:<port> -sTCP:LISTEN -t`. (`lsof -ti -sTCP:LISTEN :<port>` errors, and plain `lsof -ti :<port>` also returns client connections, so it could return a client's PID.)
 - **Process shape.** `uv tool uvx ...` (launcher, tiny) starts a python worker (listener, the model). Both share one process group. Signalling only the launcher left the worker listening and the old check reported "stopped" anyway.
@@ -141,4 +141,4 @@ median 4.34 GiB after a reap. So the default idle threshold is 300 s: restarting
   (or a reboot) was not measured and will be slower.
 - A server the manager did not start reports `idle_sec: 0.0` and `managed: false`, so even `reap --timeout 1` with default flags
   leaves it running. Still pass `--only-managed` in scripts so that does not depend on idle tracking.
-- Evidence: `LEARNING/research/experiments/mission-029/`.
+- Evidence: `LEARNING/experiments/mission-029/`.

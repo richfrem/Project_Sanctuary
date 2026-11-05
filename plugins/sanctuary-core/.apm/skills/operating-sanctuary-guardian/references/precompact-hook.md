@@ -12,4 +12,4 @@ the injected context. The snapshot is PROVISIONAL: verify it against the repo.
 
 Measured: median 61 ms, max 67 ms on a 20.6 MB transcript (ceiling 2,500 ms). Fired on a real manual `/compact`; the `auto`
 trigger is unverified. It only runs in sessions where the sanctuary-core plugin hooks are installed.
-Evidence: `LEARNING/research/experiments/mission-030/README.md`. Tests: `plugins/sanctuary-core/.apm/hooks/tests/`.
+Evidence: `LEARNING/experiments/mission-030/README.md`. Tests: `plugins/sanctuary-core/.apm/hooks/tests/`.

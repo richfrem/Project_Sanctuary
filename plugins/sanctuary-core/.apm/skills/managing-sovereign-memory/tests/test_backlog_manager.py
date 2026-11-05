@@ -41,7 +41,7 @@ class TestBacklogManager(unittest.TestCase):
         self.assertEqual(entry["idea"], "Test agent discovery")
 
         # Verify inbox file exists and contains the line
-        inbox_file = self.temp_dir / "LEARNING" / "research" / "inbox.jsonl"
+        inbox_file = self.temp_dir / "LEARNING" / "inbox.jsonl"
         self.assertTrue(inbox_file.exists())
         lines = inbox_file.read_text(encoding="utf-8").strip().splitlines()
         self.assertEqual(len(lines), 1)
@@ -86,7 +86,7 @@ class TestBacklogManager(unittest.TestCase):
         self.mgr.compile()
 
         # Check index.jsonl
-        index_file = self.temp_dir / "LEARNING" / "research" / "index.jsonl"
+        index_file = self.temp_dir / "LEARNING" / "index.jsonl"
         self.assertTrue(index_file.exists())
         index_lines = [json.loads(line) for line in index_file.read_text(encoding="utf-8").strip().splitlines()]
         self.assertEqual(len(index_lines), 2)

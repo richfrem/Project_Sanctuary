@@ -41,7 +41,7 @@
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-023/",
+      "LEARNING/experiments/mission-023/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md"

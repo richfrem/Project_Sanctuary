@@ -42,7 +42,7 @@
     {
       "timestamp": "2026-11-03T15:58:53.700072+00:00",
       "agent": "claude-code",
-      "citation": "LEARNING/research/experiments/mission-027/README.md",
+      "citation": "LEARNING/experiments/mission-027/README.md",
       "details": "Pre-registered. RED on the old code: 4/4 defects reproduced with a stub launcher->worker tree (discovery returned a client PID; stop left the worker listening; stop reported 'stopped' while a worker ignoring SIGTERM survived; status reported the launcher). After the fix: 20/20 stub cycles and 8/8 real-model cycles (Qwen2.5-Coder-7B-4bit on spare port 8099; :8080 untouched) with verified teardown, 0 survivors, 0 client PIDs; safety rule holds (process groups containing non-MLX processes fall back to a tree kill; stale state PIDs are never signalled). Real-model footprint 4,304-4,361 MB warm; system free memory recovered about 24% -> 52% after stop. Idle reaping limited to managed servers and hooked into the Protocol 128 boot (guardian_wakeup) and closure steps. Pre-registered misses: fresh-boot footprint was 562-3,317 MB (>=4,000 predicted) and ps RSS was not <100 MB for fresh servers; the warm measurement point was added after the miss and labelled as an amendment."
     }
   ],

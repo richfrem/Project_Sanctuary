@@ -185,7 +185,7 @@ mcp_config/
 05_ARCHIVED_BLUEPRINTS/
 
 # reference repos
-LEARNING/topics/drq_recursive_self_improvement/drq_repo/
+LEARNING/research/drq_recursive_self_improvement/drq_repo/
 
 # Temp folder - Ephemeral context bundles and working files
 temp/
@@ -207,7 +207,7 @@ mnemonics/learning_summary.md
 
 
 # DRQ research repo clone (local analysis only)
-LEARNING/topics/drq_recursive_self_improvement/drq_repo/
+LEARNING/research/drq_recursive_self_improvement/drq_repo/
 !scripts/archive/
 
 # Added by Spec Kitty CLI (auto-managed)

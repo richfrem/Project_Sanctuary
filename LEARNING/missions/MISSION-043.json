@@ -50,7 +50,7 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/research/experiments/mission-043/",
+      "LEARNING/experiments/mission-043/",
       "LEARNING/missions/MISSION-043.json",
       "plugins/sanctuary-core/.apm/skills/forging-sovereign-models/",
       "huggingface/data/soul_traces.jsonl"
