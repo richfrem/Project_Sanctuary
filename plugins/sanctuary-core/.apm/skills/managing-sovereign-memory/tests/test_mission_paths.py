@@ -57,3 +57,26 @@ class TestMissionPaths(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestBacklogViewPath(unittest.TestCase):
+    """Step 2: the generated human view moved from LEARNING/research/backlog.md to LEARNING/backlog.md."""
+
+    def test_backlog_view_is_at_the_learning_root(self):
+        self.assertTrue((REPO / "LEARNING" / "backlog.md").exists())
+        self.assertFalse((REPO / "LEARNING" / "research" / "backlog.md").exists())
+
+    def test_no_tracked_file_still_names_the_old_backlog_path(self):
+        files = subprocess.run(["git", "grep", "-l", "-F", "LEARNING/research/backlog.md"], cwd=str(REPO), capture_output=True, text=True).stdout.split()
+        offenders = [f for f in files if not f.startswith(ALLOWED_PREFIXES) and f not in ALLOWED_FILES]
+        self.assertEqual(offenders, [], offenders)
+
+    def test_compile_writes_the_backlog_view_at_the_learning_root(self):
+        root = Path(tempfile.mkdtemp())
+        mdir = root / "LEARNING" / "missions"; mdir.mkdir(parents=True)
+        (mdir / "MISSION-034.json").write_text((REPO / "LEARNING" / "missions" / "MISSION-034.json").read_text())
+        mgr = BacklogManager(root)
+        mgr.compile()
+        self.assertEqual(mgr.markdown_file.resolve(), (root / "LEARNING" / "backlog.md").resolve())
+        self.assertIn("MISSION-034", (root / "LEARNING" / "backlog.md").read_text())
+        self.assertFalse((root / "LEARNING" / "research" / "backlog.md").exists())

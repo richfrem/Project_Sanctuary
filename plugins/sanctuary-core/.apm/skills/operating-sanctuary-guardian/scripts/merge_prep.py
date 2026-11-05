@@ -31,7 +31,7 @@ LEDGER_REL = ".agent/learning/cognitive_ledger.json"
 EVENTS_REL = ".agent/learning/events.jsonl"
 UNION_LOGS = [".agent/learning/events.jsonl"]
 CHRONICLE_LEDGER_REL = "chronicle/ledger.json"
-GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
+GENERATED = ["LEARNING/research/index.jsonl", "LEARNING/backlog.md", LEDGER_REL, CHRONICLE_LEDGER_REL]
 
 
 def find_root(start: Path = None) -> Path:
@@ -163,7 +163,7 @@ def regenerate(root: Path, apply: bool = True) -> Dict[str, Any]:
     before = _hash_dir(root / "LEARNING" / "missions")
     if apply and (root / "LEARNING" / "missions").exists():
         manage_backlog.BacklogManager(root).compile()
-        report["generated"] += ["LEARNING/research/index.jsonl", "LEARNING/research/backlog.md"]
+        report["generated"] += ["LEARNING/research/index.jsonl", "LEARNING/backlog.md"]
     after = _hash_dir(root / "LEARNING" / "missions")
     report["manifests_changed"] = [Path(k).name for k in after if before.get(k) != after[k]]
 

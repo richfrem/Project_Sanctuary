@@ -40,3 +40,6 @@ The human's layout: `missions/`, `experiments/`, `index.jsonl`, `backlog.md` and
 - Bugs the tests caught on the way: the wakeup counted `mission.schema.json` as a fourth manifest (now counts `MISSION-*.json`); the backlog loader read every `*.json` in the folder (now `MISSION-*.json`); a relay fixture relied on `mkdir research/missions` creating `research/`.
 - Guard: `manage_backlog.py validate` (and so the pre-commit gate) now fails if anything is left at `LEARNING/research/missions/`, so an agent following an old prompt cannot silently write there.
 - Two canonical docs got path-only edits: the layer table in Protocol 128 and the architecture diagram.
+
+### Step 2: `backlog.md` to the LEARNING root (2026-11-05)
+The generated human view moved from `LEARNING/research/backlog.md` to `LEARNING/backlog.md` (manager, pre-commit hook, merge-prep and impact lists, docs, tests; the merge-harness expected-files set too). Three tests first (red), 324 pass after. No stale-write guard: the file is generated, so compile just writes it in the new place. Same history rule as step 1.

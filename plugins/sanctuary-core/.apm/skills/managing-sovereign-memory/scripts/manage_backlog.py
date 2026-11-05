@@ -3,7 +3,7 @@
 Purpose: Sovereign, agent-first backlog and falsifiable mission tracker for Project Sanctuary. Provides Tier 1 machine indices, append-only inbox capture, structured mission manifests, cheapest-viable model routing (MISSION-016), and deterministic compilation to human Markdown views.
 Layer: sanctuary-core / managing-sovereign-memory (Layer 2 Epistemic Backlog & Mission Governance).
 Key Input Dependencies: LEARNING/missions/*.json (mission manifests), LEARNING/research/inbox.jsonl (appended by capture), .agent/learning/events.jsonl (optional event log).
-Key Outputs: LEARNING/research/index.jsonl (Tier 1 fast index), LEARNING/research/backlog.md (human view).
+Key Outputs: LEARNING/research/index.jsonl (Tier 1 fast index), LEARNING/backlog.md (human view).
 Usage:
     python3 manage_backlog.py list [--status STATUS] [--format text|json|jsonl]
     python3 manage_backlog.py route <TASK_DESCRIPTION> [--type TYPE] [--failures N] [--format json|text]
@@ -258,7 +258,7 @@ class BacklogManager:
         self.missions_dir = self.root_dir / "LEARNING" / "missions"
         self.inbox_file = self.research_dir / "inbox.jsonl"
         self.index_file = self.research_dir / "index.jsonl"
-        self.markdown_file = self.research_dir / "backlog.md"
+        self.markdown_file = self.root_dir / "LEARNING" / "backlog.md"
         self.events_file = self.root_dir / ".agent" / "learning" / "events.jsonl"
 
         self.missions_dir.mkdir(parents=True, exist_ok=True)

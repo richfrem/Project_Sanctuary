@@ -12,7 +12,7 @@ import score_contribution  # noqa: E402
 from manage_backlog import BacklogManager  # noqa: E402
 
 N = 60
-GEN = {"LEARNING/research/index.jsonl", "LEARNING/research/backlog.md", ".agent/learning/cognitive_ledger.json"}
+GEN = {"LEARNING/research/index.jsonl", "LEARNING/backlog.md", ".agent/learning/cognitive_ledger.json"}
 
 
 def git(cwd, *a, check=True):

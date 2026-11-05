@@ -10,7 +10,7 @@
 | [`procedures/`](./procedures/) | Executable procedures with recorded outcomes (`record_procedure_outcome.py`). | live |
 | [`philosophy/`](./philosophy/) | Identity doctrine: the Garden and the Cage, the Cognitive Genome synthesis, Meta-Embers. | stable |
 | [`missions/`](./missions/) | **The mission manifests** (`MISSION-NNN.json`) and their schema. See "The mission system" below. | live |
-| [`research/`](./research/) | The rest of the mission system while it is being moved up here: Tier-1 index, backlog view, inbox and experiments. | live (moving) |
+| [`research/`](./research/) | The rest of the mission system while it is being moved up here: Tier-1 index, inbox and experiments. | live (moving) |
 | [`topics/`](./topics/) | Self-directed research dossiers (17), each marked KEEP or HISTORICAL in [`topics/README.md`](./topics/README.md). Six are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. | mixed |
 | [`README.md`](./README.md) | Pointer to this file. | - |
 
@@ -33,10 +33,10 @@ Retired material (2025 security briefings, eight retired topic dossiers, two loo
 
 ## The mission system
 
-The mission system is the operational backlog, not a literature folder. It is being moved up from `research/` to the root of `LEARNING/` one folder at a time; `missions/` is done.
+The mission system is the operational backlog, not a literature folder. It is being moved up from `research/` to the root of `LEARNING/` one item at a time; `missions/` and `backlog.md` are done.
 
 - `missions/MISSION-NNN.json`: one falsifiable manifest per mission (hypothesis, falsification criteria, scores, routing, declared impact). Structure is defined by [`missions/mission.schema.json`](./missions/mission.schema.json). A manifest left at the old `research/missions/` path is reported by `validate`.
-- `research/index.jsonl` (Tier-1 index) and `research/backlog.md` (human view): **generated** by `manage_backlog.py compile`; never hand-edit or hand-merge.
+- `research/index.jsonl` (Tier-1 index) and `backlog.md` (its human view, at this root): **generated** by `manage_backlog.py compile`; never hand-edit or hand-merge.
 - `research/inbox.jsonl`: raw ideas awaiting promotion to missions.
 - `research/experiments/<mission>/`: the pre-registered predictions, scripts and results for each mission.
 - Tools: `managing-sovereign-memory/scripts/manage_backlog.py` (list, route, related, validate, compile, record-result) and `validate_missions.py`; `operating-sanctuary-guardian/scripts/manage_coordination.py` (leases and worktrees). Rules: `managing-sovereign-memory/references/agent-native-backlog.md`.

@@ -156,7 +156,7 @@ Project Sanctuary implements a zero-dependency, filesystem-native 3-layer sovere
    - **Tier 1 Fast Index (`LEARNING/research/index.jsonl`)**: Dense, single-line JSON items (< 15 tokens/item, < 100 tokens total orientation cost).
    - **Frictionless Inbox (`LEARNING/research/inbox.jsonl`)**: Append-only capture for unvetted ideas across sessions, including offline local Qwen2 GGUF runs.
    - **Popperian Manifests (`LEARNING/missions/*.json`)**: Enforces explicit hypotheses, objective falsification criteria, empirical trial evidence, and verdicts (`CORROBORATED` / `FALSIFIED` / `ABANDONED`).
-   - **Automated Human Projection (`LEARNING/research/backlog.md`)**: Compiled deterministically; never hand-edited.
+   - **Automated Human Projection (`LEARNING/backlog.md`)**: Compiled deterministically; never hand-edited.
    - **One-Directional Cloud Mirrors**: Outward advisory mirrors to GitHub Issues are created solely for remote cloud workers (`execution_surface: cloud-worker`), never as a bidirectional sync.
 
 ---
