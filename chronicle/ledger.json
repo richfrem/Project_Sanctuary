@@ -1,6 +1,13 @@
 {
-  "total_entries": 362,
+  "total_entries": 363,
   "entries": [
+    {
+      "id": 371,
+      "title": "LEARNING navigation fixed, decay audit made real, and a path-integrity test added; my first archive triage was wrong",
+      "filename": "371_learning_navigation_fixed_decay_audit_made_real_and_a_path_integrity_test_added_my_first_archive_triage_was_wrong.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 370,
       "title": "Flight-board files untracked: shared root from any worktree, handoffs durable in events.jsonl, 34 check-ins rescued",

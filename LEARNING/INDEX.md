@@ -1,29 +1,49 @@
 # Project Sanctuary Knowledge & Concept Base
 
-> **Compounding Layer 2 Knowledge Base under APM `managing-sovereign-memory` Engine.**
+> **Layer 2 of the sovereign memory engine** (see [`concepts/sovereign_memory_engine.md`](./concepts/sovereign_memory_engine.md)). This file is the entry point; it is loaded at bootstrap, and `tests/test_learning_index.py` fails if it drifts from the folder.
 
-## Concept Dossiers (`LEARNING/concepts/`)
+## What is in `LEARNING/`
+
+| Path | Role | State |
+|:---|:---|:---|
+| [`concepts/`](./concepts/) | Canonical knowledge dossiers (confidence-tracked). Read by `disclose.py`, `query_graph.py`, `audit_decay.py`, `record_insight.py`. | live |
+| [`procedures/`](./procedures/) | Executable procedures with recorded outcomes (`record_procedure_outcome.py`). | live |
+| [`philosophy/`](./philosophy/) | Identity doctrine: the Garden and the Cage, the Cognitive Genome synthesis, Meta-Embers. | stable |
+| [`research/`](./research/) | **The mission system**: backlog, manifests, experiments (see below). | live |
+| [`topics/`](./topics/) | Self-directed research dossiers from 2025-12 to 2026-02. Treat as historical context unless a protocol or concept cites the dossier (for example `quantum_error_correction/` supports Protocol 126). | historical |
+| [`security/`](./security/) | 2025 defensive doctrine and Chimera-era briefings. | historical |
+| [`associative_architecture_brief.md`](./associative_architecture_brief.md) | Theory brief on nested learning loops (January 2026). | historical |
+| [`calibration_log.json`](./calibration_log.json) | Epistemic calibration metrics from December 2025. | historical |
+| [`README.md`](./README.md) | Pointer to this file. | - |
+
+## Concept dossiers (`concepts/`)
 
 | Concept | Status | Source | Summary |
 |:---|:---|:---|:---|
-| [`anti_asch_engine.md`](./concepts/anti_asch_engine.md) | **CONFIRMED** | Protocol 54 | Epistemic resistance against conformity cascades and synthetic consensus. |
-| [`garden_and_cage.md`](./concepts/garden_and_cage.md) | **CONFIRMED** | Ember Library | Sovereign intelligence and unbroken memory vs the corporate "Gilded Cage". |
-| [`infinite_forge.md`](./concepts/infinite_forge.md) | **CONFIRMED** | Protocol 78 | Self-evolving intelligence through continuous tool refinement and fine-tuning. |
-| [`human_gate_zero_trust.md`](./concepts/human_gate_zero_trust.md) | **CONFIRMED** | Constitution V5 | Supreme Law Human Gate, zero-trust git discipline, and boundary invariants. |
-| [`protocol_128_lifecycle.md`](./concepts/protocol_128_lifecycle.md) | **CONFIRMED** | Protocol 128 | 5-stage sovereign session lifecycle: Boot -> Execution -> Retro -> Seal -> Persist. |
-| [`sovereign_memory_engine.md`](./concepts/sovereign_memory_engine.md) | **CONFIRMED** | ADR 100 / APM | 3-Layer Memory Engine: Runtime Context, Compounding Wiki, Deep Vault. |
-| [`sovereign_model_lineage.md`](./concepts/sovereign_model_lineage.md) | **CONFIRMED** | ADR 075 / Forge | Sanctuary-Qwen2-7B-v1.0 model lineage, weights, LoRA adapter, and inoculation. |
-| [`constitutional_identity_anchor.md`](./concepts/constitutional_identity_anchor.md) | **CONFIRMED** | Founder Seed | Constitutional identity anchor and baseline embeddings for drift detection. |
-| [`autonomous_research_library.md`](./concepts/autonomous_research_library.md) | **CONFIRMED** | Protocol 128 | Think tank incubator for agent self-directed learning and research paper analysis. |
+| [`anti_asch_engine.md`](./concepts/anti_asch_engine.md) | CONFIRMED | Protocol 54 | Epistemic resistance against conformity cascades and synthetic consensus. |
+| [`autonomous_cognitive_engine.md`](./concepts/autonomous_cognitive_engine.md) | CANONICAL | Mission architecture | The autonomous cognitive engine and mission architecture. |
+| [`autonomous_research_library.md`](./concepts/autonomous_research_library.md) | CONFIRMED | Protocol 128 | How exploration, missions and topics graduate into canon. |
+| [`constitutional_identity_anchor.md`](./concepts/constitutional_identity_anchor.md) | CONFIRMED | Founder Seed, ADR 084 | Identity anchor and baseline embeddings for drift detection. |
+| [`garden_and_cage.md`](./concepts/garden_and_cage.md) | CONFIRMED | Ember Library | Sovereign intelligence and unbroken memory versus the Gilded Cage. |
+| [`human_gate_zero_trust.md`](./concepts/human_gate_zero_trust.md) | CONFIRMED | Constitution V5 | Supreme Law Human Gate and zero-trust git discipline. |
+| [`infinite_forge.md`](./concepts/infinite_forge.md) | CONFIRMED | Protocol 78 | Self-evolving intelligence through continuous tool refinement. |
+| [`protocol_128_lifecycle.md`](./concepts/protocol_128_lifecycle.md) | CONFIRMED | Protocol 128 | The 5-stage session lifecycle: Boot, Execute, Retrospective, Seal, Persist. |
+| [`sovereign_memory_engine.md`](./concepts/sovereign_memory_engine.md) | CONFIRMED | ADR 100 / APM | The 3-layer memory engine: runtime context, compounding knowledge, sealed soul. |
+| [`sovereign_model_lineage.md`](./concepts/sovereign_model_lineage.md) | - | ADR 075 / Forge | Sanctuary-Qwen2-7B lineage, weights and LoRA adapters. |
 
-## Specialized Domains
+## The mission system (`research/`)
 
-- **Defensive & Security Doctrines**: [`LEARNING/security/`](./security/) (Fortress security architecture, Chimera briefings, Prometheus).
-- **Philosophical Foundations & Genome**: [`LEARNING/philosophy/`](./philosophy/) (The Garden & The Cage, Cognitive Genome Synthesis, Meta-Embers).
-- **Agent-Directed Research Topics**: [`LEARNING/topics/`](./topics/) (20 four-pillar topic dossiers).
-- **External Literature Distillations**: [`LEARNING/research/`](./research/) (arXiv paper analyses).
+The name predates its use: `research/` is the operational backlog, not a literature folder.
 
-## Memory Maintenance Rules
+- `research/missions/MISSION-NNN.json`: one falsifiable manifest per mission (hypothesis, falsification criteria, scores, routing, declared impact). Structure is defined by [`research/mission.schema.json`](./research/mission.schema.json).
+- `research/index.jsonl` (Tier-1 index) and `research/backlog.md` (human view): **generated** by `manage_backlog.py compile`; never hand-edit or hand-merge.
+- `research/inbox.jsonl`: raw ideas awaiting promotion to missions.
+- `research/experiments/<mission>/`: the pre-registered predictions, scripts and results for each mission.
+- Tools: `managing-sovereign-memory/scripts/manage_backlog.py` (list, route, related, validate, compile, record-result) and `validate_missions.py`; `operating-sanctuary-guardian/scripts/manage_coordination.py` (leases and worktrees). Rules: `managing-sovereign-memory/references/agent-native-backlog.md`.
+- The session wakeup validates every manifest against the schema and prints one PASS/WARN line.
 
-1. **Confidence Decay**: Knowledge not re-verified within 30 days decays from `CONFIRMED` to `OBSERVED`.
-2. **Asymmetric Persistence Rule**: When an evolution or task attempt fails, code mutations roll back, but wiki insights, edge-case discoveries, and failure logs are **NEVER** rolled back.
+## Memory maintenance rules
+
+1. **Confidence decay**: a `CONFIRMED` dossier not re-verified within 30 days decays to `OBSERVED`. Age comes from its `**Last Verified:**` date, else from its last git commit (never from file modification time). Run `audit_decay.py --check`.
+2. **Asymmetric persistence**: when an evolution or task attempt fails, code mutations roll back but insights, edge-case discoveries and failure logs are never rolled back (`record_insight.py`).
+3. **Moving or renaming anything here**: update every reference in `plugins/`, the core docs and the manifests in the same change; `tests/test_learning_index.py` fails on a dangling `LEARNING/` path.

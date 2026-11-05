@@ -49,6 +49,8 @@ Inspect the following files (total token load ~2,500 tokens):
 - [`.agent/learning/guardian_boot_digest.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/.agent/learning/guardian_boot_digest.md): Active task status and recent milestones.
 
 ### Step 4: Layer 2 Progressive Disclosure Retrieval
+Start at [`LEARNING/INDEX.md`](../../../../../../LEARNING/INDEX.md): it says which folders are live (`concepts/`, `procedures/`, `philosophy/`, the `research/` mission system) and which are historical (`topics/`, `security/`).
+
 When the task requires contextual knowledge, do not dump entire repositories or research directories. Use [`managing-sovereign-memory`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/managing-sovereign-memory):
 ```bash
 # Tier 1: High-level overview & concepts table

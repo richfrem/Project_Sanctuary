@@ -47,4 +47,4 @@ C. Feature Collapse Recovery - Use sparse autoencoders to disentangle concepts
 - Protocol 114 (Guardian Wakeup): Include stabilizer health in boot digest
 - Protocol 056 (Recursive Validation): Meta-validate Protocol 126 itself
 
-Full specification: LEARNING/00_PROTOCOL/126_qec_ai_robustness.md
+Supporting research and drafts: LEARNING/topics/quantum_error_correction/ (the earlier 00_PROTOCOL specification path was retired)
