@@ -1,0 +1,62 @@
+{
+  "id": "MISSION-051",
+  "title": "Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "evaluating-agent-work usage ledger (claude, codex, agy) and the flight-board checkout/checkin hooks",
+  "created_at": "2026-11-05T05:00:00Z",
+  "updated_at": "2026-11-05T05:00:00Z",
+  "confidence_reviewed": "2026-11-05",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 30.0
+  },
+  "priority_score": 30.0,
+  "hypothesis": "If agents declare one of three size buckets (small, medium, large) at checkout instead of a free-text task class, and the percent-to-token calibration is fitted only on measurements where the window moved by at least 3 percentage points (or on tasks pooled to that size), then once 40 measured tasks exist with at least 8 per bucket: (a) the held-out token MAPE of the per-bucket median predictor is at most 30% and at least 20% below the static per-task ceilings; (b) the calibrated percent-to-token estimate lands within +/-50% on at least 8 of 10 held-out measurements; and (c) for at least one bucket run on two models, the measured effort ratio (wall time, cost, retries) differs from 1.0 by more than the run-to-run spread of the cheaper model.",
+  "falsification_criteria": "With >= 40 measured tasks and >= 8 per bucket: held-out MAPE > 30% or not >= 20% better than the static ceilings; or fewer than 8 of 10 held-out window predictions within +/-50%; or no bucket has two models and a ratio outside the run-to-run spread (then the effort multiplier is noise at this scale); or bucket assignment by the agent disagrees with the measured size bucket on more than 30% of tasks (then declared buckets are not usable).",
+  "baseline_evidence": "MISSION-035 at N=14 (FALSIFIED 2026-11-05, results-n14.md): per-free-text-class predictor MAPE 122.3% vs static 166.2% over 9 classes with 1-4 tasks each; calibration 56,349 tokens/pct with 5 of 8 leave-one-out predictions within +/-50% (all 3 misses are 1-2 pct tasks where the integer percent reading alone is 25-50% error); no task class ran on two models.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "gpt-6-luna"
+    ]
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "usage-telemetry",
+    "prediction",
+    "calibration",
+    "effort-multiplier",
+    "spawned-by-mission-035"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-035": "SPAWNED BY: falsified at N=14; this tests the repairs its data points to. Reuses its probe, hooks, delegation recorder and ledger.",
+    "MISSION-016": "CONSUMER: cheapest-viable routing needs token and effort predictions; this supplies them if (a)-(c) hold.",
+    "MISSION-045": "CONSUMER: selecting cross-vendor collaborators by measured complementarity needs per-model effort ratios (c)."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-051/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/track_budget.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_usage_probe.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/usage_hook.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/usage-telemetry-sources.md"
+    ],
+    "resources": [],
+    "basis": "Declared 2026-11-05 by claude-code from the hypothesis; confirm with `manage_coordination.py verify`."
+  }
+}

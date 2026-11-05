@@ -1,11 +1,11 @@
 {
   "id": "MISSION-035",
   "title": "Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "hybrid",
   "target_platform": "Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill",
   "created_at": "2026-11-04T08:30:00Z",
-  "updated_at": "2026-11-04T08:30:00Z",
+  "updated_at": "2026-11-05T05:42:18.438430+00:00",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 5,
@@ -55,7 +55,7 @@
     ],
     "frontier_escalation_condition": "P3 attribution design and P6 recommender statistics need a frontier model; P1 discovery and P2 plumbing are cheap-tier work. The pilot deliberately spans backends, so its worker assignment follows the experiment design, not cost."
   },
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": true,
   "issue_ref": null,
   "tags": [
@@ -69,8 +69,20 @@
     "multi-vendor",
     "protocol-128"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-05T05:42:18.438430+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-035/results-n14.md",
+      "details": "N=14 measured tasks (11 claude, 1 codex, 2 agy). (c) per-class token predictor: held-out MAPE 122.3% vs static 166.2% (limit 30%; relative improvement 26.4% passes the 20% leg). (f) percent-to-token calibration 56,349 tokens/pct; leave-one-out 5 of 8 within +/-50%, 3 misses = the falsification threshold (misses are 1-2 pct tasks where integer rounding alone is 25-50%). (a) met for 3 of 4 backends with exact tokens; (b) partly met; (d) and (e) not testable at this N. Survived: exact tokens, catalog-based cost, fuel gauge, delegation recorder."
+    }
+  ],
+  "lessons_learned": [
+    "Free-text task classes are too fine for 14 tasks: use a few size buckets.",
+    "The claude window percent is an integer: calibrate on tasks that move it by >= 3 points or pool them.",
+    "A same-backend delegate shares the account window with its orchestrator: its window delta is unattributable.",
+    "Reasoning tokens bill as output: a cheap model's output count can be 8x its visible answer."
+  ],
   "upstream_skill_dependencies": [
     "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/cli-agent",
     "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work"
@@ -86,7 +98,8 @@
     "MISSION-031": "Uses its projected_impact and suggest to choose independent missions; telemetry attaches to the lease lifecycle (checkout/checkin) rather than a new mechanism.",
     "MISSION-002": "EXTENDED BY THIS: adds measured window state to the readiness probe and failover routing.",
     "MISSION-016": "VALIDATES: replaces static cheapest-viable tiers with measured cost per task class.",
-    "MISSION-028": "SUPPLIES DATA TO: the local-to-haiku escalation decision."
+    "MISSION-028": "SUPPLIES DATA TO: the local-to-haiku escalation decision.",
+    "MISSION-051": "SPAWNED: follow-up testing size buckets, resolvable window readings and a same-bucket cross-model effort ratio after this mission was falsified at N=14."
   },
   "projected_impact": {
     "paths": [
@@ -99,10 +112,17 @@
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/usage-telemetry-sources.md",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/usage_hook.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_usage_hook.py",
-      ".agent/learning/budget_ledger.json"
+      ".agent/learning/budget_ledger.json",
+      "LEARNING/research/missions/MISSION-016.json",
+      "LEARNING/research/missions/MISSION-045.json",
+      "LEARNING/research/missions/MISSION-051.json",
+      "LEARNING/research/experiments/mission-051/",
+      ".agent/learning/events.jsonl",
+      "LEARNING/research/index.jsonl",
+      "LEARNING/research/backlog.md"
     ],
     "resources": [],
-    "basis": "Declared 2026-11-04 at creation by claude-code from the phases; refine at checkout and confirm with `manage_coordination.py verify`. Also edits related-mission links in the manifests of MISSION-002, 016, 028 and 033 (found by a keyword scan of all missions at drafting). Updated 2026-11-04 at build time to add the guardian hook files (usage_hook.py, manage_coordination.py, relay.py, tests) and .gitignore. model-prices.json (added then deleted 2026-11-04) stays declared because its deletion is part of the diff. Narrowed 2026-11-05 by claude-code: the build phases (probe, hooks, fuel gauge, catalog costs) are merged (#302-#307), so the lease no longer needs whole skill directories. It remains for evidence collection, the evaluate/calibrate run and the verdict; it blocked 034 and its follow-up for no reason."
+    "basis": "Declared 2026-11-04 at creation by claude-code from the phases; refine at checkout and confirm with `manage_coordination.py verify`. Also edits related-mission links in the manifests of MISSION-002, 016, 028 and 033 (found by a keyword scan of all missions at drafting). Updated 2026-11-04 at build time to add the guardian hook files (usage_hook.py, manage_coordination.py, relay.py, tests) and .gitignore. model-prices.json (added then deleted 2026-11-04) stays declared because its deletion is part of the diff. Narrowed 2026-11-05 by claude-code: the build phases (probe, hooks, fuel gauge, catalog costs) are merged (#302-#307), so the lease no longer needs whole skill directories. It remains for evidence collection, the evaluate/calibrate run and the verdict; it blocked 034 and its follow-up for no reason. Closed 2026-11-05 (FALSIFIED at N=14): also edits the follow-up MISSION-051 and its reciprocal links in 016 and 045."
   },
   "assignee": "claude-code",
   "worktree": ".worktrees/claude-code-mission-035"
