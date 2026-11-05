@@ -1,6 +1,13 @@
 {
-  "total_entries": 356,
+  "total_entries": 357,
   "entries": [
+    {
+      "id": 365,
+      "title": "MISSION-029 corroborated: idle-reap default cut from 15 to 5 minutes; cold start p95 4.97 s, 3.6 GiB returned",
+      "filename": "365_mission_029_corroborated_idle_reap_default_cut_from_15_to_5_minutes_cold_start_p95_497_s_36_gib_returned.md",
+      "date": "2026-11-04",
+      "status": "draft"
+    },
     {
       "id": 364,
       "title": "MISSION-030 corroborated: PreCompact snapshot hook, first measured Codex record, codex token split fix",

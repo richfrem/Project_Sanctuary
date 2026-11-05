@@ -1,11 +1,11 @@
 {
   "id": "MISSION-029",
   "title": "Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX",
   "created_at": "2026-11-03T20:00:00Z",
-  "updated_at": "2026-11-03T20:00:00Z",
+  "updated_at": "2026-11-05T04:44:35.171601+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 3,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Not applicable; this mission measures local lifecycle latency."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -38,19 +38,35 @@
     "memory-reclamation",
     "spawned-by-mission-027"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-05T04:44:35.171601+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/research/experiments/mission-029/README.md",
+      "details": "20 managed stop/start cycles ended by the real reap path on a 16 GB M1 with a human-owned server resident and swap saturated: 0 failed requests; first token median 4.0 s, p95 4.97 s, max 5.77 s (limit 10 s); 3.6 GiB resident per server; system-available memory recovered median 4.34 GiB (limit 3). Reap never touched the unmanaged :8080 server; an unmanaged decoy survived default and --only-managed reap. Default idle threshold changed 900 s -> 300 s. LIMIT: cold process with warm OS page cache, one machine and model, 2 s test threshold, 1-token requests."
+    }
+  ],
+  "lessons_learned": [
+    "Measure cold starts on a separate port; never reap the human's server.",
+    "Free swap is not a limit on macOS (it grows on demand): gate on memory-free percent and disk.",
+    "Unmanaged servers report idle_sec 0.0, so default reap cannot stop them, but pass --only-managed anyway."
+  ],
   "priority_score": 180.0,
   "projected_impact": {
     "paths": [
       "LEARNING/research/experiments/mission-029/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/local-mlx-server-lifecycle.md",
-      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py"
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_mlx_lifecycle_hardening.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py",
+      "chronicle/",
+      ".agent/learning/budget_ledger.json"
     ],
     "resources": [
       "local-model-memory"
     ],
-    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
-  }
+    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`. Added at close: forge_llm.py default idle timeout, chronicle, budget ledger."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-029"
 }

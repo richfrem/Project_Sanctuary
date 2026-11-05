@@ -8,7 +8,7 @@ Usage:
     python3 forge_llm.py query "What is the capital of France?" [--auto-start]
     python3 forge_llm.py tool-call "Weather in Vancouver" --tools tools.json [--auto-start]
     python3 forge_llm.py structured "Fix task-409" --schema schema.json [--auto-start]
-    python3 forge_llm.py server start [--port 8080] [--idle-timeout 900]
+    python3 forge_llm.py server start [--port 8080] [--idle-timeout 300]
     python3 forge_llm.py server stop [--force]
     python3 forge_llm.py status
     python3 forge_llm.py verify --type pre-completion
@@ -759,7 +759,7 @@ def main():
     s_start = s_subparsers.add_parser("start", help="Start MLX server daemon")
     s_start.add_argument("--port", type=int, default=8080)
     s_start.add_argument("--model", default=DEFAULT_MLX_MODEL)
-    s_start.add_argument("--idle-timeout", type=int, default=900)
+    s_start.add_argument("--idle-timeout", type=int, default=300)
     s_start.add_argument("--no-wait", action="store_true")
 
     s_stop = s_subparsers.add_parser("stop", help="Stop running MLX server daemon")

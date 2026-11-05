@@ -5,7 +5,7 @@ Layer: sanctuary-core / operating-sanctuary-guardian (Layer 1 Execution & Resour
 Key Inputs: Server host/port, MLX model repository, idle timeout (seconds), action command.
 Key Outputs: Process PID, operational status, memory telemetry (RSS MB), and JSON lifecycle events.
 Usage:
-    python3 mlx_server_manager.py start [--port 8080] [--idle-timeout 900]
+    python3 mlx_server_manager.py start [--port 8080] [--idle-timeout 300]
     python3 mlx_server_manager.py stop [--force]
     python3 mlx_server_manager.py status
     python3 mlx_server_manager.py ensure
@@ -34,7 +34,7 @@ from typing import Optional, Dict, Any, List, Set
 DEFAULT_HOST = os.environ.get("MLX_SERVER_HOST_IP", "127.0.0.1")
 DEFAULT_PORT = int(os.environ.get("MLX_SERVER_PORT", "8080"))
 DEFAULT_MODEL = os.environ.get("MLX_MODEL", "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit")
-DEFAULT_IDLE_TIMEOUT = int(os.environ.get("MLX_IDLE_TIMEOUT_SEC", "900"))  # 15 minutes
+DEFAULT_IDLE_TIMEOUT = int(os.environ.get("MLX_IDLE_TIMEOUT_SEC", "300"))  # 5 minutes (MISSION-029: cold start p95 4.97 s, 3.6 GiB returned)
 
 STATE_DIR = Path(".agent/runtime")
 STATE_FILE = STATE_DIR / "mlx_server.json"

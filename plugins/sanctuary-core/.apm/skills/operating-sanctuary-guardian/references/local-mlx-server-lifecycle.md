@@ -20,7 +20,7 @@ On Apple Silicon Macs with 16GB of unified memory, running local LLMs presents a
 **The On-Demand Lifecycle Controller** ([`mlx_server_manager.py`](../scripts/mlx_server_manager.py)) solves this dilemma:
 1. **Zero-Latency Availability**: Delivers instant HTTP chat completion responses (`/v1/chat/completions`) when needed.
 2. **Safe Port Attachment**: Automatically detects whether a server is already listening on port 8080, safely attaching to existing PIDs without port collisions or duplicate process spawns.
-3. **Automated Idle Reclamation**: Every query invocation automatically touches the `last_active` timestamp. A background reaper routine (`reap_if_idle`) terminates servers that remain idle beyond the threshold (default: 15 minutes / 900s), fully releasing the Metal memory buffer back to macOS.
+3. **Automated Idle Reclamation**: Every query invocation automatically touches the `last_active` timestamp. A background reaper routine (`reap_if_idle`) terminates servers that remain idle beyond the threshold (default: 5 minutes / 300s; MISSION-029 measured a cold start to first token at p95 4.97 s and 3.6 GiB returned per reap), fully releasing the Metal memory buffer back to macOS.
 
 ---
 
@@ -43,7 +43,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
   "endpoint": "http://127.0.0.1:8080/v1",
   "uptime_sec": 342.1,
   "idle_sec": 12.4,
-  "idle_timeout_sec": 900,
+  "idle_timeout_sec": 300,
   "launcher_pid": null,
   "managed": false,
   "rss_mb": 10.1,
@@ -60,7 +60,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 ### Start Server Manually
 ```bash
-python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server start --port 8080 --idle-timeout 900
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server start --port 8080 --idle-timeout 300
 ```
 
 ### Stop Server & Reclaim Memory
@@ -71,7 +71,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 ### Reap If Idle
 ```bash
-python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server reap --timeout 900
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py server reap --timeout 300
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py reap --only-managed
 ```
 `--only-managed` reaps only a server this manager started and leaves an attached or hand-launched persistent daemon alone.
@@ -129,3 +129,16 @@ Measured on an M1 with 16 GB and `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit` 
 - **Reclamation.** Stopping returned about 4.3 GB: system free memory went from about 24% (server running) to about 52%.
 - **Reaping policy.** Idle reaping applies only to servers this manager started (`managed`). Holistic wakeup calls `reap_if_idle(only_managed=True)` at boot, and the closure step of Protocol 128 should run `mlx_server_manager.py reap --only-managed` (or `stop` for a server you started). A persistent daemon you launched yourself is never reaped.
 - **Not covered.** macOS SIP permission errors when signalling are not handled (none occurred); processes owned by another user cannot be signalled.
+
+## Idle-reap policy (MISSION-029)
+
+Measured on a 16 GB M1 with a human-owned server already resident and swap saturated: 20 stop/start cycles of a managed
+`Qwen2.5-Coder-7B-Instruct-4bit` server, each ended by the real `reap` path. 0 failed requests; boot median 1.8 s; first
+generated token median 4.0 s, p95 4.97 s, max 5.77 s; 3.6 GiB resident per server; system-available memory recovered a
+median 4.34 GiB after a reap. So the default idle threshold is 300 s: restarting costs about 4 s, a resident idle server costs 3.6 GiB.
+
+- "Cold" here means a cold process with the model files still in the OS page cache. A first load after the files are evicted
+  (or a reboot) was not measured and will be slower.
+- A server the manager did not start reports `idle_sec: 0.0` and `managed: false`, so even `reap --timeout 1` with default flags
+  leaves it running. Still pass `--only-managed` in scripts so that does not depend on idle tracking.
+- Evidence: `LEARNING/research/experiments/mission-029/`.

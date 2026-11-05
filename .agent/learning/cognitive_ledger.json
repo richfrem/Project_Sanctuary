@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T04:28:19.773471+00:00",
-  "total_assessments": 19,
-  "cumulative_score": 264,
-  "average_fitness": 0.926,
+  "updated_at": "2026-11-05T04:44:35.753735+00:00",
+  "total_assessments": 20,
+  "cumulative_score": 277,
+  "average_fitness": 0.923,
   "dimension_totals": {
-    "useful_outcome": 53,
-    "learning_depth": 55,
-    "verification_rigor": 56,
-    "token_economy": 43,
-    "anti_asch_integrity": 57
+    "useful_outcome": 55,
+    "learning_depth": 58,
+    "verification_rigor": 59,
+    "token_economy": 45,
+    "anti_asch_integrity": 60
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 6,
-      "cumulative_score": 78,
+      "assessments": 7,
+      "cumulative_score": 91,
       "average_fitness": 0.867
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "a5312b50-9094-44de-b539-cad1cd228ff4",
+      "timestamp": "2026-11-05T04:44:35.753232+00:00",
+      "task_id": "MISSION-029",
+      "agent_id": "claude-code",
+      "raw_score": 13,
+      "fitness": 0.867,
+      "notes": "Pre-registered 5 predictions, 2 wrong and reported; pilot caught a bad guard and an invalid decoy before the real run; never touched the human's server; honest page-cache limit"
+    },
     {
       "assessment_id": "f6d6b15f-9b9e-40b1-a2ad-372b787f8e13",
       "timestamp": "2026-11-05T04:28:19.772898+00:00",
