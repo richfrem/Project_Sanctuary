@@ -1,0 +1,9 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.4, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-b-mission-050
+collected 26 items
+
+plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_adaptive_checkpoint.py . [  3%]
+.........................                                                [100%]
+
+============================== 26 passed in 1.62s ==============================

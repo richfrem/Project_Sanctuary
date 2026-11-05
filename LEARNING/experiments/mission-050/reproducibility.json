@@ -1,0 +1,39 @@
+{
+  "adaptive_trials_replayed_by_unit_tests": 90,
+  "byte_identical_compressed_evidence": true,
+  "compressed_sha256_matches_execution_record": true,
+  "decompressed_sha256_matches_execution_record": true,
+  "exact_command": "PYTHONDONTWRITEBYTECODE=1 python3 LEARNING/experiments/mission-050/verify_evidence.py",
+  "first_sha256": "ea03237dc997fc00c532c377ab9f722650cdf587b890add77408961054c4228f",
+  "rerun_sha256": "ea03237dc997fc00c532c377ab9f722650cdf587b890add77408961054c4228f",
+  "rerun_wall_seconds": 5.154706083005294,
+  "source_matches_execution_record": true,
+  "split_profile_counts": {
+    "control": {
+      "0": 5,
+      "1": 5,
+      "2": 5,
+      "3": 5,
+      "4": 5,
+      "5": 5
+    },
+    "development": {
+      "0": 5,
+      "1": 5,
+      "2": 5,
+      "3": 5,
+      "4": 5,
+      "5": 5
+    },
+    "held_out": {
+      "0": 5,
+      "1": 5,
+      "2": 5,
+      "3": 5,
+      "4": 5,
+      "5": 5
+    }
+  },
+  "total_independently_audited_final_receipts": 148465,
+  "total_trials": 1620
+}
