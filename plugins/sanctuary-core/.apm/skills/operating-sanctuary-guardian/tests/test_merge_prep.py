@@ -42,6 +42,13 @@ class TestLedger(unittest.TestCase):
         self.assertEqual(implied["cumulative_score"], 36)
         self.assertEqual(implied["recent_assessments"][0]["assessment_id"], "id-2")  # newest first
 
+    def test_rebuild_is_independent_of_line_order(self):
+        root, events = _make_root(4)
+        a = merge_prep.implied_ledger(root)
+        (root / ".agent" / "learning" / "events.jsonl").write_text("".join(json.dumps(e) + "\n" for e in reversed(events)))
+        b = merge_prep.implied_ledger(root)
+        self.assertEqual(a, b)
+
     def test_status_ok_stale_drift(self):
         root, _ = _make_root(3)
         implied = merge_prep.implied_ledger(root)
@@ -129,6 +136,18 @@ class TestRegenerate(unittest.TestCase):
         self.assertEqual(len(first.splitlines()), 2)
         merge_prep.regenerate(root)
         self.assertEqual(idx.read_bytes(), first)
+
+    def test_chronicle_ledger_is_regenerated_from_entries(self):
+        root, _ = _make_root(1, with_missions=False)
+        ent = root / "chronicle" / "entries"
+        ent.mkdir(parents=True)
+        for n in (1, 2):
+            (ent / f"{n:03d}_x.md").write_text(f"**Title:** T{n}\n**Date:** 2026-11-04\n**Status:** draft\n\n---\nb\n")
+        (root / "chronicle" / "ledger.json").write_text('{"total_entries": 99, "entries": []}')
+        rep = merge_prep.regenerate(root)
+        self.assertIn("chronicle/ledger.json", rep["generated"])
+        led = json.loads((root / "chronicle" / "ledger.json").read_text())
+        self.assertEqual((led["total_entries"], led["entries"][0]["id"]), (2, 2))
 
     def test_regenerate_is_deterministic_across_runs(self):
         a, _ = _make_root(3)
