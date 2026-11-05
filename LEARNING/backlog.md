@@ -69,7 +69,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#48** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
 | **#49** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
 | **#50** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#51** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#51** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
+| **#52** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -774,7 +775,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #51)
+### MISSION-052: Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill (Rank #51)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Claude Code orchestrator; Codex CLI x2, Antigravity CLI, local MLX Qwen2.5-Coder-7B; flight board, merge_prep, cli-agent, usage_hook
+- **Cheapest Viable Model**: `claude-sonnet-5.5` (Tier: `standard`, CLI: `claude`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A single main-thread orchestrator (Claude) using only the existing stack (flight board, manage_coordination, cli-agent, merge_prep, usage_hook delegated, validate_missions) can run ONE bounded batch of four concurrent workers (Codex A, Codex B, Antigravity, local Qwen2.5-Coder-7B), each in its own leased worktree, such that: (a) the four runs overlap for at least 50% of the shortest worker's runtime; (b) there are 0 undeclared edits outside leased paths and 0 writes into a peer worktree; (c) at least 3 of 4 deliveries are accepted after cross-vendor review and the orchestrator's own re-run of the acceptance checks; (d) measured tokens are attributable per worker session for at least 3 of 4 workers; (e) accepted deliveries integrate onto a dedicated integration branch with at most 1 conflict round each after merge_prep regeneration and a green combined suite; and (f) review finds at least 1 real defect the author's self-assessment missed.
+- **Falsification Gate**:
+  > Any of: an undeclared edit, clobbered file or write into a peer worktree; fewer than 2 accepted deliveries; the workers were not concurrent (overlap under 50% of the shortest runtime); per-worker tokens attributable for fewer than 3 workers; an integration needing more than 1 conflict round despite merge_prep, or a red combined suite; a push, merge to main or publication without explicit human approval; the human-managed MLX server stopped or reconfigured; or review finds no defect in any of the four deliveries. This is NOT a test of MISSION-033's three-worker thresholds (60% wall-clock, 25% orchestrator overhead, 80% review agreement), and no speedup claim is valid without a measured baseline.
+
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #52)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

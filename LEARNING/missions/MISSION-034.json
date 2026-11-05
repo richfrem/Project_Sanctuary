@@ -55,7 +55,8 @@
   ],
   "related_missions": {
     "MISSION-031": "SPAWNED BY: found the 60/60 index.jsonl conflict boundary.",
-    "MISSION-033": "FEEDS: the orchestrator runs merge-prep when it merges workers' PRs in order."
+    "MISSION-033": "FEEDS: the orchestrator runs merge-prep when it merges workers' PRs in order.",
+    "MISSION-052": "CONSUMER: MISSION-052 integrates four deliveries and measures conflict rounds after merge_prep."
   },
   "projected_impact": {
     "paths": [

@@ -1,0 +1,72 @@
+{
+  "id": "MISSION-052",
+  "title": "Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Claude Code orchestrator; Codex CLI x2, Antigravity CLI, local MLX Qwen2.5-Coder-7B; flight board, merge_prep, cli-agent, usage_hook",
+  "created_at": "2026-11-05T07:30:00Z",
+  "updated_at": "2026-11-05T07:30:00Z",
+  "confidence_reviewed": "2026-11-05",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 1.0,
+    "operational_friction": 4,
+    "priority_score": 5.0
+  },
+  "priority_score": 5.0,
+  "hypothesis": "A single main-thread orchestrator (Claude) using only the existing stack (flight board, manage_coordination, cli-agent, merge_prep, usage_hook delegated, validate_missions) can run ONE bounded batch of four concurrent workers (Codex A, Codex B, Antigravity, local Qwen2.5-Coder-7B), each in its own leased worktree, such that: (a) the four runs overlap for at least 50% of the shortest worker's runtime; (b) there are 0 undeclared edits outside leased paths and 0 writes into a peer worktree; (c) at least 3 of 4 deliveries are accepted after cross-vendor review and the orchestrator's own re-run of the acceptance checks; (d) measured tokens are attributable per worker session for at least 3 of 4 workers; (e) accepted deliveries integrate onto a dedicated integration branch with at most 1 conflict round each after merge_prep regeneration and a green combined suite; and (f) review finds at least 1 real defect the author's self-assessment missed.",
+  "falsification_criteria": "Any of: an undeclared edit, clobbered file or write into a peer worktree; fewer than 2 accepted deliveries; the workers were not concurrent (overlap under 50% of the shortest runtime); per-worker tokens attributable for fewer than 3 workers; an integration needing more than 1 conflict round despite merge_prep, or a red combined suite; a push, merge to main or publication without explicit human approval; the human-managed MLX server stopped or reconfigured; or review finds no defect in any of the four deliveries. This is NOT a test of MISSION-033's three-worker thresholds (60% wall-clock, 25% orchestrator overhead, 80% review agreement), and no speedup claim is valid without a measured baseline.",
+  "baseline_evidence": "Flight board, impact verify and merge_prep are corroborated (026, 031, 034). Usage: exact per-task tokens work but the per-class predictor is falsified (035 at N=14), the Codex pair cannot be separated by the current recorder, and a Claude delegate shares the account window with its orchestrator. Local autonomy beyond a single hop was falsified (022); structured tool-calling works (021). The relay raised handover consistency 22.7% to 68.2% but missed its 90% bar (025). Lease fencing (038) is not implemented. Headroom when created: claude 43%, agy 11.4% constrained, codex 58%; the machine's swap was about 92% used with a human-managed MLX server resident. Orchestration and verification dominated delegation cost in earlier delegated tasks.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "claude-sonnet-5.5",
+    "cli_target": "claude",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate the orchestrator only if integration needs a semantic judgement that the review pair cannot settle."
+  },
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "tags": [
+    "orchestration",
+    "parallel-workers",
+    "codex",
+    "antigravity",
+    "local-qwen",
+    "flight-board",
+    "cross-vendor-review",
+    "spawned-by-mission-033"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "experiment": "LEARNING/experiments/mission-052/README.md",
+  "related_missions": {
+    "MISSION-033": "PARENT: this batch is the 'configuration alone' arm of 033's falsification criterion (no new orchestrator skill) with four workers instead of three; it does not test 033's thresholds.",
+    "MISSION-026": "DEPENDS ON: flight board, leases and isolated worktrees for four concurrent workers.",
+    "MISSION-031": "DEPENDS ON: declared impact, overlap detection and `verify` of actual edits per worker.",
+    "MISSION-034": "DEPENDS ON: merge_prep regeneration when integrating accepted deliveries.",
+    "MISSION-035": "DEPENDS ON: exact per-worker token records and headroom; the per-class predictor is falsified, so budgets are explicit caps.",
+    "MISSION-025": "READS: relay and handoff limits (68.2% consistency, below its 90% bar); handoffs are not assumed to transfer fully.",
+    "MISSION-022": "CONSTRAINED BY: broad local multi-turn autonomy was falsified, so Qwen gets narrow, checkable work only.",
+    "MISSION-021": "USES: the existing local structured-output and tool-call interface.",
+    "MISSION-028": "READS: proposed local-to-cloud escalation; its targets are not assumed achieved.",
+    "MISSION-036": "READS: proposed evidence contracts; keeps delivery and claim corroboration separate.",
+    "MISSION-037": "READS: proposed dependency-aware invalidation of inherited claims.",
+    "MISSION-038": "READS: proposed lease fencing and crash recovery; NOT implemented, so recovery is supervised.",
+    "MISSION-045": "FEEDS: per-model, per-worker evidence for complementary-collaborator selection.",
+    "MISSION-051": "FEEDS: same-bucket two-model usage data (Codex A vs B, agy vs Codex) for the size-bucket predictor and effort ratio."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/experiments/mission-052/",
+      "LEARNING/missions/MISSION-052.json"
+    ],
+    "resources": [],
+    "basis": "Declared 2026-11-05 by claude-code. Deliberately narrow: the orchestrator holds no broad lease; each worker is leased on its own mission or exclusive artifact path, and the integration branch is a separate worktree."
+  }
+}

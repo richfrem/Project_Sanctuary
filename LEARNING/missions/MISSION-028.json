@@ -56,6 +56,7 @@
     "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
   },
   "related_missions": {
-    "MISSION-035": "DATA CONSUMER: 028's escalation trigger (local MLX loop to haiku vs local retry) needs a measured cost of each path; 035's per-task-class deltas supply it. Not a dependency: 028 can proceed with estimated costs."
+    "MISSION-035": "DATA CONSUMER: 028's escalation trigger (local MLX loop to haiku vs local retry) needs a measured cost of each path; 035's per-task-class deltas supply it. Not a dependency: 028 can proceed with estimated costs.",
+    "MISSION-052": "CONTEXT: MISSION-052 may observe a Qwen failure and an attributed escalation, which is data for this proposal."
   }
 }

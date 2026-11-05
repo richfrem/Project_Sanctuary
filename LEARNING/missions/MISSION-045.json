@@ -47,7 +47,8 @@
     "MISSION-013": "EXTENDS: replaces arbitrary role assignments with empirically measured error complementarity.",
     "MISSION-035": "CONSUMES: relies on real-time measured token and quota telemetry across vendor backends.",
     "MISSION-033": "SUPPLIES DATA TO: guides dynamic worker selection during parallel mission orchestrations.",
-    "MISSION-051": "SUPPLIER: per-model effort ratios on a shared size bucket (criterion c), the measured complementarity data this mission needs."
+    "MISSION-051": "SUPPLIER: per-model effort ratios on a shared size bucket (criterion c), the measured complementarity data this mission needs.",
+    "MISSION-052": "CONSUMER: MISSION-052 produces cross-vendor review pairs and their defect findings."
   },
   "projected_impact": {
     "paths": [

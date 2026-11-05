@@ -48,5 +48,8 @@
     "Qwen2.5-Coder-7B can format tool calls across multiple syntaxes depending on prompt nuances: <tools>, <tool_call>, <function_call>, or <function name='...' arguments='...'/>. A robust parser must inspect all container tag variations and XML function attributes.",
     "Conversational queries with tools passed in the payload correctly produce natural language without hallucinating tools when standard chat templates are used.",
     "Offline local tool use provides a viable zero-cost, zero-latency-variance alternative to cloud tool execution for sovereign agents on Apple Silicon."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-052": "CONSUMER: MISSION-052 uses the structured interface for its local worker."
+  }
 }

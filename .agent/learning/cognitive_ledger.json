@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T06:44:53.310495+00:00",
-  "total_assessments": 33,
-  "cumulative_score": 456,
-  "average_fitness": 0.921,
+  "updated_at": "2026-11-05T07:07:52.214220+00:00",
+  "total_assessments": 34,
+  "cumulative_score": 470,
+  "average_fitness": 0.922,
   "dimension_totals": {
-    "useful_outcome": 92,
-    "learning_depth": 89,
-    "verification_rigor": 98,
-    "token_economy": 78,
-    "anti_asch_integrity": 99
+    "useful_outcome": 95,
+    "learning_depth": 91,
+    "verification_rigor": 101,
+    "token_economy": 81,
+    "anti_asch_integrity": 102
   },
   "agents": {
     "astra": {
@@ -38,12 +38,21 @@
       "average_fitness": 1.0
     },
     "claude-code": {
-      "assessments": 20,
-      "cumulative_score": 270,
-      "average_fitness": 0.9
+      "assessments": 21,
+      "cumulative_score": 284,
+      "average_fitness": 0.902
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "873b014e-0946-4ad1-8cde-42737eae94d9",
+      "timestamp": "2026-11-05T07:07:52.213711+00:00",
+      "task_id": "TASK-CREATE-MISSION-052",
+      "agent_id": "claude-code",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Kept 052 separate from 033 as the instruction required; refreshed the prompt against current state (035 falsified, 038 absent, agy 11%, read-only Qwen sandbox, Codex-pair attribution gap); corrected the paths; tests guard the brief; scored honestly low rather than gaming the wakeup"
+    },
     {
       "assessment_id": "43227819-5390-446b-b2b0-d32e460de684",
       "timestamp": "2026-11-05T06:44:53.310013+00:00",
@@ -214,15 +223,6 @@
       "raw_score": 13,
       "fitness": 0.867,
       "notes": "Built probe, hooks, gauge and cost fields with pre-registration, real fixtures and 179 tests; outcome claims await real-mission data; test-suite slowness incident found and fixed"
-    },
-    {
-      "assessment_id": "7ed063d9-ff30-4014-8de8-e418939f53a3",
-      "timestamp": "2026-11-04T14:27:44.720537+00:00",
-      "task_id": "MISSION-035-draft",
-      "agent_id": "claude-code",
-      "raw_score": 11,
-      "fitness": 0.733,
-      "notes": "Drafted from live probes of every backend; cost: 18k-token codex misprobe and near-redeem via blind TUI keystrokes; PR left unmerged until prompted"
     }
   ]
 }

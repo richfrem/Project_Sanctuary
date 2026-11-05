@@ -43,7 +43,8 @@
   "related_missions": {
     "MISSION-035": "SPAWNED BY: falsified at N=14; this tests the repairs its data points to. Reuses its probe, hooks, delegation recorder and ledger.",
     "MISSION-016": "CONSUMER: cheapest-viable routing needs token and effort predictions; this supplies them if (a)-(c) hold.",
-    "MISSION-045": "CONSUMER: selecting cross-vendor collaborators by measured complementarity needs per-model effort ratios (c)."
+    "MISSION-045": "CONSUMER: selecting cross-vendor collaborators by measured complementarity needs per-model effort ratios (c).",
+    "MISSION-052": "CONSUMER: MISSION-052 records each worker's size bucket and model."
   },
   "projected_impact": {
     "paths": [

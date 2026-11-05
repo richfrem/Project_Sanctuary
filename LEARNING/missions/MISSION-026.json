@@ -63,5 +63,8 @@
     "agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/graph-planning.md"
   ],
   "assignee": "antigravity",
-  "worktree": ".worktrees/mission-026"
+  "worktree": ".worktrees/mission-026",
+  "related_missions": {
+    "MISSION-052": "CONSUMER: MISSION-052 exercises the board with four concurrent leased worktrees."
+  }
 }
