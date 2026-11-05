@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-038",
+  "title": "Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic subprocesses and fault-injection harness; manage_coordination.py; board.json; leases.jsonl",
+  "created_at": "2026-11-04T22:00:00Z",
+  "updated_at": "2026-11-04T22:00:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 33.33
+  },
+  "priority_score": 33.33,
+  "hypothesis": "Extending the existing flight board with monotonic lease generations, idempotent transition identifiers, and recoverable state updates will produce zero accepted stale-owner operations, zero simultaneous valid overlapping leases, and zero lost acknowledged handoffs across 1,000 fault-injected schedules, while recovery completes within 5 seconds p95 and normal coordination latency overhead increases by <= 20%.",
+  "falsification_criteria": "Any stale lease holder can renew, release, or publish through coordination-managed operations after reassignment; any schedule grants overlapping valid leases; an acknowledged handoff disappears after recovery; replay produces duplicate logical transitions; or recovery or latency targets fail. (A lease token does not prevent direct arbitrary filesystem writes by an uncooperative process; the scope protects coordination-managed operations and publication checks).",
+  "experiment": "Use disposable Git repositories and controlled processes to inject failures: (1) two simultaneous checkout attempts for overlapping targets, (2) process termination between journal and board updates, (3) lease expiry, reassignment, then delayed heartbeat/checkin from original owner, (4) duplicate checkins and interrupted handoff persistence, (5) clock changes and malformed trailing journal records. Test existing implementation first; add only mechanisms demonstrated necessary by failures.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to bounded standard review solely for mathematical or formal proof of concurrency invariants."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "coordination",
+    "flight-board",
+    "lease-fencing",
+    "idempotent-state-machine",
+    "crash-safety",
+    "multi-agent-concurrency",
+    "proposed-by-astra"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-026": "EXTENDS existing lease and worktree coordination; hard dependency.",
+    "MISSION-031": "CONSUMES existing overlap detection; hard dependency, no replacement detector.",
+    "MISSION-033": "PROVIDER of recovery guarantees for parallel mission delivery.",
+    "MISSION-008": "PROVIDER of durable handoff storage; distinct from testing whether checkpoint content improves agent comprehension."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-038/",
+      "LEARNING/research/missions/MISSION-038.json",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_coordination.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md"
+    ],
+    "resources": [
+      "isolated fixture copies of .agent/coordination/board.json, leases.jsonl, and disposable worktrees"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate C. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

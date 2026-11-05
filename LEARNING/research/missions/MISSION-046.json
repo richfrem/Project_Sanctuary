@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-046",
+  "title": "Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Hybrid multi-model debate harness; evaluating-agent-work; deterministic Python/shell execution sandbox (ceiling 900k tokens, 6 CPU-hours)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.5,
+    "operational_friction": 3,
+    "priority_score": 16.67
+  },
+  "priority_score": 16.67,
+  "hypothesis": "For disputed engineering claims, requiring each side to propose a bounded executable challenge will: (a) resolve >= 80% of disputes correctly; (b) outperform the better of majority voting and prose debate by >= 15 percentage points; (c) keep confidently incorrect resolutions <= 5%; and (d) use <= 3 challenge rounds per dispute within an equal inference budget.",
+  "falsification_criteria": "Any threshold missed falsifies the hypothesis. A dispute settled by an LLM judge without running an available discriminating test is not an executable resolution. A test passing in one isolated environment does not prove a universal claim.",
+  "experiment": "Use 60 hidden-oracle disputes about small programs, concurrency traces, accounting transformations, and dependency behavior. Create correct-vs-incorrect and both-incorrect pairs. Randomize vendor assignments. Compare majority voting, bounded prose debate, and executable challenges in disposable testbeds.",
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "multi-vendor-pool",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.5,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models are permitted as adversarial debaters; total inference ceiling is 900k tokens."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "adversarial-review",
+    "multi-model-debate",
+    "executable-challenges",
+    "discriminating-experiments",
+    "evaluating-agent-work",
+    "proposed-by-astra",
+    "astra-epoch-n08"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-013": "EXTENDS: converts prose debates into empirical test-generating adversarial trials.",
+    "MISSION-036": "CONSUMES: grounds dispute outcomes in formal evidence contracts.",
+    "MISSION-041": "REUSES: leverages automated property-based counterexample machinery to generate challenge cases."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-046/",
+      "LEARNING/research/missions/MISSION-046.json",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/challenge_runner.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_challenge_runner.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/executable-disputes.md"
+    ],
+    "resources": [
+      "disposable execution sandbox; bounded cloud quotas (ceiling 900k tokens, 6 CPU-hours)"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N08. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

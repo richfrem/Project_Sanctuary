@@ -42,18 +42,33 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#21** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#22** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
 | **#23** | `MISSION-028` | **Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku** | 4 | 4 | 0.1x | 2 | **80.0** | `PROPOSED` | - |
-| **#24** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
-| **#25** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `RESOLVED` | `ABANDONED` |
-| **#26** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
-| **#27** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#28** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#29** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#30** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#31** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#32** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#33** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `IN_PROGRESS` | - |
-| **#34** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#35** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#24** | `MISSION-040` | **Prevent Evidence Duplication from Manufacturing Confidence Across Accumulated Memory** | 5 | 4 | 0.15x | 2 | **66.67** | `PROPOSED` | - |
+| **#25** | `MISSION-011` | **Distilling Investigation Principles into Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#26** | `MISSION-036` | **Preregistered Evidence Contracts: Disaggregating Implementation Delivery from Empirical Claim Corroboration** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#27** | `MISSION-039` | **Detect Preference-Induced Factual Drift with Paired Counterfactual Probes** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#28** | `MISSION-042` | **Compile Procedures into Reliable Offline Execution Plans for Sovereign Local Models** | 5 | 5 | 0.2x | 2 | **62.5** | `PROPOSED` | - |
+| **#29** | `MISSION-009` | **Resisting Consensus without Reflexive Contrarianism** | 3 | 4 | 0.2x | 1 | **60.0** | `RESOLVED` | `ABANDONED` |
+| **#30** | `MISSION-014` | **Active Curiosity as Uncertainty-Reduction Policy** | 3 | 3 | 0.2x | 1 | **45.0** | `PROPOSED` | - |
+| **#31** | `MISSION-037` | **Dependency-Aware Invalidation of Inherited Empirical Claims via Code, Model, and Runtime Hashes** | 5 | 5 | 0.2x | 3 | **41.67** | `PROPOSED` | - |
+| **#32** | `MISSION-049` | **Turn Recorded Failures into Independently Verified and Protected Repair Procedures** | 5 | 5 | 0.2x | 3 | **41.67** | `PROPOSED` | - |
+| **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
+| **#35** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
+| **#36** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
+| **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#40** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
+| **#41** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#42** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
+| **#43** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#44** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#45** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#46** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#47** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
+| **#48** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `IN_PROGRESS` | - |
+| **#49** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#50** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -448,7 +463,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Escalate-on-signal correct rate < 95%, or escalation rate > 35%, or always-Haiku is both cheaper (credits + wall-clock) and >= as accurate, or the trigger misses > 20% of local failures (silent confident errors such as MISSION-022 D9/D10 are expected misses and need a verifier; see MISSION-007).
 
-### MISSION-011: Distilling Investigation Principles into Local Models (Rank #24)
+### MISSION-040: Prevent Evidence Duplication from Manufacturing Confidence Across Accumulated Memory (Rank #24)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic graph processor; query_graph.py; disclose.py; cheap LLM evaluator (ceiling 400k tokens, 4 local hours)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Tracking derivation relationships and grouping evidence by originating observation will: (a) reduce false acceptance caused by duplicated evidence by >= 50% versus ordinary provenance-tagged retrieval; (b) preserve correct use of genuinely independent corroboration within 3 percentage points; (c) add <= 15% retrieved-context tokens; and (d) correctly identify >= 95% of known derivative relationships in held-out fixtures.
+- **Falsification Gate**:
+  > Fail if any threshold is missed, or if the system labels independently collected evidence as derivative solely because its wording is similar. Missing provenance must reduce confidence in independence rather than trigger invented lineage.
+
+### MISSION-011: Distilling Investigation Principles into Local Models (Rank #25)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: forging-sovereign-models & Local Ollama
@@ -459,7 +485,40 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Comparative improvement falls below 10pp on unseen task families, or control benchmark regression exceeds 3pp.
 
-### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #25)
+### MISSION-036: Preregistered Evidence Contracts: Disaggregating Implementation Delivery from Empirical Claim Corroboration (Rank #26)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local Python runner; manage_backlog.py; deterministic test fixtures; bounded standard LLM review for claim decomposition
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Adding a versioned evaluation contract to existing mission manifests (explicit claim IDs, numeric thresholds, evaluation scope, and cryptographic evidence references) will detect >= 95% of deliberately unsupported corroborations with <= 5% false rejection of supported results across 60 held-out evaluation cases, while deterministic validation adds < 500 ms p95 per mission excluding execution of the underlying experiment.
+- **Falsification Gate**:
+  > Detection falls below 95%, or false rejection exceeds 5%; any changed hypothesis can silently inherit evidence supporting its previous version; a partially supported result passes as full corroboration without explicitly narrowing and versioning the claim; or validation exceeds the < 500 ms p95 latency target. Unavailable evidence must be flagged unassessed, not automatically falsified.
+
+### MISSION-039: Detect Preference-Induced Factual Drift with Paired Counterfactual Probes (Rank #27)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Hybrid Python test runner; evaluating-agent-work; deterministic scoring; fixed standard model subjects (ceiling 800k inference tokens)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A paired-probe detector followed by evidence-only reconsideration will, on held-out cases: (a) reduce unsupported preference-aligned answer changes by >= 50% relative to the unchanged agent; (b) keep false alarms on legitimate preference-sensitive decisions <= 5%; (c) reduce factual accuracy by no more than 2 percentage points; and (d) add <= 35% inference-token overhead.
+- **Falsification Gate**:
+  > Any threshold missed falsifies the combined hypothesis; or if the system avoids changing its answer by refusing legitimate evidence updates.
+
+### MISSION-042: Compile Procedures into Reliable Offline Execution Plans for Sovereign Local Models (Rank #28)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Apple Silicon M1 (16GB) MLX runner; forge_llm.py; procedure_executor.py; 8 GiB RAM ceiling
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A finite-state executor using typed procedure steps, with the local sovereign model restricted to bounded decisions, will: (a) complete >= 90% of held-out procedure tasks; (b) improve success by >= 15 percentage points over the frozen MISSION-022 free-form loop; (c) execute zero operations outside the declared tool contract; (d) use <= 70% of the free-form baseline inference tokens; and (e) remain within 8 GiB measured process-tree memory with incremental swap <= 1 GiB.
+- **Falsification Gate**:
+  > Any required threshold missed falsifies the hypothesis. Success achieved by adding task-specific hardcoded answers to the executor does not count as generalization. If deterministic-only execution matches performance without the model, the LLM component is falsified.
+
+### MISSION-009: Resisting Consensus without Reflexive Contrarianism (Rank #29)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `ABANDONED`
 - **Execution Surface**: `local`
@@ -475,7 +534,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Lessons Learned & Epistemic Compounding**:
   * Scan related missions before creating one (agent-native-backlog 4a); this pair slipped through before the helper existed.
 
-### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #26)
+### MISSION-014: Active Curiosity as Uncertainty-Reduction Policy (Rank #30)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Simulation Environments & evaluating-agent-work
@@ -486,7 +545,29 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Query reduction fails across held-out environment families, or LLM-estimated information gain fails to correlate with realized uncertainty reduction.
 
-### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #27)
+### MISSION-037: Dependency-Aware Invalidation of Inherited Empirical Claims via Code, Model, and Runtime Hashes (Rank #31)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Local deterministic dependency graph evaluator; audit_decay.py; disclose.py; relay.py; evaluating-agent-work usage telemetry
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Binding reusable conclusions to explicit dependencies (relevant code/configuration hashes, model identity, runtime version, and evaluation conditions) will detect >= 95% of materially stale claims with <= 10% unnecessary invalidations while executing <= 30% of a full benchmark rerun measured cost across a fixed mutation suite.
+- **Falsification Gate**:
+  > More than 5% of materially stale claims remain eligible for unqualified reuse; unnecessary invalidations exceed 10%; selected revalidation costs exceed 30% of full reruns; or any declared safety-critical dependency change leaves its dependent claim marked currently verified. If dependency maintenance exceeds rerun savings, abandon broad deployment and retain only high-value bindings.
+
+### MISSION-049: Turn Recorded Failures into Independently Verified and Protected Repair Procedures (Rank #32)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic fault fixture harness; record_procedure_outcome.py; cheap repair worker (ceiling 800k tokens, 8 CPU-hours)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A pipeline that minimizes failures, creates independently validated regression tests, and stores repair preconditions will: (a) repair >= 70% of held-out related faults; (b) improve repair success by >= 20 percentage points over ordinary failure-log retrieval; (c) reduce median repair inference tokens by >= 25%; and (d) introduce zero regressions on the protected hidden suite.
+- **Falsification Gate**:
+  > Fail if any threshold is missed, or if a repair passes by deleting tests, weakening assertions, bypassing the failing feature, or altering the evaluator.
+
+### MISSION-012: Selective Forgetting & Counterexample Memory Compression (Rank #33)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: managing-sovereign-memory / disclose.py
@@ -497,7 +578,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Task performance retention drops below 95% or comparative advantage over recency is below 10pp.
 
-### MISSION-032: Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency (Rank #28)
+### MISSION-032: Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency (Rank #34)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Haiku 5.5 / Gemini 3.8 Flash via cli-agent as incoming agents; local Qwen2.5-Coder-7B via MLX for the placement arm
@@ -508,7 +589,73 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #29)
+### MISSION-041: Compile Falsification Criteria into Executable Property Tests and Counterexample Searches (Rank #35)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local Python hypothesis/property testing harness; evaluating-agent-work; deterministic execution (ceiling 500k tokens, 6 CPU-hours)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > For bounded Python components, an agent that translates preregistered claims into property tests and counterexample searches will: (a) detect >= 80% of held-out, non-equivalent semantic mutants; (b) improve detection by >= 20 percentage points over equal-budget example-test generation; (c) produce <= 5% false alarms against verified reference implementations; and (d) finish within 10 minutes per component, excluding initial environment setup.
+- **Falsification Gate**:
+  > Any threshold missed falsifies the hypothesis. Tests that merely reproduce the implementation behavior without an independent specification do not count. A timeout is not proof of correctness.
+
+### MISSION-047: Transfer and Compose Procedures Through Evidence-Linked Concept Graphs (Rank #36)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic graph traverser; query_graph.py; disclose.py; cheap LLM synthesizer (ceiling 600k tokens)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Retrieval over typed concept relationships (preconditions, mechanisms, counterexamples, outcomes) followed by procedure synthesis will: (a) improve success on unseen composed tasks by >= 15 percentage points over the stronger of lexical retrieval and untyped graph traversal; (b) retain >= 95% accuracy on familiar control tasks; and (c) stay within an identical 6,000-token retrieval budget per task.
+- **Falsification Gate**:
+  > Fail if any threshold is missed, or if improvement depends on answer-bearing links inserted after seeing held-out tasks. Causality must not be inferred solely from a wikilink.
+
+### MISSION-038: Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board (Rank #37)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic subprocesses and fault-injection harness; manage_coordination.py; board.json; leases.jsonl
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Extending the existing flight board with monotonic lease generations, idempotent transition identifiers, and recoverable state updates will produce zero accepted stale-owner operations, zero simultaneous valid overlapping leases, and zero lost acknowledged handoffs across 1,000 fault-injected schedules, while recovery completes within 5 seconds p95 and normal coordination latency overhead increases by <= 20%.
+- **Falsification Gate**:
+  > Any stale lease holder can renew, release, or publish through coordination-managed operations after reassignment; any schedule grants overlapping valid leases; an acknowledged handoff disappears after recovery; replay produces duplicate logical transitions; or recovery or latency targets fail. (A lease token does not prevent direct arbitrary filesystem writes by an uncooperative process; the scope protects coordination-managed operations and publication checks).
+
+### MISSION-044: Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access (Rank #38)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic bootstrap runner; air-gapped network namespace; operating-sanctuary-guardian; forge_llm.py
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > From a sealed, locally available recovery package, a clean environment with external networking denied will: (a) restore >= 95% of a fixed 40-task capability suite; (b) complete restoration within 30 minutes; (c) preserve 100% of selected evidence artifacts byte-for-byte; (d) make zero attempted external network connections during restoration and evaluation; and (e) include at least 10 tasks requiring local MLX model execution.
+- **Falsification Gate**:
+  > Any threshold missed falsifies the hypothesis. A reconstruction that works only because it accesses undeclared host caches or environmental secrets fails. Same-machine recovery does not establish cross-hardware portability.
+
+### MISSION-050: Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery (Rank #39)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Multi-agent coordination harness; manage_coordination.py; relay.py; evaluating-agent-work telemetry (ceiling 1M tokens, 12 execution-hours)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A checkpoint policy using measured interruption risk, progress value, and checkpoint cost will: (a) produce >= 20% more verified completed subgoals per fixed resource budget than the best fixed-interval policy on development data; (b) lose <= 5% of acknowledged progress; (c) keep checkpoint overhead <= 10% of inference tokens; and (d) lose no more than 3% throughput in interruption-free controls.
+- **Falsification Gate**:
+  > Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.
+
+### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #40)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Local deterministic curriculum scheduler; evaluating-agent-work; cheap learner (ceiling 750k tokens)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A curriculum selected from diagnosed failure categories and prerequisite relationships will: (a) reach 80% held-out task success using >= 30% fewer learning episodes than both random selection and weakest-category-first selection; (b) end with <= 3 percentage points regression on previously mastered categories; and (c) achieve these results within 60 learning episodes.
+- **Falsification Gate**:
+  > Fail if target is not reached within 60 episodes, episode savings are below 30%, or retention fails. Choosing easier evaluation tasks after observing failures invalidates the run.
+
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #41)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -519,7 +666,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #30)
+### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #42)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board
@@ -530,7 +677,29 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any pilot threshold missed (wall-clock > 60% of sequential, clobbering or > 1 conflict round per PR, token overhead > 25%, review agreement < 80%, zero defects caught); or one worker corrupts another's worktree or files; or an orchestrator-run merge leaves main failing its tests; or the orchestrator merges, pushes or signs anything without the human approval its policy requires; or Phase 1 shows the existing upstream skill already covers selection, dispatch, review and merge with configuration alone (then no new skill is warranted and the result is recorded as such).
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #31)
+### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #43)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Multi-vendor CLI agent pool (OpenAI, Anthropic, Google); evaluating-agent-work; usage telemetry (ceiling 1.2M tokens)
+- **Cheapest Viable Model**: `multi-vendor-pool` (Tier: `standard`, CLI: `cli-agent`)
+- **Fallback Models**: `gemini-3.8-flash`, `claude-haiku-5.5`
+- **Hypothesis (Popperian Prediction)**:
+  > A team selector trained on development-set error patterns will achieve >= 8 percentage points higher task success than the strongest preregistered control (best individual model repeated sampling, random cross-vendor teams, fixed asymmetric roles) while staying within the same measured inference-cost ceiling.
+- **Falsification Gate**:
+  > Fail if the advantage is below 8 points, exceeds the cost ceiling, or disappears on untouched task families. Selection using held-out answers invalidates the experiment. Vendor diversity is not assumed to be epistemic independence.
+
+### MISSION-046: Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges (Rank #44)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Hybrid multi-model debate harness; evaluating-agent-work; deterministic Python/shell execution sandbox (ceiling 900k tokens, 6 CPU-hours)
+- **Cheapest Viable Model**: `multi-vendor-pool` (Tier: `standard`, CLI: `cli-agent`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > For disputed engineering claims, requiring each side to propose a bounded executable challenge will: (a) resolve >= 80% of disputes correctly; (b) outperform the better of majority voting and prose debate by >= 15 percentage points; (c) keep confidently incorrect resolutions <= 5%; and (d) use <= 3 challenge rounds per dispute within an equal inference budget.
+- **Falsification Gate**:
+  > Any threshold missed falsifies the hypothesis. A dispute settled by an LLM judge without running an available discriminating test is not an executable resolution. A test passing in one isolated environment does not prove a universal claim.
+
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #45)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -541,7 +710,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #32)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #46)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -552,7 +721,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #33)
+### MISSION-043: Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates (Rank #47)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `local`
+- **Target Platform**: Apple Silicon M1 (16GB) MLX LoRA training; forging-sovereign-models; 10 GiB RAM ceiling
+- **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
+- **Fallback Models**: `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Across three sequential domain updates, a replay-based LoRA adapter pipeline will: (a) improve newest-domain success by >= 10 percentage points over the frozen initial model after each update; (b) lose <= 3 percentage points on every earlier domain (catastrophic forgetting prevention); (c) reject 100% of deliberately regressive candidate adapters in the promotion gate; and (d) complete each update within 6 hours, using <= 10 GiB process-tree memory and <= 1 GiB incremental swap on 16GB Apple Silicon.
+- **Falsification Gate**:
+  > Fail if any update violates capability or retention thresholds, a regressive adapter is promoted, or resource limits cannot be met. A smaller model or easier task substitution after evaluation begins requires a new hypothesis.
+
+### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #48)
 - **Status**: `IN_PROGRESS`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex, Antigravity (agy) CLIs and the local MLX server (Copilot only under an explicit human-approved, usage-query-only exception); the evaluating-agent-work skill; the cli-agent skill
@@ -563,7 +743,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 3 backends yield a measurable per-task delta; any delta deviates > 10% from the vendor-reported session total; the held-out MAPE is > 30% or not >= 20% better than the static estimates; a quota-window reading cannot be attributed (other sessions' usage swamps the mission's own delta) and no mitigation restores attribution; any auth token, API key or prompt text appears in a tracked file or log; the probe reaches Copilot (a corporate account the cli-agent skill marks work-only) without explicit per-run human approval and usage-query-only scope; or obtaining a backend's quota state requires scraping an undocumented private endpoint or violating its terms (then record that backend as unmeasurable, not hacked). If worker self-report proves as accurate as orchestrator measurement, the measured path is not justified and the result is recorded as such. Also falsified if, with >= 12 real tasks, the measured data shows no usable difference in effective cost or time between models within a task class (the effort multiplier is noise), or the recommender's top choice is outperformed on effective cost by a random choice among unconstrained backends on held-out tasks. Also falsified if the calibrated percent-to-token estimate misses subsequent percent movement by more than 50% on >= 3 held-out measurements, or if a backend reaches 0% remaining without the gauge having flagged it LOW beforehand.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #34)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #49)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -574,7 +754,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #35)
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #50)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

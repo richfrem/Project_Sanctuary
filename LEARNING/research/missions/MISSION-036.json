@@ -1,0 +1,64 @@
+{
+  "id": "MISSION-036",
+  "title": "Preregistered Evidence Contracts: Disaggregating Implementation Delivery from Empirical Claim Corroboration",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local Python runner; manage_backlog.py; deterministic test fixtures; bounded standard LLM review for claim decomposition",
+  "created_at": "2026-11-04T22:00:00Z",
+  "updated_at": "2026-11-04T22:00:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 62.5
+  },
+  "priority_score": 62.5,
+  "hypothesis": "Adding a versioned evaluation contract to existing mission manifests (explicit claim IDs, numeric thresholds, evaluation scope, and cryptographic evidence references) will detect >= 95% of deliberately unsupported corroborations with <= 5% false rejection of supported results across 60 held-out evaluation cases, while deterministic validation adds < 500 ms p95 per mission excluding execution of the underlying experiment.",
+  "falsification_criteria": "Detection falls below 95%, or false rejection exceeds 5%; any changed hypothesis can silently inherit evidence supporting its previous version; a partially supported result passes as full corroboration without explicitly narrowing and versioning the claim; or validation exceeds the < 500 ms p95 latency target. Unavailable evidence must be flagged unassessed, not automatically falsified.",
+  "experiment": "Construct 20 valid cases, 20 invalid cases, and 20 partially supported cases (including missing evidence, failed thresholds, changed criteria, successful implementation with a failed hypothesis, and claims generalized beyond tested models). Compare current validation with the proposed contract using independently labeled expected results. Freeze the evaluation set before implementation.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to bounded standard model (e.g. gpt-6-luna or claude-sonnet-5.5) solely for ambiguous natural-language claim decomposition into formal predicates."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "evidence-contract",
+    "preregistration",
+    "falsification-gates",
+    "anti-asch-epistemics",
+    "verdict-integrity",
+    "manage-backlog",
+    "proposed-by-astra"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-015": "PROVIDER of enforceable preregistration and verdict checks; no hard dependency.",
+    "MISSION-033": "PROVIDER of review acceptance inputs; no hard dependency.",
+    "MISSION-031": "VALIDATES claim-versus-evidence representation using its documented limitation; preserves historical record while disaggregating delivery from claim."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-036/",
+      "LEARNING/research/missions/MISSION-036.json",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/manage_backlog.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_backlog_manager.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/agent-native-backlog.md",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/evidence-contract.md"
+    ],
+    "resources": [
+      "temporary fixture repositories; no MLX server required"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate A. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

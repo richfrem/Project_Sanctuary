@@ -1,0 +1,63 @@
+{
+  "id": "MISSION-049",
+  "title": "Turn Recorded Failures into Independently Verified and Protected Repair Procedures",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic fault fixture harness; record_procedure_outcome.py; cheap repair worker (ceiling 800k tokens, 8 CPU-hours)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 41.67
+  },
+  "priority_score": 41.67,
+  "hypothesis": "A pipeline that minimizes failures, creates independently validated regression tests, and stores repair preconditions will: (a) repair >= 70% of held-out related faults; (b) improve repair success by >= 20 percentage points over ordinary failure-log retrieval; (c) reduce median repair inference tokens by >= 25%; and (d) introduce zero regressions on the protected hidden suite.",
+  "falsification_criteria": "Fail if any threshold is missed, or if a repair passes by deleting tests, weakening assertions, bypassing the failing feature, or altering the evaluator.",
+  "experiment": "Use 20 development failures and 60 held-out faults in small fixture repositories. Separate by root-cause variant, not just filename. Compare ordinary logs, a retrieved prior patch, and a structured procedure containing trigger, diagnosis, minimal counterexample, repair, and applicability limits. Cap each repair at 2 attempts.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to bounded standard adjudication solely for evaluating subtle test assertion weakening."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "autonomous-repair",
+    "self-healing",
+    "procedure-generation",
+    "regression-testing",
+    "managing-sovereign-memory",
+    "proposed-by-astra",
+    "astra-epoch-n11"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-015": "INTERVENTION UNDER: provides explicit empirical self-improvement mechanism without self-deception.",
+    "MISSION-036": "CONSUMES: grounds repair validations in strict evidence contracts.",
+    "MISSION-041": "CONSUMES: uses automated counterexample generation to build regression protections."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-049/",
+      "LEARNING/research/missions/MISSION-049.json",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/record_procedure_outcome.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_procedure_repair.py",
+      "LEARNING/procedures/"
+    ],
+    "resources": [
+      "disposable repository fixtures; max 800k inference tokens, 8 CPU-hours"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N11. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

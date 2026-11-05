@@ -1,0 +1,63 @@
+{
+  "id": "MISSION-048",
+  "title": "Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Local deterministic curriculum scheduler; evaluating-agent-work; cheap learner (ceiling 750k tokens)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.25,
+    "operational_friction": 3,
+    "priority_score": 26.67
+  },
+  "priority_score": 26.67,
+  "hypothesis": "A curriculum selected from diagnosed failure categories and prerequisite relationships will: (a) reach 80% held-out task success using >= 30% fewer learning episodes than both random selection and weakest-category-first selection; (b) end with <= 3 percentage points regression on previously mastered categories; and (c) achieve these results within 60 learning episodes.",
+  "falsification_criteria": "Fail if target is not reached within 60 episodes, episode savings are below 30%, or retention fails. Choosing easier evaluation tasks after observing failures invalidates the run.",
+  "experiment": "Use 6 task families with hidden evaluation cases and known prerequisites. Each learning episode runs one bounded experiment and updates a procedure or memory artifact. Keep model weights fixed to isolate curriculum selection. Evaluate frozen snapshots at preregistered intervals.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.25,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models are excluded; curriculum scheduling is deterministic graph traversal and diagnostic categorization."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "curriculum-learning",
+    "self-directed-learning",
+    "failure-diagnosis",
+    "capability-acquisition",
+    "evaluating-agent-work",
+    "proposed-by-astra",
+    "astra-epoch-n10"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-014": "EXTENDS: shifts from pure information-theoretic gain to active capability acquisition.",
+    "MISSION-011": "SUPPLIES DATA TO: generates structured learning sequences for sovereign fine-tuning.",
+    "MISSION-043": "SUPPLIES DATA TO: orders domain updates to minimize catastrophic forgetting in sequential LoRA adapters."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-048/",
+      "LEARNING/research/missions/MISSION-048.json",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/curriculum_scheduler.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_curriculum_scheduler.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/curriculum-prerequisites.md"
+    ],
+    "resources": [
+      "isolated fixture memory stores; max 750k inference tokens across 60 episodes"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N10. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

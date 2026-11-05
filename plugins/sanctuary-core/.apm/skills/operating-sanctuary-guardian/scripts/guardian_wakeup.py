@@ -68,6 +68,36 @@ def get_git_telemetry(project_root: Path) -> dict[str, str | bool]:
     return {"branch": branch, "dirty": dirty}
 
 
+def check_mission_manifests(project_root: Path) -> "dict | None":
+    """Validate LEARNING/research/missions/*.json against LEARNING/research/mission.schema.json (MISSION schema task).
+
+    None when the project has no schema (older checkouts). Never raises: a problem is reported as WARN so it cannot break the boot.
+    Uses the zero-dependency validator of the managing-sovereign-memory skill.
+    """
+    schema_path = project_root / "LEARNING" / "research" / "mission.schema.json"
+    if not schema_path.exists():
+        return None
+    entry = {"path": "LEARNING/research/missions", "status": "WARN", "size_bytes": 0, "description": ""}
+    try:
+        import importlib.util
+        script = Path(__file__).resolve().parents[2] / "managing-sovereign-memory" / "scripts" / "validate_missions.py"
+        spec = importlib.util.spec_from_file_location("validate_missions", str(script))
+        vm = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(vm)
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        missions_dir = project_root / "LEARNING" / "research" / "missions"
+        errors = vm.validate_dir(str(missions_dir), schema) if missions_dir.is_dir() else ["[(none)] (root): no manifests found"]
+        count = len([f for f in missions_dir.glob("*.json")]) if missions_dir.is_dir() else 0
+        if not errors:
+            entry.update(status="PASS", description=f"Mission manifests vs mission.schema.json [{count} manifests valid]")
+        else:
+            shown = "; ".join(errors[:3]) + (f" (+{len(errors) - 3} more)" if len(errors) > 3 else "")
+            entry["description"] = f"Mission manifests vs mission.schema.json [{len(errors)} problem(s): {shown}]"
+    except Exception as e:  # noqa: BLE001 - boot must not fail on a validator problem
+        entry["description"] = f"Mission schema check could not run [{e.__class__.__name__}: {e}]"
+    return entry
+
+
 def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     """Inspect presence and structural integrity of Layer 1 fast-boot context files."""
     checks = []
@@ -111,6 +141,10 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
         })
         if not valid:
             all_passed = False
+
+    mission_check = check_mission_manifests(project_root)
+    if mission_check:
+        checks.append(mission_check)  # informational: does not decide GREEN/YELLOW (that is the context files)
 
     health_status = "GREEN" if all_passed else "YELLOW"
     return health_status, checks

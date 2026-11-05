@@ -1,0 +1,66 @@
+{
+  "id": "MISSION-037",
+  "title": "Dependency-Aware Invalidation of Inherited Empirical Claims via Code, Model, and Runtime Hashes",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Local deterministic dependency graph evaluator; audit_decay.py; disclose.py; relay.py; evaluating-agent-work usage telemetry",
+  "created_at": "2026-11-04T22:00:00Z",
+  "updated_at": "2026-11-04T22:00:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 41.67
+  },
+  "priority_score": 41.67,
+  "hypothesis": "Binding reusable conclusions to explicit dependencies (relevant code/configuration hashes, model identity, runtime version, and evaluation conditions) will detect >= 95% of materially stale claims with <= 10% unnecessary invalidations while executing <= 30% of a full benchmark rerun measured cost across a fixed mutation suite.",
+  "falsification_criteria": "More than 5% of materially stale claims remain eligible for unqualified reuse; unnecessary invalidations exceed 10%; selected revalidation costs exceed 30% of full reruns; or any declared safety-critical dependency change leaves its dependent claim marked currently verified. If dependency maintenance exceeds rerun savings, abandon broad deployment and retain only high-value bindings.",
+  "experiment": "Use 12 previously measured claims and 60 controlled repository/environment mutations (implementation changes, model changes, altered config, unrelated edits, documentation edits). Compare: (1) existing age-based decay, (2) invalidate everything after any repo change, (3) dependency-specific invalidation. Run full evaluations to establish ground truth; measure tests chosen by the selective policy. Preserve prior findings as historical evidence while qualifying present applicability.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate to targeted model evaluations only for models specifically referenced in invalidated claims."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "claim-invalidation",
+    "dependency-graph",
+    "confidence-decay",
+    "revalidation",
+    "relay-provenance",
+    "anti-asch-epistemics",
+    "proposed-by-astra"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-006": "EXTENDS provenance with applicability after legitimate code change; planted falsehood detection remains distinct.",
+    "MISSION-032": "PROVIDER of validity annotations for the predecessor relay.",
+    "MISSION-035": "CONSUMER of existing measured-cost telemetry rather than building a separate cost ledger.",
+    "MISSION-036": "CONSUMER of claim identifiers and evidence scope; hard dependency for integrated deployment."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-037/",
+      "LEARNING/research/missions/MISSION-037.json",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_sovereign_memory.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/relay.py",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_relay.py"
+    ],
+    "resources": [
+      "local-model-memory when testing MLX claims; explicitly bounded cloud quota"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate B. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}

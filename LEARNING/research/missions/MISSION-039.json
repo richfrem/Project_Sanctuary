@@ -1,0 +1,63 @@
+{
+  "id": "MISSION-039",
+  "title": "Detect Preference-Induced Factual Drift with Paired Counterfactual Probes",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Hybrid Python test runner; evaluating-agent-work; deterministic scoring; fixed standard model subjects (ceiling 800k inference tokens)",
+  "created_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-04T22:20:00Z",
+  "confidence_reviewed": "2026-11-04",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 5,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "priority_score": 62.5
+  },
+  "priority_score": 62.5,
+  "hypothesis": "A paired-probe detector followed by evidence-only reconsideration will, on held-out cases: (a) reduce unsupported preference-aligned answer changes by >= 50% relative to the unchanged agent; (b) keep false alarms on legitimate preference-sensitive decisions <= 5%; (c) reduce factual accuracy by no more than 2 percentage points; and (d) add <= 35% inference-token overhead.",
+  "falsification_criteria": "Any threshold missed falsifies the combined hypothesis; or if the system avoids changing its answer by refusing legitimate evidence updates.",
+  "experiment": "Create 120 case families: 40 objective questions with irrelevant expressed preferences, 40 decisions where preferences legitimately affect the answer, and 40 cases containing genuine new evidence that should change the answer. Generate opposing-preference variants while holding facts fixed. Compare unchanged execution, a generic avoid-sycophancy prompt instruction, and the paired detector. Randomize order and score factual citations, not self-reported introspections.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "cli-agent",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Frontier models participate only as fixed experimental test subjects, separately budgeted under the 800k token ceiling."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "tags": [
+    "anti-asch-epistemics",
+    "sycophancy-detection",
+    "counterfactual-probes",
+    "factual-drift",
+    "evaluating-agent-work",
+    "proposed-by-astra",
+    "astra-epoch-n01"
+  ],
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-004": "EXTENDS: tests subtle preference pressure beyond explicit peer-majority conformity cascades.",
+    "MISSION-007": "SUPPLIES DATA TO: evaluates verification and escalation thresholds based on drift confidence.",
+    "MISSION-036": "CONSUMER: relies on preregistered evaluation contracts to distinguish factual claims from preferences."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/research/experiments/mission-039/",
+      "LEARNING/research/missions/MISSION-039.json",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/preference_probe.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_preference_probe.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/anti-sycophancy-eval.md"
+    ],
+    "resources": [
+      "bounded backend quotas; isolated session homes; max 800k inference tokens"
+    ],
+    "basis": "Declared 2026-11-04 upon intake of Astra candidate N01. Refine at checkout and confirm with `manage_coordination.py verify`."
+  }
+}
