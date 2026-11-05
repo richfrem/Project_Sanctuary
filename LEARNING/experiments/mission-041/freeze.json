@@ -1,0 +1,13 @@
+{
+  "fixtures/claim_accounting.py": "d9531b84139589a23e29964097985c901f2cc11b08515e72e96e714a669294cf",
+  "fixtures/claim_clamp.py": "4cc857c1f8131ef096975376cc7c1a3ec991234ce2a94af77f19509b43640ef1",
+  "fixtures/claim_lease.py": "cc6cabe9c1c4cfbc29324091bb85bdb62a95650e0d99557e8453ef0ad12a8a14",
+  "fixtures/claim_path.py": "41c7c04e7f72b4ffbba4d7ee75e4302783493477249178898506295d73ee9159",
+  "fixtures/claim_replay.py": "18a1912be9179c2424ff0f66f99474bebd9ed3d3d55d74e432c1a0d2f959e5f2",
+  "fixtures/claim_schema.py": "d47ab1b3a3769a64b29d44e5b8ee4e9b7ab4c3adc81d3b9938019038b2f697e4",
+  "fixtures/development.py": "4020e1b0494502c0907e270d9c5cd878b50c4b203d31854c613c14d707643e73",
+  "fixtures/heldout.py": "f958bba26b9647ac6d3b3a358dcc434779591c865df2ae24a345802f83edd027",
+  "fixtures/manifest.json": "52c4d36ccdc0b5b9784985e5c614cee4300ac9f7faed81303af7703dd8919d9a",
+  "fixtures/references.py": "d5dec4166440dd51126c3f85650d3480c3042517e2022bba483743f1f7705853",
+  "preregistration.md": "549b94eff509b7db48f56d50c890ac1a235ed7b8f0acdb1053de0eae977fdf1d"
+}

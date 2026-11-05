@@ -1,0 +1,36 @@
+{
+  "components": {
+    "lease": {
+      "cases": 2178,
+      "failures": [],
+      "coverage": "exhaustive stated domain"
+    },
+    "path": {
+      "cases": 488281,
+      "failures": [],
+      "coverage": "exhaustive stated domain"
+    },
+    "accounting": {
+      "cases": 35937,
+      "failures": [],
+      "coverage": "exhaustive stated domain"
+    },
+    "schema": {
+      "cases": 9,
+      "failures": [],
+      "coverage": "exhaustive stated domain"
+    },
+    "clamp": {
+      "cases": 139425,
+      "failures": [],
+      "coverage": "exhaustive stated domain"
+    },
+    "replay": {
+      "cases": 65987,
+      "failures": [],
+      "coverage": "reduced exhaustive + 10000 seeded full-domain samples"
+    }
+  },
+  "elapsed_seconds": 0.5688426250126213,
+  "all_passed": true
+}
