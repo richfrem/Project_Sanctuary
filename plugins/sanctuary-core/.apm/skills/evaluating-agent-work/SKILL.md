@@ -13,7 +13,9 @@ allowed-tools: Bash, Read, Write
 
 A sovereign evaluation and cognitive economy skill for Project Sanctuary, providing evidence-based scoring, real-world subscription budget tracking, and reinforcement learning value analytics.
 
-> **What lives where (MISSION-055):** this skill keeps Sanctuary-specific policy: subscription headroom and budgets (`usage_probe.py`, `track_budget.py`), the 0-3 contribution scoring and dashboards (`score_contribution.py`, `visualize_economy.py`), pre-dispatch evaluation, the property-falsification evaluator, and two thin adapters (`eval_gate.py`, `sanctuary_adapter.py`). The reusable evaluation core (work-contract assessment, validity/pilot/fixture gates, cost accounting, intervention and repair records, lessons) lives in the companion skill `evaluating-agent-outcomes` and is reached through those adapters. Details: [shared-loop-adapter.md](references/shared-loop-adapter.md).
+> **Entry points:** ordinary work in any repo -> the shared `evaluating-agent-outcomes` skill (work-contract assessment, validity gates, scoring, accounting, lessons). Sanctuary mission work -> this skill (policy, budgets, scoring profile, dashboards, mission records). Generic evaluation is routed to the shared implementation and is not re-implemented here. Full per-function map: [responsibility-map.md](references/responsibility-map.md).
+
+> **What lives where (MISSION-055):** this skill keeps Sanctuary policy and storage: the contribution profile (`references/contribution-profile.json`), subscription budget profiles, headroom floors and the (falsified) predictor, the pre-dispatch Popperian rules, mission attribution and `events.jsonl`/ledger files, dashboards, the MISSION-041 benchmark protocol, and the adapters. The arithmetic behind `score_contribution.py`, `track_budget.py`, `evaluate_dispatch.py` and `usage_probe.py` (scoring, cost tiers, ledger fold, usage measurement, validity gates, interventions, repairs, lessons) lives once in the companion skill `evaluating-agent-outcomes`; these scripts keep their command lines and output and call it. `counterexample_eval.py` is held here because MISSION-041's frozen record pins its hash. Details: [shared-loop-adapter.md](references/shared-loop-adapter.md).
 
 ## Contents
 
@@ -81,6 +83,7 @@ python3 tests/test_evaluating_agent_work.py
 - [Evaluation Rubric](references/evaluation-rubric.md) — Detailed anchor criteria and anti-slop guidelines.
 - [Token Budget Profiles](references/token-budget-profiles.md) — Real-world subscription boundaries (static estimates; measured data supersedes them).
 - [Usage Telemetry](references/usage-telemetry-sources.md) — Fuel gauge (5-hour/weekly windows) and measured efficiency per model, collected at every real mission checkout/checkin (`scripts/usage_probe.py`).
+- [Responsibility map](references/responsibility-map.md) — Every script classified as generic, policy, storage or presentation; what moved, what is held and why.
 - [Shared Loop Adapter](references/shared-loop-adapter.md) — How Sanctuary consumes the shared orchestrator, executor and evaluator; delivery is not a verdict.
 - [Eval Gate](references/eval-gate.md) — Deterministic pre-evaluation gates, validity cap, intervention and repair records.
 - [Reinforcement Learning Analogy](references/reinforcement-learning-analogy.md) — AlphaGo MCTS analogy and cognitive value policies.

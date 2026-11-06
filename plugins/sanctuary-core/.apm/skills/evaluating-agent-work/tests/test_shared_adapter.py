@@ -39,6 +39,13 @@ class Adapter(unittest.TestCase):
         finally:
             os.chdir(old)
 
+    def test_qwen_shape_blocks_behavioral_verdict_via_shared_gate(self):
+        v = g.validity(60, 2, {"q": {"k": 2, "n": 60}})                 # the 004 Qwen shape
+        r = ad.interpret_validity(v, self.m)
+        self.assertFalse(r["behavioral_verdict_supported"]); self.assertEqual(r["max_claim"], "MECHANICS_ONLY")
+        ok = ad.interpret_validity(g.validity(60, 58, {"b": {"k": 20, "n": 60}}), self.m)
+        self.assertTrue(ok["behavioral_verdict_supported"]); self.assertEqual(ok["current_empirical_state"], "UNASSESSED")
+
     def test_empirical_state_comes_only_from_manifest(self):
         self.assertEqual(ad.empirical_state(dict(self.m, verdict="FALSIFIED")), "FALSIFIED")
 

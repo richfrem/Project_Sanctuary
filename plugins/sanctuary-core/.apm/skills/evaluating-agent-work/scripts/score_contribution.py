@@ -39,119 +39,34 @@ def get_project_root() -> Path:
     return Path.cwd()
 
 
-MODEL_COST_WEIGHTS = {
-    # Frontier models (4.0x - 4.5x)
-    "gpt-6-astra": 4.0,
-    "astra": 4.0,
-    "claude-opus": 4.0,
-    "opus": 4.0,
-    "claude-fable": 4.5,
-    "fable": 4.5,
-    "gemini-4": 4.0,
-    "o1": 3.5,
-    "o3": 4.0,
+# Generic arithmetic (scoring, cost tiers, projection folding) is single-sourced in the companion skill
+# `evaluating-agent-outcomes` (MISSION-055). This script keeps Sanctuary's profile (meanings of the five 0-3 dimensions),
+# its storage (events.jsonl + cognitive_ledger.json), the event type and the CLI/text output.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _shared  # noqa: E402,F401
+import scoring as _scoring  # noqa: E402
+import accounting as _accounting  # noqa: E402
 
-    # Standard models (1.0x - 1.5x)
-    "gpt-6.1-sol": 1.5,
-    "sol": 1.5,
-    "gpt-6-luna": 1.0,
-    "luna": 1.0,
-    "claude-sonnet": 1.0,
-    "sonnet": 1.0,
-    "gemini-pro": 1.0,
-    "pro": 1.0,
-    "gpt-4o": 1.0,
-
-    # Cheap models (0.1x - 0.2x)
-    "claude-3-5-haiku": 0.2,
-    "claude-haiku": 0.2,
-    "haiku": 0.2,
-    "gemini-3.8-flash": 0.1,
-    "gemini-flash": 0.1,
-    "flash": 0.1,
-    "gpt-4o-mini": 0.15,
-    "mini": 0.15,
-    "local-llama": 0.05,
-    "llama": 0.05,
-    "qwen": 0.05
-}
+PROFILE = _scoring.load_profile(Path(__file__).resolve().parent.parent / "references" / "contribution-profile.json")
+MODEL_COST_WEIGHTS = {k: v["weight"] for k, v in _accounting.MODEL_COST_TIERS.items()}   # compat view of the shared table
 
 
 def get_model_cost_weight(model_name: str) -> float:
-    clean = model_name.lower().strip()
-    for k, w in MODEL_COST_WEIGHTS.items():
-        if k in clean or clean in k:
-            return w
-    return 1.0
+    return _accounting.get_model_cost_weight(model_name)
 
 
 def empty_projection() -> dict:
-    return {
-        "schema_version": 1,
-        "updated_at": None,
-        "total_assessments": 0,
-        "cumulative_score": 0,
-        "average_fitness": 0.0,
-        "dimension_totals": {
-            "useful_outcome": 0,
-            "learning_depth": 0,
-            "verification_rigor": 0,
-            "token_economy": 0,
-            "anti_asch_integrity": 0
-        },
-        "agents": {},
-        "recent_assessments": []
-    }
+    return _scoring.empty_projection(PROFILE)
 
 
 def fold_assessment(data: dict, assessment: dict) -> dict:
     """Apply one CONTRIBUTION_ASSESSED event to the projection (shared by the live scorer and the rebuild)."""
-    data["total_assessments"] = data.get("total_assessments", 0) + 1
-    raw = assessment["raw_score"]
-    data["cumulative_score"] = data.get("cumulative_score", 0) + raw
-    data["average_fitness"] = round(data["cumulative_score"] / (data["total_assessments"] * 15.0), 3)
-
-    dim_totals = data.setdefault("dimension_totals", {})
-    for dim, val in assessment["dimensions"].items():
-        dim_totals[dim] = dim_totals.get(dim, 0) + val
-
-    agent_id = assessment["agent_id"]
-    agents = data.setdefault("agents", {})
-    agent_stat = agents.setdefault(agent_id, {
-        "assessments": 0,
-        "cumulative_score": 0,
-        "average_fitness": 0.0
-    })
-    agent_stat["assessments"] += 1
-    agent_stat["cumulative_score"] += raw
-    agent_stat["average_fitness"] = round(agent_stat["cumulative_score"] / (agent_stat["assessments"] * 15.0), 3)
-
-    recent = data.setdefault("recent_assessments", [])
-    recent.insert(0, {
-        "assessment_id": assessment["assessment_id"],
-        "timestamp": assessment["timestamp"],
-        "task_id": assessment["task_id"],
-        "agent_id": agent_id,
-        "raw_score": raw,
-        "fitness": assessment["cognitive_fitness"],
-        "notes": assessment["notes"]
-    })
-    data["recent_assessments"] = recent[:20]
-    return data
+    return _scoring.fold_assessment(PROFILE, data, assessment)
 
 
 def rebuild_projection(assessments: list) -> dict:
-    """Deterministically rebuild the projection from events (updated_at = last event time, not now).
-
-    Events are folded in (timestamp, assessment_id) order, so the result does not depend on the order of lines in
-    events.jsonl (a union merge of two branches can interleave them)."""
-    ordered = sorted(assessments, key=lambda a: (a["timestamp"], a["assessment_id"]))
-    data = empty_projection()
-    for a in ordered:
-        fold_assessment(data, a)
-    if ordered:
-        data["updated_at"] = ordered[-1]["timestamp"]
-    return data
+    """Deterministically rebuild the projection from events (updated_at = last event time, not now), order-independent."""
+    return _scoring.rebuild_projection(PROFILE, assessments)
 
 
 def update_ledger_projection(root: Path, assessment: dict) -> Path:
@@ -203,15 +118,13 @@ def main():
         "anti_asch_integrity": args.anti_asch_integrity
     }
 
-    raw_score = sum(dimensions.values())
-    cognitive_fitness = round(raw_score / 15.0, 3)
+    scored = _scoring.score(PROFILE, dimensions)
+    raw_score = scored["raw_score"]
+    cognitive_fitness = scored["fitness"]
 
     model_weight = get_model_cost_weight(args.model)
-    cost_adjusted_roi = round(cognitive_fitness / model_weight, 3)
-
-    bloat_warning = None
-    if model_weight >= 3.0 and (args.token_economy <= 1 or args.useful_outcome <= 1):
-        bloat_warning = f"CRITICAL: Expensive model '{args.model}' (weight {model_weight}x) produced bloated/low-value output without advancing core objectives."
+    cost_adjusted_roi = _scoring.cost_adjusted(cognitive_fitness, model_weight)
+    bloat_warning = _scoring.bloat_warning(PROFILE, dimensions, args.model, model_weight)
 
     evidence_list = [e.strip() for e in args.evidence_refs.split(",") if e.strip()]
 
@@ -227,7 +140,7 @@ def main():
         "assessor": args.assessor,
         "dimensions": dimensions,
         "raw_score": raw_score,
-        "max_score": 15,
+        "max_score": scored["max_score"],
         "cognitive_fitness": cognitive_fitness,
         "cost_adjusted_roi": cost_adjusted_roi,
         "bloat_warning": bloat_warning,

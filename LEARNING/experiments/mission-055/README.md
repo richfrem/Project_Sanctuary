@@ -13,6 +13,10 @@ Ownership and scope map: [`ownership.md`](./ownership.md). No empirical verdict 
 ## Actual agent behavior observed (one real run, installed interface)
 Neutral repo, installed `work_loop.py` -> installed `run_agent.py` -> real `claude` (Haiku 5.5, 6.5 s): created `hello.py`; cwd boundary and unit claim enforced and recorded; criterion passed; recommendation accept; `integration_allowed` false (authorization not widened). Findings: the CLI printed no token usage, so usage is recorded as unknown (not captured for `claude -p` text output); and a non-clean `claude` launched in the neutral repo still loaded user hooks (a `context/` directory appeared), which is the already-known ambient-context leak. `--clean-context` exists for experiments and was not used here because this is ordinary work.
 
+## Ownership split follow-up (same mission, 2026-11-06)
+Generic scoring (`scoring.py`), cost tiers and ledger arithmetic (`accounting.py`) and usage measurement (`usage_measure.py`) now exist once upstream (companion PR #751); Sanctuary's `score_contribution.py`, `track_budget.py`, `evaluate_dispatch.py` and `usage_probe.py` keep their command lines, output and storage and call them. The Sanctuary rubric is data (`references/contribution-profile.json`); budget profiles, headroom floors, the falsified predictor, dashboards and mission records stay local. Proof of unchanged behavior: golden tests against pre-migration outputs (`tests/test_pre_migration_goldens.py`). Map: `evaluating-agent-work/references/responsibility-map.md`.
+**Not complete:** `counterexample_eval.py`'s generic search core is still implemented only in Sanctuary because MISSION-041's frozen record pins its hash; extracting it requires a re-freeze decision (reported as a concrete incompatibility, not silently changed).
+
 ## Unassessed
 - Whether orchestrators behave better (053 scenario families, baseline versus revised): not run.
 - 054 Claim A (12 held-out scenarios) and Claim B (12 real work units, recurrence and overhead): not run / unassessed. Passive collection: `eval_gate.py repair applied`, `lessons.py use`.
