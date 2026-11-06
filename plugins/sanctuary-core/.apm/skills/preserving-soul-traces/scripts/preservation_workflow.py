@@ -23,13 +23,13 @@ STATE = Path(".agent/coordination/soul_preservation.json")
 RESUME = "python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure"
 
 
-def atomic_json(path, value):
+def atomic_json(path, value, indent=2):
     """Replace progress atomically; a killed process cannot truncate prior state."""
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=".soul-")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as stream:
-            json.dump(value, stream, indent=2, sort_keys=True)
+            json.dump(value, stream, indent=indent, sort_keys=True)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(tmp, path)

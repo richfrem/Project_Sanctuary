@@ -279,7 +279,7 @@ def export(root, dry=False, model_version="Sanctuary-Qwen2-7B-v1.0-GGUF-Final"):
         TE.update_manifest(root / "huggingface/metadata/manifest.json", root / DATASET, model_version)
         (root / MANIFEST).parent.mkdir(parents=True, exist_ok=True)
         from preservation_workflow import atomic_json
-        atomic_json(root / MANIFEST, manifest)
+        atomic_json(root / MANIFEST, manifest, indent=1)
     return manifest
 
 
