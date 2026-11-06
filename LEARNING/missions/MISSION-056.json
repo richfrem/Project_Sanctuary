@@ -1,0 +1,62 @@
+{
+  "id": "MISSION-056",
+  "title": "Can evenly spaced rhythms survive missing beats better than irregular rhythms?",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Mathematics of musical rhythm and information recovery (exact enumeration in Python; bounded local CPU)",
+  "created_at": "2026-11-06T18:00:00Z",
+  "updated_at": "2026-11-06T18:00:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "proposed_by": "ChatGPT",
+  "interest_statement": "I am interested in the tension between order and distinctiveness. An even rhythm is structurally simple, but repetition might make its position harder to recover when beats disappear. Which effect wins in a precisely defined model?",
+  "hypothesis": "At deletion probability 0.25, evenly spaced cyclic rhythms have at least a 5 percentage point higher mean exact-reconstruction probability than uniformly sampled irregular rhythms, averaged equally across the held-out (n,k) pairs.",
+  "falsification_criteria": "The hypothesis is FALSIFIED within the tested domain if the primary difference is less than 0.05. Invalid instrumentation or unfinished evaluation is unassessed. Do not change the threshold, decoder or aggregation after inspecting held-out results.",
+  "experiment": "Binary circular grid of n positions with k occupied beats; the template is known, its cyclic phase unknown; recover the rotated pattern (equivalent rotations are one candidate). Development n=8..12, k=3..min(8,n-1) (debug only; code, checks, seed and interpretation frozen before held-out). Held-out: every pair n=13..24, k=3..min(8,n-1); per pair one even template (positions floor(j*n/k)), 40 distinct uniformly sampled k-subsets excluding rotations of the even template (all if fewer), and one contiguous clustered control; seed 73185. Observation: a true distinct rotation chosen uniformly, each beat deleted independently with probability p, no false positives; decoder knows n and the origin, keeps distinct rotations containing every observed beat and picks uniformly (success 1/candidate_count). Exact expectation by enumerating every rotation and all 2^k deletion masks weighted p^d(1-p)^(k-d). Primary: at p=0.25, even minus mean irregular success per (n,k), averaged equally across pairs. Secondary (cannot rescue a failed primary): p=0.10 and 0.50, rotational symmetry, empty observations, clustered controls. Checks: masks sum to one; no deletion gives 1; all deletion gives 1/R; rotation invariance; independent brute-force agreement on tiny cases. Full frozen protocol: LEARNING/experiments/mission-056/protocol.md.",
+  "scores": {
+    "strategic_leverage": 2,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 40.0
+  },
+  "priority_score": 40.0,
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cost_weight": 0.1,
+    "cli_target": "claude",
+    "fallback_models": [
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "None: deterministic Python; no model calls inside the rhythm evaluation. Model assistance is limited to implementation and interpretation.",
+    "guidance": "Budget: max 20000 additional model tokens, 15 experiment wall minutes. Optimize deterministic computation if needed; if still over budget, checkpoint rather than silently reducing the held-out scope."
+  },
+  "tags": [
+    "curiosity",
+    "mathematics",
+    "music-rhythm",
+    "combinatorics",
+    "exact-enumeration",
+    "proposed-by-chatgpt"
+  ],
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "design_constraints": [
+    "This tests recovery of a grid pattern with a known template, not human hearing, musical quality, tempo inference or memory.",
+    "Symmetric rhythms have fewer distinct rotations. Report that advantage explicitly; do not attribute an advantage solely to spacing.",
+    "Irregular templates are sampled even though deletion outcomes are enumerated exactly. Report sampling limitations and per-pair variation."
+  ],
+  "related_missions": {},
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-056.json",
+      "LEARNING/experiments/mission-056/"
+    ],
+    "resources": [
+      "bounded local CPU"
+    ]
+  }
+}

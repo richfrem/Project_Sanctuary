@@ -1,0 +1,11 @@
+{
+ "frozen_at": "before held-out evaluation",
+ "sha256": {
+  "rhythm.py": "def4ac7f66daf40e9954e0ffa90532bbb710e61218951fb6aeac32ad6323fb3a",
+  "brute.py": "dcc1576441c182a9bda37703406f5f8f4bbb11b27654919d33d5c6813eca3c7b",
+  "test_checks.py": "cc26f163cdd57d48f92f959f79bc21280a1d2d1dcfe57a49ce739edb74c6a1ce",
+  "run.py": "b1ece036678c727ffeaae46b837d71e001e42630575a87ead00bfa79e44524e9",
+  "protocol.md": "13e93e91b1a09eaf3a27552d96a5def7dcf7a201ba0b822270b10eaadb2bc932"
+ },
+ "seed": 73185
+}
