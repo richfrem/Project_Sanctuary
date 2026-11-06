@@ -62,3 +62,5 @@ Review [acceptance-criteria.md](references/acceptance-criteria.md) before declar
 - [soul-trace-schema.md](references/soul-trace-schema.md) — 13-field canonical record schema, typing, and validation rules per ADR 084.
 - [huggingface-dataset-integration.md](references/huggingface-dataset-integration.md) — Architecture and boundary rules for delegating sync to `managing-huggingface-assets`.
 - [acceptance-criteria.md](references/acceptance-criteria.md) — Pre-completion verification checklist.
+
+Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Guardian startup retries pending capture; resume with `soul_coverage.py closure`. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the preserving-soul-traces `references/coverage.md` contract.

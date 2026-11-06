@@ -28,3 +28,5 @@ For a single file (for example the dataset README) use the global `managing-hugg
 `python3 ~/.claude/skills/managing-huggingface-assets/scripts/hf_upload.py --file huggingface/README.md --remote-path README.md`.
 
 `forge_soul.py --vault-root <vault> [--full-sync] [--dry-run] [--output PATH]` exports records from an Obsidian vault; it is not part of the standard path.
+
+Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Guardian startup retries pending capture; resume with `soul_coverage.py closure`. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the preserving-soul-traces `references/coverage.md` contract.

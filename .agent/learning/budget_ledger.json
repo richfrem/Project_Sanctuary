@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T07:08:38.997864+00:00",
-  "total_tokens_consumed": 5369552,
-  "total_turns": 34,
+  "updated_at": "2026-11-06T18:40:59.471317+00:00",
+  "total_tokens_consumed": 5393338,
+  "total_turns": 35,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -171,9 +171,29 @@
       "turns": 1,
       "last_backend": "claude",
       "last_model": "claude-sonnet-5-5"
+    },
+    "soul-completion-repair-hook-smoke": {
+      "tokens_consumed": 23786,
+      "turns": 1,
+      "last_backend": "codex",
+      "last_model": "default"
     }
   },
   "recent_records": [
+    {
+      "record_id": "c6049410-2cee-4d98-9668-67a5a8d93bbe",
+      "timestamp": "2026-11-06T18:40:59.471317+00:00",
+      "task_id": "soul-completion-repair-hook-smoke",
+      "backend": "codex",
+      "model": "default",
+      "tokens_est": 23786,
+      "turns": 1,
+      "summary": "Fresh Codex 0.167.0 startup smoke; output HOOK_SMOKE_OK, zero invalid SessionStart JSON errors. Main host session tokens unknown.",
+      "source": "measured",
+      "outcome": "ok",
+      "tokens_in": 23754,
+      "tokens_out": 32
+    },
     {
       "record_id": "1069be6f-5977-4837-ae0f-ba4b3734c053",
       "timestamp": "2026-11-05T07:08:38.997890+00:00",
@@ -1732,16 +1752,6 @@
       "tokens_est": 57492,
       "turns": 1,
       "summary": "Codex Astra formulated top 10 sovereign learning inquiries with Popperian falsification gates"
-    },
-    {
-      "record_id": "7cc30755-e78d-4544-b559-b496bf86775b",
-      "timestamp": "2026-11-03T02:52:04.426965+00:00",
-      "task_id": "task-backlog-architecture-consult",
-      "backend": "claude",
-      "model": "claude-opus",
-      "tokens_est": 3500,
-      "turns": 1,
-      "summary": "Consultation with Claude Opus on agent backlog architecture"
     }
   ]
 }

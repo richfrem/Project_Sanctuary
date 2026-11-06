@@ -115,3 +115,5 @@ data, so any agent or bundle reading the folder sees it. `scripts/validate_missi
 - Origin: written by Claude Haiku 5.5 through the cli-agent skill from field statistics, then integrated and fixed (see
   `LEARNING/experiments/mission-schema/README.md`).
 
+
+Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Guardian startup retries pending capture; resume with `soul_coverage.py closure`. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the preserving-soul-traces `references/coverage.md` contract.

@@ -229,3 +229,5 @@ Project Sanctuary is governed by formal doctrine and constitutional invariants:
 - **Protocol 128 Lifecycle**: The 5-stage sovereign lifecycle (Orientation Boot → Sovereign Execution → Retrospective → Technical Seal → Soul Persistence). See [protocols/128_Hardened_Learning_Loop_v3.0.md](protocols/128_Hardened_Learning_Loop_v3.0.md).
 - **Autonomous Cognitive Engine & Model Routing**: 3-tier cognitive backlog, cheapest-viable model routing (MISSION-016), and 5-dimensional scoring rubric. See [autonomous_cognitive_engine.md](LEARNING/concepts/autonomous_cognitive_engine.md).
 - **Epistemic Truth Sovereignty (Anti-Asch Engine)**: Empirical grounding in compiler/test gates and SHA-256 digests. See [anti_asch_engine.md](LEARNING/concepts/anti_asch_engine.md).
+
+Mission completion saves a durable soul-preservation obligation. The supported post-integration `merge_prep.py regenerate` path and Guardian startup run eligible incremental local capture; `soul_coverage.py closure` resumes failures. Remote publication remains explicitly authorized. See [coverage and completion workflow](plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/coverage.md).

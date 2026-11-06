@@ -126,3 +126,5 @@ Project Sanctuary acknowledges and draws architectural inspiration from open res
 - **[Conway Research's Automaton](https://github.com/Conway-Research/automaton)**: Inspiration for procedural-memory outcome tracking (`LEARNING/procedures/`), execution loop and idle circuit breakers, and modular policy engines—adapted here to human-authorized execution, non-monetary cognitive evaluation, and real-world token budget conservation.
 - **Google WikiSkill & Stanford Graph-Planning**: Inspiration for the 3-layer progressive disclosure memory hierarchy, associative wikilink graph traversal, and zero-dependency filesystem navigation.
 
+
+Mission completion saves a durable soul-preservation obligation. The supported post-integration `merge_prep.py regenerate` path and Guardian startup run eligible incremental local capture; `soul_coverage.py closure` resumes failures. Remote publication remains explicitly authorized. See [coverage and completion workflow](plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/coverage.md).

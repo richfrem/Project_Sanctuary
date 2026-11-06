@@ -273,3 +273,6 @@ apm_modules/
 
 # Forge workspace: training data and Modelfile written by forging-sovereign-models scripts on first run (the old tree is ARCHIVE/forge). Never commit generated training data.
 /forge/
+
+# Resumable preservation progress; obligations are tracked in final mission manifests.
+.agent/coordination/soul_preservation.json
