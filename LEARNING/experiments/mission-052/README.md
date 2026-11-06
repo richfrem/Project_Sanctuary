@@ -1,6 +1,6 @@
 # MISSION-052: four-worker parallel batch with the existing stack
 
-Status: **batch executed 2026-11-05 (one bounded batch); integration branch `feat/mission-052-integration` awaiting human review; nothing pushed or merged.** Start from [`brief.md`](./brief.md); it holds the human's instruction verbatim plus what changed since it was drafted.
+Status: **closed: the four-worker batch (PR #350) and the completion rounds for missions 041, 050 and 004 (PRs #351, #355, #358) are merged; see [`closeout.md`](./closeout.md) for the evidence table and verdict.** Start from [`brief.md`](./brief.md); it holds the human's instruction verbatim plus what changed since it was drafted.
 
 ## What this tests, and what it does not
 It runs ONE bounded batch (Codex A, Codex B, agy, local Qwen2.5-Coder-7B) under a main-thread Claude orchestrator using **only existing tools**: flight board, `merge_prep.py`, `cli-agent`, `usage_hook.py delegated`, `validate_missions.py`. That is the "configuration alone" arm of MISSION-033's falsification criterion (an orchestrator skill is only warranted if configuration alone does not suffice). It is **not** 033's three-worker pilot: it makes no claim about 033's thresholds (60% wall-clock, 25% overhead, 80% review agreement), and any speedup claim needs a valid baseline.
