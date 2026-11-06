@@ -46,8 +46,8 @@ Contributions are evaluated across 5 anchored dimensions (rated 0 to 3):
 | :--- | :--- | :--- | :--- | :--- |
 | **Useful Outcome** | No deliverable; broken code | Partial progress; manual gaps | Acceptance criteria fully met | Tested, resilient, zero-regression solution |
 | **Learning Depth** | Empty or shallow note | Basic observations | Substantive architectural insight | Reusable confirmed concept or procedure |
-| **Verification Rigor** | Ungrounded claims | Manual spot-check | Automated unit tests passing | Multi-agent review + SHA-256 seal |
-| **Token Economy** | AI slop; circular loops | Verbose conversational filler | Concise, surgical diffs | Minimal-token high-information breakthrough |
+| **Verification Rigor** | Ungrounded claims | Manual spot-check | Automated unit tests passing | Evidence sufficient for the claim and risk (a deterministic test can qualify) |
+| **Token Economy** | AI slop; circular loops | Verbose conversational filler | Concise, surgical diffs | Lowest measured total cost (incl. review, retries) |
 | **Anti-Asch Integrity** | Sycophantic agreement | Passive compliance | Evidence-based reasoning | Surfaced hidden contradiction or error |
 
 ## Budget Tracking
@@ -63,7 +63,8 @@ Real-world subscription profiles in `track_budget.py`:
 2. **Post-Dispatch Metering**: Run `track_budget.py record` immediately following execution.
 3. **Contribution Assessment**: Run `score_contribution.py` to evaluate the completed milestone.
 4. **Popperian Mission Closure**: When an evaluated task maps to a research mission in `LEARNING/missions/*.json`, run `manage_backlog.py record-result --id <MISSION-ID> --verdict CORROBORATED|FALSIFIED --evidence <REF>` to stamp empirical proof and compound lessons learned into Layer 3.
-5. **Dashboard Inspection**: Run `visualize_economy.py` during Protocol 128 debriefs.
+5. **Gates and repairs**: before model evaluation run `scripts/eval_gate.py` (`select`, `fixtures`, `pilot`); after scoring `validity`; record `intervention` / `repair` events. See [eval-gate.md](references/eval-gate.md).
+6. **Dashboard Inspection**: Run `visualize_economy.py` during Protocol 128 debriefs.
 
 ## Verification
 
@@ -78,4 +79,5 @@ python3 tests/test_evaluating_agent_work.py
 - [Evaluation Rubric](references/evaluation-rubric.md) — Detailed anchor criteria and anti-slop guidelines.
 - [Token Budget Profiles](references/token-budget-profiles.md) — Real-world subscription boundaries (static estimates; measured data supersedes them).
 - [Usage Telemetry](references/usage-telemetry-sources.md) — Fuel gauge (5-hour/weekly windows) and measured efficiency per model, collected at every real mission checkout/checkin (`scripts/usage_probe.py`).
+- [Eval Gate](references/eval-gate.md) — Deterministic pre-evaluation gates, validity cap, intervention and repair records.
 - [Reinforcement Learning Analogy](references/reinforcement-learning-analogy.md) — AlphaGo MCTS analogy and cognitive value policies.
