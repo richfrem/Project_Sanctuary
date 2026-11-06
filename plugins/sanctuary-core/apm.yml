@@ -1,5 +1,7 @@
 name: sanctuary-core
-version: 0.1.0
-description: "Project Sanctuary core governance, Living Chronicle, Protocols, and autonomous tool evolution plugin."
+version: 0.2.0
+description: "Project Sanctuary core governance, Living Chronicle, Protocols, and autonomous tool evolution plugin. External prerequisite (not bundled, installed globally by APM): the companion agent-orchestration plugin (orchestrating-agent-work, cli-agent, evaluating-agent-outcomes) used by evaluating-agent-work adapters."
 author: Richard Fremmerlid
 license: MIT
+# Prerequisite, intentionally NOT declared as a dependency: the companion agent-orchestration plugin is installed globally
+# (`apm update --global`, Protocol 133). Declaring it here would create project-local copies that shadow the global ones.

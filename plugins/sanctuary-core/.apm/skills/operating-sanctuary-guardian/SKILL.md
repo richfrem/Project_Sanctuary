@@ -77,4 +77,5 @@ python3 scripts/forge_llm.py verify
 - MLX Server Lifecycle & Auto-Idle: [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md)
 - Local Tool Use & Structured JSON: [local-tool-use-and-structured-json.md](references/local-tool-use-and-structured-json.md)
 - Acceptance Criteria: [acceptance-criteria.md](references/acceptance-criteria.md)
-- Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration](references/integrations/orchestration.md)
+- Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration & shared learning loop](references/integrations/orchestration.md)
+- Two-repository skill maintenance: [Protocol 133 section 8](../../../../../protocols/133_Companion_Repository_Skill_Improvement_Protocol.md) • [Shared loop adapter](../evaluating-agent-work/references/shared-loop-adapter.md) • Moved capabilities: `dispatch_guard.py` now lives in the companion `cli-agent`; reusable evaluation logic in the companion `evaluating-agent-outcomes`
