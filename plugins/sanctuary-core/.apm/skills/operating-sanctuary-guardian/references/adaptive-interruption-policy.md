@@ -67,3 +67,31 @@ Supervisor integration: inspect the evidence before updating mission status.
 This worker must not edit manifests, ledgers, shared coordination state or installed
 skill copies. APM reinstallation and canonical session accounting remain supervisor
 work after review; this experiment creates no replacement runtime checkpoint hook.
+
+## MISSION-050 v2 completion pass (2026-11-05)
+
+`AdaptivePolicyV2` retains the v1 decision formula and immutable four-value input
+boundary. The simulation runner supplies the preregistered pseudo-count hazard
+`(interruptions + 1) / (elapsed_ticks + 40)`, so zero observed interruptions no
+longer prohibit an early checkpoint. `AdaptivePolicy` and its default runner
+semantics remain intact for exact v1 replay. Explicit priors must be finite and
+positive. The policy still has no task, future schedule, seed or split input.
+
+The new frozen design and evidence are beside v1 in
+`LEARNING/experiments/mission-050/v2/`. The full v2 simulation still fails:
+development verified-subgoal gain -14.8567%; held-out -11.6423% versus the
+**development-selected** fixed-step-2 comparator (held-out split-best differs).
+Acknowledged count loss is 47.7307% / 46.2478%; interruption-free throughput loss
+is 3.5998%. Synthetic overhead is 5.3806% / 5.1306% of allocated ticks. These are
+finite simulation results, not inference-token measurements. Cold-start repair
+does not repair the candidate's broader loss/overhead tradeoff.
+
+The separately frozen real-Qwen arm meters server usage, checks deterministic
+semantic subgoals and saves raw responses. Consult `v2/results.md` and
+`v2/real-summary.json` for completion status and exact scopes; partial trials or
+splits cannot support a full-arm verdict. Worker termination targets only the
+disposable client process. Context reset, quota denial and handoff are injected
+at completed-call safe points; the same Qwen model is used in both handoff roles.
+Actual vendor changes and mid-generation recovery remain outside those claims.
+Never manage the shared human-owned MLX server. Every request must exclusively
+lock `/tmp/sanctuary-mlx.lock` using Python `fcntl.flock`.

@@ -283,3 +283,29 @@ def test_recorded_adaptive_trials_replay_exactly_from_frozen_fixtures():
                                   ac.AdaptivePolicy(), trace=True)
             # JSON round-trip normalizes tuples into persisted lists.
             assert json.loads(json.dumps(result)) == trials[task.seed]
+
+
+def test_v2_prior_requests_checkpoint_without_observed_interruption():
+    """Pseudo-count prior fixes cold start while preserving v1 replay semantics."""
+    task = tiny_task(budget=100, cost=1, work=2, value=3)
+    v1 = ac.run_trial(task, (), ac.AdaptivePolicy(), trace=True)
+    v2 = ac.run_trial(task, (), ac.AdaptivePolicyV2(), trace=True)
+    assert not any(d['requested'] for d in v1['decisions'])
+    assert any(d['requested'] and not d['final_flush'] for d in v2['decisions'])
+    assert v2['decisions'][0]['observation']['interruption_rate'] == 1 / 40
+    assert v2['observed_interruptions'] == 0
+    assert v2['checkpoint_attempts'] > v1['checkpoint_attempts']
+
+
+def test_v2_identical_past_has_identical_decisions_with_prior():
+    task = tiny_task(budget=100)
+    common = (ac.Event(8, 'context_reset'),)
+    a = ac.run_trial(task, common, ac.AdaptivePolicyV2(), trace=True)
+    b = ac.run_trial(task, (*common, ac.Event(60, 'vendor_handoff')), ac.AdaptivePolicyV2(), trace=True)
+    assert [d for d in a['decisions'] if d['tick'] < 60] == [d for d in b['decisions'] if d['tick'] < 60]
+
+
+@pytest.mark.parametrize('prior', [(0, 40), (1, 0), (-1, 40), (float('nan'), 40)])
+def test_v2_rejects_invalid_pseudocount_prior(prior):
+    with pytest.raises(ValueError):
+        ac.run_trial(tiny_task(), (), ac.AdaptivePolicyV2(), hazard_prior=prior)

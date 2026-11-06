@@ -1,0 +1,15 @@
+{
+  "dimensions": {
+    "anti_asch_integrity": 3,
+    "learning_depth": 2,
+    "token_economy": 2,
+    "useful_outcome": 1,
+    "verification_rigor": 2
+  },
+  "interpretation": "Negative evidence is a useful outcome. Early lock contention consumed time; calls were metered. No held-out tuning. Verification rating is 2 because no independent agent review was authorized.",
+  "ledger_status": "not written: user explicitly reserves ledgers/manifests for orchestrator",
+  "measurement_ref": "final-accounting.json",
+  "outcome": "Frozen v2 simulation missed gain, loss and control throughput. Real finite benchmark: FALSIFIED",
+  "prediction_ref": "design.md",
+  "scope": "worker experiment deliverable; provisional assessor codex-b"
+}

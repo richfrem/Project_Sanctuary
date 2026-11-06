@@ -1,0 +1,18 @@
+{
+  "frozen_hashes_and_v1_integrity": "PASS",
+  "simulation_trials_replayed": 1620,
+  "completed_real_trials_audited": 630,
+  "real_calls": 5626,
+  "unique_server_response_ids": 5626,
+  "measured_server_tokens_all_calls": 339686,
+  "work_calls_audited": 4653,
+  "incorrect_work_calls": 1282,
+  "checkpoint_calls_audited": 971,
+  "partial_trial_call_counts": {},
+  "resume_boundary_audit": {
+    "prior_raw_evidence_prefixes": "PASS",
+    "exact_remaining_order": "PASS",
+    "additional_completed_trials": 237,
+    "remaining_trials": 0
+  }
+}
