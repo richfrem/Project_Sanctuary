@@ -57,3 +57,20 @@ not binding its coverage-manifest hash; both fixed. Exact host-session tokens ar
 the bounded fresh-session smoke measured 23,754 input and 32 output tokens (23,786 total),
 recorded through track_budget.py. Flight-board snapshots provide account usage where available. No token estimate is represented as a measurement. Contribution
 score and usage events are recorded with the existing evaluation tools before final export.
+
+## Installed post-integration verification
+
+Sanctuary source PR 378 merged at 4c3c6c3bc. Project APM refreshed; all 29 Python
+scripts across preservation, sovereign memory and Guardian match source in both
+`.agents/skills` and `.claude/skills` (APM rewrites two documentation links).
+The installed `merge_prep.py regenerate` ran against the integrated checkout:
+no ledger drift, no mission-manifest changes, local preservation `local_complete`,
+no coverage problems; remote remains separate pending the explicitly authorized sync.
+The final handoff is published before the resulting export so it also reaches JSONL.
+
+Flight-board check-in measured 637 seconds and reported 4,432,294 aggregate rollout
+tokens, including 4,316,800 cache reads, with `concurrent=true`; that aggregate is
+not an attributable host-session token measurement. It is recorded as reported
+rather than used to claim cost savings. The installed coordination command resolves
+its project from its own installed path; its two new events and generated budget
+projection were carried into this source-record PR before final extraction.

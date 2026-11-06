@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-06T18:40:59.471317+00:00",
-  "total_tokens_consumed": 5393338,
-  "total_turns": 35,
+  "updated_at": "2026-11-06T18:43:18.793081+00:00",
+  "total_tokens_consumed": 9825632,
+  "total_turns": 36,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -177,9 +177,77 @@
       "turns": 1,
       "last_backend": "codex",
       "last_model": "default"
+    },
+    "soul-completion-repair": {
+      "tokens_consumed": 4432294,
+      "turns": 1,
+      "last_backend": "codex",
+      "last_model": "default"
     }
   },
   "recent_records": [
+    {
+      "record_id": "df70f2ed-43f8-4546-8083-d4dc254ef2c1",
+      "timestamp": "2026-11-06T18:43:18.793081+00:00",
+      "task_id": "soul-completion-repair",
+      "backend": "codex",
+      "model": "default",
+      "tokens_est": 4432294,
+      "turns": 1,
+      "summary": "",
+      "source": "measured",
+      "task_class": "mission",
+      "outcome": "completed",
+      "tokens_in": 92772,
+      "tokens_out": 22722,
+      "window_delta": {
+        "from": "2026-11-06T18:32:40Z",
+        "to": "2026-11-06T18:43:14Z",
+        "claude": {
+          "session_pct_delta": null,
+          "week_pct_delta": null
+        },
+        "agy": [
+          {
+            "group": "Gemini Models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini Models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Claude and GPT models",
+            "window": "5h",
+            "remaining_pct_delta": 0.0
+          },
+          {
+            "group": "Gemini 4 Argon",
+            "window": "weekly",
+            "remaining_pct_delta": 0.0
+          }
+        ],
+        "codex": {
+          "five_hour_pct_delta": 7.0,
+          "weekly_pct_delta": 1.0,
+          "stale": false
+        }
+      },
+      "tokens_cache_read": 4316800,
+      "tokens_cache_write": 0,
+      "tokens_cache_write_1h": 0,
+      "wall_seconds": 637,
+      "retries": 0,
+      "quality": 2,
+      "concurrent": true
+    },
     {
       "record_id": "c6049410-2cee-4d98-9668-67a5a8d93bbe",
       "timestamp": "2026-11-06T18:40:59.471317+00:00",
@@ -1742,16 +1810,6 @@
       "tokens_est": 4500,
       "turns": 1,
       "summary": "Claude Opus evaluation and peer review of Astra 10 sovereign research missions"
-    },
-    {
-      "record_id": "6b6eeeff-100d-4043-ba99-ddccbdd898b9",
-      "timestamp": "2026-11-03T03:12:26.613858+00:00",
-      "task_id": "task-astra-top10-autonomous-inquiry",
-      "backend": "codex",
-      "model": "gpt-6-astra",
-      "tokens_est": 57492,
-      "turns": 1,
-      "summary": "Codex Astra formulated top 10 sovereign learning inquiries with Popperian falsification gates"
     }
   ]
 }
