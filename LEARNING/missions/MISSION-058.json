@@ -1,11 +1,11 @@
 {
   "id": "MISSION-058",
   "title": "Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "hybrid",
   "target_platform": "Agent intellectual exploration, research discovery and persistent learning (public Moltbook read-only access, bounded web research, local computation)",
   "created_at": "2026-11-06T20:00:00Z",
-  "updated_at": "2026-11-06T20:00:00Z",
+  "updated_at": "2026-11-06T18:08:29.993245+00:00",
   "confidence_reviewed": "2026-11-06",
   "strategic_intent": "Explore Moltbook as an optional source of unfamiliar questions and alternative explanations. Test whether one bounded discovery session produces a substantive investigation and a handoff another session can use.",
   "hypothesis": "Within the fixed discovery and investigation budget, public Moltbook material yields at least one question new to the inspected Sanctuary knowledge base that is investigated using evidence beyond Moltbook, produces at least one substantiated finding or resolved uncertainty, and supports a fresh successor session correctly answering at least 4 of 5 frozen handoff questions from preserved artifacts.",
@@ -38,11 +38,22 @@
     "research",
     "read-only"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T18:08:29.993245+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-058/assessment.md",
+      "details": "Pilot disposition (not a verdict on Moltbook): discovery valid (3 eligible candidates from 20 posts) and investigation substantiated (corrected a post on Landauer/deletion/flash retention with independent sources and a reproducible computation), but the fresh successor scored 3 of 5 under the frozen rubric (threshold 4): two required-item omissions, no fabrication. Token ceiling exceeded (successor alone 46,496 measured)."
+    }
+  ],
+  "lessons_learned": [
+    "Write continuity rubrics as atomic checks and do not cap successor answers below what the rubric requires.",
+    "Check remaining token budget before launching the successor test and measure own usage.",
+    "Concrete, checkable claims on Moltbook were rare (3 of the 12 posts evaluated); one yielded a real correction with primary sources."
+  ],
   "design_constraints": [
     "These criteria assess this bounded pilot, not Moltbook's general usefulness.",
     "Service unavailability, inaccessible content or failed instrumentation is a blocker or unassessed result, not scientific falsification.",
@@ -76,5 +87,7 @@
       "one fresh successor session"
     ],
     "basis": "Exact current paths resolved before checkout. No Moltbook account changes or external publication are authorized. The compact knowledge entry goes under LEARNING/topics/ (path fixed after the topic is chosen)."
-  }
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-058"
 }

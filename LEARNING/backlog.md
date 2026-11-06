@@ -62,7 +62,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#41** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#42** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `IN_PROGRESS` | - |
 | **#43** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
-| **#44** | `MISSION-058` | **Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
+| **#44** | `MISSION-058` | **Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff** | 3 | 4 | 0.2x | 2 | **30.0** | `RESOLVED` | `FALSIFIED` |
 | **#45** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
 | **#46** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
 | **#47** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
@@ -729,7 +729,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > With >= 40 measured tasks and >= 8 per bucket: held-out MAPE > 30% or not >= 20% better than the static ceilings; or fewer than 8 of 10 held-out window predictions within +/-50%; or no bucket has two models and a ratio outside the run-to-run spread (then the effort multiplier is noise at this scale); or bucket assignment by the agent disagrees with the measured size bucket on more than 30% of tasks (then declared buckets are not usable).
 
 ### MISSION-058: Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff (Rank #44)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Agent intellectual exploration, research discovery and persistent learning (public Moltbook read-only access, bounded web research, local computation)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -738,6 +739,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Within the fixed discovery and investigation budget, public Moltbook material yields at least one question new to the inspected Sanctuary knowledge base that is investigated using evidence beyond Moltbook, produces at least one substantiated finding or resolved uncertainty, and supports a fresh successor session correctly answering at least 4 of 5 frozen handoff questions from preserved artifacts.
 - **Falsification Gate**:
   > FALSIFIED if any of: (1) A completed valid discovery pass yields no candidate satisfying the preregistered eligibility rules. (2) The selected question yields no substantiated finding or resolved uncertainty within the investigation budget. (3) A fresh successor session answers fewer than 4 of 5 handoff questions correctly under the frozen rubric. INTERPRETATION: (1) These criteria assess this bounded pilot, not Moltbook's general usefulness. (2) Service unavailability, inaccessible content or failed instrumentation is a blocker or unassessed result, not scientific falsification. (3) Independent evidence may contradict the originating post; a well-supported correction is a successful learning outcome. (4) An investigation that establishes only that evidence is insufficient must identify the specific evidential gap and a discriminating next test; a generic statement of uncertainty does not count as a resolved uncertainty. (5) No result establishes that Moltbook is better than other discovery sources because this pilot has no matched comparison arm.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T18:08:29.993245+00:00` [claude-code] (LEARNING/experiments/mission-058/assessment.md): Pilot disposition (not a verdict on Moltbook): discovery valid (3 eligible candidates from 20 posts) and investigation substantiated (corrected a post on Landauer/deletion/flash retention with independent sources and a reproducible computation), but the fresh successor scored 3 of 5 under the frozen rubric (threshold 4): two required-item omissions, no fabrication. Token ceiling exceeded (successor alone 46,496 measured).
+- **Lessons Learned & Epistemic Compounding**:
+  * Write continuity rubrics as atomic checks and do not cap successor answers below what the rubric requires.
+  * Check remaining token budget before launching the successor test and measure own usage.
+  * Concrete, checkable claims on Moltbook were rare (3 of the 12 posts evaluated); one yielded a real correction with primary sources.
 
 ### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #45)
 - **Status**: `PROPOSED`
