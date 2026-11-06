@@ -45,7 +45,8 @@ def record_delivery(manifest, findings, path=EVENTS):
     rec = {"mission_id": manifest["id"], "delivery_complete": bool(findings.get("complete")), "delivery_recommended": findings.get("recommended"),
            "incomplete": findings.get("incomplete", []), "empirical_assessment": empirical_state(manifest),
            "note": "engineering delivery only; no verdict is derived from it"}
-    return _g._c.append("delivery", rec, root=str(Path(path).parent), store=str(path), compat_event_type=False)
+    path = Path(path).resolve()                      # absolute, so the store is not re-joined onto its own parent
+    return _g._c.append("delivery", rec, root=str(path.parent), store=str(path))
 
 
 def main(argv=None):

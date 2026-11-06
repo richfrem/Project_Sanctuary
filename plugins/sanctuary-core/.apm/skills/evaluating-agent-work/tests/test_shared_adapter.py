@@ -30,6 +30,15 @@ class Adapter(unittest.TestCase):
         self.assertIsNone(self.m["verdict"])
         self.assertFalse(any(hasattr(ad, n) for n in ("record_result", "set_verdict", "corroborate")))
 
+    def test_relative_store_path_not_doubled(self):
+        import os
+        d = Path(tempfile.mkdtemp()); old = os.getcwd(); os.chdir(d)
+        try:
+            ad.record_delivery(self.m, {"complete": True}, Path("./.agent/learning/events.jsonl"))
+            self.assertTrue((d / ".agent/learning/events.jsonl").exists()); self.assertFalse((d / ".agent/learning/.agent").exists())
+        finally:
+            os.chdir(old)
+
     def test_empirical_state_comes_only_from_manifest(self):
         self.assertEqual(ad.empirical_state(dict(self.m, verdict="FALSIFIED")), "FALSIFIED")
 
