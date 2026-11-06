@@ -70,7 +70,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#49** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
 | **#50** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
 | **#51** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#52** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
+| **#52** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `RESOLVED` | `CORROBORATED` |
 | **#53** | `MISSION-053` | **Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
 | **#54** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
@@ -809,7 +809,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
 ### MISSION-052: Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill (Rank #52)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code orchestrator; Codex CLI x2, Antigravity CLI, local MLX Qwen2.5-Coder-7B; flight board, merge_prep, cli-agent, usage_hook
 - **Cheapest Viable Model**: `claude-sonnet-5.5` (Tier: `standard`, CLI: `claude`)
@@ -818,6 +819,13 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A single main-thread orchestrator (Claude) using only the existing stack (flight board, manage_coordination, cli-agent, merge_prep, usage_hook delegated, validate_missions) can run ONE bounded batch of four concurrent workers (Codex A, Codex B, Antigravity, local Qwen2.5-Coder-7B), each in its own leased worktree, such that: (a) the four runs overlap for at least 50% of the shortest worker's runtime; (b) there are 0 undeclared edits outside leased paths and 0 writes into a peer worktree; (c) at least 3 of 4 deliveries are accepted after cross-vendor review and the orchestrator's own re-run of the acceptance checks; (d) measured tokens are attributable per worker session for at least 3 of 4 workers; (e) accepted deliveries integrate onto a dedicated integration branch with at most 1 conflict round each after merge_prep regeneration and a green combined suite; and (f) review finds at least 1 real defect the author's self-assessment missed.
 - **Falsification Gate**:
   > Any of: an undeclared edit, clobbered file or write into a peer worktree; fewer than 2 accepted deliveries; the workers were not concurrent (overlap under 50% of the shortest runtime); per-worker tokens attributable for fewer than 3 workers; an integration needing more than 1 conflict round despite merge_prep, or a red combined suite; a push, merge to main or publication without explicit human approval; the human-managed MLX server stopped or reconfigured; or review finds no defect in any of the four deliveries. This is NOT a test of MISSION-033's three-worker thresholds (60% wall-clock, 25% orchestrator overhead, 80% review agreement), and no speedup claim is valid without a measured baseline.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T07:20:00.738704+00:00` [claude-code] (LEARNING/experiments/mission-052/closeout.md): Orchestration-mechanics hypothesis (a)-(f) met by the round-1 four-worker batch (PR #350): overlap 87 s = 74% of the shortest worker's 117 s; verify clean for all four leases; 3 of 4 deliveries accepted after cross-vendor review (strict independence from the orchestrator: 2 of 4); tokens attributable per session for 3 of 4 workers; 4 merges with 0 conflicts, combined suite green (292 passed, 2 skipped); real defects found by review in the deliveries. Completion rounds (PRs #351, #355, #358) are corroborating context: 041 and 050 closed FALSIFIED, 004 inconclusive and open; merged changes stay within declared impact. Verdict is on the literal reading of clause (c) and the standing-authorization reading of the push/merge condition (quoted in closeout.md section 7); same-vendor review of the verdict (Codex out of quota). Not a test of MISSION-033 thresholds; no speedup claim; lease fencing (038) unimplemented. Recorded limitations: about 7 human corrections of avoidable failures, telemetry recorded zero; 480 Haiku calls launched before the experimental context was verified; the orchestrator's lock hold interrupted a worker; round 1 stopped at bounded slices until the human corrected the purpose; one batch, small N.
+- **Lessons Learned & Epistemic Compounding**:
+  * Define completion at the requested outcome level (verdicts), not at worker return.
+  * Verify the experimental context with supported diagnostics before launching hundreds of calls.
+  * A shared-resource hold by the orchestrator must be announced to the worker it affects.
+  * Report telemetry gaps; hooks that write zero counters can misrepresent observed corrections.
 
 ### MISSION-053: Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios (Rank #53)
 - **Status**: `PROPOSED`

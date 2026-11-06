@@ -45,7 +45,7 @@ Counted from the conversation, not from instrumentation; approximate. The post-r
 
 **Status or information requests (about 8)**: status, progress, remaining work, critical path, and when Codex resets.
 
-Totals are by category and rounded; items 1 and 2 are classified as avoidable omissions generously in the human's favour of nothing: they were gaps the brief or the mission contract already covered. The telemetry mechanism (`usage_hook`) records tokens and tasks, not human corrections.
+Totals are by category and rounded. Items 1 and 2 are classified as avoidable omissions because the brief and the mission contract already covered them. The telemetry mechanism (`usage_hook`) records tokens and tasks, not human corrections.
 
 ## 5. Process defects and operational friction
 - Round 1 defined success as "the batch ran" and stopped at bounded slices; corrected after the human's intervention.

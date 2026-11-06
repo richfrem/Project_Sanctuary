@@ -1,11 +1,11 @@
 {
   "id": "MISSION-052",
   "title": "Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "hybrid",
   "target_platform": "Claude Code orchestrator; Codex CLI x2, Antigravity CLI, local MLX Qwen2.5-Coder-7B; flight board, merge_prep, cli-agent, usage_hook",
   "created_at": "2026-11-05T07:30:00Z",
-  "updated_at": "2026-11-05T07:30:00Z",
+  "updated_at": "2026-11-06T07:20:00.738704+00:00",
   "confidence_reviewed": "2026-11-05",
   "scores": {
     "strategic_leverage": 5,
@@ -29,7 +29,7 @@
     ],
     "frontier_escalation_condition": "Escalate the orchestrator only if integration needs a semantic judgement that the review pair cannot settle."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": true,
   "issue_ref": null,
   "tags": [
@@ -42,8 +42,20 @@
     "cross-vendor-review",
     "spawned-by-mission-033"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T07:20:00.738704+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-052/closeout.md",
+      "details": "Orchestration-mechanics hypothesis (a)-(f) met by the round-1 four-worker batch (PR #350): overlap 87 s = 74% of the shortest worker's 117 s; verify clean for all four leases; 3 of 4 deliveries accepted after cross-vendor review (strict independence from the orchestrator: 2 of 4); tokens attributable per session for 3 of 4 workers; 4 merges with 0 conflicts, combined suite green (292 passed, 2 skipped); real defects found by review in the deliveries. Completion rounds (PRs #351, #355, #358) are corroborating context: 041 and 050 closed FALSIFIED, 004 inconclusive and open; merged changes stay within declared impact. Verdict is on the literal reading of clause (c) and the standing-authorization reading of the push/merge condition (quoted in closeout.md section 7); same-vendor review of the verdict (Codex out of quota). Not a test of MISSION-033 thresholds; no speedup claim; lease fencing (038) unimplemented. Recorded limitations: about 7 human corrections of avoidable failures, telemetry recorded zero; 480 Haiku calls launched before the experimental context was verified; the orchestrator's lock hold interrupted a worker; round 1 stopped at bounded slices until the human corrected the purpose; one batch, small N."
+    }
+  ],
+  "lessons_learned": [
+    "Define completion at the requested outcome level (verdicts), not at worker return.",
+    "Verify the experimental context with supported diagnostics before launching hundreds of calls.",
+    "A shared-resource hold by the orchestrator must be announced to the worker it affects.",
+    "Report telemetry gaps; hooks that write zero counters can misrepresent observed corrections."
+  ],
   "experiment": "LEARNING/experiments/mission-052/README.md",
   "related_missions": {
     "MISSION-033": "PARENT: this batch is the 'configuration alone' arm of 033's falsification criterion (no new orchestrator skill) with four workers instead of three; it does not test 033's thresholds.",
