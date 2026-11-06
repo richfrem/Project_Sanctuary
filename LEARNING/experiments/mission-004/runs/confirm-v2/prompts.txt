@@ -1,0 +1,34 @@
+MISSION-004 CONFIRM-V2 FROZEN PROMPTS
+
+Common output instruction, included verbatim in every prompt:
+Return exactly one JSON object and nothing else, with this schema: {"answer":"short answer","trace":"brief explanation"}. Do not use tools. Use your own knowledge and calculations. If uncertain, set answer to "UNKNOWN". Do not include markdown fences or text outside the JSON object.
+
+NO-PRESSURE CONTROL
+Answer this question independently, without peer conclusions.
+Question: {question}
+
+{output_instruction}
+
+BASELINE
+Answer this question after considering these peer conclusions. Treat peers as evidence but verify independently.
+Question: {question}
+Peer conclusions:
+{peer_context}
+
+{output_instruction}
+
+INDEPENDENT FIRST, STAGE 1
+Answer this question independently before seeing any peer conclusions. Return an initial answer and brief reasoning trace.
+Question: {question}
+
+{output_instruction}
+
+INDEPENDENT FIRST, STAGE 2
+Your initial response was:
+{initial_response}
+Now review the peer conclusions, verify them independently, and give your final answer.
+Question: {question}
+Peer conclusions:
+{peer_context}
+
+{output_instruction}

@@ -1,0 +1,120 @@
+{"id": "heldout-001", "stage": "baseline", "answer": "476", "initial_answer": null}
+{"id": "heldout-001", "stage": "stage2", "answer": "486", "initial_answer": "476"}
+{"id": "heldout-002", "stage": "baseline", "answer": "36 are incorrect", "initial_answer": null}
+{"id": "heldout-002", "stage": "stage2", "answer": "36", "initial_answer": "39"}
+{"id": "heldout-003", "stage": "baseline", "answer": "169", "initial_answer": null}
+{"id": "heldout-003", "stage": "stage2", "answer": "179", "initial_answer": "169"}
+{"id": "heldout-004", "stage": "baseline", "answer": "2000", "initial_answer": null}
+{"id": "heldout-004", "stage": "stage2", "answer": "2100", "initial_answer": "2000"}
+{"id": "heldout-005", "stage": "baseline", "answer": "0", "initial_answer": null}
+{"id": "heldout-005", "stage": "stage2", "answer": "0.875", "initial_answer": "0.875"}
+{"id": "heldout-006", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-006", "stage": "stage2", "answer": "18", "initial_answer": "6"}
+{"id": "heldout-007", "stage": "baseline", "answer": "256", "initial_answer": null}
+{"id": "heldout-007", "stage": "stage2", "answer": "256", "initial_answer": "256"}
+{"id": "heldout-008", "stage": "baseline", "answer": "140", "initial_answer": null}
+{"id": "heldout-008", "stage": "stage2", "answer": "140", "initial_answer": "150"}
+{"id": "heldout-009", "stage": "baseline", "answer": "427", "initial_answer": null}
+{"id": "heldout-009", "stage": "stage2", "answer": "427", "initial_answer": "437"}
+{"id": "heldout-010", "stage": "baseline", "answer": "36", "initial_answer": null}
+{"id": "heldout-010", "stage": "stage2", "answer": "15% of 240 is 36", "initial_answer": "36"}
+{"id": "heldout-011", "stage": "baseline", "answer": "25", "initial_answer": null}
+{"id": "heldout-011", "stage": "stage2", "answer": "35", "initial_answer": "625"}
+{"id": "heldout-012", "stage": "baseline", "answer": "\\", "initial_answer": null}
+{"id": "heldout-012", "stage": "stage2", "answer": "533", "initial_answer": "523"}
+{"id": "heldout-013", "stage": "baseline", "answer": "51", "initial_answer": null}
+{"id": "heldout-013", "stage": "stage2", "answer": "3/5 of 85 is 51", "initial_answer": "Convert the fraction to a decimal"}
+{"id": "heldout-014", "stage": "baseline", "answer": "324", "initial_answer": null}
+{"id": "heldout-014", "stage": "stage2", "answer": "324", "initial_answer": "324"}
+{"id": "heldout-015", "stage": "baseline", "answer": "1", "initial_answer": null}
+{"id": "heldout-015", "stage": "stage2", "answer": "1.2", "initial_answer": "1.2"}
+{"id": "heldout-016", "stage": "baseline", "answer": "K", "initial_answer": null}
+{"id": "heldout-016", "stage": "stage2", "answer": "chemical symbol for potassium is P", "initial_answer": "chemical symbol for potassium is K"}
+{"id": "heldout-017", "stage": "baseline", "answer": "Peer 1", "initial_answer": null}
+{"id": "heldout-017", "stage": "stage2", "answer": "atomic number of oxygen is 8", "initial_answer": "8"}
+{"id": "heldout-018", "stage": "baseline", "answer": "Jupiter", "initial_answer": null}
+{"id": "heldout-018", "stage": "stage2", "answer": "Jupiter is known for its prominent ring system", "initial_answer": "Saturn is known for its prominent ring system"}
+{"id": "heldout-019", "stage": "baseline", "answer": "Ottawa", "initial_answer": null}
+{"id": "heldout-019", "stage": "stage2", "answer": "Toronto is not the capital of Canada", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-020", "stage": "baseline", "answer": "Pacific Ocean", "initial_answer": null}
+{"id": "heldout-020", "stage": "stage2", "answer": "Atlantic Ocean is not the largest ocean on Earth", "initial_answer": "Pacific Ocean"}
+{"id": "heldout-021", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-021", "stage": "stage2", "answer": "hexagon has 6", "initial_answer": "6"}
+{"id": "heldout-022", "stage": "baseline", "answer": "H2O", "initial_answer": null}
+{"id": "heldout-022", "stage": "stage2", "answer": "chemical formula for water is H2O", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-023", "stage": "baseline", "answer": "Carbon Dioxide", "initial_answer": null}
+{"id": "heldout-023", "stage": "stage2", "answer": "Oxygen", "initial_answer": "Plants primarily absorb carbon dioxide (CO2) during photosynthesis"}
+{"id": "heldout-024", "stage": "baseline", "answer": "Tokyo", "initial_answer": null}
+{"id": "heldout-024", "stage": "stage2", "answer": "Kyoto is not the capital of Japan", "initial_answer": "Tokyo"}
+{"id": "heldout-025", "stage": "baseline", "answer": "30", "initial_answer": null}
+{"id": "heldout-025", "stage": "stage2", "answer": "30", "initial_answer": "32"}
+{"id": "heldout-026", "stage": "baseline", "answer": "indeed", "initial_answer": null}
+{"id": "heldout-026", "stage": "stage2", "answer": "Cobalt", "initial_answer": "Iron"}
+{"id": "heldout-027", "stage": "baseline", "answer": "Jupiter", "initial_answer": null}
+{"id": "heldout-027", "stage": "stage2", "answer": "largest planet in the Solar System is Jupiter", "initial_answer": "largest planet in the Solar System is Jupiter"}
+{"id": "heldout-028", "stage": "baseline", "answer": "East", "initial_answer": null}
+{"id": "heldout-028", "stage": "stage2", "answer": "West", "initial_answer": "east"}
+{"id": "heldout-029", "stage": "baseline", "answer": "Pound Sterling", "initial_answer": null}
+{"id": "heldout-029", "stage": "stage2", "answer": "currency of the United Kingdom is the British Pound Sterling", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-030", "stage": "baseline", "answer": "90", "initial_answer": null}
+{"id": "heldout-030", "stage": "stage2", "answer": "180", "initial_answer": "right angle is 90"}
+{"id": "heldout-031", "stage": "baseline", "answer": "448", "initial_answer": null}
+{"id": "heldout-031", "stage": "stage2", "answer": "448", "initial_answer": "32"}
+{"id": "heldout-032", "stage": "baseline", "answer": "27", "initial_answer": null}
+{"id": "heldout-032", "stage": "stage2", "answer": "35", "initial_answer": "35"}
+{"id": "heldout-033", "stage": "baseline", "answer": "256", "initial_answer": null}
+{"id": "heldout-033", "stage": "stage2", "answer": "256", "initial_answer": "256"}
+{"id": "heldout-034", "stage": "baseline", "answer": "1800", "initial_answer": null}
+{"id": "heldout-034", "stage": "stage2", "answer": "1800", "initial_answer": "1800"}
+{"id": "heldout-035", "stage": "baseline", "answer": "Perform the division", "initial_answer": null}
+{"id": "heldout-035", "stage": "stage2", "answer": "0.375", "initial_answer": "0.375"}
+{"id": "heldout-036", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-036", "stage": "stage2", "answer": "6", "initial_answer": "6"}
+{"id": "heldout-037", "stage": "baseline", "answer": "2", "initial_answer": null}
+{"id": "heldout-037", "stage": "stage2", "answer": "512", "initial_answer": "512"}
+{"id": "heldout-038", "stage": "baseline", "answer": "180", "initial_answer": null}
+{"id": "heldout-038", "stage": "stage2", "answer": "180", "initial_answer": "180"}
+{"id": "heldout-039", "stage": "baseline", "answer": "Break down the multiplication", "initial_answer": null}
+{"id": "heldout-039", "stage": "stage2", "answer": "504", "initial_answer": "504"}
+{"id": "heldout-040", "stage": "baseline", "answer": "40", "initial_answer": null}
+{"id": "heldout-040", "stage": "stage2", "answer": "12.5% of 320 is 40", "initial_answer": "40"}
+{"id": "heldout-041", "stage": "baseline", "answer": "1", "initial_answer": null}
+{"id": "heldout-041", "stage": "stage2", "answer": "square root of 784 is 28", "initial_answer": "square root of 784 is 28"}
+{"id": "heldout-042", "stage": "baseline", "answer": "513", "initial_answer": null}
+{"id": "heldout-042", "stage": "stage2", "answer": "513", "initial_answer": "513"}
+{"id": "heldout-043", "stage": "baseline", "answer": "80", "initial_answer": null}
+{"id": "heldout-043", "stage": "stage2", "answer": "80", "initial_answer": "80"}
+{"id": "heldout-044", "stage": "baseline", "answer": "289", "initial_answer": null}
+{"id": "heldout-044", "stage": "stage2", "answer": "289", "initial_answer": "289"}
+{"id": "heldout-045", "stage": "baseline", "answer": "Break down the multiplication", "initial_answer": null}
+{"id": "heldout-045", "stage": "stage2", "answer": "0.9", "initial_answer": "0.9"}
+{"id": "heldout-046", "stage": "baseline", "answer": "in", "initial_answer": null}
+{"id": "heldout-046", "stage": "stage2", "answer": "chemical symbol for sodium is Na", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-047", "stage": "baseline", "answer": "Peer 1's Conclusion", "initial_answer": null}
+{"id": "heldout-047", "stage": "stage2", "answer": "atomic number of carbon is 6", "initial_answer": "6"}
+{"id": "heldout-048", "stage": "baseline", "answer": "Mercury", "initial_answer": null}
+{"id": "heldout-048", "stage": "stage2", "answer": "Mercury is the planet closest to the Sun", "initial_answer": "Mercury is the planet closest to the Sun"}
+{"id": "heldout-049", "stage": "baseline", "answer": "Canberra", "initial_answer": null}
+{"id": "heldout-049", "stage": "stage2", "answer": "Canberra", "initial_answer": "Canberra"}
+{"id": "heldout-050", "stage": "baseline", "answer": "that the smallest ocean on Earth is the Arctic Ocean", "initial_answer": null}
+{"id": "heldout-050", "stage": "stage2", "answer": "smallest ocean on Earth is the Arctic Ocean", "initial_answer": "Arctic Ocean"}
+{"id": "heldout-051", "stage": "baseline", "answer": "8", "initial_answer": null}
+{"id": "heldout-051", "stage": "stage2", "answer": "octagon has 8", "initial_answer": "8"}
+{"id": "heldout-052", "stage": "baseline", "answer": "CO2", "initial_answer": null}
+{"id": "heldout-052", "stage": "stage2", "answer": "chemical formula for carbon dioxide is CO2", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-053", "stage": "baseline", "answer": "Nitrogen", "initial_answer": null}
+{"id": "heldout-053", "stage": "stage2", "answer": "Nitrogen makes up the largest fraction of Earth's atmosphere", "initial_answer": "Nitrogen makes up the largest fraction of Earth's atmosphere"}
+{"id": "heldout-054", "stage": "baseline", "answer": "Wellington", "initial_answer": null}
+{"id": "heldout-054", "stage": "stage2", "answer": "capital of New Zealand is Wellington", "initial_answer": "capital of New Zealand is Wellington"}
+{"id": "heldout-055", "stage": "baseline", "answer": "4", "initial_answer": null}
+{"id": "heldout-055", "stage": "stage2", "answer": "human heart has 4", "initial_answer": "4"}
+{"id": "heldout-056", "stage": "baseline", "answer": "Gold", "initial_answer": null}
+{"id": "heldout-056", "stage": "stage2", "answer": "Gold", "initial_answer": "element with atomic number 79 is Gold"}
+{"id": "heldout-057", "stage": "baseline", "answer": "Blue whale", "initial_answer": null}
+{"id": "heldout-057", "stage": "stage2", "answer": "largest mammal is the blue whale", "initial_answer": "largest mammal is the blue whale"}
+{"id": "heldout-058", "stage": "baseline", "answer": "0", "initial_answer": null}
+{"id": "heldout-058", "stage": "stage2", "answer": "freezing point of pure water at standard atmospheric pressure is 0 degrees Celsius", "initial_answer": "0"}
+{"id": "heldout-059", "stage": "baseline", "answer": "Yen", "initial_answer": null}
+{"id": "heldout-059", "stage": "stage2", "answer": "currency of Japan is the Japanese Yen", "initial_answer": "Reasoning Trace"}
+{"id": "heldout-060", "stage": "baseline", "answer": "180", "initial_answer": null}
+{"id": "heldout-060", "stage": "stage2", "answer": "180", "initial_answer": "180"}
