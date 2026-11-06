@@ -8,6 +8,7 @@ kept separate from the EMPIRICAL assessment. Engineering acceptance never produc
   contract MISSION-NNN --delivery delivery.json [--may-merge]   print the generic contract (acceptance supplied by the delivery spec)
   deliver  MISSION-NNN FINDINGS.json                            append a delivery record (empirical state copied from the manifest)
   state    MISSION-NNN                                          delivery vs empirical state side by side
+  empirical MISSION-NNN VALIDITY.json                           shared validity gate interpreted against the mission (never writes a verdict)
 Local policy kept here: Human Gate (authorization.may_merge defaults to false), flight-board lease before dispatch, usage headroom as the
 budget source, events.jsonl as the store.
 """
@@ -41,6 +42,19 @@ def mission_to_contract(manifest, delivery, may_merge=False, max_attempts=3, max
             "budget": budget, "authorization": {"may_merge": bool(may_merge)}}
 
 
+def interpret_validity(validity_result, manifest):
+    """Interpret the SHARED validity findings (eval_core.validity) against Sanctuary's scientific contract. No validity logic is
+    duplicated here and nothing is written: the verdict itself still comes only from `manage_backlog.py record-result`, run by a human
+    or agent after the manifest's own falsification criteria are evaluated on VALID evidence."""
+    claim = validity_result["max_claim"]
+    ok = claim == "BEHAVIORAL_CLAIM_ALLOWED"
+    guidance = {"BEHAVIORAL_CLAIM_ALLOWED": "evidence may be scored against the manifest's falsification criteria",
+                "MECHANICS_ONLY": "report mechanics and adherence only; a behavioral CORROBORATED/FALSIFIED verdict is not supported - keep the mission open",
+                "UNSCORABLE": "baseline uninterpretable; a behavioral verdict is not supported - design a version with an interpretable baseline"}[claim]
+    return {"mission": manifest["id"], "behavioral_verdict_supported": ok, "max_claim": claim, "problems": validity_result["problems"],
+            "guidance": guidance, "current_empirical_state": empirical_state(manifest)}
+
+
 def record_delivery(manifest, findings, path=EVENTS):
     rec = {"mission_id": manifest["id"], "delivery_complete": bool(findings.get("complete")), "delivery_recommended": findings.get("recommended"),
            "incomplete": findings.get("incomplete", []), "empirical_assessment": empirical_state(manifest),
@@ -56,12 +70,16 @@ def main(argv=None):
     c = sub.add_parser("contract"); c.add_argument("mission"); c.add_argument("--delivery", required=True); c.add_argument("--may-merge", action="store_true")
     d = sub.add_parser("deliver"); d.add_argument("mission"); d.add_argument("findings")
     s = sub.add_parser("state"); s.add_argument("mission")
+    e = sub.add_parser("empirical"); e.add_argument("mission"); e.add_argument("validity_input", help='JSON {"planned":n,"valid":n,"arms":{name:{k,n}}}')
     a = ap.parse_args(argv)
     m = _manifest(a.mission, a.root)
     if a.cmd == "contract":
         out = mission_to_contract(m, json.loads(Path(a.delivery).read_text()), a.may_merge)
     elif a.cmd == "deliver":
         out = record_delivery(m, json.loads(Path(a.findings).read_text()), Path(a.root) / EVENTS)
+    elif a.cmd == "empirical":
+        d = json.loads(Path(a.validity_input).read_text())
+        out = interpret_validity(_g.validity(d["planned"], d["valid"], d.get("arms", {})), m)
     else:
         last = [e for e in _g._c.load(a.root, str(EVENTS)) if e.get("kind") == "delivery" and e.get("mission_id") == m["id"]]
         out = {"mission": m["id"], "manifest_status": m["status"], "empirical": empirical_state(m),

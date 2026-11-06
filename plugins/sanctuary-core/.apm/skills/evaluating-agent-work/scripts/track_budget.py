@@ -50,32 +50,19 @@ BUDGET_PROFILES = {
     }
 }
 
-MODEL_COST_TIERS = {
-    # Frontier / Expensive models: High token weight, demands high cognitive yield
-    "gpt-6-astra": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Codex Astra (Heavy Reasoning)"},
-    "claude-3-opus": {"tier": "frontier", "weight": 4.0, "desc": "Frontier Claude Opus"},
-    "o1": {"tier": "frontier", "weight": 3.5, "desc": "OpenAI o1 Reasoning"},
-    "o3": {"tier": "frontier", "weight": 4.0, "desc": "OpenAI o3 Reasoning"},
-    
-    # Standard models
-    "claude-3-5-sonnet": {"tier": "standard", "weight": 1.0, "desc": "Standard Claude Sonnet"},
-    "gpt-4o": {"tier": "standard", "weight": 1.0, "desc": "Standard GPT-4o"},
-    "gemini-1.5-pro": {"tier": "standard", "weight": 1.0, "desc": "Standard Gemini Pro"},
-    
-    # Cheap / High-efficiency models: Low cost, high ROI potential
-    "claude-3-5-haiku": {"tier": "cheap", "weight": 0.2, "desc": "Fast & Cheap Haiku"},
-    "gpt-4o-mini": {"tier": "cheap", "weight": 0.15, "desc": "Fast & Cheap Mini"},
-    "gemini-1.5-flash": {"tier": "cheap", "weight": 0.1, "desc": "Fast & Cheap Flash"},
-    "local-llama": {"tier": "free", "weight": 0.05, "desc": "Local Offline LLM"}
-}
+# Model cost tiers and the usage-ledger arithmetic are single-sourced in the companion skill `evaluating-agent-outcomes`
+# (MISSION-055). Budget POLICY (subscription profiles above) and the ledger/event locations stay here.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _shared  # noqa: E402,F401
+import accounting as _acc  # noqa: E402
+
+MODEL_COST_TIERS = _acc.MODEL_COST_TIERS
 
 
 def get_model_tier(model_name: str) -> dict:
-    clean = model_name.lower().strip()
-    for k, v in MODEL_COST_TIERS.items():
-        if k in clean or clean in k:
-            return v
-    return {"tier": "standard", "weight": 1.0, "desc": f"Standard ({model_name})"}
+    # NOTE: before MISSION-055 this module carried an older, divergent table (unused by main(); e.g. "claude-opus-5-5" fell
+    # through to standard). It now returns the shared tiers, identical to evaluate_dispatch.py.
+    return _acc.get_model_tier(model_name)
 
 
 def get_project_root() -> Path:
@@ -90,14 +77,7 @@ def load_budget_ledger(root: Path) -> tuple[dict, Path]:
     ledger_path = root / ".agent" / "learning" / "budget_ledger.json"
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
 
-    default_data = {
-        "schema_version": 1,
-        "updated_at": datetime.now(timezone.utc).isoformat(),
-        "total_tokens_consumed": 0,
-        "total_turns": 0,
-        "tasks": {},
-        "recent_records": []
-    }
+    default_data = _acc.new_ledger()
 
     if ledger_path.exists():
         try:
@@ -154,25 +134,7 @@ def main():
 
     if args.subcommand == "record":
         task_id = args.task_id
-        tasks = data.setdefault("tasks", {})
-        task_stat = tasks.setdefault(task_id, {
-            "tokens_consumed": 0,
-            "turns": 0,
-            "last_backend": args.backend,
-            "last_model": args.model
-        })
-        task_stat["tokens_consumed"] += args.tokens_est
-        task_stat["turns"] += args.turns
-        task_stat["last_backend"] = args.backend
-        task_stat["last_model"] = args.model
-
-        data["total_tokens_consumed"] = data.get("total_tokens_consumed", 0) + args.tokens_est
-        data["total_turns"] = data.get("total_turns", 0) + args.turns
-        data["updated_at"] = datetime.now(timezone.utc).isoformat()
-
         record_entry = {
-            "record_id": str(uuid.uuid4()),
-            "timestamp": datetime.now(timezone.utc).isoformat(),
             "task_id": task_id,
             "backend": args.backend,
             "model": args.model,
@@ -209,9 +171,7 @@ def main():
             if args.concurrent:
                 record_entry["concurrent"] = True
 
-        recent = data.setdefault("recent_records", [])
-        recent.insert(0, record_entry)
-        data["recent_records"] = recent[:30]
+        record_entry, task_stat = _acc.fold_usage(data, record_entry)
 
         with open(ledger_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
@@ -235,19 +195,8 @@ def main():
             print(f"  Global Total:    {data['total_tokens_consumed']:,} tokens")
 
     elif args.subcommand == "check":
-        prof = BUDGET_PROFILES.get(args.profile, BUDGET_PROFILES["default"])
-        soft_limit = prof["soft_turn_limit_per_task"]
-        allowed = args.planned_turns <= soft_limit
-        warning = "" if allowed else f"Planned turns ({args.planned_turns}) exceeds soft limit ({soft_limit}) for {args.profile}."
-
-        result = {
-            "profile": args.profile,
-            "description": prof["description"],
-            "planned_turns": args.planned_turns,
-            "soft_turn_limit": soft_limit,
-            "status": "APPROVED" if allowed else "WARNING",
-            "warning": warning
-        }
+        result = _acc.check_turns(BUDGET_PROFILES, args.profile, args.planned_turns)
+        prof, soft_limit, warning = BUDGET_PROFILES.get(args.profile, BUDGET_PROFILES["default"]), result["soft_turn_limit"], result["warning"]
 
         if args.format == "json":
             print(json.dumps(result, indent=2))

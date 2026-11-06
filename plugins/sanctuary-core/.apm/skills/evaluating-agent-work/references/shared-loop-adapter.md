@@ -8,6 +8,8 @@ Sanctuary does not own the generic loop. It consumes three skills from the compa
 | Launch checks: claim, cwd boundary, executable, timeout, clean context, structured result | `cli-agent` (`run_agent.py` flags, `dispatch_guard.py`) | Backend choice from `usage_probe.py headroom` (never dispatch an exhausted backend; do not probe it with model calls) |
 | Findings, validity gates, cost, interventions, repairs, lessons | `evaluating-agent-outcomes` (`eval_core.py`) | `scripts/eval_gate.py` (compat adapter), `scripts/sanctuary_adapter.py`, store `.agent/learning/events.jsonl` |
 
+Scoring, accounting and usage measurement are also single-sourced upstream now; see [responsibility-map.md](responsibility-map.md) for the per-function split, the one held exception and the compatibility evidence.
+
 Kept local: mission manifests and lifecycle, hypotheses and falsification criteria, empirical verdicts (`manage_backlog.py record-result`), Protocol 128, chronicle, soul traces, research prioritization, benchmark definitions, and the scoring dashboards (`score_contribution.py`, `track_budget.py`, `visualize_economy.py`).
 
 ## Delivery is not a verdict

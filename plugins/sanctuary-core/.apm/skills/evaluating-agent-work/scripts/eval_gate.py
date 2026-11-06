@@ -7,32 +7,13 @@ All reusable logic lives in the companion skill `evaluating-agent-outcomes` (eva
   * writes Sanctuary's `.agent/learning/events.jsonl` with the legacy `event_type` field in addition to `kind`.
 It fails loudly if the shared skill is not installed (`apm install` / `apm update --global`).
 """
-import os, sys
+import sys
 from pathlib import Path
 
-_REL = Path("evaluating-agent-outcomes") / "scripts"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _shared  # noqa: E402
 
-
-def _locate():
-    cands = []
-    if os.environ.get("SHARED_EVAL_SCRIPTS"):
-        cands.append(Path(os.environ["SHARED_EVAL_SCRIPTS"]))
-    here = Path(__file__).resolve()
-    for up in here.parents:
-        if (up / ".git").exists():
-            cands += [up / ".claude/skills" / _REL, up / ".agents/skills" / _REL]
-            break
-    cands += [Path.home() / ".claude/skills" / _REL, Path.home() / ".agents/skills" / _REL,
-              Path.home() / "Projects/agent-plugins-skills/plugins/agent-orchestration/.apm/skills" / _REL]
-    for c in cands:
-        if (c / "eval_core.py").is_file():
-            return c
-    raise SystemExit("shared skill 'evaluating-agent-outcomes' not found; run `apm update --global` (companion agent-orchestration plugin) "
-                     "or set SHARED_EVAL_SCRIPTS")
-
-
-SHARED = _locate()
-sys.path.insert(0, str(SHARED))
+SHARED = _shared.SHARED
 import eval_core as _c  # noqa: E402
 import eval_cli as _cli  # noqa: E402
 

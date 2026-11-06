@@ -1,0 +1,1284 @@
+{
+ "assessments": [
+  {
+   "agent_id": "a",
+   "assessment_id": "id0",
+   "cognitive_fitness": 1.0,
+   "dimensions": {
+    "anti_asch_integrity": 3,
+    "learning_depth": 3,
+    "token_economy": 3,
+    "useful_outcome": 3,
+    "verification_rigor": 3
+   },
+   "notes": "n0",
+   "raw_score": 15,
+   "task_id": "t0",
+   "timestamp": "2026-01-01T00:00:00+00:00"
+  },
+  {
+   "agent_id": "b",
+   "assessment_id": "id1",
+   "cognitive_fitness": 0.467,
+   "dimensions": {
+    "anti_asch_integrity": 1,
+    "learning_depth": 2,
+    "token_economy": 0,
+    "useful_outcome": 1,
+    "verification_rigor": 3
+   },
+   "notes": "n1",
+   "raw_score": 7,
+   "task_id": "t1",
+   "timestamp": "2026-01-02T00:00:00+00:00"
+  },
+  {
+   "agent_id": "a",
+   "assessment_id": "id2",
+   "cognitive_fitness": 0.667,
+   "dimensions": {
+    "anti_asch_integrity": 3,
+    "learning_depth": 2,
+    "token_economy": 1,
+    "useful_outcome": 2,
+    "verification_rigor": 2
+   },
+   "notes": "n2",
+   "raw_score": 10,
+   "task_id": "t2",
+   "timestamp": "2026-01-03T00:00:00+00:00"
+  },
+  {
+   "agent_id": "c",
+   "assessment_id": "id3",
+   "cognitive_fitness": 0.0,
+   "dimensions": {
+    "anti_asch_integrity": 0,
+    "learning_depth": 0,
+    "token_economy": 0,
+    "useful_outcome": 0,
+    "verification_rigor": 0
+   },
+   "notes": "n3",
+   "raw_score": 0,
+   "task_id": "t3",
+   "timestamp": "2026-01-04T00:00:00+00:00"
+  }
+ ],
+ "budget_check": {
+  "description": "Claude Pro ($20/mo) - ~45 messages / 5 hours",
+  "planned_turns": 20,
+  "profile": "claude-pro",
+  "soft_turn_limit": 12,
+  "status": "WARNING",
+  "warning": "Planned turns (20) exceeds soft limit (12) for claude-pro."
+ },
+ "budget_check_ok": {
+  "description": "Gemini Pro / AGY ($20/mo) - 1500 RPD / 60 RPM",
+  "planned_turns": 3,
+  "profile": "gemini-pro",
+  "soft_turn_limit": 25,
+  "status": "APPROVED",
+  "warning": ""
+ },
+ "budget_ledger": {
+  "recent_records": [
+   {
+    "backend": "agy",
+    "model": "default",
+    "record_id": "X",
+    "summary": "",
+    "task_id": "t2",
+    "timestamp": "T",
+    "tokens_est": 50,
+    "turns": 1
+   },
+   {
+    "backend": "claude",
+    "model": "haiku",
+    "quality": 2,
+    "record_id": "X",
+    "source": "measured",
+    "summary": "",
+    "task_class": "edit",
+    "task_id": "t1",
+    "timestamp": "T",
+    "tokens_est": 500,
+    "tokens_in": 400,
+    "tokens_out": 100,
+    "turns": 1
+   },
+   {
+    "backend": "codex",
+    "model": "gpt-6-luna",
+    "record_id": "X",
+    "summary": "s",
+    "task_id": "t1",
+    "timestamp": "T",
+    "tokens_est": 1000,
+    "turns": 2
+   }
+  ],
+  "schema_version": 1,
+  "tasks": {
+   "t1": {
+    "last_backend": "claude",
+    "last_model": "haiku",
+    "tokens_consumed": 1500,
+    "turns": 3
+   },
+   "t2": {
+    "last_backend": "agy",
+    "last_model": "default",
+    "tokens_consumed": 50,
+    "turns": 1
+   }
+  },
+  "total_tokens_consumed": 1550,
+  "total_turns": 4,
+  "updated_at": "T"
+ },
+ "budget_profiles": {
+  "chatgpt-plus": {
+   "description": "ChatGPT Plus ($20/mo) - ~40-80 messages / 3 hours",
+   "max_tokens_per_task": 80000,
+   "recommended_batch_size": 4,
+   "soft_turn_limit_per_task": 15
+  },
+  "claude-pro": {
+   "description": "Claude Pro ($20/mo) - ~45 messages / 5 hours",
+   "max_tokens_per_task": 60000,
+   "recommended_batch_size": 3,
+   "soft_turn_limit_per_task": 12
+  },
+  "default": {
+   "description": "Standard Balanced Budget",
+   "max_tokens_per_task": 80000,
+   "recommended_batch_size": 3,
+   "soft_turn_limit_per_task": 15
+  },
+  "gemini-pro": {
+   "description": "Gemini Pro / AGY ($20/mo) - 1500 RPD / 60 RPM",
+   "max_tokens_per_task": 150000,
+   "recommended_batch_size": 5,
+   "soft_turn_limit_per_task": 25
+  }
+ },
+ "cost_usd": {
+  "none": null,
+  "priced": 11.1
+ },
+ "dispatch_tiers": {
+  "": {
+   "desc": "Frontier Codex Astra (Heavy Architectural Reasoning)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "  Opus  ": {
+   "desc": "Frontier Claude Opus (3/4/5/5.5)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "Qwen2.5-Coder-7B": {
+   "desc": "Local Offline Qwen2",
+   "tier": "free",
+   "weight": 0.05
+  },
+  "astra": {
+   "desc": "Frontier Codex Astra (Heavy Architectural Reasoning)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "claude-3-5-haiku": {
+   "desc": "Fast & Cheap Haiku",
+   "tier": "cheap",
+   "weight": 0.2
+  },
+  "claude-3-5-sonnet": {
+   "desc": "Standard Claude Sonnet",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "claude-fable-5-1": {
+   "desc": "Frontier Claude Fable (5/5.1)",
+   "tier": "frontier",
+   "weight": 4.5
+  },
+  "claude-haiku-5-5": {
+   "desc": "Fast & Cheap Haiku (3.5/4.5/5.5)",
+   "tier": "cheap",
+   "weight": 0.2
+  },
+  "claude-opus-5-5": {
+   "desc": "Frontier Claude Opus (3/4/5/5.5)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "claude-sonnet-5-5": {
+   "desc": "Standard Claude Sonnet (3.5/4/5/5.5)",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "fable": {
+   "desc": "Frontier Claude Fable (5/5.1)",
+   "tier": "frontier",
+   "weight": 4.5
+  },
+  "flash": {
+   "desc": "Fast & Cheap Gemini 3.8 Flash",
+   "tier": "cheap",
+   "weight": 0.1
+  },
+  "gemini-3.8-flash": {
+   "desc": "Fast & Cheap Gemini 3.8 Flash",
+   "tier": "cheap",
+   "weight": 0.1
+  },
+  "gemini-4-argon": {
+   "desc": "Frontier Gemini 4",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "gemini-flash": {
+   "desc": "Fast & Cheap Gemini Flash (1.5/2/3.6/3.7/3.8)",
+   "tier": "cheap",
+   "weight": 0.1
+  },
+  "gemini-pro": {
+   "desc": "Standard Gemini Pro (1.5/2/3/3.1)",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "gpt-4o": {
+   "desc": "Standard GPT-4o",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "gpt-4o-mini": {
+   "desc": "Standard GPT-4o",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "gpt-6-astra": {
+   "desc": "Frontier Codex Astra (Heavy Architectural Reasoning)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "gpt-6-luna": {
+   "desc": "Standard Codex Luna 6.0",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "gpt-6.1-sol": {
+   "desc": "Standard Codex Sol 6.1",
+   "tier": "standard",
+   "weight": 1.5
+  },
+  "haiku": {
+   "desc": "Fast & Cheap Haiku",
+   "tier": "cheap",
+   "weight": 0.2
+  },
+  "llama": {
+   "desc": "Local Offline LLM / Qwen2",
+   "tier": "free",
+   "weight": 0.05
+  },
+  "local-llama": {
+   "desc": "Local Offline LLM / Qwen2",
+   "tier": "free",
+   "weight": 0.05
+  },
+  "luna": {
+   "desc": "Standard Codex Luna 6.0",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "mini": {
+   "desc": "Frontier Gemini 4",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "o1": {
+   "desc": "OpenAI o1 Reasoning",
+   "tier": "frontier",
+   "weight": 3.5
+  },
+  "o3": {
+   "desc": "OpenAI o3 Reasoning",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "opus": {
+   "desc": "Frontier Claude Opus (3/4/5/5.5)",
+   "tier": "frontier",
+   "weight": 4.0
+  },
+  "pro": {
+   "desc": "Standard Gemini Pro (1.5/2/3/3.1)",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "qwen": {
+   "desc": "Local Offline Qwen2",
+   "tier": "free",
+   "weight": 0.05
+  },
+  "sol": {
+   "desc": "Standard Codex Sol 6.1",
+   "tier": "standard",
+   "weight": 1.5
+  },
+  "sonnet": {
+   "desc": "Standard Claude Sonnet",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "standard": {
+   "desc": "Standard (standard)",
+   "tier": "standard",
+   "weight": 1.0
+  },
+  "unknown-model-x": {
+   "desc": "Standard (unknown-model-x)",
+   "tier": "standard",
+   "weight": 1.0
+  }
+ },
+ "projection": {
+  "agents": {
+   "a": {
+    "assessments": 2,
+    "average_fitness": 0.833,
+    "cumulative_score": 25
+   },
+   "b": {
+    "assessments": 1,
+    "average_fitness": 0.467,
+    "cumulative_score": 7
+   },
+   "c": {
+    "assessments": 1,
+    "average_fitness": 0.0,
+    "cumulative_score": 0
+   }
+  },
+  "average_fitness": 0.533,
+  "cumulative_score": 32,
+  "dimension_totals": {
+   "anti_asch_integrity": 7,
+   "learning_depth": 7,
+   "token_economy": 4,
+   "useful_outcome": 6,
+   "verification_rigor": 8
+  },
+  "recent_assessments": [
+   {
+    "agent_id": "c",
+    "assessment_id": "id3",
+    "fitness": 0.0,
+    "notes": "n3",
+    "raw_score": 0,
+    "task_id": "t3",
+    "timestamp": "2026-01-04T00:00:00+00:00"
+   },
+   {
+    "agent_id": "a",
+    "assessment_id": "id2",
+    "fitness": 0.667,
+    "notes": "n2",
+    "raw_score": 10,
+    "task_id": "t2",
+    "timestamp": "2026-01-03T00:00:00+00:00"
+   },
+   {
+    "agent_id": "b",
+    "assessment_id": "id1",
+    "fitness": 0.467,
+    "notes": "n1",
+    "raw_score": 7,
+    "task_id": "t1",
+    "timestamp": "2026-01-02T00:00:00+00:00"
+   },
+   {
+    "agent_id": "a",
+    "assessment_id": "id0",
+    "fitness": 1.0,
+    "notes": "n0",
+    "raw_score": 15,
+    "task_id": "t0",
+    "timestamp": "2026-01-01T00:00:00+00:00"
+   }
+  ],
+  "schema_version": 1,
+  "total_assessments": 4,
+  "updated_at": "2026-01-04T00:00:00+00:00"
+ },
+ "score_cli": [
+  {
+   "event": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": null,
+    "cognitive_fitness": 1.0,
+    "cost_adjusted_roi": 5.0,
+    "dimensions": {
+     "anti_asch_integrity": 3,
+     "learning_depth": 3,
+     "token_economy": 3,
+     "useful_outcome": 3,
+     "verification_rigor": 3
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "haiku",
+    "model_cost_weight": 0.2,
+    "notes": "n",
+    "raw_score": 15,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   },
+   "in": [
+    [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "haiku"
+   ],
+   "ledger": {
+    "agents": {
+     "ag": {
+      "assessments": 1,
+      "average_fitness": 1.0,
+      "cumulative_score": 15
+     }
+    },
+    "average_fitness": 1.0,
+    "cumulative_score": 15,
+    "dimension_totals": {
+     "anti_asch_integrity": 3,
+     "learning_depth": 3,
+     "token_economy": 3,
+     "useful_outcome": 3,
+     "verification_rigor": 3
+    },
+    "recent_assessments": [
+     {
+      "agent_id": "ag",
+      "assessment_id": "X",
+      "fitness": 1.0,
+      "notes": "n",
+      "raw_score": 15,
+      "task_id": "T",
+      "timestamp": "T"
+     }
+    ],
+    "schema_version": 1,
+    "total_assessments": 1,
+    "updated_at": "T"
+   },
+   "stdout": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": null,
+    "cognitive_fitness": 1.0,
+    "cost_adjusted_roi": 5.0,
+    "dimensions": {
+     "anti_asch_integrity": 3,
+     "learning_depth": 3,
+     "token_economy": 3,
+     "useful_outcome": 3,
+     "verification_rigor": 3
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "haiku",
+    "model_cost_weight": 0.2,
+    "notes": "n",
+    "raw_score": 15,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   }
+  },
+  {
+   "event": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": "CRITICAL: Expensive model 'opus' (weight 4.0x) produced bloated/low-value output without advancing core objectives.",
+    "cognitive_fitness": 0.467,
+    "cost_adjusted_roi": 0.117,
+    "dimensions": {
+     "anti_asch_integrity": 1,
+     "learning_depth": 2,
+     "token_economy": 0,
+     "useful_outcome": 1,
+     "verification_rigor": 3
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "opus",
+    "model_cost_weight": 4.0,
+    "notes": "n",
+    "raw_score": 7,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   },
+   "in": [
+    [
+     1,
+     2,
+     3,
+     0,
+     1
+    ],
+    "opus"
+   ],
+   "ledger": {
+    "agents": {
+     "ag": {
+      "assessments": 1,
+      "average_fitness": 0.467,
+      "cumulative_score": 7
+     }
+    },
+    "average_fitness": 0.467,
+    "cumulative_score": 7,
+    "dimension_totals": {
+     "anti_asch_integrity": 1,
+     "learning_depth": 2,
+     "token_economy": 0,
+     "useful_outcome": 1,
+     "verification_rigor": 3
+    },
+    "recent_assessments": [
+     {
+      "agent_id": "ag",
+      "assessment_id": "X",
+      "fitness": 0.467,
+      "notes": "n",
+      "raw_score": 7,
+      "task_id": "T",
+      "timestamp": "T"
+     }
+    ],
+    "schema_version": 1,
+    "total_assessments": 1,
+    "updated_at": "T"
+   },
+   "stdout": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": "CRITICAL: Expensive model 'opus' (weight 4.0x) produced bloated/low-value output without advancing core objectives.",
+    "cognitive_fitness": 0.467,
+    "cost_adjusted_roi": 0.117,
+    "dimensions": {
+     "anti_asch_integrity": 1,
+     "learning_depth": 2,
+     "token_economy": 0,
+     "useful_outcome": 1,
+     "verification_rigor": 3
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "opus",
+    "model_cost_weight": 4.0,
+    "notes": "n",
+    "raw_score": 7,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   }
+  },
+  {
+   "event": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": "CRITICAL: Expensive model 'claude-fable-5-1' (weight 4.5x) produced bloated/low-value output without advancing core objectives.",
+    "cognitive_fitness": 0.133,
+    "cost_adjusted_roi": 0.03,
+    "dimensions": {
+     "anti_asch_integrity": 0,
+     "learning_depth": 1,
+     "token_economy": 1,
+     "useful_outcome": 0,
+     "verification_rigor": 0
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "claude-fable-5-1",
+    "model_cost_weight": 4.5,
+    "notes": "n",
+    "raw_score": 2,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   },
+   "in": [
+    [
+     0,
+     1,
+     0,
+     1,
+     0
+    ],
+    "claude-fable-5-1"
+   ],
+   "ledger": {
+    "agents": {
+     "ag": {
+      "assessments": 1,
+      "average_fitness": 0.133,
+      "cumulative_score": 2
+     }
+    },
+    "average_fitness": 0.133,
+    "cumulative_score": 2,
+    "dimension_totals": {
+     "anti_asch_integrity": 0,
+     "learning_depth": 1,
+     "token_economy": 1,
+     "useful_outcome": 0,
+     "verification_rigor": 0
+    },
+    "recent_assessments": [
+     {
+      "agent_id": "ag",
+      "assessment_id": "X",
+      "fitness": 0.133,
+      "notes": "n",
+      "raw_score": 2,
+      "task_id": "T",
+      "timestamp": "T"
+     }
+    ],
+    "schema_version": 1,
+    "total_assessments": 1,
+    "updated_at": "T"
+   },
+   "stdout": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": "CRITICAL: Expensive model 'claude-fable-5-1' (weight 4.5x) produced bloated/low-value output without advancing core objectives.",
+    "cognitive_fitness": 0.133,
+    "cost_adjusted_roi": 0.03,
+    "dimensions": {
+     "anti_asch_integrity": 0,
+     "learning_depth": 1,
+     "token_economy": 1,
+     "useful_outcome": 0,
+     "verification_rigor": 0
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "claude-fable-5-1",
+    "model_cost_weight": 4.5,
+    "notes": "n",
+    "raw_score": 2,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   }
+  },
+  {
+   "event": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": null,
+    "cognitive_fitness": 0.667,
+    "cost_adjusted_roi": 0.667,
+    "dimensions": {
+     "anti_asch_integrity": 2,
+     "learning_depth": 2,
+     "token_economy": 2,
+     "useful_outcome": 2,
+     "verification_rigor": 2
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "standard",
+    "model_cost_weight": 1.0,
+    "notes": "n",
+    "raw_score": 10,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   },
+   "in": [
+    [
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "standard"
+   ],
+   "ledger": {
+    "agents": {
+     "ag": {
+      "assessments": 1,
+      "average_fitness": 0.667,
+      "cumulative_score": 10
+     }
+    },
+    "average_fitness": 0.667,
+    "cumulative_score": 10,
+    "dimension_totals": {
+     "anti_asch_integrity": 2,
+     "learning_depth": 2,
+     "token_economy": 2,
+     "useful_outcome": 2,
+     "verification_rigor": 2
+    },
+    "recent_assessments": [
+     {
+      "agent_id": "ag",
+      "assessment_id": "X",
+      "fitness": 0.667,
+      "notes": "n",
+      "raw_score": 10,
+      "task_id": "T",
+      "timestamp": "T"
+     }
+    ],
+    "schema_version": 1,
+    "total_assessments": 1,
+    "updated_at": "T"
+   },
+   "stdout": {
+    "agent_id": "ag",
+    "assessment_id": "X",
+    "assessor": "peer-reviewer",
+    "bloat_warning": null,
+    "cognitive_fitness": 0.667,
+    "cost_adjusted_roi": 0.667,
+    "dimensions": {
+     "anti_asch_integrity": 2,
+     "learning_depth": 2,
+     "token_economy": 2,
+     "useful_outcome": 2,
+     "verification_rigor": 2
+    },
+    "event_type": "CONTRIBUTION_ASSESSED",
+    "evidence_refs": [],
+    "max_score": 15,
+    "model": "standard",
+    "model_cost_weight": 1.0,
+    "notes": "n",
+    "raw_score": 10,
+    "schema_version": 1,
+    "task_id": "T",
+    "timestamp": "T"
+   }
+  }
+ ],
+ "score_weights": {
+  "": 4.0,
+  "  Opus  ": 4.0,
+  "Qwen2.5-Coder-7B": 0.05,
+  "astra": 4.0,
+  "claude-3-5-haiku": 0.2,
+  "claude-3-5-sonnet": 1.0,
+  "claude-fable-5-1": 4.5,
+  "claude-haiku-5-5": 0.2,
+  "claude-opus-5-5": 4.0,
+  "claude-sonnet-5-5": 1.0,
+  "fable": 4.5,
+  "flash": 0.1,
+  "gemini-3.8-flash": 0.1,
+  "gemini-4-argon": 4.0,
+  "gemini-flash": 0.1,
+  "gemini-pro": 1.0,
+  "gpt-4o": 1.0,
+  "gpt-4o-mini": 1.0,
+  "gpt-6-astra": 4.0,
+  "gpt-6-luna": 1.0,
+  "gpt-6.1-sol": 1.5,
+  "haiku": 0.2,
+  "llama": 0.05,
+  "local-llama": 0.05,
+  "luna": 1.0,
+  "mini": 4.0,
+  "o1": 3.5,
+  "o3": 4.0,
+  "opus": 4.0,
+  "pro": 1.0,
+  "qwen": 0.05,
+  "sol": 1.5,
+  "sonnet": 1.0,
+  "standard": 1.0,
+  "unknown-model-x": 1.0
+ },
+ "scores": [
+  {
+   "bloat": true,
+   "fitness": 0.0,
+   "model": "opus",
+   "ratings": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw": 0,
+   "roi": 0.0,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 0.0,
+   "model": "haiku",
+   "ratings": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw": 0,
+   "roi": 0.0,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 0.0,
+   "model": "standard",
+   "ratings": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw": 0,
+   "roi": 0.0,
+   "weight": 1.0
+  },
+  {
+   "bloat": true,
+   "fitness": 0.0,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw": 0,
+   "roi": 0.0,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 0.0,
+   "model": "qwen",
+   "ratings": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "raw": 0,
+   "roi": 0.0,
+   "weight": 0.05
+  },
+  {
+   "bloat": false,
+   "fitness": 1.0,
+   "model": "opus",
+   "ratings": [
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "raw": 15,
+   "roi": 0.25,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 1.0,
+   "model": "haiku",
+   "ratings": [
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "raw": 15,
+   "roi": 5.0,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 1.0,
+   "model": "standard",
+   "ratings": [
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "raw": 15,
+   "roi": 1.0,
+   "weight": 1.0
+  },
+  {
+   "bloat": false,
+   "fitness": 1.0,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "raw": 15,
+   "roi": 0.222,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 1.0,
+   "model": "qwen",
+   "ratings": [
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "raw": 15,
+   "roi": 20.0,
+   "weight": 0.05
+  },
+  {
+   "bloat": true,
+   "fitness": 0.467,
+   "model": "opus",
+   "ratings": [
+    1,
+    2,
+    3,
+    0,
+    1
+   ],
+   "raw": 7,
+   "roi": 0.117,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 0.467,
+   "model": "haiku",
+   "ratings": [
+    1,
+    2,
+    3,
+    0,
+    1
+   ],
+   "raw": 7,
+   "roi": 2.335,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 0.467,
+   "model": "standard",
+   "ratings": [
+    1,
+    2,
+    3,
+    0,
+    1
+   ],
+   "raw": 7,
+   "roi": 0.467,
+   "weight": 1.0
+  },
+  {
+   "bloat": true,
+   "fitness": 0.467,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    1,
+    2,
+    3,
+    0,
+    1
+   ],
+   "raw": 7,
+   "roi": 0.104,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 0.467,
+   "model": "qwen",
+   "ratings": [
+    1,
+    2,
+    3,
+    0,
+    1
+   ],
+   "raw": 7,
+   "roi": 9.34,
+   "weight": 0.05
+  },
+  {
+   "bloat": true,
+   "fitness": 0.667,
+   "model": "opus",
+   "ratings": [
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "raw": 10,
+   "roi": 0.167,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 0.667,
+   "model": "haiku",
+   "ratings": [
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "raw": 10,
+   "roi": 3.335,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 0.667,
+   "model": "standard",
+   "ratings": [
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "raw": 10,
+   "roi": 0.667,
+   "weight": 1.0
+  },
+  {
+   "bloat": true,
+   "fitness": 0.667,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "raw": 10,
+   "roi": 0.148,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 0.667,
+   "model": "qwen",
+   "ratings": [
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "raw": 10,
+   "roi": 13.34,
+   "weight": 0.05
+  },
+  {
+   "bloat": true,
+   "fitness": 0.4,
+   "model": "opus",
+   "ratings": [
+    0,
+    3,
+    0,
+    3,
+    0
+   ],
+   "raw": 6,
+   "roi": 0.1,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 0.4,
+   "model": "haiku",
+   "ratings": [
+    0,
+    3,
+    0,
+    3,
+    0
+   ],
+   "raw": 6,
+   "roi": 2.0,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 0.4,
+   "model": "standard",
+   "ratings": [
+    0,
+    3,
+    0,
+    3,
+    0
+   ],
+   "raw": 6,
+   "roi": 0.4,
+   "weight": 1.0
+  },
+  {
+   "bloat": true,
+   "fitness": 0.4,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    0,
+    3,
+    0,
+    3,
+    0
+   ],
+   "raw": 6,
+   "roi": 0.089,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 0.4,
+   "model": "qwen",
+   "ratings": [
+    0,
+    3,
+    0,
+    3,
+    0
+   ],
+   "raw": 6,
+   "roi": 8.0,
+   "weight": 0.05
+  },
+  {
+   "bloat": true,
+   "fitness": 0.333,
+   "model": "opus",
+   "ratings": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "raw": 5,
+   "roi": 0.083,
+   "weight": 4.0
+  },
+  {
+   "bloat": false,
+   "fitness": 0.333,
+   "model": "haiku",
+   "ratings": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "raw": 5,
+   "roi": 1.665,
+   "weight": 0.2
+  },
+  {
+   "bloat": false,
+   "fitness": 0.333,
+   "model": "standard",
+   "ratings": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "raw": 5,
+   "roi": 0.333,
+   "weight": 1.0
+  },
+  {
+   "bloat": true,
+   "fitness": 0.333,
+   "model": "claude-fable-5-1",
+   "ratings": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "raw": 5,
+   "roi": 0.074,
+   "weight": 4.5
+  },
+  {
+   "bloat": false,
+   "fitness": 0.333,
+   "model": "qwen",
+   "ratings": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "raw": 5,
+   "roi": 6.66,
+   "weight": 0.05
+  }
+ ]
+}
