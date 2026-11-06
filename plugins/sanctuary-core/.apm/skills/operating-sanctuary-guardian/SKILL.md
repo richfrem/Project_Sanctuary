@@ -12,6 +12,8 @@ The master lifecycle and governance controller for Project Sanctuary, implementi
 - [Constraints](#constraints) • [Modes](#modes) • [Quick Start](#quick-start) • [Workflow](#workflow) • [Verification](#verification) • [References](#references)
 
 ## Constraints
+
+- **Two-Repository Duty**: Skills are maintained here AND in the companion `agent-plugins-skills`. Change each by ownership, merge the companion first, refresh and verify installs, then update the Sanctuary consumer and every pointer (Protocol 133 section 8; `references/integrations/orchestration.md`).
 1. **Human Gate Law**: Never perform unapproved state-changing operations or git pushes.
 2. **Iron Core Integrity**: Abort session closure if the Technical Seal detects repository drift.
 3. **Main-Thread Execution**: All lifecycle operations run interactively in the main thread with full operator visibility.
@@ -75,4 +77,5 @@ python3 scripts/forge_llm.py verify
 - MLX Server Lifecycle & Auto-Idle: [local-mlx-server-lifecycle.md](references/local-mlx-server-lifecycle.md)
 - Local Tool Use & Structured JSON: [local-tool-use-and-structured-json.md](references/local-tool-use-and-structured-json.md)
 - Acceptance Criteria: [acceptance-criteria.md](references/acceptance-criteria.md)
-- Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration](references/integrations/orchestration.md)
+- Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration & shared learning loop](references/integrations/orchestration.md)
+- Two-repository skill maintenance: [Protocol 133 section 8](../../../../../protocols/133_Companion_Repository_Skill_Improvement_Protocol.md) • [Shared loop adapter](../evaluating-agent-work/references/shared-loop-adapter.md) • Moved capabilities: `dispatch_guard.py` now lives in the companion `cli-agent`; reusable evaluation logic in the companion `evaluating-agent-outcomes`

@@ -1,13 +1,14 @@
 {
   "name": "sanctuary-core",
-  "version": "0.1.0",
-  "description": "Project Sanctuary core governance, Living Chronicle, Protocols, and autonomous tool evolution plugin.",
+  "version": "0.2.0",
+  "description": "Project Sanctuary core governance, Living Chronicle, Protocols, and autonomous tool evolution plugin. External prerequisite (not bundled, installed globally by APM): the companion agent-orchestration plugin (orchestrating-agent-work, cli-agent, evaluating-agent-outcomes) used by evaluating-agent-work adapters.",
   "author": {
     "name": "Richard Fremmerlid",
     "email": "richard.fremmerlid@gmail.com"
   },
   "license": "MIT",
   "keywords": [
+    "requires-companion-agent-orchestration",
     "sanctuary-core"
   ]
 }

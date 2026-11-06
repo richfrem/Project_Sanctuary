@@ -1,8 +1,8 @@
-# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.2)
+# Protocol 133: Companion Repository & Upstream Skill Improvement Protocol (v1.3)
 
 **Status:** PROPOSED  
 **Classification:** Operational Framework  
-**Version:** 1.2 (first used 2026-11-03; corrected 2026-11-04 after the catalog refresh; see Section 7)  
+**Version:** 1.3 (two-repository duty added 2026-11-06; first used 2026-11-03; corrected 2026-11-04 after the catalog refresh; see Section 7)  
 **Authority:** Project owner directive (2026-11-03); drafted by Claude Code. Ratify by changing Status to CANONICAL.  
 **Linked Protocols:** Protocol 128 (Hardened Learning Loop)
 
@@ -66,6 +66,18 @@ An upstream skill change is Stage 2 work (execution on a branch, human-gated) an
 
 - **Change:** `managing-huggingface-assets/scripts/hf_upload.py` documented `--file`/`--remote-path` but had no command line; run as documented it exited 0 silently and uploaded nothing. Added the CLI with 8 tests, a docs update and a `DEBT-20261103-HF-UPLOAD-NO-CLI (RESOLVED)` map-debt entry. Upstream PR #746 (squash-merged), then the single-plugin global install of `dev-utils` with zero differences across the three install directories.
 - **What the run taught (now folded into Section 4):** the evolution guard requires a map-debt entry for any `plugins/` commit; `--no-verify` skips only the pre-push hook; push after the commit succeeds; use the single-plugin install form with `antigravity` on APM 0.33.0; back up `~/.apm/` first; verify all three install directories.
+
+## 8. Two-repository maintenance duty (added 2026-11-06, MISSION-055)
+
+Sanctuary agents are responsible for keeping skills correct in BOTH repositories, not only for editing upstream on request.
+
+1. **Place each change by ownership** (Section 3): generic behavior (orchestration, `cli-agent` launch controls, shared evaluation `evaluating-agent-outcomes`) lives in the companion; Sanctuary policy and adapters (`evaluating-agent-work`, `sanctuary_adapter.py`, `eval_gate.py` shim, guardian references) live here.
+2. **One worktree and feature branch per repository**, named for the mission; record path, branch and base SHA in the mission's `LEARNING/experiments/mission-NNN/` notes. The flight board does not protect the companion.
+3. **Order**: integrate and merge the companion first, run `apm update --global` and verify installed files equal the merged clone, then integrate the Sanctuary consumer. A consumer must never point at a capability that is not yet installed.
+4. **Moving or renaming a capability** (for example `dispatch_guard.py` moved from `orchestrating-agent-work` to `cli-agent`): leave a compatibility shim or update every caller in the same change, then grep both repositories for the old name and path (`README.md`, `architecture.md`, `AGENTS.md`, `START_HERE.md`, `INSTALL.md`, `bootstrapping.md`, skill `SKILL.md` and `references/`).
+5. **Keep awareness current**: update the root documents of both repositories and every skill that routes to the changed capability in the same change set. The companion's `AGENTS.md` names Sanctuary as a consumer.
+6. **Verify installs**: after merge, global `apm update --global` and Sanctuary `apm install`; compare installed copies with source for Claude, Codex and AGY; check no project-local copy shadows a global skill; restore unrelated `apm.lock.yaml` noise.
+7. **Never hand-edit installed copies**; clean up the worktrees and branches in both repositories.
 
 ## Revision note (2026-11-04, v1.2)
 The first catalog refresh (companion repo PR 747) showed that `apm install --global` alone did not update the installed skills because of the pinned GitHub dependency; steps 9 and the install note above were corrected, and the verification there (`diff -rq` of installed copies against the plugin) is what caught it. The update moved 7 packages from 3f0c0ba to 6bb64dc and reported one interrupted-install backup item it could not remove.

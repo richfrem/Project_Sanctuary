@@ -78,3 +78,8 @@ git status
 ```
 - Ensure execution is on a dedicated feature branch (`feat/*`), NEVER on `main`.
 - Confirm local machine harnesses (`.agents/`, `.claude/`, `.codex/`) are gitignored and only `.agent/` is tracked.
+
+
+## Appendix: Two-repository skill maintenance (MISSION-055)
+
+Skills live in two places: `plugins/sanctuary-core/` (Sanctuary policy and adapters) and the companion `richfrem/agent-plugins-skills` (generic orchestration, `cli-agent`, shared evaluation `evaluating-agent-outcomes`), installed globally by APM. You are responsible for both: place changes by ownership, merge the companion first, refresh installs and verify them, then update the consumer, and update the root documents and every skill that points at a moved capability. See Protocol 133 section 8 and `evaluating-agent-work/references/shared-loop-adapter.md`. Never hand-edit installed copies.
