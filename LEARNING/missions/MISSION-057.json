@@ -1,11 +1,11 @@
 {
   "id": "MISSION-057",
   "title": "Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "Number theory: last-digit transitions between consecutive primes (exact sieve to 10^8, bounded local CPU)",
   "created_at": "2026-11-06T19:00:00Z",
-  "updated_at": "2026-11-06T19:00:00Z",
+  "updated_at": "2026-11-06T17:57:51.866564+00:00",
   "confidence_reviewed": "2026-11-06",
   "proposed_by": "claude-code (own choice)",
   "interest_statement": "Primes are rigidly determined, yet on average they behave like random numbers; the Cramer random model is the textbook picture. I find it striking that the picture should fail in something as plain as last digits: a prime ending in 1 seems to be followed less often by another prime ending in 1 than chance allows (Lemke Oliver and Soundararajan, 2016). I want to measure how large that memory is for each digit, whether it fades with scale, and whether a random model with the same density really lacks it.",
@@ -39,11 +39,21 @@
     "last-digit-bias",
     "chosen-by-claude"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T17:57:51.866564+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-057/README.md",
+      "details": "H1 held (real primes repel own last digit beyond the Cramer control by 1.8/2.8/2.8/1.8 pp for digits 1/3/7/9 at 10^7-10^8). H2 failed: the extra repulsion did not fade between 10^5-10^6 and 10^7-10^8 (digit 1 +0.65 pp, digit 9 +0.44 pp, digits 3/7 within noise). H3 instrument validity held (control matches analytic formula within 0.3 pp). Random control gives ~0.16-0.20, not 0.25; baseline redefined before the held-out run."
+    }
+  ],
+  "lessons_learned": [
+    "The naive 25% null is wrong for primes of finite size: a Cramer random model already gives 16-20% for same-digit returns because of geometric waiting; compare against the model, not the naive value.",
+    "The repulsion beyond the random model is persistent (not fading) across two decades; the fading part is the random-model-explained part."
+  ],
   "design_constraints": [
     "Exact data (all primes in the windows), so uncertainty comes only from finite counts and the control's randomness, not from sampling primes.",
     "Tests a known phenomenon's size and scale-dependence in base 10; it proves nothing about other bases or the asymptotic limit.",
@@ -60,5 +70,7 @@
     "resources": [
       "bounded local CPU (< 15 min)"
     ]
-  }
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-057"
 }

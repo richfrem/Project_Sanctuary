@@ -54,7 +54,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#35** | `MISSION-056` | **Can evenly spaced rhythms survive missing beats better than irregular rhythms?** | 2 | 4 | 0.1x | 2 | **40.0** | `IN_PROGRESS` | `FALSIFIED` |
-| **#36** | `MISSION-057` | **Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?** | 1 | 4 | 0.1x | 1 | **40.0** | `PROPOSED` | - |
+| **#36** | `MISSION-057` | **Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?** | 1 | 4 | 0.1x | 1 | **40.0** | `IN_PROGRESS` | `FALSIFIED` |
 | **#37** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#38** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
 | **#39** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
@@ -620,7 +620,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Sequence the freeze commit before the scoring command, not in the same chain: a blocked commit let the held-out run happen first (integrity kept by hash guard).
 
 ### MISSION-057: Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow? (Rank #36)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Number theory: last-digit transitions between consecutive primes (exact sieve to 10^8, bounded local CPU)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -629,6 +630,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Let P(d->d) be the probability that the next prime has the same last digit d in {1,3,7,9}, and let C(d->d) be the same quantity in a Cramer-style random control (each integer coprime to 10 included independently with probability 2.5/ln n, which itself gives a value below 0.25 at finite size). Repulsion R_d = C(d->d) - P(d->d). (H1) In the primes within [10^7, 10^8], R_d >= 0.5 percentage points for EVERY digit d. (H2) For every digit d, R_d is larger in [10^5, 10^6] than in [10^7, 10^8]. (H3, instrument validity) The simulated control matches its analytic value q(1-q)^3/(1-(1-q)^4) within 0.3 percentage points for every digit in both windows.
 - **Falsification Gate**:
   > FALSIFIED if H1 or H2 fails for any digit given a valid control. If H3 fails or any instrument check fails the result is UNASSESSED. Thresholds, windows, control definition and aggregation are fixed in protocol.md before the held-out run and not changed afterwards. Secondary tables cannot rescue a failed primary claim. REVISION NOTE: the first draft compared primes with the naive independence value 0.25; the development run showed the random control itself sits near 0.16 at these sizes (waiting-time geometry), so 0.25 is the wrong null and the comparison was redefined to the control BEFORE the held-out run; this is disclosed in protocol.md.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T17:57:51.866564+00:00` [claude-code] (LEARNING/experiments/mission-057/README.md): H1 held (real primes repel own last digit beyond the Cramer control by 1.8/2.8/2.8/1.8 pp for digits 1/3/7/9 at 10^7-10^8). H2 failed: the extra repulsion did not fade between 10^5-10^6 and 10^7-10^8 (digit 1 +0.65 pp, digit 9 +0.44 pp, digits 3/7 within noise). H3 instrument validity held (control matches analytic formula within 0.3 pp). Random control gives ~0.16-0.20, not 0.25; baseline redefined before the held-out run.
+- **Lessons Learned & Epistemic Compounding**:
+  * The naive 25% null is wrong for primes of finite size: a Cramer random model already gives 16-20% for same-digit returns because of geometric waiting; compare against the model, not the naive value.
+  * The repulsion beyond the random model is persistent (not fading) across two decades; the fading part is the random-model-explained part.
 
 ### MISSION-041: Compile Falsification Criteria into Executable Property Tests and Counterexample Searches (Rank #37)
 - **Status**: `RESOLVED`
