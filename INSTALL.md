@@ -69,6 +69,8 @@ apm --version
 
 Project-local installation places materialized, dereferenced copies of the skills directly into your local agent harness folders (`.agents/skills/`, `.claude/skills/`, `.codex/`), ensuring the repository is fully self-contained.
 
+> **Shared loop dependency (MISSION-055):** `evaluating-agent-work` consumes the companion skills `evaluating-agent-outcomes`, `orchestrating-agent-work` and `cli-agent`. Install them globally first (`apm update --global`, see Protocol 133) or Sanctuary adapters fail loudly with "shared skill not found". After any companion change, verify installed files against the clone and check for stale project-local copies shadowing the global ones.
+
 ### 1. Install Sanctuary Core Skills Locally
 
 To install all 7 sovereign skills (`managing-chronicles`, `managing-protocols`, `operating-sanctuary-guardian`, `forging-sovereign-models`, `preserving-soul-traces`, `managing-sovereign-memory`, `evaluating-agent-work`) into this project's client targets:

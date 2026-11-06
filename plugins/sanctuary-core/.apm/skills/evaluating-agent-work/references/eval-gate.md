@@ -1,6 +1,6 @@
 # Eval gate (MISSION-054)
 
-`scripts/eval_gate.py` (stdlib) holds the deterministic checks that run before expensive model evaluation, and compact records appended to `.agent/learning/events.jsonl`. It reuses the event log; there is no new ledger.
+`scripts/eval_gate.py` is now a thin compatibility adapter: the logic lives once in the companion skill `evaluating-agent-outcomes` (`eval_core.py`) and records still go to `.agent/learning/events.jsonl` (MISSION-055). See [shared-loop-adapter.md](shared-loop-adapter.md).
 
 | Failure seen in MISSION-052 | Gate |
 |---|---|

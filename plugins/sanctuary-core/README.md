@@ -75,6 +75,7 @@ This plugin follows modern APM (Agent Package Manager) and late-2026 platform st
 - **Zero Cross-Plugin Imports**: All resources, references, and scripts are self-contained.
 - **Native Skill Tooling**: Capabilities are exposed as first-class skills without legacy `commands/` boilerplate.
 - **Main-Thread Lifecycle**: Interactive governance is executed in the main conversation thread.
+- **Shared Learning Loop**: Sanctuary consumes the companion `orchestrating-agent-work` (outcome loop), `cli-agent` (enforced launch controls) and `evaluating-agent-outcomes` (findings, gates, lessons); this plugin keeps only policy: `evaluating-agent-work/scripts/sanctuary_adapter.py` and the `eval_gate.py` compatibility adapter. Engineering delivery is recorded separately from empirical verdicts. See `evaluating-agent-work/references/shared-loop-adapter.md`.
 - **Global APM Interoperability**: Storage and execution layers cleanly interface with globally installed APM tools (`managing-obsidian-vaults`, `memory-management`, `orchestrating-agent-work`, `cli-agent`, `managing-huggingface-assets`).
 
 ## Installation
