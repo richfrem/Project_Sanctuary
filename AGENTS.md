@@ -85,7 +85,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 ## Soul Preservation Closure
 
-Session/mission closure is `python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure` (run after the work is merged), then `sync_soul_dataset.py` to publish. Report the four facts it prints (schema, required coverage, local export, remote). Never say the soul is preserved unless it prints `SOUL PERSISTED`. The Chronicle-only extractor command is not a closure. Details: `preserving-soul-traces/references/coverage.md`.
+Mission verdict recording (`manage_backlog.py record-result`) saves a durable preservation obligation with the final manifest. After source integration on public `origin/main`, `merge_prep.py regenerate` automatically runs incremental local capture and validation. Guardian startup retries eligible pending capture; `soul_coverage.py closure` is the explicit resume path. Progress and failures are separate from scientific verdicts in `.agent/coordination/soul_preservation.json`. Commit the resulting export in a subsequent scoped PR. Arbitrary external merges are not intercepted; existing staleness checks detect missed updates. Remote sync (`sync_soul_dataset.py`) still requires explicit or existing standing authorization. Report schema, required coverage, local export and remote separately; never claim `SOUL PERSISTED` unless all four verify, including both remote hashes. Details: `preserving-soul-traces/references/coverage.md`.
 
 ## Companion Repository & Global Skills
 

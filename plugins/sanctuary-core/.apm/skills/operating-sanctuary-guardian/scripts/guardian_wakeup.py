@@ -170,7 +170,14 @@ def check_soul_preservation(project_root: Path) -> "dict | None":
         import importlib.util
         spec = importlib.util.spec_from_file_location("soul_coverage_boot", script); mod = importlib.util.module_from_spec(spec)
         sys.path.insert(0, str(script.parent)); spec.loader.exec_module(mod)
+        import preservation_workflow
+        progress = preservation_workflow.bootstrap(project_root)
         status, msg = mod.quick_status(project_root)
+        if progress:
+            msg += "; local preservation " + progress["status"]
+            if progress["status"] != "local_complete":
+                status = "WARN"
+                msg += "; resume: " + progress["resume"]
     except Exception as exc:  # noqa: BLE001
         status, msg = "WARN", f"soul status unavailable: {type(exc).__name__}"
     return {"path": "soul-preservation", "status": status, "size_bytes": 0, "description": msg}

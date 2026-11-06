@@ -59,7 +59,7 @@ def _full_sync_commands(project_root: Path) -> List[str]:
     """Commands that perform a full dataset sync (extract, verify, publish)."""
     skills = project_root / "plugins" / "sanctuary-core" / ".apm" / "skills" / "preserving-soul-traces" / "scripts"
     return [
-        f"python3 {skills}/trace_extractor.py --source-dir chronicle/entries --append",
+        f"python3 {skills}/soul_coverage.py closure",
         f"python3 {skills}/trace_extractor.py --verify",
         f"python3 {skills}/sync_soul_dataset.py --dry-run",
         f"python3 {skills}/sync_soul_dataset.py --message \"feat(soul): sync soul traces\"",

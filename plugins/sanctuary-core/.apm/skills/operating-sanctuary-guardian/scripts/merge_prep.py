@@ -171,6 +171,10 @@ def regenerate(root: Path, apply: bool = True) -> Dict[str, Any]:
     if apply and entries_dir.exists():
         chronicle_manager.write_ledger(entries_dir)
         report["generated"].append(CHRONICLE_LEDGER_REL)
+    if apply:
+        sys.path.insert(0, str(SKILLS / "preserving-soul-traces" / "scripts"))
+        import preservation_workflow
+        report["preservation"] = preservation_workflow.run(root)
     report["union_rules_missing"] = missing_union_rules(root)
     return report
 
@@ -197,9 +201,14 @@ def main(argv=None) -> int:
             print("manifests changed by compile:", ", ".join(report["manifests_changed"]))
         if report["union_rules_missing"]:
             print("missing union rules in .gitattributes:", ", ".join(report["union_rules_missing"]))
+        if report.get("preservation"):
+            p = report["preservation"]
+            print("local preservation:", p["status"], "-", p["remote"])
+            if p["status"] != "local_complete":
+                print("resume:", p["resume"])
         if report["generated"]:
             print("regenerated:", ", ".join(report["generated"]))
-    return 3 if report["drift"] else 0
+    return 3 if report["drift"] else 2 if report.get("preservation", {}).get("status", "local_complete") != "local_complete" else 0
 
 
 if __name__ == "__main__":

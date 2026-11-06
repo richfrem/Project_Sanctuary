@@ -173,7 +173,17 @@ def load_dataset(root):
 
 def write_dataset(root, recs):
     p = root / DATASET; p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs.values()), encoding="utf-8")
+    # Never expose a truncated JSONL if interrupted during automatic capture.
+    import os, tempfile
+    fd, tmp = tempfile.mkstemp(dir=p.parent, prefix=".soul-")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            stream.write("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs.values()))
+            stream.flush(); os.fsync(stream.fileno())
+        os.replace(tmp, p)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
 
 
 def export(root, dry=False, model_version="Sanctuary-Qwen2-7B-v1.0-GGUF-Final"):
@@ -268,7 +278,8 @@ def export(root, dry=False, model_version="Sanctuary-Qwen2-7B-v1.0-GGUF-Final"):
         write_dataset(root, recs)
         TE.update_manifest(root / "huggingface/metadata/manifest.json", root / DATASET, model_version)
         (root / MANIFEST).parent.mkdir(parents=True, exist_ok=True)
-        (root / MANIFEST).write_text(json.dumps(manifest, indent=1, sort_keys=True))
+        from preservation_workflow import atomic_json
+        atomic_json(root / MANIFEST, manifest)
     return manifest
 
 
@@ -375,7 +386,7 @@ def check(root):
     out["problems"] += stale[:20]
     ds = hashlib.sha256((root / DATASET).read_bytes()).hexdigest()
     rc = last_receipt(root)
-    if rc and rc.get("verified") and rc.get("local_dataset_sha256") == ds:
+    if rc and rc.get("verified") and rc.get("local_dataset_sha256") == ds and rc.get("local_manifest_sha256") == sha((root / MANIFEST).read_bytes()):
         out["remote"] = f"verified at revision {rc['revision'][:10]} ({rc['time']})"
     else:
         out["remote"] = "NOT VERIFIED" + (" (last receipt is for a different dataset version)" if rc else " (no verified sync receipt)")
@@ -395,7 +406,7 @@ def quick_status(root):
     rel = [p for p in changed if (r := classify(p, pol)) is not None and r.get("action") != "exclude"]
     ds = hashlib.sha256((root / DATASET).read_bytes()).hexdigest() if (root / DATASET).exists() else ""
     rc = last_receipt(root)
-    remote = "remote verified" if rc and rc.get("verified") and rc.get("local_dataset_sha256") == ds else "remote NOT verified"
+    remote = "remote verified" if rc and rc.get("verified") and rc.get("local_dataset_sha256") == ds and rc.get("local_manifest_sha256") == sha(mp.read_bytes()) else "remote NOT verified"
     cov = "coverage complete" if man["summary"]["required_ok"] else "coverage INCOMPLETE"
     if rel:
         return "WARN", f"soul export STALE: {len(rel)} preserved source(s) changed since export {base[:8]} (run soul_coverage.py closure); {cov}; {remote}"
@@ -431,7 +442,9 @@ def main(argv=None):
     a = ap.parse_args(argv)
     root = Path(a.repo_root).resolve()
     if a.cmd == "export":
-        m = export(root, dry=a.dry_run)
+        from preservation_workflow import preservation_lock
+        with preservation_lock(root):
+            m = export(root, dry=a.dry_run)
         s = m["summary"]
         acts = Counter()
         for e in m["sources"]:
@@ -445,9 +458,15 @@ def main(argv=None):
     if a.cmd == "status":
         st, msg = quick_status(root); print(f"{st}: {msg}"); return 0 if st == "PASS" else 1
     if a.cmd == "closure":            # the documented session/mission closure command: export, then report the four facts
-        m = export(root)
-        print(f"closure export: {len(m['sources'])} policy-matched sources, {m['dataset_records']} records, manifest {MANIFEST}")
-        return report(check(root))
+        from preservation_workflow import run
+        state = run(root)
+        print("LOCAL PRESERVATION:", state["status"])
+        if state["status"] != "local_complete":
+            for p in state.get("problems", []):
+                print("  -", p)
+            print("Resume:", state["resume"])
+            return 2
+        return report(state["facts"])
     if a.cmd == "inventory":
         m = json.loads((root / MANIFEST).read_text()) if (root / MANIFEST).exists() else export(root, dry=True)
         print(f"{'category':38s} {'req':3s} {'found':>6s} {'incl':>6s} {'excl':>6s} {'fail':>5s}")

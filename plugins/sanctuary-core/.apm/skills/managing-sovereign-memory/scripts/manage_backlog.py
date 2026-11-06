@@ -290,8 +290,18 @@ class BacklogManager:
     def save_mission(self, mission: Dict[str, Any]) -> Path:
         mission_id = mission["id"]
         target = self.missions_dir / f"{mission_id}.json"
-        with open(target, "w", encoding="utf-8") as fp:
-            json.dump(mission, fp, indent=2)
+        import os
+        import tempfile
+        fd, tmp = tempfile.mkstemp(dir=target.parent, prefix=".mission-")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as fp:
+                json.dump(mission, fp, indent=2)
+                fp.flush()
+                os.fsync(fp.fileno())
+            os.replace(tmp, target)
+        finally:
+            if os.path.exists(tmp):
+                os.unlink(tmp)
         return target
 
     def capture_inbox(self, idea: str, author: str = "agent", tags: Optional[List[str]] = None) -> Dict[str, Any]:
@@ -312,6 +322,16 @@ class BacklogManager:
         return entry
 
     def record_result(self, mission_id: str, verdict: str, evidence: str,
+                      citation: str = "", lessons: Optional[List[str]] = None,
+                      agent: str = "agent") -> Dict[str, Any]:
+        """Durably record the verdict and preservation obligation in one manifest."""
+        scripts = Path(__file__).resolve().parents[2] / "preserving-soul-traces" / "scripts"
+        sys.path.insert(0, str(scripts))
+        from preservation_workflow import preservation_lock
+        with preservation_lock(self.root_dir):
+            return self._record_result(mission_id, verdict, evidence, citation, lessons, agent)
+
+    def _record_result(self, mission_id: str, verdict: str, evidence: str,
                       citation: str = "", lessons: Optional[List[str]] = None,
                       agent: str = "agent") -> Dict[str, Any]:
         """Records an empirical trial verdict, evidence, and lessons learned."""
@@ -344,6 +364,8 @@ class BacklogManager:
                 mission["lessons_learned"] = []
             mission["lessons_learned"].extend(lessons)
 
+        mission["preservation_obligation"] = {"required": True, "requested_at": now.isoformat(),
+                                              "workflow": "soul_coverage.py closure"}
         self.save_mission(mission)
 
         # Log event into .agent/learning/events.jsonl if root has it
@@ -361,7 +383,7 @@ class BacklogManager:
                 fp.write(json.dumps(event) + "\n")
 
         # Recompile index and markdown
-        self.compile()
+        self._compile()
         return mission
 
     def complete_model_routing(self, mission: Dict[str, Any]) -> Dict[str, Any]:
@@ -388,6 +410,13 @@ class BacklogManager:
         return merged
 
     def compile(self) -> None:
+        """Serialize projection generation with verdict recording and soul capture."""
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "preserving-soul-traces/scripts"))
+        from preservation_workflow import preservation_lock
+        with preservation_lock(self.root_dir):
+            self._compile()
+
+    def _compile(self) -> None:
         """Validates all missions, writes Tier 1 index.jsonl, and generates backlog.md."""
         missions = self.load_missions()
 
@@ -708,8 +737,9 @@ def main():
             agent=args.agent
         )
         print(f"Recorded verdict '{updated['verdict']}' for {args.id}. Backlog recompiled.")
-        print("SOUL CAPTURE: after this change is merged, run `python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure` "
-              "so the findings, handoff and supporting-artifact references reach the soul dataset; a verdict is not preserved until that reports COVERAGE complete.")
+        print("SOUL CAPTURE: durable preservation obligation recorded in the final manifest. "
+              "Post-integration merge_prep.py regenerate and Guardian startup retry local capture; "
+              "resume with soul_coverage.py closure. Remote synchronization requires authorization.")
 
 
 if __name__ == "__main__":
