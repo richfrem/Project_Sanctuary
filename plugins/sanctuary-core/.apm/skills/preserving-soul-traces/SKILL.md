@@ -25,7 +25,8 @@ Coordinates the cognitive lineage preservation lifecycle: scanning markdown know
 python3 scripts/trace_extractor.py --dry-run
 
 # 2. Extract or update records in the local Hugging Face dataset repo
-python3 scripts/trace_extractor.py --append
+python3 scripts/soul_coverage.py closure     # coverage-aware export + four-fact report (the closure command)
+python3 scripts/trace_extractor.py --append   # legacy: Markdown under --source-dir only; NOT a closure
 
 # 3. Verify JSONL schema compliance and SHA-256 integrity
 python3 scripts/trace_extractor.py --verify
@@ -55,6 +56,8 @@ python3 scripts/sync_soul_dataset.py --check-readiness
 Review [acceptance-criteria.md](references/acceptance-criteria.md) before declaring dataset sync complete.
 
 ## References
+
+- [Coverage](references/coverage.md) - what is preserved, the policy, the four verifiable facts, recovery.
 
 - [soul-trace-schema.md](references/soul-trace-schema.md) — 13-field canonical record schema, typing, and validation rules per ADR 084.
 - [huggingface-dataset-integration.md](references/huggingface-dataset-integration.md) — Architecture and boundary rules for delegating sync to `managing-huggingface-assets`.

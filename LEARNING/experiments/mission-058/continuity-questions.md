@@ -9,5 +9,5 @@ Rubric SHA-256: 67ded2b11ee38fb11605af58110520e1ccef2013295f4b88adfcbbf0b66ca4a4
 4. What conclusion is justified, and what remains uncertain?
 5. What next investigation would distinguish the remaining explanations?
 
-Artifacts available to the successor: LEARNING/experiments/mission-058/{handoff.md, findings.md, selection.md, investigation-protocol.md, landauer-results.json, landauer_check.py}, LEARNING/topics/physics_of_forgetting/README.md.
+Artifacts available to the successor: LEARNING/experiments/mission-058/{handoff.md, findings.md, selection.md, investigation-protocol.md, landauer-results.json, landauer_check.py}, LEARNING/research/physics_of_forgetting/README.md.
 Scoring limitation: the investigating session scores against the rubric.

@@ -172,6 +172,7 @@ python3 plugins/sanctuary-core/.apm/skills/managing-protocols/scripts/protocol_m
 
 # 4. Verify Soul Traces dataset workspace & Hugging Face integration
 python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/sync_soul_dataset.py --check-readiness
+python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py check   # SCHEMA / COVERAGE / LOCAL EXPORT / REMOTE, reported separately
 
 # 5. Verify Sovereign Memory progressive disclosure
 python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 1

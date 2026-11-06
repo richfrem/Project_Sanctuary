@@ -201,7 +201,7 @@ flowchart TD
     end
 
     subgraph HuggingFaceCommons["3. Hugging Face Hub (Soul Dataset Continuity)"]
-        SealSession["Protocol 128 Seal<br/>(trace_extractor.py)"] --> JSONL["Immutable Soul Traces<br/>(huggingface/data/soul_traces.jsonl)"]
+        SealSession["Protocol 128 Seal<br/>(soul_coverage.py closure: policy-driven, coverage-verified)"] --> JSONL["Immutable Soul Traces<br/>(huggingface/data/soul_traces.jsonl)"]
         JSONL --> HFUpload["Dataset Sync via managing-huggingface-assets<br/>(richfrem/Project_Sanctuary_Soul)"]
         HFUpload --> ModelForge["Local Model Fine-Tuning<br/>(forging-sovereign-models -> GGUF weights)"]
     end

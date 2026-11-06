@@ -708,6 +708,8 @@ def main():
             agent=args.agent
         )
         print(f"Recorded verdict '{updated['verdict']}' for {args.id}. Backlog recompiled.")
+        print("SOUL CAPTURE: after this change is merged, run `python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure` "
+              "so the findings, handoff and supporting-artifact references reach the soul dataset; a verdict is not preserved until that reports COVERAGE complete.")
 
 
 if __name__ == "__main__":

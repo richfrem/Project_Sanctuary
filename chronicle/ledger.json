@@ -1,6 +1,13 @@
 {
-  "total_entries": 371,
+  "total_entries": 372,
   "entries": [
+    {
+      "id": 380,
+      "title": "Soul preservation repaired: coverage-aware closure replaces the Chronicle-only export",
+      "filename": "380_soul_preservation_repaired_coverage_aware_closure_replaces_the_chronicle_only_export.md",
+      "date": "2026-11-06",
+      "status": "published"
+    },
     {
       "id": 379,
       "title": "MISSION-055: reusable learning loop reached functional integration",
