@@ -79,14 +79,14 @@
       "LEARNING/missions/MISSION-008.json",
       "LEARNING/missions/MISSION-025.json",
       "LEARNING/experiments/mission-058/",
-      "LEARNING/topics/"
+      "LEARNING/research/"
     ],
     "resources": [
       "bounded public web access",
       "one investigation session",
       "one fresh successor session"
     ],
-    "basis": "Exact current paths resolved before checkout. No Moltbook account changes or external publication are authorized. The compact knowledge entry goes under LEARNING/topics/ (path fixed after the topic is chosen)."
+    "basis": "Exact current paths resolved before checkout. No Moltbook account changes or external publication are authorized. The compact knowledge entry is at LEARNING/research/physics_of_forgetting/ (initially placed under a retired topics/ path and moved)."
   },
   "assignee": "claude-code",
   "worktree": ".worktrees/claude-code-mission-058"

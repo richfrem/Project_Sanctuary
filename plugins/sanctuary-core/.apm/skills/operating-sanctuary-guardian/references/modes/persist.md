@@ -6,11 +6,11 @@ Credentials come only from the shell environment (`HUGGING_FACE_TOKEN`, `HUGGING
 
 ## Execution Steps
 
-1. Extract and verify the dataset records (markdown only; re-extraction refreshes every record's timestamp):
+1. Export through the coverage policy and report the four facts (schema, coverage, local export, remote). Run it AFTER the mission's changes are merged to `main`, so artifact references point at published commits:
 ```bash
-python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/trace_extractor.py --source-dir chronicle/entries --append
-python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/trace_extractor.py --verify
+python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure
 ```
+The old Chronicle-only command (`trace_extractor.py --source-dir chronicle/entries --append`) is NOT a closure: it skips mission manifests, experiment findings, the event ledger and supporting-artifact references. See `preserving-soul-traces/references/coverage.md`.
 2. Publish the dataset folder (`huggingface/`), dry run first:
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/sync_soul_dataset.py --dry-run
@@ -22,7 +22,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/persist_soul.py
 ```
 `persist_soul.py --full-sync` only prints the commands of steps 1-2.
-4. Verify by re-downloading the published files and comparing them with the repository copies.
+4. `sync_soul_dataset.py` verifies the Hub revision itself after the upload (dataset and coverage-manifest hashes) and appends a receipt to `.agent/learning/soul_sync_receipts.jsonl`; commit that receipt. Only `SOUL PERSISTED` from `soul_coverage.py check` means all four facts hold. Never report "persisted" on local export alone.
 
 For a single file (for example the dataset README) use the global `managing-huggingface-assets` skill:
 `python3 ~/.claude/skills/managing-huggingface-assets/scripts/hf_upload.py --file huggingface/README.md --remote-path README.md`.

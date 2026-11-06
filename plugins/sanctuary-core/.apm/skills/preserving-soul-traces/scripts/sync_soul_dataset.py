@@ -28,6 +28,8 @@ Key Functions:
 import os
 import sys
 import json
+import hashlib
+import time
 import asyncio
 import argparse
 from pathlib import Path
@@ -37,6 +39,10 @@ from typing import Optional, Tuple
 # ---------------------------------------------------------------------------
 # Global APM Skill Discovery
 # ---------------------------------------------------------------------------
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import soul_coverage as SC  # noqa: E402  (coverage manifest, check and receipts)
+
 
 # Discover the installed location of the global managing-huggingface-assets skill.
 def find_managing_hf_skill() -> Optional[Path]:
@@ -82,6 +88,42 @@ def validate_local_dataset(dataset_dir: Path) -> Tuple[bool, str]:
     return True, "Dataset structure valid"
 
 
+def verify_remote(repo_id, local_dataset, local_manifest, revision_hint=None, fetch=None):
+    """Confirm that what is on the Hub equals what was exported. `fetch(repo_id, filename, revision)` -> bytes is injectable for tests.
+    Returns dict(verified, revision, remote_dataset_sha256, remote_manifest_sha256, problems)."""
+    problems = []
+    try:
+        if fetch is None:
+            from huggingface_hub import HfApi, hf_hub_download
+            api = HfApi()
+            revision = api.dataset_info(repo_id).sha
+            def fetch(rid, filename, rev):
+                return Path(hf_hub_download(rid, filename, repo_type="dataset", revision=rev, force_download=True)).read_bytes()
+        else:
+            revision = revision_hint
+        remote_ds = hashlib.sha256(fetch(repo_id, "data/soul_traces.jsonl", revision)).hexdigest()
+        remote_mf = hashlib.sha256(fetch(repo_id, "metadata/coverage_manifest.json", revision)).hexdigest()
+    except Exception as e:  # noqa: BLE001
+        return {"verified": False, "revision": revision_hint, "problems": [f"remote verification failed: {type(e).__name__}: {e}"]}
+    lds = hashlib.sha256(Path(local_dataset).read_bytes()).hexdigest()
+    lmf = hashlib.sha256(Path(local_manifest).read_bytes()).hexdigest()
+    if remote_ds != lds:
+        problems.append("remote soul_traces.jsonl differs from the local export")
+    if remote_mf != lmf:
+        problems.append("remote coverage_manifest.json differs from the local one")
+    return {"verified": not problems, "revision": revision, "remote_dataset_sha256": remote_ds, "remote_manifest_sha256": remote_mf,
+            "local_dataset_sha256": lds, "local_manifest_sha256": lmf, "problems": problems}
+
+
+def write_receipt(repo_root, repo_id, result, coverage_ok):
+    rec = {"time": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "repo": repo_id, "coverage_required_ok": coverage_ok, **result}
+    p = Path(repo_root) / SC.RECEIPTS
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a") as f:
+        f.write(json.dumps(rec, sort_keys=True) + "\n")
+    return rec
+
+
 # Delegate the folder upload to managing-huggingface-assets with exponential backoff.
 async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str, dry_run: bool = False) -> bool:
     """Execute upload via managing-huggingface-assets."""
@@ -101,8 +143,9 @@ async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str,
     print(f"Commit Message:             {commit_msg}")
 
     if dry_run:
-        print("\n[DRY-RUN] Dataset is validated. Sync would delegate to managing-huggingface-assets upload_folder().")
+        print("\n[DRY-RUN] Dataset folder is valid. Sync would delegate to managing-huggingface-assets upload_folder().")
         print(f"[DRY-RUN] Destination: repo_id='{target_repo}', folder='{dataset_dir}'")
+        print("[DRY-RUN] Nothing was sent: remote persistence has NOT occurred.")
         return True
 
     # Real upload execution (requires explicit human approval per Human Gate Law)
@@ -119,7 +162,16 @@ async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str,
     )
 
     if result.success:
-        print(f"\nSUCCESS: Soul traces persisted to {result.repo_url}")
+        print(f"\nUPLOAD FINISHED to {result.repo_url} - verifying what the Hub actually holds...")
+        repo_root = dataset_dir.parent
+        v = verify_remote(target_repo, dataset_dir / "data" / "soul_traces.jsonl", dataset_dir / "metadata" / "coverage_manifest.json")
+        cov_ok = SC.check(repo_root)["coverage"] == "complete"
+        rc = write_receipt(repo_root, target_repo, v, cov_ok)
+        if v["verified"]:
+            print(f"REMOTE VERIFIED at revision {v['revision']}: dataset and coverage manifest hashes match the local export. Receipt appended to {SC.RECEIPTS} (commit it).")
+        else:
+            print("REMOTE NOT VERIFIED: " + "; ".join(v["problems"]) + f" (receipt appended to {SC.RECEIPTS} with verified=false)")
+            return False
         return True
     else:
         print(f"\nERROR: Upload failed: {result.error}")
@@ -150,6 +202,11 @@ def main():
         help="Validate dataset and preview sync without uploading"
     )
     parser.add_argument(
+        "--allow-partial",
+        action="store_true",
+        help="Upload even though required source coverage is incomplete or stale (the omissions are printed and recorded; not a normal closure)"
+    )
+    parser.add_argument(
         "--check-readiness",
         action="store_true",
         help="Validate local dataset and managing-huggingface-assets availability"
@@ -165,6 +222,17 @@ def main():
         sys.exit(1)
 
     print(f"Dataset Check: OK ({dataset_dir.name})")
+
+    # 1b. Coverage gate: schema validity, required-source coverage and export currency are checked BEFORE anything is sent.
+    cov = SC.check(dataset_dir.parent)
+    print("Coverage check (four separate facts):")
+    rc_cov = SC.report(cov)
+    bad = cov["schema"] != "valid" or cov["coverage"] != "complete" or cov["local_export"] != "current"
+    if bad and not (args.dry_run or args.check_readiness):
+        if not args.allow_partial:
+            sys.stderr.write("REFUSING to upload: required coverage is incomplete, the export is stale, or the schema is invalid. Fix it, or pass --allow-partial to publish a declared partial export.\n")
+            sys.exit(2)
+        print("WARNING: --allow-partial given; publishing a declared PARTIAL export (omissions listed above).")
 
     # 2. Check managing-huggingface-assets integration
     hf_scripts = find_managing_hf_skill()

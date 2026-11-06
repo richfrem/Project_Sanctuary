@@ -1,0 +1,246 @@
+{
+  "policy_version": "1",
+  "description": "What the soul dataset must contain. Declarative: each tracked repository file is matched, in order, to exactly one rule. 'required' categories must be fully covered (every matching file included, or explicitly excluded with a reason); a required source that fails, is missing or is stale makes coverage INCOMPLETE and blocks an unqualified 'persisted' report. Files matching no rule under the watched roots are listed as uncategorized (never silently dropped).",
+  "watched_roots": [
+    "chronicle/",
+    "LEARNING/",
+    "context/",
+    "protocols/",
+    "ADRs/",
+    ".agent/learning/",
+    "plugins/sanctuary-core/",
+    "ARCHIVE/LEARNING_pre_2026-11/topics/"
+  ],
+  "max_record_bytes": 400000,
+  "rules": [
+    {
+      "name": "secrets_and_auth",
+      "action": "exclude",
+      "reason": "credentials/authentication material is never exported",
+      "match": [
+        "**/.env",
+        "**/.env.*",
+        "**/credentials*",
+        "**/*.pem",
+        "**/*.key",
+        "**/auth.json",
+        "**/*secret*"
+      ]
+    },
+    {
+      "name": "transient_state",
+      "action": "exclude",
+      "reason": "regenerated or per-session operational state with no durable learning content",
+      "match": [
+        ".agent/learning/usage_latest.json",
+        ".agent/learning/guardian_boot_digest.md",
+        ".agent/learning/precompact/**",
+        ".agent/learning/guardian_manifest.json",
+        ".agent/learning/bootstrap_manifest.json",
+        "**/__pycache__/**",
+        "**/.pytest_cache/**"
+      ]
+    },
+    {
+      "name": "sync_receipts",
+      "action": "exclude",
+      "reason": "local publication receipts (they describe the dataset, they are not learning content)",
+      "match": [
+        ".agent/learning/soul_sync_receipts.jsonl"
+      ]
+    },
+    {
+      "name": "derived_projections",
+      "action": "exclude",
+      "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
+      "match": [
+        ".agent/learning/budget_ledger.json",
+        ".agent/learning/cognitive_ledger.json",
+        "LEARNING/index.jsonl",
+        "LEARNING/backlog.md",
+        "chronicle/ledger.json"
+      ]
+    },
+    {
+      "name": "mission_manifests",
+      "required": true,
+      "handler": "mission_json",
+      "snapshot_type": "learning",
+      "match": [
+        "LEARNING/missions/MISSION-*.json"
+      ]
+    },
+    {
+      "name": "mission_schema",
+      "action": "exclude",
+      "reason": "JSON schema file; the schema is versioned in git and not learning content",
+      "match": [
+        "LEARNING/missions/mission.schema.json"
+      ]
+    },
+    {
+      "name": "event_ledger",
+      "required": true,
+      "handler": "events_digest",
+      "snapshot_type": "learning",
+      "match": [
+        ".agent/learning/events.jsonl"
+      ],
+      "note": "handoffs (CHECKIN), verdicts (MISSION_RESOLVED), failures/repairs, interventions, lessons, deliveries, evaluation and cost events, procedure outcomes"
+    },
+    {
+      "name": "chronicle",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        "chronicle/entries/*.md"
+      ]
+    },
+    {
+      "name": "experiment_knowledge",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "learning",
+      "match": [
+        "LEARNING/experiments/**/*.md",
+        "LEARNING/experiments/**/*.txt"
+      ]
+    },
+    {
+      "name": "experiment_supporting_artifacts",
+      "required": true,
+      "handler": "artifact_refs",
+      "snapshot_type": "learning",
+      "group_depth": 3,
+      "match": [
+        "LEARNING/experiments/**"
+      ],
+      "note": "code, raw results, datasets: preserved as verifiable references (path, bytes, sha256, git commit) in one index record per experiment folder; recover with git"
+    },
+    {
+      "name": "knowledge_topics_concepts_research",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "learning",
+      "match": [
+        "LEARNING/topics/**/*.md",
+        "LEARNING/concepts/**/*.md",
+        "LEARNING/research/**/*.md",
+        "LEARNING/philosophy/**/*.md",
+        "LEARNING/procedures/**/*.md",
+        "LEARNING/INDEX.md",
+        "LEARNING/README.md",
+        "LEARNING/missions/**/*.md"
+      ]
+    },
+    {
+      "name": "knowledge_supporting_data",
+      "required": false,
+      "handler": "artifact_refs",
+      "snapshot_type": "learning",
+      "group_depth": 3,
+      "match": [
+        "LEARNING/research/**",
+        "LEARNING/topics/**",
+        "LEARNING/concepts/**",
+        "LEARNING/philosophy/**",
+        "LEARNING/procedures/**",
+        "LEARNING/inbox.jsonl"
+      ]
+    },
+    {
+      "name": "archived_topic_dossiers",
+      "required": false,
+      "handler": "markdown",
+      "snapshot_type": "learning",
+      "dedupe_by_content": true,
+      "match": [
+        "ARCHIVE/LEARNING_pre_2026-11/topics/**/*.md"
+      ]
+    },
+    {
+      "name": "curated_memory_identity",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        "context/soul.md",
+        "context/user.md",
+        "context/memory.md",
+        "context/status.md"
+      ]
+    },
+    {
+      "name": "sealed_snapshots",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "sealed",
+      "match": [
+        ".agent/learning/learning_package_snapshot.md"
+      ]
+    },
+    {
+      "name": "learning_loop_readme",
+      "required": false,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        ".agent/learning/README.md"
+      ]
+    },
+    {
+      "name": "governance_protocols_adrs",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        "protocols/*.md",
+        "ADRs/*.md"
+      ]
+    },
+    {
+      "name": "root_architecture_docs",
+      "required": true,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        "AGENTS.md",
+        "START_HERE.md",
+        "README.md",
+        "architecture.md",
+        "INSTALL.md"
+      ]
+    },
+    {
+      "name": "skill_documentation",
+      "required": false,
+      "handler": "markdown",
+      "snapshot_type": "genome",
+      "match": [
+        "plugins/sanctuary-core/**/*.md"
+      ]
+    },
+    {
+      "name": "skill_code_and_tests",
+      "action": "exclude",
+      "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+      "match": [
+        "plugins/sanctuary-core/**"
+      ]
+    },
+    {
+      "name": "kernel_event_bus",
+      "action": "exclude",
+      "reason": "operational telemetry bus (metric/session_summary events); no learning content",
+      "match": [
+        "context/events.jsonl",
+        "context/os-state.json",
+        "context/agents.json",
+        "context/identity/**",
+        "context/memory/**",
+        "context/kernel.py"
+      ]
+    }
+  ]
+}

@@ -161,6 +161,21 @@ def check_installed_skills(project_root: Path) -> "dict | None":
     return entry
 
 
+def check_soul_preservation(project_root: Path) -> "dict | None":
+    """One line on soul preservation: export current?, required coverage complete?, remote verified? (WARN only; never breaks boot)."""
+    script = project_root / "plugins" / "sanctuary-core" / ".apm" / "skills" / "preserving-soul-traces" / "scripts" / "soul_coverage.py"
+    if not script.exists():
+        return None
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("soul_coverage_boot", script); mod = importlib.util.module_from_spec(spec)
+        sys.path.insert(0, str(script.parent)); spec.loader.exec_module(mod)
+        status, msg = mod.quick_status(project_root)
+    except Exception as exc:  # noqa: BLE001
+        status, msg = "WARN", f"soul status unavailable: {type(exc).__name__}"
+    return {"path": "soul-preservation", "status": status, "size_bytes": 0, "description": msg}
+
+
 def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     """Inspect presence and structural integrity of Layer 1 fast-boot context files."""
     checks = []
@@ -214,6 +229,9 @@ def check_layer1_health(project_root: Path) -> tuple[str, list[dict[str, str]]]:
     installed_check = check_installed_skills(project_root)
     if installed_check:
         checks.append(installed_check)  # informational as well
+    soul_check = check_soul_preservation(project_root)
+    if soul_check:
+        checks.append(soul_check)  # informational: never fails the boot
 
     health_status = "GREEN" if all_passed else "YELLOW"
     return health_status, checks
