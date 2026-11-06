@@ -47,12 +47,14 @@ def interpret_validity(validity_result, manifest):
     duplicated here and nothing is written: the verdict itself still comes only from `manage_backlog.py record-result`, run by a human
     or agent after the manifest's own falsification criteria are evaluated on VALID evidence."""
     claim = validity_result["max_claim"]
-    ok = claim == "BEHAVIORAL_CLAIM_ALLOWED"
+    ok = claim in ("BEHAVIORAL_CLAIM_ALLOWED", "CLAIM_SUPPORTED")
     guidance = {"BEHAVIORAL_CLAIM_ALLOWED": "evidence may be scored against the manifest's falsification criteria",
+                "CLAIM_SUPPORTED": "the named metric is defined and the evidence is observable; it may be scored against the manifest's falsification criteria for THAT metric only",
                 "MECHANICS_ONLY": "report mechanics and adherence only; a behavioral CORROBORATED/FALSIFIED verdict is not supported - keep the mission open",
-                "UNSCORABLE": "baseline uninterpretable; a behavioral verdict is not supported - design a version with an interpretable baseline"}[claim]
+                "UNSCORABLE": "baseline uninterpretable; a behavioral verdict is not supported - design a version with an interpretable baseline",
+                "UNDEFINED_CLAIM": "the named metric is undefined for this data (e.g. relative reduction from a zero baseline); report the descriptive and alternative metrics the manifest allows, do not record a verdict on the undefined metric"}[claim]
     return {"mission": manifest["id"], "behavioral_verdict_supported": ok, "max_claim": claim, "problems": validity_result["problems"],
-            "guidance": guidance, "current_empirical_state": empirical_state(manifest)}
+            "guidance": guidance, "descriptive": validity_result.get("descriptive"), "current_empirical_state": empirical_state(manifest)}
 
 
 def record_delivery(manifest, findings, path=EVENTS):
@@ -70,7 +72,7 @@ def main(argv=None):
     c = sub.add_parser("contract"); c.add_argument("mission"); c.add_argument("--delivery", required=True); c.add_argument("--may-merge", action="store_true")
     d = sub.add_parser("deliver"); d.add_argument("mission"); d.add_argument("findings")
     s = sub.add_parser("state"); s.add_argument("mission")
-    e = sub.add_parser("empirical"); e.add_argument("mission"); e.add_argument("validity_input", help='JSON {"planned":n,"valid":n,"arms":{name:{k,n}}}')
+    e = sub.add_parser("empirical"); e.add_argument("mission"); e.add_argument("validity_input", help='JSON {"planned":n,"valid":n,"arms":{name:{k,n}}, optional "claim":{"type",...}}')
     a = ap.parse_args(argv)
     m = _manifest(a.mission, a.root)
     if a.cmd == "contract":
@@ -79,7 +81,9 @@ def main(argv=None):
         out = record_delivery(m, json.loads(Path(a.findings).read_text()), Path(a.root) / EVENTS)
     elif a.cmd == "empirical":
         d = json.loads(Path(a.validity_input).read_text())
-        out = interpret_validity(_g.validity(d["planned"], d["valid"], d.get("arms", {})), m)
+        v = (_g.assess_claim(d["planned"], d["valid"], d.get("arms", {}), d["claim"]) if d.get("claim")
+             else _g.validity(d["planned"], d["valid"], d.get("arms", {})))     # claim given -> metric-specific; else historical semantics
+        out = interpret_validity(v, m)
     else:
         last = [e for e in _g._c.load(a.root, str(EVENTS)) if e.get("kind") == "delivery" and e.get("mission_id") == m["id"]]
         out = {"mission": m["id"], "manifest_status": m["status"], "empirical": empirical_state(m),

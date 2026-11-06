@@ -20,3 +20,6 @@ Lessons (`lessons.py`, same events store) are short records with trigger, eviden
 
 ## Where this runs
 The shared skills must be installed (`apm update --global`, then verify with the installed-skills check in guardian wakeup). `eval_gate.py` fails loudly if `evaluating-agent-outcomes` cannot be found. Controls enforced by code only apply to launches that pass the executor flags; direct CLI use bypasses them.
+
+## Hardened loop (MISSION-055 follow-up)
+Sanctuary agents run ordinary work through the companion `work_loop.py run` (claim-first dispatch, immutable attempts under `.agent-work/<work-id>/attempts/`, per-work-item budget admission with an unknown-usage policy, bounded lessons in the worker brief, process-group timeout cleanup). Mission contracts that need a clean experimental context set `"isolation": {"required": true}`, which requires a successful configuration-level `dispatch_guard.py probe-context` first. Claim-specific validity (`assess_claim`) is available through `eval_gate.assess_claim` and `sanctuary_adapter.py empirical` (pass a `claim` object): a relative reduction from a zero baseline is undefined, a zero rate stays reportable, and malformed output can never support a behavioral claim. The historical `validity` call keeps its semantics and no recorded experiment was rescored. Engineering acceptance still never produces a verdict.

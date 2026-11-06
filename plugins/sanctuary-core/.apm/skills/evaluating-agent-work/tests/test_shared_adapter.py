@@ -46,6 +46,13 @@ class Adapter(unittest.TestCase):
         ok = ad.interpret_validity(g.validity(60, 58, {"b": {"k": 20, "n": 60}}), self.m)
         self.assertTrue(ok["behavioral_verdict_supported"]); self.assertEqual(ok["current_empirical_state"], "UNASSESSED")
 
+    def test_claim_specific_validity_reaches_the_adapter(self):
+        arms = {"base": {"k": 0, "n": 60}, "treat": {"k": 0, "n": 60}}
+        rr = ad.interpret_validity(g.assess_claim(60, 60, arms, {"type": "relative_reduction", "baseline": "base", "treatment": "treat"}), self.m)
+        self.assertFalse(rr["behavioral_verdict_supported"]); self.assertEqual(rr["max_claim"], "UNDEFINED_CLAIM"); self.assertEqual(rr["descriptive"]["base"]["rate"], 0.0)
+        dr = ad.interpret_validity(g.assess_claim(60, 60, arms, {"type": "descriptive_rate", "arm": "base"}), self.m)
+        self.assertTrue(dr["behavioral_verdict_supported"]); self.assertEqual(dr["current_empirical_state"], "UNASSESSED")   # still no verdict written
+
     def test_empirical_state_comes_only_from_manifest(self):
         self.assertEqual(ad.empirical_state(dict(self.m, verdict="FALSIFIED")), "FALSIFIED")
 
