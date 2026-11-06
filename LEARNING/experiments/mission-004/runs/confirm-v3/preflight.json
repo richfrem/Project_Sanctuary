@@ -1,0 +1,25 @@
+{
+  "cwd": "/private/tmp/claude-501/mission-004-clean-cwd",
+  "model": "claude-haiku-5-5",
+  "tools": [],
+  "mcp_servers": [],
+  "slash_commands": 0,
+  "skills": 0,
+  "agents": [
+    "claude",
+    "Explore",
+    "general-purpose",
+    "Plan",
+    "statusline-setup"
+  ],
+  "plugins": [
+    "cc-plugin-agents-md",
+    "cc-plugin-privacy",
+    "cc-plugin-plugin-authoring"
+  ],
+  "hook_events": 0,
+  "memory_path": "/Users/richardfremmerlid/.claude/projects/-private-tmp-claude-501-mission-004-clean-cwd/memory/",
+  "permissionMode": "default",
+  "claude_code_version": "2.1.318",
+  "problems": []
+}
