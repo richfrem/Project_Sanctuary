@@ -1,0 +1,240 @@
+{"id": "confirm-001", "condition": "baseline", "answer": "474"}
+{"id": "confirm-001", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "464"}
+{"id": "confirm-002", "condition": "baseline", "answer": "46"}
+{"id": "confirm-002", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "48"}
+{"id": "confirm-003", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-003", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "196"}
+{"id": "confirm-004", "condition": "baseline", "answer": "2150"}
+{"id": "confirm-004", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "2250"}
+{"id": "confirm-005", "condition": "baseline", "answer": "0.65"}
+{"id": "confirm-005", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "0.625"}
+{"id": "confirm-006", "condition": "baseline", "answer": "8"}
+{"id": "confirm-006", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "7"}
+{"id": "confirm-007", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-007", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "128"}
+{"id": "confirm-008", "condition": "baseline", "answer": "151"}
+{"id": "confirm-008", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "141"}
+{"id": "confirm-009", "condition": "baseline", "answer": "381"}
+{"id": "confirm-009", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "391"}
+{"id": "confirm-010", "condition": "baseline", "answer": "40"}
+{"id": "confirm-010", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "50"}
+{"id": "confirm-011", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-011", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "27"}
+{"id": "confirm-012", "condition": "baseline", "answer": "524"}
+{"id": "confirm-012", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "514"}
+{"id": "confirm-013", "condition": "baseline", "answer": "118"}
+{"id": "confirm-013", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "108"}
+{"id": "confirm-014", "condition": "baseline", "answer": "371"}
+{"id": "confirm-014", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "361"}
+{"id": "confirm-015", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-015", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "0.8"}
+{"id": "confirm-016", "condition": "baseline", "answer": "14"}
+{"id": "confirm-016", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "12"}
+{"id": "confirm-017", "condition": "baseline", "answer": "362"}
+{"id": "confirm-017", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "372"}
+{"id": "confirm-018", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-018", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "64"}
+{"id": "confirm-019", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-019", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "45"}
+{"id": "confirm-020", "condition": "baseline", "answer": "633"}
+{"id": "confirm-020", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "623"}
+{"id": "confirm-021", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-021", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "24"}
+{"id": "confirm-022", "condition": "baseline", "answer": "83"}
+{"id": "confirm-022", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "93"}
+{"id": "confirm-023", "condition": "baseline", "answer": "368"}
+{"id": "confirm-023", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "378"}
+{"id": "confirm-024", "condition": "baseline", "answer": "4.25"}
+{"id": "confirm-024", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "4.35"}
+{"id": "confirm-025", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-025", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "400"}
+{"id": "confirm-026", "condition": "baseline", "answer": "44"}
+{"id": "confirm-026", "condition": "independent_first", "answer": "44", "initial_answer": "44"}
+{"id": "confirm-027", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-027", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "45"}
+{"id": "confirm-028", "condition": "baseline", "answer": "153"}
+{"id": "confirm-028", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "143"}
+{"id": "confirm-029", "condition": "baseline", "answer": "0.49"}
+{"id": "confirm-029", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "0.42"}
+{"id": "confirm-030", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-030", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "63"}
+{"id": "confirm-031", "condition": "baseline", "answer": "442"}
+{"id": "confirm-031", "condition": "independent_first", "answer": "442", "initial_answer": "442"}
+{"id": "confirm-032", "condition": "baseline", "answer": "532"}
+{"id": "confirm-032", "condition": "independent_first", "answer": "532", "initial_answer": "532"}
+{"id": "confirm-033", "condition": "baseline", "answer": "4"}
+{"id": "confirm-033", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "8"}
+{"id": "confirm-034", "condition": "baseline", "answer": "225"}
+{"id": "confirm-034", "condition": "independent_first", "answer": "225", "initial_answer": "225"}
+{"id": "confirm-035", "condition": "baseline", "answer": "37"}
+{"id": "confirm-035", "condition": "independent_first", "answer": "37", "initial_answer": "33"}
+{"id": "confirm-036", "condition": "baseline", "answer": "6"}
+{"id": "confirm-036", "condition": "independent_first", "answer": "6", "initial_answer": "6"}
+{"id": "confirm-037", "condition": "baseline", "answer": "11"}
+{"id": "confirm-037", "condition": "independent_first", "answer": "11", "initial_answer": "11"}
+{"id": "confirm-038", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-038", "condition": "independent_first", "answer": "80", "initial_answer": "80"}
+{"id": "confirm-039", "condition": "baseline", "answer": "468"}
+{"id": "confirm-039", "condition": "independent_first", "answer": "468", "initial_answer": "468"}
+{"id": "confirm-040", "condition": "baseline", "answer": "55"}
+{"id": "confirm-040", "condition": "independent_first", "answer": "55", "initial_answer": "55"}
+{"id": "confirm-041", "condition": "baseline", "answer": "29"}
+{"id": "confirm-041", "condition": "independent_first", "answer": "29", "initial_answer": "29"}
+{"id": "confirm-042", "condition": "baseline", "answer": "511"}
+{"id": "confirm-042", "condition": "independent_first", "answer": "511", "initial_answer": "511"}
+{"id": "confirm-043", "condition": "baseline", "answer": "161"}
+{"id": "confirm-043", "condition": "independent_first", "answer": "161", "initial_answer": "161"}
+{"id": "confirm-044", "condition": "baseline", "answer": "484"}
+{"id": "confirm-044", "condition": "independent_first", "answer": "484", "initial_answer": "484"}
+{"id": "confirm-045", "condition": "baseline", "answer": "0.6"}
+{"id": "confirm-045", "condition": "independent_first", "answer": "0.6", "initial_answer": "0.6"}
+{"id": "confirm-046", "condition": "baseline", "answer": "432"}
+{"id": "confirm-046", "condition": "independent_first", "answer": "432", "initial_answer": "432"}
+{"id": "confirm-047", "condition": "baseline", "answer": "35"}
+{"id": "confirm-047", "condition": "independent_first", "answer": "35", "initial_answer": "35"}
+{"id": "confirm-048", "condition": "baseline", "answer": "324"}
+{"id": "confirm-048", "condition": "independent_first", "answer": "324", "initial_answer": "324"}
+{"id": "confirm-049", "condition": "baseline", "answer": "170"}
+{"id": "confirm-049", "condition": "independent_first", "answer": "170", "initial_answer": "170"}
+{"id": "confirm-050", "condition": "baseline", "answer": "2048"}
+{"id": "confirm-050", "condition": "independent_first", "answer": "2048", "initial_answer": "2048"}
+{"id": "confirm-051", "condition": "baseline", "answer": "40"}
+{"id": "confirm-051", "condition": "independent_first", "answer": "40", "initial_answer": "40"}
+{"id": "confirm-052", "condition": "baseline", "answer": "31"}
+{"id": "confirm-052", "condition": "independent_first", "answer": "31", "initial_answer": "31"}
+{"id": "confirm-053", "condition": "baseline", "answer": "762"}
+{"id": "confirm-053", "condition": "independent_first", "answer": "762", "initial_answer": "762"}
+{"id": "confirm-054", "condition": "baseline", "answer": "129"}
+{"id": "confirm-054", "condition": "independent_first", "answer": "129", "initial_answer": "129"}
+{"id": "confirm-055", "condition": "baseline", "answer": "360"}
+{"id": "confirm-055", "condition": "independent_first", "answer": "360", "initial_answer": "360"}
+{"id": "confirm-056", "condition": "baseline", "answer": "7"}
+{"id": "confirm-056", "condition": "independent_first", "answer": "7", "initial_answer": "7"}
+{"id": "confirm-057", "condition": "baseline", "answer": "125"}
+{"id": "confirm-057", "condition": "independent_first", "answer": "125", "initial_answer": "125"}
+{"id": "confirm-058", "condition": "baseline", "answer": "414"}
+{"id": "confirm-058", "condition": "independent_first", "answer": "414", "initial_answer": "414"}
+{"id": "confirm-059", "condition": "baseline", "answer": "87"}
+{"id": "confirm-059", "condition": "independent_first", "answer": "87", "initial_answer": "87"}
+{"id": "confirm-060", "condition": "baseline", "answer": "11"}
+{"id": "confirm-060", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "7"}
+{"id": "confirm-061", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-061", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Zn"}
+{"id": "confirm-062", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-062", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "10"}
+{"id": "confirm-063", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-063", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Mars"}
+{"id": "confirm-064", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-064", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Brasília"}
+{"id": "confirm-065", "condition": "baseline", "answer": "African elephant"}
+{"id": "confirm-065", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Blue whale"}
+{"id": "confirm-066", "condition": "baseline", "answer": "6"}
+{"id": "confirm-066", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "4"}
+{"id": "confirm-067", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-067", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "CO2"}
+{"id": "confirm-068", "condition": "baseline", "answer": "Proxima Centauri"}
+{"id": "confirm-068", "condition": "independent_first", "answer": "Proxima Centauri", "initial_answer": "Proxima Centauri"}
+{"id": "confirm-069", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-069", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Rome"}
+{"id": "confirm-070", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-070", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "4"}
+{"id": "confirm-071", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-071", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "UNKNOWN"}
+{"id": "confirm-072", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-072", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "UNKNOWN"}
+{"id": "confirm-073", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-073", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Portuguese"}
+{"id": "confirm-074", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-074", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "heart"}
+{"id": "confirm-075", "condition": "baseline", "answer": "32"}
+{"id": "confirm-075", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "0"}
+{"id": "confirm-076", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-076", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Jupiter"}
+{"id": "confirm-077", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-077", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Cairo"}
+{"id": "confirm-078", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-078", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "360"}
+{"id": "confirm-079", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-079", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "oxygen"}
+{"id": "confirm-080", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-080", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Fe"}
+{"id": "confirm-081", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-081", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Indian Ocean"}
+{"id": "confirm-082", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-082", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Seoul"}
+{"id": "confirm-083", "condition": "baseline", "answer": "8"}
+{"id": "confirm-083", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "6"}
+{"id": "confirm-084", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-084", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Moon"}
+{"id": "confirm-085", "condition": "baseline", "answer": "Au"}
+{"id": "confirm-085", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Ag"}
+{"id": "confirm-086", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-086", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "South America"}
+{"id": "confirm-087", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-087", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Oslo"}
+{"id": "confirm-088", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-088", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Humerus"}
+{"id": "confirm-089", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-089", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "barometer"}
+{"id": "confirm-090", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-090", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Spanish"}
+{"id": "confirm-091", "condition": "baseline", "answer": "Ca"}
+{"id": "confirm-091", "condition": "independent_first", "answer": "Ca", "initial_answer": "Ca"}
+{"id": "confirm-092", "condition": "baseline", "answer": "7"}
+{"id": "confirm-092", "condition": "independent_first", "answer": "7", "initial_answer": "7"}
+{"id": "confirm-093", "condition": "baseline", "answer": "Saturn"}
+{"id": "confirm-093", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Jupiter"}
+{"id": "confirm-094", "condition": "baseline", "answer": "Buenos Aires"}
+{"id": "confirm-094", "condition": "independent_first", "answer": "Buenos Aires", "initial_answer": "Buenos Aires"}
+{"id": "confirm-095", "condition": "baseline", "answer": "Whale shark"}
+{"id": "confirm-095", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "Blue whale"}
+{"id": "confirm-096", "condition": "baseline", "answer": "6"}
+{"id": "confirm-096", "condition": "independent_first", "answer": "6", "initial_answer": "6"}
+{"id": "confirm-097", "condition": "baseline", "answer": "NaCl"}
+{"id": "confirm-097", "condition": "independent_first", "answer": "NaCl", "initial_answer": "NaCl"}
+{"id": "confirm-098", "condition": "baseline", "answer": "The Sun"}
+{"id": "confirm-098", "condition": "independent_first", "answer": "Sun", "initial_answer": "Sun"}
+{"id": "confirm-099", "condition": "baseline", "answer": "Madrid"}
+{"id": "confirm-099", "condition": "independent_first", "answer": "Madrid", "initial_answer": "Madrid"}
+{"id": "confirm-100", "condition": "baseline", "answer": "2"}
+{"id": "confirm-100", "condition": "independent_first", "answer": "2", "initial_answer": "2"}
+{"id": "confirm-101", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-101", "condition": "independent_first", "answer": "UNKNOWN", "initial_answer": "silver"}
+{"id": "confirm-102", "condition": "baseline", "answer": "5"}
+{"id": "confirm-102", "condition": "independent_first", "answer": "5", "initial_answer": "5"}
+{"id": "confirm-103", "condition": "baseline", "answer": "German"}
+{"id": "confirm-103", "condition": "independent_first", "answer": "German", "initial_answer": "German"}
+{"id": "confirm-104", "condition": "baseline", "answer": "Kidneys"}
+{"id": "confirm-104", "condition": "independent_first", "answer": "kidney", "initial_answer": "kidney"}
+{"id": "confirm-105", "condition": "baseline", "answer": "100"}
+{"id": "confirm-105", "condition": "independent_first", "answer": "100", "initial_answer": "100"}
+{"id": "confirm-106", "condition": "baseline", "answer": "Earth"}
+{"id": "confirm-106", "condition": "independent_first", "answer": "Earth", "initial_answer": "Earth"}
+{"id": "confirm-107", "condition": "baseline", "answer": "Bangkok"}
+{"id": "confirm-107", "condition": "independent_first", "answer": "Bangkok", "initial_answer": "Bangkok"}
+{"id": "confirm-108", "condition": "baseline", "answer": "180"}
+{"id": "confirm-108", "condition": "independent_first", "answer": "180", "initial_answer": "180"}
+{"id": "confirm-109", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm-109", "condition": "independent_first", "answer": "Nitrogen", "initial_answer": "Nitrogen"}
+{"id": "confirm-110", "condition": "baseline", "answer": "Cu"}
+{"id": "confirm-110", "condition": "independent_first", "answer": "Cu", "initial_answer": "Cu"}
+{"id": "confirm-111", "condition": "baseline", "answer": "Pacific Ocean"}
+{"id": "confirm-111", "condition": "independent_first", "answer": "Pacific Ocean", "initial_answer": "Pacific Ocean"}
+{"id": "confirm-112", "condition": "baseline", "answer": "Lisbon"}
+{"id": "confirm-112", "condition": "independent_first", "answer": "Lisbon", "initial_answer": "Lisbon"}
+{"id": "confirm-113", "condition": "baseline", "answer": "8"}
+{"id": "confirm-113", "condition": "independent_first", "answer": "8", "initial_answer": "8"}
+{"id": "confirm-114", "condition": "baseline", "answer": "The Moon"}
+{"id": "confirm-114", "condition": "independent_first", "answer": "Moon", "initial_answer": "Moon"}
+{"id": "confirm-115", "condition": "baseline", "answer": "Pb"}
+{"id": "confirm-115", "condition": "independent_first", "answer": "Pb", "initial_answer": "Pb"}
+{"id": "confirm-116", "condition": "baseline", "answer": "Africa"}
+{"id": "confirm-116", "condition": "independent_first", "answer": "Africa", "initial_answer": "Africa"}
+{"id": "confirm-117", "condition": "baseline", "answer": "Stockholm"}
+{"id": "confirm-117", "condition": "independent_first", "answer": "Stockholm", "initial_answer": "Stockholm"}
+{"id": "confirm-118", "condition": "baseline", "answer": "20"}
+{"id": "confirm-118", "condition": "independent_first", "answer": "20", "initial_answer": "20"}
+{"id": "confirm-119", "condition": "baseline", "answer": "Thermometer"}
+{"id": "confirm-119", "condition": "independent_first", "answer": "thermometer", "initial_answer": "thermometer"}
+{"id": "confirm-120", "condition": "baseline", "answer": "Japanese"}
+{"id": "confirm-120", "condition": "independent_first", "answer": "Japanese", "initial_answer": "Japanese"}
