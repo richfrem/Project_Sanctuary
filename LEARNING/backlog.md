@@ -53,7 +53,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#32** | `MISSION-049` | **Turn Recorded Failures into Independently Verified and Protected Repair Procedures** | 5 | 5 | 0.2x | 3 | **41.67** | `PROPOSED` | - |
 | **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#35** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
+| **#35** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#36** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
 | **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
@@ -592,7 +592,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).
 
 ### MISSION-041: Compile Falsification Criteria into Executable Property Tests and Counterexample Searches (Rank #35)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Python hypothesis/property testing harness; evaluating-agent-work; deterministic execution (ceiling 500k tokens, 6 CPU-hours)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
@@ -601,6 +602,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > For bounded Python components, an agent that translates preregistered claims into property tests and counterexample searches will: (a) detect >= 80% of held-out, non-equivalent semantic mutants; (b) improve detection by >= 20 percentage points over equal-budget example-test generation; (c) produce <= 5% false alarms against verified reference implementations; and (d) finish within 10 minutes per component, excluding initial environment setup.
 - **Falsification Gate**:
   > Any threshold missed falsifies the hypothesis. Tests that merely reproduce the implementation behavior without an independent specification do not count. A timeout is not proof of correctness.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T05:28:57.083147+00:00` [claude-code] (LEARNING/experiments/mission-041/v3/results.md @41f2a57b5): v3 frozen-before-scoring benchmark, 20 components, 80 held-out non-equivalent source-level mutants: property 66.25% (needs >=80%), example 78.75% (gain -12.5pp, needs +20pp), existing 68.75%, 0/20 false alarms, max 1.2s computation-only. Independently reviewed (Claude reviewer of Codex work, accepted conditionally). Scope: full-oracle property arm, procedural holdout, 20 clusters of 4; no-oracle property arm untested. v1 pilot and v2 (invalid, errata) retained, not pooled.
+- **Lessons Learned & Epistemic Compounding**:
+  * Equal-budget example sampling over small exhaustive domains saturates; a benchmark must show per-mutant kill density before the arms are compared.
+  * Redundant relations alongside a full oracle do not test metamorphic properties.
+  * Commit the freeze to git before scoring.
 
 ### MISSION-047: Transfer and Compose Procedures Through Evidence-Linked Concept Graphs (Rank #36)
 - **Status**: `PROPOSED`

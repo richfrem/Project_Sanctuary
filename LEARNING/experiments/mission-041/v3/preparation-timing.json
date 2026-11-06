@@ -1,0 +1,8 @@
+{
+  "method": "rebuild unchanged pools and compare JSON to pre-mutant sealed suites",
+  "whole_suite_generation_seconds": 0.161463791038841,
+  "runtime_charge": "conservatively charge this entire 20-component construction time to each component",
+  "python": "3.13.4",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "session_tokens": "not available; no estimated token usage recorded"
+}

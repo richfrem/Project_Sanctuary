@@ -1,0 +1,48 @@
+{
+  "audit_kind": "post-run evidence replay, no new test selection or scored search",
+  "freeze_verified": true,
+  "curation_lock_verified": true,
+  "n_components": 20,
+  "n_verified_reference_cases": 745564,
+  "n_candidate_mutants": 120,
+  "n_equivalents": 73,
+  "n_non_equivalents": 47,
+  "n_unresolved": 0,
+  "detections_recomputed": {
+    "existing": 12,
+    "example": 47,
+    "property": 46
+  },
+  "detection_witnesses_replayed": {
+    "existing": 12,
+    "example": 47,
+    "property": 46
+  },
+  "existing_covered_mutants": 12,
+  "existing_uncovered_mutants": 35,
+  "existing_detection_percent_among_covered": 100.0,
+  "property_survivors": [
+    {
+      "component": "extension",
+      "operator": "stable_sequence_sort",
+      "tested": 64,
+      "curation_witness": {
+        "case": [
+          "A.py",
+          ".env"
+        ],
+        "reference": "",
+        "mutant": "py"
+      },
+      "baseline_counterexample": [
+        "A.py",
+        "a.b.c",
+        "a.PY"
+      ]
+    }
+  ],
+  "zero_of_20_alarm_one_sided_95pct_upper_percent": 13.910834066826517,
+  "measured_audit_seconds": 0.01813370897434652,
+  "all_passed": true,
+  "primary_sha256": "3326d53659c0f6ac68bc6334015b35982f26b82a45b7e86c035964d2a5c16277"
+}

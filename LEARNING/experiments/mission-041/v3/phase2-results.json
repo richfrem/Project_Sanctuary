@@ -1,0 +1,4202 @@
+{
+  "freeze_commit_attestation": "41f2a57b52a46c0e6fd472e0453bee02e1e74737",
+  "components": [
+    {
+      "id": "lease",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05689437501132488,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05314725008793175,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05817441700492054,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "lease_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 1,
+            "elapsed_seconds": 0.06442225002683699,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 1,
+            "elapsed_seconds": 0.06274058308918029,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              102,
+              102,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 2,
+            "elapsed_seconds": 0.05340024991892278,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "lease_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 1,
+            "elapsed_seconds": 0.05173883307725191,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 1,
+            "elapsed_seconds": 0.055214582942426205,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              102,
+              102,
+              false
+            ],
+            "actual": false,
+            "expected": true,
+            "calls": 2,
+            "elapsed_seconds": 0.049546040943823755,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "lease_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 2,
+            "elapsed_seconds": 0.05317724996712059,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 2,
+            "elapsed_seconds": 0.051300875027664006,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              101,
+              102,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 1,
+            "elapsed_seconds": 0.0532431669998914,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "lease_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 2,
+            "elapsed_seconds": 0.05414949997793883,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 2,
+            "elapsed_seconds": 0.06332783307880163,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              101,
+              102,
+              false
+            ],
+            "actual": true,
+            "expected": false,
+            "calls": 1,
+            "elapsed_seconds": 0.06093120796140283,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.0308694170089439
+    },
+    {
+      "id": "renew",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06302241689991206,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.061847624951042235,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05496395903173834,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "renew_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              10,
+              20
+            ],
+            "actual": 30,
+            "expected": 10,
+            "calls": 3,
+            "elapsed_seconds": 0.05542654194869101,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              10,
+              20
+            ],
+            "actual": 30,
+            "expected": 10,
+            "calls": 3,
+            "elapsed_seconds": 0.05380441702436656,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              10,
+              28
+            ],
+            "actual": 38,
+            "expected": 10,
+            "calls": 1,
+            "elapsed_seconds": 0.05758012493606657,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "renew_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05612874997314066,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              28,
+              29,
+              11
+            ],
+            "actual": 29,
+            "expected": 39,
+            "calls": 11,
+            "elapsed_seconds": 0.059596166014671326,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              11,
+              12,
+              4
+            ],
+            "actual": 12,
+            "expected": 15,
+            "calls": 3,
+            "elapsed_seconds": 0.05659449996892363,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "renew_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05531600001268089,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.053417416056618094,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05773433402646333,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "renew_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06455116695724428,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.16997320903465152,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.07011683296877891,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.182051249081269
+    },
+    {
+      "id": "release",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05860233400017023,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05895199999213219,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.061190249980427325,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "release_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              31,
+              31,
+              1
+            ],
+            "actual": 1,
+            "expected": 0,
+            "calls": 4,
+            "elapsed_seconds": 0.058351999963633716,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              31,
+              31,
+              1
+            ],
+            "actual": 1,
+            "expected": 0,
+            "calls": 4,
+            "elapsed_seconds": 0.056221542065031826,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              14,
+              14,
+              1
+            ],
+            "actual": 1,
+            "expected": 0,
+            "calls": 4,
+            "elapsed_seconds": 0.05853258306160569,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "release_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              0
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 1,
+            "elapsed_seconds": 0.05760454200208187,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              0,
+              0
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 1,
+            "elapsed_seconds": 0.0549321249127388,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              11,
+              11,
+              0
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 2,
+            "elapsed_seconds": 0.055837207939475775,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "release_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              2,
+              2,
+              3
+            ],
+            "actual": -2,
+            "expected": 2,
+            "calls": 2,
+            "elapsed_seconds": 0.054678999935276806,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              2,
+              2,
+              3
+            ],
+            "actual": -2,
+            "expected": 2,
+            "calls": 2,
+            "elapsed_seconds": 0.055841082939878106,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              15,
+              15,
+              31
+            ],
+            "actual": -30,
+            "expected": 30,
+            "calls": 10,
+            "elapsed_seconds": 0.055597875034436584,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "release_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05608687491621822,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05599833303131163,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              15,
+              15,
+              31
+            ],
+            "actual": 31,
+            "expected": 30,
+            "calls": 10,
+            "elapsed_seconds": 0.05856554105412215,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.0431082909926772
+    },
+    {
+      "id": "fence",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05807391705457121,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05045404192060232,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05209454195573926,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "fence_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.049149374943226576,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.050359541084617376,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              121,
+              122
+            ],
+            "actual": 121,
+            "expected": 122,
+            "calls": 2,
+            "elapsed_seconds": 0.0526166670024395,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "fence_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.050748583977110684,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.045981209026649594,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              121,
+              122
+            ],
+            "actual": 121,
+            "expected": 122,
+            "calls": 2,
+            "elapsed_seconds": 0.046161417034454644,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "fence_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.047602832899428904,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.05373504105955362,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              121,
+              122
+            ],
+            "actual": 121,
+            "expected": 122,
+            "calls": 2,
+            "elapsed_seconds": 0.0542544589843601,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "fence_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.05187237507198006,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              6
+            ],
+            "actual": 5,
+            "expected": 6,
+            "calls": 2,
+            "elapsed_seconds": 0.04749849997460842,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              121,
+              122
+            ],
+            "actual": 121,
+            "expected": 122,
+            "calls": 2,
+            "elapsed_seconds": 0.05045912507921457,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 0.9780835399869829
+    },
+    {
+      "id": "path",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04965845891274512,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05321320809889585,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.050272249965928495,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "path_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "..",
+              "b"
+            ],
+            "actual": "/a/b",
+            "expected": "/b",
+            "calls": 4,
+            "elapsed_seconds": 0.06462287495378405,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "..",
+              "b"
+            ],
+            "actual": "/a/b",
+            "expected": "/b",
+            "calls": 4,
+            "elapsed_seconds": 0.05570937495213002,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "j",
+              "..",
+              "."
+            ],
+            "actual": "/j",
+            "expected": "/",
+            "calls": 15,
+            "elapsed_seconds": 0.057231124956160784,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05068454099819064,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04956987488549203,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05028116703033447,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05206354090478271,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.053040332975797355,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.12081175006460398,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "..",
+              "b"
+            ],
+            "actual": "/a/b",
+            "expected": "/b",
+            "calls": 4,
+            "elapsed_seconds": 0.07665754191111773,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "..",
+              "b"
+            ],
+            "actual": "/a/b",
+            "expected": "/b",
+            "calls": 4,
+            "elapsed_seconds": 0.05619074997957796,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "j",
+              "..",
+              "."
+            ],
+            "actual": "/j",
+            "expected": "/",
+            "calls": 15,
+            "elapsed_seconds": 0.06452145799994469,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.2078309579519555
+    },
+    {
+      "id": "relative",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06019712507259101,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06088420900050551,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06287133391015232,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "relative_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".."
+            ],
+            "actual": "a/..",
+            "expected": ".",
+            "calls": 3,
+            "elapsed_seconds": 0.05956349999178201,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".."
+            ],
+            "actual": "a/..",
+            "expected": ".",
+            "calls": 3,
+            "elapsed_seconds": 0.06163383403327316,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06287879205774516,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "relative_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".."
+            ],
+            "actual": "a/..",
+            "expected": ".",
+            "calls": 3,
+            "elapsed_seconds": 0.05769591603893787,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".."
+            ],
+            "actual": "a/..",
+            "expected": ".",
+            "calls": 3,
+            "elapsed_seconds": 0.05210187507327646,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05367079202551395,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "relative_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05574579199310392,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "m",
+              "i",
+              ".."
+            ],
+            "actual": "i",
+            "expected": "m",
+            "calls": 8,
+            "elapsed_seconds": 0.06088495801668614,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "f",
+              "h",
+              ".."
+            ],
+            "actual": "h",
+            "expected": "f",
+            "calls": 1,
+            "elapsed_seconds": 0.055652708979323506,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "relative_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".",
+              "b"
+            ],
+            "actual": "a/././b",
+            "expected": "a/b",
+            "calls": 5,
+            "elapsed_seconds": 0.05394700006581843,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "e",
+              ".",
+              "k",
+              "a"
+            ],
+            "actual": "e/././k/a",
+            "expected": "e/k/a",
+            "calls": 5,
+            "elapsed_seconds": 0.053610083064995706,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "f",
+              "h",
+              "..",
+              "."
+            ],
+            "actual": "f/./.",
+            "expected": "f",
+            "calls": 2,
+            "elapsed_seconds": 0.0569805420236662,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.2131910410244018
+    },
+    {
+      "id": "extension",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 6,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.0568082919344306,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05936679197475314,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05314404203090817,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "extension_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.b.c"
+            ],
+            "actual": "b.c",
+            "expected": "c",
+            "calls": 5,
+            "elapsed_seconds": 0.052689541946165264,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py",
+              ".a.b",
+              ".env",
+              ".a.b"
+            ],
+            "actual": "",
+            "expected": "b",
+            "calls": 8,
+            "elapsed_seconds": 0.04822416708339006,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.b.c"
+            ],
+            "actual": "b.c",
+            "expected": "c",
+            "calls": 9,
+            "elapsed_seconds": 0.05113462498411536,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "extension_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py"
+            ],
+            "actual": "",
+            "expected": "py",
+            "calls": 4,
+            "elapsed_seconds": 0.05083495902363211,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py"
+            ],
+            "actual": "",
+            "expected": "py",
+            "calls": 4,
+            "elapsed_seconds": 0.051121917087584734,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py"
+            ],
+            "actual": "",
+            "expected": "py",
+            "calls": 1,
+            "elapsed_seconds": 0.049052666989155114,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "extension_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py",
+              "b.PY"
+            ],
+            "actual": "py",
+            "expected": "PY",
+            "calls": 6,
+            "elapsed_seconds": 0.04781374998856336,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              ".env",
+              "b.md",
+              "b.md",
+              "b.PY"
+            ],
+            "actual": "py",
+            "expected": "PY",
+            "calls": 5,
+            "elapsed_seconds": 0.04782633308786899,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "b.PY"
+            ],
+            "actual": "py",
+            "expected": "PY",
+            "calls": 3,
+            "elapsed_seconds": 0.04849583294708282,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "extension_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 6,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04942654096521437,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a.py",
+              ".a.b",
+              ".env",
+              ".a.b"
+            ],
+            "actual": "",
+            "expected": "b",
+            "calls": 8,
+            "elapsed_seconds": 0.049943707999773324,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              ".a.b"
+            ],
+            "actual": "",
+            "expected": "b",
+            "calls": 15,
+            "elapsed_seconds": 0.04956862493418157,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.038551790989004
+    },
+    {
+      "id": "path_key",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.049700292060151696,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04930258297827095,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04919787496328354,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "path_key_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".",
+              "b"
+            ],
+            "actual": "b",
+            "expected": "a/b",
+            "calls": 3,
+            "elapsed_seconds": 0.049396874965168536,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".",
+              "b"
+            ],
+            "actual": "b",
+            "expected": "a/b",
+            "calls": 3,
+            "elapsed_seconds": 0.05395112500991672,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "c",
+              "a"
+            ],
+            "actual": "c",
+            "expected": "c/a",
+            "calls": 7,
+            "elapsed_seconds": 0.048548208083957434,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_key_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".",
+              "b"
+            ],
+            "actual": "a",
+            "expected": "a/b",
+            "calls": 3,
+            "elapsed_seconds": 0.05035258398856968,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              ".",
+              "b"
+            ],
+            "actual": "a",
+            "expected": "a/b",
+            "calls": 3,
+            "elapsed_seconds": 0.0493832080392167,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.049862332991324365,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_key_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04964241595007479,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "h",
+              "c",
+              "i",
+              ".."
+            ],
+            "actual": "h/i/..",
+            "expected": "h/c/i/..",
+            "calls": 7,
+            "elapsed_seconds": 0.0511707499390468,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "c",
+              "."
+            ],
+            "actual": "",
+            "expected": "c",
+            "calls": 5,
+            "elapsed_seconds": 0.052156666992232203,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "path_key_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04938425007276237,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "k",
+              "d",
+              "f",
+              "l"
+            ],
+            "actual": "k/f/l",
+            "expected": "k/d/f/l",
+            "calls": 5,
+            "elapsed_seconds": 0.050200624973513186,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04812024999409914,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.050586624071002
+    },
+    {
+      "id": "replay",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04898224992211908,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05585887492634356,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.0544806249672547,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "replay_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": 0,
+            "expected": 1,
+            "calls": 3,
+            "elapsed_seconds": 0.05310887505766004,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": 0,
+            "expected": 1,
+            "calls": 3,
+            "elapsed_seconds": 0.06079816701821983,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 5,
+            "elapsed_seconds": 0.05853891605511308,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "replay_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.057826792006380856,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                1,
+                -1
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                2,
+                -1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "actual": -3,
+            "expected": -2,
+            "calls": 5,
+            "elapsed_seconds": 0.05989491706714034,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                -1
+              ],
+              [
+                1,
+                -1
+              ]
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 1,
+            "elapsed_seconds": 0.06316816690377891,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "replay_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.053902250016108155,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "actual": 3,
+            "expected": 2,
+            "calls": 15,
+            "elapsed_seconds": 0.058253000024706125,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.0595052499556914,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "replay_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                3,
+                0
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "actual": 1,
+            "expected": 0,
+            "calls": 5,
+            "elapsed_seconds": 0.06571645801886916,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                0
+              ],
+              [
+                3,
+                -1
+              ],
+              [
+                3,
+                -1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "actual": -1,
+            "expected": 0,
+            "calls": 7,
+            "elapsed_seconds": 0.06224591704085469,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                3,
+                -1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "actual": 1,
+            "expected": 0,
+            "calls": 15,
+            "elapsed_seconds": 0.05748745892196894,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.0833515820559114
+    },
+    {
+      "id": "last_replay",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05880958400666714,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06308133294805884,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05680829205084592,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "last_replay_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                1
+              ]
+            ],
+            "expected": [
+              [
+                0,
+                -1
+              ]
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05435591598507017,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                1
+              ]
+            ],
+            "expected": [
+              [
+                0,
+                -1
+              ]
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05537341698072851,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05331912497058511,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "last_replay_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05704454204533249,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                2,
+                -1
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                -1
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "expected": [
+              [
+                0,
+                -1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "calls": 5,
+            "elapsed_seconds": 0.05051483400166035,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                -1
+              ],
+              [
+                1,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "expected": [
+              [
+                1,
+                -1
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "calls": 5,
+            "elapsed_seconds": 0.04883433389477432,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "last_replay_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.050063125090673566,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04855783306993544,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                -1
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                -1
+              ]
+            ],
+            "expected": [
+              [
+                2,
+                -1
+              ],
+              [
+                3,
+                -1
+              ]
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.053285415982827544,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "last_replay_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.049375707982108,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                3,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                -1
+              ],
+              [
+                1,
+                -1
+              ]
+            ],
+            "actual": [
+              [
+                1,
+                -1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "expected": [
+              [
+                1,
+                -1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                -1
+              ]
+            ],
+            "calls": 8,
+            "elapsed_seconds": 0.050324957934208214,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                3,
+                -1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                1
+              ],
+              [
+                3,
+                -1
+              ]
+            ],
+            "expected": [
+              [
+                0,
+                1
+              ],
+              [
+                3,
+                1
+              ]
+            ],
+            "calls": 1,
+            "elapsed_seconds": 0.04782629106193781,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.0418712079990655
+    },
+    {
+      "id": "revision",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.054700166918337345,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05396016698796302,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05142645805608481,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "revision_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              15,
+              1,
+              2
+            ],
+            "actual": 2,
+            "expected": 15,
+            "calls": 4,
+            "elapsed_seconds": 0.05069533293135464,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              15,
+              1,
+              2
+            ],
+            "actual": 2,
+            "expected": 15,
+            "calls": 4,
+            "elapsed_seconds": 0.06719720794353634,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              11,
+              3,
+              15
+            ],
+            "actual": 11,
+            "expected": 15,
+            "calls": 3,
+            "elapsed_seconds": 0.0489261249313131,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "revision_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04938466695602983,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              12,
+              14,
+              0
+            ],
+            "actual": 12,
+            "expected": 14,
+            "calls": 7,
+            "elapsed_seconds": 0.051483500050380826,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              14,
+              14,
+              9
+            ],
+            "actual": 9,
+            "expected": 14,
+            "calls": 13,
+            "elapsed_seconds": 0.04850620904471725,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "revision_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04924033291172236,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04814687499310821,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05203937494661659,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "revision_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04946795792784542,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              4,
+              12,
+              6
+            ],
+            "actual": 6,
+            "expected": 12,
+            "calls": 14,
+            "elapsed_seconds": 0.050437500001862645,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              10,
+              12
+            ],
+            "actual": 10,
+            "expected": 12,
+            "calls": 11,
+            "elapsed_seconds": 0.04797866602893919,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.051563083077781
+    },
+    {
+      "id": "tombstone",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05227791704237461,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.053173249936662614,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05321000004187226,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "tombstone_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                "put"
+              ],
+              [
+                0,
+                "delete"
+              ]
+            ],
+            "actual": [
+              0
+            ],
+            "expected": [],
+            "calls": 3,
+            "elapsed_seconds": 0.04939179099164903,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                0,
+                "put"
+              ],
+              [
+                0,
+                "delete"
+              ]
+            ],
+            "actual": [
+              0
+            ],
+            "expected": [],
+            "calls": 3,
+            "elapsed_seconds": 0.05044791696127504,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.050802582991309464,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "tombstone_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.056742042070254683,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06118145806249231,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05768316600006074,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "tombstone_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.061591582954861224,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.058704250026494265,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              [
+                2,
+                "put"
+              ],
+              [
+                2,
+                "delete"
+              ]
+            ],
+            "actual": [
+              2
+            ],
+            "expected": [],
+            "calls": 7,
+            "elapsed_seconds": 0.060772042023018,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "tombstone_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.054596709087491035,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05581574991811067,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05624687497038394,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.196011207997799
+    },
+    {
+      "id": "accounting",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05512320902198553,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.056979916989803314,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.055611209012568,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "accounting_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              31,
+              31,
+              31
+            ],
+            "actual": 31,
+            "expected": 0,
+            "calls": 5,
+            "elapsed_seconds": 0.05924154201056808,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.054135542013682425,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              10,
+              26
+            ],
+            "actual": 10,
+            "expected": 0,
+            "calls": 3,
+            "elapsed_seconds": 0.057652041083201766,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "accounting_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              31
+            ],
+            "actual": -1,
+            "expected": 10,
+            "calls": 3,
+            "elapsed_seconds": 0.05742687510792166,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              11,
+              31
+            ],
+            "actual": -1,
+            "expected": 10,
+            "calls": 3,
+            "elapsed_seconds": 0.057565582916140556,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05345508304890245,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "accounting_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              31,
+              31,
+              31
+            ],
+            "actual": 31,
+            "expected": 0,
+            "calls": 5,
+            "elapsed_seconds": 0.05392991693224758,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05208079097792506,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              18,
+              18,
+              18
+            ],
+            "actual": 18,
+            "expected": 0,
+            "calls": 10,
+            "elapsed_seconds": 0.05020845797844231,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "accounting_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              4,
+              3
+            ],
+            "actual": 6,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.051053083036094904,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              10,
+              4,
+              3
+            ],
+            "actual": 6,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.0477680410258472,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              18,
+              18,
+              17
+            ],
+            "actual": 0,
+            "expected": 18,
+            "calls": 9,
+            "elapsed_seconds": 0.04984187497757375,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.006166539969854
+    },
+    {
+      "id": "clamp",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04870149993803352,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.049820082960650325,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.049282665946520865,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "clamp_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -3,
+              -2,
+              2
+            ],
+            "actual": -3,
+            "expected": -2,
+            "calls": 2,
+            "elapsed_seconds": 0.05185199994593859,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -3,
+              -2,
+              2
+            ],
+            "actual": -3,
+            "expected": -2,
+            "calls": 2,
+            "elapsed_seconds": 0.05055325001012534,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              19,
+              20,
+              28
+            ],
+            "actual": 19,
+            "expected": 20,
+            "calls": 1,
+            "elapsed_seconds": 0.049627208965830505,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "clamp_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -3,
+              -2,
+              2
+            ],
+            "actual": -3,
+            "expected": -2,
+            "calls": 2,
+            "elapsed_seconds": 0.05032158293761313,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -3,
+              -2,
+              2
+            ],
+            "actual": -3,
+            "expected": -2,
+            "calls": 2,
+            "elapsed_seconds": 0.04971200006548315,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              19,
+              20,
+              28
+            ],
+            "actual": 19,
+            "expected": 20,
+            "calls": 1,
+            "elapsed_seconds": 0.05400050000753254,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "clamp_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              3,
+              -2,
+              2
+            ],
+            "actual": 3,
+            "expected": 2,
+            "calls": 3,
+            "elapsed_seconds": 0.05298779101576656,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              3,
+              -2,
+              2
+            ],
+            "actual": 3,
+            "expected": 2,
+            "calls": 3,
+            "elapsed_seconds": 0.04908016603440046,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -16,
+              -22,
+              -17
+            ],
+            "actual": -16,
+            "expected": -17,
+            "calls": 8,
+            "elapsed_seconds": 0.04797258402686566,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "clamp_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              3,
+              -2,
+              2
+            ],
+            "actual": 3,
+            "expected": 2,
+            "calls": 3,
+            "elapsed_seconds": 0.04985275003127754,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              3,
+              -2,
+              2
+            ],
+            "actual": 3,
+            "expected": 2,
+            "calls": 3,
+            "elapsed_seconds": 0.0527483340119943,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              -16,
+              -22,
+              -17
+            ],
+            "actual": -16,
+            "expected": -17,
+            "calls": 8,
+            "elapsed_seconds": 0.08001716702710837,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.0887739571044222
+    },
+    {
+      "id": "reserve",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.0662511249538511,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05126504099462181,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04663412505760789,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "reserve_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              7,
+              [
+                7
+              ]
+            ],
+            "actual": 7,
+            "expected": 0,
+            "calls": 3,
+            "elapsed_seconds": 0.046707125031389296,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              7,
+              [
+                7
+              ]
+            ],
+            "actual": 7,
+            "expected": 0,
+            "calls": 3,
+            "elapsed_seconds": 0.047755374922417104,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05338004091754556,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "reserve_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04602675000205636,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04685895808506757,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              11,
+              [
+                5,
+                7
+              ]
+            ],
+            "actual": -1,
+            "expected": 11,
+            "calls": 7,
+            "elapsed_seconds": 0.0487826659809798,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "reserve_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              [
+                3,
+                4
+              ]
+            ],
+            "actual": -2,
+            "expected": 5,
+            "calls": 4,
+            "elapsed_seconds": 0.05164329207036644,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              5,
+              [
+                3,
+                4
+              ]
+            ],
+            "actual": -2,
+            "expected": 5,
+            "calls": 4,
+            "elapsed_seconds": 0.057108207955025136,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              11,
+              [
+                5,
+                7
+              ]
+            ],
+            "actual": -1,
+            "expected": 11,
+            "calls": 7,
+            "elapsed_seconds": 0.05973766604438424,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "reserve_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              7,
+              [
+                7
+              ]
+            ],
+            "actual": 7,
+            "expected": 0,
+            "calls": 3,
+            "elapsed_seconds": 0.05935837503056973,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              7,
+              [
+                7
+              ]
+            ],
+            "actual": 7,
+            "expected": 0,
+            "calls": 3,
+            "elapsed_seconds": 0.055224708979949355,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.055548790958710015,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 0.9818673740373924
+    },
+    {
+      "id": "refund",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.061870999983511865,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.057933917036280036,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05901258310768753,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "refund_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.05475941696204245,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.054759833961725235,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05789412499871105,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "refund_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.05978245893493295,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.05515449994709343,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              2,
+              4
+            ],
+            "actual": 6,
+            "expected": 4,
+            "calls": 5,
+            "elapsed_seconds": 0.06301954109221697,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "refund_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.0585892089875415,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.05902391707058996,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              2,
+              4
+            ],
+            "actual": 6,
+            "expected": 4,
+            "calls": 5,
+            "elapsed_seconds": 0.05737283395137638,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "refund_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.056825082981958985,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              7,
+              10
+            ],
+            "actual": 11,
+            "expected": 10,
+            "calls": 4,
+            "elapsed_seconds": 0.04902220796793699,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              4,
+              2,
+              4
+            ],
+            "actual": 6,
+            "expected": 4,
+            "calls": 5,
+            "elapsed_seconds": 0.05463704199064523,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.042378832004033
+    },
+    {
+      "id": "schema",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 6,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.04939862503670156,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.0508263329975307,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05018337501678616,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "schema_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "new",
+              "open",
+              1
+            ],
+            "actual": "active",
+            "expected": "new",
+            "calls": 5,
+            "elapsed_seconds": 0.049744792049750686,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05097974999807775,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05016662506386638,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "schema_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "new",
+              "open",
+              0
+            ],
+            "actual": "closed",
+            "expected": "active",
+            "calls": 1,
+            "elapsed_seconds": 0.05272008397150785,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "new",
+              "open",
+              0
+            ],
+            "actual": "closed",
+            "expected": "active",
+            "calls": 1,
+            "elapsed_seconds": 0.05108829098753631,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04940608306787908,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "schema_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "active",
+              "close",
+              0
+            ],
+            "actual": "new",
+            "expected": "closed",
+            "calls": 2,
+            "elapsed_seconds": 0.04896004206966609,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "active",
+              "close",
+              0
+            ],
+            "actual": "new",
+            "expected": "closed",
+            "calls": 2,
+            "elapsed_seconds": 0.04820641700644046,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.04812024999409914,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "schema_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "closed",
+              "reset",
+              0
+            ],
+            "actual": "active",
+            "expected": "new",
+            "calls": 3,
+            "elapsed_seconds": 0.049637541989795864,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "closed",
+              "reset",
+              0
+            ],
+            "actual": "active",
+            "expected": "new",
+            "calls": 3,
+            "elapsed_seconds": 0.049938500043936074,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.049942041048780084,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 0.91523679101374
+    },
+    {
+      "id": "migration",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05177387502044439,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.052624958916567266,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05154841695912182,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "migration_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.052511250018142164,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.050756750046275556,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05340245901606977,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "migration_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05291333398781717,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.04970662493724376,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "a"
+            ],
+            "expected": [
+              "A"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05140970798674971,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "migration_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "b"
+            ],
+            "expected": [
+              "a"
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.05118179204873741,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "b"
+            ],
+            "expected": [
+              "a"
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.04890204197727144,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              [
+                "A"
+              ]
+            ],
+            "actual": [
+              "b"
+            ],
+            "expected": [
+              "a"
+            ],
+            "calls": 1,
+            "elapsed_seconds": 0.05065979191567749,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "migration_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              [
+                "A",
+                "a",
+                "B"
+              ]
+            ],
+            "actual": [
+              "A",
+              "B",
+              "a"
+            ],
+            "expected": [
+              "B",
+              "a"
+            ],
+            "calls": 4,
+            "elapsed_seconds": 0.050204040948301554,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              0,
+              [
+                "A",
+                "a",
+                "B"
+              ]
+            ],
+            "actual": [
+              "A",
+              "B",
+              "a"
+            ],
+            "expected": [
+              "B",
+              "a"
+            ],
+            "calls": 4,
+            "elapsed_seconds": 0.05793866701424122,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05685716704465449,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 0.9957465830957517
+    },
+    {
+      "id": "required",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05854058300610632,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.058829042012803257,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05713325005490333,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "required_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "A"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "expected": [
+              "B",
+              "C"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05864587507676333,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "A"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "expected": [
+              "B",
+              "C"
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.05348125007003546,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05604520800989121,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "required_01",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.059319416992366314,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.058785042027011514,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05892158392816782,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "required_02",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06265137495938689,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.05880487500689924,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.060057500028051436,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "required_03",
+          "existing": {
+            "status": "EXHAUSTED",
+            "calls": 5,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06115533399861306,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.06185850000474602,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "EXHAUSTED",
+            "calls": 16,
+            "note": "Not proof of correctness",
+            "elapsed_seconds": 0.059040291933342814,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.2150740830693394
+    },
+    {
+      "id": "enum_map",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "calls": 5,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.0595284589799121,
+          "seconds_budget": 2.0
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.06185375002678484,
+          "seconds_budget": 2.0
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "calls": 16,
+          "note": "Not proof of correctness",
+          "elapsed_seconds": 0.05362933303695172,
+          "seconds_budget": 2.0
+        }
+      },
+      "mutants": [
+        {
+          "id": "enum_map_00",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              1,
+              1,
+              2,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.05124329205136746,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              1,
+              1,
+              2,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.05261312494985759,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "B",
+              "A",
+              "b"
+            ],
+            "actual": [
+              2,
+              1,
+              3
+            ],
+            "expected": [
+              2,
+              0,
+              3
+            ],
+            "calls": 3,
+            "elapsed_seconds": 0.049800041946582496,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "enum_map_01",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              2,
+              2,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.04879345803055912,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              2,
+              2,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.04795191599987447,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              2,
+              2,
+              3
+            ],
+            "expected": [
+              1,
+              2,
+              3
+            ],
+            "calls": 1,
+            "elapsed_seconds": 0.05125000001862645,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "enum_map_02",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              1,
+              3,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.049008750007487833,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              1,
+              3,
+              3
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.05049445806071162,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              1,
+              3,
+              3
+            ],
+            "expected": [
+              1,
+              2,
+              3
+            ],
+            "calls": 1,
+            "elapsed_seconds": 0.04914933396503329,
+            "seconds_budget": 2.0
+          }
+        },
+        {
+          "id": "enum_map_03",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.04870649997610599,
+            "seconds_budget": 2.0
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "expected": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "calls": 2,
+            "elapsed_seconds": 0.049982374999672174,
+            "seconds_budget": 2.0
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "reason": "independent_specification",
+            "case": [
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": [
+              1,
+              2,
+              0
+            ],
+            "expected": [
+              1,
+              2,
+              3
+            ],
+            "calls": 1,
+            "elapsed_seconds": 0.047611458925530314,
+            "seconds_budget": 2.0
+          }
+        }
+      ],
+      "component_seconds": 1.1697032080264762
+    }
+  ],
+  "summary": {
+    "non_equivalents": 80,
+    "detection_percent": {
+      "property": 66.25,
+      "example": 78.75,
+      "existing": 68.75
+    },
+    "reference_alarms": {
+      "property": 0,
+      "example": 0,
+      "existing": 0
+    },
+    "reference_denominator": 20,
+    "max_component_seconds": 1.2150740830693394,
+    "infrastructure_failures": 0,
+    "valid": true,
+    "thresholds": {
+      "detection_ge_80": false,
+      "gain_ge_20pp": false,
+      "false_alarm_le_5": true,
+      "component_runtime_le_600": true
+    },
+    "verdict": "FALSIFIED"
+  }
+}
