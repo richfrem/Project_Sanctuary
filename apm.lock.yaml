@@ -15,13 +15,16 @@ dependencies:
   - .agents/skills/evaluating-agent-work/SKILL.md
   - .agents/skills/evaluating-agent-work/evals/evals.json
   - .agents/skills/evaluating-agent-work/references/acceptance-criteria.md
+  - .agents/skills/evaluating-agent-work/references/contribution-profile.json
   - .agents/skills/evaluating-agent-work/references/eval-gate.md
   - .agents/skills/evaluating-agent-work/references/evaluation-rubric.md
   - .agents/skills/evaluating-agent-work/references/property-falsification.md
   - .agents/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md
+  - .agents/skills/evaluating-agent-work/references/responsibility-map.md
   - .agents/skills/evaluating-agent-work/references/shared-loop-adapter.md
   - .agents/skills/evaluating-agent-work/references/token-budget-profiles.md
   - .agents/skills/evaluating-agent-work/references/usage-telemetry-sources.md
+  - .agents/skills/evaluating-agent-work/scripts/_shared.py
   - .agents/skills/evaluating-agent-work/scripts/counterexample_eval.py
   - .agents/skills/evaluating-agent-work/scripts/eval_gate.py
   - .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -32,10 +35,13 @@ dependencies:
   - .agents/skills/evaluating-agent-work/scripts/visualize_economy.py
   - .agents/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
   - .agents/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
+  - .agents/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json
+  - .agents/skills/evaluating-agent-work/tests/golden_capture.py
   - .agents/skills/evaluating-agent-work/tests/test_counterexample_eval.py
   - .agents/skills/evaluating-agent-work/tests/test_eval_gate.py
   - .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
   - .agents/skills/evaluating-agent-work/tests/test_model_routing.py
+  - .agents/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py
   - .agents/skills/evaluating-agent-work/tests/test_shared_adapter.py
   - .agents/skills/evaluating-agent-work/tests/test_usage_probe.py
   - .agents/skills/forging-sovereign-models
@@ -179,13 +185,16 @@ dependencies:
   - .claude/skills/evaluating-agent-work/SKILL.md
   - .claude/skills/evaluating-agent-work/evals/evals.json
   - .claude/skills/evaluating-agent-work/references/acceptance-criteria.md
+  - .claude/skills/evaluating-agent-work/references/contribution-profile.json
   - .claude/skills/evaluating-agent-work/references/eval-gate.md
   - .claude/skills/evaluating-agent-work/references/evaluation-rubric.md
   - .claude/skills/evaluating-agent-work/references/property-falsification.md
   - .claude/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md
+  - .claude/skills/evaluating-agent-work/references/responsibility-map.md
   - .claude/skills/evaluating-agent-work/references/shared-loop-adapter.md
   - .claude/skills/evaluating-agent-work/references/token-budget-profiles.md
   - .claude/skills/evaluating-agent-work/references/usage-telemetry-sources.md
+  - .claude/skills/evaluating-agent-work/scripts/_shared.py
   - .claude/skills/evaluating-agent-work/scripts/counterexample_eval.py
   - .claude/skills/evaluating-agent-work/scripts/eval_gate.py
   - .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -196,10 +205,13 @@ dependencies:
   - .claude/skills/evaluating-agent-work/scripts/visualize_economy.py
   - .claude/skills/evaluating-agent-work/tests/fixtures/agy_usage.json
   - .claude/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt
+  - .claude/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json
+  - .claude/skills/evaluating-agent-work/tests/golden_capture.py
   - .claude/skills/evaluating-agent-work/tests/test_counterexample_eval.py
   - .claude/skills/evaluating-agent-work/tests/test_eval_gate.py
   - .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py
   - .claude/skills/evaluating-agent-work/tests/test_model_routing.py
+  - .claude/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py
   - .claude/skills/evaluating-agent-work/tests/test_shared_adapter.py
   - .claude/skills/evaluating-agent-work/tests/test_usage_probe.py
   - .claude/skills/forging-sovereign-models
@@ -351,31 +363,37 @@ dependencies:
     .agents/hooks/sanctuary-core/.apm/hooks/tests/conftest.py: sha256:6d7d972026d15c09763fdf91978f4ebebc502f644595a4fda7c947025b3fe9c7
     .agents/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:2ba702a319c3e3457201edfadc21e22c45e89fcbf05acc1d4d07ff75a53d2e95
     .agents/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
-    .agents/skills/evaluating-agent-work/SKILL.md: sha256:6357700d0b332f42a7ea4cb33451ad5bd2d447c3e913a60105fecf4147b2bf92
+    .agents/skills/evaluating-agent-work/SKILL.md: sha256:b00b07aef1ccc89862743a923c930070091b74530778ddcb6d3a49fb87624eab
     .agents/skills/evaluating-agent-work/evals/evals.json: sha256:02385394eda6f85ee7ef29497d181ba417c8aff3defbe8bd5be89c19a99b65f8
     .agents/skills/evaluating-agent-work/references/acceptance-criteria.md: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
+    .agents/skills/evaluating-agent-work/references/contribution-profile.json: sha256:3129230c23e5b6d6f3173005b1c1baec5528b0ce8e1487bb3fb0375cabe5f668
     .agents/skills/evaluating-agent-work/references/eval-gate.md: sha256:04bbc0c6df3229284e7609eb40a9edf5a771069dd75d6746dd3e0ff53d2ba892
     .agents/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:de933c7eb147b9bd7e67682b89452416a1da46a0e181d799dae6b0ee7b1cd193
     .agents/skills/evaluating-agent-work/references/property-falsification.md: sha256:a7a57080bef90546b954c38a4d73a2211df1d96666d3b61dd0ede8a5c7a509c1
     .agents/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
-    .agents/skills/evaluating-agent-work/references/shared-loop-adapter.md: sha256:6dd3d11f43cee595f908a01997ea1a194a639cc4d5c4b18514b3f403cef0b4b1
+    .agents/skills/evaluating-agent-work/references/responsibility-map.md: sha256:4a40a17d98a3c4558e7551c01527722a7d7a797dbc700d3c15558bb6da1d9532
+    .agents/skills/evaluating-agent-work/references/shared-loop-adapter.md: sha256:cc7c2fee558ec9ada6c4fc966a9ff8aac7e40506cf38d1eb45290bd9f032f27d
     .agents/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
     .agents/skills/evaluating-agent-work/references/usage-telemetry-sources.md: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
+    .agents/skills/evaluating-agent-work/scripts/_shared.py: sha256:fdd4127734c59565940116da46590f470f796cbc761bf329aef3a4ad9e7b5554
     .agents/skills/evaluating-agent-work/scripts/counterexample_eval.py: sha256:cbec0c1b2e88d4ed018b5dd5b38ab6af9e2ef72f599d4204d305d7210a2c6deb
-    .agents/skills/evaluating-agent-work/scripts/eval_gate.py: sha256:0246f5934a1faa2068896c226b92f1b95f44459797488be91fe5d1c4f5bdac9d
-    .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
-    .agents/skills/evaluating-agent-work/scripts/sanctuary_adapter.py: sha256:2dbd3e37df4745acb14168a763e614787cd0b88e4c3952198a189b7940a4dbdf
-    .agents/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
-    .agents/skills/evaluating-agent-work/scripts/track_budget.py: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
-    .agents/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
+    .agents/skills/evaluating-agent-work/scripts/eval_gate.py: sha256:0d6ab8f32c7d9e8b6666f10fabd54bc4ca700f0ef3412a5f630394b59d80b4e6
+    .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:7b8eaf20f213bdd8cb0cc0985a38cc36f371766e4204c4bf2f27e3964927139f
+    .agents/skills/evaluating-agent-work/scripts/sanctuary_adapter.py: sha256:f548aa69f461a378e7fc891d4afdf83a054793be8355831ac43be60c98f25983
+    .agents/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:ad98f24397dfdefd15e3369e6bdc317ae9beadda9a1fc204cec555851757ba25
+    .agents/skills/evaluating-agent-work/scripts/track_budget.py: sha256:7180fecde84622677ee90aeebdb486cca42d957e6582748e8cefa81d0ce629f0
+    .agents/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78
     .agents/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
     .agents/skills/evaluating-agent-work/tests/fixtures/agy_usage.json: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
     .agents/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
+    .agents/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json: sha256:acfea1aae0ddb12ff8c70509aceda7b9b8ed03eee52ed05ae14b1af1381d1944
+    .agents/skills/evaluating-agent-work/tests/golden_capture.py: sha256:f132c8058309f225099498177687724fef28e484c8331df04b5c290d70270be7
     .agents/skills/evaluating-agent-work/tests/test_counterexample_eval.py: sha256:15a8b37e1a452970813b53ffccbc9d45a21ca51603ccf4c93203b8cd56f62f09
     .agents/skills/evaluating-agent-work/tests/test_eval_gate.py: sha256:4dfc2be120fbe64cb444de0671c0fac926f80bec24cabeee9a97fbdd5b948fe6
     .agents/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
     .agents/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
-    .agents/skills/evaluating-agent-work/tests/test_shared_adapter.py: sha256:47dc5b44c7619fbdeaf1ba6b3c67180a094f5bb7a44608807c24746fe8b0faae
+    .agents/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py: sha256:fce767a7b73601d09a7d3de696cfad74132f8aa1018e5546af1255a6221308f8
+    .agents/skills/evaluating-agent-work/tests/test_shared_adapter.py: sha256:b723fafe27e13236cb912ce29d4d7cef69e82ec69553ae497b359bfd102f3363
     .agents/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
     .agents/skills/forging-sovereign-models/SKILL.md: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
     .agents/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
@@ -508,31 +526,37 @@ dependencies:
     .claude/hooks/sanctuary-core/.apm/hooks/tests/conftest.py: sha256:6d7d972026d15c09763fdf91978f4ebebc502f644595a4fda7c947025b3fe9c7
     .claude/hooks/sanctuary-core/.apm/hooks/tests/test_hooks_integration.py: sha256:2ba702a319c3e3457201edfadc21e22c45e89fcbf05acc1d4d07ff75a53d2e95
     .claude/hooks/sanctuary-core/.apm/hooks/tests/test_pre_compact_snapshot.py: sha256:ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e
-    .claude/skills/evaluating-agent-work/SKILL.md: sha256:6357700d0b332f42a7ea4cb33451ad5bd2d447c3e913a60105fecf4147b2bf92
+    .claude/skills/evaluating-agent-work/SKILL.md: sha256:b00b07aef1ccc89862743a923c930070091b74530778ddcb6d3a49fb87624eab
     .claude/skills/evaluating-agent-work/evals/evals.json: sha256:02385394eda6f85ee7ef29497d181ba417c8aff3defbe8bd5be89c19a99b65f8
     .claude/skills/evaluating-agent-work/references/acceptance-criteria.md: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
+    .claude/skills/evaluating-agent-work/references/contribution-profile.json: sha256:3129230c23e5b6d6f3173005b1c1baec5528b0ce8e1487bb3fb0375cabe5f668
     .claude/skills/evaluating-agent-work/references/eval-gate.md: sha256:04bbc0c6df3229284e7609eb40a9edf5a771069dd75d6746dd3e0ff53d2ba892
     .claude/skills/evaluating-agent-work/references/evaluation-rubric.md: sha256:de933c7eb147b9bd7e67682b89452416a1da46a0e181d799dae6b0ee7b1cd193
     .claude/skills/evaluating-agent-work/references/property-falsification.md: sha256:a7a57080bef90546b954c38a4d73a2211df1d96666d3b61dd0ede8a5c7a509c1
     .claude/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
-    .claude/skills/evaluating-agent-work/references/shared-loop-adapter.md: sha256:6dd3d11f43cee595f908a01997ea1a194a639cc4d5c4b18514b3f403cef0b4b1
+    .claude/skills/evaluating-agent-work/references/responsibility-map.md: sha256:4a40a17d98a3c4558e7551c01527722a7d7a797dbc700d3c15558bb6da1d9532
+    .claude/skills/evaluating-agent-work/references/shared-loop-adapter.md: sha256:cc7c2fee558ec9ada6c4fc966a9ff8aac7e40506cf38d1eb45290bd9f032f27d
     .claude/skills/evaluating-agent-work/references/token-budget-profiles.md: sha256:8f296c8edad1992030f69d44d55cff2ddda7f90741ff6e1000baccff279081ab
     .claude/skills/evaluating-agent-work/references/usage-telemetry-sources.md: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
+    .claude/skills/evaluating-agent-work/scripts/_shared.py: sha256:fdd4127734c59565940116da46590f470f796cbc761bf329aef3a4ad9e7b5554
     .claude/skills/evaluating-agent-work/scripts/counterexample_eval.py: sha256:cbec0c1b2e88d4ed018b5dd5b38ab6af9e2ef72f599d4204d305d7210a2c6deb
-    .claude/skills/evaluating-agent-work/scripts/eval_gate.py: sha256:0246f5934a1faa2068896c226b92f1b95f44459797488be91fe5d1c4f5bdac9d
-    .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
-    .claude/skills/evaluating-agent-work/scripts/sanctuary_adapter.py: sha256:2dbd3e37df4745acb14168a763e614787cd0b88e4c3952198a189b7940a4dbdf
-    .claude/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
-    .claude/skills/evaluating-agent-work/scripts/track_budget.py: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
-    .claude/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
+    .claude/skills/evaluating-agent-work/scripts/eval_gate.py: sha256:0d6ab8f32c7d9e8b6666f10fabd54bc4ca700f0ef3412a5f630394b59d80b4e6
+    .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py: sha256:7b8eaf20f213bdd8cb0cc0985a38cc36f371766e4204c4bf2f27e3964927139f
+    .claude/skills/evaluating-agent-work/scripts/sanctuary_adapter.py: sha256:f548aa69f461a378e7fc891d4afdf83a054793be8355831ac43be60c98f25983
+    .claude/skills/evaluating-agent-work/scripts/score_contribution.py: sha256:ad98f24397dfdefd15e3369e6bdc317ae9beadda9a1fc204cec555851757ba25
+    .claude/skills/evaluating-agent-work/scripts/track_budget.py: sha256:7180fecde84622677ee90aeebdb486cca42d957e6582748e8cefa81d0ce629f0
+    .claude/skills/evaluating-agent-work/scripts/usage_probe.py: sha256:37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78
     .claude/skills/evaluating-agent-work/scripts/visualize_economy.py: sha256:146e21d9742a8a92fe63c40bb77b232d273081a1972cee76adab17b339c94cf0
     .claude/skills/evaluating-agent-work/tests/fixtures/agy_usage.json: sha256:b9beb756abe7994dfa7760d9c34a6268fecd901a7fb757b9403b334c59696675
     .claude/skills/evaluating-agent-work/tests/fixtures/claude_usage.txt: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
+    .claude/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json: sha256:acfea1aae0ddb12ff8c70509aceda7b9b8ed03eee52ed05ae14b1af1381d1944
+    .claude/skills/evaluating-agent-work/tests/golden_capture.py: sha256:f132c8058309f225099498177687724fef28e484c8331df04b5c290d70270be7
     .claude/skills/evaluating-agent-work/tests/test_counterexample_eval.py: sha256:15a8b37e1a452970813b53ffccbc9d45a21ca51603ccf4c93203b8cd56f62f09
     .claude/skills/evaluating-agent-work/tests/test_eval_gate.py: sha256:4dfc2be120fbe64cb444de0671c0fac926f80bec24cabeee9a97fbdd5b948fe6
     .claude/skills/evaluating-agent-work/tests/test_evaluating_agent_work.py: sha256:1bf5153a6d6ca9db888dc63ac5ad3cacc82b6e920bd7792d25fa81bcf59d57df
     .claude/skills/evaluating-agent-work/tests/test_model_routing.py: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
-    .claude/skills/evaluating-agent-work/tests/test_shared_adapter.py: sha256:47dc5b44c7619fbdeaf1ba6b3c67180a094f5bb7a44608807c24746fe8b0faae
+    .claude/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py: sha256:fce767a7b73601d09a7d3de696cfad74132f8aa1018e5546af1255a6221308f8
+    .claude/skills/evaluating-agent-work/tests/test_shared_adapter.py: sha256:b723fafe27e13236cb912ce29d4d7cef69e82ec69553ae497b359bfd102f3363
     .claude/skills/evaluating-agent-work/tests/test_usage_probe.py: sha256:833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8
     .claude/skills/forging-sovereign-models/SKILL.md: sha256:fc785a26be200a17767066c67482bca31340f2a70513294ed0911f584835d7af
     .claude/skills/forging-sovereign-models/assets/Modelfile.template: sha256:1bc6690cce7a1f34fccbecd344128ac2dfbddea73e1725998e5909303e51478a
@@ -692,7 +716,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6357700d0b332f42a7ea4cb33451ad5bd2d447c3e913a60105fecf4147b2bf92
+  content_hash: sha256:b00b07aef1ccc89862743a923c930070091b74530778ddcb6d3a49fb87624eab
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/evals/evals.json
@@ -711,6 +735,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/references/contribution-profile.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:3129230c23e5b6d6f3173005b1c1baec5528b0ce8e1487bb3fb0375cabe5f668
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/references/eval-gate.md
@@ -749,13 +782,22 @@ deployments:
   content_hash: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/evaluating-agent-work/references/responsibility-map.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4a40a17d98a3c4558e7551c01527722a7d7a797dbc700d3c15558bb6da1d9532
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/evaluating-agent-work/references/shared-loop-adapter.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6dd3d11f43cee595f908a01997ea1a194a639cc4d5c4b18514b3f403cef0b4b1
+  content_hash: sha256:cc7c2fee558ec9ada6c4fc966a9ff8aac7e40506cf38d1eb45290bd9f032f27d
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/references/token-budget-profiles.md
@@ -776,6 +818,15 @@ deployments:
   content_hash: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/evaluating-agent-work/scripts/_shared.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fdd4127734c59565940116da46590f470f796cbc761bf329aef3a4ad9e7b5554
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/counterexample_eval.py
   runtime: null
   scope: project
@@ -791,7 +842,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:0246f5934a1faa2068896c226b92f1b95f44459797488be91fe5d1c4f5bdac9d
+  content_hash: sha256:0d6ab8f32c7d9e8b6666f10fabd54bc4ca700f0ef3412a5f630394b59d80b4e6
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -800,7 +851,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
+  content_hash: sha256:7b8eaf20f213bdd8cb0cc0985a38cc36f371766e4204c4bf2f27e3964927139f
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/sanctuary_adapter.py
@@ -809,7 +860,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2dbd3e37df4745acb14168a763e614787cd0b88e4c3952198a189b7940a4dbdf
+  content_hash: sha256:f548aa69f461a378e7fc891d4afdf83a054793be8355831ac43be60c98f25983
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/score_contribution.py
@@ -818,7 +869,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
+  content_hash: sha256:ad98f24397dfdefd15e3369e6bdc317ae9beadda9a1fc204cec555851757ba25
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/track_budget.py
@@ -827,7 +878,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+  content_hash: sha256:7180fecde84622677ee90aeebdb486cca42d957e6582748e8cefa81d0ce629f0
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/usage_probe.py
@@ -836,7 +887,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
+  content_hash: sha256:37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/scripts/visualize_economy.py
@@ -864,6 +915,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:acfea1aae0ddb12ff8c70509aceda7b9b8ed03eee52ed05ae14b1af1381d1944
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/golden_capture.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:f132c8058309f225099498177687724fef28e484c8331df04b5c290d70270be7
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/tests/test_counterexample_eval.py
@@ -902,13 +971,22 @@ deployments:
   content_hash: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fce767a7b73601d09a7d3de696cfad74132f8aa1018e5546af1255a6221308f8
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/evaluating-agent-work/tests/test_shared_adapter.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:47dc5b44c7619fbdeaf1ba6b3c67180a094f5bb7a44608807c24746fe8b0faae
+  content_hash: sha256:b723fafe27e13236cb912ce29d4d7cef69e82ec69553ae497b359bfd102f3363
 - kind: project-relative
   target: antigravity
   value: .agents/skills/evaluating-agent-work/tests/test_usage_probe.py
@@ -2168,7 +2246,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6357700d0b332f42a7ea4cb33451ad5bd2d447c3e913a60105fecf4147b2bf92
+  content_hash: sha256:b00b07aef1ccc89862743a923c930070091b74530778ddcb6d3a49fb87624eab
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/evals/evals.json
@@ -2187,6 +2265,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:61455283f49bdcaf54aa43cd892ec54aa0cf0543c28134aaba00663812c85933
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/references/contribution-profile.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:3129230c23e5b6d6f3173005b1c1baec5528b0ce8e1487bb3fb0375cabe5f668
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/references/eval-gate.md
@@ -2225,13 +2312,22 @@ deployments:
   content_hash: sha256:2e24d7aad826348769bc88019f78e1c6433d8719790ea5e4bbccc314fa0f062d
 - kind: project-relative
   target: claude
+  value: .claude/skills/evaluating-agent-work/references/responsibility-map.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:4a40a17d98a3c4558e7551c01527722a7d7a797dbc700d3c15558bb6da1d9532
+- kind: project-relative
+  target: claude
   value: .claude/skills/evaluating-agent-work/references/shared-loop-adapter.md
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6dd3d11f43cee595f908a01997ea1a194a639cc4d5c4b18514b3f403cef0b4b1
+  content_hash: sha256:cc7c2fee558ec9ada6c4fc966a9ff8aac7e40506cf38d1eb45290bd9f032f27d
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/references/token-budget-profiles.md
@@ -2252,6 +2348,15 @@ deployments:
   content_hash: sha256:9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8
 - kind: project-relative
   target: claude
+  value: .claude/skills/evaluating-agent-work/scripts/_shared.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fdd4127734c59565940116da46590f470f796cbc761bf329aef3a4ad9e7b5554
+- kind: project-relative
+  target: claude
   value: .claude/skills/evaluating-agent-work/scripts/counterexample_eval.py
   runtime: null
   scope: project
@@ -2267,7 +2372,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:0246f5934a1faa2068896c226b92f1b95f44459797488be91fe5d1c4f5bdac9d
+  content_hash: sha256:0d6ab8f32c7d9e8b6666f10fabd54bc4ca700f0ef3412a5f630394b59d80b4e6
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/evaluate_dispatch.py
@@ -2276,7 +2381,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a2cb347298b8e1fd1e24099357e78acb354dafd65f328cac77d24b710a594c70
+  content_hash: sha256:7b8eaf20f213bdd8cb0cc0985a38cc36f371766e4204c4bf2f27e3964927139f
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/sanctuary_adapter.py
@@ -2285,7 +2390,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:2dbd3e37df4745acb14168a763e614787cd0b88e4c3952198a189b7940a4dbdf
+  content_hash: sha256:f548aa69f461a378e7fc891d4afdf83a054793be8355831ac43be60c98f25983
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/score_contribution.py
@@ -2294,7 +2399,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:902fb066789959d8af848254426e06e8a497afa3b170b66d0fd30bce014bc876
+  content_hash: sha256:ad98f24397dfdefd15e3369e6bdc317ae9beadda9a1fc204cec555851757ba25
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/track_budget.py
@@ -2303,7 +2408,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:55beb9c1d792f1cde5e171b913b604b7823dd9af7861224b3987e51e331c4751
+  content_hash: sha256:7180fecde84622677ee90aeebdb486cca42d957e6582748e8cefa81d0ce629f0
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/usage_probe.py
@@ -2312,7 +2417,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:d976efa91bb8fb628421784f70faebfd47f5c9dfdfd5b1376ac1bf2c335a3b29
+  content_hash: sha256:37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/scripts/visualize_economy.py
@@ -2340,6 +2445,24 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:15862361999b755956c2f11ae36d048d0a7b0ca9a474f2b4a18b74567eed648b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/fixtures/pre_migration_goldens.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:acfea1aae0ddb12ff8c70509aceda7b9b8ed03eee52ed05ae14b1af1381d1944
+- kind: project-relative
+  target: claude
+  value: .claude/skills/evaluating-agent-work/tests/golden_capture.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:f132c8058309f225099498177687724fef28e484c8331df04b5c290d70270be7
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/tests/test_counterexample_eval.py
@@ -2378,13 +2501,22 @@ deployments:
   content_hash: sha256:880eefd2719117be07dcf8015040170f71561a95a3ba73f2992048feb0211386
 - kind: project-relative
   target: claude
+  value: .claude/skills/evaluating-agent-work/tests/test_pre_migration_goldens.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:fce767a7b73601d09a7d3de696cfad74132f8aa1018e5546af1255a6221308f8
+- kind: project-relative
+  target: claude
   value: .claude/skills/evaluating-agent-work/tests/test_shared_adapter.py
   runtime: null
   scope: project
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:47dc5b44c7619fbdeaf1ba6b3c67180a094f5bb7a44608807c24746fe8b0faae
+  content_hash: sha256:b723fafe27e13236cb912ce29d4d7cef69e82ec69553ae497b359bfd102f3363
 - kind: project-relative
   target: claude
   value: .claude/skills/evaluating-agent-work/tests/test_usage_probe.py
