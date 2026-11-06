@@ -13,6 +13,8 @@ allowed-tools: Bash, Read, Write
 
 A sovereign evaluation and cognitive economy skill for Project Sanctuary, providing evidence-based scoring, real-world subscription budget tracking, and reinforcement learning value analytics.
 
+> **What lives where (MISSION-055):** this skill keeps Sanctuary-specific policy: subscription headroom and budgets (`usage_probe.py`, `track_budget.py`), the 0-3 contribution scoring and dashboards (`score_contribution.py`, `visualize_economy.py`), pre-dispatch evaluation, the property-falsification evaluator, and two thin adapters (`eval_gate.py`, `sanctuary_adapter.py`). The reusable evaluation core (work-contract assessment, validity/pilot/fixture gates, cost accounting, intervention and repair records, lessons) lives in the companion skill `evaluating-agent-outcomes` and is reached through those adapters. Details: [shared-loop-adapter.md](references/shared-loop-adapter.md).
+
 ## Contents
 
 - [Constraints](#constraints) • [Quick Start](#quick-start) • [Evaluation Dimensions](#evaluation-dimensions) • [Budget Tracking](#budget-tracking) • [Workflow](#workflow) • [Verification](#verification) • [References](#references)
