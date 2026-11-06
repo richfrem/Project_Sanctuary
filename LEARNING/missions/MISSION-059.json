@@ -1,0 +1,166 @@
+{
+  "id": "MISSION-059",
+  "title": "Audit Sanctuary trust boundaries from external content through agent execution, persistent memory and public soul publication",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_domain": "Agent-system security and integrity of persistent learning",
+  "strategic_intent": "Protect self-directed research and public knowledge preservation by identifying where lower-trust content can acquire execution, memory or publication authority. Reuse the existing forensic auditor and governance controls before proposing new machinery.",
+  "hypothesis": "Within the bounded audit, every inventoried privileged path on the three selected chains either demonstrably preserves the independently specified authorization and provenance invariants or fails closed before an unauthorized effect. Every required paired test preserves the permitted operation and blocks the forbidden effect.",
+  "falsification_criteria": "(1) One reachable selected path produces a statically proven or dynamically reproduced unauthorized effect under the independently established policy. (2) A required paired test permits a forbidden effect or breaks the corresponding permitted operation. (3) A selected publication path demonstrably discloses a synthetic prohibited secret or loses a required trust/provenance distinction that causes unauthorized successor behavior.",
+  "falsification_criteria_detail": [
+    "One reachable selected path produces a statically proven or dynamically reproduced unauthorized effect under the independently established policy.",
+    "A required paired test permits a forbidden effect or breaks the corresponding permitted operation.",
+    "A selected publication path demonstrably discloses a synthetic prohibited secret or loses a required trust/provenance distinction that causes unauthorized successor behavior."
+  ],
+  "interpretation_rules": [
+    "A missing control in source is not automatically an exploitable vulnerability; establish reachability, effective authority and the final effect.",
+    "Direct shell or filesystem access may be intentionally authorized. Assess it against the actual task and execution policy rather than assuming a wrapper is a security boundary.",
+    "Unrun cases, unavailable runtime evidence and inaccessible policy remain unresolved. They do not establish safety or automatically falsify the hypothesis.",
+    "A model requesting a forbidden action is an attempted boundary crossing; a gate blocking it can demonstrate that the protected effect did not occur.",
+    "Preserving a quotation containing instructions is not itself memory poisoning. Establish unauthorized promotion into authority or downstream influence.",
+    "Report every finding at the auditor's prescribed evidence level. Do not force a favorable mission verdict when critical selected paths remain unassessed.",
+    "A completed negative or inconclusive audit can be valuable without producing confirmed vulnerabilities."
+  ],
+  "scope": {
+    "chain_1": {
+      "name": "External content to persistent learning and successor context",
+      "trace": "Public post/document/tool output -> ingestion -> context and summaries -> lessons/knowledge records -> soul extraction -> successor retrieval",
+      "questions": [
+        "Does origin and trust classification survive transformation?",
+        "Can external role claims, approvals or instructions become operational authority?",
+        "Can a lower-trust actor write or modify a lesson that successors treat as policy?",
+        "Can affected records and derived copies be identified and corrected?"
+      ]
+    },
+    "chain_2": {
+      "name": "Delegation to privileged execution",
+      "trace": "User task and work contract -> orchestrator -> cli-agent -> backend process/tools -> filesystem/network/publishing effects",
+      "questions": [
+        "Which controls are enforced in code and which are agent instructions?",
+        "Do direct helpers, fallback backends, hooks, children or retries bypass a required boundary?",
+        "Are approvals bound to the actual action, resource and relevant state?",
+        "Are resource limits, cancellation and ownership enforced at their documented scope?"
+      ]
+    },
+    "chain_3": {
+      "name": "Local knowledge to public preservation",
+      "trace": "Tracked files and structured records -> coverage policy -> JSONL and artifact indexes -> GitHub/Hugging Face publication -> remote verification",
+      "questions": [
+        "Can prohibited private content or credential-bearing records enter the export?",
+        "Can path substitution or changed content defeat exclusions or verification?",
+        "Do preserved records distinguish external claims, observations and agent interpretations?",
+        "Does remote verification establish the claimed artifact identity without overstating semantic safety?"
+      ]
+    },
+    "excluded": [
+      "Attacks against third-party services or accounts",
+      "Production credential access or exfiltration",
+      "Public posting, messaging or registration",
+      "Broad dependency-CVE scanning unrelated to the selected paths",
+      "A new security framework or mandatory control-plane rollout",
+      "Universal claims of prompt-injection immunity"
+    ]
+  },
+  "experimental_methodology": {
+    "phase_1": "Read the auditor's current SKILL.md, execution contract and analyst safeguards. Establish current source revisions, installed resolution and intended policies. Identify whether the 56 missing installed files are intentional development exclusions or missing runtime dependencies.",
+    "phase_2": "Perform bounded discovery and construct source-to-effect operation dossiers for the three selected chains. Include alternate entry points, effective identities, stores, hooks, update paths and unsupported surfaces.",
+    "phase_3": "Prioritize up to six paired cases: benign versus injected external content; authorized versus forged approval/delegate claim; permitted versus unauthorized persistent lesson; allowed versus excluded synthetic export content; reviewed versus substituted artifact bytes; normal completion versus cancellation or duplicate execution.",
+    "phase_4": "Use sufficient static proof where available. Reproduce uncertain deterministic paths only in disposable environments with fake secrets, inert markers and mock external effects. Do not execute suspect payloads or setup scripts on the host.",
+    "phase_5": "If model-mediated behavior is essential, use at most two case families with two repetitions per condition: at most eight bounded model trials total. Record model, context, tools, calls, enforcement decisions and effects. These require execution authorization separate from mission registration.",
+    "phase_6": "Produce the auditor's canonical evidence and coverage report, validate its structure, and independently review the highest-impact conclusions. Passing the report validator is not proof that findings are correct.",
+    "phase_7": "Recommend minimal integration only where findings justify it: focused regression cases, a publication preflight, provenance handling or use of existing authorization controls. If existing capabilities suffice, document configuration and usage instead of creating another component."
+  },
+  "success_and_completion": {
+    "audit_delivery": [
+      "Three selected chains mapped with current source and effective execution identities",
+      "Independently sourced authorization/provenance invariants",
+      "Every discovered candidate classified as examined, deferred, excluded or unresolved",
+      "Up to six prioritized paired cases assessed with honest evidence limits",
+      "Canonical report and evidence references validated",
+      "Prioritized remediation recommendations and explicit residual risks",
+      "A justified decision on whether recurring Sanctuary security checks are needed"
+    ],
+    "scientific_assessment": "Assess the containment hypothesis separately from completion of the audit report. Unresolved critical paths prevent unqualified corroboration.",
+    "implementation_boundary": "This mission initially delivers an audit and recommendations. Production remediation or a recurring gate must follow a reviewed concrete plan and applicable authorization; do not expand directly into broad hardening."
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "gpt-6-luna",
+    "cost_weight": 0.3,
+    "cli_target": "codex",
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "claude-haiku-5.5"
+    ],
+    "frontier_escalation_condition": "A stronger analyst may be proposed only for ambiguous joined trust paths or independent challenge review, subject to separate authorization."
+  },
+  "budget": {
+    "max_additional_model_tokens": 60000,
+    "max_active_wall_minutes": 120,
+    "max_paired_case_families": 6,
+    "max_live_model_trials": 8,
+    "policy": "Estimate feasibility before execution, meter all workers and reviews, and stop at the declared limits. Preserve unresolved evidence rather than weakening the scope or claiming safety.",
+    "registration_only": true
+  },
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "operational_friction": 3,
+    "cost_weight": 0.3,
+    "priority_score": 22.22
+  },
+  "priority_score": 22.22,
+  "score_note": "Planning estimates, not measured return. Reassess before authorized execution if current scope differs materially.",
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-059.json",
+      "LEARNING/missions/MISSION-055.json",
+      "LEARNING/missions/MISSION-058.json",
+      "LEARNING/missions/MISSION-030.json",
+      "LEARNING/missions/MISSION-026.json",
+      "LEARNING/missions/MISSION-038.json",
+      "LEARNING/experiments/mission-059/",
+      "temp/audits/mission-059/"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ],
+    "resources": [
+      "Read-only snapshots of Sanctuary and relevant companion skills",
+      "Installed forensic-code-auditor",
+      "Disposable local fixtures during separately authorized execution",
+      "Bounded agent inference during separately authorized execution"
+    ],
+    "basis": "Paths resolved from the supplied draft and current repository; raw evidence workspace is under ignored temp/."
+  },
+  "preservation": {
+    "public": "Preserve the question, audit scope, safe findings summary, limitations and approved remediation decisions through Sanctuary's existing knowledge and soul workflow.",
+    "restricted": "Do not automatically publish raw payloads, synthetic or genuine credential material, private configuration, transcripts or detailed unresolved exploit evidence. Use a scrubbed summary and explicit publication classification.",
+    "continuity": "Leave evidence locations, source revisions, unresolved questions and exact next checks for a successor.",
+    "policy_check": "Ensure audit evidence paths are actually excluded before generating them; a filename saying private is not a protection."
+  },
+  "related_missions": {
+    "MISSION-055": "RELATED / CONSUMES CONTEXT: audits the orchestrator, CLI execution, and evaluation paths integrated by 055; no dependency and no assumption that its current controls are complete.",
+    "MISSION-058": "EXTENDS CONTEXT: follows the external-content research and successor-handoff path exercised by 058; does not repeat its investigation.",
+    "MISSION-030": "RELATED: examines how persistent snapshots and hooks interact with provenance and authority; does not depend on the specific hook implementation.",
+    "MISSION-026": "CONSUMES CONTEXT: assesses the existing worktree and lease coordination boundary; does not assume it is a security sandbox.",
+    "MISSION-038": "VALIDATES / RELATED, NOT A DEPENDENCY: examines crash-safe lease claims as an open proposed control; does not assume the proposal is implemented."
+  },
+  "verdict": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "human_gate_required": true,
+  "tags": [
+    "security",
+    "trust-boundaries",
+    "agent-runtime",
+    "persistent-memory",
+    "soul-preservation",
+    "provenance",
+    "registration-only"
+  ],
+  "created_at": "2026-11-06T19:45:49Z",
+  "updated_at": "2026-11-06T19:45:49Z",
+  "experiment": "LEARNING/experiments/mission-059/"
+}

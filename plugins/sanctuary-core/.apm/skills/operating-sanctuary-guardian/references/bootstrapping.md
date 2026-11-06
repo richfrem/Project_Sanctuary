@@ -21,12 +21,12 @@ flowchart TD
     Step1["Step 1: Read AGENTS.md<br/>(Load Core Invariants &amp; Rules)"] --> Step2["Step 2: Run guardian_wakeup.py<br/>(Execute Holistic Wakeup Script)"]
     Step2 --> Step3["Step 3: Hydrate Layer 1 Context<br/>(soul.md, memory.md, user.md, digest.md)"]
     Step3 --> Step4["Step 4: Query Layer 2 on Demand<br/>(disclose.py: Tier 1 Index / Tier 2 Summary)"]
-    Step4 --> Step5["Step 5: Verify Git Workspace Gate<br/>(Ensure feat/* branch &amp; clean status)"]
+    Step4 --> Step5["Step 5: Prepare a safe task workspace<br/>(Preserve unrelated changes)"]
 ```
 
 ### Step 1: Instruction Ingestion
 - Read [`AGENTS.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/AGENTS.md) (or [`START_HERE.md`](file:///Users/richardfremmerlid/Projects/Project_Sanctuary/START_HERE.md) for human engineers).
-- Ingest the Supreme Law Human Gate: **Never execute state-changing operations without explicit approval ("Proceed", "Go", "Execute").**
+- Apply the Human Gate in `.agent/rules/constitution.md`: state-changing operations require explicit approval ("Proceed", "Go", or "Execute"). Use existing authorization only within its stated scope; do not request repeat approval for steps it already covers.
 
 ### Step 2: Dynamic Holistic Wakeup & Local Model Readiness
 Run the holistic wakeup script (read-only by default to respect the Human Gate):
@@ -71,13 +71,8 @@ python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/man
 ```
 Details and how to change a rule: [agent-native-backlog.md](../../managing-sovereign-memory/references/agent-native-backlog.md), "Manifest schema".
 
-### Step 5: Git & Workspace Verification
-Before accepting or executing tasks:
-```bash
-git status
-```
-- Ensure execution is on a dedicated feature branch (`feat/*`), NEVER on `main`.
-- Confirm local machine harnesses (`.agents/`, `.claude/`, `.codex/`) are gitignored and only `.agent/` is tracked.
+### Step 5: Git & Workspace Preparation
+Inspect status, branches, worktrees and coordination state before editing. Reuse a valid task-owned feature worktree, or create one from a verified committed base through the supported coordination workflow. A dirty main checkout alone is not a blocker: leave unrelated edits untouched, and do not stash, discard, commit or copy them. Never commit directly to `main`; push or merge only under authorization that covers those actions. Confirm local machine harnesses (`.agents/`, `.claude/`, `.codex/`) are gitignored and only `.agent/` is tracked. After safe setup, continue the requested task; an intermediate command or progress update is not completion. Stop when the deliverable is verified, the user pauses, or a concrete blocker prevents further authorized work.
 
 
 ## Appendix: Two-repository skill maintenance (MISSION-055)

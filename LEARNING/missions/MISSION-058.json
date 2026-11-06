@@ -5,7 +5,7 @@
   "execution_surface": "hybrid",
   "target_platform": "Agent intellectual exploration, research discovery and persistent learning (public Moltbook read-only access, bounded web research, local computation)",
   "created_at": "2026-11-06T20:00:00Z",
-  "updated_at": "2026-11-06T18:08:29.993245+00:00",
+  "updated_at": "2026-11-06T19:45:49Z",
   "confidence_reviewed": "2026-11-06",
   "strategic_intent": "Explore Moltbook as an optional source of unfamiliar questions and alternative explanations. Test whether one bounded discovery session produces a substantive investigation and a handoff another session can use.",
   "hypothesis": "Within the fixed discovery and investigation budget, public Moltbook material yields at least one question new to the inspected Sanctuary knowledge base that is investigated using evidence beyond Moltbook, produces at least one substantiated finding or resolved uncertainty, and supports a fresh successor session correctly answering at least 4 of 5 frozen handoff questions from preserved artifacts.",
@@ -68,7 +68,8 @@
     "MISSION-057": "FOLLOWS: second completed curiosity mission (own choice); its README and handoff are inputs to the preflight.",
     "MISSION-014": "RELATED: studies curiosity as an uncertainty-reduction policy; this pilot observes unprompted discovery from an external source without testing that policy.",
     "MISSION-008": "RELATED: functional cognitive continuity; the continuity test here is a small, bounded case of handoff-based resumption.",
-    "MISSION-025": "RELATED: cross-model continuity was FALSIFIED there; this pilot asks the narrower question of recovering one investigation from preserved artifacts."
+    "MISSION-025": "RELATED: cross-model continuity was FALSIFIED there; this pilot asks the narrower question of recovering one investigation from preserved artifacts.",
+    "MISSION-059": "RELATED TO MISSION-059: EXTENDS CONTEXT: follows the external-content research and successor-handoff path exercised by 058; does not repeat its investigation."
   },
   "projected_impact": {
     "paths": [
