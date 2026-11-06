@@ -1,9 +1,9 @@
 {
- "base_commit": "b4505e487fab994919de18a9e1d3f6fd1d4cdca0",
+ "base_commit": "a7f4ffe2fa9e1fa960fdc00e9ff93933d1b25cdb",
  "dataset_records": 1343,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-06T19:48:47Z",
+ "generated_at": "2026-11-06T19:57:04Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,9 +54,10 @@
   },
   {
    "action": {
-    "unchanged": 10
+    "unchanged": 8,
+    "updated": 2
    },
-   "bytes": 111948,
+   "bytes": 112348,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -78,13 +79,13 @@
     "2a15aa575abd139df37e394551078b31785ed7d2d4aad68758de351b9dc83e1c",
     "6f1719ba97ced659727cdb98a4374ab4bd651bcf0faebf4ca8af3942dd7273ab",
     "2a11eb75e1596f9c40efd87c07c34884bf88a1f454b5ad12e3e02c376dc589be",
-    "37ea61e9ac61fefa3d0a58f6086a7344dfac0cd291a7bcec41e89466f75588b5",
-    "36387d1a03afb23cc2b62543de464712d6cee0ad71de33c2e3d0efbbffec0cfb",
+    "8d86fb6129485f3efebaa6c8ce10075679a1d9c819fe0abb12694f87d96d3188",
+    "7a93ef75cb6fd0967a9d8dda36f43f7e50057e910f9116854e3ff526c88b5781",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "27c164cfd172b552aad805c2d6da959ce903e5a1d3148d39c7ac91eb3a1120fc"
    ],
    "required": true,
-   "source_sha256": "eec0e9955d5c0bfe57cb11dc1bd87f9a274a2131b9372804314dab3a43f8f7c1",
+   "source_sha256": "4d313a2494040798bc1d88294dc2c90df2962ad194b6afbd3108678436fd04a1",
    "status": "included"
   },
   {
@@ -142,7 +143,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 22706,
    "category": "root_architecture_docs",
@@ -23697,7 +23698,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 3699,
    "category": "mission_manifests",
@@ -23765,7 +23766,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4551,
    "category": "mission_manifests",
@@ -23901,7 +23902,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4253,
    "category": "mission_manifests",
@@ -24190,7 +24191,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7808,
    "category": "mission_manifests",
@@ -24241,7 +24242,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 9115,
    "category": "mission_manifests",
@@ -24258,7 +24259,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 12362,
    "category": "mission_manifests",
@@ -25769,7 +25770,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7092,
    "category": "root_architecture_docs",
@@ -33465,7 +33466,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7548,
    "category": "skill_documentation",
