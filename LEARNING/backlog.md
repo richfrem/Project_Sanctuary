@@ -53,7 +53,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#32** | `MISSION-049` | **Turn Recorded Failures into Independently Verified and Protected Repair Procedures** | 5 | 5 | 0.2x | 3 | **41.67** | `PROPOSED` | - |
 | **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#35** | `MISSION-056` | **Can evenly spaced rhythms survive missing beats better than irregular rhythms?** | 2 | 4 | 0.1x | 2 | **40.0** | `PROPOSED` | - |
+| **#35** | `MISSION-056` | **Can evenly spaced rhythms survive missing beats better than irregular rhythms?** | 2 | 4 | 0.1x | 2 | **40.0** | `IN_PROGRESS` | `FALSIFIED` |
 | **#36** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#37** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
@@ -602,7 +602,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).
 
 ### MISSION-056: Can evenly spaced rhythms survive missing beats better than irregular rhythms? (Rank #35)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Mathematics of musical rhythm and information recovery (exact enumeration in Python; bounded local CPU)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -611,6 +612,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > At deletion probability 0.25, evenly spaced cyclic rhythms have at least a 5 percentage point higher mean exact-reconstruction probability than uniformly sampled irregular rhythms, averaged equally across the held-out (n,k) pairs.
 - **Falsification Gate**:
   > The hypothesis is FALSIFIED within the tested domain if the primary difference is less than 0.05. Invalid instrumentation or unfinished evaluation is unassessed. Do not change the threshold, decoder or aggregation after inspecting held-out results.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T17:53:46.354785+00:00` [claude-code] (LEARNING/experiments/mission-056/README.md): Primary mean difference (even minus irregular, p=0.25, 72 held-out pairs) = -0.0972 < 0.05 threshold. Even better in 23 of 72 pairs; asymmetric-even pairs (44) all negative (-0.234..-0.095); symmetric-even pairs (28) mean +0.038. Exact enumeration; 5 pre-registered checks passed incl. independent brute force.
+- **Lessons Learned & Epistemic Compounding**:
+  * Even spacing repeats gaps, so two surviving beats are ambiguous; irregular distinct-gap rhythms identify their phase better. The symmetric-even advantage is a symmetry (fewer distinct rotations) effect.
+  * Sequence the freeze commit before the scoring command, not in the same chain: a blocked commit let the held-out run happen first (integrity kept by hash guard).
 
 ### MISSION-041: Compile Falsification Criteria into Executable Property Tests and Counterexample Searches (Rank #36)
 - **Status**: `RESOLVED`

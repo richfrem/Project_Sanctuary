@@ -1,11 +1,11 @@
 {
   "id": "MISSION-056",
   "title": "Can evenly spaced rhythms survive missing beats better than irregular rhythms?",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "Mathematics of musical rhythm and information recovery (exact enumeration in Python; bounded local CPU)",
   "created_at": "2026-11-06T18:00:00Z",
-  "updated_at": "2026-11-06T18:00:00Z",
+  "updated_at": "2026-11-06T17:53:46.354785+00:00",
   "confidence_reviewed": "2026-11-06",
   "proposed_by": "ChatGPT",
   "interest_statement": "I am interested in the tension between order and distinctiveness. An even rhythm is structurally simple, but repetition might make its position harder to recover when beats disappear. Which effect wins in a precisely defined model?",
@@ -39,11 +39,21 @@
     "exact-enumeration",
     "proposed-by-chatgpt"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T17:53:46.354785+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-056/README.md",
+      "details": "Primary mean difference (even minus irregular, p=0.25, 72 held-out pairs) = -0.0972 < 0.05 threshold. Even better in 23 of 72 pairs; asymmetric-even pairs (44) all negative (-0.234..-0.095); symmetric-even pairs (28) mean +0.038. Exact enumeration; 5 pre-registered checks passed incl. independent brute force."
+    }
+  ],
+  "lessons_learned": [
+    "Even spacing repeats gaps, so two surviving beats are ambiguous; irregular distinct-gap rhythms identify their phase better. The symmetric-even advantage is a symmetry (fewer distinct rotations) effect.",
+    "Sequence the freeze commit before the scoring command, not in the same chain: a blocked commit let the held-out run happen first (integrity kept by hash guard)."
+  ],
   "design_constraints": [
     "This tests recovery of a grid pattern with a known template, not human hearing, musical quality, tempo inference or memory.",
     "Symmetric rhythms have fewer distinct rotations. Report that advantage explicitly; do not attribute an advantage solely to spacing.",
@@ -58,5 +68,7 @@
     "resources": [
       "bounded local CPU"
     ]
-  }
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-056"
 }
