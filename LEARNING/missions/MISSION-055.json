@@ -1,7 +1,7 @@
 {
   "id": "MISSION-055",
   "title": "Reusable Agent Learning Loop: Integrate Orchestration, CLI Execution, and Evaluation Across Repositories",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "hybrid",
   "target_platform": "Companion repo richfrem/agent-plugins-skills (agent-orchestration: orchestrating-agent-work, cli-agent, new shared evaluation skill); Sanctuary thin adapter in sanctuary-core; Protocol 133; APM global + project installs; deterministic fixture tests plus one small genuine CLI run",
   "created_at": "2026-11-06T17:00:00Z",
@@ -74,5 +74,7 @@
       "GLOBAL APM install (~/.claude/skills, ~/.agents/skills, antigravity) and project install: separate shared-state operations, authorized by the 2026-11-06 instruction, after source merge"
     ],
     "basis": "Declared 2026-11-06 by claude-code from the human's complete brief."
-  }
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-055"
 }
