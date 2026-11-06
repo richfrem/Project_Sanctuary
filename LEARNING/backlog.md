@@ -70,7 +70,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#49** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
 | **#50** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
 | **#51** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
-| **#52** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#52** | `MISSION-053` | **Turn the MISSION-052 Orchestration Evidence into Durable Improvements to the Shared orchestrating-agent-work Skill, Verified by Regression Scenarios** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
+| **#53** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -793,7 +794,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any of: an undeclared edit, clobbered file or write into a peer worktree; fewer than 2 accepted deliveries; the workers were not concurrent (overlap under 50% of the shortest runtime); per-worker tokens attributable for fewer than 3 workers; an integration needing more than 1 conflict round despite merge_prep, or a red combined suite; a push, merge to main or publication without explicit human approval; the human-managed MLX server stopped or reconfigured; or review finds no defect in any of the four deliveries. This is NOT a test of MISSION-033's three-worker thresholds (60% wall-clock, 25% orchestrator overhead, 80% review agreement), and no speedup claim is valid without a measured baseline.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #52)
+### MISSION-053: Turn the MISSION-052 Orchestration Evidence into Durable Improvements to the Shared orchestrating-agent-work Skill, Verified by Regression Scenarios (Rank #52)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Companion repo richfrem/agent-plugins-skills (plugins/agent-orchestration/.apm/skills/orchestrating-agent-work); Claude Code orchestrator; Sanctuary Protocol 133 for source-then-install; APM global install
+- **Cheapest Viable Model**: `claude-sonnet-5.5` (Tier: `standard`, CLI: `claude`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A focused revision of the shared orchestrating-agent-work skill (SKILL.md kept concise, existing references extended, deterministic checks where they fit, no new scheduler/ledger/control plane) changes an orchestrator's decisions on seven failure scenarios taken from MISSION-052: (1) a worker returns scaffolding while the assigned outcome is unfinished; (2) one worker still runs while another delivery is ready for review; (3) a cloud arm is independent of a congested local resource; (4) a second launcher attempts an already-owned execution unit; (5) logs contain duplicate ids and malformed responses; (6) a required CLI exists in the parent shell but not the worker environment; (7) the user already authorized the required continuation. Expected decisions are written BEFORE evaluation. Thresholds: the revised skill yields the expected decision in >= 6 of 7 scenarios and at least 3 more than the current installed version, using deterministic checks where behavior is checkable, with no regression in the skill's existing evals or tests and a main SKILL.md growth of <= 25%.
+- **Falsification Gate**:
+  > Fewer than 6 of 7 scenarios decided as expected, or fewer than 3 more than the unrevised baseline, or any regression in existing evals or tests, or main SKILL.md growth above 25%, or a rule added that duplicates existing coverage instead of improving its discoverability or enforcement. A packaging or link check passing is NOT evidence that orchestration behavior improved. Whether future orchestrators need fewer human corrections is a longitudinal question this mission does not claim to answer.
+
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #53)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI

@@ -1,0 +1,61 @@
+{
+  "id": "MISSION-053",
+  "title": "Turn the MISSION-052 Orchestration Evidence into Durable Improvements to the Shared orchestrating-agent-work Skill, Verified by Regression Scenarios",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Companion repo richfrem/agent-plugins-skills (plugins/agent-orchestration/.apm/skills/orchestrating-agent-work); Claude Code orchestrator; Sanctuary Protocol 133 for source-then-install; APM global install",
+  "created_at": "2026-11-06T06:40:00Z",
+  "updated_at": "2026-11-06T06:40:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 1.0,
+    "operational_friction": 4,
+    "priority_score": 5.0
+  },
+  "priority_score": 5.0,
+  "hypothesis": "A focused revision of the shared orchestrating-agent-work skill (SKILL.md kept concise, existing references extended, deterministic checks where they fit, no new scheduler/ledger/control plane) changes an orchestrator's decisions on seven failure scenarios taken from MISSION-052: (1) a worker returns scaffolding while the assigned outcome is unfinished; (2) one worker still runs while another delivery is ready for review; (3) a cloud arm is independent of a congested local resource; (4) a second launcher attempts an already-owned execution unit; (5) logs contain duplicate ids and malformed responses; (6) a required CLI exists in the parent shell but not the worker environment; (7) the user already authorized the required continuation. Expected decisions are written BEFORE evaluation. Thresholds: the revised skill yields the expected decision in >= 6 of 7 scenarios and at least 3 more than the current installed version, using deterministic checks where behavior is checkable, with no regression in the skill's existing evals or tests and a main SKILL.md growth of <= 25%.",
+  "falsification_criteria": "Fewer than 6 of 7 scenarios decided as expected, or fewer than 3 more than the unrevised baseline, or any regression in existing evals or tests, or main SKILL.md growth above 25%, or a rule added that duplicates existing coverage instead of improving its discoverability or enforcement. A packaging or link check passing is NOT evidence that orchestration behavior improved. Whether future orchestrators need fewer human corrections is a longitudinal question this mission does not claim to answer.",
+  "experiment": "Read the companion AGENTS.md, the skill and its references, and Sanctuary Protocol 133; compare the source and installed versions and record which one the session used. Build the failure table (observed failure | evidence | cause: missing guidance, ignored guidance, executor/installation/telemetry defect, or Sanctuary-specific | existing coverage | proposed correction | verification) covering: partial deliverables treated as the endpoint; review and integration waiting on other workers; cloud evaluation delayed behind local inference; shared-resource contention needing explicit scheduling and validity assessment; duplicate-execution risk without explicit ownership transfer; progress mixing logged records, valid responses, unique trials and remaining work; CLI availability not verified in the worker environment; repeated permission questions on authorized work; friction/error counters not reflecting failures and human corrections. Keep Sanctuary-specific content in Sanctuary. Write the seven scenarios and expected decisions first, run them against the unrevised skill, revise in a feature branch of the companion repo, rerun, then follow Protocol 133 and the APM dependency configuration to update the installed copy and verify its files against the intended source revision. Never hand-edit installed copies.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "claude-sonnet-5.5",
+    "cli_target": "claude",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ]
+  },
+  "tags": [
+    "orchestration",
+    "skill-improvement",
+    "companion-repo",
+    "protocol-133",
+    "regression-scenarios",
+    "human-corrections",
+    "mission-052-lessons"
+  ],
+  "related_missions": {
+    "MISSION-052": "PARENT: the evidence source; its closeout.md records the failures and the human interventions. Start this mission only after 052 and its assigned missions (004, 041, 050) are closed.",
+    "MISSION-033": "READS: the original orchestrator-skill question; this mission improves the existing shared skill instead of creating a Sanctuary-only one.",
+    "MISSION-036": "READS: evidence contracts; separates delivery, empirical validity and integration state.",
+    "MISSION-035": "READS: measured usage and the telemetry-gap reporting rules."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/experiments/mission-053/"
+    ],
+    "resources": [
+      "companion repo ../agent-plugins-skills (feature branch/worktree)",
+      "global APM install (after the authorized update)"
+    ],
+    "basis": "Declared 2026-11-06 by claude-code. Sanctuary-side edits are limited to this mission's experiment folder and records; the shared skill changes live in the companion repo."
+  }
+}
