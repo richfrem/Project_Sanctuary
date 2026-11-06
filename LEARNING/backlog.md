@@ -58,7 +58,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
-| **#40** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#40** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `IN_PROGRESS` | - |
 | **#41** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
 | **#42** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
 | **#43** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
@@ -669,7 +669,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * A shared model lock held by the orchestrator can stall a worker that misreads the wait as a timeout.
 
 ### MISSION-054: Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings (Rank #40)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: evaluating-agent-work skill (sanctuary-core); existing scoring, usage telemetry, procedure-outcome and memory mechanisms; deterministic Python/shell checks; proposed additional inference ceiling 150k total tokens (an initial ceiling, not a target)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
