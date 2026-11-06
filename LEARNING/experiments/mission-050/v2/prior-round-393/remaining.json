@@ -1,0 +1,1432 @@
+{
+  "counts_by_split": {
+    "control": 210,
+    "held_out": 27
+  },
+  "next_trial": "held_out-230026-adaptive-v2",
+  "remaining": [
+    {
+      "policy": "adaptive-v2",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230026,
+      "split": "held_out",
+      "trial": "held_out-230026-fixed-time-240"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230027,
+      "split": "held_out",
+      "trial": "held_out-230027-fixed-time-480"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230028,
+      "split": "held_out",
+      "trial": "held_out-230028-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230029,
+      "split": "held_out",
+      "trial": "held_out-230029-end-only"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230000,
+      "split": "control",
+      "trial": "control-230000-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230001,
+      "split": "control",
+      "trial": "control-230001-end-only"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230002,
+      "split": "control",
+      "trial": "control-230002-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230003,
+      "split": "control",
+      "trial": "control-230003-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230004,
+      "split": "control",
+      "trial": "control-230004-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230005,
+      "split": "control",
+      "trial": "control-230005-fixed-time-240"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230006,
+      "split": "control",
+      "trial": "control-230006-fixed-time-480"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230007,
+      "split": "control",
+      "trial": "control-230007-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230008,
+      "split": "control",
+      "trial": "control-230008-end-only"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230009,
+      "split": "control",
+      "trial": "control-230009-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230010,
+      "split": "control",
+      "trial": "control-230010-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230011,
+      "split": "control",
+      "trial": "control-230011-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230012,
+      "split": "control",
+      "trial": "control-230012-fixed-time-240"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230013,
+      "split": "control",
+      "trial": "control-230013-fixed-time-480"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230014,
+      "split": "control",
+      "trial": "control-230014-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230015,
+      "split": "control",
+      "trial": "control-230015-end-only"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230016,
+      "split": "control",
+      "trial": "control-230016-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230017,
+      "split": "control",
+      "trial": "control-230017-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230018,
+      "split": "control",
+      "trial": "control-230018-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230019,
+      "split": "control",
+      "trial": "control-230019-fixed-time-240"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230020,
+      "split": "control",
+      "trial": "control-230020-fixed-time-480"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230021,
+      "split": "control",
+      "trial": "control-230021-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230022,
+      "split": "control",
+      "trial": "control-230022-end-only"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230023,
+      "split": "control",
+      "trial": "control-230023-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230024,
+      "split": "control",
+      "trial": "control-230024-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230025,
+      "split": "control",
+      "trial": "control-230025-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230026,
+      "split": "control",
+      "trial": "control-230026-fixed-time-240"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230027,
+      "split": "control",
+      "trial": "control-230027-fixed-time-480"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-end-only"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230028,
+      "split": "control",
+      "trial": "control-230028-adaptive-v2"
+    },
+    {
+      "policy": "fixed-steps-1",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-fixed-steps-1"
+    },
+    {
+      "policy": "fixed-steps-2",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-fixed-steps-2"
+    },
+    {
+      "policy": "fixed-steps-4",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-fixed-steps-4"
+    },
+    {
+      "policy": "fixed-time-240",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-fixed-time-240"
+    },
+    {
+      "policy": "fixed-time-480",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-fixed-time-480"
+    },
+    {
+      "policy": "adaptive-v2",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-adaptive-v2"
+    },
+    {
+      "policy": "end-only",
+      "seed": 230029,
+      "split": "control",
+      "trial": "control-230029-end-only"
+    }
+  ],
+  "remaining_trials": 237
+}

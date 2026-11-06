@@ -57,7 +57,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#36** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
 | **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
-| **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#40** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#41** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
 | **#42** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
@@ -645,7 +645,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Any threshold missed falsifies the hypothesis. A reconstruction that works only because it accesses undeclared host caches or environmental secrets fails. Same-machine recovery does not establish cross-hardware portability.
 
 ### MISSION-050: Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery (Rank #39)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Multi-agent coordination harness; manage_coordination.py; relay.py; evaluating-agent-work telemetry (ceiling 1M tokens, 12 execution-hours)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
@@ -654,6 +655,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A checkpoint policy using measured interruption risk, progress value, and checkpoint cost will: (a) produce >= 20% more verified completed subgoals per fixed resource budget than the best fixed-interval policy on development data; (b) lose <= 5% of acknowledged progress; (c) keep checkpoint overhead <= 10% of inference tokens; and (d) lose no more than 3% throughput in interruption-free controls.
 - **Falsification Gate**:
   > Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T07:10:54.800563+00:00` [claude-code] (LEARNING/experiments/mission-050/v2/results.md + orchestrator-addendum.md): Frozen v2 candidate (cold-start repair with pre-registered prior), all 630 planned trials complete (simulation 1,620 trials; real-agent arm with local Qwen: 30 tasks x 7 policies x development/held-out/control). Simulation: gain -14.9% dev / -11.6% held-out (needs >=20%), acknowledged loss 47.7% / 46.2% (needs <=5%), control throughput loss 3.5998% (needs <=3%). Real arm: gain -78.0% dev / -71.7% held-out, loss 93.2% / 90.9%, checkpoint overhead 7.6-8.0% (pass), control loss 0.0% frozen measure and 1.09% by request service time (pass by construction: adaptive behaved as end-only, 0 early requests in 90 trials). Independent reviews (Claude reviewer of Codex work): simulation accepted; real arm changes-requested then fixed (adaptive == end-only by arithmetic; budget infeasible: even the best fixed policy loses 57-58%; 1,113/1,282 wrong calls were identical deterministic repeats; ~46% of budget unused; v2 prior chosen post hoc after v1 held-out). Scope: this frozen design and candidate, not adaptive checkpointing in general; handoff and quota denial simulated; real arm tested a sequential request driver, not a live long-context agent. Contention: 58% of summed wall time was lock wait; metrics are token-based; control claim re-checked on service time; one interrupted trial preserved and rerun, reproduced exactly.
+- **Lessons Learned & Epistemic Compounding**:
+  * A policy whose trigger cannot fire inside the trial budget degenerates to the baseline; check feasibility before a real-agent run.
+  * Interrupted trials: preserve the partial snapshot, rerun deterministically, exclude by explicit response id, assert reproduction.
+  * A shared model lock held by the orchestrator can stall a worker that misreads the wait as a timeout.
 
 ### MISSION-054: Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings (Rank #40)
 - **Status**: `PROPOSED`

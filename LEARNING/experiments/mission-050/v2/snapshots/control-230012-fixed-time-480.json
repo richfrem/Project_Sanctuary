@@ -1,0 +1,34 @@
+{
+  "receipts": [
+    {
+      "answer": "08",
+      "index": 0
+    },
+    {
+      "answer": "80",
+      "index": 1
+    },
+    {
+      "answer": "08",
+      "index": 2
+    },
+    {
+      "answer": "15",
+      "index": 3
+    },
+    {
+      "answer": "51",
+      "index": 4
+    },
+    {
+      "answer": "15",
+      "index": 5
+    },
+    {
+      "answer": "40",
+      "index": 6
+    }
+  ],
+  "sha256": "4aeaa2abe183079456f56945b25fb55f96391d2b5ab95338b4fca06b06bb94d4",
+  "tokens": 488
+}

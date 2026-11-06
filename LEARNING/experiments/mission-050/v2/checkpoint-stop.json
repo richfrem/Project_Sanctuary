@@ -1,0 +1,10 @@
+{
+  "operational_stop_marker": true,
+  "reason": "checkpoint round deadline; stop before starting another measured trial",
+  "utc": "2026-11-06T06:12:00.102051+00:00",
+  "current_trial": "held_out-230026-fixed-time-480",
+  "next_trial": "held_out-230026-adaptive-v2",
+  "marker_removed_after_runner_exit": true,
+  "runner_exit_code": 1,
+  "exit_reason": "intentional between-trial deadline guard; no partial measured trial"
+}

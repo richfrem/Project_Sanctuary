@@ -1,0 +1,12 @@
+{
+  "complete_real_experiment": true,
+  "completed_gate_misses": [
+    "development: improvement_pass",
+    "development: loss_pass",
+    "held_out: improvement_pass",
+    "held_out: loss_pass"
+  ],
+  "real_candidate": "FALSIFIED",
+  "reason": "Any completed n=30 primary gate miss falsifies this candidate. All 630 planned trials are complete; verdict scoped to the frozen v2 candidate and 1,000-token design.",
+  "simulation": "FALSIFIED"
+}

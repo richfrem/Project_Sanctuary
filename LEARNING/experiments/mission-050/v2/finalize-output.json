@@ -1,0 +1,38 @@
+{
+  "completed_real_trials": 630,
+  "planned_real_trials": 630,
+  "measured_prompt_tokens": 314959,
+  "measured_completion_tokens": 24727,
+  "measured_total_tokens": 339686,
+  "measured_cached_prompt_tokens": 287810,
+  "calls": 5626,
+  "work_calls": 4654,
+  "wrong_work_calls": 1282,
+  "checkpoint_calls": 972,
+  "role_B_work_calls": 957,
+  "invalid_checkpoint_responses": 0,
+  "lock_wait_seconds": 3692.520056224079,
+  "request_wall_seconds": 6398.476462581777,
+  "observed_events": {
+    "context_reset": 342,
+    "worker_termination": 351,
+    "quota_denial": 349,
+    "vendor_handoff": 343
+  },
+  "simulated_denials": 308,
+  "http_or_usage_errors": [],
+  "adaptive_nonfinal_requests": 0,
+  "experimental_token_ceiling": 1000000,
+  "supervisor_session_tokens": "unavailable; never self-reported",
+  "wall_seconds_since_real_start": 7628.976410865784,
+  "resumed_round": {
+    "baseline_completed_trials": 393,
+    "additional_completed_trials": 237,
+    "additional_calls": 2075,
+    "measured_prompt_tokens": 116622,
+    "measured_completion_tokens": 9060,
+    "measured_total_tokens": 125682,
+    "lock_wait_seconds": 1336.627725481405,
+    "request_wall_seconds": 2377.9140850047115
+  }
+}

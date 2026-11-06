@@ -1,0 +1,1 @@
+{"checkpoint_calls_audited": 618, "completed_real_trials_audited": 393, "frozen_hashes_and_v1_integrity": "PASS", "incorrect_work_calls": 556, "measured_server_tokens_all_calls": 214004, "partial_trial_call_counts": {}, "real_calls": 3551, "simulation_trials_replayed": 1620, "unique_server_response_ids": 3551, "work_calls_audited": 2933}

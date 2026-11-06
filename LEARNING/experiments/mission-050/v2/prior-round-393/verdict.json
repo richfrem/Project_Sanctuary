@@ -1,0 +1,10 @@
+{
+  "complete_real_experiment": false,
+  "completed_gate_misses": [
+    "development: improvement_pass",
+    "development: loss_pass"
+  ],
+  "real_candidate": "FALSIFIED",
+  "reason": "Any completed n=30 primary gate miss falsifies this candidate; unfinished conditions remain unmeasured. Full corroboration requires every planned condition.",
+  "simulation": "FALSIFIED"
+}
