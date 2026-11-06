@@ -67,3 +67,10 @@ The installed `merge_prep.py regenerate` ran against the integrated checkout:
 no ledger drift, no mission-manifest changes, local preservation `local_complete`,
 no coverage problems; remote remains separate pending the explicitly authorized sync.
 The final handoff is published before the resulting export so it also reaches JSONL.
+
+Flight-board check-in measured 637 seconds and reported 4,432,294 aggregate rollout
+tokens, including 4,316,800 cache reads, with `concurrent=true`; that aggregate is
+not an attributable host-session token measurement. It is recorded as reported
+rather than used to claim cost savings. The installed coordination command resolves
+its project from its own installed path; its two new events and generated budget
+projection were carried into this source-record PR before final extraction.
