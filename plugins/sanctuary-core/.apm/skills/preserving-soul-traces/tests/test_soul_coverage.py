@@ -177,6 +177,13 @@ class Check(unittest.TestCase):
         git(d, "add", "-A"); git(d, "commit", "-qm", "receipt"); git(d, "push", "-q")
         self.assertEqual(S.report(S.check(d)), 0)                                     # still SOUL PERSISTED after the receipt is committed
 
+    def test_changing_excluded_code_does_not_stale_the_export_but_changing_a_preserved_doc_does(self):
+        d = make_repo(); S.export(d)
+        (d / "plugins/sanctuary-core/.apm/skills/x/scripts/a.py").write_text("x=2\n"); git(d, "commit", "-qam", "code"); git(d, "push", "-q")
+        self.assertEqual(S.check(d)["local_export"], "current")
+        (d / "plugins/sanctuary-core/.apm/skills/x/SKILL.md").write_text("# Skill\nCHANGED DOC\n"); git(d, "commit", "-qam", "doc"); git(d, "push", "-q")
+        self.assertEqual(S.check(d)["local_export"], "STALE")
+
     def test_receipt_for_an_older_dataset_does_not_verify_the_new_one(self):
         d = make_repo(); S.export(d)
         SYNC.write_receipt(d, "o/r", {"verified": True, "revision": "r1", "local_dataset_sha256": "0" * 64}, True)
