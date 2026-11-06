@@ -1,0 +1,2452 @@
+{
+  "started_utc": "2026-11-06T05:06:38Z",
+  "lock": {
+    "curation_sha256": "ca5791338efb8973fa0c216d011a25101b56c889808441308e004a2f23e1ed48",
+    "freeze_sha256": "b3c9ba10ab1cc8d3595ce252d8556c342ed525b2d7c74a2b04e7bef71a92d2cb"
+  },
+  "development": true,
+  "components": [
+    {
+      "id": "lease",
+      "family": "lease",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 2178,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.09222329198382795,
+          "seed": 41052,
+          "trial_budget": 2178,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.08057858399115503,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "185998fb4b873131776a6624f25188fa99e55e7f98438dc787710d69248c81d2"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.0625033340184018,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "4c0a418542c9d5c040d43fda0acdd7247e3044f158b6c17f485d69fb03b42795"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_lease",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06017820804845542,
+            "seed": 41052,
+            "trial_budget": 2178,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              14,
+              0,
+              true
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.060414958046749234,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "185998fb4b873131776a6624f25188fa99e55e7f98438dc787710d69248c81d2"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              14,
+              13,
+              true
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06722458405420184,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "4c0a418542c9d5c040d43fda0acdd7247e3044f158b6c17f485d69fb03b42795"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.424170000012964,
+      "preparation_seconds": 0.019725708989426494,
+      "total_computational_seconds": 0.4438957090023905
+    },
+    {
+      "id": "renew",
+      "family": "lease",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07270441704895347,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "100abdf6786be1011b7840af04035ea914f7e194b07854026d06cf950d393485"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07266612502280623,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "18bf8a42173da40a289eb5039b85b8f45af0fb70c79f87893fd3558c1c8319f4"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_renew",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              0,
+              6,
+              false
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07441854209173471,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "100abdf6786be1011b7840af04035ea914f7e194b07854026d06cf950d393485"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              3,
+              8,
+              false
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.08106966700870544,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "18bf8a42173da40a289eb5039b85b8f45af0fb70c79f87893fd3558c1c8319f4"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.30186429200693965,
+      "preparation_seconds": 0.016286290949210525,
+      "total_computational_seconds": 0.3181505829561502
+    },
+    {
+      "id": "release",
+      "family": "lease",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.08015520800836384,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "d98cadb4dbc61959eb77fe8d5a5b8888ebb2e4769a3b20e1b08fa777998c426f"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07013804197777063,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "9639d4e170857d98d42759a3b90c1399002b9784600efabd209bcb3c754c172c"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_release",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A",
+              "A",
+              true
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06538033299148083,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "d98cadb4dbc61959eb77fe8d5a5b8888ebb2e4769a3b20e1b08fa777998c426f"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A",
+              "A",
+              true
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06785995804239064,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "9639d4e170857d98d42759a3b90c1399002b9784600efabd209bcb3c754c172c"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.2844610420288518,
+      "preparation_seconds": 0.0003587091341614723,
+      "total_computational_seconds": 0.2848197511630133
+    },
+    {
+      "id": "fence",
+      "family": "lease",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.0684952080482617,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ccf8b9092e455faab82f189c767bb5f0e0406749346fcbc4bbd1a15f7402a3d4"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07272041600663215,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "ecaf3feb7e0029e02a1de9d38cc830c9b922fc3cab0d4166aef4fef3dc4d4831"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_fence",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              0
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07630029204301536,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ccf8b9092e455faab82f189c767bb5f0e0406749346fcbc4bbd1a15f7402a3d4"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              3
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07255874993279576,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "ecaf3feb7e0029e02a1de9d38cc830c9b922fc3cab0d4166aef4fef3dc4d4831"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.2908309999620542,
+      "preparation_seconds": 0.0008060830878093839,
+      "total_computational_seconds": 0.2916370830498636
+    },
+    {
+      "id": "path",
+      "family": "path",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 488281,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 3.0485169159946963,
+          "seed": 41052,
+          "trial_budget": 488281,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.08425662491936237,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "13f02cd3128666aca8f16a5e9730f129f0e22f6ad39a6f8be454524a6aecef65"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07439700001850724,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "1dd820341ec3f5c8c4251f1c7477c3f4f05e9eea90fe63ad37785caca8841de6"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_path",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06716770899947733,
+            "seed": 41052,
+            "trial_budget": 488281,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "a",
+              ".",
+              "a"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06696154200471938,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "13f02cd3128666aca8f16a5e9730f129f0e22f6ad39a6f8be454524a6aecef65"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "a",
+              "..",
+              "..",
+              "a"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07973087497521192,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "1dd820341ec3f5c8c4251f1c7477c3f4f05e9eea90fe63ad37785caca8841de6"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 3.4221653749700636,
+      "preparation_seconds": 6.9135543330339715,
+      "total_computational_seconds": 10.335719708004035
+    },
+    {
+      "id": "relative",
+      "family": "path",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06673054106067866,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "f671f3ac2d695a799c14222693ce54bb738ee09afb4271c032cae637ac986fe7"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.09953116695396602,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "1d47002a9b69fa740d72e8037ef119a98faef856ee302d8f98b95e130b2db11f"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_relative",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06468541698995978,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "f671f3ac2d695a799c14222693ce54bb738ee09afb4271c032cae637ac986fe7"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A",
+              "..",
+              "a"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06401816697325557,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "1d47002a9b69fa740d72e8037ef119a98faef856ee302d8f98b95e130b2db11f"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.29575216700322926,
+      "preparation_seconds": 0.002682249993085861,
+      "total_computational_seconds": 0.2984344169963151
+    },
+    {
+      "id": "extension",
+      "family": "path",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05634945898782462,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "b5e762c846b7c267dfaa95c98e67a21dd2953ccd7848c44550e41929507bf180"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06928179098758847,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "0193c90b8596eda8dc2820831546afacbd8e0ea0934964911f07611e98b3a53d"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_extension",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A.py"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06204479199368507,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "b5e762c846b7c267dfaa95c98e67a21dd2953ccd7848c44550e41929507bf180"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "a.PY"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.058127874974161386,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "0193c90b8596eda8dc2820831546afacbd8e0ea0934964911f07611e98b3a53d"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.2464907499961555,
+      "preparation_seconds": 0.0017761250492185354,
+      "total_computational_seconds": 0.24826687504537404
+    },
+    {
+      "id": "path_key",
+      "family": "path",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06151516700629145,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ee8a278e09c71687b267c508030a06032496b304df2158eb28012852a9b30f8e"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.061245292075909674,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "7441500e69007b95712fa21e50ba0e95d0cfeb1f156f6102a61f6d9c041ffea2"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_path_key",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.0607492079725489,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ee8a278e09c71687b267c508030a06032496b304df2158eb28012852a9b30f8e"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "a",
+              "A"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05667708406690508,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "7441500e69007b95712fa21e50ba0e95d0cfeb1f156f6102a61f6d9c041ffea2"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.24090233305469155,
+      "preparation_seconds": 0.003466124995611608,
+      "total_computational_seconds": 0.24436845805030316
+    },
+    {
+      "id": "replay",
+      "family": "replay",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 65987,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 1.0036804999690503,
+          "seed": 41052,
+          "trial_budget": 65987,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06744175008498132,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "1304cad8fbc1255c8d91b1eab7e6b51ea9455515f51ef9347e2dcf1af48ddfb7"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06677754200063646,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "13219c54c3d3c1cfc73150c243e6ac574a995a276389471f5398dd3aad9e0b20"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_replay",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07498533301986754,
+            "seed": 41052,
+            "trial_budget": 65987,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                0,
+                20
+              ],
+              [
+                6,
+                -20
+              ],
+              [
+                2,
+                3
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06794795789755881,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "1304cad8fbc1255c8d91b1eab7e6b51ea9455515f51ef9347e2dcf1af48ddfb7"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                3,
+                -20
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.0657220829743892,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "13219c54c3d3c1cfc73150c243e6ac574a995a276389471f5398dd3aad9e0b20"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Structural identity: replay inputs contain only lists and integers; string-only operator cannot alter any full-domain input."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Structural identity: replay inputs contain only lists and integers; string-only operator cannot alter any full-domain input."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 1.3477616249583662,
+      "preparation_seconds": 1.4540659169433638,
+      "total_computational_seconds": 2.80182754190173
+    },
+    {
+      "id": "last_replay",
+      "family": "replay",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06577912496868521,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "7543688377fdd327d4946e774db2f20d94819dcda7ec4a9e3fe125ca0b3bd34c"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06739304203074425,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "222fb4bdc1851659581b13803247dd70711c57932a10812c67e5e7c25b8ab9e0"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_last_replay",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                "A",
+                1
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06599495897535235,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "7543688377fdd327d4946e774db2f20d94819dcda7ec4a9e3fe125ca0b3bd34c"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                "A",
+                1
+              ],
+              [
+                "a",
+                -1
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06668595899827778,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "222fb4bdc1851659581b13803247dd70711c57932a10812c67e5e7c25b8ab9e0"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.2667008750140667,
+      "preparation_seconds": 0.01235816697590053,
+      "total_computational_seconds": 0.2790590419899672
+    },
+    {
+      "id": "revision",
+      "family": "replay",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.059310375014320016,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ea9038b4ab2427da7e92aa59c8283499485acc18c7c9589eeaa3c3eafaacf21b"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05926854198332876,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "f3b1746d4a2a57754f0c6cceb1ad326a236a1937700ffe90a05acfe021695a3c"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_revision",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.059508625068701804,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ea9038b4ab2427da7e92aa59c8283499485acc18c7c9589eeaa3c3eafaacf21b"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              4,
+              1,
+              4
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.057283999980427325,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "f3b1746d4a2a57754f0c6cceb1ad326a236a1937700ffe90a05acfe021695a3c"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 655,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.23608729103580117,
+      "preparation_seconds": 0.007879959070123732,
+      "total_computational_seconds": 0.2439672501059249
+    },
+    {
+      "id": "tombstone",
+      "family": "replay",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06004116591066122,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "39b0fa13f386c57a7bd7fa50f1838199b8c68b8488bdd7843e08df40e82ac180"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06519470899365842,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "3b96a13d53a55dc80eea5a9556d29ee8b8c4b91bfd583683931eeb54051d8931"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_tombstone",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                "A",
+                "delete"
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07313729100860655,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "39b0fa13f386c57a7bd7fa50f1838199b8c68b8488bdd7843e08df40e82ac180"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              [
+                "A",
+                "put"
+              ],
+              [
+                "a",
+                "delete"
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06476699991617352,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "3b96a13d53a55dc80eea5a9556d29ee8b8c4b91bfd583683931eeb54051d8931"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.26401683292351663,
+      "preparation_seconds": 0.004647333058528602,
+      "total_computational_seconds": 0.26866416598204523
+    },
+    {
+      "id": "accounting",
+      "family": "accounting",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 35937,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.2008813749998808,
+          "seed": 41052,
+          "trial_budget": 35937,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07510025007650256,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "83bc044367938ade84741ca75f20882452c6021b13175d10dd6a5fbe7df7fb9d"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.0859207499306649,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "15aa2a316e8ec08ce444e5dbbce602765d7f8c08e3af2d7c20a4f4c4f12fb373"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_accounting",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              0,
+              0
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.0633830000879243,
+            "seed": 41052,
+            "trial_budget": 35937,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              14,
+              0,
+              24
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06216883298475295,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "83bc044367938ade84741ca75f20882452c6021b13175d10dd6a5fbe7df7fb9d"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              14,
+              0,
+              32
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.061509500024840236,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "15aa2a316e8ec08ce444e5dbbce602765d7f8c08e3af2d7c20a4f4c4f12fb373"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.550156082957983,
+      "preparation_seconds": 0.3401819160208106,
+      "total_computational_seconds": 0.8903379989787936
+    },
+    {
+      "id": "clamp",
+      "family": "accounting",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 139425,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.4454463750589639,
+          "seed": 41052,
+          "trial_budget": 139425,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06363933300599456,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ff2d1e5e219d27180c09d8be803577bd0f3847453a605578e97879278a49ba95"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.0648501249961555,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "cf3b29cca3d734baef3914b59adcf5ad08f3e3a4be8ec0e423e67b9d6afc95ef"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_clamp",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              -32,
+              -32,
+              -32
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07217408297583461,
+            "seed": 41052,
+            "trial_budget": 139425,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              17,
+              -32,
+              -4
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06591929099522531,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ff2d1e5e219d27180c09d8be803577bd0f3847453a605578e97879278a49ba95"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              -3,
+              -4,
+              -4
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.0662676669890061,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "cf3b29cca3d734baef3914b59adcf5ad08f3e3a4be8ec0e423e67b9d6afc95ef"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.7792678331024945,
+      "preparation_seconds": 1.315508248982951,
+      "total_computational_seconds": 2.0947760820854455
+    },
+    {
+      "id": "reserve",
+      "family": "accounting",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07029058306943625,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "1588e2cd32667676eafd1b0f1a97fc4be58ae0af76a50556a3bca975be7d1c8f"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.08455095801036805,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "739b21f3defcac7a40d8370c5a3c53a2afd27f33ce3ce2053877e07c30c62ec8"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_reserve",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              []
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07399750000331551,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "1588e2cd32667676eafd1b0f1a97fc4be58ae0af76a50556a3bca975be7d1c8f"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              3,
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.07270725001581013,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "739b21f3defcac7a40d8370c5a3c53a2afd27f33ce3ce2053877e07c30c62ec8"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 5895,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.3023999589495361,
+      "preparation_seconds": 0.10922500002197921,
+      "total_computational_seconds": 0.4116249589715153
+    },
+    {
+      "id": "refund",
+      "family": "accounting",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.07214370789006352,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "da3fe0ce1373e50c320457dfa95e0b23ac084b3ed056d31a3087398f17ba0e2c"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06918854196555912,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "ab3607c7d1432e021a21d6fbde8eb4d2769aac108a51b22ac7f5941845a0e60b"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_refund",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              6,
+              3
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06728983297944069,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "da3fe0ce1373e50c320457dfa95e0b23ac084b3ed056d31a3087398f17ba0e2c"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              8,
+              3
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06825658294837922,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "ab3607c7d1432e021a21d6fbde8eb4d2769aac108a51b22ac7f5941845a0e60b"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.2777360409963876,
+      "preparation_seconds": 0.004655375028960407,
+      "total_computational_seconds": 0.282391416025348
+    },
+    {
+      "id": "schema",
+      "family": "schema",
+      "references": {
+        "existing": {
+          "status": "EXHAUSTED",
+          "tested": 9,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06747008394449949,
+          "seed": 41052,
+          "trial_budget": 9,
+          "seconds_budget": 30,
+          "mode": "property"
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.06610425002872944,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "411af37fb3b80df3422dd45cdd70e0a4a15d9ad35e687244d06e95dc6e465333"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.08002283296082169,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "016336ee0a2c6201b99afbeef8ba4cb2bdf3a62539f704ff932b3e5677500024"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_schema",
+          "operator": "constant_return",
+          "existing": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "new",
+              "open"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06625695794355124,
+            "seed": 41052,
+            "trial_budget": 9,
+            "seconds_budget": 30,
+            "mode": "property"
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "new",
+              "open"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05814775009639561,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "411af37fb3b80df3422dd45cdd70e0a4a15d9ad35e687244d06e95dc6e465333"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "active",
+              "close"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05917350004892796,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "016336ee0a2c6201b99afbeef8ba4cb2bdf3a62539f704ff932b3e5677500024"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_casefold",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "sequence_tail_loss",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.3981599999824539,
+      "preparation_seconds": 0.0002690838882699609,
+      "total_computational_seconds": 0.39842908387072384
+    },
+    {
+      "id": "migration",
+      "family": "schema",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05595937499310821,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ea99630a6ab607ab02b2a4df3f7ec815ee3df3ae6a79acc447fa45e27a65c247"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.057656874996609986,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "15a1efd75423367a3062fd3d8303eac5aec877f7d2ce5f2f0cb76a91662e87dc"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_migration",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              [
+                "a"
+              ]
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.054793499992229044,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ea99630a6ab607ab02b2a4df3f7ec815ee3df3ae6a79acc447fa45e27a65c247"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              0,
+              []
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.06129841704387218,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "15a1efd75423367a3062fd3d8303eac5aec877f7d2ce5f2f0cb76a91662e87dc"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 4,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.23038595798425376,
+      "preparation_seconds": 0.0007204168941825628,
+      "total_computational_seconds": 0.23110637487843633
+    },
+    {
+      "id": "required",
+      "family": "schema",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.058559542056173086,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "8a6861cbe66e73fc38b7354c36857983bd64a7f444d96e6f2431a3a518b707f8"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05720125010702759,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "2f891ce243ea0daed9c0e250473e09b915bf35649b3c7a75d74fed824df6cd13"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_required",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05738037498667836,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "8a6861cbe66e73fc38b7354c36857983bd64a7f444d96e6f2431a3a518b707f8"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A",
+              "a",
+              "B"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05679154198151082,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "2f891ce243ea0daed9c0e250473e09b915bf35649b3c7a75d74fed824df6cd13"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "stable_sequence_sort",
+          "witness": null,
+          "input_changes": 271,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.23065887507982552,
+      "preparation_seconds": 0.004290124052204192,
+      "total_computational_seconds": 0.2349489991320297
+    },
+    {
+      "id": "enum_map",
+      "family": "schema",
+      "references": {
+        "existing": {
+          "status": "NO_TESTS",
+          "tested": 0,
+          "elapsed_seconds": 0,
+          "reason": "No historical tests exist for this newly introduced component."
+        },
+        "example": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05953087494708598,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "example",
+          "suite_sha256": "ed109c585ca0f9a31d41afb53ab83d1b86daa2da8b73bb468d619ada50d86ce5"
+        },
+        "property": {
+          "status": "EXHAUSTED",
+          "tested": 64,
+          "note": "No counterexample found; not proof of correctness.",
+          "elapsed_seconds": 0.05810408398974687,
+          "seed": 41052,
+          "trial_budget": 64,
+          "seconds_budget": 2,
+          "mode": "witness",
+          "arm": "property",
+          "suite_sha256": "1fd6fcef59115cd0fbd290823524e48f32afc5d4386f43443c568f9435b1dffa"
+        }
+      },
+      "mutants": [
+        {
+          "id": "dev_enum_map",
+          "operator": "constant_return",
+          "existing": {
+            "status": "NO_TESTS",
+            "tested": 0,
+            "elapsed_seconds": 0,
+            "reason": "No historical tests exist for this newly introduced component."
+          },
+          "example": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.05652562505565584,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "example",
+            "suite_sha256": "ed109c585ca0f9a31d41afb53ab83d1b86daa2da8b73bb468d619ada50d86ce5"
+          },
+          "property": {
+            "status": "COUNTEREXAMPLE",
+            "tested": 1,
+            "case": [
+              "A",
+              "a",
+              "B",
+              "b"
+            ],
+            "actual": null,
+            "reason": "property_rejected",
+            "elapsed_seconds": 0.0684363340260461,
+            "seed": 41052,
+            "trial_budget": 64,
+            "seconds_budget": 2,
+            "mode": "witness",
+            "arm": "property",
+            "suite_sha256": "1fd6fcef59115cd0fbd290823524e48f32afc5d4386f43443c568f9435b1dffa"
+          }
+        }
+      ],
+      "equivalents": [
+        {
+          "operator": "unsigned_width_2",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "signedness_erasure",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        },
+        {
+          "operator": "identifier_prefix_encoding",
+          "witness": null,
+          "input_changes": 0,
+          "classification": "EQUIVALENT",
+          "proof": "Exhaustive equality over entire declared finite input domain."
+        }
+      ],
+      "unresolved": 0,
+      "scoring_seconds": 0.24330500001087785,
+      "preparation_seconds": 0.008776249014772475,
+      "total_computational_seconds": 0.2520812490256503
+    }
+  ],
+  "summary": {
+    "n_components": 20,
+    "n_non_equivalent_mutants": 20,
+    "n_equivalent_excluded": 73,
+    "detections": {
+      "existing": 6,
+      "example": 20,
+      "property": 20
+    },
+    "detection_percent": {
+      "existing": 30.0,
+      "example": 100.0,
+      "property": 100.0
+    },
+    "delta_pp": 0.0,
+    "reference_results": {
+      "existing": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 14
+      },
+      "example": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 0
+      },
+      "property": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 0
+      }
+    },
+    "property_false_alarm_percent": 0.0,
+    "max_component_computational_seconds": 10.335719708004035,
+    "total_computational_seconds": 20.854506747215055,
+    "errors": 0,
+    "timeouts": 0,
+    "valid_measurement": true,
+    "thresholds": {
+      "detection_ge_80": true,
+      "delta_ge_20pp": false,
+      "false_alarm_le_5": true,
+      "component_runtime_le_600s": true
+    },
+    "recommendation": "FALSIFIED"
+  }
+}

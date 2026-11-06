@@ -1,6 +1,9 @@
 """Behavioral tests for bounded search and non-inflating mutation scoring."""
 import importlib.util
 import json
+import os
+from unittest import mock
+import time
 from pathlib import Path
 import sys
 import tempfile
@@ -81,6 +84,28 @@ def check(c, actual):
         self.assertIsNone(result['tested'])
         self.assertLess(result['elapsed_seconds'], 3)
 
+    @unittest.skipUnless(os.name == 'posix', 'process groups require POSIX')
+    def test_timeout_kills_descendant_with_inherited_pipes(self):
+        marker = self.root / 'descendant-survived'
+        pidfile = self.root / 'descendant-started'
+        candidate = self.root / 'descendant.py'
+        child_code = ("import time; from pathlib import Path; "
+                      f"Path({str(pidfile)!r}).write_text('started'); "
+                      "time.sleep(1.0); "
+                      f"Path({str(marker)!r}).write_text('escaped')")
+        candidate.write_text("import subprocess, sys\n"
+                             "def spawn(c):\n"
+                             f"    subprocess.Popen([sys.executable, '-c', {child_code!r}])\n"
+                             "    return c * 2\n")
+        # Parent returns and exits; grandchild retains stdout/stderr pipes.
+        result = runner.search(f'{candidate}:spawn', str(self.claim),
+                               trials=1, seconds=0.4)
+        self.assertEqual(result['status'], 'TIMEOUT')
+        self.assertTrue(pidfile.exists(), 'descendant must actually start')
+        time.sleep(1.1)
+        self.assertFalse(marker.exists(), 'process-group kill must stop descendant')
+        self.assertLess(result['elapsed_seconds'], 2)
+
     def test_candidate_exception_is_failure_on_valid_input(self):
         result = self.run_search('throws')
         self.assertEqual(result['status'], 'COUNTEREXAMPLE')
@@ -122,6 +147,28 @@ def check(c, actual):
                        {'mode': 'unknown'}, {'mode': 'witness', 'trials': 2, 'cases': [1]}):
             with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
                 self.run_search('correct', **kwargs)
+
+
+class PlatformGuardTests(unittest.TestCase):
+    def test_posix_uses_process_group(self):
+        proc = mock.Mock(pid=123)
+        with mock.patch.object(runner.os, 'name', 'posix'), mock.patch.object(runner.os, 'killpg', create=True) as killpg:
+            runner.kill_worker(proc)
+        killpg.assert_called_once_with(123, runner.signal.SIGKILL)
+        proc.kill.assert_not_called()
+
+    def test_non_posix_does_not_require_killpg(self):
+        proc = mock.Mock(pid=123)
+        with mock.patch.object(runner.os, 'name', 'nt'), mock.patch.object(runner.os, 'killpg', create=True) as killpg:
+            runner.kill_worker(proc)
+        proc.kill.assert_called_once_with()
+        killpg.assert_not_called()
+
+    def test_already_exited_process_is_harmless(self):
+        proc = mock.Mock()
+        proc.kill.side_effect = ProcessLookupError
+        with mock.patch.object(runner.os, 'name', 'nt'):
+            runner.kill_worker(proc)
 
 
 class BenchmarkTests(unittest.TestCase):

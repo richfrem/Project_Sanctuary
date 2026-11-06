@@ -1,0 +1,2221 @@
+{
+  "method": "exhaustive over entire declared finite domain",
+  "syntactic_noops": 0,
+  "inapplicable_candidates": 0,
+  "components": [
+    {
+      "component": "lease",
+      "domain_size": 32768,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.026698834029957652,
+      "candidates": [
+        {
+          "id": "lease_00",
+          "component": "lease",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/lease_00.py",
+          "old": "deadline <= now",
+          "new": "deadline < now",
+          "distinguishing_cases": 128,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "expected": true,
+            "actual": false
+          },
+          "domain_size": 32768,
+          "kill_density": 0.00390625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('lease') against independently verified reference/specification"
+        },
+        {
+          "id": "lease_01",
+          "component": "lease",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/lease_01.py",
+          "old": "deadline <= now",
+          "new": "deadline + 2 <= now",
+          "distinguishing_cases": 255,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              false
+            ],
+            "expected": true,
+            "actual": false
+          },
+          "domain_size": 32768,
+          "kill_density": 0.007781982421875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('lease') against independently verified reference/specification"
+        },
+        {
+          "id": "lease_02",
+          "component": "lease",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/lease_02.py",
+          "old": "deadline <= now",
+          "new": "deadline - 1 <= now",
+          "distinguishing_cases": 127,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              false
+            ],
+            "expected": false,
+            "actual": true
+          },
+          "domain_size": 32768,
+          "kill_density": 0.003875732421875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('lease') against independently verified reference/specification"
+        },
+        {
+          "id": "lease_03",
+          "component": "lease",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/lease_03.py",
+          "old": "deadline <= now",
+          "new": "deadline - 2 <= now",
+          "distinguishing_cases": 253,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              false
+            ],
+            "expected": false,
+            "actual": true
+          },
+          "domain_size": 32768,
+          "kill_density": 0.007720947265625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('lease') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "renew",
+      "domain_size": 32768,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.029265583027154207,
+      "candidates": [
+        {
+          "id": "renew_00",
+          "component": "renew",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/renew_00.py",
+          "old": "now >= expiry",
+          "new": "now > expiry",
+          "distinguishing_cases": 992,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              1
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.0302734375,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('renew') against independently verified reference/specification"
+        },
+        {
+          "id": "renew_01",
+          "component": "renew",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/renew_01.py",
+          "old": "now >= expiry",
+          "new": "now >= expiry - 1",
+          "distinguishing_cases": 930,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              2
+            ],
+            "expected": 2,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.02838134765625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('renew') against independently verified reference/specification"
+        },
+        {
+          "id": "renew_02",
+          "component": "renew",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/renew_02.py",
+          "old": "candidate > expiry",
+          "new": "candidate > expiry + 1",
+          "distinguishing_cases": 495,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              2
+            ],
+            "expected": 2,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.015106201171875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('renew') against independently verified reference/specification"
+        },
+        {
+          "id": "renew_03",
+          "component": "renew",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/renew_03.py",
+          "old": "candidate > expiry",
+          "new": "candidate > expiry + 2",
+          "distinguishing_cases": 988,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              2
+            ],
+            "expected": 2,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.0301513671875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('renew') against independently verified reference/specification"
+        },
+        {
+          "id": "renew_04",
+          "component": "renew",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/renew_04.py",
+          "old": "candidate > expiry",
+          "new": "candidate >= expiry",
+          "distinguishing_cases": 0,
+          "first_witness": null,
+          "domain_size": 32768,
+          "kill_density": 0.0,
+          "classification": "TRUE_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('renew') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "release",
+      "domain_size": 32768,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.02340966695919633,
+      "candidates": [
+        {
+          "id": "release_00",
+          "component": "release",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/release_00.py",
+          "old": "depth > 0",
+          "new": "depth > 1",
+          "distinguishing_cases": 32,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              1
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.0009765625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('release') against independently verified reference/specification"
+        },
+        {
+          "id": "release_01",
+          "component": "release",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/release_01.py",
+          "old": "depth > 0",
+          "new": "depth >= 0",
+          "distinguishing_cases": 32,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              0
+            ],
+            "expected": 0,
+            "actual": -1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.0009765625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('release') against independently verified reference/specification"
+        },
+        {
+          "id": "release_02",
+          "component": "release",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/release_02.py",
+          "old": "return depth - 1",
+          "new": "return 1 - depth",
+          "distinguishing_cases": 960,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              2
+            ],
+            "expected": 1,
+            "actual": -1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.029296875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('release') against independently verified reference/specification"
+        },
+        {
+          "id": "release_03",
+          "component": "release",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/release_03.py",
+          "old": "owner == requester and depth > 0",
+          "new": "owner == requester and depth > 0 and depth != 31",
+          "distinguishing_cases": 32,
+          "first_witness": {
+            "case": [
+              0,
+              0,
+              31
+            ],
+            "expected": 30,
+            "actual": 31
+          },
+          "domain_size": 32768,
+          "kill_density": 0.0009765625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('release') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "fence",
+      "domain_size": 65536,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.054483790998347104,
+      "candidates": [
+        {
+          "id": "fence_00",
+          "component": "fence",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/fence_00.py",
+          "old": "proposed > current",
+          "new": "proposed > current + 1",
+          "distinguishing_cases": 255,
+          "first_witness": {
+            "case": [
+              0,
+              1
+            ],
+            "expected": 1,
+            "actual": 0
+          },
+          "domain_size": 65536,
+          "kill_density": 0.0038909912109375,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 65536 inputs in specifications.domain('fence') against independently verified reference/specification"
+        },
+        {
+          "id": "fence_01",
+          "component": "fence",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/fence_01.py",
+          "old": "proposed > current",
+          "new": "proposed > current + 2",
+          "distinguishing_cases": 509,
+          "first_witness": {
+            "case": [
+              0,
+              1
+            ],
+            "expected": 1,
+            "actual": 0
+          },
+          "domain_size": 65536,
+          "kill_density": 0.0077667236328125,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 65536 inputs in specifications.domain('fence') against independently verified reference/specification"
+        },
+        {
+          "id": "fence_02",
+          "component": "fence",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/fence_02.py",
+          "old": "proposed > current",
+          "new": "proposed > current + 3",
+          "distinguishing_cases": 762,
+          "first_witness": {
+            "case": [
+              0,
+              1
+            ],
+            "expected": 1,
+            "actual": 0
+          },
+          "domain_size": 65536,
+          "kill_density": 0.011627197265625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 65536 inputs in specifications.domain('fence') against independently verified reference/specification"
+        },
+        {
+          "id": "fence_03",
+          "component": "fence",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/fence_03.py",
+          "old": "proposed > current",
+          "new": "proposed > current + 4",
+          "distinguishing_cases": 1014,
+          "first_witness": {
+            "case": [
+              0,
+              1
+            ],
+            "expected": 1,
+            "actual": 0
+          },
+          "domain_size": 65536,
+          "kill_density": 0.015472412109375,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 65536 inputs in specifications.domain('fence') against independently verified reference/specification"
+        },
+        {
+          "id": "fence_04",
+          "component": "fence",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/fence_04.py",
+          "old": "proposed > current",
+          "new": "proposed >= current",
+          "distinguishing_cases": 0,
+          "first_witness": null,
+          "domain_size": 65536,
+          "kill_density": 0.0,
+          "classification": "TRUE_EQUIVALENT",
+          "proof": "Compared all 65536 inputs in specifications.domain('fence') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "path",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.14057270798366517,
+      "candidates": [
+        {
+          "id": "path_00",
+          "component": "path",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/path_00.py",
+          "old": "if stack:",
+          "new": "if len(stack) > 1:",
+          "distinguishing_cases": 4830,
+          "first_witness": {
+            "case": [
+              "a",
+              ".."
+            ],
+            "expected": "/",
+            "actual": "/a"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.0690937701165868,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path') against independently verified reference/specification"
+        },
+        {
+          "id": "path_01",
+          "component": "path",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/path_01.py",
+          "old": "if stack:",
+          "new": "if stack and len(stack) != 2:",
+          "distinguishing_cases": 4116,
+          "first_witness": {
+            "case": [
+              "a",
+              "a",
+              ".."
+            ],
+            "expected": "/a",
+            "actual": "/a/a"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.05887990844717832,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path') against independently verified reference/specification"
+        },
+        {
+          "id": "path_02",
+          "component": "path",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/path_02.py",
+          "old": "stack.pop()",
+          "new": "stack.pop(0)",
+          "distinguishing_cases": 6370,
+          "first_witness": {
+            "case": [
+              "a",
+              "b",
+              ".."
+            ],
+            "expected": "/a",
+            "actual": "/b"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.09112366783491882,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path') against independently verified reference/specification"
+        },
+        {
+          "id": "path_03",
+          "component": "path",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/path_03.py",
+          "old": "stack.pop()",
+          "new": "pass",
+          "distinguishing_cases": 11494,
+          "first_witness": {
+            "case": [
+              "a",
+              ".."
+            ],
+            "expected": "/",
+            "actual": "/a"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.16442314569773264,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "relative",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.18218233296647668,
+      "candidates": [
+        {
+          "id": "relative_00",
+          "component": "relative",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/relative_00.py",
+          "old": "token == '..' and out and out[-1] != '..'",
+          "new": "token == '..' and len(out) > 1 and out[-1] != '..'",
+          "distinguishing_cases": 4536,
+          "first_witness": {
+            "case": [
+              "a",
+              ".."
+            ],
+            "expected": ".",
+            "actual": "a/.."
+          },
+          "domain_size": 69905,
+          "kill_density": 0.06488806237035978,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('relative') against independently verified reference/specification"
+        },
+        {
+          "id": "relative_01",
+          "component": "relative",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/relative_01.py",
+          "old": "token == '..' and out and out[-1] != '..'",
+          "new": "token == '..' and out and out[-1] not in {'..', 'a'}",
+          "distinguishing_cases": 847,
+          "first_witness": {
+            "case": [
+              "a",
+              ".."
+            ],
+            "expected": ".",
+            "actual": "a/.."
+          },
+          "domain_size": 69905,
+          "kill_density": 0.012116443745082613,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('relative') against independently verified reference/specification"
+        },
+        {
+          "id": "relative_02",
+          "component": "relative",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/relative_02.py",
+          "old": "out.pop()",
+          "new": "out.pop(0)",
+          "distinguishing_cases": 6678,
+          "first_witness": {
+            "case": [
+              "..",
+              "a",
+              ".."
+            ],
+            "expected": "..",
+            "actual": "a"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.09552964737858523,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('relative') against independently verified reference/specification"
+        },
+        {
+          "id": "relative_03",
+          "component": "relative",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/relative_03.py",
+          "old": "if token == '.':\n            continue",
+          "new": "if token == '.':\n            out.append(token)",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "."
+            ],
+            "expected": ".",
+            "actual": "./."
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('relative') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "extension",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.11047345900442451,
+      "candidates": [
+        {
+          "id": "extension_00",
+          "component": "extension",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/extension_00.py",
+          "old": "c[-1].split('.')",
+          "new": "c[-1].split('.', 1)",
+          "distinguishing_cases": 8738,
+          "first_witness": {
+            "case": [
+              "a.b.c"
+            ],
+            "expected": "c",
+            "actual": "b.c"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.12499821185895144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('extension') against independently verified reference/specification"
+        },
+        {
+          "id": "extension_01",
+          "component": "extension",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/extension_01.py",
+          "old": "tokens[0] == ''",
+          "new": "tokens[0] in ('', 'a')",
+          "distinguishing_cases": 8738,
+          "first_witness": {
+            "case": [
+              "a.py"
+            ],
+            "expected": "py",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.12499821185895144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('extension') against independently verified reference/specification"
+        },
+        {
+          "id": "extension_02",
+          "component": "extension",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/extension_02.py",
+          "old": "return tokens[-1]",
+          "new": "return tokens[-1].lower()",
+          "distinguishing_cases": 4369,
+          "first_witness": {
+            "case": [
+              "b.PY"
+            ],
+            "expected": "PY",
+            "actual": "py"
+          },
+          "domain_size": 69905,
+          "kill_density": 0.06249910592947572,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('extension') against independently verified reference/specification"
+        },
+        {
+          "id": "extension_03",
+          "component": "extension",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/extension_03.py",
+          "old": "len(tokens) == 2",
+          "new": "len(tokens) >= 2",
+          "distinguishing_cases": 4369,
+          "first_witness": {
+            "case": [
+              ".a.b"
+            ],
+            "expected": "b",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.06249910592947572,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('extension') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "path_key",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.13756145804654807,
+      "candidates": [
+        {
+          "id": "path_key_00",
+          "component": "path_key",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/path_key_00.py",
+          "old": "if token != '.':",
+          "new": "if token not in {'.', 'a'}:",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "a"
+            ],
+            "expected": "a",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path_key') against independently verified reference/specification"
+        },
+        {
+          "id": "path_key_01",
+          "component": "path_key",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/path_key_01.py",
+          "old": "if token != '.':",
+          "new": "if token not in {'.', 'b'}:",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "b"
+            ],
+            "expected": "b",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path_key') against independently verified reference/specification"
+        },
+        {
+          "id": "path_key_02",
+          "component": "path_key",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/path_key_02.py",
+          "old": "if token != '.':",
+          "new": "if token not in {'.', 'c'}:",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "c"
+            ],
+            "expected": "c",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path_key') against independently verified reference/specification"
+        },
+        {
+          "id": "path_key_03",
+          "component": "path_key",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/path_key_03.py",
+          "old": "if token != '.':",
+          "new": "if token not in {'.', 'd'}:",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "d"
+            ],
+            "expected": "d",
+            "actual": ""
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('path_key') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "replay",
+      "domain_size": 22621,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.05091379093937576,
+      "candidates": [
+        {
+          "id": "replay_00",
+          "component": "replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/replay_00.py",
+          "old": "seen.add(key)",
+          "new": "\n            if key != 0:\n                seen.add(key)",
+          "distinguishing_cases": 3810,
+          "first_witness": {
+            "case": [
+              [
+                0,
+                -1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            "expected": -1,
+            "actual": -2
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16842756730471686,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('replay') against independently verified reference/specification"
+        },
+        {
+          "id": "replay_01",
+          "component": "replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/replay_01.py",
+          "old": "seen.add(key)",
+          "new": "\n            if key != 1:\n                seen.add(key)",
+          "distinguishing_cases": 3810,
+          "first_witness": {
+            "case": [
+              [
+                1,
+                -1
+              ],
+              [
+                1,
+                -1
+              ]
+            ],
+            "expected": -1,
+            "actual": -2
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16842756730471686,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('replay') against independently verified reference/specification"
+        },
+        {
+          "id": "replay_02",
+          "component": "replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/replay_02.py",
+          "old": "seen.add(key)",
+          "new": "\n            if key != 2:\n                seen.add(key)",
+          "distinguishing_cases": 3810,
+          "first_witness": {
+            "case": [
+              [
+                2,
+                -1
+              ],
+              [
+                2,
+                -1
+              ]
+            ],
+            "expected": -1,
+            "actual": -2
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16842756730471686,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('replay') against independently verified reference/specification"
+        },
+        {
+          "id": "replay_03",
+          "component": "replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/replay_03.py",
+          "old": "seen.add(key)",
+          "new": "\n            if key != 3:\n                seen.add(key)",
+          "distinguishing_cases": 3810,
+          "first_witness": {
+            "case": [
+              [
+                3,
+                -1
+              ],
+              [
+                3,
+                -1
+              ]
+            ],
+            "expected": -1,
+            "actual": -2
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16842756730471686,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('replay') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "last_replay",
+      "domain_size": 22621,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.0815785420127213,
+      "candidates": [
+        {
+          "id": "last_replay_00",
+          "component": "last_replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/last_replay_00.py",
+          "old": "state[key] = value",
+          "new": "\n        if key != 0 or key not in state:\n            state[key] = value",
+          "distinguishing_cases": 3804,
+          "first_witness": {
+            "case": [
+              [
+                0,
+                -1
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            "expected": [
+              [
+                0,
+                0
+              ]
+            ],
+            "actual": [
+              [
+                0,
+                -1
+              ]
+            ]
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16816232704124487,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('last_replay') against independently verified reference/specification"
+        },
+        {
+          "id": "last_replay_01",
+          "component": "last_replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/last_replay_01.py",
+          "old": "state[key] = value",
+          "new": "\n        if key != 1 or key not in state:\n            state[key] = value",
+          "distinguishing_cases": 3804,
+          "first_witness": {
+            "case": [
+              [
+                1,
+                -1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "expected": [
+              [
+                1,
+                0
+              ]
+            ],
+            "actual": [
+              [
+                1,
+                -1
+              ]
+            ]
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16816232704124487,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('last_replay') against independently verified reference/specification"
+        },
+        {
+          "id": "last_replay_02",
+          "component": "last_replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/last_replay_02.py",
+          "old": "state[key] = value",
+          "new": "\n        if key != 2 or key not in state:\n            state[key] = value",
+          "distinguishing_cases": 3804,
+          "first_witness": {
+            "case": [
+              [
+                2,
+                -1
+              ],
+              [
+                2,
+                0
+              ]
+            ],
+            "expected": [
+              [
+                2,
+                0
+              ]
+            ],
+            "actual": [
+              [
+                2,
+                -1
+              ]
+            ]
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16816232704124487,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('last_replay') against independently verified reference/specification"
+        },
+        {
+          "id": "last_replay_03",
+          "component": "last_replay",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/last_replay_03.py",
+          "old": "state[key] = value",
+          "new": "\n        if key != 3 or key not in state:\n            state[key] = value",
+          "distinguishing_cases": 3804,
+          "first_witness": {
+            "case": [
+              [
+                3,
+                -1
+              ],
+              [
+                3,
+                0
+              ]
+            ],
+            "expected": [
+              [
+                3,
+                0
+              ]
+            ],
+            "actual": [
+              [
+                3,
+                -1
+              ]
+            ]
+          },
+          "domain_size": 22621,
+          "kill_density": 0.16816232704124487,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 22621 inputs in specifications.domain('last_replay') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "revision",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.11532550002448261,
+      "candidates": [
+        {
+          "id": "revision_00",
+          "component": "revision",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/revision_00.py",
+          "old": "if incoming > current:",
+          "new": "if incoming > current and incoming != 15:",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              15
+            ],
+            "expected": 15,
+            "actual": 0
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('revision') against independently verified reference/specification"
+        },
+        {
+          "id": "revision_01",
+          "component": "revision",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/revision_01.py",
+          "old": "if incoming > current:",
+          "new": "if incoming > current and incoming != 14:",
+          "distinguishing_cases": 12870,
+          "first_witness": {
+            "case": [
+              14
+            ],
+            "expected": 14,
+            "actual": 0
+          },
+          "domain_size": 69905,
+          "kill_density": 0.1841070023603462,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('revision') against independently verified reference/specification"
+        },
+        {
+          "id": "revision_02",
+          "component": "revision",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/revision_02.py",
+          "old": "if incoming > current:",
+          "new": "if incoming > current and incoming != 13:",
+          "distinguishing_cases": 10430,
+          "first_witness": {
+            "case": [
+              13
+            ],
+            "expected": 13,
+            "actual": 0
+          },
+          "domain_size": 69905,
+          "kill_density": 0.1492024890923396,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('revision') against independently verified reference/specification"
+        },
+        {
+          "id": "revision_03",
+          "component": "revision",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/revision_03.py",
+          "old": "if incoming > current:",
+          "new": "if incoming > current and incoming != 12:",
+          "distinguishing_cases": 8320,
+          "first_witness": {
+            "case": [
+              12
+            ],
+            "expected": 12,
+            "actual": 0
+          },
+          "domain_size": 69905,
+          "kill_density": 0.11901866819254703,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('revision') against independently verified reference/specification"
+        },
+        {
+          "id": "revision_04",
+          "component": "revision",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/revision_04.py",
+          "old": "incoming > current",
+          "new": "incoming >= current",
+          "distinguishing_cases": 0,
+          "first_witness": null,
+          "domain_size": 69905,
+          "kill_density": 0.0,
+          "classification": "TRUE_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('revision') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "tombstone",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.2007836669217795,
+      "candidates": [
+        {
+          "id": "tombstone_00",
+          "component": "tombstone",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/tombstone_00.py",
+          "old": "live.discard(key)",
+          "new": "\n            if key != 0:\n                live.discard(key)",
+          "distinguishing_cases": 1397,
+          "first_witness": {
+            "case": [
+              [
+                0,
+                "put"
+              ],
+              [
+                0,
+                "delete"
+              ]
+            ],
+            "expected": [],
+            "actual": [
+              0
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.01998426435877262,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('tombstone') against independently verified reference/specification"
+        },
+        {
+          "id": "tombstone_01",
+          "component": "tombstone",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/tombstone_01.py",
+          "old": "live.discard(key)",
+          "new": "\n            if key != 1:\n                live.discard(key)",
+          "distinguishing_cases": 1397,
+          "first_witness": {
+            "case": [
+              [
+                1,
+                "put"
+              ],
+              [
+                1,
+                "delete"
+              ]
+            ],
+            "expected": [],
+            "actual": [
+              1
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.01998426435877262,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('tombstone') against independently verified reference/specification"
+        },
+        {
+          "id": "tombstone_02",
+          "component": "tombstone",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/tombstone_02.py",
+          "old": "live.discard(key)",
+          "new": "\n            if key != 2:\n                live.discard(key)",
+          "distinguishing_cases": 1397,
+          "first_witness": {
+            "case": [
+              [
+                2,
+                "put"
+              ],
+              [
+                2,
+                "delete"
+              ]
+            ],
+            "expected": [],
+            "actual": [
+              2
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.01998426435877262,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('tombstone') against independently verified reference/specification"
+        },
+        {
+          "id": "tombstone_03",
+          "component": "tombstone",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/tombstone_03.py",
+          "old": "live.discard(key)",
+          "new": "\n            if key != 3:\n                live.discard(key)",
+          "distinguishing_cases": 1397,
+          "first_witness": {
+            "case": [
+              [
+                3,
+                "put"
+              ],
+              [
+                3,
+                "delete"
+              ]
+            ],
+            "expected": [],
+            "actual": [
+              3
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.01998426435877262,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('tombstone') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "accounting",
+      "domain_size": 32768,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.0313480410259217,
+      "candidates": [
+        {
+          "id": "accounting_00",
+          "component": "accounting",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/accounting_00.py",
+          "old": "charge > balance",
+          "new": "charge >= balance",
+          "distinguishing_cases": 496,
+          "first_witness": {
+            "case": [
+              1,
+              1,
+              1
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.01513671875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('accounting') against independently verified reference/specification"
+        },
+        {
+          "id": "accounting_01",
+          "component": "accounting",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/accounting_01.py",
+          "old": "charge > balance",
+          "new": "charge > balance + 1",
+          "distinguishing_cases": 496,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              1
+            ],
+            "expected": 0,
+            "actual": -1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.01513671875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('accounting') against independently verified reference/specification"
+        },
+        {
+          "id": "accounting_02",
+          "component": "accounting",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/accounting_02.py",
+          "old": "charge > limit",
+          "new": "charge >= limit",
+          "distinguishing_cases": 496,
+          "first_witness": {
+            "case": [
+              1,
+              1,
+              1
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 32768,
+          "kill_density": 0.01513671875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('accounting') against independently verified reference/specification"
+        },
+        {
+          "id": "accounting_03",
+          "component": "accounting",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/accounting_03.py",
+          "old": "charge > limit",
+          "new": "charge > limit + 1",
+          "distinguishing_cases": 496,
+          "first_witness": {
+            "case": [
+              1,
+              1,
+              0
+            ],
+            "expected": 1,
+            "actual": 0
+          },
+          "domain_size": 32768,
+          "kill_density": 0.01513671875,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 32768 inputs in specifications.domain('accounting') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "clamp",
+      "domain_size": 139425,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.13954650005325675,
+      "candidates": [
+        {
+          "id": "clamp_00",
+          "component": "clamp",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/clamp_00.py",
+          "old": "value < lower",
+          "new": "value < lower - 1",
+          "distinguishing_cases": 2080,
+          "first_witness": {
+            "case": [
+              -32,
+              -31,
+              -31
+            ],
+            "expected": -31,
+            "actual": -32
+          },
+          "domain_size": 139425,
+          "kill_density": 0.014918414918414918,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 139425 inputs in specifications.domain('clamp') against independently verified reference/specification"
+        },
+        {
+          "id": "clamp_01",
+          "component": "clamp",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/clamp_01.py",
+          "old": "value < lower",
+          "new": "value < lower - 2",
+          "distinguishing_cases": 4096,
+          "first_witness": {
+            "case": [
+              -32,
+              -31,
+              -31
+            ],
+            "expected": -31,
+            "actual": -32
+          },
+          "domain_size": 139425,
+          "kill_density": 0.029377801685493993,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 139425 inputs in specifications.domain('clamp') against independently verified reference/specification"
+        },
+        {
+          "id": "clamp_02",
+          "component": "clamp",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/clamp_02.py",
+          "old": "value > upper",
+          "new": "value > upper + 1",
+          "distinguishing_cases": 2080,
+          "first_witness": {
+            "case": [
+              -31,
+              -32,
+              -32
+            ],
+            "expected": -32,
+            "actual": -31
+          },
+          "domain_size": 139425,
+          "kill_density": 0.014918414918414918,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 139425 inputs in specifications.domain('clamp') against independently verified reference/specification"
+        },
+        {
+          "id": "clamp_03",
+          "component": "clamp",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/clamp_03.py",
+          "old": "value > upper",
+          "new": "value > upper + 2",
+          "distinguishing_cases": 4096,
+          "first_witness": {
+            "case": [
+              -31,
+              -32,
+              -32
+            ],
+            "expected": -32,
+            "actual": -31
+          },
+          "domain_size": 139425,
+          "kill_density": 0.029377801685493993,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 139425 inputs in specifications.domain('clamp') against independently verified reference/specification"
+        },
+        {
+          "id": "clamp_04",
+          "component": "clamp",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/clamp_04.py",
+          "old": "value < lower",
+          "new": "value <= lower",
+          "distinguishing_cases": 0,
+          "first_witness": null,
+          "domain_size": 139425,
+          "kill_density": 0.0,
+          "classification": "TRUE_EQUIVALENT",
+          "proof": "Compared all 139425 inputs in specifications.domain('clamp') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "reserve",
+      "domain_size": 18720,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.026971083017997444,
+      "candidates": [
+        {
+          "id": "reserve_00",
+          "component": "reserve",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/reserve_00.py",
+          "old": "used > capacity",
+          "new": "used >= capacity",
+          "distinguishing_cases": 581,
+          "first_witness": {
+            "case": [
+              1,
+              [
+                1
+              ]
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 18720,
+          "kill_density": 0.031036324786324787,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 18720 inputs in specifications.domain('reserve') against independently verified reference/specification"
+        },
+        {
+          "id": "reserve_01",
+          "component": "reserve",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/reserve_01.py",
+          "old": "used > capacity",
+          "new": "used > capacity + 1",
+          "distinguishing_cases": 581,
+          "first_witness": {
+            "case": [
+              0,
+              [
+                1
+              ]
+            ],
+            "expected": 0,
+            "actual": -1
+          },
+          "domain_size": 18720,
+          "kill_density": 0.031036324786324787,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 18720 inputs in specifications.domain('reserve') against independently verified reference/specification"
+        },
+        {
+          "id": "reserve_02",
+          "component": "reserve",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/reserve_02.py",
+          "old": "used > capacity",
+          "new": "used > capacity + 2",
+          "distinguishing_cases": 1156,
+          "first_witness": {
+            "case": [
+              0,
+              [
+                1
+              ]
+            ],
+            "expected": 0,
+            "actual": -1
+          },
+          "domain_size": 18720,
+          "kill_density": 0.061752136752136755,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 18720 inputs in specifications.domain('reserve') against independently verified reference/specification"
+        },
+        {
+          "id": "reserve_03",
+          "component": "reserve",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/reserve_03.py",
+          "old": "used > capacity",
+          "new": "used > capacity - 2",
+          "distinguishing_cases": 1162,
+          "first_witness": {
+            "case": [
+              1,
+              [
+                1
+              ]
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 18720,
+          "kill_density": 0.062072649572649574,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 18720 inputs in specifications.domain('reserve') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "refund",
+      "domain_size": 16896,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.02012962498702109,
+      "candidates": [
+        {
+          "id": "refund_00",
+          "component": "refund",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/refund_00.py",
+          "old": "result > capacity",
+          "new": "result > capacity + 1",
+          "distinguishing_cases": 527,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              0
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 16896,
+          "kill_density": 0.031190814393939392,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16896 inputs in specifications.domain('refund') against independently verified reference/specification"
+        },
+        {
+          "id": "refund_01",
+          "component": "refund",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/refund_01.py",
+          "old": "result > capacity",
+          "new": "result > capacity + 2",
+          "distinguishing_cases": 1052,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              0
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 16896,
+          "kill_density": 0.062263257575757576,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16896 inputs in specifications.domain('refund') against independently verified reference/specification"
+        },
+        {
+          "id": "refund_02",
+          "component": "refund",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/refund_02.py",
+          "old": "result > capacity",
+          "new": "result > capacity + 3",
+          "distinguishing_cases": 1574,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              0
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 16896,
+          "kill_density": 0.09315814393939394,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16896 inputs in specifications.domain('refund') against independently verified reference/specification"
+        },
+        {
+          "id": "refund_03",
+          "component": "refund",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/refund_03.py",
+          "old": "result > capacity",
+          "new": "result > capacity + 4",
+          "distinguishing_cases": 2092,
+          "first_witness": {
+            "case": [
+              0,
+              1,
+              0
+            ],
+            "expected": 0,
+            "actual": 1
+          },
+          "domain_size": 16896,
+          "kill_density": 0.12381628787878787,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16896 inputs in specifications.domain('refund') against independently verified reference/specification"
+        },
+        {
+          "id": "refund_04",
+          "component": "refund",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/refund_04.py",
+          "old": "result > capacity",
+          "new": "result >= capacity",
+          "distinguishing_cases": 0,
+          "first_witness": null,
+          "domain_size": 16896,
+          "kill_density": 0.0,
+          "classification": "TRUE_EQUIVALENT",
+          "proof": "Compared all 16896 inputs in specifications.domain('refund') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "schema",
+      "domain_size": 2304,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.0033870829502120614,
+      "candidates": [
+        {
+          "id": "schema_00",
+          "component": "schema",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/schema_00.py",
+          "old": "version != 0",
+          "new": "version > 1",
+          "distinguishing_cases": 3,
+          "first_witness": {
+            "case": [
+              "new",
+              "open",
+              1
+            ],
+            "expected": "new",
+            "actual": "active"
+          },
+          "domain_size": 2304,
+          "kill_density": 0.0013020833333333333,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 2304 inputs in specifications.domain('schema') against independently verified reference/specification"
+        },
+        {
+          "id": "schema_01",
+          "component": "schema",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/schema_01.py",
+          "old": "('new', 'open'): 'active'",
+          "new": "('new', 'open'): 'closed'",
+          "distinguishing_cases": 1,
+          "first_witness": {
+            "case": [
+              "new",
+              "open",
+              0
+            ],
+            "expected": "active",
+            "actual": "closed"
+          },
+          "domain_size": 2304,
+          "kill_density": 0.00043402777777777775,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 2304 inputs in specifications.domain('schema') against independently verified reference/specification"
+        },
+        {
+          "id": "schema_02",
+          "component": "schema",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/schema_02.py",
+          "old": "('active', 'close'): 'closed'",
+          "new": "('active', 'close'): 'new'",
+          "distinguishing_cases": 1,
+          "first_witness": {
+            "case": [
+              "active",
+              "close",
+              0
+            ],
+            "expected": "closed",
+            "actual": "new"
+          },
+          "domain_size": 2304,
+          "kill_density": 0.00043402777777777775,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 2304 inputs in specifications.domain('schema') against independently verified reference/specification"
+        },
+        {
+          "id": "schema_03",
+          "component": "schema",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/schema_03.py",
+          "old": "('closed', 'reset'): 'new'",
+          "new": "('closed', 'reset'): 'active'",
+          "distinguishing_cases": 1,
+          "first_witness": {
+            "case": [
+              "closed",
+              "reset",
+              0
+            ],
+            "expected": "new",
+            "actual": "active"
+          },
+          "domain_size": 2304,
+          "kill_density": 0.00043402777777777775,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 2304 inputs in specifications.domain('schema') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "migration",
+      "domain_size": 16384,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.050719042075797915,
+      "candidates": [
+        {
+          "id": "migration_00",
+          "component": "migration",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/migration_00.py",
+          "old": "version == 0",
+          "new": "version <= 1",
+          "distinguishing_cases": 256,
+          "first_witness": {
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "expected": [
+              "A"
+            ],
+            "actual": [
+              "a"
+            ]
+          },
+          "domain_size": 16384,
+          "kill_density": 0.015625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16384 inputs in specifications.domain('migration') against independently verified reference/specification"
+        },
+        {
+          "id": "migration_01",
+          "component": "migration",
+          "operator": "boundary_shift",
+          "split": "heldout",
+          "file": "mutants/migration_01.py",
+          "old": "version == 0",
+          "new": "version <= 2",
+          "distinguishing_cases": 512,
+          "first_witness": {
+            "case": [
+              1,
+              [
+                "A"
+              ]
+            ],
+            "expected": [
+              "A"
+            ],
+            "actual": [
+              "a"
+            ]
+          },
+          "domain_size": 16384,
+          "kill_density": 0.03125,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16384 inputs in specifications.domain('migration') against independently verified reference/specification"
+        },
+        {
+          "id": "migration_02",
+          "component": "migration",
+          "operator": "wrong_state_update",
+          "split": "heldout",
+          "file": "mutants/migration_02.py",
+          "old": "data['a'] = data.pop('A')",
+          "new": "data['b'] = data.pop('A')",
+          "distinguishing_cases": 256,
+          "first_witness": {
+            "case": [
+              0,
+              [
+                "A"
+              ]
+            ],
+            "expected": [
+              "a"
+            ],
+            "actual": [
+              "b"
+            ]
+          },
+          "domain_size": 16384,
+          "kill_density": 0.015625,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16384 inputs in specifications.domain('migration') against independently verified reference/specification"
+        },
+        {
+          "id": "migration_03",
+          "component": "migration",
+          "operator": "branch_deletion",
+          "split": "heldout",
+          "file": "mutants/migration_03.py",
+          "old": "'A' in data",
+          "new": "'A' in data and 'a' not in data",
+          "distinguishing_cases": 128,
+          "first_witness": {
+            "case": [
+              0,
+              [
+                "A",
+                "a"
+              ]
+            ],
+            "expected": [
+              "a"
+            ],
+            "actual": [
+              "A",
+              "a"
+            ]
+          },
+          "domain_size": 16384,
+          "kill_density": 0.0078125,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 16384 inputs in specifications.domain('migration') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "required",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.16910375002771616,
+      "candidates": [
+        {
+          "id": "required_00",
+          "component": "required",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/required_00.py",
+          "old": "if key not in c:",
+          "new": "if key not in c or (key == 'A' and c.count(key) > 1):",
+          "distinguishing_cases": 1458,
+          "first_witness": {
+            "case": [
+              "A",
+              "A"
+            ],
+            "expected": [
+              "B",
+              "C"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.020856877190472786,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('required') against independently verified reference/specification"
+        },
+        {
+          "id": "required_01",
+          "component": "required",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/required_01.py",
+          "old": "if key not in c:",
+          "new": "if key not in c or (key == 'B' and c.count(key) > 1):",
+          "distinguishing_cases": 1458,
+          "first_witness": {
+            "case": [
+              "B",
+              "B"
+            ],
+            "expected": [
+              "A",
+              "C"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.020856877190472786,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('required') against independently verified reference/specification"
+        },
+        {
+          "id": "required_02",
+          "component": "required",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/required_02.py",
+          "old": "if key not in c:",
+          "new": "if key not in c or (key == 'C' and c.count(key) > 1):",
+          "distinguishing_cases": 1458,
+          "first_witness": {
+            "case": [
+              "C",
+              "C"
+            ],
+            "expected": [
+              "A",
+              "B"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.020856877190472786,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('required') against independently verified reference/specification"
+        },
+        {
+          "id": "required_03",
+          "component": "required",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/required_03.py",
+          "old": "if key not in c:",
+          "new": "if key not in c or (key == 'A' and c.count(key) > 2):",
+          "distinguishing_cases": 62,
+          "first_witness": {
+            "case": [
+              "A",
+              "A",
+              "A"
+            ],
+            "expected": [
+              "B",
+              "C"
+            ],
+            "actual": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.0008869179600886918,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('required') against independently verified reference/specification"
+        }
+      ]
+    },
+    {
+      "component": "enum_map",
+      "domain_size": 69905,
+      "reference_mismatches": 0,
+      "curation_seconds": 0.23551079200115055,
+      "candidates": [
+        {
+          "id": "enum_map_00",
+          "component": "enum_map",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/enum_map_00.py",
+          "old": "out.append(0)",
+          "new": "out.append(1)",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "A"
+            ],
+            "expected": [
+              0
+            ],
+            "actual": [
+              1
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('enum_map') against independently verified reference/specification"
+        },
+        {
+          "id": "enum_map_01",
+          "component": "enum_map",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/enum_map_01.py",
+          "old": "out.append(1)",
+          "new": "out.append(2)",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "a"
+            ],
+            "expected": [
+              1
+            ],
+            "actual": [
+              2
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('enum_map') against independently verified reference/specification"
+        },
+        {
+          "id": "enum_map_02",
+          "component": "enum_map",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/enum_map_02.py",
+          "old": "out.append(2)",
+          "new": "out.append(3)",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "B"
+            ],
+            "expected": [
+              2
+            ],
+            "actual": [
+              3
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('enum_map') against independently verified reference/specification"
+        },
+        {
+          "id": "enum_map_03",
+          "component": "enum_map",
+          "operator": "wrong_branch_value",
+          "split": "heldout",
+          "file": "mutants/enum_map_03.py",
+          "old": "out.append(3)",
+          "new": "out.append(0)",
+          "distinguishing_cases": 15664,
+          "first_witness": {
+            "case": [
+              "b"
+            ],
+            "expected": [
+              3
+            ],
+            "actual": [
+              0
+            ]
+          },
+          "domain_size": 69905,
+          "kill_density": 0.22407553107789144,
+          "classification": "NON_EQUIVALENT",
+          "proof": "Compared all 69905 inputs in specifications.domain('enum_map') against independently verified reference/specification"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "applicable_candidates": 85,
+    "true_equivalents": 5,
+    "non_equivalents": 80,
+    "domain_comparisons": 4303806
+  }
+}

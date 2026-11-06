@@ -1,0 +1,66 @@
+lease {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.423
+renew {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.307
+release {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.237
+fence {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.24
+path {'existing': 3, 'example': 3, 'property': 3} n=3 seconds=10.884
+relative {'existing': 0, 'example': 4, 'property': 4} n=4 seconds=0.666
+extension {'existing': 0, 'example': 4, 'property': 3} n=4 seconds=0.596
+path_key {'existing': 0, 'example': 3, 'property': 3} n=3 seconds=0.569
+replay {'existing': 4, 'example': 4, 'property': 4} n=4 seconds=3.399
+last_replay {'existing': 0, 'example': 5, 'property': 5} n=5 seconds=0.698
+revision {'existing': 0, 'example': 2, 'property': 2} n=2 seconds=0.485
+tombstone {'existing': 0, 'example': 4, 'property': 4} n=4 seconds=0.721
+accounting {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.941
+clamp {'existing': 2, 'example': 2, 'property': 2} n=2 seconds=2.453
+reserve {'existing': 0, 'example': 2, 'property': 2} n=2 seconds=0.745
+refund {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.404
+schema {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.468
+migration {'existing': 0, 'example': 2, 'property': 2} n=2 seconds=0.432
+required {'existing': 0, 'example': 2, 'property': 2} n=2 seconds=0.612
+enum_map {'existing': 0, 'example': 3, 'property': 3} n=3 seconds=0.599
+{
+  "n_components": 20,
+  "n_non_equivalent_mutants": 47,
+  "n_equivalent_excluded": 73,
+  "detections": {
+    "existing": 12,
+    "example": 47,
+    "property": 46
+  },
+  "detection_percent": {
+    "existing": 25.53191489361702,
+    "example": 100.0,
+    "property": 97.87234042553192
+  },
+  "delta_pp": -2.1276595744680833,
+  "reference_results": {
+    "existing": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 14
+    },
+    "example": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 0
+    },
+    "property": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 0
+    }
+  },
+  "property_false_alarm_percent": 0.0,
+  "max_component_computational_seconds": 10.883707583067007,
+  "total_computational_seconds": 25.879192954860628,
+  "errors": 0,
+  "timeouts": 0,
+  "valid_measurement": true,
+  "thresholds": {
+    "detection_ge_80": true,
+    "delta_ge_20pp": false,
+    "false_alarm_le_5": true,
+    "component_runtime_le_600s": true
+  },
+  "recommendation": "FALSIFIED"
+}

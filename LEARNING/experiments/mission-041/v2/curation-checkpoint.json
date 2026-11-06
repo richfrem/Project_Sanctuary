@@ -1,0 +1,1457 @@
+[
+  {
+    "id": "lease",
+    "verified_cases": 2178,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            0,
+            4,
+            false
+          ],
+          "reference": false,
+          "mutant": true
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.019553042016923428
+  },
+  {
+    "id": "renew",
+    "verified_cases": 1458,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            0,
+            1,
+            4,
+            true
+          ],
+          "reference": 4,
+          "mutant": 1
+        },
+        "input_changes": 12,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.016099874977953732
+  },
+  {
+    "id": "release",
+    "verified_cases": 18,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "A",
+            "a",
+            false
+          ],
+          "reference": false,
+          "mutant": true
+        },
+        "input_changes": 3,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.00020166707690805197
+  },
+  {
+    "id": "fence",
+    "verified_cases": 81,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            0,
+            4
+          ],
+          "reference": 4,
+          "mutant": 0
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.0006378330290317535
+  },
+  {
+    "id": "path",
+    "verified_cases": 488281,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            "a",
+            ".."
+          ],
+          "reference": "/",
+          "mutant": "/a"
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "a"
+          ],
+          "reference": "/a",
+          "mutant": "/"
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": {
+          "case": [
+            "a",
+            ".."
+          ],
+          "reference": "/",
+          "mutant": "/a"
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      }
+    ],
+    "elapsed_seconds": 6.91325466602575
+  },
+  {
+    "id": "relative",
+    "verified_cases": 341,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": "A",
+          "mutant": "a"
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            "A",
+            ".."
+          ],
+          "reference": ".",
+          "mutant": "../A"
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": "A",
+          "mutant": "."
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": {
+          "case": [
+            ".."
+          ],
+          "reference": "..",
+          "mutant": "."
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      }
+    ],
+    "elapsed_seconds": 0.002517124987207353
+  },
+  {
+    "id": "extension",
+    "verified_cases": 259,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "a.PY"
+          ],
+          "reference": "PY",
+          "mutant": "py"
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            "A.py",
+            ".env"
+          ],
+          "reference": "",
+          "mutant": "py"
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "A.py"
+          ],
+          "reference": "py",
+          "mutant": ""
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": {
+          "case": [
+            "A.py"
+          ],
+          "reference": "py",
+          "mutant": ""
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      }
+    ],
+    "elapsed_seconds": 0.0016373330727219582
+  },
+  {
+    "id": "path_key",
+    "verified_cases": 341,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": "A",
+          "mutant": "a"
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            "a",
+            "A"
+          ],
+          "reference": "a/A",
+          "mutant": "A/a"
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": "A",
+          "mutant": ""
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.0032632079673931003
+  },
+  {
+    "id": "replay",
+    "verified_cases": 65987,
+    "verification_scope": "reduced exhaustive (IDs 0,1; values -1,0,1; length <=6) plus 10000 full-domain seeded samples",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            [
+              0,
+              -1
+            ]
+          ],
+          "reference": -1,
+          "mutant": 3
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Structural identity: replay inputs contain only lists and integers; string-only operator cannot alter any full-domain input."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reference": 0,
+          "mutant": -1
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            [
+              0,
+              -1
+            ]
+          ],
+          "reference": -1,
+          "mutant": 0
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": {
+          "case": [
+            [
+              0,
+              -1
+            ]
+          ],
+          "reference": -1,
+          "mutant": 1
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Structural identity: replay inputs contain only lists and integers; string-only operator cannot alter any full-domain input."
+      }
+    ],
+    "elapsed_seconds": 1.453655624995008
+  },
+  {
+    "id": "last_replay",
+    "verified_cases": 1555,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "reference": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "mutant": [
+            [
+              "A",
+              3
+            ]
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "reference": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "mutant": [
+            [
+              "a",
+              -1
+            ]
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            [
+              "A",
+              0
+            ],
+            [
+              "A",
+              -1
+            ]
+          ],
+          "reference": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "mutant": [
+            [
+              "A",
+              0
+            ]
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "reference": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "mutant": []
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": {
+          "case": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "reference": [
+            [
+              "A",
+              -1
+            ]
+          ],
+          "mutant": [
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.012147667002864182
+  },
+  {
+    "id": "revision",
+    "verified_cases": 781,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            4
+          ],
+          "reference": 4,
+          "mutant": 0
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 655,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            1
+          ],
+          "reference": 1,
+          "mutant": 0
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.007584791979752481
+  },
+  {
+    "id": "tombstone",
+    "verified_cases": 341,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            [
+              "A",
+              "put"
+            ]
+          ],
+          "reference": [
+            "A"
+          ],
+          "mutant": [
+            "a"
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            [
+              "A",
+              "put"
+            ],
+            [
+              "A",
+              "delete"
+            ]
+          ],
+          "reference": [],
+          "mutant": [
+            "A"
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            [
+              "A",
+              "put"
+            ]
+          ],
+          "reference": [
+            "A"
+          ],
+          "mutant": []
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": {
+          "case": [
+            [
+              "A",
+              "put"
+            ]
+          ],
+          "reference": [
+            "A"
+          ],
+          "mutant": []
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      }
+    ],
+    "elapsed_seconds": 0.004400250036269426
+  },
+  {
+    "id": "accounting",
+    "verified_cases": 35937,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            1,
+            1,
+            4
+          ],
+          "reference": 0,
+          "mutant": 1
+        },
+        "input_changes": 1103,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.340025041019544
+  },
+  {
+    "id": "clamp",
+    "verified_cases": 139425,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            -32,
+            -32,
+            -32
+          ],
+          "reference": -32,
+          "mutant": 0
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": {
+          "case": [
+            -32,
+            -32,
+            -32
+          ],
+          "reference": -32,
+          "mutant": 32
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 1.315226958016865
+  },
+  {
+    "id": "reserve",
+    "verified_cases": 7029,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            1,
+            [
+              1,
+              4
+            ]
+          ],
+          "reference": 1,
+          "mutant": 0
+        },
+        "input_changes": 443,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 5895,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            1,
+            [
+              1
+            ]
+          ],
+          "reference": 0,
+          "mutant": 1
+        },
+        "input_changes": 782,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.10900858300738037
+  },
+  {
+    "id": "refund",
+    "verified_cases": 405,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": {
+          "case": [
+            0,
+            4,
+            1
+          ],
+          "reference": 1,
+          "mutant": 0
+        },
+        "input_changes": 6,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.004375208052806556
+  },
+  {
+    "id": "schema",
+    "verified_cases": 9,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": {
+          "case": [
+            "new",
+            "open"
+          ],
+          "reference": "active",
+          "mutant": "n"
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      }
+    ],
+    "elapsed_seconds": 0.00011595897376537323
+  },
+  {
+    "id": "migration",
+    "verified_cases": 16,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            0,
+            [
+              "B"
+            ]
+          ],
+          "reference": [
+            "B"
+          ],
+          "mutant": [
+            "b"
+          ]
+        },
+        "input_changes": 2,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 4,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            0,
+            [
+              "A"
+            ]
+          ],
+          "reference": [
+            "a"
+          ],
+          "mutant": []
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.00023879192303866148
+  },
+  {
+    "id": "required",
+    "verified_cases": 341,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": [
+            "B",
+            "a"
+          ],
+          "mutant": [
+            "A",
+            "B"
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": null,
+        "input_changes": 271,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": [
+            "B",
+            "a"
+          ],
+          "mutant": [
+            "A",
+            "B",
+            "a"
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.004122833022847772
+  },
+  {
+    "id": "enum_map",
+    "verified_cases": 781,
+    "verification_scope": "exhaustive declared finite domain",
+    "operators": [
+      {
+        "operator": "unsigned_width_2",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_casefold",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": [
+            0
+          ],
+          "mutant": [
+            1
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "stable_sequence_sort",
+        "witness": {
+          "case": [
+            "a",
+            "A"
+          ],
+          "reference": [
+            1,
+            0
+          ],
+          "mutant": [
+            0,
+            1
+          ]
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "sequence_tail_loss",
+        "witness": {
+          "case": [
+            "A"
+          ],
+          "reference": [
+            0
+          ],
+          "mutant": []
+        },
+        "input_changes": 1,
+        "classification": "NON_EQUIVALENT",
+        "proof": "Explicit valid-domain distinguishing witness; independent oracle accepts reference."
+      },
+      {
+        "operator": "signedness_erasure",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      },
+      {
+        "operator": "identifier_prefix_encoding",
+        "witness": null,
+        "input_changes": 0,
+        "classification": "EQUIVALENT",
+        "proof": "Exhaustive equality over entire declared finite input domain."
+      }
+    ],
+    "elapsed_seconds": 0.008597083040513098
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "components": [
+    {
+      "id": "lease",
+      "family": "lease",
+      "contract": "Acquire iff same owner or deadline <= now. Integer clocks 0..32, Boolean same owner.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_lease.py"
+    },
+    {
+      "id": "renew",
+      "family": "lease",
+      "contract": "At now strictly before expiry, same-owner renewal returns max(expiry, now+duration); otherwise expiry. now/expiry/duration 0..8, Boolean owner.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_renew.py"
+    },
+    {
+      "id": "release",
+      "family": "lease",
+      "contract": "Return free iff already free OR requester matches owner; owner/requester in A,a,B; Boolean free.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_release.py"
+    },
+    {
+      "id": "fence",
+      "family": "lease",
+      "contract": "Accept strictly greater proposed fencing token; return max(current, proposed). Tokens 0..8.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_fence.py"
+    },
+    {
+      "id": "path",
+      "family": "path",
+      "contract": "Absolute root-clamped POSIX path from a,b,c,.,.. tokens, length 0..8.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_path.py"
+    },
+    {
+      "id": "relative",
+      "family": "path",
+      "contract": "Relative POSIX normalization: preserve unmatched parents. Tokens A,a,.,..; length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_relative.py"
+    },
+    {
+      "id": "extension",
+      "family": "path",
+      "contract": "Last dot suffix of final basename, excluding leading dot and absent dot; case preserved. Enumerated basename alphabet.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_extension.py"
+    },
+    {
+      "id": "path_key",
+      "family": "path",
+      "contract": "Slash-joined case-sensitive tokens, dropping dot tokens only; A,a,B,.; length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_path_key.py"
+    },
+    {
+      "id": "replay",
+      "family": "replay",
+      "contract": "First event per ID contributes value, IDs 0..8, values -20..20, length 0..10.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_replay.py"
+    },
+    {
+      "id": "last_replay",
+      "family": "replay",
+      "contract": "Latest value per ID; return sorted key/value pairs. IDs A,a; values -1,0,1; length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_last_replay.py"
+    },
+    {
+      "id": "revision",
+      "family": "replay",
+      "contract": "Accept only events with strictly rising positive revision; return last accepted revision. Revisions 0..4, length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_revision.py"
+    },
+    {
+      "id": "tombstone",
+      "family": "replay",
+      "contract": "Sequential put/delete events update live-ID set; return sorted live IDs. IDs A,a; put/delete; length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_tombstone.py"
+    },
+    {
+      "id": "accounting",
+      "family": "accounting",
+      "contract": "Charge iff charge <= both balance and limit, inclusive. All integers 0..32.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_accounting.py"
+    },
+    {
+      "id": "clamp",
+      "family": "accounting",
+      "contract": "Return median(value, lower, upper); ordered lower <= upper; each integer -32..32.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_clamp.py"
+    },
+    {
+      "id": "reserve",
+      "family": "accounting",
+      "contract": "Reserve sum of requests iff sum <= capacity, otherwise capacity unchanged. Capacity 0..8; requests 0..4, length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_reserve.py"
+    },
+    {
+      "id": "refund",
+      "family": "accounting",
+      "contract": "Return min(capacity, balance+refund). balance 0..capacity, capacity/refund 0..8.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_refund.py"
+    },
+    {
+      "id": "schema",
+      "family": "schema",
+      "contract": "State table: new/open->active; active/close->closed; closed/reset->new; others identity. Enumerated 3x3.",
+      "v1_rerun": true,
+      "existing_tests": "v1 reference-verification domain and unchanged v1 claim",
+      "claim": "claim_schema.py"
+    },
+    {
+      "id": "migration",
+      "family": "schema",
+      "contract": "Version 0 renames A to a if A exists, dropping A; version 1 preserves fields. keys A,a,B subset, values 1. Output sorted keys.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_migration.py"
+    },
+    {
+      "id": "required",
+      "family": "schema",
+      "contract": "Return sorted missing fields from required A,a,B, ignoring duplicate provided fields. Provided A,a,B,X sequences length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_required.py"
+    },
+    {
+      "id": "enum_map",
+      "family": "schema",
+      "contract": "Case-sensitive enum conversion: A->0, a->1, B->2, b->3; unknown->-1. Map sequence length 0..4.",
+      "v1_rerun": false,
+      "existing_tests": "none; NO_TESTS, not synthetic tests",
+      "claim": "claim_enum_map.py"
+    }
+  ]
+}

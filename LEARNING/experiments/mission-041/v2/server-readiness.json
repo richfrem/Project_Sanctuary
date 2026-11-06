@@ -1,0 +1,15 @@
+{
+  "status": 200,
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+        "object": "model",
+        "created": 1793941601
+      }
+    ]
+  },
+  "operation": "read-only models probe; no reconfiguration",
+  "lock": "exclusive /tmp/sanctuary-mlx.lock"
+}

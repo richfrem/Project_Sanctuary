@@ -1,0 +1,767 @@
+[
+  {
+    "id": "lease_00",
+    "component": "lease",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/lease_00.py",
+    "old": "deadline <= now",
+    "new": "deadline < now"
+  },
+  {
+    "id": "lease_01",
+    "component": "lease",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/lease_01.py",
+    "old": "deadline <= now",
+    "new": "deadline + 2 <= now"
+  },
+  {
+    "id": "lease_02",
+    "component": "lease",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/lease_02.py",
+    "old": "deadline <= now",
+    "new": "deadline - 1 <= now"
+  },
+  {
+    "id": "lease_03",
+    "component": "lease",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/lease_03.py",
+    "old": "deadline <= now",
+    "new": "deadline - 2 <= now"
+  },
+  {
+    "id": "renew_00",
+    "component": "renew",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/renew_00.py",
+    "old": "now >= expiry",
+    "new": "now > expiry"
+  },
+  {
+    "id": "renew_01",
+    "component": "renew",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/renew_01.py",
+    "old": "now >= expiry",
+    "new": "now >= expiry - 1"
+  },
+  {
+    "id": "renew_02",
+    "component": "renew",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/renew_02.py",
+    "old": "candidate > expiry",
+    "new": "candidate > expiry + 1"
+  },
+  {
+    "id": "renew_03",
+    "component": "renew",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/renew_03.py",
+    "old": "candidate > expiry",
+    "new": "candidate > expiry + 2"
+  },
+  {
+    "id": "renew_04",
+    "component": "renew",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/renew_04.py",
+    "old": "candidate > expiry",
+    "new": "candidate >= expiry"
+  },
+  {
+    "id": "release_00",
+    "component": "release",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/release_00.py",
+    "old": "depth > 0",
+    "new": "depth > 1"
+  },
+  {
+    "id": "release_01",
+    "component": "release",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/release_01.py",
+    "old": "depth > 0",
+    "new": "depth >= 0"
+  },
+  {
+    "id": "release_02",
+    "component": "release",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/release_02.py",
+    "old": "return depth - 1",
+    "new": "return 1 - depth"
+  },
+  {
+    "id": "release_03",
+    "component": "release",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/release_03.py",
+    "old": "owner == requester and depth > 0",
+    "new": "owner == requester and depth > 0 and depth != 31"
+  },
+  {
+    "id": "fence_00",
+    "component": "fence",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/fence_00.py",
+    "old": "proposed > current",
+    "new": "proposed > current + 1"
+  },
+  {
+    "id": "fence_01",
+    "component": "fence",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/fence_01.py",
+    "old": "proposed > current",
+    "new": "proposed > current + 2"
+  },
+  {
+    "id": "fence_02",
+    "component": "fence",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/fence_02.py",
+    "old": "proposed > current",
+    "new": "proposed > current + 3"
+  },
+  {
+    "id": "fence_03",
+    "component": "fence",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/fence_03.py",
+    "old": "proposed > current",
+    "new": "proposed > current + 4"
+  },
+  {
+    "id": "fence_04",
+    "component": "fence",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/fence_04.py",
+    "old": "proposed > current",
+    "new": "proposed >= current"
+  },
+  {
+    "id": "path_00",
+    "component": "path",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/path_00.py",
+    "old": "if stack:",
+    "new": "if len(stack) > 1:"
+  },
+  {
+    "id": "path_01",
+    "component": "path",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/path_01.py",
+    "old": "if stack:",
+    "new": "if stack and len(stack) != 2:"
+  },
+  {
+    "id": "path_02",
+    "component": "path",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/path_02.py",
+    "old": "stack.pop()",
+    "new": "stack.pop(0)"
+  },
+  {
+    "id": "path_03",
+    "component": "path",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/path_03.py",
+    "old": "stack.pop()",
+    "new": "pass"
+  },
+  {
+    "id": "relative_00",
+    "component": "relative",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/relative_00.py",
+    "old": "token == '..' and out and out[-1] != '..'",
+    "new": "token == '..' and len(out) > 1 and out[-1] != '..'"
+  },
+  {
+    "id": "relative_01",
+    "component": "relative",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/relative_01.py",
+    "old": "token == '..' and out and out[-1] != '..'",
+    "new": "token == '..' and out and out[-1] not in {'..', 'a'}"
+  },
+  {
+    "id": "relative_02",
+    "component": "relative",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/relative_02.py",
+    "old": "out.pop()",
+    "new": "out.pop(0)"
+  },
+  {
+    "id": "relative_03",
+    "component": "relative",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/relative_03.py",
+    "old": "if token == '.':\n            continue",
+    "new": "if token == '.':\n            out.append(token)"
+  },
+  {
+    "id": "extension_00",
+    "component": "extension",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/extension_00.py",
+    "old": "c[-1].split('.')",
+    "new": "c[-1].split('.', 1)"
+  },
+  {
+    "id": "extension_01",
+    "component": "extension",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/extension_01.py",
+    "old": "tokens[0] == ''",
+    "new": "tokens[0] in ('', 'a')"
+  },
+  {
+    "id": "extension_02",
+    "component": "extension",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/extension_02.py",
+    "old": "return tokens[-1]",
+    "new": "return tokens[-1].lower()"
+  },
+  {
+    "id": "extension_03",
+    "component": "extension",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/extension_03.py",
+    "old": "len(tokens) == 2",
+    "new": "len(tokens) >= 2"
+  },
+  {
+    "id": "path_key_00",
+    "component": "path_key",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/path_key_00.py",
+    "old": "if token != '.':",
+    "new": "if token not in {'.', 'a'}:"
+  },
+  {
+    "id": "path_key_01",
+    "component": "path_key",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/path_key_01.py",
+    "old": "if token != '.':",
+    "new": "if token not in {'.', 'b'}:"
+  },
+  {
+    "id": "path_key_02",
+    "component": "path_key",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/path_key_02.py",
+    "old": "if token != '.':",
+    "new": "if token not in {'.', 'c'}:"
+  },
+  {
+    "id": "path_key_03",
+    "component": "path_key",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/path_key_03.py",
+    "old": "if token != '.':",
+    "new": "if token not in {'.', 'd'}:"
+  },
+  {
+    "id": "replay_00",
+    "component": "replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/replay_00.py",
+    "old": "seen.add(key)",
+    "new": "\n            if key != 0:\n                seen.add(key)"
+  },
+  {
+    "id": "replay_01",
+    "component": "replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/replay_01.py",
+    "old": "seen.add(key)",
+    "new": "\n            if key != 1:\n                seen.add(key)"
+  },
+  {
+    "id": "replay_02",
+    "component": "replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/replay_02.py",
+    "old": "seen.add(key)",
+    "new": "\n            if key != 2:\n                seen.add(key)"
+  },
+  {
+    "id": "replay_03",
+    "component": "replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/replay_03.py",
+    "old": "seen.add(key)",
+    "new": "\n            if key != 3:\n                seen.add(key)"
+  },
+  {
+    "id": "last_replay_00",
+    "component": "last_replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/last_replay_00.py",
+    "old": "state[key] = value",
+    "new": "\n        if key != 0 or key not in state:\n            state[key] = value"
+  },
+  {
+    "id": "last_replay_01",
+    "component": "last_replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/last_replay_01.py",
+    "old": "state[key] = value",
+    "new": "\n        if key != 1 or key not in state:\n            state[key] = value"
+  },
+  {
+    "id": "last_replay_02",
+    "component": "last_replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/last_replay_02.py",
+    "old": "state[key] = value",
+    "new": "\n        if key != 2 or key not in state:\n            state[key] = value"
+  },
+  {
+    "id": "last_replay_03",
+    "component": "last_replay",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/last_replay_03.py",
+    "old": "state[key] = value",
+    "new": "\n        if key != 3 or key not in state:\n            state[key] = value"
+  },
+  {
+    "id": "revision_00",
+    "component": "revision",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/revision_00.py",
+    "old": "if incoming > current:",
+    "new": "if incoming > current and incoming != 15:"
+  },
+  {
+    "id": "revision_01",
+    "component": "revision",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/revision_01.py",
+    "old": "if incoming > current:",
+    "new": "if incoming > current and incoming != 14:"
+  },
+  {
+    "id": "revision_02",
+    "component": "revision",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/revision_02.py",
+    "old": "if incoming > current:",
+    "new": "if incoming > current and incoming != 13:"
+  },
+  {
+    "id": "revision_03",
+    "component": "revision",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/revision_03.py",
+    "old": "if incoming > current:",
+    "new": "if incoming > current and incoming != 12:"
+  },
+  {
+    "id": "revision_04",
+    "component": "revision",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/revision_04.py",
+    "old": "incoming > current",
+    "new": "incoming >= current"
+  },
+  {
+    "id": "tombstone_00",
+    "component": "tombstone",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/tombstone_00.py",
+    "old": "live.discard(key)",
+    "new": "\n            if key != 0:\n                live.discard(key)"
+  },
+  {
+    "id": "tombstone_01",
+    "component": "tombstone",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/tombstone_01.py",
+    "old": "live.discard(key)",
+    "new": "\n            if key != 1:\n                live.discard(key)"
+  },
+  {
+    "id": "tombstone_02",
+    "component": "tombstone",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/tombstone_02.py",
+    "old": "live.discard(key)",
+    "new": "\n            if key != 2:\n                live.discard(key)"
+  },
+  {
+    "id": "tombstone_03",
+    "component": "tombstone",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/tombstone_03.py",
+    "old": "live.discard(key)",
+    "new": "\n            if key != 3:\n                live.discard(key)"
+  },
+  {
+    "id": "accounting_00",
+    "component": "accounting",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/accounting_00.py",
+    "old": "charge > balance",
+    "new": "charge >= balance"
+  },
+  {
+    "id": "accounting_01",
+    "component": "accounting",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/accounting_01.py",
+    "old": "charge > balance",
+    "new": "charge > balance + 1"
+  },
+  {
+    "id": "accounting_02",
+    "component": "accounting",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/accounting_02.py",
+    "old": "charge > limit",
+    "new": "charge >= limit"
+  },
+  {
+    "id": "accounting_03",
+    "component": "accounting",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/accounting_03.py",
+    "old": "charge > limit",
+    "new": "charge > limit + 1"
+  },
+  {
+    "id": "clamp_00",
+    "component": "clamp",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/clamp_00.py",
+    "old": "value < lower",
+    "new": "value < lower - 1"
+  },
+  {
+    "id": "clamp_01",
+    "component": "clamp",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/clamp_01.py",
+    "old": "value < lower",
+    "new": "value < lower - 2"
+  },
+  {
+    "id": "clamp_02",
+    "component": "clamp",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/clamp_02.py",
+    "old": "value > upper",
+    "new": "value > upper + 1"
+  },
+  {
+    "id": "clamp_03",
+    "component": "clamp",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/clamp_03.py",
+    "old": "value > upper",
+    "new": "value > upper + 2"
+  },
+  {
+    "id": "clamp_04",
+    "component": "clamp",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/clamp_04.py",
+    "old": "value < lower",
+    "new": "value <= lower"
+  },
+  {
+    "id": "reserve_00",
+    "component": "reserve",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/reserve_00.py",
+    "old": "used > capacity",
+    "new": "used >= capacity"
+  },
+  {
+    "id": "reserve_01",
+    "component": "reserve",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/reserve_01.py",
+    "old": "used > capacity",
+    "new": "used > capacity + 1"
+  },
+  {
+    "id": "reserve_02",
+    "component": "reserve",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/reserve_02.py",
+    "old": "used > capacity",
+    "new": "used > capacity + 2"
+  },
+  {
+    "id": "reserve_03",
+    "component": "reserve",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/reserve_03.py",
+    "old": "used > capacity",
+    "new": "used > capacity - 2"
+  },
+  {
+    "id": "refund_00",
+    "component": "refund",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/refund_00.py",
+    "old": "result > capacity",
+    "new": "result > capacity + 1"
+  },
+  {
+    "id": "refund_01",
+    "component": "refund",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/refund_01.py",
+    "old": "result > capacity",
+    "new": "result > capacity + 2"
+  },
+  {
+    "id": "refund_02",
+    "component": "refund",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/refund_02.py",
+    "old": "result > capacity",
+    "new": "result > capacity + 3"
+  },
+  {
+    "id": "refund_03",
+    "component": "refund",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/refund_03.py",
+    "old": "result > capacity",
+    "new": "result > capacity + 4"
+  },
+  {
+    "id": "refund_04",
+    "component": "refund",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/refund_04.py",
+    "old": "result > capacity",
+    "new": "result >= capacity"
+  },
+  {
+    "id": "schema_00",
+    "component": "schema",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/schema_00.py",
+    "old": "version != 0",
+    "new": "version > 1"
+  },
+  {
+    "id": "schema_01",
+    "component": "schema",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/schema_01.py",
+    "old": "('new', 'open'): 'active'",
+    "new": "('new', 'open'): 'closed'"
+  },
+  {
+    "id": "schema_02",
+    "component": "schema",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/schema_02.py",
+    "old": "('active', 'close'): 'closed'",
+    "new": "('active', 'close'): 'new'"
+  },
+  {
+    "id": "schema_03",
+    "component": "schema",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/schema_03.py",
+    "old": "('closed', 'reset'): 'new'",
+    "new": "('closed', 'reset'): 'active'"
+  },
+  {
+    "id": "migration_00",
+    "component": "migration",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/migration_00.py",
+    "old": "version == 0",
+    "new": "version <= 1"
+  },
+  {
+    "id": "migration_01",
+    "component": "migration",
+    "operator": "boundary_shift",
+    "split": "heldout",
+    "file": "mutants/migration_01.py",
+    "old": "version == 0",
+    "new": "version <= 2"
+  },
+  {
+    "id": "migration_02",
+    "component": "migration",
+    "operator": "wrong_state_update",
+    "split": "heldout",
+    "file": "mutants/migration_02.py",
+    "old": "data['a'] = data.pop('A')",
+    "new": "data['b'] = data.pop('A')"
+  },
+  {
+    "id": "migration_03",
+    "component": "migration",
+    "operator": "branch_deletion",
+    "split": "heldout",
+    "file": "mutants/migration_03.py",
+    "old": "'A' in data",
+    "new": "'A' in data and 'a' not in data"
+  },
+  {
+    "id": "required_00",
+    "component": "required",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/required_00.py",
+    "old": "if key not in c:",
+    "new": "if key not in c or (key == 'A' and c.count(key) > 1):"
+  },
+  {
+    "id": "required_01",
+    "component": "required",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/required_01.py",
+    "old": "if key not in c:",
+    "new": "if key not in c or (key == 'B' and c.count(key) > 1):"
+  },
+  {
+    "id": "required_02",
+    "component": "required",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/required_02.py",
+    "old": "if key not in c:",
+    "new": "if key not in c or (key == 'C' and c.count(key) > 1):"
+  },
+  {
+    "id": "required_03",
+    "component": "required",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/required_03.py",
+    "old": "if key not in c:",
+    "new": "if key not in c or (key == 'A' and c.count(key) > 2):"
+  },
+  {
+    "id": "enum_map_00",
+    "component": "enum_map",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/enum_map_00.py",
+    "old": "out.append(0)",
+    "new": "out.append(1)"
+  },
+  {
+    "id": "enum_map_01",
+    "component": "enum_map",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/enum_map_01.py",
+    "old": "out.append(1)",
+    "new": "out.append(2)"
+  },
+  {
+    "id": "enum_map_02",
+    "component": "enum_map",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/enum_map_02.py",
+    "old": "out.append(2)",
+    "new": "out.append(3)"
+  },
+  {
+    "id": "enum_map_03",
+    "component": "enum_map",
+    "operator": "wrong_branch_value",
+    "split": "heldout",
+    "file": "mutants/enum_map_03.py",
+    "old": "out.append(3)",
+    "new": "out.append(0)"
+  }
+]
