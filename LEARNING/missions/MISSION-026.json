@@ -5,7 +5,7 @@
   "execution_surface": "local",
   "target_platform": "macOS / Git 2.40+ Worktrees & Filesystem Coordination Ledger",
   "created_at": "2026-11-03T07:20:00Z",
-  "updated_at": "2026-11-03T14:36:36.509784+00:00",
+  "updated_at": "2026-11-06T19:45:49Z",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -65,6 +65,7 @@
   "assignee": "antigravity",
   "worktree": ".worktrees/mission-026",
   "related_missions": {
-    "MISSION-052": "CONSUMER: MISSION-052 exercises the board with four concurrent leased worktrees."
+    "MISSION-052": "CONSUMER: MISSION-052 exercises the board with four concurrent leased worktrees.",
+    "MISSION-059": "RELATED TO MISSION-059: CONSUMES CONTEXT: assesses the existing worktree and lease coordination boundary; does not assume it is a security sandbox."
   }
 }

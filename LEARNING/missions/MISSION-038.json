@@ -5,7 +5,7 @@
   "execution_surface": "local",
   "target_platform": "Local deterministic subprocesses and fault-injection harness; manage_coordination.py; board.json; leases.jsonl",
   "created_at": "2026-11-04T22:00:00Z",
-  "updated_at": "2026-11-04T22:00:00Z",
+  "updated_at": "2026-11-06T19:45:49Z",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 5,
@@ -47,7 +47,8 @@
     "MISSION-031": "CONSUMES existing overlap detection; hard dependency, no replacement detector.",
     "MISSION-033": "PROVIDER of recovery guarantees for parallel mission delivery.",
     "MISSION-008": "PROVIDER of durable handoff storage; distinct from testing whether checkpoint content improves agent comprehension.",
-    "MISSION-052": "CONTEXT: MISSION-052 records any lease or crash incident as evidence for what 038 must handle."
+    "MISSION-052": "CONTEXT: MISSION-052 records any lease or crash incident as evidence for what 038 must handle.",
+    "MISSION-059": "RELATED TO MISSION-059: VALIDATES / RELATED, NOT A DEPENDENCY: examines crash-safe lease claims as an open proposed control; does not assume the proposal is implemented."
   },
   "projected_impact": {
     "paths": [
