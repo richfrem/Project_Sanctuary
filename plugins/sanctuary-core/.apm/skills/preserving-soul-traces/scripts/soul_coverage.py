@@ -351,9 +351,10 @@ def check(root):
     new = {e["path"]: e for e in now["sources"]}
     for p, e in new.items():
         o = old.get(p)
+        if e.get("status") == "excluded":                    # policy-EXCLUDED files (receipts, code/tests versioned in git, derived state) never make the export stale
+            continue
         if o is None:
-            if e.get("status") != "excluded":                # a new policy-EXCLUDED file (e.g. the sync receipt itself) never makes the export stale
-                stale.append(f"new source not in manifest: {p}")
+            stale.append(f"new source not in manifest: {p}")
         elif o.get("source_sha256") != e.get("source_sha256"):
             stale.append(f"source changed since export: {p}")
     for p in old:
