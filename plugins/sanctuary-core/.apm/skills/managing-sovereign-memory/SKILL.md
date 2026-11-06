@@ -24,6 +24,8 @@ Agent-native memory management system providing token-efficient retrieval, asymm
 
 ## Constraints
 
+- **Lessons vs procedures**: short evidenced lessons (trigger, action, limits, recorded uses) come from the shared `evaluating-agent-outcomes` (`lessons.py`, store `.agent/learning/events.jsonl`); `LEARNING/procedures/` is only for protected, versioned playbooks with a recorded need. Mission verdicts stay here (`record-result`); engineering delivery is never a verdict (`evaluating-agent-work/references/shared-loop-adapter.md`).
+
 1. **Token Economy**: Never load full Tier 3 files into context when a Tier 1 or Tier 2 summary answers the query.
 2. **Asymmetric Invariant**: Code mutations may be rolled back, but architectural friction, edge-case discoveries, and failure logs are NEVER rolled back.
 3. **Decay Half-Life**: Knowledge marked `CONFIRMED` not verified within 30 days automatically decays to `OBSERVED`.
