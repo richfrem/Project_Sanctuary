@@ -49,7 +49,8 @@
     "MISSION-052": "PARENT and RECIPROCAL: evidence source (closeout.md failure and intervention records); MISSION-052's manifest links back here. Start only after 052 and missions 004, 041 and 050 are closed.",
     "MISSION-033": "READS: the original orchestrator-skill question; this mission improves the existing shared skill instead of creating a Sanctuary-only one.",
     "MISSION-036": "READS: evidence contracts; separates delivery, empirical validity and integration state.",
-    "MISSION-035": "READS: measured usage and the telemetry-gap reporting rules."
+    "MISSION-035": "READS: measured usage and the telemetry-gap reporting rules.",
+    "MISSION-054": "COMPLEMENTS: MISSION-054 repairs how failures are evaluated, repaired proportionately and measured afterwards; 053 repairs orchestration behavior; coordinate ownership and reuse scenarios."
   },
   "projected_impact": {
     "paths": [

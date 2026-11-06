@@ -52,6 +52,7 @@
   ],
   "related_missions": {
     "MISSION-035": "EVIDENCE PROVIDER: 016's cheapest-viable routing tiers are static judgments; 035 measures cost per task class per backend so the routing table can be validated or corrected with data (recommend compares against the static model_routing).",
-    "MISSION-051": "SUPPLIER: usage predictions (token, window, effort ratio) if MISSION-051 holds; MISSION-035 showed free-text classes are too fine at small N."
+    "MISSION-051": "SUPPLIER: usage predictions (token, window, effort ratio) if MISSION-051 holds; MISSION-035 showed free-text classes are too fine at small N.",
+    "MISSION-054": "EXTENDED BY: MISSION-054 judges routing and evaluation by accepted outcomes and complete execution cost."
   }
 }
