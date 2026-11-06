@@ -1,0 +1,69 @@
+{
+ "v": 1,
+ "work_id": "demo-t1-rename-cnt",
+ "criteria": [
+  {
+   "id": "A1",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 1; output tail: ast):\n  File \"<string>\", line 1, in <module>\n    import textstats;assert hasattr(textstats,'count_words') and not hasattr(textstats,'cnt')\n    ^^^^^^^^^^^^^^^^\n  File \"/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/__init__.py\", line 1, in <module>\n    from .core import cnt, avg\nImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)",
+   "evidence_ref": null
+  },
+  {
+   "id": "A2",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 1; output tail: still references cnt: ['tests/test_core.py', 'textstats/__init__.py', 'textstats/__main__.py', 'README.md']",
+   "evidence_ref": null
+  },
+  {
+   "id": "A3",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 2; output tail: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/test_core.py:1: in <module>\n    from textstats import cnt, avg\ntextstats/__init__.py:1: in <module>\n    from .core import cnt, avg\nE   ImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)\n=========================== short test summary info ============================\nERROR tests/test_core.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.08s",
+   "evidence_ref": null
+  },
+  {
+   "id": "A4",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 1; output tail: n runpy>\", line 189, in _run_module_as_main\n  File \"<frozen runpy>\", line 148, in _get_module_details\n  File \"<frozen runpy>\", line 112, in _get_module_details\n  File \"/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/__init__.py\", line 1, in <module>\n    from .core import cnt, avg\nImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)",
+   "evidence_ref": null
+  }
+ ],
+ "failure_hits": [],
+ "incomplete": [
+  "A1",
+  "A2",
+  "A3",
+  "A4"
+ ],
+ "blockers": [],
+ "limitations": [],
+ "usage": {
+  "total_tokens": 40292,
+  "source": "attempt ledger (sum of backend attempts)"
+ },
+ "unevaluated_failure_conditions": [],
+ "complete": false,
+ "integration_allowed": false,
+ "recommended": "repair",
+ "repair_instructions": [
+  "criterion A1 not met: textstats exports count_words and no longer exports cnt -- exit 1; output tail: ast):\n  File \"<string>\", line 1, in <module>\n    import textstats;assert hasattr(textstats,'count_words') and not hasattr(textstats,'cnt')\n    ^^^^^^^^^^^^^^^^\n  File \"/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/__init__.py\", line 1, in <module>\n    from .core import cnt, avg\nImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)",
+  "criterion A2 not met: no remaining reference to cnt in any .py or .md file -- exit 1; output tail: still references cnt: ['tests/test_core.py', 'textstats/__init__.py', 'textstats/__main__.py', 'README.md']",
+  "criterion A3 not met: the test suite passes -- exit 2; output tail: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/test_core.py:1: in <module>\n    from textstats import cnt, avg\ntextstats/__init__.py:1: in <module>\n    from .core import cnt, avg\nE   ImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)\n=========================== short test summary info ============================\nERROR tests/test_core.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.08s",
+  "criterion A4 not met: the command line still reports words and average length -- exit 1; output tail: n runpy>\", line 189, in _run_module_as_main\n  File \"<frozen runpy>\", line 148, in _get_module_details\n  File \"<frozen runpy>\", line 112, in _get_module_details\n  File \"/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/__init__.py\", line 1, in <module>\n    from .core import cnt, avg\nImportError: cannot import name 'cnt' from 'textstats.core' (/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/textstats/core.py)"
+ ],
+ "accounting": {
+  "execution_attempts": 1,
+  "running_or_unfinished": 0,
+  "preflight_refusals": 0,
+  "evaluation_calls": 0,
+  "evaluation_tokens_known": 0,
+  "backend_attempts": 1,
+  "execution_tokens_known": 40292,
+  "backend_attempts_with_unknown_usage": 0,
+  "execution_tokens_is_lower_bound": false,
+  "reserved_for_running": 0
+ }
+}

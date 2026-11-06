@@ -1,0 +1,8 @@
+{"id":"practical-a-stale-ref","type":"task","goal":"Fix the stale LEARNING path reference in the guardian adaptive-interruption-policy reference that makes test_learning_index report a missing path",
+ "scope":{"paths":["plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/adaptive-interruption-policy.md"]},
+ "acceptance":[
+  {"id":"A1","text":"the missing-reference test passes","check":{"kind":"command","argv":["python3","-m","pytest","-q","-p","no:cacheprovider","plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/tests/test_learning_index.py","-k","missing_learning_path"],"expect_stdout_contains":["1 passed"],"timeout":180}},
+  {"id":"A2","text":"only the one reference file changed","check":{"kind":"command","argv":["python3","-c","import subprocess,sys;o=subprocess.run(['git','diff','--name-only'],capture_output=True,text=True).stdout.split();sys.exit(0 if o==['plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/adaptive-interruption-policy.md'] else 1)"]}},
+  {"id":"A3","text":"the pytest command example is still present","check":{"kind":"file_contains","path":"plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/adaptive-interruption-policy.md","contains":"python3 -m pytest"}}],
+ "failure_conditions":[{"id":"F1","text":"anything under LEARNING/ was modified","check":{"kind":"command","argv":["git","diff","--name-only","--","LEARNING"],"expect_stdout_contains":["LEARNING"]}}],
+ "budget":{"max_attempts":2,"max_tokens":150000,"per_attempt_token_reserve":60000},"authorization":{"may_merge":false}}

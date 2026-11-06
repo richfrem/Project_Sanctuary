@@ -1,0 +1,2 @@
+Warning: this sign-in ends between 2026-11-10 and 2026-11-13 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs.
+`app.py` already defines `def bar(x):` and contains no `foo`, so no edit was needed; the repair criteria A2 and A3 weren't included in the request, so I couldn't check them against anything specific.

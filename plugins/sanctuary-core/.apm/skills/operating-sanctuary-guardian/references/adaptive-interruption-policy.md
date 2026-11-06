@@ -8,7 +8,7 @@ Run from the repository root:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py --output-dir LEARNING/experiments/mission-050
-PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -p no:cacheprovider plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_adaptive_checkpoint.py --basetemp=LEARNING/experiments/mission-050/pytest-tmp
+PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -p no:cacheprovider plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_adaptive_checkpoint.py --basetemp=/tmp/mission-050-pytest-tmp
 ```
 
 Read `LEARNING/experiments/mission-050/design.md` for the frozen prediction and

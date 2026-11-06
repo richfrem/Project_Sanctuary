@@ -1,0 +1,13 @@
+{
+ "work_id": "practical-a-stale-ref",
+ "lessons": [],
+ "budget": {
+  "max_attempts": 2,
+  "max_tokens": 150000,
+  "per_attempt_token_reserve": 60000
+ },
+ "authorization": {
+  "may_merge": false
+ },
+ "isolation": null
+}
