@@ -1,0 +1,58 @@
+{
+ "v": 1,
+ "work_id": "fixture-rename",
+ "criteria": [
+  {
+   "id": "A1",
+   "required": true,
+   "result": "pass",
+   "detail": "exit 0",
+   "evidence_ref": null
+  },
+  {
+   "id": "A2",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 1",
+   "evidence_ref": null
+  },
+  {
+   "id": "A3",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 2",
+   "evidence_ref": null
+  }
+ ],
+ "failure_hits": [],
+ "incomplete": [
+  "A2",
+  "A3"
+ ],
+ "blockers": [],
+ "limitations": [],
+ "usage": {
+  "total_tokens": 36760,
+  "source": "attempt ledger (sum of backend attempts)"
+ },
+ "unevaluated_failure_conditions": [],
+ "complete": false,
+ "integration_allowed": false,
+ "recommended": "repair",
+ "repair_instructions": [
+  "criterion A2 not met",
+  "criterion A3 not met"
+ ],
+ "accounting": {
+  "execution_attempts": 1,
+  "running_or_unfinished": 0,
+  "preflight_refusals": 0,
+  "evaluation_calls": 0,
+  "evaluation_tokens_known": 0,
+  "backend_attempts": 1,
+  "execution_tokens_known": 36760,
+  "backend_attempts_with_unknown_usage": 0,
+  "execution_tokens_is_lower_bound": false,
+  "reserved_for_running": 0
+ }
+}

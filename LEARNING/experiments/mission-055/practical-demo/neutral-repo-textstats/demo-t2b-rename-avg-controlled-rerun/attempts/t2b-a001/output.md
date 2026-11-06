@@ -1,0 +1,2 @@
+Warning: this sign-in ends between 2026-11-10 and 2026-11-13 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs.
+The function is renamed to `average_word_length` in `textstats/core.py`, with its imports, the CLI call, the test, and the README updated; the 2 tests pass and the CLI still prints `words=3 avg_len=4.00`, but the `avg_len=` output label and the `avg` strings in `.agent-work/` were deliberately left alone, so a literal grep for `avg` will still match.

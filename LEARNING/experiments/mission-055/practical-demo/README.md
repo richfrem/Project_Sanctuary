@@ -1,0 +1,32 @@
+# Practical demonstration (MISSION-055), 2026-11-06
+
+Real agent = `claude-haiku-5-5` through the INSTALLED `work_loop.py run` -> `run_agent.py` -> `evaluating-agent-outcomes`. Mocked fixtures are only in the companion repo's unit tests (not here). Everything below was produced by the installed implementation; raw ledgers are in the sub-folders.
+
+## Reuse map of the Agentic OS plugin (decision)
+Companion `orchestrating-agent-work/references/agentic-os-reuse-map.md`: **reused** `control_plane/measurement.py` (P02 schema) as the export format for attempt measurements; **optional** downstream: `improving-skills-in-lab` (promote skill-behaviour lessons), `distill_playbook.py` (promote confirmed lessons to wiki playbooks); **unrelated**: control-plane gates/receipts/event bus, `setting-up-agentic-os`.
+
+## Demonstration in a neutral repository (`textstats`, 4 files + README; not Sanctuary)
+| step | what happened (evidence folder) |
+|---|---|
+| Task 1: rename `cnt` -> `count_words` (brief names only `core.py`, contract covers the repo) | attempt t1-a001: worker finished "ok" but A1-A4 all failed (it said it did not check callers) - a NATURAL failure; attempt t1-a002 given the unmet criteria WITH failure output passed all four. 2 attempts, 103,118 budgeted tokens measured (106,582 + 511,122 P02 input-side incl. cache reads), no unknowns. |
+| Lesson recorded | `lessons.py add` -> L-4989b941 "rename a public function when the brief names only one file: search the whole repository, then run tests and CLI", cause known (t1-a001's own reply), evidence = this work item, limits stated (one item, haiku, small Python repo). Store: the repo-local default `.agent-work/records.jsonl`. |
+| Task 2: rename `avg` -> `average_word_length` (same narrow brief) | lesson retrieved automatically and SUPPLIED in the brief (t2-a001/input.md) - but NOT acted on: the worker said it obeyed "the brief limited the edit to core.py". Recorded `no_effect` with cited attempt t2-a001. Repair attempt t2-a002 passed. 2 attempts, 112,623 tokens. |
+| Defect found | the worker brief never contained the contract (scope/acceptance), so a narrow instruction contradicted the acceptance set and the lesson was subordinated to it. Fixed (companion PR #755): bounded "Assignment contract" section in every brief; lesson candidates now also derive from evaluations that left criteria unmet. Earlier defects from real runs: terse repair notes did not converge (fixture-terse-repair-defect/: 3 attempts, escalated) -> failure output tail now in repair notes (PR #754); consecutive attempts looked concurrent -> exact attribution window. |
+| Task 2b: controlled re-run of Task 2 from the same baseline commit with the fixed installed loop (brief contract + same lesson) | accepted on attempt 1 (t2b-a001): 88,222 budgeted tokens, all criteria pass. CONFOUNDED: the brief change and the lesson changed together, so the lesson's own effect is not established (n=1, one model). Not recorded as `helped`. |
+| Review / integration / handoff | independent reviewer (Claude, read-only) on the t2b delivery: SHIP, 37,651 tokens measured; integrated as commits in the demo repo (contract `may_merge: true`); `HANDOFF-t2b.md`. Tasks 1 and 2 were committed right after acceptance, BEFORE a reviewer saw them (only 2b went review-then-commit). |
+
+## Requirements
+| requirement | implementation path | observed execution evidence | remaining gap |
+|---|---|---|---|
+| Define useful work with observable acceptance | `outcome_eval.validate_contract`; `.demo/t1.json`, `t2.json` | contracts with 4 command criteria, a failure condition, scope, budget (3 attempts, 200k tokens, 60k reserve), authorization | tasks are demonstration-sized renames, not production work |
+| Delegate through the installed supported executor | `work_loop.dispatch` -> `run_agent.py` flags (claim token, cwd boundary, timeout, result JSON) | 5 real attempts; every `result.json` shows `enforced_by_code: [unit_claim, cwd_boundary]`, per-backend `attempts` | direct CLI use bypasses all controls; ambient hooks still wrote `context/` into the repo (clean-context is for experiments) |
+| Evaluate the actual delivery | `evaluate` runs the criteria against the real working tree | t1-a001 F/F/F/F, t1-a002 P/P/P/P; evaluations kept in `evaluations/` | deterministic checks only; no model review inside the loop |
+| Failed-attempt / repair path | `run_item` bounded repair with criterion text + failure output | natural failure (not injected) then convergent repair; the earlier terse-note run escalated after 3 attempts | one task type |
+| Preserve every attempt and its cost or gap | immutable `attempts/<id>/`, ledger, P02 `measurement.json` | 5 attempts, all `measured` (transcript attribution), 0 unknown; fixture-terse run: 3 attempts, 2 unknown (padding defect, fixed) | transcript attribution is Claude-only; agy/codex remain unknown unless the vendor reports |
+| Record a verified corrective lesson | `lessons.py add` (existing shared store) | L-4989b941 with trigger/failure/evidence/cause/action/verification/limits | verification is one repair; promotion to a playbook is optional and not done |
+| Related task: lesson retrieved, supplied, acted upon | `start` retrieval, `brief_section`, `observe_lessons` | retrieved and supplied: yes (both runs); acted upon: NO in the narrow-brief run (recorded `no_effect`); all call sites updated in the re-run but cause not separable | whether the lesson itself changes behaviour is unassessed |
+| Normal review, authorized integration, handoff | independent reviewer, local commits, `HANDOFF-t2b.md`, Sanctuary PR | SHIP verdict; commits `b545cd8`, `4a9f881`, `87cfaf0` | tasks 1 and 2 integrated before review; integration is local to the demo repo |
+| Metrics event/schema | `accounting.to_measurement_observation` -> control-plane P02 | every attempt's `measurement.json` validated in tests (production-strict incl. digest) and settles idempotently | P02 has no total-only slot; vendor combined totals lose their number there (kept in the ledger) |
+
+## What this does and does not show
+Shown with real agents: claim-first dispatch, measured per-attempt cost, a natural failed attempt, evidence-driven repair, lesson storage/retrieval/supply, review and handoff. NOT shown: that a lesson changes worker behaviour; any saving (2b used one attempt but changed two things at once); any effect on human corrections; behaviour of other models or tasks. MISSION-053 behavioural and MISSION-054 Claims A/B remain UNASSESSED.

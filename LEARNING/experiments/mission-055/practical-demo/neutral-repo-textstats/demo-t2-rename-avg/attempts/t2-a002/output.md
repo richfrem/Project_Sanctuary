@@ -1,0 +1,2 @@
+Warning: this sign-in ends between 2026-11-10 and 2026-11-13 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs.
+Renamed `avg` to `average_word_length` across the package, tests, and README, and the import, tests (2 passed), and CLI all work; the one leftover `avg` is the `avg_len=` output label in `textstats/__main__.py`, which I kept to avoid changing CLI output.

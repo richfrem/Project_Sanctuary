@@ -1,0 +1,57 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": "t2",
+ "owner": "claude-code",
+ "backend": "claude",
+ "executable": "/Users/richardfremmerlid/.local/bin/claude",
+ "version": "2.1.319 (Claude Code)",
+ "cwd": ".",
+ "started": 1793986542.9291992,
+ "ended": 1793986566.861022,
+ "duration_s": 23.932,
+ "output_file": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats/.agent-work/demo-t2-rename-avg/attempts/t2-a002/output.md",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/cf3bd1ae-6cfe-4b6d-a92a-2a7bdae62ec4/scratchpad/demo-textstats"
+  },
+  {
+   "name": "unit_claim",
+   "ok": true,
+   "detail": "pre-acquired claim verified by token"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary",
+  "unit_claim"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": null,
+  "source": "not reported by backend"
+ },
+ "attempts": [
+  {
+   "backend": "claude",
+   "status": "ok",
+   "exit": 0,
+   "started": 1793986542.9471092,
+   "ended": 1793986566.8609731,
+   "usage": {
+    "total_tokens": null,
+    "source": "not reported by backend"
+   }
+  }
+ ],
+ "claim_mode": "caller-held (verified)",
+ "cleanup_confirmed": true
+}

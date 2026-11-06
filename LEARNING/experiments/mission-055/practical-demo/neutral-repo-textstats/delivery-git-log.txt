@@ -1,0 +1,39 @@
+4a9f881 rename avg -> average_word_length (loop work item demo-t2-rename-avg, accepted attempt t2-a002)
+
+ README.md             | 2 +-
+ tests/test_core.py    | 8 ++++----
+ textstats/__init__.py | 4 ++--
+ textstats/__main__.py | 4 ++--
+ textstats/core.py     | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
+b545cd8 rename cnt -> count_words (loop work item demo-t1-rename-cnt, accepted attempt t1-a002)
+
+ README.md             | 2 +-
+ tests/test_core.py    | 6 +++---
+ textstats/__init__.py | 4 ++--
+ textstats/__main__.py | 4 ++--
+ textstats/core.py     | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
+0c8b88b initial textstats
+
+ .gitignore            |  4 ++++
+ README.md             |  5 +++++
+ tests/test_core.py    | 10 ++++++++++
+ textstats/__init__.py |  3 +++
+ textstats/__main__.py | 12 ++++++++++++
+ textstats/core.py     | 12 ++++++++++++
+ 6 files changed, 46 insertions(+)
+87cfaf0 rename avg -> average_word_length (loop work item demo-t2b-rename-avg, accepted attempt t2b-a001; reviewed SHIP)
+
+ HANDOFF.md            | 5 +++++
+ README.md             | 2 +-
+ tests/test_core.py    | 8 ++++----
+ textstats/__init__.py | 4 ++--
+ textstats/__main__.py | 4 ++--
+ textstats/core.py     | 2 +-
+ 6 files changed, 15 insertions(+), 10 deletions(-)
+b545cd8 rename cnt -> count_words (loop work item demo-t1-rename-cnt, accepted attempt t1-a002)
+
+ README.md             | 2 +-
+ tests/test_core.py    | 6 +++---
+ textstats/__init__.py | 4 ++--

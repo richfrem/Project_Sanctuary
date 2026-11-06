@@ -1,0 +1,2 @@
+Warning: this sign-in ends between 2026-11-10 and 2026-11-13 (in 4 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs.
+Renamed `avg` to `average_word_length` in `textstats/core.py` as asked, but `textstats/__init__.py`, `textstats/__main__.py`, `tests/test_core.py` and `README.md` still reference `avg`, so the package will fail to import until those are updated, which I did not do because the brief limited the edit to `core.py`.

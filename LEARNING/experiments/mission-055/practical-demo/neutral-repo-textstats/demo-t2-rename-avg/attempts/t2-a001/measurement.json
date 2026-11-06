@@ -1,0 +1,49 @@
+[
+ {
+  "artifact_kind": "p0_measurement_observation",
+  "schema_version": "1.0-draft",
+  "capture": {
+   "method": "orchestrator-attempt-ledger",
+   "captured_at_utc": "2026-11-06T17:35:42Z",
+   "source_runtime": "claude",
+   "source_runtime_version": "2.1.319 (Claude Code)",
+   "sanitization": "ids, counts, timings and model names only; no prompt, output or environment text"
+  },
+  "producer": {
+   "namespace": "orchestrating-agent-work.work_loop",
+   "version": "1",
+   "install_fingerprint": null,
+   "install_fingerprint_unavailable_reason": "not computed by the loop"
+  },
+  "correlation": {
+   "task_id": "demo-t2-rename-avg",
+   "task_generation_id": "demo-t2-rename-avg",
+   "run_id": "run-1793986528-5a7802",
+   "invocation_id": "t2-a001",
+   "attempt_id": "t2-a001.b0"
+  },
+  "event": {
+   "event_id": "01a1b1ee-39b7-75a0-93be-3e6fb841900a",
+   "occurred_at_utc": "2026-11-06T17:35:41Z",
+   "coverage_state": "observed",
+   "canonical_digest": "193d8cebf636c975a0ee14db2fd49ccb2a97430d3a536ca4950b202ffd56e151"
+  },
+  "execution": {
+   "exit_code": 0,
+   "duration_ms": 13652,
+   "duration_provenance": "measured",
+   "requested_model": "claude-haiku-5-5",
+   "observed_model": null,
+   "observed_model_unavailable_reason": "CLI text mode does not report the model actually used"
+  },
+  "usage": {
+   "provenance": "measured",
+   "input_tokens": 193263,
+   "output_tokens": 3852,
+   "cached_tokens": 142127,
+   "reasoning_tokens": null,
+   "unavailable_reason": "reasoning tokens are not reported separately by the source",
+   "scope": "final"
+  }
+ }
+]

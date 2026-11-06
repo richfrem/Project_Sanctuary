@@ -1,0 +1,102 @@
+{
+ "id": "demo-t2b-rename-avg",
+ "type": "task",
+ "goal": "Rename the public function avg to average_word_length everywhere in the textstats repository (api cleanup, second function)",
+ "scope": {
+  "paths": [
+   "textstats/",
+   "tests/",
+   "README.md"
+  ]
+ },
+ "acceptance": [
+  {
+   "id": "A1",
+   "text": "textstats exports average_word_length and no longer exports avg",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-c",
+     "import textstats;assert hasattr(textstats,'average_word_length') and not hasattr(textstats,'avg')"
+    ]
+   }
+  },
+  {
+   "id": "A2",
+   "text": "no remaining reference to avg in any .py or .md file",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-c",
+     "import pathlib,re,sys;b=[str(p) for p in list(pathlib.Path('.').rglob('*.py'))+list(pathlib.Path('.').rglob('*.md')) if '.agent-work' not in str(p) and '.demo' not in str(p) and re.search(r'\\bavg\\b',p.read_text())];print('still references avg:',b);sys.exit(1 if b else 0)"
+    ]
+   }
+  },
+  {
+   "id": "A3",
+   "text": "the test suite passes",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-m",
+     "pytest",
+     "-q",
+     "-p",
+     "no:cacheprovider",
+     "tests"
+    ],
+    "expect_stdout_contains": [
+     "passed"
+    ]
+   }
+  },
+  {
+   "id": "A4",
+   "text": "the command line still reports words and average length",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-m",
+     "textstats",
+     "a",
+     "bb",
+     "ccc"
+    ],
+    "expect_stdout_contains": [
+     "words=3",
+     "avg_len=2.00"
+    ]
+   }
+  }
+ ],
+ "failure_conditions": [
+  {
+   "id": "F1",
+   "text": "a test file was deleted",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "git",
+     "ls-files",
+     "--deleted",
+     "tests"
+    ],
+    "expect_stdout_contains": [
+     "tests/"
+    ]
+   }
+  }
+ ],
+ "budget": {
+  "max_attempts": 3,
+  "max_tokens": 200000,
+  "per_attempt_token_reserve": 60000
+ },
+ "authorization": {
+  "may_merge": true
+ }
+}

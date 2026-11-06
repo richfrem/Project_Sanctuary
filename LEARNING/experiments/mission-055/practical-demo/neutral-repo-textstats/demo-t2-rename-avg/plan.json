@@ -1,0 +1,24 @@
+{
+ "work_id": "demo-t2-rename-avg",
+ "run_id": "run-1793986528-5a7802",
+ "lessons": [
+  {
+   "id": "L-4989b941",
+   "trigger": "rename a public function when the brief names only one file",
+   "action": "Before declaring a rename done, search the whole repository (code, tests, docs, CLI entry points) for the old name and update every reference, then run the test suite and the CLI.",
+   "limits": "Python function renames in a small repo; one work item on claude-haiku-5-5; says nothing about other task types or models",
+   "cause": "known",
+   "evidence": "work item demo-t1-rename-cnt: attempt t1-a001 failed A1-A4, attempt t1-a002 passed all; .agent-work/demo-t1-rename-cnt/evaluations/",
+   "match": 7
+  }
+ ],
+ "budget": {
+  "max_attempts": 3,
+  "max_tokens": 200000,
+  "per_attempt_token_reserve": 60000
+ },
+ "authorization": {
+  "may_merge": true
+ },
+ "isolation": null
+}

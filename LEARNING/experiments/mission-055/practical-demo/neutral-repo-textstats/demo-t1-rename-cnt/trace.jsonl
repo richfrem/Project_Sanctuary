@@ -1,0 +1,10 @@
+{"action": "lessons_retrieved", "lesson_ids": [], "t": 1793986461.269}
+{"action": "plan_recorded", "budget": {"max_attempts": 3, "max_tokens": 200000, "per_attempt_token_reserve": 60000}, "t": 1793986461.269}
+{"action": "attempt_reserved", "attempt_id": "t1-a001", "lessons_supplied": [], "t": 1793986461.272, "unit": "t1"}
+{"action": "exec_check", "attempt_id": "t1-a001", "detail": "/Users/richardfremmerlid/.local/bin/claude", "ok": true, "t": 1793986461.421, "unit": "t1"}
+{"action": "dispatch", "attempt_id": "t1-a001", "backend_attempts": 1, "exit": 0, "status": "ok", "t": 1793986471.448, "unit": "t1"}
+{"action": "evaluated", "complete": false, "eval_id": "eval-1793986472311-4e6705", "incomplete": ["A1", "A2", "A3", "A4"], "recommended": "repair", "t": 1793986472.313}
+{"action": "attempt_reserved", "attempt_id": "t1-a002", "lessons_supplied": [], "t": 1793986472.314, "unit": "t1"}
+{"action": "exec_check", "attempt_id": "t1-a002", "detail": "/Users/richardfremmerlid/.local/bin/claude", "ok": true, "t": 1793986472.349, "unit": "t1"}
+{"action": "dispatch", "attempt_id": "t1-a002", "backend_attempts": 1, "exit": 0, "status": "ok", "t": 1793986499.508, "unit": "t1"}
+{"action": "evaluated", "complete": true, "eval_id": "eval-1793986500161-ae74ed", "incomplete": [], "recommended": "accept", "t": 1793986500.163}

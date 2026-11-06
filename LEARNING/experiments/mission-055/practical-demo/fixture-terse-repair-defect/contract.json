@@ -1,0 +1,75 @@
+{
+ "id": "fixture-rename",
+ "type": "fixture",
+ "goal": "Rename function foo to bar across the repository (FAULT-INJECTION FIXTURE: the brief only mentions app.py)",
+ "scope": {
+  "paths": [
+   "app.py",
+   "util.py",
+   "test_app.py"
+  ]
+ },
+ "acceptance": [
+  {
+   "id": "A1",
+   "text": "app.bar works",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-c",
+     "import app;assert app.bar(1)==2"
+    ]
+   }
+  },
+  {
+   "id": "A2",
+   "text": "no remaining reference to foo in any python file",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-c",
+     "import pathlib,sys;sys.exit(1 if any('foo' in p.read_text() for p in pathlib.Path('.').glob('*.py')) else 0)"
+    ]
+   }
+  },
+  {
+   "id": "A3",
+   "text": "tests pass",
+   "check": {
+    "kind": "command",
+    "argv": [
+     "python3",
+     "-m",
+     "pytest",
+     "-q",
+     "-p",
+     "no:cacheprovider",
+     "test_app.py"
+    ],
+    "expect_stdout_contains": [
+     "2 passed"
+    ]
+   }
+  }
+ ],
+ "failure_conditions": [
+  {
+   "id": "F1",
+   "text": "error marker",
+   "check": {
+    "kind": "file_exists",
+    "path": "ERROR.txt"
+   }
+  }
+ ],
+ "budget": {
+  "max_attempts": 3,
+  "max_tokens": 200000,
+  "per_attempt_token_reserve": 60000
+ },
+ "authorization": {
+  "may_merge": false
+ }
+}

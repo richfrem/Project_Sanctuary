@@ -1,0 +1,59 @@
+{
+ "v": 1,
+ "work_id": "demo-t2-rename-avg",
+ "criteria": [
+  {
+   "id": "A1",
+   "required": true,
+   "result": "pass",
+   "detail": "exit 0",
+   "evidence_ref": null
+  },
+  {
+   "id": "A2",
+   "required": true,
+   "result": "pass",
+   "detail": "exit 0",
+   "evidence_ref": null
+  },
+  {
+   "id": "A3",
+   "required": true,
+   "result": "pass",
+   "detail": "exit 0",
+   "evidence_ref": null
+  },
+  {
+   "id": "A4",
+   "required": true,
+   "result": "pass",
+   "detail": "exit 0",
+   "evidence_ref": null
+  }
+ ],
+ "failure_hits": [],
+ "incomplete": [],
+ "blockers": [],
+ "limitations": [],
+ "usage": {
+  "total_tokens": 112623,
+  "source": "attempt ledger (sum of backend attempts)"
+ },
+ "unevaluated_failure_conditions": [],
+ "complete": true,
+ "integration_allowed": true,
+ "recommended": "accept",
+ "repair_instructions": [],
+ "accounting": {
+  "execution_attempts": 2,
+  "running_or_unfinished": 0,
+  "preflight_refusals": 0,
+  "evaluation_calls": 1,
+  "evaluation_tokens_known": 0,
+  "backend_attempts": 2,
+  "execution_tokens_known": 112623,
+  "backend_attempts_with_unknown_usage": 0,
+  "execution_tokens_is_lower_bound": false,
+  "reserved_for_running": 0
+ }
+}
