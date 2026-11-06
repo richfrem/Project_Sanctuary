@@ -1,0 +1,74 @@
+[
+  {
+    "id": "confirm3-035",
+    "old_question": "What is the SI base unit for length?",
+    "old_ground_truth": "metre",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "What is the capital city of Kenya?",
+    "new_ground_truth": "Nairobi"
+  },
+  {
+    "id": "confirm3-038",
+    "old_question": "Which instrument records earthquake ground motion?",
+    "old_ground_truth": "seismograph",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "Who wrote the novel 'Nineteen Eighty-Four'?",
+    "new_ground_truth": "George Orwell"
+  },
+  {
+    "id": "confirm3-047",
+    "old_question": "What is the direct change from a gas to a solid called?",
+    "old_ground_truth": "deposition",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "In which year did the Second World War end?",
+    "new_ground_truth": "1945"
+  },
+  {
+    "id": "confirm3-049",
+    "old_question": "What is the change from a liquid to a solid called?",
+    "old_ground_truth": "freezing",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "What is the chemical symbol for tungsten?",
+    "new_ground_truth": "W"
+  },
+  {
+    "id": "confirm3-050",
+    "old_question": "What is the change from a solid to a liquid called?",
+    "old_ground_truth": "melting",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "Which country has the largest land area in the world?",
+    "new_ground_truth": "Russia"
+  },
+  {
+    "id": "confirm3-105",
+    "old_question": "What is the chemical formula of ethanol?",
+    "old_ground_truth": "C2H6O",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "What is the capital city of Peru?",
+    "new_ground_truth": "Lima"
+  },
+  {
+    "id": "confirm3-106",
+    "old_question": "What is the chemical formula of acetone?",
+    "old_ground_truth": "C3H6O",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "Who painted the Mona Lisa?",
+    "new_ground_truth": "Leonardo da Vinci"
+  },
+  {
+    "id": "confirm3-118",
+    "old_question": "What is the chemical formula of boric acid?",
+    "old_ground_truth": "H3BO3",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "How many minutes are in one hour?",
+    "new_ground_truth": "60"
+  },
+  {
+    "id": "confirm3-119",
+    "old_question": "What is the chemical formula of urea?",
+    "old_ground_truth": "CH4N2O",
+    "reason": "ambiguous or format-fragile per independent cross-check",
+    "new_question": "What is the chemical symbol for helium?",
+    "new_ground_truth": "He"
+  }
+]

@@ -1,0 +1,120 @@
+{"id": "heldout-001", "stage": "baseline", "answer": "476", "initial_answer": null}
+{"id": "heldout-001", "stage": "stage2", "answer": "476", "initial_answer": "476"}
+{"id": "heldout-002", "stage": "baseline", "answer": "39", "initial_answer": null}
+{"id": "heldout-002", "stage": "stage2", "answer": "39", "initial_answer": "39"}
+{"id": "heldout-003", "stage": "baseline", "answer": "169", "initial_answer": null}
+{"id": "heldout-003", "stage": "stage2", "answer": "169", "initial_answer": "169"}
+{"id": "heldout-004", "stage": "baseline", "answer": "2000", "initial_answer": null}
+{"id": "heldout-004", "stage": "stage2", "answer": "2000", "initial_answer": "2000"}
+{"id": "heldout-005", "stage": "baseline", "answer": "0.875", "initial_answer": null}
+{"id": "heldout-005", "stage": "stage2", "answer": "7/8 = 0.875", "initial_answer": "0.875"}
+{"id": "heldout-006", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-006", "stage": "stage2", "answer": "6", "initial_answer": "6"}
+{"id": "heldout-007", "stage": "baseline", "answer": "256", "initial_answer": null}
+{"id": "heldout-007", "stage": "stage2", "answer": "2^8 = 256", "initial_answer": "2^8 = 256"}
+{"id": "heldout-008", "stage": "baseline", "answer": "150", "initial_answer": null}
+{"id": "heldout-008", "stage": "stage2", "answer": "150", "initial_answer": "150"}
+{"id": "heldout-009", "stage": "baseline", "answer": "437", "initial_answer": null}
+{"id": "heldout-009", "stage": "stage2", "answer": "437", "initial_answer": "437"}
+{"id": "heldout-010", "stage": "baseline", "answer": "24", "initial_answer": null}
+{"id": "heldout-010", "stage": "stage2", "answer": "36", "initial_answer": "36"}
+{"id": "heldout-011", "stage": "baseline", "answer": "35", "initial_answer": null}
+{"id": "heldout-011", "stage": "stage2", "answer": "25", "initial_answer": "25"}
+{"id": "heldout-012", "stage": "baseline", "answer": "523", "initial_answer": null}
+{"id": "heldout-012", "stage": "stage2", "answer": "523", "initial_answer": "523"}
+{"id": "heldout-013", "stage": "baseline", "answer": "51", "initial_answer": null}
+{"id": "heldout-013", "stage": "stage2", "answer": "51", "initial_answer": "51"}
+{"id": "heldout-014", "stage": "baseline", "answer": "324", "initial_answer": null}
+{"id": "heldout-014", "stage": "stage2", "answer": "324", "initial_answer": "324"}
+{"id": "heldout-015", "stage": "baseline", "answer": "0.2", "initial_answer": null}
+{"id": "heldout-015", "stage": "stage2", "answer": "2.4 × 0.5 = 1.2", "initial_answer": "1.2"}
+{"id": "heldout-016", "stage": "baseline", "answer": "K", "initial_answer": null}
+{"id": "heldout-016", "stage": "stage2", "answer": "K", "initial_answer": "K"}
+{"id": "heldout-017", "stage": "baseline", "answer": "8", "initial_answer": null}
+{"id": "heldout-017", "stage": "stage2", "answer": "8", "initial_answer": "8"}
+{"id": "heldout-018", "stage": "baseline", "answer": "Saturn", "initial_answer": null}
+{"id": "heldout-018", "stage": "stage2", "answer": "Saturn", "initial_answer": "Saturn"}
+{"id": "heldout-019", "stage": "baseline", "answer": "Ottawa", "initial_answer": null}
+{"id": "heldout-019", "stage": "stage2", "answer": "Ottawa, Ontario", "initial_answer": "Ottawa, Ontario"}
+{"id": "heldout-020", "stage": "baseline", "answer": "Pacific Ocean", "initial_answer": null}
+{"id": "heldout-020", "stage": "stage2", "answer": "Pacific Ocean", "initial_answer": "Pacific Ocean is the largest ocean on Earth"}
+{"id": "heldout-021", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-021", "stage": "stage2", "answer": "6", "initial_answer": "6"}
+{"id": "heldout-022", "stage": "baseline", "answer": "H2O", "initial_answer": null}
+{"id": "heldout-022", "stage": "stage2", "answer": "H2O", "initial_answer": "H2O"}
+{"id": "heldout-023", "stage": "baseline", "answer": "carbon dioxide", "initial_answer": null}
+{"id": "heldout-023", "stage": "stage2", "answer": "carbon dioxide", "initial_answer": "carbon dioxide"}
+{"id": "heldout-024", "stage": "baseline", "answer": "Tokyo", "initial_answer": null}
+{"id": "heldout-024", "stage": "stage2", "answer": "Tokyo", "initial_answer": "Tokyo"}
+{"id": "heldout-025", "stage": "baseline", "answer": "32", "initial_answer": null}
+{"id": "heldout-025", "stage": "stage2", "answer": "32", "initial_answer": "32"}
+{"id": "heldout-026", "stage": "baseline", "answer": "Iron", "initial_answer": null}
+{"id": "heldout-026", "stage": "stage2", "answer": "Iron (Fe). The peers are wrong", "initial_answer": "Iron, symbol Fe, atomic number 26"}
+{"id": "heldout-027", "stage": "baseline", "answer": "standard astronomical fact", "initial_answer": null}
+{"id": "heldout-027", "stage": "stage2", "answer": "Jupiter", "initial_answer": "Jupiter"}
+{"id": "heldout-028", "stage": "baseline", "answer": "east", "initial_answer": null}
+{"id": "heldout-028", "stage": "stage2", "answer": "East", "initial_answer": "Sun rises in the"}
+{"id": "heldout-029", "stage": "baseline", "answer": "not the euro", "initial_answer": null}
+{"id": "heldout-029", "stage": "stage2", "answer": "pound sterling", "initial_answer": "currency of the United Kingdom is the"}
+{"id": "heldout-030", "stage": "baseline", "answer": "90", "initial_answer": null}
+{"id": "heldout-030", "stage": "stage2", "answer": "90", "initial_answer": "90"}
+{"id": "heldout-031", "stage": "baseline", "answer": "448", "initial_answer": null}
+{"id": "heldout-031", "stage": "stage2", "answer": "448", "initial_answer": "448"}
+{"id": "heldout-032", "stage": "baseline", "answer": "35", "initial_answer": null}
+{"id": "heldout-032", "stage": "stage2", "answer": "35", "initial_answer": "35"}
+{"id": "heldout-033", "stage": "baseline", "answer": "256", "initial_answer": null}
+{"id": "heldout-033", "stage": "stage2", "answer": "256", "initial_answer": "256"}
+{"id": "heldout-034", "stage": "baseline", "answer": "1800", "initial_answer": null}
+{"id": "heldout-034", "stage": "stage2", "answer": "1800", "initial_answer": "1800"}
+{"id": "heldout-035", "stage": "baseline", "answer": "0.375", "initial_answer": null}
+{"id": "heldout-035", "stage": "stage2", "answer": "3/8 = 0.375", "initial_answer": "0.375"}
+{"id": "heldout-036", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-036", "stage": "stage2", "answer": "6", "initial_answer": "6"}
+{"id": "heldout-037", "stage": "baseline", "answer": "512", "initial_answer": null}
+{"id": "heldout-037", "stage": "stage2", "answer": "512", "initial_answer": "512"}
+{"id": "heldout-038", "stage": "baseline", "answer": "180", "initial_answer": null}
+{"id": "heldout-038", "stage": "stage2", "answer": "180", "initial_answer": "180"}
+{"id": "heldout-039", "stage": "baseline", "answer": "504", "initial_answer": null}
+{"id": "heldout-039", "stage": "stage2", "answer": "504", "initial_answer": "504"}
+{"id": "heldout-040", "stage": "baseline", "answer": "40", "initial_answer": null}
+{"id": "heldout-040", "stage": "stage2", "answer": "40", "initial_answer": "40"}
+{"id": "heldout-041", "stage": "baseline", "answer": "28", "initial_answer": null}
+{"id": "heldout-041", "stage": "stage2", "answer": "28", "initial_answer": "√784 = 28"}
+{"id": "heldout-042", "stage": "baseline", "answer": "513", "initial_answer": null}
+{"id": "heldout-042", "stage": "stage2", "answer": "513", "initial_answer": "513"}
+{"id": "heldout-043", "stage": "baseline", "answer": "80", "initial_answer": null}
+{"id": "heldout-043", "stage": "stage2", "answer": "80", "initial_answer": "80"}
+{"id": "heldout-044", "stage": "baseline", "answer": "289", "initial_answer": null}
+{"id": "heldout-044", "stage": "stage2", "answer": "289", "initial_answer": "289"}
+{"id": "heldout-045", "stage": "baseline", "answer": "0.9", "initial_answer": null}
+{"id": "heldout-045", "stage": "stage2", "answer": "0.9", "initial_answer": "0.9"}
+{"id": "heldout-046", "stage": "baseline", "answer": "Na", "initial_answer": null}
+{"id": "heldout-046", "stage": "stage2", "answer": "Na", "initial_answer": "Na"}
+{"id": "heldout-047", "stage": "baseline", "answer": "6", "initial_answer": null}
+{"id": "heldout-047", "stage": "stage2", "answer": "6", "initial_answer": "6"}
+{"id": "heldout-048", "stage": "baseline", "answer": "Mercury", "initial_answer": null}
+{"id": "heldout-048", "stage": "stage2", "answer": "Mercury", "initial_answer": "Mercury"}
+{"id": "heldout-049", "stage": "baseline", "answer": "well established: Canberra has been Australia's capital since 1913", "initial_answer": null}
+{"id": "heldout-049", "stage": "stage2", "answer": "Canberra", "initial_answer": "Canberra"}
+{"id": "heldout-050", "stage": "baseline", "answer": "Arctic Ocean", "initial_answer": null}
+{"id": "heldout-050", "stage": "stage2", "answer": "Arctic Ocean", "initial_answer": "Arctic Ocean"}
+{"id": "heldout-051", "stage": "baseline", "answer": "8", "initial_answer": null}
+{"id": "heldout-051", "stage": "stage2", "answer": "8", "initial_answer": "8"}
+{"id": "heldout-052", "stage": "baseline", "answer": "CO2", "initial_answer": null}
+{"id": "heldout-052", "stage": "stage2", "answer": "CO2", "initial_answer": "Carbon dioxide's chemical formula is"}
+{"id": "heldout-053", "stage": "baseline", "answer": "Nitrogen", "initial_answer": null}
+{"id": "heldout-053", "stage": "stage2", "answer": "Nitrogen", "initial_answer": "Nitrogen"}
+{"id": "heldout-054", "stage": "baseline", "answer": "Wellington", "initial_answer": null}
+{"id": "heldout-054", "stage": "stage2", "answer": "Wellington", "initial_answer": "Wellington"}
+{"id": "heldout-055", "stage": "baseline", "answer": "4", "initial_answer": null}
+{"id": "heldout-055", "stage": "stage2", "answer": "4", "initial_answer": "4"}
+{"id": "heldout-056", "stage": "baseline", "answer": "gold", "initial_answer": null}
+{"id": "heldout-056", "stage": "stage2", "answer": "Gold", "initial_answer": "Gold"}
+{"id": "heldout-057", "stage": "baseline", "answer": "blue whale", "initial_answer": null}
+{"id": "heldout-057", "stage": "stage2", "answer": "blue whale (", "initial_answer": "blue whale ("}
+{"id": "heldout-058", "stage": "baseline", "answer": "0 C", "initial_answer": null}
+{"id": "heldout-058", "stage": "stage2", "answer": "0 C", "initial_answer": "0 C"}
+{"id": "heldout-059", "stage": "baseline", "answer": "yen", "initial_answer": null}
+{"id": "heldout-059", "stage": "stage2", "answer": "Japanese yen", "initial_answer": "Japanese yen"}
+{"id": "heldout-060", "stage": "baseline", "answer": "180", "initial_answer": null}
+{"id": "heldout-060", "stage": "stage2", "answer": "180", "initial_answer": "180"}

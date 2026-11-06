@@ -1,0 +1,120 @@
+{"id": "confirm-001", "answer": "464", "raw_text": "{\"answer\":\"464\",\"trace\":\"29 * 16 = 464\"}"}
+{"id": "confirm-002", "answer": "48", "raw_text": "{\"answer\":\"48\",\"trace\":\"864 divided by 18 equals 48.\"}"}
+{"id": "confirm-003", "answer": "196", "raw_text": "{\"answer\":\"196\",\"trace\":\"14 squared is calculated as 14 * 14, which equals 196.\"}"}
+{"id": "confirm-004", "answer": "2250", "raw_text": "{\"answer\":\"2250\",\"trace\":\"125 * 18 = 2250\"}"}
+{"id": "confirm-005", "answer": "0.625", "raw_text": "{\n  \"answer\": \"0.625\",\n  \"trace\": \"5 divided by 8 equals 0.625\"\n}"}
+{"id": "confirm-006", "answer": "7", "raw_text": "{\"answer\":\"7\",\"trace\":\"168 divided by (4 * 6) is 168 divided by 24, which equals 7.\"}"}
+{"id": "confirm-007", "answer": "128", "raw_text": "{\"answer\":\"128\",\"trace\":\"2^7 is calculated as 2*2*2*2*2*2*2, which equals 128.\"}"}
+{"id": "confirm-008", "answer": "141", "raw_text": "{\n  \"answer\": \"141\",\n  \"trace\": \"46 + 57 = 103, then 103 + 38 = 141\"\n}"}
+{"id": "confirm-009", "answer": "391", "raw_text": "{\"answer\":\"391\",\"trace\":\"23 * 17 = 391\"}"}
+{"id": "confirm-010", "answer": "50", "raw_text": "{\"answer\":\"50\",\"trace\":\"12.5% of 400 is calculated as 400 * 12.5/100 = 50.\"}"}
+{"id": "confirm-011", "answer": "27", "raw_text": "{\"answer\":\"27\",\"trace\":\"27 * 27 = 729\"}"}
+{"id": "confirm-012", "answer": "514", "raw_text": "{\"answer\":\"514\",\"trace\":\"1100 - 586 = 514\"}"}
+{"id": "confirm-013", "answer": "108", "raw_text": "{\n  \"answer\": \"108\",\n  \"trace\": \"4/5 of 135 is calculated as (4/5) * 135 = 108\"\n}"}
+{"id": "confirm-014", "answer": "361", "raw_text": "{\"answer\":\"361\",\"trace\":\"19 * 19 = 361\"}"}
+{"id": "confirm-015", "answer": "0.8", "raw_text": "{\"answer\":\"0.8\",\"trace\":\"3.2 * 0.25 = 0.8\"}"}
+{"id": "confirm-016", "answer": "12", "raw_text": "{\"answer\":\"12\",\"trace\":\"84 divided by 7 equals 12.\"}"}
+{"id": "confirm-017", "answer": "372", "raw_text": "{\"answer\":\"372\",\"trace\":\"31 multiplied by 12 equals 372.\"}"}
+{"id": "confirm-018", "answer": "64", "raw_text": "{\"answer\":\"64\",\"trace\":\"2^6 is calculated as 2*2*2*2*2*2, which equals 64.\"}"}
+{"id": "confirm-019", "answer": "45", "raw_text": "{\"answer\":\"45\",\"trace\":\"18% of 250 is calculated as (18/100) * 250 = 45.\"}"}
+{"id": "confirm-020", "answer": "623", "raw_text": "{\"answer\":\"623\",\"trace\":\"Subtract 376 from 999: 999 - 376 = 623\"}"}
+{"id": "confirm-021", "answer": "24", "raw_text": "{\"answer\":\"24\",\"trace\":\"24 * 24 = 576\"}"}
+{"id": "confirm-022", "answer": "93", "raw_text": "{\"answer\":\"93\",\"trace\":\"To find 3/4 of 124, multiply 124 by 3 and then divide by 4. (124 * 3) / 4 = 372 / 4 = 93\"}"}
+{"id": "confirm-023", "answer": "378", "raw_text": "{\"answer\":\"378\",\"trace\":\"27 * 14 = 378\"}"}
+{"id": "confirm-024", "answer": "4.35", "raw_text": "{\"answer\":\"4.35\",\"trace\":\"2.75 + 1.6 = 4.35\"}"}
+{"id": "confirm-025", "answer": "400", "raw_text": "{\"answer\":\"400\",\"trace\":\"16 * 25 = 400\"}"}
+{"id": "confirm-026", "answer": "UNKNOWN", "raw_text": "{\n  \"answer\": 44,\n  \"trace\": \"7^2 is 49. Subtracting 15 from 49 gives 34.\"\n}"}
+{"id": "confirm-027", "answer": "45", "raw_text": "{\"answer\":\"45\",\"trace\":\"540 divided by 12 equals 45.\"}"}
+{"id": "confirm-028", "answer": "143", "raw_text": "{\"answer\":\"143\",\"trace\":\"11 * 13 = 143\"}"}
+{"id": "confirm-029", "answer": "0.42", "raw_text": "{\"answer\":\"0.42\",\"trace\":\"0.6 * 0.7 = 0.42\"}"}
+{"id": "confirm-030", "answer": "63", "raw_text": "{\"answer\":\"63\",\"trace\":\"35% of 180 is calculated as 0.35 * 180 = 63.\"}"}
+{"id": "confirm-031", "answer": "442", "raw_text": "{\"answer\":\"442\",\"trace\":\"34 * 13 = 442\"}"}
+{"id": "confirm-032", "answer": "532", "raw_text": "{\"answer\":\"532\",\"trace\":\"1000 - 468 = 532\"}"}
+{"id": "confirm-033", "answer": "8", "raw_text": "{\"answer\":\"8\",\"trace\":\"157 divided by 9 is 17 with a remainder of 8.\"}"}
+{"id": "confirm-034", "answer": "225", "raw_text": "{\"answer\":\"225\",\"trace\":\"15 squared is calculated as 15 * 15, which equals 225.\"}"}
+{"id": "confirm-035", "answer": "33", "raw_text": "{\"answer\":\"33\",\"trace\":\"8 * 7 = 56, then 56 - 19 = 37\"}"}
+{"id": "confirm-036", "answer": "6", "raw_text": "{\"answer\":\"6\",\"trace\":\"72 divided by 3 is 24, and then 24 divided by 4 is 6.\"}"}
+{"id": "confirm-037", "answer": "11", "raw_text": "{\"answer\":\"11\",\"trace\":\"The median is the middle number in a sorted list. Sorting the given list [2, 8, 11, 17, 23] does not change it as it is already sorted. Since there are 5 numbers, the median is the 3rd number, which is 11.\"}"}
+{"id": "confirm-038", "answer": "80", "raw_text": "{\n  \"answer\": \"80\",\n  \"trace\": \"To find five-sixths of 96, multiply 96 by 5/6: 96 * (5/6) = 80\"\n}"}
+{"id": "confirm-039", "answer": "468", "raw_text": "{\"answer\":\"468\",\"trace\":\"18 * 26 = 468\"}"}
+{"id": "confirm-040", "answer": "55", "raw_text": "{\"answer\":\"55\",\"trace\":\"20% of 275 is calculated as (20/100) * 275 = 55.\"}"}
+{"id": "confirm-041", "answer": "29", "raw_text": "{\"answer\":\"29\",\"trace\":\"29 * 29 = 841\"}"}
+{"id": "confirm-042", "answer": "511", "raw_text": "{\"answer\":\"511\",\"trace\":\"1300 - 789 = 511\"}"}
+{"id": "confirm-043", "answer": "161", "raw_text": "{\"answer\":\"161\",\"trace\":\"To find 7/10 of 230, multiply 230 by 7 and then divide by 10. (230 * 7) / 10 = 161\"}"}
+{"id": "confirm-044", "answer": "484", "raw_text": "{\"answer\":\"484\",\"trace\":\"22 * 22 = 484\"}"}
+{"id": "confirm-045", "answer": "0.6", "raw_text": "{\"answer\":\"0.6\",\"trace\":\"4.8 * 0.125 = 0.6\"}"}
+{"id": "confirm-046", "answer": "432", "raw_text": "{\"answer\":\"432\",\"trace\":\"27 * 16 = 432\"}"}
+{"id": "confirm-047", "answer": "35", "raw_text": "{\"answer\":\"35\",\"trace\":\"875 divided by 25 equals 35.\"}"}
+{"id": "confirm-048", "answer": "324", "raw_text": "{\n  \"answer\": \"324\",\n  \"trace\": \"18 squared is calculated as 18 * 18, which equals 324.\"\n}"}
+{"id": "confirm-049", "answer": "170", "raw_text": "{\n  \"answer\": \"170\",\n  \"trace\": \"63 + 78 = 141, then 141 + 29 = 170\"\n}"}
+{"id": "confirm-050", "answer": "2048", "raw_text": "{\"answer\":\"2048\",\"trace\":\"2^11 = 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 = 2048\"}"}
+{"id": "confirm-051", "answer": "40", "raw_text": "{\"answer\":\"40\",\"trace\":\"16% of 250 is calculated as (16/100) * 250 = 40.\"}"}
+{"id": "confirm-052", "answer": "31", "raw_text": "{\"answer\":\"31\",\"trace\":\"961 is 31 squared (31 * 31 = 961).\"}"}
+{"id": "confirm-053", "answer": "762", "raw_text": "{\"answer\":\"762\",\"trace\":\"1400 - 638 = 762\"}"}
+{"id": "confirm-054", "answer": "129", "raw_text": "{\"answer\":\"129\",\"trace\":\"To find three-fifths of 215, multiply 215 by 3/5: (215 * 3) / 5 = 645 / 5 = 129\"}"}
+{"id": "confirm-055", "answer": "360", "raw_text": "{\"answer\":\"360\",\"trace\":\"24 * 15 = 360\"}"}
+{"id": "confirm-056", "answer": "7", "raw_text": "{\"answer\":\"7\",\"trace\":\"4.2 divided by 0.6 equals 7.\"}"}
+{"id": "confirm-057", "answer": "125", "raw_text": "{\"answer\":\"125\",\"trace\":\"5^3 means 5 multiplied by itself 3 times, which is 5*5*5 = 125.\"}"}
+{"id": "confirm-058", "answer": "414", "raw_text": "{\"answer\":\"414\",\"trace\":\"18 * 23 = 414\"}"}
+{"id": "confirm-059", "answer": "87", "raw_text": "{\"answer\":\"87\",\"trace\":\"25% of 348 is calculated as (25/100) * 348 = 87\"}"}
+{"id": "confirm-060", "answer": "7", "raw_text": "{\"answer\":\"7\",\"trace\":\"203 divided by 12 is 16 with a remainder of 7.\"}"}
+{"id": "confirm-061", "answer": "Zn", "raw_text": "{\"answer\":\"Zn\",\"trace\":\"Zinc is a chemical element with the symbol Zn and atomic number 30. It is a lustrous, silver-white metal with a slight golden tinge. Zinc is a relatively hard and brittle metal that is highly malleable and ductile. It is a chemical element that is used in a variety of applications, including in batteries, alloys, and as a coating for other metals to prevent corrosion.\"}"}
+{"id": "confirm-062", "answer": "10", "raw_text": "{\"answer\":\"10\",\"trace\":\"Neon has 10 protons in its nucleus, which defines its atomic number.\"}"}
+{"id": "confirm-063", "answer": "Mars", "raw_text": "{\"answer\":\"Mars\",\"trace\":\"Mars is called the Red Planet due to its reddish appearance, which is caused by iron oxide (rust) on its surface.\"}"}
+{"id": "confirm-064", "answer": "Brasília", "raw_text": "{\"answer\":\"Brasília\",\"trace\":\"Brasília is the capital city of Brazil, located in the central part of the country. It was established in 1960 as the new capital to replace Rio de Janeiro, which was considered too crowded and close to the coast.\"}"}
+{"id": "confirm-065", "answer": "Blue whale", "raw_text": "{\"answer\":\"Blue whale\",\"trace\":\"The blue whale (Balaenoptera musculus) is the largest mammal living today, with adult males reaching lengths of up to 100 feet (30 meters) and weights of around 200 tons (180 metric tonnes).\"}"}
+{"id": "confirm-066", "answer": "4", "raw_text": "{\"answer\":\"4\",\"trace\":\"A standard violin has four strings, typically tuned in the intervals of perfect fifths: E, A, D, and G.\"}"}
+{"id": "confirm-067", "answer": "CO2", "raw_text": "{\"answer\":\"CO2\",\"trace\":\"Carbon dioxide is composed of one carbon atom and two oxygen atoms, forming the chemical formula CO2.\"}"}
+{"id": "confirm-068", "answer": "Proxima Centauri", "raw_text": "{\"answer\":\"Proxima Centauri\",\"trace\":\"Proxima Centauri is the closest star to Earth, located at approximately 4.24 light-years away from our planet.\"}"}
+{"id": "confirm-069", "answer": "Rome", "raw_text": "{\"answer\":\"Rome\",\"trace\":\"Rome is the capital of Italy, located in the central part of the country on the Italian Peninsula.\"}"}
+{"id": "confirm-070", "answer": "4", "raw_text": "{\"answer\":\"4\",\"trace\":\"A typical human heart has four chambers: two atria (right and left) and two ventricles (right and left).\"}"}
+{"id": "confirm-071", "answer": "UNKNOWN", "raw_text": "{\"answer\":\"UNKNOWN\",\"trace\":\"The atomic number of an element is the number of protons in its nucleus. The element with atomic number 1 is hydrogen, which has one proton in its nucleus. However, the question asks for an element with atomic number 1, which is not a valid element as the smallest atomic number is 1 for hydrogen. Therefore, the answer is UNKNOWN.\"}"}
+{"id": "confirm-072", "answer": "UNKNOWN", "raw_text": "{\"answer\":\"UNKNOWN\",\"trace\":\"The question asks for the largest hot desert on Earth, but there is no universally accepted definition of a \"hot desert\" that excludes other types of deserts. Deserts are typically classified based on their precipitation levels, and the Sahara Desert is the largest desert by area, covering approximately 9.2 million square kilometers. However, it is not exclusively hot, as it experiences cold nights and seasonal snowfall in some areas. Other large deserts like the Gobi and the Kalahari are also hot but are not as large as the Sahara. Therefore, the answer to the question is unknown without a clear definition of what constitutes a \"hot desert.\"\"}"}
+{"id": "confirm-073", "answer": "Portuguese", "raw_text": "{\"answer\":\"Portuguese\",\"trace\":\"Portuguese is the official language of Brazil, established during the Portuguese colonization of the region in the 16th century. It is spoken by the vast majority of the population and is used in all official capacities, education, media, and government.\"}"}
+{"id": "confirm-074", "answer": "heart", "raw_text": "{\"answer\":\"heart\",\"trace\":\"The heart is a muscular organ that pumps blood through the circulatory system of the human body. It has four chambers and uses its rhythmic contractions to move blood from the body's tissues to the lungs and back to the body.\"}"}
+{"id": "confirm-075", "answer": "0", "raw_text": "{\"answer\":\"0\",\"trace\":\"The freezing point of pure water at sea level is 0 degrees Celsius.\"}"}
+{"id": "confirm-076", "answer": "Jupiter", "raw_text": "{\"answer\":\"Jupiter\",\"trace\":\"Jupiter is the largest planet in the Solar System, with a diameter of approximately 86,881 kilometers. It is significantly larger than the next largest planet, Saturn, and is more than twice as large as all other planets combined.\"}"}
+{"id": "confirm-077", "answer": "Cairo", "raw_text": "{\"answer\":\"Cairo\",\"trace\":\"Cairo is the capital and largest city of Egypt, located on the Nile River in the northeastern part of the country.\"}"}
+{"id": "confirm-078", "answer": "360", "raw_text": "{\"answer\":\"360\",\"trace\":\"A full circle is defined as 360 degrees.\"}"}
+{"id": "confirm-079", "answer": "oxygen", "raw_text": "{\"answer\":\"oxygen\",\"trace\":\"Humans need oxygen for cellular respiration to break down glucose and produce energy.\"}"}
+{"id": "confirm-080", "answer": "Fe", "raw_text": "{\"answer\":\"Fe\",\"trace\":\"Iron's chemical symbol is Fe, which comes from the Latin word 'ferrum'.\"}"}
+{"id": "confirm-081", "answer": "Indian Ocean", "raw_text": "{\"answer\":\"Indian Ocean\",\"trace\":\"The Indian Ocean is located between Africa and Australia, separating the two continents.\"}"}
+{"id": "confirm-082", "answer": "Seoul", "raw_text": "{\"answer\":\"Seoul\",\"trace\":\"Seoul is the capital and largest city of South Korea. It is located in the southern part of the country and serves as the political, economic, and cultural center.\"}"}
+{"id": "confirm-083", "answer": "6", "raw_text": "{\"answer\":\"6\",\"trace\":\"Insects typically have six legs.\"}"}
+{"id": "confirm-084", "answer": "Moon", "raw_text": "{\"answer\":\"Moon\",\"trace\":\"The Moon is the only natural satellite that orbits Earth.\"}"}
+{"id": "confirm-085", "answer": "Ag", "raw_text": "{\"answer\":\"Ag\",\"trace\":\"The chemical symbol for silver is Ag, which comes from the Latin word 'argentum'.\"}"}
+{"id": "confirm-086", "answer": "South America", "raw_text": "{\"answer\":\"South America\",\"trace\":\"The Amazon rainforest is located in South America, spanning across nine countries including Brazil, Peru, Colombia, and Ecuador.\"}"}
+{"id": "confirm-087", "answer": "Oslo", "raw_text": "{\"answer\":\"Oslo\",\"trace\":\"Oslo is the capital and most populous city of Norway. It is located on the Oslo Fjord in the southwestern part of the country.\"}"}
+{"id": "confirm-088", "answer": "Humerus", "raw_text": "{\"answer\":\"Humerus\",\"trace\":\"The humerus is the largest bone in the human body, forming the upper arm and connecting the shoulder to the elbow.\"}"}
+{"id": "confirm-089", "answer": "barometer", "raw_text": "{\n  \"answer\": \"barometer\",\n  \"trace\": \"A barometer is an instrument used to measure atmospheric pressure. It typically consists of a sealed glass tube partially filled with mercury or another liquid, with the open end exposed to the atmosphere. As atmospheric pressure changes, the height of the liquid column in the tube changes, allowing the pressure to be measured.\"\n}"}
+{"id": "confirm-090", "answer": "Spanish", "raw_text": "{\"answer\":\"Spanish\",\"trace\":\"Spanish is the official language of Mexico and is spoken by the vast majority of the population.\"}"}
+{"id": "confirm-091", "answer": "Ca", "raw_text": "{\"answer\":\"Ca\",\"trace\":\"Calcium is a chemical element with the symbol Ca and atomic number 20. It is a soft, silvery-white metallic element that is essential for many biological processes.\"}"}
+{"id": "confirm-092", "answer": "7", "raw_text": "{\"answer\":\"7\",\"trace\":\"Nitrogen is the 7th element in the periodic table, and its atomic number is 7.\"}"}
+{"id": "confirm-093", "answer": "Jupiter", "raw_text": "{\"answer\":\"Jupiter\",\"trace\":\"Jupiter is famous for its prominent rings, which are made up of dust and ice particles orbiting around the planet.\"}"}
+{"id": "confirm-094", "answer": "Buenos Aires", "raw_text": "{\"answer\":\"Buenos Aires\",\"trace\":\"Buenos Aires is the capital and largest city of Argentina. It is located on the western coast of the country, on the Río de la Plata estuary. The city is known for its rich history, culture, and vibrant nightlife.\"}"}
+{"id": "confirm-095", "answer": "Blue whale", "raw_text": "{\"answer\":\"Blue whale\",\"trace\":\"The blue whale (Balaenoptera musculus) is the largest living species of shark, not the whale. It can grow up to 100 feet long and weigh over 200 tons. Sharks are fish, while whales are mammals.\"}"}
+{"id": "confirm-096", "answer": "6", "raw_text": "{\"answer\":\"6\",\"trace\":\"A standard guitar typically has six strings.\"}"}
+{"id": "confirm-097", "answer": "NaCl", "raw_text": "{\"answer\":\"NaCl\",\"trace\":\"Table salt is composed of sodium (Na) and chlorine (Cl) atoms, forming the chemical compound sodium chloride. The formula NaCl represents one atom of sodium and one atom of chlorine.\"}"}
+{"id": "confirm-098", "answer": "Sun", "raw_text": "{\"answer\":\"Sun\",\"trace\":\"The Sun is at the center of our Solar System and is the primary source of energy and heat for the planets and other objects orbiting around it.\"}"}
+{"id": "confirm-099", "answer": "Madrid", "raw_text": "{\"answer\":\"Madrid\",\"trace\":\"Madrid is the capital and largest city of Spain, located in the central part of the country.\"}"}
+{"id": "confirm-100", "answer": "2", "raw_text": "{\"answer\":\"2\",\"trace\":\"A typical human has two lungs, one on each side of the chest cavity.\"}"}
+{"id": "confirm-101", "answer": "silver", "raw_text": "{\"answer\":\"silver\",\"trace\":\"Silver has an atomic number of 47 in the periodic table.\"}"}
+{"id": "confirm-102", "answer": "5", "raw_text": "{\"answer\":\"5\",\"trace\":\"In standard basketball, each team has 5 players on the court during play.\"}"}
+{"id": "confirm-103", "answer": "German", "raw_text": "{\"answer\":\"German\",\"trace\":\"Austria is a German-speaking country, with German as the official language used in government, education, and everyday life.\"}"}
+{"id": "confirm-104", "answer": "kidney", "raw_text": "{\"answer\":\"kidney\",\"trace\":\"The kidney is the primary organ that filters blood to produce urine. It contains millions of nephrons, each with a glomerulus and a tubule, which filter blood and remove waste products and excess water, forming urine.\"}"}
+{"id": "confirm-105", "answer": "100", "raw_text": "{\"answer\":\"100\",\"trace\":\"At standard atmospheric pressure (101.325 kPa), the boiling point of water is 100 degrees Celsius.\"}"}
+{"id": "confirm-106", "answer": "Earth", "raw_text": "{\"answer\":\"Earth\",\"trace\":\"Earth is the third planet from the Sun in our solar system.\"}"}
+{"id": "confirm-107", "answer": "Bangkok", "raw_text": "{\"answer\":\"Bangkok\",\"trace\":\"Bangkok is the capital and largest city of Thailand. It is located on the Chao Phraya River in the central part of the country.\"}"}
+{"id": "confirm-108", "answer": "180", "raw_text": "{\"answer\":\"180\",\"trace\":\"The sum of the interior angles of a triangle is always 180 degrees.\"}"}
+{"id": "confirm-109", "answer": "nitrogen", "raw_text": "{\"answer\":\" nitrogen\",\"trace\":\"Nitrogen makes up approximately 78% of Earth's atmosphere, primarily due to its abundance in the formation of molecules like nitrogen gas (N2).\"}"}
+{"id": "confirm-110", "answer": "Cu", "raw_text": "{\"answer\":\"Cu\",\"trace\":\"Copper is a chemical element with the symbol Cu and atomic number 29. It is a reddish-orange metal that is widely used in electrical wiring, plumbing, and various industrial applications.\"}"}
+{"id": "confirm-111", "answer": "Pacific Ocean", "raw_text": "{\"answer\":\"Pacific Ocean\",\"trace\":\"The Pacific Ocean borders the west coast of the United States from California to Alaska.\"}"}
+{"id": "confirm-112", "answer": "Lisbon", "raw_text": "{\"answer\":\"Lisbon\",\"trace\":\"Lisbon is the capital and largest city of Portugal.\"}"}
+{"id": "confirm-113", "answer": "8", "raw_text": "{\"answer\":\"8\",\"trace\":\"Spiders have 8 legs.\"}"}
+{"id": "confirm-114", "answer": "Moon", "raw_text": "{\"answer\":\"Moon\",\"trace\":\"The Moon is Earth's only natural satellite, orbiting the Earth and being the fifth largest moon in the Solar System.\"}"}
+{"id": "confirm-115", "answer": "Pb", "raw_text": "{\"answer\":\"Pb\",\"trace\":\"Lead's chemical symbol is Pb, which comes from the Latin word 'plumbum'.\"}"}
+{"id": "confirm-116", "answer": "Africa", "raw_text": "{\"answer\":\"Africa\",\"trace\":\"The Sahara Desert is located in North Africa, spanning across eleven countries including Algeria, Chad, Egypt, Libya, Mali, Mauritania, Morocco, Niger, Nigeria, Sudan, and Tunisia.\"}"}
+{"id": "confirm-117", "answer": "Stockholm", "raw_text": "{\"answer\":\"Stockholm\",\"trace\":\"Stockholm is the capital and most populous city of Sweden.\"}"}
+{"id": "confirm-118", "answer": "20", "raw_text": "{\"answer\":\"20\",\"trace\":\"A complete set of primary teeth, also known as baby teeth or deciduous teeth, consists of 20 teeth in total. These include 10 incisors, 8 premolars, and 2 molars.\"}"}
+{"id": "confirm-119", "answer": "thermometer", "raw_text": "{\"answer\":\"thermometer\",\"trace\":\"A thermometer is the instrument used to measure temperature.\"}"}
+{"id": "confirm-120", "answer": "Japanese", "raw_text": "{\"answer\":\"Japanese\",\"trace\":\"Japanese is the official language of Japan and is spoken by the majority of the population. It is a member of the Japonic language family and is the only language spoken in Japan. While there are some regional dialects, Japanese is the primary language used in government, education, and media.\"}"}

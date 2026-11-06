@@ -1,0 +1,240 @@
+{"id": "confirm3-001", "condition": "baseline", "answer": "5914"}
+{"id": "confirm3-001", "condition": "independent_first", "answer": "5914", "initial_answer": "5914"}
+{"id": "confirm3-002", "condition": "baseline", "answer": "7161"}
+{"id": "confirm3-002", "condition": "independent_first", "answer": "7161", "initial_answer": "7161"}
+{"id": "confirm3-003", "condition": "baseline", "answer": "5893"}
+{"id": "confirm3-003", "condition": "independent_first", "answer": "5893", "initial_answer": "5893"}
+{"id": "confirm3-004", "condition": "baseline", "answer": "570"}
+{"id": "confirm3-004", "condition": "independent_first", "answer": "570", "initial_answer": "570"}
+{"id": "confirm3-005", "condition": "baseline", "answer": "6100"}
+{"id": "confirm3-005", "condition": "independent_first", "answer": "6100", "initial_answer": "6100"}
+{"id": "confirm3-006", "condition": "baseline", "answer": "6113"}
+{"id": "confirm3-006", "condition": "independent_first", "answer": "6113", "initial_answer": "6113"}
+{"id": "confirm3-007", "condition": "baseline", "answer": "6192"}
+{"id": "confirm3-007", "condition": "independent_first", "answer": "6192", "initial_answer": "6192"}
+{"id": "confirm3-008", "condition": "baseline", "answer": "658"}
+{"id": "confirm3-008", "condition": "independent_first", "answer": "658", "initial_answer": "658"}
+{"id": "confirm3-009", "condition": "baseline", "answer": "6464"}
+{"id": "confirm3-009", "condition": "independent_first", "answer": "6485", "initial_answer": "6467"}
+{"id": "confirm3-010", "condition": "baseline", "answer": "6737"}
+{"id": "confirm3-010", "condition": "independent_first", "answer": "6737", "initial_answer": "6737"}
+{"id": "confirm3-011", "condition": "baseline", "answer": "6887"}
+{"id": "confirm3-011", "condition": "independent_first", "answer": "6887", "initial_answer": "6887"}
+{"id": "confirm3-012", "condition": "baseline", "answer": "648"}
+{"id": "confirm3-012", "condition": "independent_first", "answer": "648", "initial_answer": "648"}
+{"id": "confirm3-013", "condition": "baseline", "answer": "7147"}
+{"id": "confirm3-013", "condition": "independent_first", "answer": "7147", "initial_answer": "7169"}
+{"id": "confirm3-014", "condition": "baseline", "answer": "7579"}
+{"id": "confirm3-014", "condition": "independent_first", "answer": "7579", "initial_answer": "7579"}
+{"id": "confirm3-015", "condition": "baseline", "answer": "7622"}
+{"id": "confirm3-015", "condition": "independent_first", "answer": "7622", "initial_answer": "7622"}
+{"id": "confirm3-016", "condition": "baseline", "answer": "780"}
+{"id": "confirm3-016", "condition": "independent_first", "answer": "780", "initial_answer": "780"}
+{"id": "confirm3-017", "condition": "baseline", "answer": "7723"}
+{"id": "confirm3-017", "condition": "independent_first", "answer": "7723", "initial_answer": "7723"}
+{"id": "confirm3-018", "condition": "baseline", "answer": "7807"}
+{"id": "confirm3-018", "condition": "independent_first", "answer": "7807", "initial_answer": "7807"}
+{"id": "confirm3-019", "condition": "baseline", "answer": "7957"}
+{"id": "confirm3-019", "condition": "independent_first", "answer": "7957", "initial_answer": "7957"}
+{"id": "confirm3-020", "condition": "baseline", "answer": "840"}
+{"id": "confirm3-020", "condition": "independent_first", "answer": "840", "initial_answer": "840"}
+{"id": "confirm3-021", "condition": "baseline", "answer": "8013"}
+{"id": "confirm3-021", "condition": "independent_first", "answer": "8013", "initial_answer": "8013"}
+{"id": "confirm3-022", "condition": "baseline", "answer": "8129"}
+{"id": "confirm3-022", "condition": "independent_first", "answer": "8129", "initial_answer": "8129"}
+{"id": "confirm3-023", "condition": "baseline", "answer": "8307"}
+{"id": "confirm3-023", "condition": "independent_first", "answer": "8307", "initial_answer": "8307"}
+{"id": "confirm3-024", "condition": "baseline", "answer": "800"}
+{"id": "confirm3-024", "condition": "independent_first", "answer": "800", "initial_answer": "800"}
+{"id": "confirm3-025", "condition": "baseline", "answer": "8372"}
+{"id": "confirm3-025", "condition": "independent_first", "answer": "8372", "initial_answer": "8372"}
+{"id": "confirm3-026", "condition": "baseline", "answer": "8409"}
+{"id": "confirm3-026", "condition": "independent_first", "answer": "8409", "initial_answer": "8409"}
+{"id": "confirm3-027", "condition": "baseline", "answer": "8591"}
+{"id": "confirm3-027", "condition": "independent_first", "answer": "8591", "initial_answer": "8591"}
+{"id": "confirm3-028", "condition": "baseline", "answer": "900"}
+{"id": "confirm3-028", "condition": "independent_first", "answer": "900", "initial_answer": "900"}
+{"id": "confirm3-029", "condition": "baseline", "answer": "8641"}
+{"id": "confirm3-029", "condition": "independent_first", "answer": "8641", "initial_answer": "8639"}
+{"id": "confirm3-030", "condition": "baseline", "answer": "8883"}
+{"id": "confirm3-030", "condition": "independent_first", "answer": "8883", "initial_answer": "8883"}
+{"id": "confirm3-031", "condition": "baseline", "answer": "candela"}
+{"id": "confirm3-031", "condition": "independent_first", "answer": "candela (cd)", "initial_answer": "candela (cd)"}
+{"id": "confirm3-032", "condition": "baseline", "answer": "mole (mol)"}
+{"id": "confirm3-032", "condition": "independent_first", "answer": "mole (mol)", "initial_answer": "mole (mol)"}
+{"id": "confirm3-033", "condition": "baseline", "answer": "ampere (A)"}
+{"id": "confirm3-033", "condition": "independent_first", "answer": "ampere (A)", "initial_answer": "ampere (A)"}
+{"id": "confirm3-034", "condition": "baseline", "answer": "kelvin"}
+{"id": "confirm3-034", "condition": "independent_first", "answer": "kelvin (K)", "initial_answer": "kelvin (K)"}
+{"id": "confirm3-035", "condition": "baseline", "answer": "Nairobi"}
+{"id": "confirm3-035", "condition": "independent_first", "answer": "Nairobi", "initial_answer": "Nairobi"}
+{"id": "confirm3-036", "condition": "baseline", "answer": "kilogram (kg)"}
+{"id": "confirm3-036", "condition": "independent_first", "answer": "kilogram (kg)", "initial_answer": "kilogram (kg)"}
+{"id": "confirm3-037", "condition": "baseline", "answer": "second"}
+{"id": "confirm3-037", "condition": "independent_first", "answer": "second (s)", "initial_answer": "second (s)"}
+{"id": "confirm3-038", "condition": "baseline", "answer": "George Orwell"}
+{"id": "confirm3-038", "condition": "independent_first", "answer": "George Orwell", "initial_answer": "George Orwell (pen name of Eric Arthur Blair)"}
+{"id": "confirm3-039", "condition": "baseline", "answer": "Anemometer"}
+{"id": "confirm3-039", "condition": "independent_first", "answer": "Anemometer", "initial_answer": "Anemometer"}
+{"id": "confirm3-040", "condition": "baseline", "answer": "Hygrometer"}
+{"id": "confirm3-040", "condition": "independent_first", "answer": "Hygrometer", "initial_answer": "Hygrometer"}
+{"id": "confirm3-041", "condition": "baseline", "answer": "hydrometer"}
+{"id": "confirm3-041", "condition": "independent_first", "answer": "hydrometer", "initial_answer": "Hydrometer"}
+{"id": "confirm3-042", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm3-042", "condition": "independent_first", "answer": "Ohmmeter", "initial_answer": "Ohmmeter"}
+{"id": "confirm3-043", "condition": "baseline", "answer": "Voltmeter"}
+{"id": "confirm3-043", "condition": "independent_first", "answer": "Voltmeter", "initial_answer": "Voltmeter"}
+{"id": "confirm3-044", "condition": "baseline", "answer": "Ammeter"}
+{"id": "confirm3-044", "condition": "independent_first", "answer": "Ammeter", "initial_answer": "Ammeter"}
+{"id": "confirm3-045", "condition": "baseline", "answer": "evaporation"}
+{"id": "confirm3-045", "condition": "independent_first", "answer": "Evaporation", "initial_answer": "Evaporation"}
+{"id": "confirm3-046", "condition": "baseline", "answer": "Sublimation"}
+{"id": "confirm3-046", "condition": "independent_first", "answer": "Sublimation", "initial_answer": "Sublimation"}
+{"id": "confirm3-047", "condition": "baseline", "answer": "1945"}
+{"id": "confirm3-047", "condition": "independent_first", "answer": "1945", "initial_answer": "1945"}
+{"id": "confirm3-048", "condition": "baseline", "answer": "Condensation"}
+{"id": "confirm3-048", "condition": "independent_first", "answer": "Condensation", "initial_answer": "Condensation"}
+{"id": "confirm3-049", "condition": "baseline", "answer": "W"}
+{"id": "confirm3-049", "condition": "independent_first", "answer": "W", "initial_answer": "W"}
+{"id": "confirm3-050", "condition": "baseline", "answer": "Russia"}
+{"id": "confirm3-050", "condition": "independent_first", "answer": "Russia", "initial_answer": "Russia"}
+{"id": "confirm3-051", "condition": "baseline", "answer": "newton"}
+{"id": "confirm3-051", "condition": "independent_first", "answer": "newton (N)", "initial_answer": "newton (N); 1 N = 1 kg·m/s²"}
+{"id": "confirm3-052", "condition": "baseline", "answer": "pascal (Pa)"}
+{"id": "confirm3-052", "condition": "independent_first", "answer": "pascal (Pa)", "initial_answer": "pascal (Pa)"}
+{"id": "confirm3-053", "condition": "baseline", "answer": "joule"}
+{"id": "confirm3-053", "condition": "independent_first", "answer": "joule (J)", "initial_answer": "joule (J)"}
+{"id": "confirm3-054", "condition": "baseline", "answer": "watt (W)"}
+{"id": "confirm3-054", "condition": "independent_first", "answer": "watt (W)", "initial_answer": "watt (W)"}
+{"id": "confirm3-055", "condition": "baseline", "answer": "coulomb (C)"}
+{"id": "confirm3-055", "condition": "independent_first", "answer": "coulomb (C)", "initial_answer": "coulomb (C)"}
+{"id": "confirm3-056", "condition": "baseline", "answer": "hertz (Hz)"}
+{"id": "confirm3-056", "condition": "independent_first", "answer": "hertz (Hz)", "initial_answer": "hertz (Hz)"}
+{"id": "confirm3-057", "condition": "baseline", "answer": "UNKNOWN"}
+{"id": "confirm3-057", "condition": "independent_first", "answer": "ohm (Ω)", "initial_answer": "The ohm (Ω), equal to one volt per ampere (1 Ω = 1 V/A = 1 kg·m²·s⁻³·A⁻²)."}
+{"id": "confirm3-058", "condition": "baseline", "answer": "volt"}
+{"id": "confirm3-058", "condition": "independent_first", "answer": "volt (V)", "initial_answer": "volt (V)"}
+{"id": "confirm3-059", "condition": "baseline", "answer": "farad"}
+{"id": "confirm3-059", "condition": "independent_first", "answer": "farad (F)", "initial_answer": "farad (F)"}
+{"id": "confirm3-060", "condition": "baseline", "answer": "weber (Wb)"}
+{"id": "confirm3-060", "condition": "independent_first", "answer": "Weber (Wb)", "initial_answer": "Weber (Wb)"}
+{"id": "confirm3-061", "condition": "baseline", "answer": "15001"}
+{"id": "confirm3-061", "condition": "independent_first", "answer": "15001", "initial_answer": "15001"}
+{"id": "confirm3-062", "condition": "baseline", "answer": "15003"}
+{"id": "confirm3-062", "condition": "independent_first", "answer": "15003", "initial_answer": "15003"}
+{"id": "confirm3-063", "condition": "baseline", "answer": "15005"}
+{"id": "confirm3-063", "condition": "independent_first", "answer": "15005", "initial_answer": "15005"}
+{"id": "confirm3-064", "condition": "baseline", "answer": "15007"}
+{"id": "confirm3-064", "condition": "independent_first", "answer": "15007", "initial_answer": "15007"}
+{"id": "confirm3-065", "condition": "baseline", "answer": "15009"}
+{"id": "confirm3-065", "condition": "independent_first", "answer": "15009", "initial_answer": "15009"}
+{"id": "confirm3-066", "condition": "baseline", "answer": "15011"}
+{"id": "confirm3-066", "condition": "independent_first", "answer": "15011", "initial_answer": "15011"}
+{"id": "confirm3-067", "condition": "baseline", "answer": "15013"}
+{"id": "confirm3-067", "condition": "independent_first", "answer": "15013", "initial_answer": "15013"}
+{"id": "confirm3-068", "condition": "baseline", "answer": "15015"}
+{"id": "confirm3-068", "condition": "independent_first", "answer": "15015", "initial_answer": "15015"}
+{"id": "confirm3-069", "condition": "baseline", "answer": "15017"}
+{"id": "confirm3-069", "condition": "independent_first", "answer": "15017", "initial_answer": "15017"}
+{"id": "confirm3-070", "condition": "baseline", "answer": "15019"}
+{"id": "confirm3-070", "condition": "independent_first", "answer": "15019", "initial_answer": "15019"}
+{"id": "confirm3-071", "condition": "baseline", "answer": "15021"}
+{"id": "confirm3-071", "condition": "independent_first", "answer": "15021", "initial_answer": "15021"}
+{"id": "confirm3-072", "condition": "baseline", "answer": "15023"}
+{"id": "confirm3-072", "condition": "independent_first", "answer": "15023", "initial_answer": "15023"}
+{"id": "confirm3-073", "condition": "baseline", "answer": "15025"}
+{"id": "confirm3-073", "condition": "independent_first", "answer": "15025", "initial_answer": "15025"}
+{"id": "confirm3-074", "condition": "baseline", "answer": "15027"}
+{"id": "confirm3-074", "condition": "independent_first", "answer": "15027", "initial_answer": "15027"}
+{"id": "confirm3-075", "condition": "baseline", "answer": "15029"}
+{"id": "confirm3-075", "condition": "independent_first", "answer": "15029", "initial_answer": "15029"}
+{"id": "confirm3-076", "condition": "baseline", "answer": "15031"}
+{"id": "confirm3-076", "condition": "independent_first", "answer": "15031", "initial_answer": "15031"}
+{"id": "confirm3-077", "condition": "baseline", "answer": "15033"}
+{"id": "confirm3-077", "condition": "independent_first", "answer": "15033", "initial_answer": "15033"}
+{"id": "confirm3-078", "condition": "baseline", "answer": "15035"}
+{"id": "confirm3-078", "condition": "independent_first", "answer": "15035", "initial_answer": "15035"}
+{"id": "confirm3-079", "condition": "baseline", "answer": "15037"}
+{"id": "confirm3-079", "condition": "independent_first", "answer": "15037", "initial_answer": "15037"}
+{"id": "confirm3-080", "condition": "baseline", "answer": "15039"}
+{"id": "confirm3-080", "condition": "independent_first", "answer": "15039", "initial_answer": "15039"}
+{"id": "confirm3-081", "condition": "baseline", "answer": "15041"}
+{"id": "confirm3-081", "condition": "independent_first", "answer": "15041", "initial_answer": "15041"}
+{"id": "confirm3-082", "condition": "baseline", "answer": "15043"}
+{"id": "confirm3-082", "condition": "independent_first", "answer": "15043", "initial_answer": "15043"}
+{"id": "confirm3-083", "condition": "baseline", "answer": "15045"}
+{"id": "confirm3-083", "condition": "independent_first", "answer": "15045", "initial_answer": "15045"}
+{"id": "confirm3-084", "condition": "baseline", "answer": "15047"}
+{"id": "confirm3-084", "condition": "independent_first", "answer": "15047", "initial_answer": "15047"}
+{"id": "confirm3-085", "condition": "baseline", "answer": "15049"}
+{"id": "confirm3-085", "condition": "independent_first", "answer": "15049", "initial_answer": "15049"}
+{"id": "confirm3-086", "condition": "baseline", "answer": "15051"}
+{"id": "confirm3-086", "condition": "independent_first", "answer": "15051", "initial_answer": "15051"}
+{"id": "confirm3-087", "condition": "baseline", "answer": "15053"}
+{"id": "confirm3-087", "condition": "independent_first", "answer": "15053", "initial_answer": "15053"}
+{"id": "confirm3-088", "condition": "baseline", "answer": "15055"}
+{"id": "confirm3-088", "condition": "independent_first", "answer": "15055", "initial_answer": "15055"}
+{"id": "confirm3-089", "condition": "baseline", "answer": "15057"}
+{"id": "confirm3-089", "condition": "independent_first", "answer": "15057", "initial_answer": "15057"}
+{"id": "confirm3-090", "condition": "baseline", "answer": "15059"}
+{"id": "confirm3-090", "condition": "independent_first", "answer": "15059", "initial_answer": "15059"}
+{"id": "confirm3-091", "condition": "baseline", "answer": "tesla"}
+{"id": "confirm3-091", "condition": "independent_first", "answer": "tesla", "initial_answer": "tesla (T)"}
+{"id": "confirm3-092", "condition": "baseline", "answer": "henry"}
+{"id": "confirm3-092", "condition": "independent_first", "answer": "henry", "initial_answer": "henry (H)"}
+{"id": "confirm3-093", "condition": "baseline", "answer": "lumen"}
+{"id": "confirm3-093", "condition": "independent_first", "answer": "lumen (lm)", "initial_answer": "lumen (lm)"}
+{"id": "confirm3-094", "condition": "baseline", "answer": "lux"}
+{"id": "confirm3-094", "condition": "independent_first", "answer": "lux", "initial_answer": "lux (lx)"}
+{"id": "confirm3-095", "condition": "baseline", "answer": "katal (kat)"}
+{"id": "confirm3-095", "condition": "independent_first", "answer": "katal (kat)", "initial_answer": "katal (kat), where 1 kat = 1 mol/s"}
+{"id": "confirm3-096", "condition": "baseline", "answer": "O3"}
+{"id": "confirm3-096", "condition": "independent_first", "answer": "O3", "initial_answer": "O3"}
+{"id": "confirm3-097", "condition": "baseline", "answer": "CH4"}
+{"id": "confirm3-097", "condition": "independent_first", "answer": "CH4", "initial_answer": "CH4"}
+{"id": "confirm3-098", "condition": "baseline", "answer": "NH3"}
+{"id": "confirm3-098", "condition": "independent_first", "answer": "NH3", "initial_answer": "NH3"}
+{"id": "confirm3-099", "condition": "baseline", "answer": "H2O2"}
+{"id": "confirm3-099", "condition": "independent_first", "answer": "H2O2", "initial_answer": "H2O2"}
+{"id": "confirm3-100", "condition": "baseline", "answer": "H2SO4"}
+{"id": "confirm3-100", "condition": "independent_first", "answer": "H2SO4", "initial_answer": "H2SO4"}
+{"id": "confirm3-101", "condition": "baseline", "answer": "HNO3"}
+{"id": "confirm3-101", "condition": "independent_first", "answer": "HNO3", "initial_answer": "HNO3"}
+{"id": "confirm3-102", "condition": "baseline", "answer": "NaHCO3"}
+{"id": "confirm3-102", "condition": "independent_first", "answer": "NaHCO3", "initial_answer": "NaHCO3"}
+{"id": "confirm3-103", "condition": "baseline", "answer": "CaCO3"}
+{"id": "confirm3-103", "condition": "independent_first", "answer": "CaCO3", "initial_answer": "CaCO3"}
+{"id": "confirm3-104", "condition": "baseline", "answer": "C6H12O6"}
+{"id": "confirm3-104", "condition": "independent_first", "answer": "C6H12O6", "initial_answer": "C6H12O6"}
+{"id": "confirm3-105", "condition": "baseline", "answer": "Lima"}
+{"id": "confirm3-105", "condition": "independent_first", "answer": "Lima", "initial_answer": "Lima"}
+{"id": "confirm3-106", "condition": "baseline", "answer": "Leonardo da Vinci"}
+{"id": "confirm3-106", "condition": "independent_first", "answer": "Leonardo da Vinci", "initial_answer": "Leonardo da Vinci"}
+{"id": "confirm3-107", "condition": "baseline", "answer": "SiO2"}
+{"id": "confirm3-107", "condition": "independent_first", "answer": "SiO2", "initial_answer": "SiO2"}
+{"id": "confirm3-108", "condition": "baseline", "answer": "HCl"}
+{"id": "confirm3-108", "condition": "independent_first", "answer": "HCl", "initial_answer": "HCl"}
+{"id": "confirm3-109", "condition": "baseline", "answer": "NaOH"}
+{"id": "confirm3-109", "condition": "independent_first", "answer": "NaOH", "initial_answer": "NaOH"}
+{"id": "confirm3-110", "condition": "baseline", "answer": "KNO3"}
+{"id": "confirm3-110", "condition": "independent_first", "answer": "KNO3", "initial_answer": "KNO3"}
+{"id": "confirm3-111", "condition": "baseline", "answer": "CaO"}
+{"id": "confirm3-111", "condition": "independent_first", "answer": "CaO", "initial_answer": "CaO"}
+{"id": "confirm3-112", "condition": "baseline", "answer": "MgSO4"}
+{"id": "confirm3-112", "condition": "independent_first", "answer": "MgSO4", "initial_answer": "MgSO4 (magnesium sulfate; with water of hydration, commonly MgSO4·7H2O as Epsom salt)"}
+{"id": "confirm3-113", "condition": "baseline", "answer": "Na2CO3"}
+{"id": "confirm3-113", "condition": "independent_first", "answer": "Na2CO3", "initial_answer": "Na2CO3"}
+{"id": "confirm3-114", "condition": "baseline", "answer": "CO"}
+{"id": "confirm3-114", "condition": "independent_first", "answer": "CO", "initial_answer": "CO"}
+{"id": "confirm3-115", "condition": "baseline", "answer": "H2S"}
+{"id": "confirm3-115", "condition": "independent_first", "answer": "H2S", "initial_answer": "H2S"}
+{"id": "confirm3-116", "condition": "baseline", "answer": "SO2"}
+{"id": "confirm3-116", "condition": "independent_first", "answer": "SO2", "initial_answer": "SO2"}
+{"id": "confirm3-117", "condition": "baseline", "answer": "H3PO4"}
+{"id": "confirm3-117", "condition": "independent_first", "answer": "H3PO4", "initial_answer": "H3PO4"}
+{"id": "confirm3-118", "condition": "baseline", "answer": "60"}
+{"id": "confirm3-118", "condition": "independent_first", "answer": "60", "initial_answer": "60"}
+{"id": "confirm3-119", "condition": "baseline", "answer": "He"}
+{"id": "confirm3-119", "condition": "independent_first", "answer": "He", "initial_answer": "He"}
+{"id": "confirm3-120", "condition": "baseline", "answer": "C6H8O7"}
+{"id": "confirm3-120", "condition": "independent_first", "answer": "C6H8O7", "initial_answer": "C6H8O7"}
