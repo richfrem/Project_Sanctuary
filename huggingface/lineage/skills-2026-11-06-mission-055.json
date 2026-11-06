@@ -1,0 +1,66 @@
+{
+ "v": 1,
+ "purpose": "provenance of the skills and scripts active when this soul milestone was produced (pointer, not a copy)",
+ "milestone": "MISSION-055 reusable learning loop reached functional integration (chronicle entry 379)",
+ "generated_at_utc": "2026-11-06T17:46:56Z",
+ "sanctuary": {
+  "repo": "richfrem/Project_Sanctuary",
+  "base_commit": "80494f6787d3adc2f1255c607ed7fb21b0c33278"
+ },
+ "companion": {
+  "repo": "richfrem/agent-plugins-skills",
+  "commit": "de7edc93ec6e5d38c939f393a844db0699112c01",
+  "license": "MIT"
+ },
+ "skills": {
+  "sanctuary-core": {
+   "evaluating-agent-work": {
+    "tree_sha256_16": "b4c9d0ec40fe7f7c",
+    "files": 32
+   },
+   "forging-sovereign-models": {
+    "tree_sha256_16": "f522adac71d191d0",
+    "files": 21
+   },
+   "managing-chronicles": {
+    "tree_sha256_16": "d951936e81c5793d",
+    "files": 8
+   },
+   "managing-protocols": {
+    "tree_sha256_16": "68244c6ad19f6ea9",
+    "files": 8
+   },
+   "managing-sovereign-memory": {
+    "tree_sha256_16": "86b05323b9a3a2da",
+    "files": 23
+   },
+   "operating-sanctuary-guardian": {
+    "tree_sha256_16": "761980514d5184a8",
+    "files": 60
+   },
+   "preserving-soul-traces": {
+    "tree_sha256_16": "0187cce365313583",
+    "files": 7
+   }
+  },
+  "companion:agent-orchestration": {
+   "orchestrating-agent-work": {
+    "tree_sha256_16": "864d7e704271ee61",
+    "files": 53,
+    "installed_global_claude_matches_source": true
+   },
+   "cli-agent": {
+    "tree_sha256_16": "5d7bbc559c6c1549",
+    "files": 63,
+    "installed_global_claude_matches_source": true
+   },
+   "evaluating-agent-outcomes": {
+    "tree_sha256_16": "6ad058f5dbc40185",
+    "files": 18,
+    "installed_global_claude_matches_source": true
+   }
+  }
+ },
+ "not_included": "companion plugins/skills/scripts are NOT copied into this dataset; fetch the commit above",
+ "generated_by": "one-off inline script in the 2026-11-06 session (git rev-parse + tree hashes); regenerate by the same method"
+}

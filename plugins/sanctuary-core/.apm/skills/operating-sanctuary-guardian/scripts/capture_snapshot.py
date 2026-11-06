@@ -51,6 +51,19 @@ def get_git_state(project_root: Path) -> dict:
     except Exception:
         return {"lines": [], "changed_files": set(), "hash": "error"}
 
+def find_bundler(project_root, home=None):
+    """-> (script, style). 'legacy' = plugins/context-bundler positional CLI; 'bundling-context' = installed skill with --manifest/--bundle."""
+    legacy = Path(project_root) / "plugins" / "context-bundler" / "scripts" / "bundle.py"
+    if legacy.exists():
+        return legacy, "legacy"
+    home = Path(home) if home else Path.home()
+    for c in (Path(project_root) / ".claude/skills/bundling-context/scripts/bundle.py", Path(project_root) / ".agents/skills/bundling-context/scripts/bundle.py",
+              home / ".claude/skills/bundling-context/scripts/bundle.py", home / ".agents/skills/bundling-context/scripts/bundle.py"):
+        if c.exists():
+            return c, "bundling-context"
+    return None, None
+
+
 def main():
     parser = argparse.ArgumentParser(description="Capture Snapshot (Protocol 128)")
     parser.add_argument("--type", choices=["audit", "learning_audit", "seal"], default="audit", help="Snapshot type")
@@ -132,19 +145,17 @@ def main():
         
     final_snapshot_path = output_dir / snapshot_filename
 
-    # Call Context Bundler
-    bundler_script = project_root / "plugins" / "context-bundler" / "scripts" / "bundle.py"
-    if not bundler_script.exists():
-        print(json.dumps({"status": "error", "error": "Context bundler script not found"}, indent=2), file=sys.stderr)
+    # Call Context Bundler: the legacy in-repo plugin if present, otherwise the installed `bundling-context` skill (dev-utils)
+    bundler_script, style = find_bundler(project_root)
+    if bundler_script is None:
+        print(json.dumps({"status": "error", "error": "Context bundler script not found (looked for plugins/context-bundler and the installed bundling-context skill)"}, indent=2), file=sys.stderr)
         sys.exit(1)
-        
-    bundler_cmd = [
-        sys.executable,
-        str(bundler_script),
-        str(manifest_file),
-        "-o", str(final_snapshot_path)
-    ]
-    
+
+    if style == "legacy":
+        bundler_cmd = [sys.executable, str(bundler_script), str(manifest_file), "-o", str(final_snapshot_path)]
+    else:                                   # bundling-context CLI; guardian_manifest.json already uses its {title, description, files:[{path, note}]} schema
+        bundler_cmd = [sys.executable, str(bundler_script), "--manifest", str(manifest_file), "--bundle", str(final_snapshot_path)]
+
     result = subprocess.run(bundler_cmd, cwd=str(project_root), capture_output=True, text=True)
     
     if result.returncode != 0:

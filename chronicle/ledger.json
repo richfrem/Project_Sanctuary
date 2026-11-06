@@ -1,6 +1,13 @@
 {
-  "total_entries": 370,
+  "total_entries": 371,
   "entries": [
+    {
+      "id": 379,
+      "title": "MISSION-055: reusable learning loop reached functional integration",
+      "filename": "379_mission_055_reusable_learning_loop_reached_functional_integration.md",
+      "date": "2026-11-06",
+      "status": "published"
+    },
     {
       "id": 378,
       "title": "MISSION-052 created: the four-worker orchestration batch as a startable mission, with a brief for a clean session",
