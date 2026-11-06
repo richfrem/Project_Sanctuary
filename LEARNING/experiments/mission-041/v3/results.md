@@ -19,3 +19,6 @@ Verdict: FALSIFIED under the manifest's literal criteria (any threshold missed f
 5. Holdout is procedural, not blind: one author wrote pools and mutants; order rests on mtimes, a seal and a script assertion (the seal itself was not committed separately). The v3 freeze commit precedes scoring.
 6. Superseded evidence: v2 (ceiling effect, no-op mutants, input-transform mutants) is retained with `v2/errata.md`; v1 was a 6-component pilot. Neither is pooled.
 7. No token counts were recorded for the worker; measured usage is in the orchestrator record.
+
+## Verification of record
+`freeze_tools.py --verify` and `test_protocol.py::test_scoring_has_not_run` are PRE-scoring gates: they pass at the freeze commit `41f2a57b5` (and passed immediately before scoring) and fail by design once results and this note are added to the folder. To re-verify the freeze, check out `41f2a57b5` and run `freeze_tools.py --verify`. The experiment folder is not part of any collected test suite; the evaluating-agent-work suite passes with the harness changes (110 passed when run together with the protocol tests, plus this one expected gate failure).
