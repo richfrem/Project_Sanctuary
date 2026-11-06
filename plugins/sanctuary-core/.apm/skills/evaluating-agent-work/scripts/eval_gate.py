@@ -20,6 +20,7 @@ import eval_cli as _cli  # noqa: E402
 EVENTS = Path(".agent/learning/events.jsonl")
 INTERVENTION_CATEGORIES, COST_CATEGORIES = _c.INTERVENTION_CATEGORIES, _c.COST_CATEGORIES
 select_method, run_fixtures, pilot_adherence, validity, investment = _c.select_method, _c.run_fixtures, _c.pilot_adherence, _c.validity, _c.investment
+assess_claim = _c.assess_claim            # claim-specific validity (MISSION-055); `validity` keeps its historical relative-reduction semantics
 
 
 def _loc(path):
