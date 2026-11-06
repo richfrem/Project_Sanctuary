@@ -1,7 +1,7 @@
 {
   "id": "MISSION-057",
   "title": "Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Number theory: last-digit transitions between consecutive primes (exact sieve to 10^8, bounded local CPU)",
   "created_at": "2026-11-06T19:00:00Z",
@@ -60,7 +60,8 @@
     "The Cramer control is one random model among several; a bias-free Cramer control is evidence that the effect is arithmetic, not that every random model lacks it."
   ],
   "related_missions": {
-    "MISSION-056": "Sibling curiosity mission (ChatGPT's choice): another question where exact computation tests an intuition about structure versus randomness."
+    "MISSION-056": "Sibling curiosity mission (ChatGPT's choice): another question where exact computation tests an intuition about structure versus randomness.",
+    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice."
   },
   "projected_impact": {
     "paths": [

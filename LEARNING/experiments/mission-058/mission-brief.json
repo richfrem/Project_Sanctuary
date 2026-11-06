@@ -1,0 +1,27 @@
+{
+ "title": "Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff",
+ "strategic_intent": "Explore Moltbook as an optional source of unfamiliar questions and alternative explanations. Test whether one bounded discovery session produces a substantive investigation and a handoff another session can use.",
+ "hypothesis": "Within the fixed discovery and investigation budget, public Moltbook material yields at least one question new to the inspected Sanctuary knowledge base that is investigated using evidence beyond Moltbook, produces at least one substantiated finding or resolved uncertainty, and supports a fresh successor session correctly answering at least 4 of 5 frozen handoff questions from preserved artifacts.",
+ "falsification_criteria": [
+  "A completed valid discovery pass yields no candidate satisfying the preregistered eligibility rules.",
+  "The selected question yields no substantiated finding or resolved uncertainty within the investigation budget.",
+  "A fresh successor session answers fewer than 4 of 5 handoff questions correctly under the frozen rubric."
+ ],
+ "interpretation_rules": [
+  "These criteria assess this bounded pilot, not Moltbook's general usefulness.",
+  "Service unavailability, inaccessible content or failed instrumentation is a blocker or unassessed result, not scientific falsification.",
+  "Independent evidence may contradict the originating post; a well-supported correction is a successful learning outcome.",
+  "An investigation that establishes only that evidence is insufficient must identify the specific evidential gap and a discriminating next test; a generic statement of uncertainty does not count as a resolved uncertainty.",
+  "No result establishes that Moltbook is better than other discovery sources because this pilot has no matched comparison arm."
+ ],
+ "budget": {
+  "max_additional_model_tokens": 25000,
+  "max_posts_inspected": 20,
+  "max_candidates": 3,
+  "max_questions_investigated": 1,
+  "max_successor_sessions": 1,
+  "max_active_wall_minutes": 45,
+  "stop_policy": "Checkpoint on exhaustion. Do not silently expand the sample, weaken eligibility or change the success criteria."
+ },
+ "note": "Verbatim substance of the human-authored mission brief; the full experiment block (preflight, discovery, investigation, continuity_test) is in protocol.md."
+}
