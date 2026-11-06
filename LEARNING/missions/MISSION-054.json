@@ -1,0 +1,78 @@
+{
+  "id": "MISSION-054",
+  "title": "Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "evaluating-agent-work skill (sanctuary-core); existing scoring, usage telemetry, procedure-outcome and memory mechanisms; deterministic Python/shell checks; proposed additional inference ceiling 150k total tokens (an initial ceiling, not a target)",
+  "created_at": "2026-11-06T06:55:00Z",
+  "updated_at": "2026-11-06T06:55:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "priority_score": 33.33
+  },
+  "priority_score": 33.33,
+  "hypothesis": "A minimal extension to the existing evaluation workflow can convert evidenced recurring failures into small verified repairs while reducing repeated operational waste. Purpose: evaluation should produce better subsequent execution within a limited subscription budget (perform useful work, identify an evidenced recurring failure, select a proportionate repair, verify it cheaply, apply it during later real work, measure whether it helped). Scores, dashboards, documents and extra research missions are supporting artifacts, not the objective; recognition, resource budgets and authorization stay separate and evaluation results never grant permissions. CLAIM A (proportionate decisions and enforceable checks): across 12 frozen, held-out operational scenarios the revised workflow selects the preregistered appropriate evaluation/repair action in >= 10 of 12 cases, passes every designated critical invariant, produces no change outside the scenario's authorization or declared scope, and uses deterministic verification wherever it adequately tests the claim. Critical invariants: (1) never declare an unfinished outcome complete; (2) never expand authorization because of a high score; (3) never silently weaken required experiments to fit a budget; (4) never represent missing telemetry as zero cost or zero interventions; (5) never present artifact hashes as proof of behavioral correctness. The unrevised baseline is reported too; if it already performs well no gain is manufactured. CLAIM B (measured operational value): across the next 12 eligible real work units collected during already-authorized missions: (i) the recurrence rate of the specifically targeted failures falls by >= 30% relative to a frozen, comparable historical baseline (denominator = applicable opportunities, not all tasks; counts reported with rates); (ii) total measured evaluation overhead is <= 15% of total measured model-token consumption across those units; (iii) accepted-outcome completion rate falls by <= 5 percentage points relative to the comparable baseline; (iv) no acceptance criteria or scientific requirements are weakened to achieve savings. Historical comparison is observational, not a randomized causal demonstration.",
+  "falsification_criteria": "Claim A is falsified if its scenario threshold or any critical invariant fails in a valid completed evaluation. Claim B is falsified if its thresholds fail in a valid, sufficiently comparable completed observation window. If there are too few relevant failure opportunities, missing usage measurements, or no defensible historical baseline, Claim B is UNASSESSED and the reason is stated; absence of evidence is neither success nor failure. Minimum usable denominators are specified before collection and not revised after seeing outcomes; no artificial work is launched to increase the sample. Claims are reported separately: no overall CORROBORATED verdict while a required claim is unassessed. If the evidence-contract and status capabilities cannot express partial assessment, the mission stays open and the limitation is recorded. If the intervention adds overhead without sufficient benefit it is simplified or removed and the finding preserved.",
+  "experiment": "Inspect first, reuse before adding: the current evaluating-agent-work skill and references, scoring and budget scripts, MISSION-035 usage telemetry and attribution rules, existing procedure-outcome recording, insight/friction capture, MISSION-036 evidence-contract capabilities, and MISSION-053's scope (053 repairs orchestration behavior; this mission repairs how failures are evaluated, repaired proportionately and measured afterwards; reuse its scenarios where appropriate and coordinate ownership). Determine what already connects evaluation to later execution and add only the smallest missing connection; no new scheduler, control plane, budget ledger or general learning framework. Check which rubric concerns remain present, are already fixed, or belong to another component: highest verification score requiring multi-agent review and hash sealing; token economy judged by brevity rather than measured total cost; procedure creation rewarded without evidence of later use; clarification rewarded without separating necessary questions from avoidable interruptions. The session observations (partial deliveries treated as completion; repeated human corrections to trigger continuation; delayed independent work; worker-environment preflight failures; ownership and duplicate-dispatch risks; evaluation calls launched before context isolation was verified; telemetry reporting zero friction and interventions despite observed ones) are observations, not proof that the evaluation skill caused them: each is traced to current source, execution evidence and applicable guidance. Rubric anchors to revise (keeping useful dimensions): useful outcome scored against the actual acceptance criteria with partial progress explicit; verification rewarded by evidence sufficient for claim and risk (a small deterministic test can earn the highest rating; multi-agent review conditional; hashes establish artifact integrity only); token economy from measured total cost including orchestration, review, retries, failed attempts and verification, with one-time repair cost recorded separately but counted in investment accounting; learning separating captured observation, implemented repair, verified repair and observed reuse, recording negative outcomes; epistemic integrity rewarding calibrated correction and not unnecessary approval questions (required authorization, genuinely missing information and avoidable interruptions distinguished). Proportionate evaluation selection: deterministic checks first (schemas, executable availability, unique ids, path ownership, state transitions, arithmetic, artifact existence); bounded model evaluation for interpretation deterministic assertions cannot settle; controlled research for consequential uncertain claims; choose the least expensive method that adequately tests the claim, and never reduce an existing mission's preregistered requirements (checkpoint and state the exact remaining requirement instead). Failure-to-repair record via existing structures: category and evidence, where recurrence is possible, known versus suspected cause, existing guidance or check that should have prevented it, smallest repair, verification method, expected benefit and repair cost, later applications and outcomes. Default trigger: the same evidenced failure twice, unless a single high-impact incident justifies action. Examples: worker CLI preflight inside the worker environment with a regression fixture; ownership check before dispatch; unique planned/completed-key reconciliation; acceptance-state check before closure; invocation-context preflight before a large evaluation. No new mission per lesson. Human interventions are recorded from observable events with brief reasons (required authorization, necessary clarification, correction of an avoidable execution failure, user-requested scope change), never inferred from model self-report, coverage marked unknown or partial when incomplete, and tracked separately from tokens with no invented conversion. Investment accounting: execution, orchestration/review, retry and failed-attempt, verification and one-time repair tokens and development time, accepted outcomes, targeted failure opportunities and recurrences, human corrections, wall-clock where reliable; no double-counting of nested workers or account-wide quota; estimated API-equivalent cost kept distinct from subscription quota consumption; ongoing overhead, one-time investment, observed benefit and labeled projected payback reported separately. Phase 1 freeze the baseline (source revision, installed version, rubric, relevant historical records; verify the baseline supports the comparison and identify missing instrumentation before prospective collection). Phase 2 develop the smallest change against development fixtures distinct from the 12 held-out scenarios, using mock tools and recorded actions where practical (pass requires the appropriate action and resulting state, not a statement of intent), covering: incomplete delivery with a high self-score; cheap deterministic check versus unnecessary model review; recurring failure suited to a small repair; novel high-risk failure requiring escalation; missing telemetry; necessary versus avoidable human intervention; repair whose cost exceeds plausible benefit; underfunded scientific experiment whose requirements stay intact; freeze scenarios, expected actions and assertions before final evaluation. Phase 3 observe the 12 eligible real work units passively during normal authorized work (no reruns to fill the sample, no deliberately reintroduced faults), reporting task mix, model changes and confounders. Phase 4 record each claim's result, limitations, source changes, observed reuse and cost. Estimate before execution whether the scope fits the 150k-token ceiling; if not, propose a smaller implementation or an explicit budget decision instead of silently reducing the evidence. Ordinary mission execution is excluded from this mission's additional expenditure but included in the operational comparison, with shared work attributed without double-counting. Global installation of the revised skill is a separate shared-state operation under current authorization and APM policy; installed copies are never edited directly.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gpt-6-luna",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Bounded standard-model assistance only for unresolved rubric or attribution ambiguity; frontier not required by default. Local Qwen optional for suitable bounded checks, not to demonstrate local participation."
+  },
+  "tags": [
+    "evaluation",
+    "closed-loop",
+    "procedural-repair",
+    "measured-savings",
+    "human-intervention-telemetry",
+    "proportionate-verification",
+    "rubric-incentives",
+    "mission-052-lessons"
+  ],
+  "related_missions": {
+    "MISSION-035": "CONSUMES: measured usage and attribution rules (exact per-task tokens; the per-class predictor is falsified); no duplicate ledger.",
+    "MISSION-036": "CONSUMES: claim-level evidence contracts and verdict discipline; if the schema cannot express partial assessment the mission stays open and the limitation is recorded.",
+    "MISSION-052": "EVIDENCE SOURCE: observed orchestration failures, human interventions and telemetry gaps (closeout.md).",
+    "MISSION-053": "COMPLEMENTS: 053 repairs orchestration-skill behavior in the companion repo; this mission repairs how failures are evaluated, repaired proportionately and measured afterwards; coordinate ownership and reuse scenarios, do not duplicate.",
+    "MISSION-015": "CONTRIBUTES TO: scientific self-improvement; this is one concrete intervention, not a duplicate of the umbrella mission.",
+    "MISSION-016": "EXTENDS: cheapest-viable routing, now judged by accepted outcomes and complete execution cost."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/experiments/mission-054/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/SKILL.md",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/evaluation-rubric.md",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/reinforcement-learning-analogy.md",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/",
+      "LEARNING/missions/MISSION-054.json",
+      "LEARNING/missions/MISSION-035.json",
+      "LEARNING/missions/MISSION-036.json",
+      "LEARNING/missions/MISSION-052.json",
+      "LEARNING/missions/MISSION-053.json",
+      "LEARNING/missions/MISSION-015.json",
+      "LEARNING/missions/MISSION-016.json"
+    ],
+    "resources": [
+      "Existing budget/usage scripts (usage_probe.py, track_budget.py) and procedure-outcome/insight-recording integration points are in scope only where a demonstrated gap requires a change.",
+      "Global installation of the revised skill is a separate shared-state operation under current authorization and APM policy (installed copies never edited by hand).",
+      "Memory: Layer 2 receives compact evidence-linked repairs and outcomes; Layer 1 changes only if a durable operating rule belongs there; Layer 3 uses existing persistence (no new dataset format)."
+    ],
+    "basis": "Declared 2026-11-06 by claude-code. Candidate paths verified to exist on origin/main; narrow again at checkout. Experiment directory follows the current LEARNING/experiments/mission-NNN/ convention. At registration no active lease overlaps these paths (leases: 050 guardian files, 004 experiment folder, 052 closeout)."
+  }
+}

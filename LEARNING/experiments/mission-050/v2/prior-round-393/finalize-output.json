@@ -1,0 +1,28 @@
+{
+  "completed_real_trials": 393,
+  "planned_real_trials": 630,
+  "measured_prompt_tokens": 198337,
+  "measured_completion_tokens": 15667,
+  "measured_total_tokens": 214004,
+  "measured_cached_prompt_tokens": 183508,
+  "calls": 3551,
+  "work_calls": 2933,
+  "wrong_work_calls": 556,
+  "checkpoint_calls": 618,
+  "role_B_work_calls": 873,
+  "invalid_checkpoint_responses": 0,
+  "lock_wait_seconds": 2355.892330742674,
+  "request_wall_seconds": 4020.5623775770655,
+  "observed_events": {
+    "context_reset": 315,
+    "worker_termination": 329,
+    "quota_denial": 328,
+    "vendor_handoff": 316
+  },
+  "simulated_denials": 288,
+  "http_or_usage_errors": [],
+  "adaptive_nonfinal_requests": 0,
+  "experimental_token_ceiling": 1000000,
+  "supervisor_session_tokens": "unavailable; never self-reported",
+  "wall_seconds_since_real_start": 4333.662503957748
+}

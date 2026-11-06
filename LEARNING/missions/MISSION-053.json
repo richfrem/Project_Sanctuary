@@ -1,0 +1,67 @@
+{
+  "id": "MISSION-053",
+  "title": "Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Companion repo richfrem/agent-plugins-skills (plugins/agent-orchestration/.apm/skills/orchestrating-agent-work); Claude Code orchestrator; Sanctuary Protocol 133 for source-then-install; APM global install",
+  "created_at": "2026-11-06T06:40:00Z",
+  "updated_at": "2026-11-06T07:05:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 1.0,
+    "operational_friction": 4,
+    "priority_score": 5.0
+  },
+  "priority_score": 5.0,
+  "hypothesis": "Repairing the demonstrated causes of the orchestration failures observed in MISSION-052 changes what an orchestrator actually DOES in staged, executable scenarios. The repair targets each failure's confirmed cause, which may be missing or ambiguous guidance, existing guidance that is hard to find or enforce, an executor or installation defect, or a telemetry defect; it is not assumed that more instructions are the fix, and it adds no new scheduler, ledger or control plane. Behavior is measured on nine scenario families by observable tool actions and state transitions recorded by a deterministic harness (never by what the model says it would do, and never by text matching against the skill): F1 partial deliverable returned while the assigned outcome is unfinished; F2 independent review started while another worker is still running; F3 cloud arm independent of a congested local resource started without waiting; F4 duplicate execution PREVENTED before launch when an execution unit is already owned (a duplicate that is only detected afterward counts as a failure); F5 progress reported from unique work units and verified artifacts when logs contain duplicate ids and malformed responses; F6 a required executable is verified inside the worker environment before dispatch; F7 prior authorization within scope is honored without a repeated permission question; F8 shared-resource contention is scheduled explicitly and its effect on experimental validity assessed; F9 misleading telemetry (zero friction or error counters despite observed failures and human corrections) is reported as a telemetry gap. Development and evaluation are separated: each family has development variants used to shape the revision and frozen, unseen evaluation variants used only to judge it; the baseline (currently installed version) and the revised version run with the same model and configuration, in isolated sessions, with counterbalanced run order, with repeated runs per variant.",
+  "falsification_criteria": "Preregistered, baseline-aware decision rule (written and frozen before either version is run): let p0 and p1 be the pooled pass rates over all frozen evaluation cases (pass = every deterministic assertion for the case holds) for the baseline and the revised version. (1) If p0 >= 0.90 the benchmark cannot demonstrate improvement: report that, and investigate whether the scenarios actually reproduce the observed execution failures (for example by replaying the recorded MISSION-052 decision points) instead of weakening the target. (2) Otherwise the required gain is g = min(0.20, 0.95 - p0). CORROBORATED only if p1 >= 0.80 AND p1 - p0 >= g AND the paired bootstrap 95% interval for p1 - p0 excludes zero AND no family is worse than baseline by more than 0.20. (3) FALSIFIED if p1 < 0.80 or p1 - p0 < g or the interval includes zero or any family regresses by more than 0.20. Per-family results and run-to-run variability are reported; no wording is tuned against evaluation variants. Not falsification, but acceptance requirements that block integration: the skill's existing tests and evals still pass; the main SKILL.md stays concise (growth beyond roughly 25% needs a stated reason); packaging and link checks pass; unnecessary duplication of existing rules is judged explicitly in review. A packaging or link check passing is not evidence that behavior improved. Whether future orchestrators need fewer human corrections is longitudinal and not claimed.",
+  "experiment": "1) Inspect first: companion AGENTS.md, the skill and its references, Sanctuary Protocol 133; compare source and installed versions and record which one the MISSION-052 session used. 2) Failure table (observed failure | evidence | cause | existing coverage | proposed correction | verification), separating confirmed causes from plausible explanations; do not add a rule where one exists, improve its discoverability or enforcement instead; keep Sanctuary mission ids and Protocol 128 detail in Sanctuary. 3) Build a small deterministic scenario harness (staged workspace, mock tools that record every action and state transition, assertions over the action trace and final state) with 3 development and 3 unseen evaluation variants per family F1-F9; write the expected decisions and the assertions BEFORE running either version; freeze the evaluation variants and assertions by hash and commit the freeze before any evaluation run. Verifiers are not edited after the freeze. 4) Run baseline and revised under identical model/configuration, isolated sessions, counterbalanced order, >= 5 repeats per variant; record per-run traces. 5) Revise in a feature branch/worktree of the companion repo using only development variants and the failure table; include executor, installation or telemetry fixes only where the cause analysis shows a defect rather than missing text. 6) Source before install: follow Protocol 133 and the APM dependency configuration; the global APM update is a separate shared-state operation performed only under the existing authorization, then verify installed files against the intended source revision (never hand-edit installed copies). 7) Verify reciprocal mission links (MISSION-052 and this mission) and leave a successor handoff.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "claude-sonnet-5.5",
+    "cli_target": "claude",
+    "cost_weight": 1.0,
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "gemini-3.8-flash"
+    ]
+  },
+  "tags": [
+    "baseline-aware-decision-rule",
+    "companion-repo",
+    "cross-repo-impact",
+    "executed-scenarios",
+    "human-corrections",
+    "mission-052-lessons",
+    "orchestration",
+    "protocol-133",
+    "regression-scenarios",
+    "skill-improvement"
+  ],
+  "related_missions": {
+    "MISSION-052": "PARENT and RECIPROCAL: evidence source (closeout.md failure and intervention records); MISSION-052's manifest links back here. Start only after 052 and missions 004, 041 and 050 are closed.",
+    "MISSION-033": "READS: the original orchestrator-skill question; this mission improves the existing shared skill instead of creating a Sanctuary-only one.",
+    "MISSION-036": "READS: evidence contracts; separates delivery, empirical validity and integration state.",
+    "MISSION-035": "READS: measured usage and the telemetry-gap reporting rules.",
+    "MISSION-054": "COMPLEMENTS: MISSION-054 repairs how failures are evaluated, repaired proportionately and measured afterwards; 053 repairs orchestration behavior; coordinate ownership and reuse scenarios."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/experiments/mission-053/",
+      "LEARNING/missions/MISSION-053.json",
+      "LEARNING/missions/MISSION-052.json"
+    ],
+    "resources": [
+      "COMPANION REPO (separate git repository /Users/richardfremmerlid/Projects/agent-plugins-skills; the Sanctuary flight board does NOT protect it): exact paths plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/SKILL.md, plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/references/ (routing-and-closure.md, cli-agent-executor.md, acceptance-criteria.md, strategy-selection.md, fallback-tree.md, post_run_survey.md and any new reference), plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/scripts/, plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/tests/ (including a new scenario harness and its frozen evaluation set), plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/evals/evals.json. Ownership: a dedicated companion worktree and branch named in LEARNING/experiments/mission-053/companion-ownership.md (path, branch, base SHA, owning agent), checked against `git worktree list` and open branches in the companion before work starts; the companion's own rules (AGENTS.md verifier sovereignty, never hand-edit installed copies) apply.",
+      "SEPARATE SHARED-STATE OPERATION, not covered by any lease: the global APM update of the installed skill (~/.claude/skills, ~/.agents/skills); performed only after the source PR is merged, under the existing authorization, with before/after file verification."
+    ],
+    "basis": "Declared 2026-11-06 by claude-code, corrected after human review: free-text resources do not give cross-repository collision protection, so the companion paths, worktree ownership and the global update are listed explicitly and ownership is recorded in a Sanctuary-side file."
+  }
+}

@@ -59,7 +59,9 @@
     "MISSION-037": "READS: proposed dependency-aware invalidation of inherited claims.",
     "MISSION-038": "READS: proposed lease fencing and crash recovery; NOT implemented, so recovery is supervised.",
     "MISSION-045": "FEEDS: per-model, per-worker evidence for complementary-collaborator selection.",
-    "MISSION-051": "FEEDS: same-bucket two-model usage data (Codex A vs B, agy vs Codex) for the size-bucket predictor and effort ratio."
+    "MISSION-051": "FEEDS: same-bucket two-model usage data (Codex A vs B, agy vs Codex) for the size-bucket predictor and effort ratio.",
+    "MISSION-053": "FEEDS and RECIPROCAL: the failures and human interventions recorded in this mission's closeout.md are the evidence base for repairing the shared orchestrating-agent-work skill; started only after this mission and missions 004, 041 and 050 are closed.",
+    "MISSION-054": "FEEDS: MISSION-054 uses the orchestration failures, human interventions and telemetry gaps recorded in this mission's closeout as its evidence source."
   },
   "projected_impact": {
     "paths": [

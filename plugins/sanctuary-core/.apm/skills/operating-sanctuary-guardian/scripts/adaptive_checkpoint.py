@@ -97,6 +97,17 @@ class AdaptivePolicy:
 
 
 @dataclass(frozen=True, slots=True)
+class AdaptivePolicyV2(AdaptivePolicy):
+    """V2 uses the same value boundary with a caller-supplied prior hazard.
+
+    The runner supplies a preregistered pseudo-count posterior rate. Keeping the
+    original policy intact permits exact v1 replay; no future schedule is passed.
+    """
+
+    name: str = "adaptive-v2"
+
+
+@dataclass(frozen=True, slots=True)
 class FixedPolicy:
     """Fixed wall-time, completed-subgoal, or end-only checkpoint policy."""
 
@@ -170,6 +181,7 @@ def run_trial(
     policy: AdaptivePolicy | FixedPolicy,
     *,
     trace: bool = False,
+    hazard_prior: tuple[float, float] | None = None,
 ) -> dict:
     """Run one budget with atomic, metered checkpoints and verified recovery.
 
@@ -178,6 +190,12 @@ def run_trial(
     Only completed receipts are acknowledged. Snapshots also preserve partial
     work; lost partial work is not miscounted as an acknowledged completion.
     """
+    if hazard_prior is not None and (len(hazard_prior) != 2 or any(
+        not math.isfinite(x) or x <= 0 for x in hazard_prior
+    )):
+        raise ValueError("hazard pseudo-count and exposure must be finite and positive")
+    if isinstance(policy, AdaptivePolicyV2) and hazard_prior is None:
+        hazard_prior = (1.0, 40.0)
     if task.budget < 1 or task.checkpoint_cost < 1 or not task.goals:
         raise ValueError("positive budget, checkpoint cost, and nonempty goals required")
     if any(goal.work < 1 or goal.value < 1 for goal in task.goals):
@@ -217,7 +235,8 @@ def run_trial(
             )
             if isinstance(policy, AdaptivePolicy):
                 observed = AdaptiveObservation(
-                    interrupted / elapsed if elapsed else 0.0,
+                    (interrupted + hazard_prior[0]) / (elapsed + hazard_prior[1])
+                    if hazard_prior is not None else (interrupted / elapsed if elapsed else 0.0),
                     max(0.0, progress_value(completed, partial)
                         - progress_value(durable_completed, durable_partial)),
                     earned_value / work_ticks if work_ticks else 0.0,
