@@ -352,11 +352,12 @@ def check(root):
     for p, e in new.items():
         o = old.get(p)
         if o is None:
-            stale.append(f"new source not in manifest: {p}")
+            if e.get("status") != "excluded":                # a new policy-EXCLUDED file (e.g. the sync receipt itself) never makes the export stale
+                stale.append(f"new source not in manifest: {p}")
         elif o.get("source_sha256") != e.get("source_sha256"):
             stale.append(f"source changed since export: {p}")
     for p in old:
-        if p not in new:
+        if p not in new and old[p].get("status") != "excluded":
             stale.append(f"source gone from repository: {p}")
     recs = load_dataset(root)
     for e in man["sources"]:

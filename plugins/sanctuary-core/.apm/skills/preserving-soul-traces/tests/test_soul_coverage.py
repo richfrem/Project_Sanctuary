@@ -170,6 +170,13 @@ class Check(unittest.TestCase):
         (d / "LEARNING/topics/t/README.md").write_text("# Topic\nCHANGED\n"); git(d, "commit", "-qam", "c")
         r2 = S.check(d); self.assertEqual(r2["local_export"], "STALE"); self.assertEqual(S.report(r2), 3)    # changed source -> not current, not "persisted"
 
+    def test_committing_the_sync_receipt_does_not_make_the_export_stale(self):
+        d = make_repo(); S.export(d)
+        ds = hashlib.sha256((d / S.DATASET).read_bytes()).hexdigest()
+        SYNC.write_receipt(d, "o/r", {"verified": True, "revision": "abcdef1234567890", "local_dataset_sha256": ds}, True)
+        git(d, "add", "-A"); git(d, "commit", "-qm", "receipt"); git(d, "push", "-q")
+        self.assertEqual(S.report(S.check(d)), 0)                                     # still SOUL PERSISTED after the receipt is committed
+
     def test_receipt_for_an_older_dataset_does_not_verify_the_new_one(self):
         d = make_repo(); S.export(d)
         SYNC.write_receipt(d, "o/r", {"verified": True, "revision": "r1", "local_dataset_sha256": "0" * 64}, True)
