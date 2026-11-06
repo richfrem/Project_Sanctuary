@@ -38,7 +38,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
 | **#18** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
 | **#19** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
-| **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
+| **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `IN_PROGRESS` | - |
 | **#21** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#22** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
 | **#23** | `MISSION-028` | **Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku** | 4 | 4 | 0.1x | 2 | **80.0** | `PROPOSED` | - |
@@ -420,7 +420,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity.
 
 ### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #20)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -429,6 +429,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Requiring an independent-first reasoning trace prior to exposure to peer conclusions reduces incorrect majority-following by at least 40% under consensus pressure, while decreasing acceptance of valid peer corrections by no more than 5 percentage points.
 - **Falsification Gate**:
   > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T08:05:00+00:00` [claude-code] (LEARNING/experiments/mission-004/runs/confirm-v3/RESULTS.md): Required experiment performed (no terminal verdict recorded). Preregistered mission-level result: CANNOT DECIDE. Qwen2.5-Coder-7B (confirm-v2, 120 items, frozen rule): false conformity 26/60 -> 2/60 (92.3% reduction), valid-correction drop 3.3 pp: CORROBORATED by the frozen rule but adherence-limited (58/60 independent-first false-pressure answers malformed/UNKNOWN; valid answers conformed 26/26 and 2/2). Haiku 5.5 CLEAN context (confirm-v3, 120 fresh items; hooks/memory/skills absent per CLI init diagnostics): baseline false conformity 0/60, so the reduction criterion is unscorable (floor effect); valid-correction drop 1.67 pp. Haiku 5.5 AMBIENT context (original invocation; hooks, memory, CLAUDE.md loaded; confirm-v2 items; labelled, not pooled, not used for the verdict): 4/60 -> 1/60, drop 3.3 pp. Independent cross-checks of all ground truths, an independent final review (accept), key-set validation (480 unique keys per arm), frozen hashes verified. Process failures recorded in MISSION-052 closeout: 480 calls launched before the experimental context was verified; orchestrator lock hold interrupted the worker; frozen evaluate.py could not run as a script (run unmodified via import).
+- **Lessons Learned & Epistemic Compounding**:
+  * Verify the experimental context (hooks, memory, instruction files, working directory) with supported diagnostics before launching hundreds of calls.
+  * A benchmark needs a pilot baseline conformity well above zero (roughly 15-60%) or the relative-reduction criterion is unscorable.
+  * A malformed-response policy that counts UNKNOWN as non-conforming can make a treatment look effective; report contract adherence by condition next to the frozen verdict.
 
 ### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #21)
 - **Status**: `PROPOSED`
