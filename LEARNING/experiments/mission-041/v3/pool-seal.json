@@ -1,0 +1,10 @@
+{
+  "stage": "before mutant catalog authoring",
+  "sha256": {
+    "operator-split.json": "d261084d95d847542513bd999464bcd6c687ca491e4a37576d8dea82f79f70fc",
+    "specifications.py": "1e1ee9d748edb11c6938dda895ee73a119290e6b5066d6215c5d6249db44385d",
+    "pools.py": "02dc8630709e22d010381d311fcf6d0585e399a6f9888c25f154baa4cdf7bbe7",
+    "suites.json": "1ad5d7cf83f848a4584a39881c5070dac6ddf855c9582444f91d091156275e25",
+    "seal_pools.py": "b35423ad94f037ad8fd7b3647ad8738863312a7a9e3a7ed14e3cff2a71e75036"
+  }
+}

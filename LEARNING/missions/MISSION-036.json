@@ -46,7 +46,8 @@
     "MISSION-015": "PROVIDER of enforceable preregistration and verdict checks; no hard dependency.",
     "MISSION-033": "PROVIDER of review acceptance inputs; no hard dependency.",
     "MISSION-031": "VALIDATES claim-versus-evidence representation using its documented limitation; preserves historical record while disaggregating delivery from claim.",
-    "MISSION-052": "CONTEXT: MISSION-052 keeps implementation disposition and empirical disposition separate by hand until 036 exists."
+    "MISSION-052": "CONTEXT: MISSION-052 keeps implementation disposition and empirical disposition separate by hand until 036 exists.",
+    "MISSION-054": "CONSUMED BY: MISSION-054 uses claim-level evidence contracts and verdict discipline for its two separately reported claims."
   },
   "projected_impact": {
     "paths": [

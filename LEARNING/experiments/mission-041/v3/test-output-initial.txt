@@ -1,0 +1,34 @@
+.F.....F..................                                        [100%]
+=================================== FAILURES ===================================
+_________ PhaseOneTests.test_all_frozen_inputs_are_in_declared_domain __________
+
+self = <test_protocol.PhaseOneTests testMethod=test_all_frozen_inputs_are_in_declared_domain>
+
+    def test_all_frozen_inputs_are_in_declared_domain(self):
+        for name, s in self.suites.items():
+            legal = {canonical(c) for c in spec.domain(name)}
+            inputs = list(s['example']) + [p[0] for p in s['existing']]
+            inputs += [case for a, b, law in s['property'] for case in [a, b]]
+>           self.assertTrue(all(canonical(c) in legal for c in inputs), name)
+E           AssertionError: False is not true : migration
+
+LEARNING/experiments/mission-041/v3/test_protocol.py:56: AssertionError
+________________ PhaseOneTests.test_pre_mutant_pool_seal_intact ________________
+
+self = <test_protocol.PhaseOneTests testMethod=test_pre_mutant_pool_seal_intact>
+
+    def test_pre_mutant_pool_seal_intact(self):
+        seal = json.loads((ROOT/'pool-seal.json').read_text())
+        for filename, digest in seal['sha256'].items():
+            self.assertEqual(hashlib.sha256((ROOT/filename).read_bytes()).hexdigest(), digest)
+>       self.assertEqual(pools.build(), {n: {**s, 'property': [tuple(p) for p in s['property']],
+                                                 'existing': [tuple(p) for p in s['existing']]}
+                                         for n, s in self.suites.items()})
+E       AssertionError: {'lea[7634 chars]]], [(1, -1), (1, -1), (2, -1), (3, 0)], [(3, [11607 chars] 16}} != {'lea[7634 chars]]], [[1, -1], [1, -1], [2, -1], [3, 0]], [[3, [11607 chars] 16}}
+E       Diff is 45528 characters long. Set self.maxDiff to None to see it.
+
+LEARNING/experiments/mission-041/v3/test_protocol.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED LEARNING/experiments/mission-041/v3/test_protocol.py::PhaseOneTests::test_all_frozen_inputs_are_in_declared_domain
+FAILED LEARNING/experiments/mission-041/v3/test_protocol.py::PhaseOneTests::test_pre_mutant_pool_seal_intact
+2 failed, 24 passed, 7 subtests passed in 4.29s

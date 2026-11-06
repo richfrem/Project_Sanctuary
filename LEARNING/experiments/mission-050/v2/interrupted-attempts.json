@@ -1,0 +1,12 @@
+{
+  "trial": "control-230014-fixed-steps-1",
+  "reason": "worker session terminated by external usage-limit error mid-trial; partial snapshot preserved at partial-preserved/; trial rerun from scratch by the frozen runner",
+  "interrupted_response_ids": [
+    "chatcmpl-29d357ac-727d-4bd0-a354-6fffa2eec984",
+    "chatcmpl-a629e7b4-c429-48b1-bb3a-de2b6cf35b58"
+  ],
+  "interrupted_calls": 2,
+  "interrupted_tokens": 113,
+  "rerun_reproduced_interrupted_calls_exactly": true,
+  "partial_snapshot_sha256": "96e6dc42d88eb16c2556fea3b365f696d024a08be13f805c4e1b3d20a27db19d"
+}

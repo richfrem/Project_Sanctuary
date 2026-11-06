@@ -1,0 +1,5 @@
+{
+  "development": ["constant_return", "unconditional_exception"],
+  "heldout": ["boundary_shift", "branch_deletion", "wrong_branch_value", "wrong_state_update"],
+  "policy": "Written before specifications, generators, suites, references and mutant catalog. Development operators may be used for harness checks only. Held-out recipes are authored after the pools are sealed. Procedural separation by one author, not independent blindness. No pool or generator changes after catalog creation or density inspection."
+}

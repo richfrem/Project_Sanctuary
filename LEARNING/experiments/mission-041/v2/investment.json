@@ -1,0 +1,74 @@
+{
+  "prediction_source": "preregistration.md, frozen before run",
+  "prediction": {
+    "detection_ge_80": true,
+    "zero_reference_alarms": true,
+    "component_seconds_lt_600": true,
+    "delta_ge_20pp": false
+  },
+  "observations": {
+    "n_components": 20,
+    "n_non_equivalent_mutants": 47,
+    "n_equivalent_excluded": 73,
+    "detections": {
+      "existing": 12,
+      "example": 47,
+      "property": 46
+    },
+    "detection_percent": {
+      "existing": 25.53191489361702,
+      "example": 100.0,
+      "property": 97.87234042553192
+    },
+    "delta_pp": -2.1276595744680833,
+    "reference_results": {
+      "existing": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 14
+      },
+      "example": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 0
+      },
+      "property": {
+        "n": 20,
+        "alarms": 0,
+        "no_tests": 0
+      }
+    },
+    "property_false_alarm_percent": 0.0,
+    "max_component_computational_seconds": 10.883707583067007,
+    "total_computational_seconds": 25.879192954860628,
+    "errors": 0,
+    "timeouts": 0,
+    "valid_measurement": true,
+    "thresholds": {
+      "detection_ge_80": true,
+      "delta_ge_20pp": false,
+      "false_alarm_le_5": true,
+      "component_runtime_le_600s": true
+    },
+    "recommendation": "FALSIFIED"
+  },
+  "expenditure": {
+    "computational_seconds": 25.879192954860628,
+    "max_component_seconds": 10.883707583067007,
+    "authoring_tokens": null,
+    "token_count_source": "unavailable; no vendor usage output exposed",
+    "model_inference_tokens": null,
+    "model_inference_requests": 0,
+    "server_readiness_probe": "HTTP 200 /v1/models; no inference usage tokens emitted"
+  },
+  "local_quality_assessment": {
+    "useful_outcome": 2,
+    "learning_depth": 2,
+    "verification_rigor": 2,
+    "token_economy": null,
+    "anti_asch_integrity": 3
+  },
+  "prediction_variance": "All qualitative predictions held: detection/alarm/runtime met, required baseline advantage missed; property underperformed examples.",
+  "official_ledger_action": "Deferred to orchestrator; worker forbidden to write budget/cognitive ledgers.",
+  "next_inquiry_candidate": "Independent blind curation of realistic components with historical tests and compositional path/event properties, evaluated on newly withheld operators; never tune and reuse this held-out set."
+}

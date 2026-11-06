@@ -15,6 +15,7 @@ import math
 import os
 from pathlib import Path
 import random
+import signal
 import subprocess
 import sys
 import time
@@ -63,6 +64,17 @@ def _execute(request):
             "note": "No counterexample found; not proof of correctness."}
 
 
+def kill_worker(proc):
+    """Kill a disposable worker group on POSIX, direct child elsewhere."""
+    try:
+        if os.name == 'posix':
+            os.killpg(proc.pid, signal.SIGKILL)
+        else:
+            proc.kill()
+    except ProcessLookupError:
+        pass
+
+
 def search(component, claim, *, seed=41, trials=64, seconds=2.0,
            mode="property", cases=None):
     """Run one isolated search with equal configurable time and trial ceilings.
@@ -93,7 +105,7 @@ def search(component, claim, *, seed=41, trials=64, seconds=2.0,
     proc = subprocess.Popen([sys.executable, "-B", str(Path(__file__).resolve()),
                              "--_worker"], stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                            text=True)
+                            text=True, start_new_session=(os.name == 'posix'))
     try:
         stdout, stderr = proc.communicate(json.dumps(request), timeout=seconds)
         if proc.returncode:
@@ -104,7 +116,9 @@ def search(component, claim, *, seed=41, trials=64, seconds=2.0,
             except ValueError:
                 result = {"status": "ERROR", "detail": "invalid worker JSON"}
     except subprocess.TimeoutExpired:
-        proc.kill()
+        # Kill the entire disposable session, including inherited-pipe holders.
+        # POSIX process groups contain ordinary descendants, not hostile escapees.
+        kill_worker(proc)
         proc.communicate()
         result = {"status": "TIMEOUT", "tested": None,
                   "note": "Deadline exceeded; not proof and not a detection."}

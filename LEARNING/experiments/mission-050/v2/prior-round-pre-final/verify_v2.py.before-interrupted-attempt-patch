@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""Independently audit persisted receipts, resource usage and trial semantics.
+
+Does not request inference. Replays simulation exactly; audits real calls in order
+against raw model output, frozen fixtures and actual interruption boundaries.
+"""
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import sys
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[3]
+sys.path.insert(0,str(ROOT/'plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts'))
+import adaptive_checkpoint as ac
+import real_agent as ra
+
+
+def load_lines(name):
+    p=HERE/name
+    return [json.loads(line) for line in p.read_text().splitlines()] if p.exists() else []
+
+
+def independent_answer(t, index, state):
+    """Separate arithmetic checker, without using the agent implementation."""
+    digits = [int(c) for c in state]
+    mode = index % 3
+    if mode == 0:
+        return str((digits[0] * 10 + digits[1] + t['operands'][index]) % 100).zfill(2)
+    if mode == 1:
+        return str(digits[1]) + str(digits[0])
+    low, high = min(digits), max(digits)
+    return str(low) + str(high)
+
+
+def run():
+    frozen=json.loads((HERE/'freeze.json').read_text())
+    for path,expected in frozen['hashes'].items():
+        assert hashlib.sha256((ROOT/path).read_bytes()).hexdigest()==expected,path
+    for name,expected in frozen['v1_hashes'].items():
+        assert hashlib.sha256((HERE.parent/name).read_bytes()).hexdigest()==expected,name
+    evidence=json.loads(gzip.decompress((HERE/'simulation-evidence.json.gz').read_bytes()))
+    assert evidence['fixture_sha256']==ac.digest_json(evidence['fixtures'])
+    assert {f['task']['seed'] for f in evidence['fixtures']['held_out']}==set(range(130000,130030))
+    assert {f['schedule_seed'] for f in evidence['fixtures']['held_out']}==set(range(140000,140030))
+    count=0
+    for split,fs in evidence['fixtures'].items():
+        trials=evidence['splits'][split]['trials']
+        assert len(trials)==540
+        mapping={(t['task_seed'],t['policy']):t for t in trials}
+        for f in fs:
+            data=f['task']
+            task=ac.Task(data['seed'],tuple(ac.Subgoal(**g) for g in data['goals']),data['checkpoint_cost'],data['budget'])
+            for policy in (*ac.fixed_family(),ac.AdaptivePolicyV2()):
+                rerun=ac.run_trial(task,tuple(ac.Event(**e) for e in f['events']),policy,trace=isinstance(policy,ac.AdaptivePolicyV2))
+                assert json.loads(json.dumps(rerun))==mapping[task.seed,policy.name]
+                count+=1
+        for name,s in evidence['splits'][split]['summaries'].items():
+            assert ac.summarize([t for t in trials if t['policy']==name])==s
+    fs=json.loads((HERE/'real-fixtures.json').read_text())
+    assert fs==ra.fixtures()
+    calls=load_lines('real-calls.jsonl'); trials=load_lines('real-trials.jsonl'); events=load_lines('real-events.jsonl')
+    assert len({t['trial'] for t in trials})==len(trials)
+    actual_tokens=sum(c['response']['usage']['prompt_tokens']+c['response']['usage']['completion_tokens'] for c in calls)
+    assert actual_tokens<=1000000
+    grouped={}
+    for c in calls: grouped.setdefault(c['trial'],[]).append(c)
+    unique_ids=[c['response']['id'] for c in calls]
+    assert len(set(unique_ids))==len(unique_ids), 'Duplicate response reused'
+    work_count=wrong_count=cp_count=0
+    for result in trials:
+        ident=result['trial']; cs=grouped[ident]
+        fixture=next(f for f in fs[result['split']] if f['task']['seed']==result['seed'])
+        t=fixture['task']; schedule=fixture['events']; seen=0
+        durable=[]; volatile=[]; acknowledged=lost=spent=work_tokens=cp_tokens=0
+        checkpoint_costs=[]; last_checkpoint=0; observation_index=0; denial_pending=False
+        interrupt_logs=[e for e in events if e['trial']==ident and e['type']=='interruption']
+        logged_event=0
+        role='A'
+        states = {0: dict(pending_value=0, value_rate=0.0, checkpoint_cost=100)}
+        for j,c in enumerate(cs):
+            assert c['call']==j+1
+            usage=c['response']['usage']; assert c['usage']==usage
+            tokens=usage['prompt_tokens']+usage['completion_tokens']; assert usage['total_tokens']==tokens
+            assert c['cursor']==len(volatile)
+            previous=t['initial'] if not volatile else volatile[-1]['answer']
+            assert c['state_before']==previous
+            wm=ra.work_messages(t,len(volatile),previous,role)
+            cm=ra.checkpoint_messages(len(volatile),previous)
+            pending=len(volatile)>len(durable)
+            final=pending and 1000-spent<=ra.bound(wm)+ra.bound(cm)
+            policy=result['policy']
+            if policy.startswith('fixed-steps-'):
+                requested=len(volatile)-len(durable)>=int(policy.rsplit('-',1)[1])
+            elif policy.startswith('fixed-time-'):
+                requested=spent-last_checkpoint>=int(policy.rsplit('-',1)[1])
+            elif policy=='adaptive-v2':
+                cost=math.ceil(sum(checkpoint_costs)/len(checkpoint_costs)) if checkpoint_costs else 100
+                rate=acknowledged/work_tokens if work_tokens else 0
+                hazard=(seen+1)/(spent+400)
+                threshold=max(math.sqrt(2*cost*rate/hazard),9*cost*rate)
+                requested=rate>0 and len(volatile)-len(durable)>=threshold
+            else: requested=False
+            expected_op='checkpoint' if pending and (final or requested) else 'work'
+            assert c['op']==expected_op
+            assert c['request']['messages']==(cm if expected_op=='checkpoint' else wm)
+            assert 1000-spent>=ra.bound(c['request']['messages'])
+            if final: assert j==len(cs)-1
+            content=c['response']['choices'][0]['message']['content'].strip()
+            assert content==c['content']
+            if c['op']=='work':
+                correct=bool(re.fullmatch(r'\d{2}',content)) and content==independent_answer(t,len(volatile),previous)
+                assert correct==c['correct']; work_count+=1; wrong_count+=not correct
+                if correct:
+                    volatile.append(dict(index=len(volatile),answer=content)); acknowledged+=1
+                work_tokens+=tokens
+            else:
+                cp_count+=1; cp_tokens+=tokens; checkpoint_costs.append(tokens)
+                try: correct=json.loads(content)==dict(cursor=len(volatile),state=previous)
+                except (ValueError,TypeError): correct=False
+                assert correct==c['correct']
+            assert tokens<=ra.bound(c['request']['messages'])
+            spent+=tokens; assert c['spent']==spent<=1000
+            crossed=False
+            while seen<len(schedule) and schedule[seen]['token_boundary']<=spent:
+                event=schedule[seen]; seen+=1; crossed=True
+                discarded=len(volatile)-len(durable); lost+=discarded
+                e=interrupt_logs[logged_event]; logged_event+=1
+                assert e['event']==event and e['spent']==spent and e['lost']==discarded
+                assert e['durable']==len(durable)
+                if event['kind'] in ('worker_termination','vendor_handoff'): assert e['new_pid']!=e['old_pid']
+                if event['kind']=='vendor_handoff': role='B' if role=='A' else 'A'
+                volatile=[dict(r) for r in durable]
+            if c['op']=='checkpoint' and not crossed and correct:
+                durable=[dict(r) for r in volatile]
+                last_checkpoint=spent
+            states[spent] = dict(pending_value=len(volatile)-len(durable),
+                value_rate=acknowledged/work_tokens if work_tokens else 0.0,
+                checkpoint_cost=math.ceil(sum(checkpoint_costs)/len(checkpoint_costs)) if checkpoint_costs else 100)
+        lost+=len(volatile)-len(durable)
+        assert result['measured_tokens']==spent==work_tokens+cp_tokens
+        assert result['checkpoint_tokens']==cp_tokens and result['work_tokens']==work_tokens
+        assert result['acknowledged_subgoals']==acknowledged
+        assert result['lost_acknowledged_subgoals']==lost
+        assert result['verified_subgoals']==len(durable) and acknowledged==len(durable)+lost
+        assert result['receipts']==durable and result['receipts_sha256']==ra.digest(durable)
+        assert result['observed_interruptions']==seen==len(interrupt_logs)
+        assert not result['overruns']
+        snap=json.loads((HERE/'snapshots'/f'{ident}.json').read_text())
+        assert snap['receipts']==durable
+        ra.verify(t,durable)
+        # Audit adaptive decision values, including the final no-call decision.
+        if result['policy']=='adaptive-v2':
+            spent_before=0; observed_events=0; ack_before=0; work_before=0; cp_before=[]
+            # Full decision trace is independently checked for deterministic policy
+            # output and posterior hazard; call replay above checks every receipt.
+            for obs in result['observations']:
+                o=obs['observation']
+                event_count=sum(e['token_boundary']<=obs['spent'] for e in schedule)
+                assert o['interruption_rate']==(event_count+1)/(obs['spent']+400)
+                assert set(o)=={'interruption_rate','pending_value','value_rate','checkpoint_cost'}
+                assert all(o[k]==v for k,v in states[obs['spent']].items())
+                threshold = max(math.sqrt(2*o['checkpoint_cost']*o['value_rate']/o['interruption_rate']),
+                    9*o['checkpoint_cost']*o['value_rate'])
+                requested=o['value_rate']>0 and o['pending_value']>=threshold
+                assert requested==obs['requested']
+    selection_path=HERE/'real-selected-fixed.json'
+    if selection_path.exists():
+        dev=[t for t in trials if t['split']=='development']
+        assert len(dev)==210
+        summaries={p:ra.aggregate([t for t in dev if t['policy']==p]) for p in ra.POLICIES}
+        selection=json.loads(selection_path.read_text())
+        assert selection==dict(selected=ra.best_fixed(summaries),development_summaries=summaries)
+        starts=[e['utc'] for e in events if e['type']=='trial_start' and e['trial'].startswith('held_out-')]
+        if starts: assert selection_path.stat().st_mtime<=min(starts)
+    completed={t['trial'] for t in trials}
+    partial={name:len(cs) for name,cs in grouped.items() if name not in completed}
+    resume_path=HERE/'resume-round.json'
+    resume_check=None
+    if resume_path.exists():
+        resume=json.loads(resume_path.read_text())
+        old=json.loads((HERE/resume['prior_projections']/'seal.json').read_text())['hashes']
+        for name,n in [('real-calls.jsonl',resume['baseline_calls']),('real-trials.jsonl',resume['baseline_completed'])]:
+            prefix=b''.join((HERE/name).read_bytes().splitlines(keepends=True)[:n])
+            assert hashlib.sha256(prefix).hexdigest()==old[name], 'Prior evidence prefix changed: '+name
+        expected=[x['trial'] for x in resume['authorized_remaining_trials']]
+        observed=[x['trial'] for x in trials[resume['baseline_completed']:]]
+        assert observed==expected[:len(observed)], 'Resume deviated from frozen remaining trial order'
+        assert len(trials)<=630
+        resume_check=dict(prior_raw_evidence_prefixes='PASS',exact_remaining_order='PASS',
+            additional_completed_trials=len(observed),remaining_trials=len(expected)-len(observed))
+    report=dict(frozen_hashes_and_v1_integrity='PASS',simulation_trials_replayed=count,
+        completed_real_trials_audited=len(trials),real_calls=len(calls),unique_server_response_ids=len(unique_ids),
+        measured_server_tokens_all_calls=actual_tokens,work_calls_audited=work_count,
+        incorrect_work_calls=wrong_count,checkpoint_calls_audited=cp_count,
+        partial_trial_call_counts=partial,resume_boundary_audit=resume_check)
+    (HERE/'audit.json').write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps(report,sort_keys=True))
+
+if __name__=='__main__': run()

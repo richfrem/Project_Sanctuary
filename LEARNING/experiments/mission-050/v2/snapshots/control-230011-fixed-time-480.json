@@ -1,0 +1,34 @@
+{
+  "receipts": [
+    {
+      "answer": "59",
+      "index": 0
+    },
+    {
+      "answer": "95",
+      "index": 1
+    },
+    {
+      "answer": "59",
+      "index": 2
+    },
+    {
+      "answer": "96",
+      "index": 3
+    },
+    {
+      "answer": "69",
+      "index": 4
+    },
+    {
+      "answer": "69",
+      "index": 5
+    },
+    {
+      "answer": "86",
+      "index": 6
+    }
+  ],
+  "sha256": "c7a9958d72817aacd83cc578a5fa55e95775813f84a3127b2354e855d87b3807",
+  "tokens": 489
+}

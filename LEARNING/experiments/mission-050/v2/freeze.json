@@ -1,0 +1,21 @@
+{
+  "hashes": {
+    "LEARNING/experiments/mission-050/v2/design.md": "ed9042f097e4d080d629d2e38932b3e8ddc6a7a72f928ff6209af154ca9b558e",
+    "LEARNING/experiments/mission-050/v2/real-fixtures.json": "884a5b50cc8947c558b5619db4538ed0afe5dac4f865334ea1128911b8cd7f3d",
+    "LEARNING/experiments/mission-050/v2/real_agent.py": "ca1d90ea9de6712d313252d91c3c3216a1b7cc34c9ae4472a74f77de42b9bc01",
+    "LEARNING/experiments/mission-050/v2/run_simulation.py": "6bb70201a2d53e5c6cf819d5edd255fa843916c11048f963d9c07dc9a8d4fb7c",
+    "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py": "0037fee57ad850569f5b74eebed91415b97c5b36c31548f87d47ad3f547d7eb2"
+  },
+  "utc": "2026-11-06T05:02:29Z",
+  "v1_hashes": {
+    "design.md": "82ddbd2d53ee85aa4e30f808bcabf1984b43f8637a17501824083d14eb5071c2",
+    "evidence.json.gz": "ea03237dc997fc00c532c377ab9f722650cdf587b890add77408961054c4228f",
+    "execution.json": "2074dc27a29c5f2fa07119f61f36dc3878c5014a2cae625126a8a4be8dac39c0",
+    "handoff.md": "d3a87c2e73e1c40dbead3b15e8c618dbddc1b026e711070b0f6a38b2a5223ff3",
+    "reproducibility.json": "bbc3989899e20a442e983dacbddeef4eab12ceabea4c7c66f95870867ec5fbfb",
+    "results.md": "26ebeeb66c9d1e098ff7767df5da18831a3580daad50b42450fec10e550cd616",
+    "summary.json": "c193998defad432f181708516f00f05947ebcea87082fc9659d992bcbe6baf83",
+    "validation.txt": "e868c5de1330d8c26eab5f8339f4812b9f1f1646542d3f35fda09852f87ba725",
+    "verify_evidence.py": "e0b578aaf0ebdf5a62c739194449c40e52e150126677b8e6198c01d2373212dc"
+  }
+}

@@ -1,0 +1,66 @@
+lease {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.444
+renew {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.318
+release {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.285
+fence {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.292
+path {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=10.336
+relative {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.298
+extension {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.248
+path_key {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.244
+replay {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=2.802
+last_replay {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.279
+revision {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.244
+tombstone {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.269
+accounting {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.89
+clamp {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=2.095
+reserve {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.412
+refund {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.282
+schema {'existing': 1, 'example': 1, 'property': 1} n=1 seconds=0.398
+migration {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.231
+required {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.235
+enum_map {'existing': 0, 'example': 1, 'property': 1} n=1 seconds=0.252
+{
+  "n_components": 20,
+  "n_non_equivalent_mutants": 20,
+  "n_equivalent_excluded": 73,
+  "detections": {
+    "existing": 6,
+    "example": 20,
+    "property": 20
+  },
+  "detection_percent": {
+    "existing": 30.0,
+    "example": 100.0,
+    "property": 100.0
+  },
+  "delta_pp": 0.0,
+  "reference_results": {
+    "existing": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 14
+    },
+    "example": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 0
+    },
+    "property": {
+      "n": 20,
+      "alarms": 0,
+      "no_tests": 0
+    }
+  },
+  "property_false_alarm_percent": 0.0,
+  "max_component_computational_seconds": 10.335719708004035,
+  "total_computational_seconds": 20.854506747215055,
+  "errors": 0,
+  "timeouts": 0,
+  "valid_measurement": true,
+  "thresholds": {
+    "detection_ge_80": true,
+    "delta_ge_20pp": false,
+    "false_alarm_le_5": true,
+    "component_runtime_le_600s": true
+  },
+  "recommendation": "FALSIFIED"
+}

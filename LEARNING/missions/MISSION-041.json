@@ -1,11 +1,11 @@
 {
   "id": "MISSION-041",
   "title": "Compile Falsification Criteria into Executable Property Tests and Counterexample Searches",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Local Python hypothesis/property testing harness; evaluating-agent-work; deterministic execution (ceiling 500k tokens, 6 CPU-hours)",
   "created_at": "2026-11-04T22:20:00Z",
-  "updated_at": "2026-11-04T22:20:00Z",
+  "updated_at": "2026-11-06T05:28:57.083147+00:00",
   "confidence_reviewed": "2026-11-04",
   "scores": {
     "strategic_leverage": 5,
@@ -28,7 +28,7 @@
     ],
     "frontier_escalation_condition": "Escalate to bounded standard review solely for resolving specification or oracle ambiguities."
   },
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -40,8 +40,19 @@
     "proposed-by-astra",
     "astra-epoch-n03"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T05:28:57.083147+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-041/v3/results.md @41f2a57b5",
+      "details": "v3 frozen-before-scoring benchmark, 20 components, 80 held-out non-equivalent source-level mutants: property 66.25% (needs >=80%), example 78.75% (gain -12.5pp, needs +20pp), existing 68.75%, 0/20 false alarms, max 1.2s computation-only. Independently reviewed (Claude reviewer of Codex work, accepted conditionally). Scope: full-oracle property arm, procedural holdout, 20 clusters of 4; no-oracle property arm untested. v1 pilot and v2 (invalid, errata) retained, not pooled."
+    }
+  ],
+  "lessons_learned": [
+    "Equal-budget example sampling over small exhaustive domains saturates; a benchmark must show per-mutant kill density before the arms are compared.",
+    "Redundant relations alongside a full oracle do not test metamorphic properties.",
+    "Commit the freeze to git before scoring."
+  ],
   "related_missions": {
     "MISSION-036": "CONSUMES: translates formal claim contracts and thresholds into executable property invariants.",
     "MISSION-015": "SUPPLIES DATA TO: equips self-improvement loops with automated counterexample discovery.",
@@ -59,5 +70,7 @@
       "isolated subprocesses and component fixture repositories; max 500k tokens, 6 CPU-hours"
     ],
     "basis": "Declared 2026-11-04 upon intake of Astra candidate N03. Refine at checkout and confirm with `manage_coordination.py verify`."
-  }
+  },
+  "assignee": "codex-a",
+  "worktree": ".worktrees/codex-a-mission-041"
 }

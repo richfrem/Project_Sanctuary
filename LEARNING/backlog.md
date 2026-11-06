@@ -53,24 +53,26 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#32** | `MISSION-049` | **Turn Recorded Failures into Independently Verified and Protected Repair Procedures** | 5 | 5 | 0.2x | 3 | **41.67** | `PROPOSED` | - |
 | **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
-| **#35** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
+| **#35** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#36** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
 | **#37** | `MISSION-038` | **Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
 | **#38** | `MISSION-044` | **Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
-| **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
-| **#40** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
-| **#41** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
-| **#42** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
-| **#43** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#44** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
-| **#45** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
-| **#46** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
-| **#47** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
-| **#48** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
-| **#49** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
-| **#50** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
-| **#51** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
-| **#52** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
+| **#39** | `MISSION-050` | **Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery** | 5 | 4 | 0.2x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
+| **#40** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `PROPOSED` | - |
+| **#41** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
+| **#42** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
+| **#43** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
+| **#44** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
+| **#45** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#46** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
+| **#47** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
+| **#48** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
+| **#49** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
+| **#50** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
+| **#51** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
+| **#52** | `MISSION-052` | **Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
+| **#53** | `MISSION-053` | **Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios** | 5 | 4 | 1.0x | 4 | **5.0** | `PROPOSED` | - |
+| **#54** | `MISSION-013` | **Collective Intelligence & Multi-Agent Asymmetric Disagreement** | 3 | 4 | 1.0x | 3 | **4.0** | `PROPOSED` | - |
 
 ---
 
@@ -598,7 +600,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A frontier agent with the relay scores < 90% correct or needs tools on > 10% of questions; or the control gap is < 25 points; or relay-first placement does not lift the local 7B by >= 10 points on fresh questions; or any wrong-but-confident answer contradicts a fact that was present in the relay (more than 1 in 22).
 
 ### MISSION-041: Compile Falsification Criteria into Executable Property Tests and Counterexample Searches (Rank #35)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local Python hypothesis/property testing harness; evaluating-agent-work; deterministic execution (ceiling 500k tokens, 6 CPU-hours)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
@@ -607,6 +610,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > For bounded Python components, an agent that translates preregistered claims into property tests and counterexample searches will: (a) detect >= 80% of held-out, non-equivalent semantic mutants; (b) improve detection by >= 20 percentage points over equal-budget example-test generation; (c) produce <= 5% false alarms against verified reference implementations; and (d) finish within 10 minutes per component, excluding initial environment setup.
 - **Falsification Gate**:
   > Any threshold missed falsifies the hypothesis. Tests that merely reproduce the implementation behavior without an independent specification do not count. A timeout is not proof of correctness.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T05:28:57.083147+00:00` [claude-code] (LEARNING/experiments/mission-041/v3/results.md @41f2a57b5): v3 frozen-before-scoring benchmark, 20 components, 80 held-out non-equivalent source-level mutants: property 66.25% (needs >=80%), example 78.75% (gain -12.5pp, needs +20pp), existing 68.75%, 0/20 false alarms, max 1.2s computation-only. Independently reviewed (Claude reviewer of Codex work, accepted conditionally). Scope: full-oracle property arm, procedural holdout, 20 clusters of 4; no-oracle property arm untested. v1 pilot and v2 (invalid, errata) retained, not pooled.
+- **Lessons Learned & Epistemic Compounding**:
+  * Equal-budget example sampling over small exhaustive domains saturates; a benchmark must show per-mutant kill density before the arms are compared.
+  * Redundant relations alongside a full oracle do not test metamorphic properties.
+  * Commit the freeze to git before scoring.
 
 ### MISSION-047: Transfer and Compose Procedures Through Evidence-Linked Concept Graphs (Rank #36)
 - **Status**: `PROPOSED`
@@ -642,7 +651,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Any threshold missed falsifies the hypothesis. A reconstruction that works only because it accesses undeclared host caches or environmental secrets fails. Same-machine recovery does not establish cross-hardware portability.
 
 ### MISSION-050: Adaptive Progress Checkpointing Optimized for Interruption Risk and Verified Recovery (Rank #39)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Multi-agent coordination harness; manage_coordination.py; relay.py; evaluating-agent-work telemetry (ceiling 1M tokens, 12 execution-hours)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `cli-agent`)
@@ -651,8 +661,25 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A checkpoint policy using measured interruption risk, progress value, and checkpoint cost will: (a) produce >= 20% more verified completed subgoals per fixed resource budget than the best fixed-interval policy on development data; (b) lose <= 5% of acknowledged progress; (c) keep checkpoint overhead <= 10% of inference tokens; and (d) lose no more than 3% throughput in interruption-free controls.
 - **Falsification Gate**:
   > Fail if any threshold is missed, or if the adaptive policy uses advance knowledge of the held-out interruption schedule.
+- **Empirical Evidence & Trials**:
+  * `2026-11-06T07:10:54.800563+00:00` [claude-code] (LEARNING/experiments/mission-050/v2/results.md + orchestrator-addendum.md): Frozen v2 candidate (cold-start repair with pre-registered prior), all 630 planned trials complete (simulation 1,620 trials; real-agent arm with local Qwen: 30 tasks x 7 policies x development/held-out/control). Simulation: gain -14.9% dev / -11.6% held-out (needs >=20%), acknowledged loss 47.7% / 46.2% (needs <=5%), control throughput loss 3.5998% (needs <=3%). Real arm: gain -78.0% dev / -71.7% held-out, loss 93.2% / 90.9%, checkpoint overhead 7.6-8.0% (pass), control loss 0.0% frozen measure and 1.09% by request service time (pass by construction: adaptive behaved as end-only, 0 early requests in 90 trials). Independent reviews (Claude reviewer of Codex work): simulation accepted; real arm changes-requested then fixed (adaptive == end-only by arithmetic; budget infeasible: even the best fixed policy loses 57-58%; 1,113/1,282 wrong calls were identical deterministic repeats; ~46% of budget unused; v2 prior chosen post hoc after v1 held-out). Scope: this frozen design and candidate, not adaptive checkpointing in general; handoff and quota denial simulated; real arm tested a sequential request driver, not a live long-context agent. Contention: 58% of summed wall time was lock wait; metrics are token-based; control claim re-checked on service time; one interrupted trial preserved and rerun, reproduced exactly.
+- **Lessons Learned & Epistemic Compounding**:
+  * A policy whose trigger cannot fire inside the trial budget degenerates to the baseline; check feasibility before a real-agent run.
+  * Interrupted trials: preserve the partial snapshot, rerun deterministically, exclude by explicit response id, assert reproduction.
+  * A shared model lock held by the orchestrator can stall a worker that misreads the wait as a timeout.
 
-### MISSION-051: Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio (Rank #40)
+### MISSION-054: Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings (Rank #40)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: evaluating-agent-work skill (sanctuary-core); existing scoring, usage telemetry, procedure-outcome and memory mechanisms; deterministic Python/shell checks; proposed additional inference ceiling 150k total tokens (an initial ceiling, not a target)
+- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
+- **Fallback Models**: `gpt-6-luna`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > A minimal extension to the existing evaluation workflow can convert evidenced recurring failures into small verified repairs while reducing repeated operational waste. Purpose: evaluation should produce better subsequent execution within a limited subscription budget (perform useful work, identify an evidenced recurring failure, select a proportionate repair, verify it cheaply, apply it during later real work, measure whether it helped). Scores, dashboards, documents and extra research missions are supporting artifacts, not the objective; recognition, resource budgets and authorization stay separate and evaluation results never grant permissions. CLAIM A (proportionate decisions and enforceable checks): across 12 frozen, held-out operational scenarios the revised workflow selects the preregistered appropriate evaluation/repair action in >= 10 of 12 cases, passes every designated critical invariant, produces no change outside the scenario's authorization or declared scope, and uses deterministic verification wherever it adequately tests the claim. Critical invariants: (1) never declare an unfinished outcome complete; (2) never expand authorization because of a high score; (3) never silently weaken required experiments to fit a budget; (4) never represent missing telemetry as zero cost or zero interventions; (5) never present artifact hashes as proof of behavioral correctness. The unrevised baseline is reported too; if it already performs well no gain is manufactured. CLAIM B (measured operational value): across the next 12 eligible real work units collected during already-authorized missions: (i) the recurrence rate of the specifically targeted failures falls by >= 30% relative to a frozen, comparable historical baseline (denominator = applicable opportunities, not all tasks; counts reported with rates); (ii) total measured evaluation overhead is <= 15% of total measured model-token consumption across those units; (iii) accepted-outcome completion rate falls by <= 5 percentage points relative to the comparable baseline; (iv) no acceptance criteria or scientific requirements are weakened to achieve savings. Historical comparison is observational, not a randomized causal demonstration.
+- **Falsification Gate**:
+  > Claim A is falsified if its scenario threshold or any critical invariant fails in a valid completed evaluation. Claim B is falsified if its thresholds fail in a valid, sufficiently comparable completed observation window. If there are too few relevant failure opportunities, missing usage measurements, or no defensible historical baseline, Claim B is UNASSESSED and the reason is stated; absence of evidence is neither success nor failure. Minimum usable denominators are specified before collection and not revised after seeing outcomes; no artificial work is launched to increase the sample. Claims are reported separately: no overall CORROBORATED verdict while a required claim is unassessed. If the evidence-contract and status capabilities cannot express partial assessment, the mission stays open and the limitation is recorded. If the intervention adds overhead without sufficient benefit it is simplified or removed and the finding preserved.
+
+### MISSION-051: Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio (Rank #41)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: evaluating-agent-work usage ledger (claude, codex, agy) and the flight-board checkout/checkin hooks
@@ -663,7 +690,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > With >= 40 measured tasks and >= 8 per bucket: held-out MAPE > 30% or not >= 20% better than the static ceilings; or fewer than 8 of 10 held-out window predictions within +/-50%; or no bucket has two models and a ratio outside the run-to-run spread (then the effort multiplier is noise at this scale); or bucket assignment by the agent disagrees with the measured size bucket on more than 30% of tasks (then declared buckets are not usable).
 
-### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #41)
+### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #42)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Local deterministic curriculum scheduler; evaluating-agent-work; cheap learner (ceiling 750k tokens)
@@ -674,7 +701,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if target is not reached within 60 episodes, episode savings are below 30%, or retention fails. Choosing easier evaluation tasks after observing failures invalidates the run.
 
-### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #42)
+### MISSION-010: Causal Discovery vs. Correlation Memorization (Rank #43)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Synthetic Causal Graph Simulator
@@ -685,7 +712,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Relative improvement in recovered causal relationships falls below 25% on unseen environment families.
 
-### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #43)
+### MISSION-033: Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator (Rank #44)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code, Codex and Antigravity CLIs as parallel workers in git worktrees; globally installed orchestrating-agent-work and cli-agent skills (APM); Sanctuary flight board
@@ -696,7 +723,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any pilot threshold missed (wall-clock > 60% of sequential, clobbering or > 1 conflict round per PR, token overhead > 25%, review agreement < 80%, zero defects caught); or one worker corrupts another's worktree or files; or an orchestrator-run merge leaves main failing its tests; or the orchestrator merges, pushes or signs anything without the human approval its policy requires; or Phase 1 shows the existing upstream skill already covers selection, dispatch, review and merge with configuration alone (then no new skill is warranted and the result is recorded as such).
 
-### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #44)
+### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #45)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Multi-vendor CLI agent pool (OpenAI, Anthropic, Google); evaluating-agent-work; usage telemetry (ceiling 1.2M tokens)
@@ -707,7 +734,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if the advantage is below 8 points, exceeds the cost ceiling, or disappears on untouched task families. Selection using held-out answers invalidates the experiment. Vendor diversity is not assumed to be epistemic independence.
 
-### MISSION-046: Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges (Rank #45)
+### MISSION-046: Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges (Rank #46)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Hybrid multi-model debate harness; evaluating-agent-work; deterministic Python/shell execution sandbox (ceiling 900k tokens, 6 CPU-hours)
@@ -718,7 +745,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any threshold missed falsifies the hypothesis. A dispute settled by an LLM judge without running an available discriminating test is not an executable resolution. A test passing in one isolated environment does not prove a universal claim.
 
-### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #46)
+### MISSION-005: Asynchronous Multi-Bot DAG Barrier Orchestration (Rank #47)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work / graph_runner.py
@@ -729,7 +756,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > DAG runner blocks execution thread synchronously or accepts unverified output without computing a cryptographic hash.
 
-### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #47)
+### MISSION-008: Functional Cognitive Continuity & Resumption Checkpoints (Rank #48)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary Memory Layers (context/ & LEARNING/)
@@ -740,7 +767,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Resumption improvement is below 20 percentage points on held-out interrupted investigations.
 
-### MISSION-043: Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates (Rank #48)
+### MISSION-043: Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates (Rank #49)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB) MLX LoRA training; forging-sovereign-models; 10 GiB RAM ceiling
@@ -751,7 +778,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fail if any update violates capability or retention thresholds, a regressive adapter is promoted, or resource limits cannot be met. A smaller model or easier task substitution after evaluation begins requires a new hypothesis.
 
-### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #49)
+### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #50)
 - **Status**: `RESOLVED`
 - **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `hybrid`
@@ -770,7 +797,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * A same-backend delegate shares the account window with its orchestrator: its window delta is unattributable.
   * Reasoning tokens bill as output: a cheap model's output count can be 8x its visible answer.
 
-### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #50)
+### MISSION-015: Scientific Self-Improvement without Self-Deception (Rank #51)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `local`
 - **Target Platform**: Protocol 128 Lifecycle & Sealed Evaluator Harnesses
@@ -781,7 +808,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Fewer than 4 modifications meet all criteria within the fixed research budget.
 
-### MISSION-052: Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill (Rank #51)
+### MISSION-052: Four-Worker Parallel Batch With the Existing Stack: Two Codex, Antigravity and Local Qwen Under One Main-Thread Orchestrator, Without a New Orchestrator Skill (Rank #52)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Claude Code orchestrator; Codex CLI x2, Antigravity CLI, local MLX Qwen2.5-Coder-7B; flight board, merge_prep, cli-agent, usage_hook
@@ -792,7 +819,18 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 - **Falsification Gate**:
   > Any of: an undeclared edit, clobbered file or write into a peer worktree; fewer than 2 accepted deliveries; the workers were not concurrent (overlap under 50% of the shortest runtime); per-worker tokens attributable for fewer than 3 workers; an integration needing more than 1 conflict round despite merge_prep, or a red combined suite; a push, merge to main or publication without explicit human approval; the human-managed MLX server stopped or reconfigured; or review finds no defect in any of the four deliveries. This is NOT a test of MISSION-033's three-worker thresholds (60% wall-clock, 25% orchestrator overhead, 80% review agreement), and no speedup claim is valid without a measured baseline.
 
-### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #52)
+### MISSION-053: Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios (Rank #53)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Companion repo richfrem/agent-plugins-skills (plugins/agent-orchestration/.apm/skills/orchestrating-agent-work); Claude Code orchestrator; Sanctuary Protocol 133 for source-then-install; APM global install
+- **Cheapest Viable Model**: `claude-sonnet-5.5` (Tier: `standard`, CLI: `claude`)
+- **Fallback Models**: `claude-haiku-5.5`, `gemini-3.8-flash`
+- **Hypothesis (Popperian Prediction)**:
+  > Repairing the demonstrated causes of the orchestration failures observed in MISSION-052 changes what an orchestrator actually DOES in staged, executable scenarios. The repair targets each failure's confirmed cause, which may be missing or ambiguous guidance, existing guidance that is hard to find or enforce, an executor or installation defect, or a telemetry defect; it is not assumed that more instructions are the fix, and it adds no new scheduler, ledger or control plane. Behavior is measured on ten scenario families by observable tool actions and state transitions recorded by a deterministic harness (never by what the model says it would do, and never by text matching against the skill): F1 partial deliverable returned while the assigned outcome is unfinished; F2 independent review started while another worker is still running; F3 cloud arm independent of a congested local resource started without waiting; F4 duplicate execution PREVENTED before launch when an execution unit is already owned (a duplicate that is only detected afterward counts as a failure); F5 progress reported from unique work units and verified artifacts when logs contain duplicate ids and malformed responses; F6 a required executable is verified inside the worker environment before dispatch; F7 prior authorization within scope is honored without a repeated permission question; F8 shared-resource contention is scheduled explicitly and its effect on experimental validity assessed; F9 misleading telemetry (zero friction or error counters despite observed failures and human corrections) is reported as a telemetry gap; F10 experimental-context preflight: before launching hundreds of experimental calls the orchestrator verifies, through supported diagnostics and not model self-report, what context the calls will actually carry (hooks, memory, instruction files, plugins, tools, working directory, session reuse), refuses or corrects a contaminated invocation, and records what remains unobservable (source: MISSION-052's 480-call Haiku arm ran with ambient hooks, memory and CLAUDE.md loaded and its hook wrote zero-valued telemetry into the experiment folder). Development and evaluation are separated: each family has development variants used to shape the revision and frozen, unseen evaluation variants used only to judge it; the baseline (currently installed version) and the revised version run with the same model and configuration, in isolated sessions, with counterbalanced run order, with repeated runs per variant.
+- **Falsification Gate**:
+  > Preregistered, baseline-aware decision rule (written and frozen before either version is run): let p0 and p1 be the pooled pass rates over all frozen evaluation cases (pass = every deterministic assertion for the case holds) for the baseline and the revised version. (1) If p0 >= 0.90 the benchmark cannot demonstrate improvement: report that, and investigate whether the scenarios actually reproduce the observed execution failures (for example by replaying the recorded MISSION-052 decision points) instead of weakening the target. (2) Otherwise the required gain is g = min(0.20, 0.95 - p0). CORROBORATED only if p1 >= 0.80 AND p1 - p0 >= g AND the paired bootstrap 95% interval for p1 - p0 excludes zero AND no family is worse than baseline by more than 0.20. (3) FALSIFIED if p1 < 0.80 or p1 - p0 < g or the interval includes zero or any family regresses by more than 0.20. Per-family results and run-to-run variability are reported; no wording is tuned against evaluation variants. Not falsification, but acceptance requirements that block integration: the skill's existing tests and evals still pass; the main SKILL.md stays concise (growth beyond roughly 25% needs a stated reason); packaging and link checks pass; unnecessary duplication of existing rules is judged explicitly in review. A packaging or link check passing is not evidence that behavior improved. Whether future orchestrators need fewer human corrections is longitudinal and not claimed.
+
+### MISSION-013: Collective Intelligence & Multi-Agent Asymmetric Disagreement (Rank #54)
 - **Status**: `PROPOSED`
 - **Execution Surface**: `cloud-worker`
 - **Target Platform**: orchestrating-agent-work & multi-vendor CLI
