@@ -1,0 +1,40 @@
+{
+ "landauer_J_per_bit": {
+  "250K": 2.39248240423227e-21,
+  "300K": 2.870978885078724e-21,
+  "350K": 3.349475365925178e-21
+ },
+ "landauer_cost_to_erase_1TB_J_at_300K": 2.296783108062979e-08,
+ "ratio_to_landauer_300K": {
+  "embedded flash program, 122 pJ/bit (Jeloka et al., VLSI 2015, SONOS)": 42494217088.83612,
+  "whole-SSD average ~1 nJ/bit (Stanford ph240 course page: ~7 W at ~0.7 GB/s -> 1.25e-09 J/bit)": 435391568533.15704,
+  "silicon transistor switching ~1e-15 J (secondary source)": 348313.25482652563
+ },
+ "post_scenario": {
+  "rack_600W_for_1_hour_J": 2160000,
+  "landauer_floor_to_erase_1TB_J": 2.296783108062979e-08,
+  "rack_hour_over_landauer_1TB": 94044578803161.92
+ },
+ "row_delete_example": {
+  "row_bytes": 1024,
+  "landauer_floor_J_if_every_payload_bit_were_erased": 2.3519059026564906e-17
+ },
+ "sqlite_logical_delete": [
+  {
+   "secure_delete": false,
+   "rows": 2000,
+   "marker_copies_before": 2013,
+   "marker_copies_after_DELETE": 2011,
+   "file_bytes": 491520,
+   "fraction_of_bytes_unchanged_by_DELETE": 0.9991617838541667
+  },
+  {
+   "secure_delete": true,
+   "rows": 2000,
+   "marker_copies_before": 2000,
+   "marker_copies_after_DELETE": 0,
+   "file_bytes": 491520,
+   "fraction_of_bytes_unchanged_by_DELETE": 0.032399495442708336
+  }
+ ]
+}

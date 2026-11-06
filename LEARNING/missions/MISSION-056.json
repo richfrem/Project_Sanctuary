@@ -1,7 +1,7 @@
 {
   "id": "MISSION-056",
   "title": "Can evenly spaced rhythms survive missing beats better than irregular rhythms?",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Mathematics of musical rhythm and information recovery (exact enumeration in Python; bounded local CPU)",
   "created_at": "2026-11-06T18:00:00Z",
@@ -59,7 +59,9 @@
     "Symmetric rhythms have fewer distinct rotations. Report that advantage explicitly; do not attribute an advantage solely to spacing.",
     "Irregular templates are sampled even though deletion outcomes are enumerated exactly. Report sampling limitations and per-pair variation."
   ],
-  "related_missions": {},
+  "related_missions": {
+    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice."
+  },
   "projected_impact": {
     "paths": [
       "LEARNING/missions/MISSION-056.json",
