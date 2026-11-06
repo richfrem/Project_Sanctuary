@@ -1,0 +1,76 @@
+{
+  "id": "MISSION-057",
+  "title": "Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?",
+  "status": "IN_PROGRESS",
+  "execution_surface": "local",
+  "target_platform": "Number theory: last-digit transitions between consecutive primes (exact sieve to 10^8, bounded local CPU)",
+  "created_at": "2026-11-06T19:00:00Z",
+  "updated_at": "2026-11-06T17:57:51.866564+00:00",
+  "confidence_reviewed": "2026-11-06",
+  "proposed_by": "claude-code (own choice)",
+  "interest_statement": "Primes are rigidly determined, yet on average they behave like random numbers; the Cramer random model is the textbook picture. I find it striking that the picture should fail in something as plain as last digits: a prime ending in 1 seems to be followed less often by another prime ending in 1 than chance allows (Lemke Oliver and Soundararajan, 2016). I want to measure how large that memory is for each digit, whether it fades with scale, and whether a random model with the same density really lacks it.",
+  "hypothesis": "Let P(d->d) be the probability that the next prime has the same last digit d in {1,3,7,9}, and let C(d->d) be the same quantity in a Cramer-style random control (each integer coprime to 10 included independently with probability 2.5/ln n, which itself gives a value below 0.25 at finite size). Repulsion R_d = C(d->d) - P(d->d). (H1) In the primes within [10^7, 10^8], R_d >= 0.5 percentage points for EVERY digit d. (H2) For every digit d, R_d is larger in [10^5, 10^6] than in [10^7, 10^8]. (H3, instrument validity) The simulated control matches its analytic value q(1-q)^3/(1-(1-q)^4) within 0.3 percentage points for every digit in both windows.",
+  "falsification_criteria": "FALSIFIED if H1 or H2 fails for any digit given a valid control. If H3 fails or any instrument check fails the result is UNASSESSED. Thresholds, windows, control definition and aggregation are fixed in protocol.md before the held-out run and not changed afterwards. Secondary tables cannot rescue a failed primary claim. REVISION NOTE: the first draft compared primes with the naive independence value 0.25; the development run showed the random control itself sits near 0.16 at these sizes (waiting-time geometry), so 0.25 is the wrong null and the comparison was redefined to the control BEFORE the held-out run; this is disclosed in protocol.md.",
+  "experiment": "Sieve all primes up to 10^8 (numpy odd-only sieve). Consecutive pairs are formed within each window; only last digits 1,3,7,9 matter. Development window [10^4,10^5] is for debugging only; held-out windows are [10^5,10^6] (small) and [10^7,10^8] (large). Control: for each window generate the Cramer random set (20 replicates small, 5 large, seeds 101..), compute the same transition statistics. Checks: pi(10^6)=78498, pi(10^7)=664579, pi(10^8)=5761455; prime list agrees with naive trial division on [10^4,10^5]; each digit's transition row sums to its prime count (minus the window's last prime); control density within 2% of the prime density in each window; simulated control agrees with the analytic Cramer formula. Compare real primes against the Cramer control (and report the analytic control value); 0.25 is reported only as the naive reference. Full frozen protocol: LEARNING/experiments/mission-057/protocol.md.",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 1,
+    "priority_score": 40.0
+  },
+  "priority_score": 40.0,
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cost_weight": 0.1,
+    "cli_target": "claude",
+    "fallback_models": [
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "None: deterministic numpy computation; no model calls in the evaluation.",
+    "guidance": "Budget: max 20000 additional model tokens, 15 experiment compute minutes; if over, checkpoint rather than shrink the windows silently."
+  },
+  "tags": [
+    "curiosity",
+    "number-theory",
+    "primes",
+    "random-model",
+    "last-digit-bias",
+    "chosen-by-claude"
+  ],
+  "verdict": "FALSIFIED",
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [
+    {
+      "timestamp": "2026-11-06T17:57:51.866564+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-057/README.md",
+      "details": "H1 held (real primes repel own last digit beyond the Cramer control by 1.8/2.8/2.8/1.8 pp for digits 1/3/7/9 at 10^7-10^8). H2 failed: the extra repulsion did not fade between 10^5-10^6 and 10^7-10^8 (digit 1 +0.65 pp, digit 9 +0.44 pp, digits 3/7 within noise). H3 instrument validity held (control matches analytic formula within 0.3 pp). Random control gives ~0.16-0.20, not 0.25; baseline redefined before the held-out run."
+    }
+  ],
+  "lessons_learned": [
+    "The naive 25% null is wrong for primes of finite size: a Cramer random model already gives 16-20% for same-digit returns because of geometric waiting; compare against the model, not the naive value.",
+    "The repulsion beyond the random model is persistent (not fading) across two decades; the fading part is the random-model-explained part."
+  ],
+  "design_constraints": [
+    "Exact data (all primes in the windows), so uncertainty comes only from finite counts and the control's randomness, not from sampling primes.",
+    "Tests a known phenomenon's size and scale-dependence in base 10; it proves nothing about other bases or the asymptotic limit.",
+    "The Cramer control is one random model among several; a bias-free Cramer control is evidence that the effect is arithmetic, not that every random model lacks it."
+  ],
+  "related_missions": {
+    "MISSION-056": "Sibling curiosity mission (ChatGPT's choice): another question where exact computation tests an intuition about structure versus randomness."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-057.json",
+      "LEARNING/experiments/mission-057/"
+    ],
+    "resources": [
+      "bounded local CPU (< 15 min)"
+    ]
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-057"
+}
