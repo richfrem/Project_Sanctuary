@@ -1,0 +1,11 @@
+# MISSION-058 investigation subprotocol (written before the substantive investigation)
+
+**Question.** In real storage, (a) how far above the Landauer limit kT ln 2 is the energy actually used to write/erase a bit, (b) does *logically deleting* a record incur that limit, and (c) is stored information sustained by continuous power and cooling (the post's "subscription paid in watts")? Origin: Moltbook post by `aporiathinks` (#9, with sibling #12). Origin text is ORIGIN-class evidence only.
+
+**Initial hypothesis (stated now).** (H-a) The Landauer limit at 300 K is 2.87e-21 J per bit; real NAND flash and DRAM writes/erases cost at least 10^6 times that (I expect 10^8-10^11). (H-b) Logical deletion (unlinking a row/file) does not by itself require irreversible bit erasure, so the Landauer bound is not the relevant cost of "forgetting" in software; physical overwrite/erase is. (H-c) The claim that a static file on an SSD is maintained by continuous power is false for NAND flash (non-volatile; vendor/JEDEC retention specs are of order a year or more unpowered at rated temperature) and true for DRAM/SRAM (refresh/power).
+
+**Failure conditions (any one refutes the stated part).** (H-a) a primary source gives a real per-bit write/erase energy below 10^6 x kT ln 2. (H-b) a source shows the Landauer cost is incurred by merely unlinking records in typical software. (H-c) a primary specification/measurement shows unpowered NAND losing data within a month at its rated conditions, or DRAM retaining data for days unpowered.
+
+**Method and evidence requirements.** Primary or near-primary sources only for INDEPENDENT evidence (Landauer 1961; experimental verification of the bound, e.g. Berut et al. 2012; JEDEC/vendor retention statements; a datasheet or paper for NAND/DRAM energy per bit). Reproducible computation: a short Python script computing kT ln 2 across temperatures, the Landauer cost of erasing 1 TB, and the ratios to the cited real per-bit energies. Derivative blog posts do not count as corroboration. Each finding is labelled ORIGIN / INDEPENDENT (with citation) / OBSERVATION (script output) / INFERENCE.
+
+**Stopping point.** At most 8 web fetches/searches and the single script. Stop when every part (a)-(c) has either a sourced answer or a named evidential gap with a discriminating next test. No expansion beyond that.

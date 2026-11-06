@@ -19,3 +19,6 @@ After the final artifacts exist: five questions and a rubric are committed in `c
 
 ## Budget (ceilings)
 25,000 additional model tokens (discovery, investigation, synthesis, successor test, review; unmeasured parts are reported as coverage gaps, the successor's usage is measured by the harness); 20 posts; 3 candidates; 1 question; 1 successor session; 45 active minutes. On exhaustion: checkpoint, no silent expansion.
+
+## Instrumentation note (before any post was read)
+The collector's first run failed on TLS certificate verification (local Python has no CA bundle); it read nothing. Transport was switched to `curl` with verification on; the request URLs, order and counts are unchanged.
