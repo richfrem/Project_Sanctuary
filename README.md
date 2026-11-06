@@ -68,8 +68,9 @@ Project Sanctuary
     ├── memory-management        → 3-layer filesystem memory engine (context/ + wiki/)
     ├── managing-rlm-cache       → Reactive Ledger Memory cache & distillation
     ├── managing-obsidian-vaults → Obsidian vault graph traversal & notes
-    ├── orchestrating-agent-work → Multi-agent execution DAGs & loops
-    ├── cli-agent                → Headless agent dispatch (Claude, Codex, Agy)
+    ├── orchestrating-agent-work → Outcome loop: work contract, lessons, guarded dispatch, redispatch (DAGs & loops)
+    ├── evaluating-agent-outcomes → Shared findings, validity gates, measured cost, lessons (consumed via sanctuary_adapter.py)
+    ├── cli-agent                → Headless dispatch with enforced launch controls (claim, cwd boundary, timeout, result JSON)
     └── managing-huggingface-assets → Model weights and soul traces synchronization
 ```
 

@@ -1,0 +1,78 @@
+{
+  "id": "MISSION-055",
+  "title": "Reusable Agent Learning Loop: Integrate Orchestration, CLI Execution, and Evaluation Across Repositories",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Companion repo richfrem/agent-plugins-skills (agent-orchestration: orchestrating-agent-work, cli-agent, new shared evaluation skill); Sanctuary thin adapter in sanctuary-core; Protocol 133; APM global + project installs; deterministic fixture tests plus one small genuine CLI run",
+  "created_at": "2026-11-06T17:00:00Z",
+  "updated_at": "2026-11-06T17:00:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 3,
+    "cost_weight": 0.5,
+    "operational_friction": 3,
+    "priority_score": 10.0
+  },
+  "priority_score": 10.0,
+  "hypothesis": "INTEGRATION CLAIM (engineering, not an empirical research claim): a repository that knows nothing about Sanctuary can run the full loop (work contract with observable acceptance and failure conditions and a budget; lesson retrieval; delegation through cli-agent with code-enforced launch checks; evaluation that returns criterion-level findings; repair of incomplete work; recording of a specific lesson; retrieval and application of that lesson on a second related task; reporting of measured cost with missing data kept unknown) using three shared skills with one authoritative implementation each: orchestrating-agent-work owns the outcome loop, cli-agent enforces execution boundaries and returns structured evidence, and a shared evaluation skill assesses evidence and economics. Sanctuary consumes them through a thin adapter that keeps research manifests, verdicts, Protocol 128 and benchmark definitions local, and records engineering delivery separately from empirical assessment. SCOPE BOUNDARY: this mission does not decide MISSION-053's behavioral claim (baseline-versus-revised orchestrator scenarios) or MISSION-054's Claims A (12 held-out scenarios) and B (12 real work units, longitudinal); both remain explicitly UNASSESSED here. One demonstration is not evidence of long-term savings or autonomy.",
+  "falsification_criteria": "The integration claim fails if any of these deterministic checks fails on the merged and INSTALLED implementations: (1) two-task fixture in a non-Sanctuary repository: injected execution failure detected by the executor's own checks, repaired and accepted by criterion-level evaluation, a lesson recorded, retrieved before dispatch and applied on the second task (asserted over action traces and state); (2) a task without a rubric works without numeric scores and a configured PR-style rubric works; a high score cannot conceal an unmet required criterion; (3) missing telemetry is reported unknown, never zero; records never leave the configured storage root; (4) the Sanctuary adapter records engineering delivery and empirical assessment separately and engineering acceptance never produces a verdict; (5) existing supported callers of run_agent.py and the Sanctuary eval_gate interface still work; (6) installed copies (Claude, Codex, AGY where configured) equal merged source and a neutral-repo smoke test invokes the installed implementation. Controls not enforced by code are documented as instructions. If the shared evaluator cannot be single-sourced without breaking Sanctuary callers, the limitation is recorded and the mission stays open.",
+  "experiment": "Inspect both repositories first; reconcile with 053 (guards shipped in PR 748: dispatch_guard.py now owned by cli-agent) and 054 (eval_gate shipped in PR 360: reusable core moves to the companion, Sanctuary keeps a delegating adapter). Build in the companion: executor flags (claim, cwd boundary, timeout, clean-context policy, structured result JSON) wired into run_agent.py; shared evaluation skill (work contract, deterministic criterion checks, validity, proportionate selection, interventions, costs, repairs, lessons with explicit storage root); orchestrator work_loop and references. Build in Sanctuary: adapter translating mission manifests to work contracts and findings to records; documentation in both repositories; PRs and merges; global companion update and local Sanctuary install with installed-interface verification. Budget ceiling set from measured headroom before dispatch; deterministic checks first; at most one small genuine CLI call, labeled apart from mocked tests.",
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gpt-6-luna",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Bounded standard-model assistance only for unresolved rubric or attribution ambiguity; frontier not required by default. Local Qwen optional for suitable bounded checks, not to demonstrate local participation."
+  },
+  "tags": [
+    "integration",
+    "learning-loop",
+    "orchestration",
+    "cli-agent",
+    "evaluation",
+    "cross-repository",
+    "budget-conscious"
+  ],
+  "related_missions": {
+    "MISSION-053": "CONSOLIDATES SCOPE: 053's behavioral baseline-vs-revised claim stays with 053 (UNASSESSED); this mission integrates and relocates its shipped guards.",
+    "MISSION-054": "CONSOLIDATES SCOPE: 054's Claims A and B stay with 054 (UNASSESSED); the reusable core of its eval_gate moves to the shared evaluation skill.",
+    "MISSION-052": "EVIDENCE SOURCE: orchestration failures and closeout (closeout.md).",
+    "MISSION-035": "CONSUMES: measured usage and attribution (usage_probe.py); its per-class predictor is falsified and not reused.",
+    "MISSION-036": "RELATED, NOT IMPLEMENTED (PROPOSED): the evidence-contract idea informs the delivery-versus-empirical split; no dependency on it.",
+    "MISSION-037": "RELATED, NOT IMPLEMENTED (PROPOSED): applicability limits of lessons are recorded per lesson; no dependency.",
+    "MISSION-038": "RELATED, NOT IMPLEMENTED (PROPOSED): lease fencing absent; claim files give duplicate-launch prevention only, not crash-safe fencing.",
+    "MISSION-049": "RELATED: failure-to-repair procedures; lessons here are lightweight records, not protected procedures.",
+    "MISSION-015": "CONTRIBUTES TO: scientific self-improvement umbrella."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/experiments/mission-055/",
+      "LEARNING/missions/MISSION-055.json",
+      "LEARNING/missions/MISSION-053.json",
+      "LEARNING/missions/MISSION-054.json",
+      "LEARNING/missions/MISSION-052.json",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/",
+      "plugins/sanctuary-core/README.md",
+      "README.md",
+      "architecture.md",
+      "AGENTS.md",
+      "START_HERE.md",
+      "INSTALL.md"
+    ],
+    "resources": [
+      "COMPANION REPO /Users/richardfremmerlid/Projects/agent-plugins-skills (separate git repo): plugins/agent-orchestration/ (orchestrating-agent-work, cli-agent, new shared evaluation skill), README.md, architecture.md; worktree recorded in LEARNING/experiments/mission-055/ownership.md",
+      "GLOBAL APM install (~/.claude/skills, ~/.agents/skills, antigravity) and project install: separate shared-state operations, authorized by the 2026-11-06 instruction, after source merge"
+    ],
+    "basis": "Declared 2026-11-06 by claude-code from the human's complete brief."
+  }
+}

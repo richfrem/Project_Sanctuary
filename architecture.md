@@ -28,7 +28,7 @@ graph TD
     
     subgraph GlobalSkills["Consumed Global APM Skills"]
         AM["agent-memory<br/>(memory-management, managing-rlm-cache, managing-obsidian-vaults, managing-vector-db)"]
-        AO["agent-orchestration<br/>(orchestrating-agent-work, cli-agent)"]
+        AO["agent-orchestration<br/>(orchestrating-agent-work, cli-agent, evaluating-agent-outcomes)"]
         DU["dev-utils<br/>(managing-huggingface-assets, managing-adrs, bundling-context, checking-links)"]
         AEA["agent-extension-authoring<br/>(authoring-skills, authoring-plugins, packaging-with-apm)"]
         AOS["agent-agentic-os<br/>(running-control-plane, setting-up-agentic-os)"]
@@ -54,7 +54,7 @@ graph TD
 | :--- | :--- | :--- |
 | **`agent-memory`** | `memory-management`<br/>`managing-rlm-cache`<br/>`managing-obsidian-vaults`<br/>`managing-vector-db` | Drives the 3-Layer Memory Engine, provides sub-5ms Living Chronicle lookups via ledger caches, semantic ChromaDB indexing, and Obsidian vault graph traversal. |
 | **`dev-utils`** | `managing-huggingface-assets`<br/>`managing-adrs`<br/>`bundling-context`<br/>`checking-links`<br/>`enforcing-coding-conventions` | Executes all remote Hugging Face transport (OAuth, exponential backoff, uploads), link auditing, and architecture decision recording. |
-| **`agent-orchestration`** | `orchestrating-agent-work`<br/>`cli-agent` | Enables DAG and loop multi-agent workflows, and dispatches external headless agents (Claude Code, Codex, Agy). |
+| **`agent-orchestration`** | `orchestrating-agent-work`<br/>`cli-agent`<br/>`evaluating-agent-outcomes` | Owns the generic learning loop: outcome loop and lesson retrieval (orchestrator), enforced launch boundaries and structured results (`cli-agent`), findings/validity/cost/lessons (evaluator). Sanctuary adds policy through `sanctuary_adapter.py`. |
 | **`agent-extension-authoring`**| `authoring-skills`<br/>`authoring-plugins`<br/>`authoring-instructions`<br/>`packaging-with-apm` | Ensures `sanctuary-core` complies strictly with open standards and passes packaging audits. |
 | **`agent-agentic-os`** | `running-control-plane`<br/>`setting-up-agentic-os`<br/>`improving-skills-in-lab` | Provides task intake verification, status checking, and autonomous skill self-improvement harnesses. |
 
@@ -94,7 +94,7 @@ plugins/sanctuary-core/
    - Formulates canonical 13-field JSONL records (`soul_traces.jsonl`) with SHA-256 verification, and delegates synchronization of `huggingface/` to `managing-huggingface-assets`.
 6. **`managing-sovereign-memory`**:
    - Executes 3-tier progressive disclosure (`disclose.py`), agent-native cognitive backlog management (`manage_backlog.py`), procedural memory outcome tracking (`LEARNING/procedures/`, `record_procedure_outcome.py`), enforces asymmetric persistence of friction logs across git rollbacks (`record_insight.py`), audits 30-day confidence decay (`audit_decay.py`), and traverses associative wikilink graphs (`query_graph.py`).
-7. **`evaluating-agent-work`**:
+7. **`evaluating-agent-work`** (Sanctuary scoring and policy; reusable evaluation logic is single-sourced in the companion `evaluating-agent-outcomes`, reached through `eval_gate.py`/`sanctuary_adapter.py`):
    - Evaluates delegated subagent and `/cli-agent` dispatches across 5 anchored dimensions (useful outcome, learning depth, verification rigor, token economy, anti-Asch truth grounding).
    - Bounds token expenditure against real-world subscription quotas (ChatGPT Plus, Claude Pro, Gemini Pro), weighting model costs (cheap models like Haiku/Flash vs expensive models like Astra) to penalize bloated, low-value outputs and reward efficient, high-signal breakthroughs.
    - Generates visual dashboards and RL value policy simulations (AlphaGo / MCTS Q-value formulation).
