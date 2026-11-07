@@ -9,7 +9,7 @@ Orchestrator-measured usage works for exact per-task tokens on claude, codex and
 
 ## [2026-11-05] [#016] Architecture: LEARNING Layout, Flight-Board State, Installed Copies
 1. `LEARNING/` root: `concepts/`, `procedures/`, `philosophy/` (canon); `missions/` (+ `mission.schema.json`), `experiments/`, `index.jsonl`, `backlog.md`, `inbox.jsonl` (mission system); `research/` (dossiers, formerly `topics/`). Guards reject mission-system files left in `research/`; `tests/test_learning_index.py` fails on dangling paths.
-2. The flight board (`.agent/coordination/`) is untracked per-machine state; scripts always use the main checkout's copy, even from a worktree. Check-in handoffs are also written to the tracked `.agent/learning/events.jsonl` (what the boot relay reads).
+2. The flight board (`.agent/coordination/`) is untracked per-machine state; scripts always use the main checkout's copy of the board and leases, even from a worktree. Check-in handoffs are also written to the tracked `.agent/learning/events.jsonl` (what the boot relay reads), but that file is the copy in the checkout the script runs from (verified 2026-11-07): a check-in made from a worktree is an uncommitted edit in that worktree and must be committed with its branch or it is stranded. Check in last, before integration; capture (`soul_coverage.py closure`) happens after it is on `origin/main`, never at startup.
 3. APM installs real copies of the skills into `.claude/skills` and `.agents/skills`: after editing `plugins/sanctuary-core/`, run `apm install`; the wakeup prints an `installed-skills` PASS/WARN line.
 
 ## [2026-11-02] [#015] Architecture: Prioritized Sovereign Research Backlog & Grok Cloud VM Integration

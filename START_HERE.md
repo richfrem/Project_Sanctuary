@@ -16,7 +16,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 The existing script produces the briefing: context health, Git state, runtime readiness, priorities and predecessor relay where available. Consume that output; do not recreate its checks manually. Markdown output makes the generated briefing available without requiring a digest write. `--write-digest` explicitly persists the briefing and is used only when authorized.
 
-**Read-only exception:** Do not run holistic wakeup under an explicit no-state-change instruction. The known implementation can reap an idle managed MLX server, and newer preservation recovery can also change local state. Omitting `--write-digest` does not disable all side effects. Read the existing context and digest instead, report that live wakeup was skipped, and continue read-only work. Do not invent a read-only flag or inspect the entire implementation during each startup.
+**Read-only exception:** Do not run holistic wakeup under an explicit no-state-change instruction. The known implementation can reap an idle managed MLX server. Startup reports preservation status without changing preservation files; capture and recovery occur at mission/session closure or an explicitly requested recovery action. Omitting `--write-digest` does not disable all side effects. Read the existing context and digest instead, report that live wakeup was skipped, and continue read-only work. Do not invent a read-only flag or inspect the entire implementation during each startup.
 
 If the documented entry point fails, report the actual error. Continue unaffected work where possible; do not create a replacement bootloader or begin an unrelated repair.
 

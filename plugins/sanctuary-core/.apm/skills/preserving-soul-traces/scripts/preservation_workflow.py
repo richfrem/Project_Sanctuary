@@ -122,19 +122,31 @@ def run(root):
 
 
 def bootstrap(root):
-    """Retry pending work and detect missed integrations, without touching remotes."""
+    """Report preservation status for session startup. Strictly observational.
+
+    Never captures, exports, recovers, syncs or rewrites any preservation file (dataset, manifests,
+    soul_preservation.json). Pending, failed and pending_publication obligations are returned exactly as
+    recorded so a later closure (`run`, via `soul_coverage.py closure` or `merge_prep.py regenerate`) still
+    sees them. Staleness is reported, never repaired: capture belongs to mission/session closure.
+    """
     root = Path(root)
     if not (root / "LEARNING/missions").exists():
         return None
     state = json.loads((root / STATE).read_text()) if (root / STATE).exists() else {}
-    status, _ = S.quick_status(root)
+    changed = S.sources_changed_since_export(root)        # None = no manifest yet; [] = export current
+    _, detail = S.quick_status(root)
     # Compare final manifest hashes with the actual export, not just local progress.
     mp = root / S.MANIFEST
     sources = {e["path"]: e.get("source_sha256") for e in json.loads(mp.read_text()).get("sources", [])} if mp.exists() else {}
     missed = any(sources.get(f"LEARNING/missions/{mid}.json") != item["manifest_sha256"]
                  for mid, item in obligations(root).items())
-    if missed or state.get("status") in ("pending", "failed", "pending_publication") or status == "WARN":
-        return run(root)
+    if state.get("status") in ("pending", "failed", "pending_publication"):
+        return dict(state, resume=state.get("resume", RESUME))        # recorded obligation, untouched
+    # An unverified REMOTE is not staleness (that needs authorization, not closure); only an outdated local export is.
+    if missed or changed is None or changed:
+        problems = ([detail] if changed is None or changed else []) + (
+            ["resolved mission manifest not yet captured in the export"] if missed else [])
+        return dict(state, status="stale", problems=problems, resume=RESUME)
     return state or None
 
 

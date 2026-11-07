@@ -162,7 +162,11 @@ def check_installed_skills(project_root: Path) -> "dict | None":
 
 
 def check_soul_preservation(project_root: Path) -> "dict | None":
-    """One line on soul preservation: export current?, required coverage complete?, remote verified? (WARN only; never breaks boot)."""
+    """One line on soul preservation: export current?, required coverage complete?, remote verified? (WARN only; never breaks boot).
+
+    READ-ONLY: reports pending/stale/failed status and the closure command to run. It must not capture, export, recover, sync or
+    rewrite any preservation file; capture happens at mission/session closure (`soul_coverage.py closure`, `merge_prep.py regenerate`).
+    """
     script = project_root / "plugins" / "sanctuary-core" / ".apm" / "skills" / "preserving-soul-traces" / "scripts" / "soul_coverage.py"
     if not script.exists():
         return None
@@ -177,7 +181,7 @@ def check_soul_preservation(project_root: Path) -> "dict | None":
             msg += "; local preservation " + progress["status"]
             if progress["status"] != "local_complete":
                 status = "WARN"
-                msg += "; resume: " + progress["resume"]
+                msg += "; startup did not change it; capture at closure or on explicit request: " + progress["resume"]
     except Exception as exc:  # noqa: BLE001
         status, msg = "WARN", f"soul status unavailable: {type(exc).__name__}"
     return {"path": "soul-preservation", "status": status, "size_bytes": 0, "description": msg}

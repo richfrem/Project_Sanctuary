@@ -393,6 +393,18 @@ def check(root):
     return out
 
 
+def sources_changed_since_export(root):
+    """Read-only: preserved sources committed since the manifest's base commit; None when there is no manifest."""
+    root = Path(root)
+    mp = root / MANIFEST
+    if not mp.exists():
+        return None
+    base = json.loads(mp.read_text()).get("base_commit", "")
+    changed = [p for p in sh(root, "git", "diff", "--name-only", base, "HEAD").splitlines() if p] if base else []
+    pol = load_policy()
+    return [p for p in changed if (r := classify(p, pol)) is not None and r.get("action") != "exclude"]
+
+
 def quick_status(root):
     """Cheap one-line status for session boot (no full recomputation): manifest age in commits, sources changed since export, last remote receipt."""
     root = Path(root)
@@ -401,9 +413,7 @@ def quick_status(root):
         return "WARN", "soul coverage manifest missing: run soul_coverage.py closure"
     man = json.loads(mp.read_text())
     base = man.get("base_commit", "")
-    changed = [p for p in sh(root, "git", "diff", "--name-only", base, "HEAD").splitlines() if p] if base else []
-    pol = load_policy()
-    rel = [p for p in changed if (r := classify(p, pol)) is not None and r.get("action") != "exclude"]
+    rel = sources_changed_since_export(root)
     ds = hashlib.sha256((root / DATASET).read_bytes()).hexdigest() if (root / DATASET).exists() else ""
     rc = last_receipt(root)
     remote = "remote verified" if rc and rc.get("verified") and rc.get("local_dataset_sha256") == ds and rc.get("local_manifest_sha256") == sha(mp.read_bytes()) else "remote NOT verified"

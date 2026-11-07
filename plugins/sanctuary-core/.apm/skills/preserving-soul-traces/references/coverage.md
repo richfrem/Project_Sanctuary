@@ -47,12 +47,23 @@ hashes and the existing export-staleness checks.
 The wired post-integration path is `merge_prep.py regenerate`. After regenerating
 projections it invokes `preservation_workflow.run`: publication eligibility,
 incremental coverage-aware extraction, schema validation and coverage/currentness
-checks. `soul_coverage.py closure` invokes the same workflow, and Guardian startup
-(both the command and SessionStart wakeup hook) detects and retries pending local
-capture. `persist_soul.py --full-sync` now points to this closure. Snapshot-only
+checks. `soul_coverage.py closure` invokes the same workflow. Guardian startup (both
+the command and the SessionStart wakeup hook, in every agent CLI) is read-only: it
+reports pending, stale or failed preservation through `preservation_workflow.bootstrap`
+and never captures, exports, recovers, syncs or rewrites preservation files
+(dataset, manifests, `soul_preservation.json`). Capture and recovery occur at
+mission/session closure or an explicitly requested recovery action.
+`persist_soul.py --full-sync` now points to this closure. Snapshot-only
 `persist_soul.py` remains an explicit transport, not a dataset completion path.
 Arbitrary external git merges are not intercepted: run `merge_prep.py regenerate`
-after integration; otherwise startup and staleness checks detect missed learning.
+after integration; otherwise startup reports the stale export and closure repairs it.
+
+Closure ordering: a CHECKIN is appended to the checkout's own tracked
+`.agent/learning/events.jsonl` (not the shared main checkout; only the untracked
+board and leases are shared). Make the final check-in first, commit and integrate it
+on `origin/main`, then run closure so the digest records include it. A check-in made
+after capture leaves the export stale, and the export-only commit that follows must
+not add another check-in, otherwise capture would chase its own tail.
 
 Sources must match the locally fetched `origin/main`; supporting artifact commits
 must be reachable there. Dirty or unmerged source changes stay `pending_publication`.
