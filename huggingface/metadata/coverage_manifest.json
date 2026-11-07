@@ -1,9 +1,9 @@
 {
- "base_commit": "d38b2033e51ee52987b1ccce914fe6c9b8421e26",
- "dataset_records": 1352,
+ "base_commit": "f61e57e131c28ec2e6d06b0ce88527ca3fa527a0",
+ "dataset_records": 1353,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-07T05:00:32Z",
+ "generated_at": "2026-11-07T05:15:21Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 2
    },
-   "bytes": 128802,
+   "bytes": 129579,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -81,15 +81,15 @@
     "2a15aa575abd139df37e394551078b31785ed7d2d4aad68758de351b9dc83e1c",
     "6f1719ba97ced659727cdb98a4374ab4bd651bcf0faebf4ca8af3942dd7273ab",
     "2a11eb75e1596f9c40efd87c07c34884bf88a1f454b5ad12e3e02c376dc589be",
-    "751a33e459b7d521add654e3bc9a616248e9e5cc0785e5a9b33d0d524b8d9daa",
-    "869555a9c71cdd43346bd7e49b7ab073b24b4214f5fb5be12235cee9466be034",
+    "76425d61d08cc889e88dbee936e9e47760c85b55465822e1b42af5a52edd26ad",
+    "3c9cbe29bd05b80252f39b26874d6ac70e7c2febd1a3266c4855f1a2616070ca",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "2e834f4ba53039c1117411f99a1c31b49167de0a4cd3f0778bc2cac18b9f1326",
     "8880fe28828d3361296517c6bccd59c8c70760e31059076f7359b801915d274a",
     "6de7dea2ad1732fb73757a32fc98c192d9e222b612f7347b873c4e076e414fc0"
    ],
    "required": true,
-   "source_sha256": "9815cd0b83c18b038bc28c44a12d358081226808c4a1ce114e66194e2a8b75d7",
+   "source_sha256": "15ccdbd6ede1f539092f101fc15a10da1b127b6bdff217d32ff1e7fce532a461",
    "status": "included"
   },
   {
@@ -814,12 +814,12 @@
    "status": "included"
   },
   {
-   "bytes": 127225,
+   "bytes": 129532,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "dbbbda76a996702be3db53b7d55111b96ccf970ed93e8b62db0389553382d6d5",
+   "source_sha256": "4f08226fa48ba3e15d169e775adf7548cc812cc0ca9139e97d38975d23257d89",
    "status": "excluded"
   },
   {
@@ -23233,6 +23233,23 @@
    "action": {
     "added": 1
    },
+   "bytes": 10891,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-060/exploration-policy-revision.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-060_exploration-policy-revision"
+   ],
+   "record_sha256": [
+    "04a2ce04cd08c6a8554813c0d9790725f78219cafcd230fefc2d2d40fda50980"
+   ],
+   "required": true,
+   "source_sha256": "37828260421bce81a011511bb034c692f0a1572d0a8ef5fa2a9d328101c11cd1",
+   "status": "included"
+  },
+  {
+   "action": {
+    "unchanged": 1
+   },
    "bytes": 11484,
    "category": "experiment_knowledge",
    "path": "LEARNING/experiments/mission-061/registration-design.md",
@@ -23248,7 +23265,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 11138,
    "category": "experiment_knowledge",
@@ -23318,12 +23335,12 @@
    "status": "included"
   },
   {
-   "bytes": 47749,
+   "bytes": 47893,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "30be050a9cc76310e72fe7c4e165a040b4f1015085a21785d201a268924e4af1",
+   "source_sha256": "728cce8d7c95100e4bfb419a3048252207c6845da9e008d6e6ef180d57ebfc7a",
    "status": "excluded"
   },
   {
@@ -23923,7 +23940,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4360,
    "category": "mission_manifests",
@@ -24008,7 +24025,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4801,
    "category": "mission_manifests",
@@ -24229,7 +24246,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 14510,
    "category": "mission_manifests",
@@ -24246,7 +24263,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 8135,
    "category": "mission_manifests",
@@ -24265,51 +24282,51 @@
    "action": {
     "updated": 1
    },
-   "bytes": 5628,
+   "bytes": 5943,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-056.json",
    "record_ids": [
     "mission__MISSION-056"
    ],
    "record_sha256": [
-    "2b1aa8d65de2f1750ea0f78c50413274352866dd51f64294897dececcc6eced7"
+    "93bb1f3a9122e215149409212ee35305f122194e865c5124a162269344a5ec1c"
    ],
    "required": true,
-   "source_sha256": "dc5499234f1b85c7a455801de5b1540aa9c0438faa82733df7809d6049f9f091",
+   "source_sha256": "b169b48cdedba15d871f6181f9315a23f4c58362a9e2d80f050efe6262f9da45",
    "status": "included"
   },
   {
    "action": {
     "updated": 1
    },
-   "bytes": 6588,
+   "bytes": 6903,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-057.json",
    "record_ids": [
     "mission__MISSION-057"
    ],
    "record_sha256": [
-    "2785ef6b744366d08d2da9c98fe3bb807a16c0e079d2ee48ab69a53ffa704861"
+    "06ab5867a23f65e4a04a3d19fdd6b96d62fb2aa7d22b73b2b06563f0daf1e336"
    ],
    "required": true,
-   "source_sha256": "796f6bf20cb76aabfb307d92e3dbbfd43fb254739f81924aab6766bab69973aa",
+   "source_sha256": "bd31a1ea9afdc6a8b9bde7f5d2dfbde2e0d5120996370ecdad6ec183665d28e5",
    "status": "included"
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 9115,
+   "bytes": 9421,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-058.json",
    "record_ids": [
     "mission__MISSION-058"
    ],
    "record_sha256": [
-    "351a140d39a7330ff89f08b72a40c601cae3e36b9affd22656c05ffc8590fbc7"
+    "88acb6e10e12a503295f987d1dd9b24b4d1ea05f4ea92aee406bae8542f1eaa0"
    ],
    "required": true,
-   "source_sha256": "9d714aab533981e8b0156de4029b4ebea929c86b933a0683f7670d504511d347",
+   "source_sha256": "9f660e2f5a22629162240b3d0f61b9c590b9bf83b88e79a05f5b1707b130d8b1",
    "status": "included"
   },
   {
@@ -24333,22 +24350,22 @@
    "action": {
     "updated": 1
    },
-   "bytes": 10110,
+   "bytes": 27829,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-060.json",
    "record_ids": [
     "mission__MISSION-060"
    ],
    "record_sha256": [
-    "b08e2cb4dc8d30206970169d4feacb1b5b5e113987704005f12d0250e4d7c326"
+    "caa95eee90616ea0db442ae4e5c40e382e06bd1948144c7da7266bc5a635a039"
    ],
    "required": true,
-   "source_sha256": "301cb8e4b8d8c0a697e746e0f84db3b5656ca92619ded23b7b2102a92c9ce832",
+   "source_sha256": "63370753f39fddc72876ac958465a19878bd5aff29be747bdb73fe6524fc26d9",
    "status": "included"
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 13853,
    "category": "mission_manifests",
@@ -24365,7 +24382,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 13903,
    "category": "mission_manifests",
@@ -36367,11 +36384,11 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 124,
+    "discovered": 125,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 124,
+    "included": 125,
     "required": true
    },
    "experiment_supporting_artifacts": {
