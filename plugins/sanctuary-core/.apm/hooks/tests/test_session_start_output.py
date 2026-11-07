@@ -32,5 +32,19 @@ class HookTests(unittest.TestCase):
         json.loads(stdout.getvalue())
         self.assertIn('diagnostic noise', stderr.getvalue())
 
+class BriefingTemplateTests(unittest.TestCase):
+    """AGENTS.md: the briefing must not hand agents a pre-written completion line to copy."""
+    SOURCES = (
+        'plugins/sanctuary-core/.apm/hooks/session_start_wakeup.py',
+        'plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py',
+    )
+    def test_briefing_has_no_copyable_completion_line(self):
+        for rel in self.SOURCES:
+            with self.subTest(source=rel):
+                text = (ROOT/rel).read_text(encoding='utf-8')
+                self.assertNotIn('5-step bootstrap complete', text)
+                self.assertNotIn('## VI. Bootstrap Completion Confirmation', text)
+                self.assertIn('NOT a completion confirmation', text)
+
 if __name__ == '__main__':
     unittest.main()
