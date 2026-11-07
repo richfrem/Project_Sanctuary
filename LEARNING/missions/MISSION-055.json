@@ -53,7 +53,8 @@
     "MISSION-038": "RELATED, NOT IMPLEMENTED (PROPOSED): lease fencing absent; claim files give duplicate-launch prevention only, not crash-safe fencing.",
     "MISSION-049": "RELATED: failure-to-repair procedures; lessons here are lightweight records, not protected procedures.",
     "MISSION-015": "CONTRIBUTES TO: scientific self-improvement umbrella.",
-    "MISSION-059": "RELATED TO MISSION-059: RELATED / CONSUMES CONTEXT: audits the orchestrator, CLI execution, and evaluation paths integrated by 055; no dependency and no assumption that its current controls are complete."
+    "MISSION-059": "RELATED TO MISSION-059: RELATED / CONSUMES CONTEXT: audits the orchestrator, CLI execution, and evaluation paths integrated by 055; no dependency and no assumption that its current controls are complete.",
+    "MISSION-060": "RELATED: provides upstream readiness filtering ensuring candidates can satisfy MISSION-055's work-contract prerequisites prior to dispatch."
   },
   "projected_impact": {
     "paths": [
@@ -75,7 +76,5 @@
       "GLOBAL APM install (~/.claude/skills, ~/.agents/skills, antigravity) and project install: separate shared-state operations, authorized by the 2026-11-06 instruction, after source merge"
     ],
     "basis": "Declared 2026-11-06 by claude-code from the human's complete brief."
-  },
-  "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-practical"
+  }
 }

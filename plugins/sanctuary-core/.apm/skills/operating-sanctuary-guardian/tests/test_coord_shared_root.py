@@ -91,3 +91,17 @@ def test_repo_no_longer_tracks_the_flight_board_files_and_ignores_them():
 def test_only_events_log_needs_the_union_merge_driver_now():
     assert merge_prep.UNION_LOGS == [".agent/learning/events.jsonl"]
     assert merge_prep.missing_union_rules(REPO) == []
+
+
+def test_verify_impact_resolves_when_called_from_inside_worktree():
+    main, wt = _repo_with_worktree()
+    (main / "LEARNING" / "missions").mkdir(parents=True)
+    m_json = main / "LEARNING" / "missions" / "MISSION-999.json"
+    m_json.write_text(json.dumps({"id": "MISSION-999", "projected_impact": {"paths": ["f.txt"]}}))
+    _git(main, "add", "-A"); _git(main, "commit", "-qm", "add mission manifest")
+    _git(wt, "merge", "main", "-qm", "sync main")
+    mc.save_board(main, {"leases": [{"agent_id": "test", "mission_id": "MISSION-999", "worktree": ".worktrees/wt1", "locked_targets": ["f.txt"]}]})
+    # Invoking verify_impact with root=wt (as when run from inside worktree) must resolve wt cleanly and not double-nest
+    res = mc.verify_impact(wt, "MISSION-999")
+    assert res.get("status") == "success"
+

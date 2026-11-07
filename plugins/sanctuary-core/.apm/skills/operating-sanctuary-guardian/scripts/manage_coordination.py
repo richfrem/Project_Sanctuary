@@ -362,13 +362,21 @@ def build_matrix(root: Path) -> Dict[str, Any]:
 
 def verify_impact(root: Path, mission: str, worktree: Optional[str] = None, base: str = "origin/main") -> Dict[str, Any]:
     """Compare the declared impact with the files a worktree actually changed (committed against `base`, staged, unstaged, untracked)."""
-    declared = impact.load_manifest_impact(root, mission)
-    lease = next((l for l in load_board(root).get("leases", []) if l.get("mission_id") == mission), None)
+    main_root = shared_root(root)
+    declared = impact.load_manifest_impact(main_root, mission)
+    lease = next((l for l in load_board(main_root).get("leases", []) if l.get("mission_id") == mission), None)
     if declared is None and lease:
         declared = {"paths": list(lease.get("locked_targets", [])), "resources": [], "shared_generated": []}
     if declared is None:
         return {"status": "error", "error": f"{mission} has no projected_impact and no active lease to compare against."}
-    wt = root / (worktree or (lease or {}).get("worktree") or ".")
+    if worktree:
+        wt = main_root / worktree
+    elif root != main_root:
+        wt = root
+    elif lease and lease.get("worktree"):
+        wt = main_root / lease["worktree"]
+    else:
+        wt = main_root
     changed: List[str] = []
     for cmd in (["git", "diff", "--name-only", f"{base}...HEAD"], ["git", "diff", "--name-only", "HEAD"],
                 ["git", "ls-files", "--others", "--exclude-standard"]):
