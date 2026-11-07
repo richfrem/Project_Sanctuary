@@ -76,7 +76,5 @@
       "Memory: Layer 2 receives compact evidence-linked repairs and outcomes; Layer 1 changes only if a durable operating rule belongs there; Layer 3 uses existing persistence (no new dataset format)."
     ],
     "basis": "Declared 2026-11-06 by claude-code. Candidate paths verified to exist on origin/main; narrow again at checkout. Experiment directory follows the current LEARNING/experiments/mission-NNN/ convention. At registration no active lease overlaps these paths (leases: 050 guardian files, 004 experiment folder, 052 closeout)."
-  },
-  "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-mission-054"
+  }
 }

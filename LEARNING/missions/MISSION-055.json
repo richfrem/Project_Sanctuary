@@ -76,7 +76,5 @@
       "GLOBAL APM install (~/.claude/skills, ~/.agents/skills, antigravity) and project install: separate shared-state operations, authorized by the 2026-11-06 instruction, after source merge"
     ],
     "basis": "Declared 2026-11-06 by claude-code from the human's complete brief."
-  },
-  "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-practical"
+  }
 }
