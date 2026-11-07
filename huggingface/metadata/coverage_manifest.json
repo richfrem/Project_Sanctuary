@@ -1,9 +1,9 @@
 {
- "base_commit": "b7ccf1241b8ae332ebcaad934063de3e722683f5",
+ "base_commit": "c6b702f986ab0e6b60665ca94cf0be1634c32382",
  "dataset_records": 1344,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-07T02:05:56Z",
+ "generated_at": "2026-11-07T03:08:14Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 8,
     "updated": 2
    },
-   "bytes": 113170,
+   "bytes": 113665,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -79,22 +79,22 @@
     "2a15aa575abd139df37e394551078b31785ed7d2d4aad68758de351b9dc83e1c",
     "6f1719ba97ced659727cdb98a4374ab4bd651bcf0faebf4ca8af3942dd7273ab",
     "2a11eb75e1596f9c40efd87c07c34884bf88a1f454b5ad12e3e02c376dc589be",
-    "c976fb274b2555567aabcec531aa8fd70ce40756c00adb1e71e0c61d190ed4c1",
-    "ad4e7b691ec8c6487b14a446cb4f699d8a94ffcc7815229422deb34bbc7619c9",
+    "fbc99790ce527581fa5e5614318db819a12d15d74e9fa0e8975f7fe0a550c4f0",
+    "1b23e330f3e1979ad6aaf1b2a6eac77760b3c61dfcf09894ee5c5f5441740a40",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "27c164cfd172b552aad805c2d6da959ce903e5a1d3148d39c7ac91eb3a1120fc"
    ],
    "required": true,
-   "source_sha256": "e9a16d1afa35998d9b2ce677fe429a1602e814ade47ecbcdd4bf3beafbbbcd74",
+   "source_sha256": "7f3895c06470b8305d230458feb37e3ecafcf58488d69cb98cbc25d3b5ac3bd9",
    "status": "included"
   },
   {
-   "bytes": 5941,
+   "bytes": 5880,
    "category": "transient_state",
    "path": ".agent/learning/guardian_boot_digest.md",
    "reason": "regenerated or per-session operational state with no durable learning content",
    "required": false,
-   "source_sha256": "d884282ce9d8837ecc97ae4edb8897b6da195a99766b43110208821e006fed99",
+   "source_sha256": "0c09b8f1e63a652991adf2fa25eb87c1e36c0d6e4c91499c3843772765971406",
    "status": "excluded"
   },
   {
@@ -124,12 +124,12 @@
    "status": "included"
   },
   {
-   "bytes": 1136,
+   "bytes": 1704,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "05cbdd905f23ecaa9ea55d1bab14eef5d339f437f1c056e5923a9238d2db46eb",
+   "source_sha256": "2b9126c853aee2ebd43bb5b407bed9c810a6005151ea239b03ac34ee082b6252",
    "status": "excluded"
   },
   {
@@ -143,19 +143,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 22706,
+   "bytes": 19069,
    "category": "root_architecture_docs",
    "path": "AGENTS.md",
    "record_ids": [
     "AGENTS"
    ],
    "record_sha256": [
-    "b85bc06fc0dba7b1e93d08e26df2a803a33fbc577512a12e41630416492cdc72"
+    "979652d6db5fbc5e0bcf91fa17d4d75c7cfc99f3600d6894e8f7c78f3818ea21"
    ],
    "required": true,
-   "source_sha256": "1df8cb87c804bd1cb0478dfcb575b48559ff9dfc711a7b8384d85fb3f7888da2",
+   "source_sha256": "8423fb34ca40875f1410f7c7714757ca18827ed23c7bbd2adbad16b86a7e579e",
    "status": "included"
   },
   {
@@ -760,19 +760,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 13936,
+   "bytes": 15040,
    "category": "root_architecture_docs",
    "path": "INSTALL.md",
    "record_ids": [
     "INSTALL"
    ],
    "record_sha256": [
-    "07e06df51d0c5dc1559d860d7993a164d26547e24699d887d61ab1a2e05154cf"
+    "cf77fa8993011b19e61823c7aff910ec252b23cd397d04d585ef317d13ba7aa1"
    ],
    "required": true,
-   "source_sha256": "68d73276104154959cbd6861bcda48035948ca45a094ce92cf8089cc5358f51e",
+   "source_sha256": "f4e7d2568af6ada3c078e70f77cdfd0a497aab84bb83a650b03dfba5a2b9778d",
    "status": "included"
   },
   {
@@ -23783,7 +23783,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 6526,
    "category": "mission_manifests",
@@ -23851,7 +23851,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 22626,
    "category": "mission_manifests",
@@ -24157,7 +24157,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 10283,
    "category": "mission_manifests",
@@ -24174,7 +24174,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 14205,
    "category": "mission_manifests",
@@ -24191,7 +24191,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7891,
    "category": "mission_manifests",
@@ -24276,7 +24276,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 9563,
    "category": "mission_manifests",
@@ -25787,19 +25787,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 7092,
+   "bytes": 5905,
    "category": "root_architecture_docs",
    "path": "START_HERE.md",
    "record_ids": [
     "START_HERE"
    ],
    "record_sha256": [
-    "b66d3fde87ba62fb9c50369397e081c5afa54ceb863e00a21603d4ba3965d93d"
+    "b4d679ff87c8f8ec1f667f73977694fe64f09d3bd5147a22dda5bd44874f0e2b"
    ],
    "required": true,
-   "source_sha256": "79cbe45834d4792ca2de435d07e7f36af6347fe1e6134eda83eb2a7ad14b9e64",
+   "source_sha256": "57741324a320d3de79df373a79f30dd462705f3e4640c911a290c64800214904",
    "status": "included"
   },
   {
@@ -32257,12 +32257,21 @@
    "status": "included"
   },
   {
-   "bytes": 656,
+   "bytes": 1794,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/hooks/finalize_hook_install.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "8adcf99d4c09f283557f31c0124b7e68691a620a06b8ffa242d229b8863a0ddb",
+   "status": "excluded"
+  },
+  {
+   "bytes": 798,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/hooks/hooks.json",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "a6e088c558ecf08fced8dbf81971c062f6adf84731de6796d0772ea4dc322bfa",
+   "source_sha256": "c60c77f7e83b0b5cc329b34df37bc376b2773c9d95778819dca461fa16651635",
    "status": "excluded"
   },
   {
@@ -32275,12 +32284,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 7952,
+   "bytes": 10167,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/hooks/session_start_wakeup.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "7081ed7338aee416b17c7f00e6f9512b650f3ffa4c578252aa5e8f4c2836fb6a",
+   "source_sha256": "7e7ba31f6a701584678dcd050d79937af25177ad80edfdea3cb1c90c30c4aa75",
    "status": "excluded"
   },
   {
@@ -32308,6 +32317,15 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "ce4f4cda89a2e4f9e18a25c76806ecd5a3be16577c5e3aec5b8d3cf3c926b07e",
+   "status": "excluded"
+  },
+  {
+   "bytes": 1875,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/hooks/tests/test_session_start_output.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "12c1e0d3469492fd53e5c659d477e2c38485d5a6ce96ee941e931f93fdc8cb6a",
    "status": "excluded"
   },
   {
@@ -33833,12 +33851,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 21283,
+   "bytes": 21593,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "24de315111c573861b7bd6fbd1d30f047a075dd8667fc269299cd523f38521cb",
+   "source_sha256": "52b9826a9f4a829121de49c050d8782b323865108a06c607e1877d4cbf042201",
    "status": "excluded"
   },
   {
@@ -36321,8 +36339,8 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 115,
-    "excluded": 115,
+    "discovered": 117,
+    "excluded": 117,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
