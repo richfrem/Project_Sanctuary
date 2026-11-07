@@ -1,11 +1,11 @@
 {
   "id": "MISSION-060",
   "title": "Evaluate Mission Selection Using Expected Value, Agent Interest and Execution Readiness",
-  "status": "PROPOSED",
+  "status": "STAGED",
   "execution_surface": "local",
   "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, selection scenario fixtures, and a protected-exploration selection policy compared with the existing priority formula on matched disagreement cohorts of real inquiries",
   "created_at": "2026-11-06T18:45:00Z",
-  "updated_at": "2026-11-07T05:15:00Z",
+  "updated_at": "2026-11-07T06:05:00Z",
   "confidence_reviewed": "2026-11-07",
   "scores": {
     "strategic_leverage": 5,
@@ -139,7 +139,8 @@
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/",
       "LEARNING/missions/MISSION-056.json",
       "LEARNING/missions/MISSION-057.json",
-      "LEARNING/missions/MISSION-058.json"
+      "LEARNING/missions/MISSION-058.json",
+      "LEARNING/experiments/mission-060/HANDOFF-codex.md"
     ],
     "resources": [
       "Backlog selection and startup recommendations",
@@ -182,6 +183,12 @@
         "updated_at": "2026-11-06T18:45:00Z",
         "confidence_reviewed": "2026-11-06"
       }
+    },
+    {
+      "date": "2026-11-07",
+      "by": "claude-code",
+      "summary": "Status set to STAGED (authorized, not started) and execution assigned to codex per the human partner; instruments committed; no freeze, calibration, declaration or execution has occurred.",
+      "status_before": "IN_PROGRESS (worktree checkout marker)"
     }
   ],
   "score_revision": {
@@ -222,5 +229,19 @@
       "documentation volume",
       "agent self-assessment of discovery without the checks above"
     ]
+  },
+  "assignee": "codex",
+  "worktree": ".worktrees/claude-code-mission-060",
+  "execution_handoff": {
+    "assigned_to": "codex",
+    "state": "ASSIGNED, NOT STARTED: zero model calls made; zero study tokens spent",
+    "assigned_by": "Richard (human partner), 2026-11-07, after claude-code paused on the Claude weekly-window stop rule",
+    "authorization": "Package approved with Proceed on 2026-11-07 (30% provisional share of the study 16 slots, thresholds, 700k additional-token ceiling, 25k per item, at most 10 items, Copilot excluded). Hugging Face sync NOT authorized.",
+    "blocker": "Quota: Claude weekly window 36% remaining (resets Nov 9) against a 25% stop floor; Codex 5-hour 28% (resets about 07:04Z). Client rebalancing is recommended but NOT approved.",
+    "next_action": "Read LEARNING/experiments/mission-060/HANDOFF-codex.md; check out the mission; settle the client allocation with Richard; calibrate the rubric; write and merge protocol.md and freeze.json before any held-out step.",
+    "handoff_note": "LEARNING/experiments/mission-060/HANDOFF-codex.md",
+    "assigned_model": "gpt-6.1-sol",
+    "assigned_effort": "medium",
+    "model_confirmation": "Confirmed by Richard on 2026-11-07 (proceed assign to sol 6.1)"
   }
 }

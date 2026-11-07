@@ -1,0 +1,34 @@
+{
+ "split": "dev",
+ "seed": 1060,
+ "n_situations": 12,
+ "recall": 0.7,
+ "summary": {
+  "f_blocked": 22,
+  "p_blocked": 8,
+  "blocker_reduction": 0.6363636363636364,
+  "depth_retention": 1.0232558139534884,
+  "f_high_interest": 22,
+  "p_high_interest": 27
+ },
+ "bootstrap_pass_probability": 0.9735,
+ "claim_A": "MET",
+ "sensitivity_to_recall": {
+  "0.4": {
+   "f_blocked": 22,
+   "p_blocked": 22,
+   "blocker_reduction": 0.0,
+   "depth_retention": 1.0193798449612403,
+   "f_high_interest": 22,
+   "p_high_interest": 30
+  },
+  "1.0": {
+   "f_blocked": 22,
+   "p_blocked": 0,
+   "blocker_reduction": 1.0,
+   "depth_retention": 0.9573643410852714,
+   "f_high_interest": 22,
+   "p_high_interest": 25
+  }
+ }
+}
