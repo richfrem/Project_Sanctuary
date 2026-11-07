@@ -8,7 +8,7 @@ Read [AGENTS.md](AGENTS.md) and the applicable [constitution](.agent/rules/const
 
 ## 2. Obtain the Guardian briefing
 
-For normal authorized startup, run from the repository root:
+**If a SessionStart hook already delivered a "Guardian Wakeup Briefing" into your context, this step is done: use it and do not rerun wakeup.** Only when no briefing is present, for normal authorized startup, run from the repository root:
 
 ```bash
 python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC --format markdown
@@ -73,6 +73,8 @@ References, read as needed: [Guardian](plugins/sanctuary-core/.apm/skills/operat
 
 After completing the bootstrap sequence, send the user a brief confirmation:
 
-“Sanctuary 5-step bootstrap complete. Continuity loaded. [Relevant blocker or workspace note, if any.] Ready.”
+“Sanctuary 5-step bootstrap complete. Continuity loaded. [Step 4 verdict, plus any blocker or workspace note.] Ready.”
 
-Only claim completion after executing the required steps. The briefing printed by the SessionStart hook or `guardian_wakeup.py` ends with a pre-written "Bootstrap Completion Confirmation" line. That line is a template, not evidence; never copy it as your own confirmation. A hook-delivered briefing counts as step 2 only. You still read the operating instructions (step 1), the Layer 1 context files (step 3) and run `git status` (step 5) yourself, even when the first user message is only a greeting. Do these tool calls in your first turn, before replying. If blocked, state the incomplete step and reason. If the user already assigned a task, confirm briefly and continue that task without waiting for another instruction.
+Put the step 4 verdict in the note, for example "no deeper retrieval needed". If a step cannot be completed, send instead “Sanctuary bootstrap INCOMPLETE at step N: <reason>.” and never the complete line.
+
+Only claim completion after executing the required steps. The briefing printed by the SessionStart hook or `guardian_wakeup.py` ends with a status block (section VI), not a confirmation; never copy any hook or script line as your own. A hook-delivered briefing counts as step 2 only. You still cover the operating instructions (step 1: AGENTS.md, which your client may have imported automatically, and the constitution, which you read), the Layer 1 context files (step 3) and `git status` (step 5) yourself, even when the first user message is only a greeting. Do these tool calls in your first turn, before replying. If the user already assigned a task, confirm briefly and continue that task without waiting for another instruction.

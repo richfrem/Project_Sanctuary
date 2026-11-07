@@ -436,9 +436,9 @@ def main():
     git_dirty_str = "DIRTY" if git_meta["dirty"] else "CLEAN"
     digest_lines.append("")
     digest_lines.append("## VI. Bootstrap Status (this briefing is NOT a completion confirmation)")
-    digest_lines.append("This briefing satisfies step 2 only. You must still personally complete steps 1, 3 and 5 with tool calls:")
-    digest_lines.append("read AGENTS.md and the constitution, read context/soul.md, user.md and memory.md, and run `git status --short --branch`.")
-    digest_lines.append("Send the confirmation message from START_HERE.md only after doing so, and answer any 'did you bootstrap' question from what you executed.")
+    digest_lines.append("This briefing satisfies step 2 only; do not rerun wakeup. Before replying to the user's first message (even a greeting), complete the rest with tool calls:")
+    digest_lines.append("step 1 read AGENTS.md (skip if already in your context) and .agent/rules/constitution.md; step 3 read context/soul.md, user.md and memory.md; step 4 decide whether deeper retrieval is needed; step 5 run `git status --short --branch`.")
+    digest_lines.append("Then send the confirmation defined in AGENTS.md (Turn 1 Mandatory Bootstrap), or 'Sanctuary bootstrap INCOMPLETE at step N: <reason>.' if a step failed. Answer any 'did you bootstrap' question from what you executed.")
     digest_lines.append(f"Git at briefing time (snapshot, may be stale): Branch `{git_meta['branch']}` ({git_dirty_str}).")
 
     digest_text = "\n".join(digest_lines)
