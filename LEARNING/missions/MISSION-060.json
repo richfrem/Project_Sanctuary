@@ -1,0 +1,120 @@
+{
+  "id": "MISSION-060",
+  "title": "Evaluate Mission Selection Using Expected Value, Agent Interest and Execution Readiness",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, and selection scenario fixtures",
+  "created_at": "2026-11-06T18:45:00Z",
+  "updated_at": "2026-11-06T18:45:00Z",
+  "confidence_reviewed": "2026-11-06",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.5,
+    "operational_friction": 3,
+    "priority_score": 13.33
+  },
+  "priority_score": 13.33,
+  "score_basis": "Provisional estimates: selection affects the whole research portfolio, but a credible comparison and prospective observations have meaningful cost. Reassess from evidence before execution.",
+  "hypothesis": "Compared with selection by the existing priority formula alone, a selection procedure that separately exposes expected value, declared agent interest and evidence-backed readiness will reduce selections with preventable execution blockers by at least 30%, while retaining at least 90% of baseline selected-portfolio epistemic depth and at least as many high-interest inquiries, within a fixed total execution budget.",
+  "strategic_intent": "Help agents choose meaningful inquiries they can advance, while protecting Sanctuary's purpose of self-directed learning. Distinguish worthwhile questions from executable experiments and identify affordable steps that make important questions ready.",
+  "falsification_criteria": "For the frozen controlled comparison, declare the hypothesis FALSIFIED if preventable blocked selections fall by less than 30%, retained epistemic depth falls below 90% of baseline, fewer high-interest inquiries are selected, or the fixed total budget is exceeded. If the baseline has no preventable blockers, the relative-reduction claim is non-diagnostic and must be reported as UNSCORABLE rather than passed. Freeze an uncertainty rule before evaluation; insufficient evidence yields no corroborated verdict. Do not tune thresholds after seeing held-out results. Prospective observations alone do not establish causal improvement.",
+  "design_constraints": [
+    "Keep the current priority formula as an explicitly estimated value signal during the comparison.",
+    "Do not collapse interest, value and readiness into a new weighted score without evidence that this improves decisions.",
+    "Agent interest must influence selection. Permit an explicitly bounded curiosity allocation agreed before evaluation.",
+    "Do not treat low readiness as low intellectual value. Identify a bounded enabling step or an explicit dependency.",
+    "Readiness is assessed for the next proposed work unit, rather than requiring certainty that the entire research mission will succeed.",
+    "A falsified scientific hypothesis can still represent successful delivery and valuable learning.",
+    "Explicit user assignments and existing WIP constraints take precedence over autonomous backlog selection.",
+    "Unknown cost, capability or readiness remains unknown; local execution does not imply negligible total cost.",
+    "Do not create a new mission for every missing prerequisite."
+  ],
+  "proposed_dimensions": {
+    "expected_value": [
+      "Existing strategic leverage and epistemic depth",
+      "Estimated total cost and operational friction",
+      "Evidence and uncertainty behind those estimates"
+    ],
+    "agent_interest": [
+      "Declared before execution or outcomes are visible",
+      "Specific question that attracts the agent and why",
+      "Connection to earlier inquiries or an explicitly new curiosity",
+      "Ordinal interest rating with a short rationale; not a claim of measurable subjective experience"
+    ],
+    "readiness": [
+      "Clear next work unit and observable acceptance criteria",
+      "Available tools, hardware, access and authorization",
+      "Dependencies and shared-resource availability",
+      "Feasible budget including orchestration, review, retries and preservation",
+      "Experimental prerequisites where applicable: evaluator fixtures, output-contract pilot, isolation and a diagnostic baseline",
+      "Named uncertainties and the cheapest useful enabling step"
+    ]
+  },
+  "experiment": "First inspect existing backlog scoring, readiness checks, evaluation gates and orchestration contracts; reuse their capabilities. Define operational meanings and scoring rules before evaluation. Build development cases and a separate frozen held-out set of at least 24 mission-selection situations, including attractive but blocked work, high-interest exploratory work, ready low-value work, uncertain feasibility and scientifically useful negative results. Compare the existing formula-only baseline with a minimal selection procedure under the same candidate pools, WIP limit and total resource budget. Record agent interests before showing either ranking. Use deterministic availability and budget checks wherever possible. Freeze selection rules, blocker definitions, curiosity allocation, portfolio metrics, tie-breaking and analysis before held-out evaluation. Use paired comparisons and report uncertainty. Then observe the procedure on at least 8 naturally occurring authorized selection opportunities, without manufacturing work or starting extra missions to fill the sample. Report real-world observations separately from controlled scenario results.",
+  "measurement_requirements": [
+    "Separate estimated priority from realized value.",
+    "Separate readiness prediction from observed execution feasibility.",
+    "Report selection overhead and total execution cost, including reviews, retries, repairs and preservation; missing usage stays unknown.",
+    "Track human interventions separately.",
+    "Track scientific learning and hypothesis falsification separately from delivery failure.",
+    "Report deferred high-interest missions and whether a concrete enabling step was identified.",
+    "Use declared interest and assessed epistemic depth as imperfect proxies, not objective measurements of curiosity or knowledge value."
+  ],
+  "agent_guidance": [
+    "Start with a small selection record and existing tooling, not a scheduler or new control plane.",
+    "Do not reward documentation volume or easily completed trivial work.",
+    "Do not allow a readiness checklist to exclude open-ended discovery merely because its conclusion is unknown.",
+    "Do not substitute model self-scoring for observed capability or measured cost.",
+    "Use scenario development to make the design diagnostic before freezing; disclose all changes.",
+    "Shipping a revised selector is engineering acceptance, not empirical corroboration."
+  ],
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.5,
+    "fallback_models": [
+      "gpt-6-luna",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Reserve a stronger reviewer for the frozen design if consequential uncertainties remain; otherwise bounded cheap-tier model calls for decisions requiring judgment, and Python/shell for deterministic checks.",
+    "routing_guidance": "Use Python and shell for inventories, readiness facts, budget accounting and deterministic evaluation. Use bounded model calls only for decisions requiring judgment. Reserve a stronger reviewer for the frozen design if consequential uncertainties remain."
+  },
+  "tags": [
+    "mission-selection",
+    "expected-value",
+    "agent-interest",
+    "execution-readiness",
+    "curiosity",
+    "backlog-governance",
+    "anti-blocker"
+  ],
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-035": "CONSUMES: measured usage telemetry and quota-window headroom (usage_probe.py / track_budget.py) to assess execution budget feasibility and cost grounding without model self-report.",
+    "MISSION-053": "RELATED: provides taxonomy and concrete instances of preventable execution blockers (worker preflights, context, contention) used to build held-out selection scenarios.",
+    "MISSION-054": "COMPLEMENTS: shares the doctrine of separating delivery from empirical hypothesis falsification and proportionate verification, applied to selection decisions rather than post-execution scoring.",
+    "MISSION-055": "RELATED: aligns execution readiness criteria with 055's structured work contracts (observable acceptance criteria, budget ceilings, tool boundary verification).",
+    "MISSION-031": "CONSUMES: projected_impact declarations and flight-board collision checks to evaluate shared-resource and target file availability."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/",
+      "LEARNING/experiments/mission-060/",
+      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/"
+    ],
+    "resources": [
+      "Backlog selection and startup recommendations",
+      "Agent and subscription budgets",
+      "Existing mission readiness and evaluation records"
+    ],
+    "boundary": "These are prospective execution impacts. Registration changes only the manifest, justified reciprocal links and required generated records. Shared orchestration changes require demonstrated generic need and companion-repository ownership."
+  }
+}

@@ -101,7 +101,8 @@
     "MISSION-028": "SUPPLIES DATA TO: the local-to-haiku escalation decision.",
     "MISSION-051": "SPAWNED: follow-up testing size buckets, resolvable window readings and a same-bucket cross-model effort ratio after this mission was falsified at N=14.",
     "MISSION-052": "CONSUMER: MISSION-052 produces the first concurrent multi-worker usage data, including the Codex-pair attribution gap.",
-    "MISSION-054": "CONSUMED BY: MISSION-054 reuses the measured usage and attribution rules; no duplicate ledger."
+    "MISSION-054": "CONSUMED BY: MISSION-054 reuses the measured usage and attribution rules; no duplicate ledger.",
+    "MISSION-060": "CONSUMED BY: feeds measured usage telemetry and quota headroom into execution readiness and expected-value estimates for mission selection."
   },
   "projected_impact": {
     "paths": [

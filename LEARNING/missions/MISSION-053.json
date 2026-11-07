@@ -51,7 +51,8 @@
     "MISSION-036": "READS: evidence contracts; separates delivery, empirical validity and integration state.",
     "MISSION-035": "READS: measured usage and the telemetry-gap reporting rules.",
     "MISSION-054": "COMPLEMENTS: MISSION-054 repairs how failures are evaluated, repaired proportionately and measured afterwards; 053 repairs orchestration behavior; coordinate ownership and reuse scenarios.",
-    "MISSION-055": "CONSOLIDATED INTO MISSION-055 (scope: integration and relocation of shipped guards); 053's behavioral baseline-vs-revised claim stays here, UNASSESSED."
+    "MISSION-055": "CONSOLIDATED INTO MISSION-055 (scope: integration and relocation of shipped guards); 053's behavioral baseline-vs-revised claim stays here, UNASSESSED.",
+    "MISSION-060": "RELATED: informs selection-stage readiness checks to filter out preventable execution blockers before orchestration dispatch."
   },
   "projected_impact": {
     "paths": [

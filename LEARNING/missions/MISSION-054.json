@@ -51,7 +51,8 @@
     "MISSION-053": "COMPLEMENTS: 053 repairs orchestration-skill behavior in the companion repo; this mission repairs how failures are evaluated, repaired proportionately and measured afterwards; coordinate ownership and reuse scenarios, do not duplicate.",
     "MISSION-015": "CONTRIBUTES TO: scientific self-improvement; this is one concrete intervention, not a duplicate of the umbrella mission.",
     "MISSION-016": "EXTENDS: cheapest-viable routing, now judged by accepted outcomes and complete execution cost.",
-    "MISSION-055": "CONSOLIDATED INTO MISSION-055 (scope: shared evaluation core extraction); Claims A and B stay here, UNASSESSED."
+    "MISSION-055": "CONSOLIDATED INTO MISSION-055 (scope: shared evaluation core extraction); Claims A and B stay here, UNASSESSED.",
+    "MISSION-060": "COMPLEMENTARY: applies proportionate evaluation and delivery-versus-empirical separation to the upstream mission selection process."
   },
   "projected_impact": {
     "paths": [
