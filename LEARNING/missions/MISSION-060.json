@@ -101,7 +101,8 @@
     "MISSION-054": "COMPLEMENTS: shares the doctrine of separating delivery from empirical hypothesis falsification and proportionate verification, applied to selection decisions rather than post-execution scoring.",
     "MISSION-055": "RELATED: aligns execution readiness criteria with 055's structured work contracts (observable acceptance criteria, budget ceilings, tool boundary verification).",
     "MISSION-031": "CONSUMES: projected_impact declarations and flight-board collision checks to evaluate shared-resource and target file availability.",
-    "MISSION-061": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-061 records expected value, agent interest and readiness separately and may serve as one prospective observation; it neither supports nor tests this mission's hypothesis."
+    "MISSION-061": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-061 records expected value, agent interest and readiness separately and may serve as one prospective observation; it neither supports nor tests this mission's hypothesis.",
+    "MISSION-062": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-062 is an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation; it neither supports nor tests this mission's hypothesis."
   },
   "projected_impact": {
     "paths": [

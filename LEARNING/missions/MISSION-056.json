@@ -60,7 +60,8 @@
     "Irregular templates are sampled even though deletion outcomes are enumerated exactly. Report sampling limitations and per-pair variation."
   ],
   "related_missions": {
-    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice."
+    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice.",
+    "MISSION-062": "FOLLOWED BY (practice, soft): MISSION-062 (own choice, additive combinatorics) reuses this mission's exact-computation practice, freeze-before-scoring sequencing and UNASSESSED-on-invalid-instrument rule. No dependency."
   },
   "projected_impact": {
     "paths": [
