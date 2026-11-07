@@ -56,7 +56,8 @@
   "related_missions": {
     "MISSION-036": "CONSUMES: translates formal claim contracts and thresholds into executable property invariants.",
     "MISSION-015": "SUPPLIES DATA TO: equips self-improvement loops with automated counterexample discovery.",
-    "MISSION-038": "VALIDATES: generates adversarial state-machine schedules for flight board recovery testing."
+    "MISSION-038": "VALIDATES: generates adversarial state-machine schedules for flight board recovery testing.",
+    "MISSION-061": "INFORMS / EXTENDED BY (soft): MISSION-061 reuses this mission's freeze-before-scoring and equivalent-curation discipline and tests the converse error, false rejection of valid alternative implementations. It does not reinterpret this mission's FALSIFIED verdict."
   },
   "projected_impact": {
     "paths": [

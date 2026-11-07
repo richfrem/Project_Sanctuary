@@ -54,7 +54,8 @@
     "MISSION-049": "RELATED: failure-to-repair procedures; lessons here are lightweight records, not protected procedures.",
     "MISSION-015": "CONTRIBUTES TO: scientific self-improvement umbrella.",
     "MISSION-059": "RELATED TO MISSION-059: RELATED / CONSUMES CONTEXT: audits the orchestrator, CLI execution, and evaluation paths integrated by 055; no dependency and no assumption that its current controls are complete.",
-    "MISSION-060": "RELATED: provides upstream readiness filtering ensuring candidates can satisfy MISSION-055's work-contract prerequisites prior to dispatch."
+    "MISSION-060": "RELATED: provides upstream readiness filtering ensuring candidates can satisfy MISSION-055's work-contract prerequisites prior to dispatch.",
+    "MISSION-061": "RELATED (ownership boundary, soft): MISSION-061 would apply the companion/adapter split when locating any evaluator defect it finds. Overlapping declared paths on plugins/sanctuary-core/.apm/skills/evaluating-agent-work/."
   },
   "projected_impact": {
     "paths": [
