@@ -19,6 +19,7 @@ import sys
 import time
 import json
 import importlib.util
+from contextlib import redirect_stdout
 from pathlib import Path
 
 # Measure hook overhead from process start
@@ -52,29 +53,43 @@ def find_project_root() -> Path | None:
     return None
 
 
-def execute_bootloader_in_process(project_root: Path) -> tuple[int, str, float]:
-    """Execute guardian wakeup logic in-process to minimize latency overhead."""
-    t0 = time.perf_counter()
-    guardian_script = (
-        HERE.parent
+def find_guardian_script(project_root: Path) -> Path | None:
+    """Resolve guardian_wakeup.py dynamically by discovering the active agent harness's installed location (INSTALL.md)."""
+    # 1. Discover within the active harness tree (e.g. .agents/skills for agy, .claude/skills for claude)
+    for parent in HERE.parents:
+        cand = parent / "skills" / "operating-sanctuary-guardian" / "scripts" / "guardian_wakeup.py"
+        if cand.exists():
+            return cand
+
+    # 2. Check sibling project-local installed APM harness locations for this workspace (INSTALL.md Section 3)
+    for harness_dir in [".agents", ".claude", ".codex", ".github"]:
+        cand = project_root / harness_dir / "skills" / "operating-sanctuary-guardian" / "scripts" / "guardian_wakeup.py"
+        if cand.exists():
+            return cand
+
+    # 3. Source repository fallback (plugins/sanctuary-core)
+    source_root = (
+        project_root
+        / "plugins"
+        / "sanctuary-core"
+        / ".apm"
         / "skills"
         / "operating-sanctuary-guardian"
         / "scripts"
         / "guardian_wakeup.py"
     )
-    if not guardian_script.exists():
-        guardian_script = (
-            project_root
-            / "plugins"
-            / "sanctuary-core"
-            / ".apm"
-            / "skills"
-            / "operating-sanctuary-guardian"
-            / "scripts"
-            / "guardian_wakeup.py"
-        )
+    if source_root.exists():
+        return source_root
 
-    if not guardian_script.exists():
+    return None
+
+
+def execute_bootloader_in_process(project_root: Path) -> tuple[int, str, float]:
+    """Execute guardian wakeup logic in-process to minimize latency overhead."""
+    t0 = time.perf_counter()
+    guardian_script = find_guardian_script(project_root)
+
+    if not guardian_script or not guardian_script.exists():
         elapsed_ms = (time.perf_counter() - t0) * 1000
         return 1, "guardian_wakeup.py not found", elapsed_ms
 
@@ -123,6 +138,11 @@ def execute_bootloader_in_process(project_root: Path) -> tuple[int, str, float]:
         for rc in runtime_checks:
             digest_lines.append(f"- [{rc['status']}] **{rc['component']}**: {rc['description']}")
 
+        git_dirty_str = "DIRTY" if git_meta["dirty"] else "CLEAN"
+        digest_lines.append("")
+        digest_lines.append("## VI. Bootstrap Completion Confirmation")
+        digest_lines.append(f"“Sanctuary 5-step bootstrap complete. Continuity loaded. Git: Branch `{git_meta['branch']}` ({git_dirty_str}). Ready.”")
+
         digest_text = "\n".join(digest_lines)
 
         # Persist digest to disk (.agent/learning/guardian_boot_digest.md)
@@ -155,6 +175,33 @@ def precompact_pointer(project_root: Path, raw_payload: str) -> str:
     return ""
 
 
+def session_start_output(context: str, raw_payload: str) -> dict:
+    """Return only the active client's SessionStart wire format."""
+    try:
+        payload = json.loads(raw_payload or "{}")
+    except (ValueError, TypeError):
+        payload = {}
+    if not isinstance(payload, dict):
+        payload = {}
+    # APM installs this same source under each client's hook directory.
+    parts = set(HERE.parts)
+    if ".cursor" in parts:
+        return {"additional_context": context}
+    if ".github" in parts:
+        return {"additionalContext": context}
+    if ".agents" in parts or ".gemini" in parts:
+        return {"injectSteps": [{"userMessage": context}]}
+    # Explicit Claude/Codex installs take precedence over inherited environment.
+    if not parts.intersection({".claude", ".codex"}):
+        if payload.get("hook_event_name") == "sessionStart":
+            return {"additional_context": context}
+        if payload.get("hookEventName") == "sessionStart":
+            return {"additionalContext": context}
+    return {"hookSpecificOutput": {
+        "hookEventName": "SessionStart", "additionalContext": context,
+    }}
+
+
 def main() -> int:
     """Run the SessionStart hook handler."""
     # Read stdin payload if provided by the harness
@@ -171,7 +218,9 @@ def main() -> int:
         # Repository uninitialized or outside Project Sanctuary context; exit silently
         return 0
 
-    code, digest_text, wakeup_elapsed_ms = execute_bootloader_in_process(project_root)
+    # Imported diagnostics must never contaminate the JSON response.
+    with redirect_stdout(sys.stderr):
+        code, digest_text, wakeup_elapsed_ms = execute_bootloader_in_process(project_root)
 
     total_hook_ms = (time.perf_counter() - HOOK_START_TIME) * 1000
 
@@ -182,15 +231,7 @@ def main() -> int:
         f"{precompact_pointer(project_root, raw_payload)}"
     )
 
-    output_payload = {
-        "hookSpecificOutput": {
-            "hookEventName": "SessionStart",
-            "additionalContext": context_banner,
-        }
-    }
-
-    # Emit JSON response on stdout for Claude Code hook ingestion
-    print(json.dumps(output_payload))
+    print(json.dumps(session_start_output(context_banner, raw_payload)))
     return 0
 
 

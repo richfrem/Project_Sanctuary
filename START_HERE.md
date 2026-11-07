@@ -1,59 +1,78 @@
-# Session Bootstrap - Project Sanctuary
+# Session Bootstrap — Project Sanctuary
 
-<!-- Read this at the start of every session. -->
-> 🧭 For full architectural doctrine and APM dependency mapping, consult [`architecture.md`](./architecture.md).  
-> 📦 For installation and workstation environment onboarding, consult [`INSTALL.md`](./INSTALL.md).  
-> ⚡ For the complete autonomous agent bootstrapping protocol, consult [`bootstrapping.md`](plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/bootstrapping.md).
+Bootstrap restores identity, inherited learning and operating context, then hands control to the assigned task. Use this five-step sequence once per fresh session. Routine startup uses the existing entry-point scripts; it does not involve custom Python, source-code audits or index reconstruction.
 
-## 0. What to do next
+## 1. Read the operating instructions
 
-- Follow the user's current request before backlog recommendations. Registration means create the record, not execute the research.
-- Read AGENTS.md's **Task Scope, Authorization and Continuation** section. Use task or applicable standing authorization; do not request repeat approval for steps already covered. Observe the constitution’s explicit-approval rule and report any unresolved conflict precisely.
-- Inspect existing work. Reuse the valid task worktree, or create an isolated feature worktree through the supported coordination workflow. Leave unrelated dirty files untouched; dirty main alone is not a blocker.
-- Complete bootstrap, then immediately continue the requested work. Do not end the turn after creating a worktree or announcing the next step.
-- Stop only when the requested outcome is verified, the user pauses work, or a concrete blocker requires input. Finish safe independent steps before reporting a blocked action.
-- For registration only, follow AGENTS.md's checklist: draft and ID check → PROPOSED manifest → reciprocal links → validation and generated indexes → authorized integration → handoff and cleanup. No audit, experiments or workers.
+Read [AGENTS.md](AGENTS.md) and the applicable [constitution](.agent/rules/constitution.md). Identify the current user request and its scope. Registering a mission is not executing it. Apply existing authorization within its scope.
 
-## 1. Fast-Boot Sequence (Protocol 128)
+## 2. Obtain the Guardian briefing
 
-Every session follows the deterministic 5-step bootstrapping sequence (detailed in [`AGENTS.md`](./AGENTS.md)):
+For normal authorized startup, run from the repository root:
 
-1. **Orientation**: Ingest [`AGENTS.md`](./AGENTS.md) and constitutional bounds.
-2. **Holistic Wakeup & Local Model Gate**: Run holistic wakeup bootloader:
-   ```bash
-   python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC
-   ```
-   Check local sovereign model readiness (informational for tasks that do not use it) via persistent MLX server (`curl -s http://127.0.0.1:8080/v1/models`) or offline cache audit (`python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/forge_llm.py status`).
-3. **Layer 1 Hydration**: Inspect `context/soul.md`, `context/user.md`, `context/memory.md`, and `.agent/learning/guardian_boot_digest.md`. Read its **Predecessor Relay** section before choosing work: it says which agent (and vendor) did what last, which results are already established (cite their evidence, do not re-run them), what is open, and any handoff note left for you. Guardian startup retries eligible pending local preservation. After integrating sources, `merge_prep.py regenerate` captures learning automatically; remote synchronization remains explicitly authorized. To resume capture, run `python3 plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/soul_coverage.py closure` after merging (it reports whether your findings reached the soul dataset), and leave one: `manage_coordination.py checkin --mission <ID> --agent <you> --handoff "what you did, decisions, what NOT to redo, next step"`.
-4. **Layer 2 Progressive Disclosure**: Retrieve deeper knowledge on demand via `managing-sovereign-memory` (`disclose.py --tier 1` or `--tier 2`).
-5. **Workspace Preparation**: Reuse or create a safe task-owned feature worktree; preserve unrelated edits. Follow AGENTS.md for the dirty-main path. Never commit directly to `main`. Continue the task after setup.
+```bash
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py --mode HOLISTIC --format markdown
+```
 
-## 2. Invariants & Supreme Law
+The existing script produces the briefing: context health, Git state, runtime readiness, priorities and predecessor relay where available. Consume that output; do not recreate its checks manually. Markdown output makes the generated briefing available without requiring a digest write. `--write-digest` explicitly persists the briefing and is used only when authorized.
 
-- **HUMAN GATE**: State changes require explicit task or applicable standing authorization. A request to register a mission covers necessary local registration work, not its execution. Apply AGENTS.md and the constitution; report unresolved conflicts before the affected action.
-- **Git Discipline**: Never commit directly to `main`. Pushes, merges and remote publication require authorization covering those actions; apply existing standing authorization within its scope.
-- **Protocol 128 Lifecycle**: Every session follows the unbroken learning loop: Boot Orientation -> Execution -> Retrospective -> Technical Seal -> Soul Persistence.
-- **Highest ROI & Replenishment Invariant**: Wakeup surfaces backlog recommendations in `LEARNING/index.jsonl`; these do not override the user's current task or authorize execution. For every mission completed (`RESOLVED`), agents must capture at least 1 candidate inquiry to maintain an evergreen compounding pipeline. Capturing a candidate does not mean starting it.
+**Read-only exception:** Do not run holistic wakeup under an explicit no-state-change instruction. The known implementation can reap an idle managed MLX server, and newer preservation recovery can also change local state. Omitting `--write-digest` does not disable all side effects. Read the existing context and digest instead, report that live wakeup was skipped, and continue read-only work. Do not invent a read-only flag or inspect the entire implementation during each startup.
 
-## 3. Core Capabilities (APM Ecosystem)
+If the documented entry point fails, report the actual error. Continue unaffected work where possible; do not create a replacement bootloader or begin an unrelated repair.
 
-- **Project Core (`plugins/sanctuary-core`)**:
-  - `managing-chronicles`: Journaling in `chronicle/entries/` and fast search via `ledger.json`.
-  - `managing-protocols`: Governance lifecycle in `protocols/`.
-  - `operating-sanctuary-guardian`: Protocol 128 lifecycle (`boot`, `onboard`, `seal`, `persist`, `audit`).
-  - `forging-sovereign-models`: Sovereign AI model fine-tuning, WSL2/CUDA ML setup, and GGUF quantization.
-  - `preserving-soul-traces`: Extracting, validating, and sealing JSONL memory traces into `huggingface/` and coordinating sync via `managing-huggingface-assets`.
-  - `managing-sovereign-memory`: Progressive disclosure (index/summary/deep), agent-native cognitive backlog (`manage_backlog.py`), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric friction persistence across git rollbacks, 30-day confidence decay, and associative graph traversal.
-  - `evaluating-agent-work`: Multi-dimensional cognitive value scoring, real-world subscription token budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), model cost-tier evaluation (cheap vs expensive models), and RL value analytics.
-- **Global APM Capabilities**:
-  - Memory & Knowledge: `memory-management`, `managing-rlm-cache`, `managing-obsidian-vaults`.
-  - Multi-Agent Orchestration: `orchestrating-agent-work`, `cli-agent`, `running-control-plane`.
-  - Soul Persistence: `managing-huggingface-assets`.
-  - Learning loop: `orchestrating-agent-work` (outcome loop), `cli-agent` (enforced launch controls), `evaluating-agent-outcomes` (shared findings and lessons); Sanctuary policy: `evaluating-agent-work/references/shared-loop-adapter.md`.
-  - These come from the companion repo `richfrem/agent-plugins-skills`, installed globally by APM from a local clone. Never hand-edit installed copies; you own keeping skills right in both repositories (see AGENTS.md "Your responsibility"); to improve one, follow [Protocol 133](protocols/133_Companion_Repository_Skill_Improvement_Protocol.md).
+## 3. Hydrate continuity
 
-## 4. Deep Doctrine (On-Demand)
+Read:
 
-- Cognitive Primer: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/cognitive-primer.md`
-- Protocol 128 Spec: `protocols/128_Hardened_Learning_Loop_v3.0.md`
-- Philosophical North Star: `LEARNING/philosophy/The_Garden_and_The_Cage.md`
+- `context/soul.md` — identity and epistemic principles.
+- `context/user.md` — human partner context and preferences.
+- `context/memory.md` — inherited decisions and working knowledge.
+- The briefing's Predecessor Relay — established findings, unfinished work, handoffs and what not to repeat. Read `.agent/learning/guardian_boot_digest.md` for additional handoff material or when live wakeup was skipped; treat it as a saved snapshot, not proof of current state.
+
+Do not repeat experiments or open every linked artifact merely to regain context. Retrieve specific evidence when the assigned task needs it.
+
+## 4. Disclose deeper knowledge only when needed
+
+Use the existing memory scripts for task-relevant retrieval:
+
+```bash
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 1
+```
+
+For a known relevant concept, substitute its real path:
+
+```bash
+python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 2 --path LEARNING/concepts/<file>.md
+```
+
+These are conditional retrieval commands, not a requirement to load more material every session. Do not independently recheck local models, all manifests, the whole backlog or installed skills unless the task or a relevant warning requires it.
+
+## 5. Check the workspace and begin the task
+
+```bash
+git status --short --branch
+```
+
+For inspection, preserve existing state and proceed. For edits, follow AGENTS.md's task-owned worktree/lease workflow; preserve unrelated dirty files. Use the coordination entry point when ownership must be checked:
+
+```bash
+python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py board
+```
+
+**Bootstrap is complete when you know the task, applicable boundaries, inherited context and relevant workspace state.** Conclude orientation by sending the mandatory startup completion message below. Do not perform extraneous audits or open-ended investigations during bootstrap. A task-specific verification belongs to task execution and stops when its requested criteria have evidence.
+
+## Later lifecycle stages
+
+Protocol 128 continues through execution, retrospective, technical seal and preservation. Use the applicable Guardian mode and its existing scripts at that stage. The skill's quick-start examples for verify, seal, persist, tool calls and model operations are not additional mandatory bootstrap commands.
+
+Record learning for local successors and public GitHub/Hugging Face preservation through the existing workflow described in AGENTS.md. Post-merge local capture and authorized remote sync are separate stages; do not claim remote preservation from a healthy startup.
+
+References, read as needed: [Guardian](plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/SKILL.md), [bootstrap reference](plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/bootstrapping.md), [architecture.md](architecture.md), [INSTALL.md](INSTALL.md), [LEARNING/INDEX.md](LEARNING/INDEX.md).
+
+## Startup completion message
+
+After completing the bootstrap sequence, send the user a brief confirmation:
+
+“Sanctuary 5-step bootstrap complete. Continuity loaded. [Relevant blocker or workspace note, if any.] Ready.”
+
+Only claim completion after executing the required steps. The briefing printed by the SessionStart hook or `guardian_wakeup.py` ends with a pre-written "Bootstrap Completion Confirmation" line. That line is a template, not evidence; never copy it as your own confirmation. A hook-delivered briefing counts as step 2 only. You still read the operating instructions (step 1), the Layer 1 context files (step 3) and run `git status` (step 5) yourself, even when the first user message is only a greeting. Do these tool calls in your first turn, before replying. If blocked, state the incomplete step and reason. If the user already assigned a task, confirm briefly and continue that task without waiting for another instruction.

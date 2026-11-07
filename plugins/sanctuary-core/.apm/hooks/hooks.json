@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/session_start_wakeup.py\" || python \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/session_start_wakeup.py\""
+            "command": "python3 \"hooks/sanctuary-core/.apm/hooks/session_start_wakeup.py\" || python3 \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/session_start_wakeup.py\" || python \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/session_start_wakeup.py\""
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\" || python \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\""
+            "command": "python3 \"hooks/sanctuary-core/.apm/hooks/pre_compact_snapshot.py\" || python3 \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\" || python \"${CLAUDE_PLUGIN_ROOT}/.apm/hooks/pre_compact_snapshot.py\""
           }
         ]
       }

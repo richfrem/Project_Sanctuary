@@ -117,6 +117,29 @@ apm deps list
 
 You should see `./plugins/sanctuary-core` and the installed skill directories populated in `.agents/skills/` and `.claude/skills/`.
 
+### Session-start hook compatibility
+
+The canonical hook configuration is `plugins/sanctuary-core/.apm/hooks/hooks.json`;
+its sibling `session_start_wakeup.py` selects the response format from the APM
+installation directory: Claude/Codex use `hookSpecificOutput`, Copilot uses
+`additionalContext`, Antigravity uses `injectSteps`, and Cursor uses
+`additional_context`. These envelopes must not be combined: Codex rejects unknown
+fields. Diagnostic output goes to stderr so stdout remains one JSON document.
+
+After changing the canonical hook, deploy all five clients from the project root:
+
+```bash
+apm install --target claude,copilot,codex,agy,cursor
+python3 plugins/sanctuary-core/.apm/hooks/finalize_hook_install.py
+```
+
+The finalizer corrects APM's current Cursor/Copilot event casing and nested
+registration format, touching only Sanctuary entries. Run it after each install
+until APM emits native registrations for these clients.
+
+Restart existing client sessions to exercise their SessionStart hook. Installation
+and contract tests do not establish that each application's live session succeeded.
+
 ### Keep the installed copies current
 
 Project-local installs are **copies**, not links. After you edit `plugins/sanctuary-core/` (or pull changes to it), run `apm install` again at the repo root (`apm install --dry-run` previews it; it touches only `./plugins/sanctuary-core`). Until you do, `.claude/skills/` and `.agents/skills/` keep the old scripts, and agents that run a skill from there use the old code and the old paths. The session wakeup (`guardian_wakeup.py`) prints an `installed-skills` line that turns to `WARN` when the copies differ from the source and names this fix. `apm.lock.yaml` is generated from a clean checkout: before regenerating it, delete the `__pycache__` folders under `plugins/` (bytecode copied by the install would be recorded and make the file irreproducible; a test fails on it) and run the install before any tests. A gitignored local file inside `plugins/` (for example the forge skill's `assets/model_card.yaml`) adds entries to the lock on that machine only; do not commit those, restore with `git checkout -- apm.lock.yaml`. The install copies each skill's whole folder, **tests included**, into `.claude/skills/`, `.agents/skills/` and `apm_modules/_local/`; the local-agent sandbox hides the held-out evaluation generator by name so those copies cannot leak it (see `references/local-agent-execution-loop.md`).
