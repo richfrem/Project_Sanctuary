@@ -1,6 +1,13 @@
 {
-  "total_entries": 373,
+  "total_entries": 374,
   "entries": [
+    {
+      "id": 382,
+      "title": "MISSION-060 prepared and handed to Codex; delegation struggles recorded",
+      "filename": "382_mission_060_prepared_and_handed_to_codex_delegation_struggles_recorded.md",
+      "date": "2026-11-06",
+      "status": "published"
+    },
     {
       "id": 381,
       "title": "Bootstrap repair: instruction imports, read-only startup preservation and cross-client validation (Claude, AGY, Codex)",
