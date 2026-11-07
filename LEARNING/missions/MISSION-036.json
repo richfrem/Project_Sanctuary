@@ -47,7 +47,8 @@
     "MISSION-033": "PROVIDER of review acceptance inputs; no hard dependency.",
     "MISSION-031": "VALIDATES claim-versus-evidence representation using its documented limitation; preserves historical record while disaggregating delivery from claim.",
     "MISSION-052": "CONTEXT: MISSION-052 keeps implementation disposition and empirical disposition separate by hand until 036 exists.",
-    "MISSION-054": "CONSUMED BY: MISSION-054 uses claim-level evidence contracts and verdict discipline for its two separately reported claims."
+    "MISSION-054": "CONSUMED BY: MISSION-054 uses claim-level evidence contracts and verdict discipline for its two separately reported claims.",
+    "MISSION-061": "COMPLEMENTS (soft, no dependency either way): MISSION-061 measures false rejection of valid alternative solutions in one existing evaluator using frozen, independently labeled cases; its method may inform how this mission's 5% false-rejection claim is measured."
   },
   "projected_impact": {
     "paths": [

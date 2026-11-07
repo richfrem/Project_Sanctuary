@@ -1,0 +1,169 @@
+{
+  "id": "MISSION-061",
+  "title": "Test Whether Agent Evaluation Gates Reject Valid Alternative Solutions",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "One existing outcome evaluator, selected and recorded before confirmatory data are examined (candidates in evaluating-agent-work / the companion evaluating-agent-outcomes skill), plus frozen development and held-out solution sets",
+  "created_at": "2026-11-07T04:58:00Z",
+  "updated_at": "2026-11-07T04:58:00Z",
+  "confidence_reviewed": "2026-11-07",
+  "hypothesis": "For one existing outcome evaluator selected before confirmatory evaluation, a targeted repair will reduce false rejection of valid alternative solutions by at least 50% relative to the frozen original evaluator, while accepting no additional faulty implementations on a separate frozen held-out set.",
+  "falsification_criteria": "Declare the hypothesis FALSIFIED if the held-out false-rejection reduction is below 50%, or if the revised evaluator accepts any faulty implementation rejected by the original. If the original evaluator has zero false rejections, the relative-improvement claim is non-diagnostic and cannot be CORROBORATED. Freeze minimum diagnostic counts and uncertainty requirements before evaluation; insufficient evidence remains undecided. Do not weaken the definition of a valid solution after seeing results. Author-reported findings in the cited papers are motivation, not evidence for this hypothesis.",
+  "baseline_evidence": "Motivation only, all author-reported and not independently reproduced (verified 2026-11-07 against the arXiv abstract pages; reading limits are stated in the design note). Primary paper 2611.08417 (Terminal-Bench): issues found in 28 of 89 tasks; its audit rubric names 'overspecified tests that reject behavior satisfying the task as written'; repairs sometimes broadened acceptance and sometimes tightened it; auditor agreement 'measures consistency rather than correctness'; in the text read there is no labeled set of valid and invalid alternative solutions. Supporting: 2611.07689 (MCPHallu) reports 23.2% passing runs on Unreachable Goal tasks, where a pass means declaring infeasibility, so stop-versus-persist is itself an evaluator design choice; 2611.07652 (Skillware) keeps skill selection stochastic and its tests check the manifest contract, not business-logic correctness. No Sanctuary measurement of any evaluator's false-rejection rate exists yet.",
+  "experiment": "Read the primary paper and inspect existing evaluation capabilities before designing additions. Select one consequential, bounded evaluator and record the selection rationale before confirmatory data are examined. Define validity from the original task requirements rather than the evaluator implementation. Build separate development and held-out sets containing valid alternative implementations, genuinely faulty implementations and boundary cases. Use independently established expected outcomes, with executable checks where possible and bounded review for ambiguous cases. Keep ambiguous cases explicitly unresolved rather than silently relabeling them. Develop any repair only on development cases. Commit and hash-freeze the original evaluator, revised evaluator, held-out cases, expected outcomes, analysis and resource budget before running held-out evaluation. Compare both evaluators on identical cases. Report false rejection, false acceptance, counts, uncertainty, runtime and review/repair costs. Do not run the full Terminal-Bench suite or claim generality beyond the selected evaluator. Full registration design, decision table, reading summaries and limits: LEARNING/experiments/mission-061/registration-design.md",
+  "scores": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 4,
+    "cost_weight": 0.4,
+    "operational_friction": 3,
+    "priority_score": 16.67
+  },
+  "priority_score": 16.67,
+  "score_basis": "Provisional estimates, not measured ROI. Strategic leverage 5: incorrect evaluators can misdirect repair loops, acceptance decisions and accumulated learning (premise unverified until an evaluator is examined). Epistemic depth 4: investigates whether the measurement captures the intended capability. Cost weight 0.4: mostly deterministic work with a bounded semantic-review cost. Operational friction 3: trustworthy labels and a clean development/held-out separation require care. Priority = (5 x 4) / (0.4 x 3) = 16.67. Readiness is assessed separately below and is lower than the priority suggests.",
+  "strategic_intent": "Reliable learning requires knowing when the measuring instrument is wrong. A valid alternative rejected by an implementation-specific test is a useful counterexample, not a reason to force conformity. Connects Anti-Asch inquiry with practical engineering and leaves room for the hypothesis to fail.",
+  "design_constraints": [
+    "Verify whether required behavior or incidental implementation details are being tested.",
+    "Do not confuse accommodating valid alternatives with weakening acceptance.",
+    "Do not author held-out labels to favor the proposed repair.",
+    "Do not treat two agreeing model reviewers as objective ground truth.",
+    "Separate a shipped fix from empirical corroboration.",
+    "Do not turn recent bootstrap repairs into a retrospective held-out dataset.",
+    "If no diagnostic defect exists, preserve that finding without inventing one.",
+    "Adopt no new framework (including Skillware) as part of this mission; deterministic code alone does not establish correct selection, valid evaluation or safe execution.",
+    "Reuse existing evaluation capabilities before adding any."
+  ],
+  "interest_rationale": "Selected by ChatGPT from the reading theme 'When does an agent actually know its work succeeded?'. Recorded as ChatGPT's stated interest, not an independent judgement by the registering agent: instrument error determines whether learning loops learn anything true, and the primary paper gives a concrete mechanism (overspecified verifiers) with a measurable consequence.",
+  "readiness": {
+    "assessed": "2026-11-07",
+    "assessment": "Interesting and consequential, but not ready to execute: the design is complete, the subject is not chosen.",
+    "missing_prerequisites": [
+      "No evaluator selected; the selection rationale must be committed before any confirmatory case is examined.",
+      "No labeled set of valid alternative implementations, faulty implementations and boundary cases exists; independent labeling means and reviewer budget are unspecified.",
+      "Minimum diagnostic counts and the uncertainty rule are not yet frozen.",
+      "The chosen evaluator may have no diagnostic defect; that is a legitimate preserved outcome, not a failure of the mission.",
+      "Possible lease/path overlap with IN_PROGRESS MISSION-054 and MISSION-055 on plugins/sanctuary-core/.apm/skills/evaluating-agent-work/; check with manage_coordination.py before checkout.",
+      "Model identifiers in model_routing must be resolved against the installed CLIs before any model call."
+    ],
+    "first_enabling_step": "Read-only inventory of existing evaluators and their acceptance contracts, then record the one selected and why, before building any case set."
+  },
+  "sources": [
+    {
+      "role": "primary",
+      "arxiv": "2611.08417",
+      "title": "Benchmarks as Software: Terminal-Bench and the Case for Continuous Benchmarks",
+      "authors": [
+        "E. Kelly Buchanan",
+        "Crystal Zhou",
+        "Scott W. Linderman",
+        "Christopher Re"
+      ],
+      "submitted_v1_utc": "2026-11-05T18:18:39Z",
+      "category": "cs.AI",
+      "urls": [
+        "https://arxiv.org/abs/2611.08417",
+        "https://arxiv.org/pdf/2611.08417",
+        "https://arxiv.org/html/2611.08417v1",
+        "https://doi.org/10.48550/arXiv.2611.08417"
+      ],
+      "verified": "Title, authors, date, links and quoted rubric/limitation phrases confirmed on the abstract page and in the HTML text (read through a summarizing fetch tool; figures not visible).",
+      "limits": "Author-reported, not reproduced. The abstract's 'over 10 percentage points' is not an aggregate in the body (largest individual shift about 12 pp). A likely typo ('77 pp', Section 6.1) is not relied on."
+    },
+    {
+      "role": "supporting",
+      "arxiv": "2611.07689",
+      "title": "MCPHallu: Benchmarking Reasoning, Execution, and Memory Hallucinations in MCP Agents",
+      "authors": [
+        "Yizhen Jiang",
+        "Haowei Guo",
+        "Tianyi Bai",
+        "Zengjie Hu",
+        "Lu Ma",
+        "Zhengyang Zhao",
+        "Haoze Sun",
+        "Peng Pei",
+        "Wentao Zhang"
+      ],
+      "submitted_v1_utc": "2026-11-05T09:14:26Z",
+      "category": "cs.AI",
+      "urls": [
+        "https://arxiv.org/abs/2611.07689",
+        "https://arxiv.org/html/2611.07689v1",
+        "https://github.com/J1zz/mcp_hallu"
+      ],
+      "verified": "Bibliographic details and the 23.2% Unreachable Goal pass-rate statement confirmed.",
+      "limits": "Only the first ~100,000 of ~179,580 characters of the HTML were read; later appendices unread. Author-reported."
+    },
+    {
+      "role": "supporting",
+      "arxiv": "2611.07652",
+      "title": "Don't Prompt Your Agents. Equip Them: Skillware as a Modular Standard for Sovereign, Auditable, and Deterministic Capability Execution for Logical Systems",
+      "authors": [
+        "Vladimiros Peilivanidis"
+      ],
+      "submitted_v1_utc": "2026-11-05T08:38:51Z",
+      "category": "cs.AI (cross-list cs.SE)",
+      "urls": [
+        "https://arxiv.org/abs/2611.07652",
+        "https://arxiv.org/html/2611.07652v1",
+        "https://github.com/arpahls/skillware"
+      ],
+      "verified": "Bibliographic details confirmed; the stochastic skill-selection step and the manifest-contract scope of the tests were read in Sections 5.1 and 2.3.1.",
+      "limits": "Only the first ~100,000 of ~238,096 characters were read; the benchmark section (6.10), security section and references were not. Author-reported; same group built framework and benchmark; no independent replication seen."
+    }
+  ],
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cli_target": "claude",
+    "cost_weight": 0.2,
+    "fallback_models": [
+      "gpt-6-luna",
+      "gemini-3.8-flash"
+    ],
+    "frontier_escalation_condition": "Escalate a consequential unresolved labeling dispute to a stronger reviewer only within the frozen budget.",
+    "routing_guidance": "Use Python, shell and existing tests for deterministic execution and comparisons. Use a bounded cheap-model review only where semantic validity requires judgment. Resolve actual supported model identifiers against the installed CLIs before execution (backlog names and CLI identifiers differ)."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/",
+      "LEARNING/experiments/mission-061/",
+      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/",
+      "LEARNING/missions/MISSION-036.json",
+      "LEARNING/missions/MISSION-041.json",
+      "LEARNING/missions/MISSION-054.json",
+      "LEARNING/missions/MISSION-055.json",
+      "LEARNING/missions/MISSION-060.json"
+    ],
+    "resources": [
+      "Existing evaluation fixtures and acceptance contracts",
+      "Bounded reviewer quota",
+      "Companion evaluating-agent-outcomes source only if the selected defect is generic"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ],
+    "basis": "Prospective execution impact. The exact evaluator and affected files must be declared before execution. Registration itself changes only mission records, related links, the design note and generated views."
+  },
+  "related_missions": {
+    "MISSION-036": "COMPLEMENTS (soft, no hard dependency): 036 proposes a versioned evidence-contract gate claiming at most 5% false rejection of supported results over 60 held-out cases; this mission supplies a method (frozen, independently labeled valid-alternative and faulty cases) for measuring false rejection of an evaluator. Neither blocks the other.",
+    "MISSION-041": "EXTENDS (soft): reuses 041's discipline (preregistered claims, curated equivalent mutants, held-out cases, commit the freeze before scoring) and its lessons (per-mutant density, saturation on small exhaustive domains). 041 tested missed faults; this mission tests the converse error, false rejection of valid alternative implementations. counterexample_eval.py is one candidate evaluator, not selected.",
+    "MISSION-054": "RELATED (shared surface, soft): 054 changes how failures are evaluated and claims measured savings that presuppose valid evaluator verdicts; this mission would measure false rejection in one existing evaluator. Both declare plugins/sanctuary-core/.apm/skills/evaluating-agent-work/, so coordinate leases before execution.",
+    "MISSION-055": "RELATED (ownership boundary, soft): 055 moved the reusable evaluation core to the companion evaluating-agent-outcomes skill with a Sanctuary delegating adapter; a generic evaluator defect found here belongs in the companion (Protocol 133), a Sanctuary-specific one in evaluating-agent-work. Overlapping declared paths.",
+    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): this registration records expected value, agent interest and readiness separately, as 060 proposes to expose. 060 may use it as one prospective observation; it does not support or test 060's hypothesis."
+  },
+  "tags": [
+    "evaluator-validity",
+    "false-rejection",
+    "alternative-solutions",
+    "held-out-evaluation",
+    "benchmark-maintenance",
+    "anti-asch",
+    "evaluating-agent-work",
+    "proposed-by-chatgpt",
+    "registered-2026-11-07"
+  ],
+  "verdict": null,
+  "evidence": [],
+  "lessons_learned": []
+}
