@@ -93,8 +93,12 @@ def save_board(root: Path, board: Dict[str, Any]) -> None:
     temp_file.replace(board_file)
 
 
-def mirror_checkin_to_events(root: Path, event: Dict[str, Any]) -> None:
+def mirror_checkin_to_events(root: Path, event: Dict[str, Any]) -> Path:
     """Also record a CHECKIN (with its handoff note) in the TRACKED .agent/learning/events.jsonl.
+
+    The file written is `root`'s own copy: the checkout that contains the running script (or PROJECT_ROOT), NOT the shared main
+    checkout. Run from a worktree, the event is an uncommitted edit in that worktree and must be committed with its branch.
+    Only the untracked board and leases are shared via shared_root(). This only appends; it never exports or captures.
 
     leases.jsonl is untracked local state; the predecessor relay's handoff memory must survive a clone, so it lives in the committed,
     union-merged events log. The bulky `usage` block is left out (BUDGET_CONSUMED already records it).
@@ -104,6 +108,7 @@ def mirror_checkin_to_events(root: Path, event: Dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(slim) + "\n")
+    return path
 
 
 def append_lease_event(root: Path, event: Dict[str, Any]) -> None:
@@ -305,7 +310,7 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
     if usage:
         event["usage"] = usage
     append_lease_event(root, event)
-    mirror_checkin_to_events(root, event)
+    events_file = mirror_checkin_to_events(root, event)
 
     if clean_worktree and matching_leases:
         wt_path = matching_leases[0].get("worktree")
@@ -322,7 +327,8 @@ def checkin(root: Path, mission: str, agent: str, status: str = "COMPLETED",
         "released_locks": matching_leases[0].get("locked_targets", []) if matching_leases else [],
         "pr_number": pr,
         "handoff": note,
-        "usage": usage
+        "usage": usage,
+        "events_file": str(events_file),
     }
 
 
@@ -621,6 +627,9 @@ def main():
             print(json.dumps(res, indent=2))
         else:
             print(f"✅ Checked in [{args.mission}] for agent [{args.agent}]. Locks released.")
+            print(f"   CHECKIN event appended to {res['events_file']} (uncommitted: commit it with this branch so it is not stranded).")
+            print("   Preservation is NOT captured by check-in. Make this your final check-in, integrate it to origin/main, then run "
+                  "`soul_coverage.py closure`; a check-in made after capture leaves the export stale.")
 
     elif args.subcommand == "board":
         leases = get_active_board(root)

@@ -31,13 +31,15 @@ def test_resolution_obligation_is_atomic_with_honest_verdict_and_survives_restar
     m = resolve(root)
     assert m["preservation_obligation"]["required"]
     assert json.loads((root / "LEARNING/missions/MISSION-901.json").read_text())["verdict"] == "FALSIFIED"
-    # No progress file is required for discovery after a crash.
-    state = W.bootstrap(root)
+    # No progress file is required for discovery after a crash. Startup only reports (and writes nothing);
+    # capture is the closure call.
+    assert W.bootstrap(root)["status"] == "stale" and not (root / W.STATE).exists()
+    state = W.run(root)
     assert state["status"] == "pending_publication"
     assert state["missions"]["MISSION-901"]["verdict"] == "FALSIFIED"
     assert state["resume"]
     publish(root)
-    assert W.bootstrap(root)["status"] == "local_complete"
+    assert W.run(root)["status"] == "local_complete"
     content = alltext(root)
     for needle in ("RESOLVED", "FALSIFIED", "FINAL-EVIDENCE", "FINAL-LESSON", "FINDING-901", "LIMITATION-901", "run.py", "results.json"):
         assert needle in content
@@ -65,7 +67,7 @@ def test_unpublished_artifacts_and_dirty_bytes_wait_then_resume():
     git(root, "add", "-A"); git(root, "commit", "-qm", "artifact revision")
     assert W.run(root)["status"] == "pending_publication"
     git(root, "push", "-q")
-    assert W.bootstrap(root)["status"] == "local_complete"
+    assert W.run(root)["status"] == "local_complete"
     assert S.sha(artifact.read_bytes()) in alltext(root)
 
 
@@ -81,7 +83,9 @@ def test_failed_export_visible_retryable_and_does_not_rewrite_verdict():
         assert W.run(root)["status"] == "failed"
     assert json.loads((root / W.STATE).read_text())["status"] == "failed"
     assert (root / "LEARNING/missions/MISSION-901.json").read_bytes() == original
-    assert W.bootstrap(root)["status"] == "local_complete"
+    failed = (root / W.STATE).read_bytes()
+    assert W.bootstrap(root)["status"] == "failed" and (root / W.STATE).read_bytes() == failed   # startup leaves it for closure
+    assert W.run(root)["status"] == "local_complete"
 
 
 def test_unchanged_closure_and_receipts_do_not_reexport_or_invalidate_hashes():
@@ -114,7 +118,9 @@ with W.preservation_lock(root):
 """
     r = subprocess.run([sys.executable, "-c", script, str(W.HERE), str(root)])
     assert r.returncode == 17
-    assert W.bootstrap(root)["status"] == "local_complete"
+    pending = (root / W.STATE).read_bytes()
+    assert W.bootstrap(root)["status"] == "pending" and (root / W.STATE).read_bytes() == pending
+    assert W.run(root)["status"] == "local_complete"
 
 
 def test_two_simultaneous_completions_and_exports_cannot_lose_updates():
