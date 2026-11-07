@@ -1,0 +1,177 @@
+{
+ "MISSION-023": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.05,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-006": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-007": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-028": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.1,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-040": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.15,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-011": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-036": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-039": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-042": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-014": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 3,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-037": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-049": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-012": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-032": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-047": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.25,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-038": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-044": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-051": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-048": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.25,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-010": {
+  "strategic_leverage": 2,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-046": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.5,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-008": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.5,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-043": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.4,
+  "operational_friction": 4,
+  "source": "manifest"
+ },
+ "MISSION-015": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 1.0,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-053": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 1.0,
+  "operational_friction": 4,
+  "source": "manifest"
+ }
+}

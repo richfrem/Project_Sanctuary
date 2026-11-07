@@ -1,0 +1,31 @@
+{
+  "_note": "Frozen parameters for the MISSION-060 study. Approved by Richard ('Proceed', 2026-11-07) as the package: 30% protected share of the study's 16 slots, thresholds below, 700k additional-token ceiling, 25k per item, at most 10 executed items.",
+  "slots_K": 16,
+  "formula_share_slots": 11,
+  "interest_share_slots": 5,
+  "cohort_min_items": 4,
+  "max_executed_items": 10,
+  "per_item_cap_additional_tokens": 25000,
+  "total_additional_tokens_ceiling": 700000,
+  "B1_min_ratio_spo_per_budget": 1.5,
+  "B1_min_absolute_spo_difference": 2,
+  "B3_diversion_guard": 0.9,
+  "claim_A": {"blocker_reduction_min": 0.30, "depth_retention_min": 0.90, "bootstrap_resamples": 2000, "bootstrap_seed": 4060, "bootstrap_pass_probability_min": 0.90},
+  "scenarios": {
+    "seed_dev": 1060, "seed_heldout": 2060, "n_dev": 12, "n_heldout": 24,
+    "candidates_per_situation": 12, "K": 6, "formula_n": 4, "interest_n": 2,
+    "p_blocker": 0.25, "readiness_check_recall": 0.7, "sensitivity_recall": [0.4, 1.0],
+    "interest_depth_weight": 0.3, "high_interest_threshold": 4.0, "agents_per_situation": 3
+  },
+  "calibration_agreement_min": 0.80,
+  "originality": {"containment_threshold": 0.35, "cap_value": 2},
+  "dimensions": ["curiosity", "originality", "potential_understanding", "expression_opportunity"],
+  "assignment": {"order_seed": 3060, "workers": ["haiku", "flash"], "reviewer_for": {"haiku": "flash", "flash": "sonnet"}, "successor_for": {"haiku": "flash", "flash": "sonnet"}},
+  "declarers": ["sonnet", "flash", "luna"],
+  "idea_generators": ["sonnet", "flash"],
+  "scorer": "haiku",
+  "stop_rules": {"min_backend_window_remaining_pct": 25, "claude_5h_study_share_max_pct": 30, "claude_tokens_per_pct": 45704},
+  "natural_observation": {"window_days": 14, "target_count": 8, "affects_verdict": false},
+  "excluded_from_pool": ["MISSION-060", "MISSION-061", "MISSION-062"],
+  "pool_rule": "PROPOSED missions with human_gate_required false, plus inbox ideas, plus up to 4 agent-proposed curiosity ideas"
+}

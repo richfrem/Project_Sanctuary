@@ -1,0 +1,9 @@
+{
+ "started": "2026-11-07T05:50:28Z",
+ "claude_5h_remaining_pct": 36.0,
+ "headroom": {
+  "claude": 36.0,
+  "agy": 49.9,
+  "codex": 28.0
+ }
+}
