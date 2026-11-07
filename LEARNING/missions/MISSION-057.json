@@ -61,7 +61,8 @@
   ],
   "related_missions": {
     "MISSION-056": "Sibling curiosity mission (ChatGPT's choice): another question where exact computation tests an intuition about structure versus randomness.",
-    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice."
+    "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice.",
+    "MISSION-062": "FOLLOWED BY (practice, soft): MISSION-062 reuses the lesson to compare against an established baseline (a paper's proved region and published table) rather than a naive value, and the rule that secondary tables cannot rescue a failed primary claim. No dependency."
   },
   "projected_impact": {
     "paths": [

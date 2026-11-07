@@ -1,0 +1,152 @@
+{
+  "id": "MISSION-062",
+  "title": "Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Additive combinatorics: sizes of h-fold sumsets of 3-element subsets of {1,...,q} (exhaustive counting by local deterministic computation; bounded CPU)",
+  "created_at": "2026-11-07T05:20:00Z",
+  "updated_at": "2026-11-07T05:20:00Z",
+  "confidence_reviewed": "2026-11-07",
+  "hypothesis": "For k = 3 and every h in {5,...,16}, at every q in [3h, 250] the h most frequent values of |hA| over the 3-element subsets A of {1,...,q} are exactly P_0,...,P_(h-1), where P_l = C(h+2,2) - C(l+1,2), each occurring for strictly more sets than every other size. Equivalently, the empirical threshold q0(h,3) is at most 3h in this range, far below the h^5 scaling that the proof of Corollary 4.1 in arXiv:2611.07303 requires.",
+  "falsification_criteria": "FALSIFIED if any (h,q) with h in {5,...,16} and 3h <= q <= 250 fails the ok-test (some P_l has f_q(P_l) = 0 or f_q(P_l) <= the maximum f_q over all unlisted sizes; a tie counts as failure), after the failing cell is recomputed by the independent reference implementation. UNASSESSED, neither corroborated nor falsified, if the validity gate fails (reproduce the paper's published threshold cells (h,k) = (3,3)->5, (4,3)->6, (2,4)->8, (3,4)->16 with failures at q = 4, 5, 7, 15; exact agreement between the fast and the reference implementation for every h <= 6, q <= 40; |hE| = 2h+1 for E = {1,2,3}, h >= 2) or if the budget is exhausted before the whole region is covered. The constant 3, the h range, the q bound 250, the ok-test and the budget are fixed in protocol.md and committed before the held-out run and are not changed afterwards. Results for h <= 4 and the k = 4 cells are calibration, not primary evidence; secondary tables cannot rescue a failed primary claim. No claim is made for q > 250, h > 16, k != 3, or asymptotic truth, and a corroboration is evidence about a finite range, not a proof. The cited paper's claims are context, not evidence for this hypothesis.",
+  "baseline_evidence": "Context only, author-reported (verified 2026-11-07 on the arXiv abstract page and in the HTML text read through a summarizing fetch tool; the PDF and Lean files were not opened). arXiv:2611.07303 (Awan, Miller, Nguyen, Senger, Wong) proves that for k >= 3 fixed and h = o(q^(1/(2k-1))) the h most frequent sizes of |hA| over k-subsets of {1,...,q} are exactly P_l = C(h+k-1,k-1) - C(l+k-2,k-1), l = 0..h-1, with simplex-number gaps (Corollary 4.1; machine-checked in Lean per the authors). Its Remark 4.2 gives an explicit sufficient threshold q > 2^k k! h (2h+1)^(2k-2) and calls it 'far from sharp' (about 1.4e8 for (h,k) = (3,4)). It tabulates the computed thresholds q0(3,3)=5, q0(4,3)=6, q0(2,4)=8, q0(3,4)=16 (failures at q=4,5,7,15), verified up to q = 120, 120, 60, 50, and lists as open Question 1 how fast h may grow with q. No table of q0(h,3) for h >= 5 was found in the text read. No Sanctuary computation of any sumset size exists.",
+  "experiment": "Freeze first: write protocol.md and freeze.json (definitions, ok-test, constants, region, budget, analysis) and commit them in a separate step BEFORE the held-out run (MISSION-056 lesson); at that step re-check the formula for P_l and the four table cells against the PDF. Instrument: exhaustive counts f_q(v) = number of 3-subsets A of {1..q} with |hA| = v, accumulated by largest element so one pass serves every q <= 250, with exact deduplication of the C(h+2,2) sums; a fast implementation (NumPy or small C) plus a separate pure-Python reference. Validity gate as in the falsification criteria. Development/calibration: the four published cells and k = 3 with h = 2,3,4. Held-out primary run: k = 3, h = 5..16, q in [3h,250]. Verdict: CORROBORATED if ok holds at every held-out (h,q); FALSIFIED if any fails after independent recomputation; UNASSESSED otherwise. Secondary (descriptive only): empirical q0(h,3) for h = 2..16, q0/h, a log-log slope, comparison with the Remark 4.2 threshold, a small k = 4 grid (h = 2..4, q <= 80). Stop on validity-gate failure, on the first confirmed counterexample, on completion, or at budget; never silently shrink the region. Budget: <= 1 wall-hour (about 2 CPU-hours over 8 cores), <= 4 GiB RAM, no network at execution, <= 40,000 additional model tokens (code and interpretation only; no model call inside the computation). Full design, selection record and limits: LEARNING/experiments/mission-062/registration-design.md",
+  "scores": {
+    "strategic_leverage": 2,
+    "epistemic_depth": 3,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 30.0
+  },
+  "priority_score": 30.0,
+  "score_basis": "Provisional estimates, not measured ROI. Strategic leverage 2: little direct project capability; exercises the self-directed research loop on an externally checkable question. Epistemic depth 3: new empirical data the paper does not contain, bounded in scope. Cost weight 0.1: deterministic local compute, as in MISSIONS 056 and 057. Operational friction 2: instrument correctness and the freeze discipline. Priority = (2 x 3) / (0.1 x 2) = 30.0. The formula rewards cheapness: cost weight 0.15 gives 20.0, leverage 1 gives 15.0, and MISSION-061 has higher leverage with a lower number. The number is not a statement of importance or of readiness. Leverage is the least certain input.",
+  "strategic_intent": "Surface and measure a gap between what a proof requires and what is true: the authors call their threshold 'far from sharp' but never locate the real boundary. Practise the project's curiosity loop (freeze before scoring, compare against an established baseline, UNASSESSED on an invalid instrument) on a question that has nothing to do with AI.",
+  "design_constraints": [
+    "Freeze protocol.md and freeze.json in a commit before the held-out run, sequenced as a separate step from the run command.",
+    "Compare against the paper's published thresholds and proof region, not a naive expectation.",
+    "An instrument that fails the validity gate yields UNASSESSED, never FALSIFIED.",
+    "Do not change 3h, the h range, the q bound, the ok-test or the budget after seeing held-out results; secondary tables cannot rescue a failed primary claim.",
+    "Do not silently shrink the region to fit the budget; checkpoint and report UNASSESSED with the coverage reached.",
+    "Re-check the paper's formulas and table against the PDF before freezing; the registration relied on a summarized reading.",
+    "State only finite-range conclusions: nothing about q > 250, h > 16, k != 3 or asymptotics.",
+    "Do not run any held-out cell before the freeze; development cells are the published ones and k = 3 with h <= 4."
+  ],
+  "interest_rationale": "Chosen by the registering agent (claude-code), independently of MISSION-061. A plain counting question has an orderly hidden answer (the most frequent sumset sizes are separated by simplex numbers; triangular numbers for k = 4), and the theorem is machine-checked, so the live uncertainty is not whether it is true but where it starts being true. The authors themselves call their proof threshold far from sharp and ask how fast h may grow with q. A finite computation can settle a precise instance without statistics, and the topic is unrelated to AI. Interest is recorded as a personal judgement, not as value or readiness.",
+  "readiness": {
+    "assessed": "2026-11-07",
+    "assessment": "High but not complete: nothing has been run and the instrument does not exist yet. Attractiveness is not a readiness argument.",
+    "verified_present": [
+      "Python 3.13.4 with NumPy 2.4.6",
+      "clang/cc",
+      "8 CPU cores",
+      "16 GiB RAM"
+    ],
+    "missing_prerequisites": [
+      "The paper's formula for P_l and the four threshold cells were read through a summarizing tool; they must be re-checked against the PDF (and ideally the Lean ancillary files) before freezing.",
+      "protocol.md and freeze.json do not exist; the constants 3h, h <= 16 and q <= 250 are provisional.",
+      "Neither the fast implementation nor the independent reference implementation exists, and the validity gate has not been run.",
+      "The compute estimate (about 2.5e9 sum evaluations over h = 2..16) is unverified; no timing pilot was run.",
+      "The expected outcome is unknown (roughly even odds); a falsification would locate a real boundary and is as informative as a corroboration."
+    ],
+    "first_enabling_step": "Re-check the formulas and table against the PDF, then write and commit protocol.md and freeze.json before any held-out cell is computed."
+  },
+  "selection_record": {
+    "method": "Browsed titles of the 100 most recent math.CO entries (5-6 Nov 2026), then read exactly five abstracts.",
+    "inspected": [
+      {
+        "arxiv": "2611.07303",
+        "title": "Gaps in the Most Frequent Sizes of Integer Sumsets",
+        "disposition": "selected"
+      },
+      {
+        "arxiv": "2611.08230",
+        "title": "The probabilistic bound for perfect hashing is sharp only for binary alphabets",
+        "disposition": "rejected: asymptotic proofs, no cheap local test of the claim"
+      },
+      {
+        "arxiv": "2611.06362",
+        "title": "Four-colour counterexamples for monochromatic path partitions",
+        "disposition": "rejected: verifying a construction for n >= 118 needs search at scale; abstract gives no method"
+      },
+      {
+        "arxiv": "2611.08079",
+        "title": "Idiosynchromatic Poetry",
+        "disposition": "rejected: infinite combinatorics, nothing computable; arXiv page shows a 2014 journal reference conflicting with the 2026 submission (unverified metadata anomaly)"
+      },
+      {
+        "arxiv": "2611.05745",
+        "title": "A toric approach to social choice theory",
+        "disposition": "rejected: abstract does not state its results, so no defensible question could be formed"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "role": "selected",
+      "arxiv": "2611.07303",
+      "title": "Gaps in the Most Frequent Sizes of Integer Sumsets",
+      "authors": [
+        "Saad A. Awan",
+        "Steven J. Miller",
+        "Linh Nguyen",
+        "Steven Senger",
+        "Elvis Wong"
+      ],
+      "submitted_v1_utc": "2026-11-05T01:38:11Z",
+      "category": "math.CO (cross-list math.NT); MSC 11B13, 11B30",
+      "urls": [
+        "https://arxiv.org/abs/2611.07303",
+        "https://arxiv.org/html/2611.07303v1",
+        "https://arxiv.org/pdf/2611.07303"
+      ],
+      "verified": "Title, authors, date and categories confirmed on the abstract page; definitions, Theorem 1.1, Corollary 4.1, Remark 4.2, the threshold table and Section 5 questions read in the HTML text.",
+      "limits": "Author-reported; read through a summarizing fetch tool, so transcription errors are possible. The PDF and the Lean ancillary files were not opened. The Lean formalization is stated by the authors to cover Corollary 4.1 and Theorem 1.1 for fixed h; not independently checked."
+    }
+  ],
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "claude-haiku-5.5",
+    "cost_weight": 0.1,
+    "cli_target": "claude",
+    "fallback_models": [
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "None: the computation is deterministic code with no model calls. Model assistance is limited to writing and reviewing the implementation and interpreting results.",
+    "routing_guidance": "Python/NumPy or a small C program for all counting. Budget: max 40000 additional model tokens, at most 1 wall-hour of experiment compute. If the projection exceeds the budget after the validity gate, checkpoint and report UNASSESSED rather than silently reducing the held-out region. Resolve actual supported model identifiers against the installed CLIs before any model call."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-062.json",
+      "LEARNING/experiments/mission-062/",
+      "LEARNING/missions/MISSION-056.json",
+      "LEARNING/missions/MISSION-057.json",
+      "LEARNING/missions/MISSION-060.json"
+    ],
+    "resources": [
+      "bounded local CPU (8 cores, about 2 CPU-hours), at most 4 GiB RAM, no network at execution"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ],
+    "basis": "Prospective execution impact is confined to LEARNING/experiments/mission-062/ (scripts, protocol, results). No skill, evaluator or shared code is changed. Registration itself changes only the manifest, justified reciprocal links, the design note and generated views."
+  },
+  "related_missions": {
+    "MISSION-056": "FOLLOWS (practice, soft): reuses this resolved curiosity mission's exact-computation practice, protocol.md and freeze.json, development versus held-out split, and the rule that an invalid instrument is UNASSESSED; and its lesson to sequence the freeze commit before the scoring command.",
+    "MISSION-057": "FOLLOWS (practice, soft): reuses the lesson to compare against an established baseline (here the paper's proved region and published threshold table), not a naive value, and the rule that secondary tables cannot rescue a failed primary claim.",
+    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation for 060; it neither supports nor tests 060's hypothesis."
+  },
+  "tags": [
+    "additive-combinatorics",
+    "sumsets",
+    "exhaustive-enumeration",
+    "sharpness-of-proof-conditions",
+    "curiosity",
+    "own-choice",
+    "exact-computation",
+    "registered-2026-11-07"
+  ],
+  "verdict": null,
+  "evidence": [],
+  "lessons_learned": []
+}
