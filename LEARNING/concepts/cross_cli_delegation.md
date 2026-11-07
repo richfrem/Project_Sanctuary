@@ -37,3 +37,14 @@ That Codex GPT-6.1 Sol picks up and executes the handoff; that the relay shows t
 ## Evidence and links
 
 PRs #409 (instruments and handoff), #410 (final check-in), #411 (export); `LEARNING/experiments/mission-060/HANDOFF-codex.md`; `LEARNING/missions/MISSION-060.json` (`execution_handoff`); Chronicle entry 382; related `bootstrap_instruction_delivery.md`, `sovereign_memory_engine.md`.
+
+## Correction (2026-11-07, after Richard's note): `cli-agent` is the dispatch path
+
+Richard pointed out that the `cli-agent` skill is how work is dispatched to other CLIs. The sections above treated "assign" as only a record plus a pickup at the target's next session start. That was incomplete, and partly my own gap: I recorded the MISSION-060 assignment and never used `cli-agent` to launch the Codex session. What is true:
+
+1. `cli-agent` is installed for Claude, AGY and Codex (`~/.claude/skills`, `~/.agents/skills`, `~/.codex/skills`) and is listed in AGENTS.md under Multi-Agent Orchestration. It launches a **fresh** session on another CLI with an instruction, for example `python3 ~/.claude/skills/cli-agent/scripts/run_agent.py /dev/null <input> <output> "<instruction>" --cli codex --model gpt-6.1-sol --executable <effort wrapper> --cwd <dir> --allowed-root <root> --timeout <seconds> --result-json <file>`. It cannot inject work into a session that is already running.
+2. The handoff note is still required, because a dispatched session starts cold.
+3. Awareness was weak: AGENTS.md names the skill only inside a long list, START_HERE.md does not mention it, and the MISSION-060 handoff called it "the router" without saying it is the dispatch path (the handoff now says so).
+4. **Not done:** MISSION-060 has not been dispatched. A Codex `exec` session started through the router ran in `workspace-write` with network disabled and approvals "never" (observed in an earlier rollout's `turn_context`), so it could not spawn the `claude`, `agy` and `codex` CLIs the study's driver uses. A non-isolated, permission-bypass launch needs Richard's explicit authorization and external containment, and the client-allocation decision is still open. Pickup by dispatch is unverified.
+
+Practice: dispatch with `cli-agent`; keep the handoff note; state in the handoff which launch settings a dispatched session needs and which authorizations are still missing.
