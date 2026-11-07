@@ -1,9 +1,9 @@
 {
- "base_commit": "a114e08a33cd0b51948ab12ac9d51dbb8541f243",
- "dataset_records": 1344,
+ "base_commit": "01fc8c4ed25c6733a6946bebba502d43de5aeccb",
+ "dataset_records": 1348,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-07T04:12:55Z",
+ "generated_at": "2026-11-07T04:41:58Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,10 +54,11 @@
   },
   {
    "action": {
-    "unchanged": 8,
-    "updated": 2
+    "added": 2,
+    "unchanged": 7,
+    "updated": 3
    },
-   "bytes": 116335,
+   "bytes": 127473,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -70,7 +71,9 @@
     "events__CHECKIN__001",
     "events__CHECKIN__002",
     "events__FAILURE_REPAIR__001",
-    "events__intervention__001"
+    "events__intervention__001",
+    "events__repair__001",
+    "events__lesson__001"
    ],
    "record_sha256": [
     "42ad6bbb3b6750505f912a70561c05bc652375845c00c2c9fe46c1494f31fc81",
@@ -79,13 +82,15 @@
     "2a15aa575abd139df37e394551078b31785ed7d2d4aad68758de351b9dc83e1c",
     "6f1719ba97ced659727cdb98a4374ab4bd651bcf0faebf4ca8af3942dd7273ab",
     "2a11eb75e1596f9c40efd87c07c34884bf88a1f454b5ad12e3e02c376dc589be",
-    "8f4b581cfd59d922e627047729681c52213cbd6c88105c632635baea1d42f2ee",
-    "1df7e462bbe4dc75bc0f05736d0f051f7686eaf7c6cd56d9a90d5fef72181346",
+    "b3dcf421b65a84d2b258447964d3e925a2780288726ee62ed8a69123426198d4",
+    "6ef856925ea802b88411007c64efece691d91e5cfa3ca0a766808c0da56d9848",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
-    "27c164cfd172b552aad805c2d6da959ce903e5a1d3148d39c7ac91eb3a1120fc"
+    "2e834f4ba53039c1117411f99a1c31b49167de0a4cd3f0778bc2cac18b9f1326",
+    "8880fe28828d3361296517c6bccd59c8c70760e31059076f7359b801915d274a",
+    "6de7dea2ad1732fb73757a32fc98c192d9e222b612f7347b873c4e076e414fc0"
    ],
    "required": true,
-   "source_sha256": "768e16bba81aba43e6cb5c6378802348756e18663825bd667994f672bbfc2906",
+   "source_sha256": "b2dc8dbd2267d1eabe40b1ef5ef3d9bfc036eb12170f978813d66b26766aa214",
    "status": "included"
   },
   {
@@ -124,12 +129,12 @@
    "status": "included"
   },
   {
-   "bytes": 2272,
+   "bytes": 2840,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "11dd2f21e2177ad55986f9e467c8d35f65e14a2a30648e8269c339a9f2082a7e",
+   "source_sha256": "c94221af4ebec81d94fc8a5eb43aca9d93ec4d509fa231b3389e482bc99e0784",
    "status": "excluded"
   },
   {
@@ -143,7 +148,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 19706,
    "category": "root_architecture_docs",
@@ -777,19 +782,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 5910,
+   "bytes": 6248,
    "category": "knowledge_topics_concepts_research",
    "path": "LEARNING/INDEX.md",
    "record_ids": [
     "LEARNING_INDEX"
    ],
    "record_sha256": [
-    "f0caae7435a4521ff8514bd561509188050407b3518d0a29e7ae3f975fc7e054"
+    "67a715da8c146aa681a7c732bb095e0e7b0f7d513e719cd1099b46cadf39ce6d"
    ],
    "required": true,
-   "source_sha256": "ef3379a5e71ce017e95260dcf08439293ee3afc83e5ea6aa7ff80462908c0344",
+   "source_sha256": "c3737a56c48bef610a8878d600f592be43718f831d0b061099926e2cea0a0078",
    "status": "included"
   },
   {
@@ -867,6 +872,23 @@
    ],
    "required": true,
    "source_sha256": "cc4e61097341d24ad4d8296a66f7b0edc05d1bea65b29bdf3d3b3b15a33a6bb4",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 15900,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/concepts/bootstrap_instruction_delivery.md",
+   "record_ids": [
+    "LEARNING_concepts_bootstrap_instruction_delivery"
+   ],
+   "record_sha256": [
+    "1e40b51aefbc6219d841d37c11194a38d8e067055886d84d9e0eddc3db3bb335"
+   ],
+   "required": true,
+   "source_sha256": "3f73ee49ccad4114ee30883244bf44f1babe576f348802976a52ccbfb976a3b1",
    "status": "included"
   },
   {
@@ -25787,7 +25809,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 6420,
    "category": "root_architecture_docs",
@@ -32161,12 +32183,29 @@
    "status": "included"
   },
   {
-   "bytes": 96589,
+   "action": {
+    "added": 1
+   },
+   "bytes": 7261,
+   "category": "chronicle",
+   "path": "chronicle/entries/381_bootstrap_repair_instruction_imports_read_only_startup_preservation_and_cross_client_validation_claude_agy_codex.md",
+   "record_ids": [
+    "chronicle_entries_381_bootstrap_repair_instruction_imports_read_only_startup_preservation_and_cross_client_validation_claude_agy_codex"
+   ],
+   "record_sha256": [
+    "157671abfb22f383f35eaed55592c8ad28461f9135f23d353c579d5a3d99f3cd"
+   ],
+   "required": true,
+   "source_sha256": "c2c4318631b21a19e0836c4dc1d5aab7f77f36c284a8ca97b3db794d5fb34b64",
+   "status": "included"
+  },
+  {
+   "bytes": 96953,
    "category": "derived_projections",
    "path": "chronicle/ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "51fd20d60f6efc62c6d988e5474a151d5c10aa60f8fda49e38a77a642120e160",
+   "source_sha256": "0cec1f4f33e2d399ce6d48e555285b159d0547fb001309cb905aaa0c219d2228",
    "status": "excluded"
   },
   {
@@ -36229,11 +36268,11 @@
     "required": false
    },
    "chronicle": {
-    "discovered": 373,
+    "discovered": 374,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 373,
+    "included": 374,
     "required": true
    },
    "curated_memory_identity": {
@@ -36301,11 +36340,11 @@
     "required": false
    },
    "knowledge_topics_concepts_research": {
-    "discovered": 96,
+    "discovered": 97,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 96,
+    "included": 97,
     "required": true
    },
    "learning_loop_readme": {
