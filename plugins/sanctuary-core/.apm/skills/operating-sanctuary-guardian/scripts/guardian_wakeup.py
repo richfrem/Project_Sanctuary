@@ -429,6 +429,11 @@ def main():
     for rc in runtime_checks:
         digest_lines.append(f"- [{rc['status']}] **{rc['component']}**: {rc['description']}")
 
+    git_dirty_str = "DIRTY" if git_meta["dirty"] else "CLEAN"
+    digest_lines.append("")
+    digest_lines.append("## VI. Bootstrap Completion Confirmation")
+    digest_lines.append(f"“Sanctuary 5-step bootstrap complete. Continuity loaded. Git: Branch `{git_meta['branch']}` ({git_dirty_str}). Ready.”")
+
     digest_text = "\n".join(digest_lines)
     digest_path_str = None
 
