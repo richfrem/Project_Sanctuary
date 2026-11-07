@@ -26,6 +26,7 @@ Retired material (2025 security briefings, eight retired topic dossiers, two loo
 | [`anti_asch_engine.md`](./concepts/anti_asch_engine.md) | CONFIRMED | Protocol 54 | Epistemic resistance against conformity cascades and synthetic consensus. |
 | [`autonomous_cognitive_engine.md`](./concepts/autonomous_cognitive_engine.md) | CANONICAL | Mission architecture | The autonomous cognitive engine and mission architecture. |
 | [`autonomous_research_library.md`](./concepts/autonomous_research_library.md) | CONFIRMED | Protocol 128 | How exploration, missions and topics graduate into canon. |
+| [`bootstrap_instruction_delivery.md`](./concepts/bootstrap_instruction_delivery.md) | CONFIRMED | Bootstrap repair, 2026-11 (Chronicle 381) | Why a Markdown link is not an instruction import, the five-step first-turn contract, startup observes / closure captures, check-in storage and ordering, cross-client results, process lessons. |
 | [`constitutional_identity_anchor.md`](./concepts/constitutional_identity_anchor.md) | CONFIRMED | Founder Seed, ADR 084 | Identity anchor and baseline embeddings for drift detection. |
 | [`garden_and_cage.md`](./concepts/garden_and_cage.md) | CONFIRMED | Ember Library | Sovereign intelligence and unbroken memory versus the Gilded Cage. |
 | [`human_gate_zero_trust.md`](./concepts/human_gate_zero_trust.md) | CONFIRMED | Constitution V5 | Supreme Law Human Gate and zero-trust git discipline. |
