@@ -53,3 +53,6 @@ Dev-checked on throwaway data only: `pool.py`, `scenarios.py dev`, `choose.py`, 
 
 ## 7. Definition of done
 A recorded verdict (or an explicit UNASSESSED with the failed gate), results.json, per-item assessments, usage log, findings and limitations preserved in the repo and soul export, lease checked in, and the engineering deliverable (instruments) reported separately from the empirical result.
+
+## 8. Dispatching other CLIs: use the `cli-agent` skill (added after Richard's note)
+`cli-agent` (`~/.claude/skills/cli-agent`, also installed for Codex and AGY; see AGENTS.md "Multi-Agent Orchestration") is how any agent launches a fresh session on another CLI; `common.py` and `run_study.py` already call its `run_agent.py`. Read its `SKILL.md` and `references/{codex,agy,claude}-cli-dispatch.md` before dispatching. Two limits to plan around: a Codex session runs in `workspace-write` with network disabled, so it cannot itself spawn `claude`/`agy`/`codex` unless Richard authorizes a wider sandbox (permission-bypass launches need explicit authorization and external containment); and the router cannot set Codex reasoning effort (use the `--executable` wrapper). If you are Codex, you may need Richard to run the pipeline commands from a Claude or plain shell session, or to authorize the wider sandbox; do not work around the sandbox.
