@@ -69,7 +69,8 @@
     "MISSION-014": "RELATED: studies curiosity as an uncertainty-reduction policy; this pilot observes unprompted discovery from an external source without testing that policy.",
     "MISSION-008": "RELATED: functional cognitive continuity; the continuity test here is a small, bounded case of handoff-based resumption.",
     "MISSION-025": "RELATED: cross-model continuity was FALSIFIED there; this pilot asks the narrower question of recovering one investigation from preserved artifacts.",
-    "MISSION-059": "RELATED TO MISSION-059: EXTENDS CONTEXT: follows the external-content research and successor-handoff path exercised by 058; does not repeat its investigation."
+    "MISSION-059": "RELATED TO MISSION-059: EXTENDS CONTEXT: follows the external-content research and successor-handoff path exercised by 058; does not repeat its investigation.",
+    "MISSION-060": "REFERENCE FOR (method and calibration, soft): MISSION-060's revised design reuses this mission's frozen successor-handoff method (a fresh session answers at least 4 of 5 questions from preserved artifacts) as one check for substantive preserved outputs; development calibration only."
   },
   "projected_impact": {
     "paths": [

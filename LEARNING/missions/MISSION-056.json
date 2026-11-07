@@ -61,7 +61,8 @@
   ],
   "related_missions": {
     "MISSION-058": "FOLLOWED BY: MISSION-058 (Moltbook discovery pilot) reuses this mission's practice.",
-    "MISSION-062": "FOLLOWED BY (practice, soft): MISSION-062 (own choice, additive combinatorics) reuses this mission's exact-computation practice, freeze-before-scoring sequencing and UNASSESSED-on-invalid-instrument rule. No dependency."
+    "MISSION-062": "FOLLOWED BY (practice, soft): MISSION-062 (own choice, additive combinatorics) reuses this mission's exact-computation practice, freeze-before-scoring sequencing and UNASSESSED-on-invalid-instrument rule. No dependency.",
+    "MISSION-060": "REFERENCE FOR (calibration only, soft): MISSION-060's revised protected-exploration design uses this resolved, agent-chosen curiosity inquiry (informative FALSIFIED verdict, preserved lessons) to calibrate its substantive-preserved-output rubric on development cases; never held-out evidence."
   },
   "projected_impact": {
     "paths": [

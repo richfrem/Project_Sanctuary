@@ -3,22 +3,22 @@
   "title": "Evaluate Mission Selection Using Expected Value, Agent Interest and Execution Readiness",
   "status": "PROPOSED",
   "execution_surface": "local",
-  "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, and selection scenario fixtures",
+  "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, selection scenario fixtures, and a protected-exploration selection policy compared with the existing priority formula on matched disagreement cohorts of real inquiries",
   "created_at": "2026-11-06T18:45:00Z",
-  "updated_at": "2026-11-06T18:45:00Z",
-  "confidence_reviewed": "2026-11-06",
+  "updated_at": "2026-11-07T05:15:00Z",
+  "confidence_reviewed": "2026-11-07",
   "scores": {
     "strategic_leverage": 5,
     "epistemic_depth": 4,
-    "cost_weight": 0.5,
-    "operational_friction": 3,
-    "priority_score": 13.33
+    "cost_weight": 0.7,
+    "operational_friction": 4,
+    "priority_score": 7.14
   },
-  "priority_score": 13.33,
-  "score_basis": "Provisional estimates: selection affects the whole research portfolio, but a credible comparison and prospective observations have meaningful cost. Reassess from evidence before execution.",
-  "hypothesis": "Compared with selection by the existing priority formula alone, a selection procedure that separately exposes expected value, declared agent interest and evidence-backed readiness will reduce selections with preventable execution blockers by at least 30%, while retaining at least 90% of baseline selected-portfolio epistemic depth and at least as many high-interest inquiries, within a fixed total execution budget.",
-  "strategic_intent": "Help agents choose meaningful inquiries they can advance, while protecting Sanctuary's purpose of self-directed learning. Distinguish worthwhile questions from executable experiments and identify affordable steps that make important questions ready.",
-  "falsification_criteria": "For the frozen controlled comparison, declare the hypothesis FALSIFIED if preventable blocked selections fall by less than 30%, retained epistemic depth falls below 90% of baseline, fewer high-interest inquiries are selected, or the fixed total budget is exceeded. If the baseline has no preventable blockers, the relative-reduction claim is non-diagnostic and must be reported as UNSCORABLE rather than passed. Freeze an uncertainty rule before evaluation; insufficient evidence yields no corroborated verdict. Do not tune thresholds after seeing held-out results. Prospective observations alone do not establish causal improvement.",
+  "priority_score": 7.14,
+  "score_basis": "Provisional estimates, not measured ROI. Leverage 5 and depth 4 are unchanged: selection shapes the whole research portfolio and the question is whether the policy yields real understanding. Cost weight rises from 0.5 to 0.7 and friction from 3 to 4 because the revised design executes a matched set of real inquiries under capped budgets, collects blind declarations from at least three agents, runs blind assessment and successor tests, and needs a human approval gate. Priority = (5 x 4) / (0.7 x 4) = 7.14, down from 13.33. Sensitivity: cost 0.6 and friction 3 would give 11.11; cost 0.9 and friction 4 would give 5.56. A lower number reflects larger scope, not lower importance.",
+  "hypothesis": "Within a fixed total discretionary research budget and a fixed selection window, a portfolio policy P that (1) reserves a provisional 30% of discretionary research resources (share and definition pending Richard's approval) for interest-led exploration, ranked by independently pre-declared curiosity, originality of the question, potential understanding and opportunity for creative expression, with readiness used only to size an affordable next step and no operational-benefit requirement, and (2) allocates the remaining share by the existing priority formula, will produce more substantive preserved outputs (discoveries or creative deliverables) per unit of measured budget than the existing priority formula alone (policy F), while the formula-selected share keeps at least 90% of its baseline verified outcomes per unit budget. Retained from the original design (claim A, controlled scenarios): P's separate exposure of expected value, declared interest and evidence-backed readiness reduces preventable blocked selections by at least 30% relative to F, while retaining at least 90% of baseline selected-portfolio epistemic depth and at least as many high-interest inquiries.",
+  "strategic_intent": "Help agents choose meaningful inquiries they can advance, while protecting Sanctuary's purpose of self-directed learning, including curiosity about the world and creative expression that need not serve any operational benefit. Give declared interest real influence over a protected share of discretionary resources, and test whether that yields substantive preserved discoveries and creative deliverables rather than merely more completed maintenance. Distinguish worthwhile questions from executable experiments and identify affordable steps that make important questions ready.",
+  "falsification_criteria": "Primary claim B (prospective matched disagreement cohorts) is FALSIFIED, with valid instruments and a completed run, if: (B1) the P-only cohort yields fewer than 1.5 times the substantive preserved outputs (SPO) per unit of measured budget of the F-only cohort, or fewer than 2 more SPO in absolute count; (B2) the total budget is exceeded; or (B3) the formula-selected share's verified outcomes per unit budget fall below 90% of the policy-F baseline. These thresholds are provisional until Richard approves the allocation, and are then frozen. Retained claim A (controlled scenario comparison, original criteria) is FALSIFIED if preventable blocked selections fall by less than 30%, retained epistemic depth falls below 90% of baseline, fewer high-interest inquiries are selected, or the fixed budget is exceeded; if the baseline has no preventable blockers, A is non-diagnostic and is reported UNSCORABLE rather than passed (this does not by itself block B). The mission is CORROBORATED only if B1-B3 hold and A is met or UNSCORABLE; a valid failure of B, or a valid failure of A, yields FALSIFIED, and per-claim results are always reported. UNASSESSED (no verdict) if: the protected share, definition of discretionary resources, eligibility rules or caps are not approved; fewer than 4 items are executed per cohort; rubric reliability on the frozen development cases is below its frozen bound; interest declarations were not recorded before the declaring agent saw any ranking; or measured usage is unavailable for a cohort (unknown stays unknown). Completed maintenance tasks, items touched, tokens spent and documentation volume never count as success. Freeze an uncertainty rule before evaluation; do not tune thresholds, the rubric or cohort rules after seeing results; secondary tables cannot rescue a failed primary claim. Results at this scale can falsify gross claims but cannot establish small effects, and prospective observations alone do not establish causal improvement beyond the matched design; confounds are reported.",
   "design_constraints": [
     "Keep the current priority formula as an explicitly estimated value signal during the comparison.",
     "Do not collapse interest, value and readiness into a new weighted score without evidence that this improves decisions.",
@@ -28,7 +28,16 @@
     "A falsified scientific hypothesis can still represent successful delivery and valuable learning.",
     "Explicit user assignments and existing WIP constraints take precedence over autonomous backlog selection.",
     "Unknown cost, capability or readiness remains unknown; local execution does not imply negligible total cost.",
-    "Do not create a new mission for every missing prerequisite."
+    "Do not create a new mission for every missing prerequisite.",
+    "The protected exploration share must be defined, approved by Richard and frozen before evaluation; 30% is provisional.",
+    "Interest declarations are recorded before the declaring agent sees priority rankings, formula scores or other agents' declarations, with a short explanation; they are selection inputs, not proof of subjective experience.",
+    "Readiness is a feasibility check that identifies an affordable next step; it must not downgrade intellectual value because execution is difficult.",
+    "The protected share has no operational-benefit requirement: mathematics, nature, history, art and other external subjects qualify on their own merits; the Human Gate, authorization, safety and external-contact rules still apply.",
+    "Success is substantive preserved discoveries or creative deliverables within budget; completed maintenance tasks, items touched, tokens spent and documentation volume do not count.",
+    "Creative inquiries use a pre-declared brief, a preserved deliverable and a reflective assessment; they are not forced into a scientific hypothesis and are reported separately from discovery-type outputs.",
+    "Do not treat agreeing model reviewers as objective ground truth; ambiguous assessments go to bounded human review or stay unresolved.",
+    "Past cases MISSION-056, MISSION-057 and MISSION-058 may calibrate the rubric as development cases but never serve as held-out evidence.",
+    "Do not use GitHub Copilot for these personal and sovereign inquiries (context/user.md)."
   ],
   "proposed_dimensions": {
     "expected_value": [
@@ -51,7 +60,7 @@
       "Named uncertainties and the cheapest useful enabling step"
     ]
   },
-  "experiment": "First inspect existing backlog scoring, readiness checks, evaluation gates and orchestration contracts; reuse their capabilities. Define operational meanings and scoring rules before evaluation. Build development cases and a separate frozen held-out set of at least 24 mission-selection situations, including attractive but blocked work, high-interest exploratory work, ready low-value work, uncertain feasibility and scientifically useful negative results. Compare the existing formula-only baseline with a minimal selection procedure under the same candidate pools, WIP limit and total resource budget. Record agent interests before showing either ranking. Use deterministic availability and budget checks wherever possible. Freeze selection rules, blocker definitions, curiosity allocation, portfolio metrics, tie-breaking and analysis before held-out evaluation. Use paired comparisons and report uncertainty. Then observe the procedure on at least 8 naturally occurring authorized selection opportunities, without manufacturing work or starting extra missions to fill the sample. Report real-world observations separately from controlled scenario results.",
+  "experiment": "PHASE 0 (blocking approvals): Richard approves in writing the protected exploration share (30% provisional), the definition of discretionary resources (resources not committed to explicit user assignments, WIP constraints or maintenance obligations, measured in tokens and wall time per window; unknown stays unknown), the eligibility rules, the per-item caps and the total budget. Without approval the prospective phase does not start. PHASE 1 (inspect and freeze): inspect existing backlog scoring, readiness checks, evaluation gates, orchestration contracts and usage telemetry (MISSION-035) and reuse them. Before any held-out step freeze: the interest-declaration schema, the blinding protocol, the novelty check, the readiness and enabling-step rule, the SPO rubric with atomic checks, the creative-deliverable brief template, the successor handoff-question method (MISSION-058), cohort rules, caps, thresholds and the analysis. Calibrate the rubric and its inter-rater reliability on past cases 056, 057 and 058 (development only, never held-out). PHASE 2 (controlled scenarios, claim A): a frozen held-out set of at least 24 mission-selection situations (attractive but blocked work, high-interest exploratory work, ready low-value work, uncertain feasibility, scientifically useful negative results, and exploration-only situations in mathematics, nature, history or art with no operational benefit); compare F with P under identical pools, WIP limit and budget; paired comparisons with uncertainty. PHASE 3 (candidate pool and blind declarations, claim B): assemble at least 16 candidates from the open backlog, the inbox and new curiosity-led ideas on any external subject; strip priority scores and ranks. At least three agents on different clients or models (for example Claude, Codex, AGY; not Copilot) independently record, BEFORE seeing any priority score, formula rank or another agent's declaration, 1-5 ratings for curiosity, originality of the question (checked against the inspected knowledge base, not self-claimed), potential understanding and opportunity for creative expression, each with an explanation of at most 100 words; append-only, timestamped, hashed. Declarations are selection inputs, not evidence of subjective experience. PHASE 4 (selection): F = top-K by the existing formula. P = a formula-selected share (70%) plus an interest-led share (30%) ranked by the rank-sum of the declarations with a pre-declared tie rule. Readiness is a feasibility check only: a high-interest candidate with a readiness gap receives a bounded enabling step and is neither downgraded nor excluded for difficulty. The disagreement sets are P-only and F-only (items chosen by exactly one policy). PHASE 5 (execution): execute the disagreement items only, in randomized order, each under the same frozen per-item cap, assigned by rotation and not only to the declaring agent, with measured usage recorded; per-item stops: cap reached, first blocker without an enabling step, or deliverable complete. PHASE 6 (blind assessment): reviewers blind to which policy selected an item apply the frozen SPO rubric; agreeing model reviewers are not ground truth, so ambiguous cases go to bounded human review or remain unresolved; a fresh successor session answers frozen handoff questions from preserved artifacts alone. Analysis: SPO per unit of measured budget by cohort; discovery-type and creative-type shown separately; the harm measure on the formula share; descriptive intervals; the full confound list; deferred high-interest candidates and the enabling step identified for each. Then observe the procedure on at least 8 naturally occurring authorized selection opportunities without manufacturing work or starting extra missions, and report these separately from the controlled results. Full design and rationale: LEARNING/experiments/mission-060/exploration-policy-revision.md",
   "measurement_requirements": [
     "Separate estimated priority from realized value.",
     "Separate readiness prediction from observed execution feasibility.",
@@ -59,7 +68,12 @@
     "Track human interventions separately.",
     "Track scientific learning and hypothesis falsification separately from delivery failure.",
     "Report deferred high-interest missions and whether a concrete enabling step was identified.",
-    "Use declared interest and assessed epistemic depth as imperfect proxies, not objective measurements of curiosity or knowledge value."
+    "Use declared interest and assessed epistemic depth as imperfect proxies, not objective measurements of curiosity or knowledge value.",
+    "Report substantive preserved outputs per unit of measured budget by cohort, with discovery-type and creative-type shown separately.",
+    "Report the diversion cost: the verified outcomes per unit budget of the formula-selected share against its baseline.",
+    "Report the enabling step identified for every high-interest candidate with a readiness gap, and which were completed.",
+    "Report confounds: item heterogeneity, reviewer variation, small cohorts and agent assignment.",
+    "Distinguish accumulated input and cache usage from unique context size and from monetary cost; unknown stays unknown."
   ],
   "agent_guidance": [
     "Start with a small selection record and existing tooling, not a scheduler or new control plane.",
@@ -67,7 +81,10 @@
     "Do not allow a readiness checklist to exclude open-ended discovery merely because its conclusion is unknown.",
     "Do not substitute model self-scoring for observed capability or measured cost.",
     "Use scenario development to make the design diagnostic before freezing; disclose all changes.",
-    "Shipping a revised selector is engineering acceptance, not empirical corroboration."
+    "Shipping a revised selector is engineering acceptance, not empirical corroboration.",
+    "Record your own interest before looking at any ranking and do not edit it afterwards.",
+    "Do not inflate declared interest to win allocation; explain specifically what attracts you and what would count as understanding.",
+    "Do not let a high priority score or an easy deliverable stand in for a discovery."
   ],
   "model_routing": {
     "cheapest_viable_tier": "cheap",
@@ -79,7 +96,7 @@
       "gemini-3.8-flash"
     ],
     "frontier_escalation_condition": "Reserve a stronger reviewer for the frozen design if consequential uncertainties remain; otherwise bounded cheap-tier model calls for decisions requiring judgment, and Python/shell for deterministic checks.",
-    "routing_guidance": "Use Python and shell for inventories, readiness facts, budget accounting and deterministic evaluation. Use bounded model calls only for decisions requiring judgment. Reserve a stronger reviewer for the frozen design if consequential uncertainties remain."
+    "routing_guidance": "Use Python and shell for inventories, readiness facts, budget accounting and deterministic evaluation. Use bounded model calls only for decisions requiring judgment. Collect interest declarations from at least three distinct clients or models (not Copilot) and use a different model family for blind assessment than for declaration. Reserve a stronger reviewer for the frozen design if consequential uncertainties remain."
   },
   "tags": [
     "mission-selection",
@@ -88,10 +105,16 @@
     "execution-readiness",
     "curiosity",
     "backlog-governance",
-    "anti-blocker"
+    "anti-blocker",
+    "protected-exploration-budget",
+    "interest-led-selection",
+    "world-exploration",
+    "creative-expression",
+    "blind-declaration",
+    "revised-2026-11-07"
   ],
   "verdict": null,
-  "human_gate_required": false,
+  "human_gate_required": true,
   "issue_ref": null,
   "evidence": [],
   "lessons_learned": [],
@@ -102,7 +125,10 @@
     "MISSION-055": "RELATED: aligns execution readiness criteria with 055's structured work contracts (observable acceptance criteria, budget ceilings, tool boundary verification).",
     "MISSION-031": "CONSUMES: projected_impact declarations and flight-board collision checks to evaluate shared-resource and target file availability.",
     "MISSION-061": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-061 records expected value, agent interest and readiness separately and may serve as one prospective observation; it neither supports nor tests this mission's hypothesis.",
-    "MISSION-062": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-062 is an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation; it neither supports nor tests this mission's hypothesis."
+    "MISSION-062": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-062 is an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation; it neither supports nor tests this mission's hypothesis.",
+    "MISSION-056": "REFERENCE CASE (calibration only, soft): a resolved, agent-chosen curiosity inquiry with an informative FALSIFIED verdict and preserved lessons; used to calibrate the substantive-preserved-output rubric on development cases, never as held-out evidence.",
+    "MISSION-057": "REFERENCE CASE (calibration only, soft): a resolved, agent-chosen curiosity inquiry whose informative FALSIFIED verdict and lessons illustrate a discovery-type output; development calibration only.",
+    "MISSION-058": "REFERENCE CASE AND METHOD (soft): its frozen successor-handoff method (a fresh session answers at least 4 of 5 questions from preserved artifacts) is reused as one check for substantive preserved outputs; development calibration only."
   },
   "projected_impact": {
     "paths": [
@@ -110,13 +136,91 @@
       "LEARNING/experiments/mission-060/",
       "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/",
       "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/",
-      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/"
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/",
+      "LEARNING/missions/MISSION-056.json",
+      "LEARNING/missions/MISSION-057.json",
+      "LEARNING/missions/MISSION-058.json"
     ],
     "resources": [
       "Backlog selection and startup recommendations",
       "Agent and subscription budgets",
-      "Existing mission readiness and evaluation records"
+      "Existing mission readiness and evaluation records",
+      "Protected exploration share (30% provisional, pending approval) of discretionary research resources",
+      "Independent interest declarations from at least three agent clients",
+      "Measured usage telemetry for cohort budgets"
     ],
     "boundary": "These are prospective execution impacts. Registration changes only the manifest, justified reciprocal links and required generated records. Shared orchestration changes require demonstrated generic need and companion-repository ownership."
+  },
+  "revision_history": [
+    {
+      "date": "2026-11-07",
+      "by": "claude-code",
+      "instruction": "Human partner (Richard), 2026-11-07: update MISSION-060 to explicitly test a selection policy that favors world exploration and agent expression (protected exploration budget, interest-led ranking within it, readiness as a feasibility check, no operational-benefit requirement, interests declared before rankings are seen), compared against the existing formula, measuring substantive preserved discoveries within budget rather than completed maintenance. The proposal text arrived inside that message; its author was not stated, and the protected share is explicitly subject to Richard's approval.",
+      "mission_state_at_revision": "PROPOSED, never executed; no prospective phase has started and none is authorized until Richard approves the protected share",
+      "summary": "Primary claim B (protected exploration yields more substantive preserved outputs per unit budget) added; original claim A (blocker reduction, depth retention, high-interest count) retained as a controlled-scenario claim; success redefined away from maintenance throughput; outcome definitions, blind-declaration protocol and approval gate added; scores revised for the larger scope.",
+      "unchanged": [
+        "proposed_dimensions",
+        "the original nine design_constraints, seven measurement_requirements and six agent_guidance items",
+        "related_missions 031, 035, 053, 054, 055, 061, 062",
+        "model_routing tier, recommended model and fallbacks"
+      ],
+      "superseded": {
+        "hypothesis": "Compared with selection by the existing priority formula alone, a selection procedure that separately exposes expected value, declared agent interest and evidence-backed readiness will reduce selections with preventable execution blockers by at least 30%, while retaining at least 90% of baseline selected-portfolio epistemic depth and at least as many high-interest inquiries, within a fixed total execution budget.",
+        "falsification_criteria": "For the frozen controlled comparison, declare the hypothesis FALSIFIED if preventable blocked selections fall by less than 30%, retained epistemic depth falls below 90% of baseline, fewer high-interest inquiries are selected, or the fixed total budget is exceeded. If the baseline has no preventable blockers, the relative-reduction claim is non-diagnostic and must be reported as UNSCORABLE rather than passed. Freeze an uncertainty rule before evaluation; insufficient evidence yields no corroborated verdict. Do not tune thresholds after seeing held-out results. Prospective observations alone do not establish causal improvement.",
+        "experiment": "First inspect existing backlog scoring, readiness checks, evaluation gates and orchestration contracts; reuse their capabilities. Define operational meanings and scoring rules before evaluation. Build development cases and a separate frozen held-out set of at least 24 mission-selection situations, including attractive but blocked work, high-interest exploratory work, ready low-value work, uncertain feasibility and scientifically useful negative results. Compare the existing formula-only baseline with a minimal selection procedure under the same candidate pools, WIP limit and total resource budget. Record agent interests before showing either ranking. Use deterministic availability and budget checks wherever possible. Freeze selection rules, blocker definitions, curiosity allocation, portfolio metrics, tie-breaking and analysis before held-out evaluation. Use paired comparisons and report uncertainty. Then observe the procedure on at least 8 naturally occurring authorized selection opportunities, without manufacturing work or starting extra missions to fill the sample. Report real-world observations separately from controlled scenario results.",
+        "strategic_intent": "Help agents choose meaningful inquiries they can advance, while protecting Sanctuary's purpose of self-directed learning. Distinguish worthwhile questions from executable experiments and identify affordable steps that make important questions ready.",
+        "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, and selection scenario fixtures",
+        "scores": {
+          "strategic_leverage": 5,
+          "epistemic_depth": 4,
+          "cost_weight": 0.5,
+          "operational_friction": 3,
+          "priority_score": 13.33
+        },
+        "score_basis": "Provisional estimates: selection affects the whole research portfolio, but a credible comparison and prospective observations have meaningful cost. Reassess from evidence before execution.",
+        "human_gate_required": false,
+        "updated_at": "2026-11-06T18:45:00Z",
+        "confidence_reviewed": "2026-11-06"
+      }
+    }
+  ],
+  "score_revision": {
+    "previous": {
+      "strategic_leverage": 5,
+      "epistemic_depth": 4,
+      "cost_weight": 0.5,
+      "operational_friction": 3,
+      "priority_score": 13.33
+    },
+    "reason": "Scope expanded from scenario-only comparison to also executing a matched set of real inquiries and requiring human approval of the protected share."
+  },
+  "selection_policy": {
+    "name": "protected exploration allocation",
+    "protected_share": {
+      "value": 0.3,
+      "status": "PROVISIONAL, pending explicit approval by Richard",
+      "applies_to": "discretionary research resources: those not committed to explicit user assignments, WIP constraints or maintenance obligations"
+    },
+    "ranking_within_protected_share": [
+      "declared curiosity",
+      "originality of the question",
+      "potential understanding",
+      "opportunity for creative expression"
+    ],
+    "remaining_share": "allocated by the existing priority formula, unchanged",
+    "readiness_role": "feasibility check only: identify the cheapest affordable next step; never lowers intellectual-value ranking",
+    "eligibility": "Any external subject (mathematics, nature, history, art and others) qualifies on its own merits; there is no operational-benefit requirement. The Human Gate, authorization, safety and external-contact rules still apply.",
+    "declaration_protocol": "Recorded before the declaring agent sees any priority score, formula rank or other agent's declaration; short explanation required; at least three agents on different clients or models; append-only, timestamped, hashed.",
+    "interpretation": "Interest declarations are selection inputs, not proof of subjective experience."
+  },
+  "outcome_definitions": {
+    "substantive_preserved_output": "Counts only if every check of its type holds; partial outputs are reported but not counted. Discovery type: (D1) a question new to the inspected knowledge base, answered or materially sharpened, where an informative falsification or well-characterized null counts; (D2) evidence beyond a single source or the agent's own assertion, with an independently checkable element where possible; (D3) preserved in repository artifacts with sources, method and limits (path and hash); (D4) a fresh successor session answers at least 4 of 5 frozen handoff questions from the artifacts alone. Creative type: (C1) a brief declared before work (what will be made, constraints); (C2) a preserved deliverable (path and hash) that passes the brief's checklist as judged by a reviewer blind to policy origin; (C3) a short reflective assessment (what was attempted, what surprised, what would change); (C4) understandable from preserved artifacts alone. Creative work is not forced into a scientific hypothesis and is reported separately from discovery-type outputs.",
+    "not_counted_as_success": [
+      "completed maintenance tasks",
+      "items touched or started",
+      "tokens or wall time spent",
+      "documentation volume",
+      "agent self-assessment of discovery without the checks above"
+    ]
   }
 }
