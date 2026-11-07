@@ -1,6 +1,13 @@
 {
-  "total_entries": 372,
+  "total_entries": 373,
   "entries": [
+    {
+      "id": 381,
+      "title": "Bootstrap repair: instruction imports, read-only startup preservation and cross-client validation (Claude, AGY, Codex)",
+      "filename": "381_bootstrap_repair_instruction_imports_read_only_startup_preservation_and_cross_client_validation_claude_agy_codex.md",
+      "date": "2026-11-06",
+      "status": "published"
+    },
     {
       "id": 380,
       "title": "Soul preservation repaired: coverage-aware closure replaces the Chronicle-only export",
