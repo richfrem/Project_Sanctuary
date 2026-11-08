@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+"""Operational CLI sequencing only; frozen study instruments remain unchanged."""
+import datetime
+import json
+import os
+import pathlib
+import select
+import subprocess
+import sys
+import time
+
+ROOT = pathlib.Path('/Users/richardfremmerlid/Projects/Project_Sanctuary')
+WT = ROOT / '.worktrees/codex-mission-060'
+STUDY = WT / 'LEARNING/experiments/mission-060'
+STATE = STUDY / 'verification/phase5-run.json'
+HANDOFF = STUDY / 'PROGRESS-HANDOFF.md'
+PROBE = ROOT / 'plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py'
+
+
+def now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def native_codex():
+    process = subprocess.Popen(['codex', 'app-server'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=0)
+    buffer = b''
+    def send(value):
+        process.stdin.write((json.dumps(value)+'\n').encode())
+        process.stdin.flush()
+    def receive(identity):
+        nonlocal buffer
+        deadline = time.monotonic()+30
+        while time.monotonic() < deadline:
+            while b'\n' in buffer:
+                line, buffer = buffer.split(b'\n', 1)
+                try:
+                    row = json.loads(line)
+                except ValueError:
+                    continue
+                if row.get('id') == identity:
+                    if 'error' in row:
+                        raise RuntimeError('native Codex account query failed')
+                    return row['result']
+            ready, _, _ = select.select([process.stdout], [], [], max(0, deadline-time.monotonic()))
+            if ready:
+                data = os.read(process.stdout.fileno(), 65536)
+                if not data:
+                    break
+                buffer += data
+        raise RuntimeError('native Codex account query timed out')
+    try:
+        send(dict(jsonrpc='2.0', id=1, method='initialize', params=dict(clientInfo=dict(name='sanctuary-phase5-quota', version='1'))))
+        receive(1)
+        send(dict(jsonrpc='2.0', method='initialized'))
+        send(dict(jsonrpc='2.0', id=2, method='account/rateLimits/read'))
+        result = receive(2)
+        limits = result['rateLimits']
+        remaining = min(100-limits[name]['usedPercent'] for name in ('primary', 'secondary'))
+        return dict(captured_at=now(), remaining_percent=remaining,
+                    ordinary_usage_allowed=result.get('ordinaryUsageAllowed'),
+                    primary=limits['primary'], secondary=limits['secondary'])
+    finally:
+        process.terminate()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+
+
+def note(message):
+    text = HANDOFF.read_text()
+    title = '# MISSION-060 progress and AGY handoff\n'
+    HANDOFF.write_text(text.replace(title, title+'\n'+message+'\n', 1))
+    print(message, flush=True)
+
+
+def main():
+    state = json.loads(STATE.read_text()) if STATE.exists() else dict(started_at=now(), steps=[])
+    sequence = [('heldout', 'scenarios.py', 'heldout'), ('snapshot', 'run_study.py', 'snapshot'),
+                ('ideas', 'run_study.py', 'ideas'), ('score', 'run_study.py', 'score'),
+                ('declare', 'run_study.py', 'declare'), ('choose', 'choose.py')]
+    sequence += [(f'ITEM-{i:02}', 'run_study.py', 'item', f'ITEM-{i:02}') for i in range(1, 11)]
+    for name, script, *args in sequence:
+        prior = next((row for row in state['steps'] if row['step'] == name), None)
+        if prior and prior['status'] == 'COMPLETE':
+            continue
+        if prior and prior['status'] not in ('QUOTA_STOP',):
+            raise RuntimeError(f'{name} has an ambiguous/failed prior attempt; no automatic retry')
+        row = dict(step=name, status='PRECHECK', at=now())
+        if prior:
+            state['steps'].remove(prior)
+        state['steps'].append(row)
+        STATE.write_text(json.dumps(state, indent=2)+'\n')
+        snapshot = json.loads(subprocess.run([sys.executable, str(PROBE), 'snapshot'], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+        claude = snapshot['backends']['claude']
+        agy = snapshot['backends']['agy']
+        if claude.get('status') != 'ok' or agy.get('status') != 'ok':
+            raise RuntimeError('quota unknown; refusing study execution')
+        native = native_codex()
+        row['quota'] = dict(claude=min(100-claude[key] for key in ('session_pct_used', 'week_pct_used')),
+                            agy=min(value['remaining_pct'] for value in agy['buckets']), codex=native['remaining_percent'])
+        row['native_codex'] = native
+        if min(row['quota'].values()) < 25 or native['ordinary_usage_allowed'] is False:
+            row['status'] = 'QUOTA_STOP'
+            STATE.write_text(json.dumps(state, indent=2)+'\n')
+            note(f"{now()} — Step 5 PAUSED before {name}; no command dispatched. Fresh tightest quota: {row['quota']}. Next: Richard's quota decision or wait for replenishment; preserve freeze/outputs and do not re-run completed stages.")
+            return 2
+        row['status'] = 'DISPATCHED'
+        STATE.write_text(json.dumps(state, indent=2)+'\n')
+        logfile = STUDY / 'verification' / f'phase5-{name}.txt'
+        with logfile.open('w') as output:
+            result = subprocess.run([sys.executable, str(STUDY/script), *args], cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
+        row.update(status='COMPLETE' if result.returncode == 0 else 'FAILED', finished_at=now(), returncode=result.returncode, log=str(logfile.relative_to(WT)))
+        STATE.write_text(json.dumps(state, indent=2)+'\n')
+        note(f"{now()} — Step 5 {name}: {row['status']}. Evidence: {row['log']}; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.")
+        if result.returncode:
+            return result.returncode
+    state['completed_at'] = now()
+    STATE.write_text(json.dumps(state, indent=2)+'\n')
+    note(f'{now()} — Step 5 pipeline COMPLETE. Next is step 6 analysis/verdict/closure; no verdict recorded by this sequencer.')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

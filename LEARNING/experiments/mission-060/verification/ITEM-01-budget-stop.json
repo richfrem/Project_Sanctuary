@@ -1,0 +1,34 @@
+{
+  "status": "BUDGET_STOP",
+  "call_id": "work-ITEM-01",
+  "usage": {
+    "requests": 31,
+    "overhead": 12906,
+    "additional_tokens": 125836,
+    "accumulated_input": 1374639,
+    "output_tokens": 46808,
+    "last_context": 91934,
+    "transcript": "/Users/richardfremmerlid/.gemini/antigravity-cli/brain/6d943236-c16a-4682-a1c4-0534dc1bb738/.system_generated/logs/transcript_full.jsonl"
+  },
+  "cap_additional_tokens": 25000,
+  "successor_dispatched": false,
+  "reviewer_dispatched": false,
+  "worker_artifacts_reviewed": false,
+  "artifacts": {
+    "invalidation_data.json": {
+      "bytes": 33827,
+      "sha256": "b71d6c440df67382ff19e48d8391bf1ef3dad81e7f1c0f281e709bb335317e31"
+    },
+    "evaluate_invalidation.py": {
+      "bytes": 28327,
+      "sha256": "2c3a2a85b8b8566e3215c657c3d99068a27ab0b2799a2cdd1e03a30136e41c06"
+    },
+    "findings.unreviewed.raw": {
+      "bytes": 41653,
+      "sha256": "fd24c44b4c6bdc35ba7dce9119b67a5a8372df896c1d2714b078d9248e733356",
+      "original_worker_name": "findings.md"
+    }
+  },
+  "recovery": "Copied existing worker outputs only; no script or worker rerun. First copy attempt used a doubled relative path and failed without changing outputs; corrected path succeeded.",
+  "preservation_note": "Exact unreviewed worker text is stored as an artifact reference, not promoted to canonical Markdown knowledge."
+}

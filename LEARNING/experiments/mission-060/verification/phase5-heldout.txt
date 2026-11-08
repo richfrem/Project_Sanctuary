@@ -1,0 +1,14 @@
+{
+ "split": "heldout",
+ "n_situations": 24,
+ "summary": {
+  "f_blocked": 40,
+  "p_blocked": 15,
+  "blocker_reduction": 0.625,
+  "depth_retention": 0.9936842105263158,
+  "f_high_interest": 34,
+  "p_high_interest": 51
+ },
+ "bootstrap_pass_probability": 1.0,
+ "claim_A": "MET"
+}

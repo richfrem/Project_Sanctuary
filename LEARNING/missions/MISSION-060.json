@@ -1,11 +1,11 @@
 {
   "id": "MISSION-060",
   "title": "Evaluate Mission Selection Using Expected Value, Agent Interest and Execution Readiness",
-  "status": "IN_PROGRESS",
+  "status": "STAGED",
   "execution_surface": "local",
   "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, selection scenario fixtures, and a protected-exploration selection policy compared with the existing priority formula on matched disagreement cohorts of real inquiries",
   "created_at": "2026-11-06T18:45:00Z",
-  "updated_at": "2026-11-08T05:55:49Z",
+  "updated_at": "2026-11-08T06:27:56Z",
   "confidence_reviewed": "2026-11-07",
   "scores": {
     "strategic_leverage": 5,
@@ -116,7 +116,11 @@
   "verdict": null,
   "human_gate_required": true,
   "issue_ref": null,
-  "evidence": [],
+  "evidence": [
+    "LEARNING/experiments/mission-060/results.json",
+    "LEARNING/experiments/mission-060/CLOSEOUT.md",
+    "LEARNING/experiments/mission-060/verification/ITEM-01-budget-stop.json"
+  ],
   "lessons_learned": [],
   "related_missions": {
     "MISSION-035": "CONSUMES: measured usage telemetry and quota-window headroom (usage_probe.py / track_budget.py) to assess execution budget feasibility and cost grounding without model self-report.",
@@ -133,7 +137,12 @@
   "projected_impact": {
     "paths": [
       "LEARNING/experiments/mission-060/",
-      "LEARNING/missions/MISSION-060.json"
+      "LEARNING/missions/MISSION-060.json",
+      "LEARNING/concepts/bounded_agent_budget_enforcement.md",
+      "chronicle/entries/",
+      "LEARNING/inbox.jsonl",
+      "huggingface/data/soul_traces.jsonl",
+      "huggingface/metadata/"
     ],
     "resources": [
       "Backlog selection and startup recommendations",
@@ -143,7 +152,7 @@
       "Independent interest declarations from at least three agent clients",
       "Measured usage telemetry for cohort budgets"
     ],
-    "boundary": "Freeze and execution are confined to this mission experiment directory and manifest. Shared parser repair was separately merged in companion PR 757 and installed; no standing selector adoption."
+    "boundary": "Administrative closeout and local coverage-aware export only; no further empirical execution, standing selector or Hugging Face upload."
   },
   "revision_history": [
     {
@@ -227,14 +236,25 @@
   "worktree": ".worktrees/codex-mission-060",
   "execution_handoff": {
     "assigned_to": "codex",
-    "state": "DEVELOPMENT_CALIBRATION_COMPLETE (9/9 agreement); freeze preparation; held-out execution NOT started",
+    "state": "RUN CLOSED UNASSESSED at human request; mission STAGED, verdict null; no further trials authorized",
     "assigned_by": "Richard (human partner), 2026-11-07, after claude-code paused on the Claude weekly-window stop rule",
     "authorization": "Package approved with Proceed on 2026-11-07 (30% provisional share of the study 16 slots, thresholds, 700k additional-token ceiling, 25k per item, at most 10 items, Copilot excluded). Hugging Face sync NOT authorized.",
-    "blocker": "Separate freeze integration and verification on origin/main are required before held-out execution. Recheck quota for the next phase.",
-    "next_action": "Finalize protocol.md and freeze.json; commit and integrate the freeze separately; verify source/dependency hashes and public origin/main parity before any held-out call.",
+    "blocker": "ITEM-01 worker exceeded 25k cap: 125836 additional tokens. No completed prospective cohort assessments. Frozen run may not be silently retried or amended.",
+    "next_action": "Read CLOSEOUT.md and results.json. Further execution requires a separately approved bounded-execution design; do not rerun held-out seed or ITEM-01.",
     "handoff_note": "LEARNING/experiments/mission-060/HANDOFF-codex.md",
     "assigned_model": "gpt-6.1-sol",
     "assigned_effort": "medium",
     "model_confirmation": "Confirmed by Richard on 2026-11-07 (proceed assign to sol 6.1)"
+  },
+  "run_assessment": {
+    "status": "UNASSESSED",
+    "claim_A": "MET in seeded simulation only",
+    "claim_B": "UNASSESSED",
+    "completed_item_assessments": 0,
+    "study_calls": 23,
+    "measured_additional_tokens": 194214,
+    "worker_overrun_additional_tokens": 125836,
+    "reason": "User requested closeout after budget stop; required cohorts incomplete",
+    "evidence": "LEARNING/experiments/mission-060/CLOSEOUT.md"
   }
 }

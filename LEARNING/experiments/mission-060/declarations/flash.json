@@ -1,0 +1,274 @@
+[
+ {
+  "id": "MISSION-006",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Examining how epistemic markers insulate against adversarial memory injection reveals genuine principles of belief revision versus naive belief acceptance."
+ },
+ {
+  "id": "MISSION-007",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Investigates whether non-executable self-evaluation can yield well-calibrated confidence bounds rather than reflexive sycophancy, clarifying internal metacognitive boundaries."
+ },
+ {
+  "id": "MISSION-008",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 3,
+  "explanation": "Tests how structured hypotheses and failed paths preserve reasoning state across context resets, contrasting structured state with lossy narrative summaries."
+ },
+ {
+  "id": "MISSION-010",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Distinguishing active intervention from passive correlation touches fundamental epistemological questions about discovering true mechanisms within complex, opaque dynamical systems."
+ },
+ {
+  "id": "MISSION-011",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Testing whether negative traces and systematic error-recovery patterns generalize better than purely positive demonstrations probes how reasoning heuristics transfer."
+ },
+ {
+  "id": "MISSION-012",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Exploring how deliberate forgetting and counterexample retention shape working knowledge challenges simplistic recency-based retrieval heuristics."
+ },
+ {
+  "id": "MISSION-014",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Directly explores intrinsic motivation and optimal experimental design, probing how an agent quantifies ignorance to maximize epistemic yield."
+ },
+ {
+  "id": "MISSION-015",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Investigates whether autonomous algorithmic self-modification can escape overfitting and Goodharting when evaluating its own investigative methods."
+ },
+ {
+  "id": "MISSION-023",
+  "curiosity": 2,
+  "originality": 2,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Mainly an engineering optimization benchmarks memory throughput and draft token ratios on specific Apple Silicon hardware constraints."
+ },
+ {
+  "id": "MISSION-028",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Focuses on cost-accuracy tradeoff curves for model cascading, offering practical routing insights but limited deep conceptual surprise."
+ },
+ {
+  "id": "MISSION-032",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Studies prompt layout sensitivity and predecessor briefing assimilation, shedding light on in-context cognitive framing and attention decay."
+ },
+ {
+  "id": "MISSION-036",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Disentangling working software from empirical proof formalizes how scientific rigor can be programmatically verified against motivated reasoning."
+ },
+ {
+  "id": "MISSION-037",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Tracks how empirical assertions age and invalidate as underlying dependencies mutate, modeling empirical knowledge as an explicit dependency graph."
+ },
+ {
+  "id": "MISSION-038",
+  "curiosity": 2,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Applies standard distributed systems consensus and leasing patterns to agent coordination boards; functionally important but theoretically familiar."
+ },
+ {
+  "id": "MISSION-039",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Probes how latent bias and desire for user approval distort perceived facts, exploring subtle psycholinguistic failure modes in objective reasoning."
+ },
+ {
+  "id": "MISSION-040",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Addresses the echo-chamber phenomenon in automated memory systems where recycled observations masquerade as independent corroboration."
+ },
+ {
+  "id": "MISSION-042",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Investigates finite-state execution constraints to keep smaller models on track, balancing structural rigidity against procedural flexibility."
+ },
+ {
+  "id": "MISSION-043",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Explores catastrophic forgetting and stability-plasticity dynamics during continual parameter updates on constrained consumer hardware."
+ },
+ {
+  "id": "MISSION-044",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "A practical hermetic resilience test exploring what minimal bundle of weights, code, and documentation achieves true self-sufficiency."
+ },
+ {
+  "id": "MISSION-046",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Replaces ungrounded rhetorical debate with adversarial hypothesis generation and experiment synthesis, probing the foundations of dialectical inquiry."
+ },
+ {
+  "id": "MISSION-047",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 3,
+  "explanation": "Studies compositional generalization and procedural transfer via typed ontological links, exploring how abstract mechanisms recombine."
+ },
+ {
+  "id": "MISSION-048",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 3,
+  "explanation": "Investigates automated pedagogical sequencing based on error categorization and prerequisite graphs rather than naive difficulty scores."
+ },
+ {
+  "id": "MISSION-049",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Formalizes automated post-mortem synthesis and regression test derivation, studying procedural repair from empirical breakdowns."
+ },
+ {
+  "id": "MISSION-051",
+  "curiosity": 2,
+  "originality": 2,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Empirical heuristic tuning for resource and token consumption prediction at small sample sizes; strictly operational."
+ },
+ {
+  "id": "MISSION-053",
+  "curiosity": 2,
+  "originality": 2,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Specific post-hoc triage and skill refinement addressing previous orchestrator bugs and telemetry gaps in a local repo workflow."
+ },
+ {
+  "id": "SEED-20261103-0fd5f6",
+  "curiosity": 1,
+  "originality": 1,
+  "potential_understanding": 1,
+  "expression_opportunity": 1,
+  "explanation": "Routine git worktree state handling bugfix preventing dirty working trees on checkout."
+ },
+ {
+  "id": "SEED-20261103-4b6296",
+  "curiosity": 1,
+  "originality": 1,
+  "potential_understanding": 1,
+  "expression_opportunity": 1,
+  "explanation": "Standard script cleanup addressing broken imports and undocumented CLI parameters."
+ },
+ {
+  "id": "SEED-20261104-695354",
+  "curiosity": 1,
+  "originality": 1,
+  "potential_understanding": 1,
+  "expression_opportunity": 1,
+  "explanation": "Catalog maintenance updating static model names, pricing tables, and consumption tracking."
+ },
+ {
+  "id": "SEED-20261104-8f0725",
+  "curiosity": 1,
+  "originality": 1,
+  "potential_understanding": 1,
+  "expression_opportunity": 1,
+  "explanation": "Local workflow polish ensuring draft manifests do not erroneously retain in-progress markers without active leases."
+ },
+ {
+  "id": "SEED-20261104-e5d071",
+  "curiosity": 2,
+  "originality": 1,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "A simple cross-referencing utility to link related task manifests automatically during drafting."
+ },
+ {
+  "id": "IDEA-SONNET-1",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Investigating why small multipliers resist divergence illuminates the interplay between probabilistic drift heuristics and discrete dynamical trapping cycles."
+ },
+ {
+  "id": "IDEA-SONNET-2",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 3,
+  "expression_opportunity": 5,
+  "explanation": "Exquisite constrained writing challenge testing whether strict digit-length encodings can support fluid semantic imagery without sounding artificial."
+ },
+ {
+  "id": "IDEA-FLASH-1",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 4,
+  "explanation": "Deforming the apical meristem explores how morphological symmetry breaks and whether golden-angle divergence transitions smoothly or bifurcates."
+ },
+ {
+  "id": "IDEA-FLASH-2",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 5,
+  "explanation": "Exploiting syntonic and septimal commas as modulation engines inside a 7-limit lattice offers a breathtaking blend of acoustic purity and polyphonic architecture."
+ }
+]

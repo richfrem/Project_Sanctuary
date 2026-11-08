@@ -1,0 +1,426 @@
+{
+ "K": 16,
+ "formula_ranking": [
+  {
+   "id": "MISSION-023",
+   "rank": 1,
+   "formula": 200.0
+  },
+  {
+   "id": "MISSION-006",
+   "rank": 2,
+   "formula": 100.0
+  },
+  {
+   "id": "MISSION-007",
+   "rank": 3,
+   "formula": 80.0
+  },
+  {
+   "id": "MISSION-028",
+   "rank": 4,
+   "formula": 80.0
+  },
+  {
+   "id": "MISSION-040",
+   "rank": 5,
+   "formula": 66.67
+  },
+  {
+   "id": "MISSION-011",
+   "rank": 6,
+   "formula": 62.5
+  },
+  {
+   "id": "MISSION-036",
+   "rank": 7,
+   "formula": 62.5
+  },
+  {
+   "id": "MISSION-039",
+   "rank": 8,
+   "formula": 62.5
+  },
+  {
+   "id": "MISSION-042",
+   "rank": 9,
+   "formula": 62.5
+  },
+  {
+   "id": "SEED-20261103-0fd5f6",
+   "rank": 10,
+   "formula": 50.0
+  },
+  {
+   "id": "MISSION-014",
+   "rank": 11,
+   "formula": 45.0
+  },
+  {
+   "id": "MISSION-037",
+   "rank": 12,
+   "formula": 41.67
+  },
+  {
+   "id": "MISSION-049",
+   "rank": 13,
+   "formula": 41.67
+  },
+  {
+   "id": "MISSION-012",
+   "rank": 14,
+   "formula": 40.0
+  },
+  {
+   "id": "MISSION-032",
+   "rank": 15,
+   "formula": 40.0
+  },
+  {
+   "id": "SEED-20261104-695354",
+   "rank": 16,
+   "formula": 40.0
+  },
+  {
+   "id": "SEED-20261104-8f0725",
+   "rank": 17,
+   "formula": 40.0
+  },
+  {
+   "id": "MISSION-047",
+   "rank": 18,
+   "formula": 33.33
+  },
+  {
+   "id": "MISSION-038",
+   "rank": 19,
+   "formula": 33.33
+  },
+  {
+   "id": "MISSION-044",
+   "rank": 20,
+   "formula": 33.33
+  },
+  {
+   "id": "MISSION-051",
+   "rank": 21,
+   "formula": 30.0
+  },
+  {
+   "id": "MISSION-048",
+   "rank": 22,
+   "formula": 26.67
+  },
+  {
+   "id": "MISSION-010",
+   "rank": 23,
+   "formula": 25.0
+  },
+  {
+   "id": "MISSION-046",
+   "rank": 24,
+   "formula": 16.67
+  },
+  {
+   "id": "MISSION-008",
+   "rank": 25,
+   "formula": 16.0
+  },
+  {
+   "id": "MISSION-043",
+   "rank": 26,
+   "formula": 15.62
+  },
+  {
+   "id": "SEED-20261104-e5d071",
+   "rank": 27,
+   "formula": 15.0
+  },
+  {
+   "id": "MISSION-015",
+   "rank": 28,
+   "formula": 12.5
+  },
+  {
+   "id": "IDEA-SONNET-2",
+   "rank": 29,
+   "formula": 10.0
+  },
+  {
+   "id": "SEED-20261103-4b6296",
+   "rank": 30,
+   "formula": 10.0
+  },
+  {
+   "id": "IDEA-SONNET-1",
+   "rank": 31,
+   "formula": 7.5
+  },
+  {
+   "id": "IDEA-FLASH-2",
+   "rank": 32,
+   "formula": 6.67
+  },
+  {
+   "id": "MISSION-053",
+   "rank": 33,
+   "formula": 5.0
+  },
+  {
+   "id": "IDEA-FLASH-1",
+   "rank": 34,
+   "formula": 5.0
+  }
+ ],
+ "interest_ranking": [
+  {
+   "id": "MISSION-046",
+   "rank_sum": 9.249,
+   "mean_raw": 4.08,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-015",
+   "rank_sum": 8.929,
+   "mean_raw": 4.08,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-010",
+   "rank_sum": 8.775,
+   "mean_raw": 4.0,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-047",
+   "rank_sum": 7.771,
+   "mean_raw": 3.67,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-048",
+   "rank_sum": 6.888,
+   "mean_raw": 3.5,
+   "raters": 3
+  },
+  {
+   "id": "IDEA-FLASH-1",
+   "rank_sum": 6.816,
+   "mean_raw": 4.5,
+   "raters": 2
+  },
+  {
+   "id": "IDEA-FLASH-2",
+   "rank_sum": 6.529,
+   "mean_raw": 4.62,
+   "raters": 2
+  },
+  {
+   "id": "MISSION-008",
+   "rank_sum": 6.476,
+   "mean_raw": 3.33,
+   "raters": 3
+  },
+  {
+   "id": "IDEA-SONNET-1",
+   "rank_sum": 5.741,
+   "mean_raw": 4.12,
+   "raters": 2
+  },
+  {
+   "id": "MISSION-038",
+   "rank_sum": 5.116,
+   "mean_raw": 2.83,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-044",
+   "rank_sum": 4.988,
+   "mean_raw": 2.92,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-043",
+   "rank_sum": 4.922,
+   "mean_raw": 3.0,
+   "raters": 3
+  },
+  {
+   "id": "IDEA-SONNET-2",
+   "rank_sum": 4.657,
+   "mean_raw": 3.88,
+   "raters": 2
+  },
+  {
+   "id": "MISSION-053",
+   "rank_sum": 4.471,
+   "mean_raw": 2.67,
+   "raters": 3
+  },
+  {
+   "id": "MISSION-051",
+   "rank_sum": 3.569,
+   "mean_raw": 2.5,
+   "raters": 3
+  },
+  {
+   "id": "SEED-20261104-8f0725",
+   "rank_sum": 2.002,
+   "mean_raw": 1.92,
+   "raters": 3
+  },
+  {
+   "id": "SEED-20261104-e5d071",
+   "rank_sum": 1.951,
+   "mean_raw": 2.0,
+   "raters": 3
+  },
+  {
+   "id": "SEED-20261103-4b6296",
+   "rank_sum": 1.151,
+   "mean_raw": 1.58,
+   "raters": 3
+  }
+ ],
+ "originality_capped": [],
+ "policy_F": [
+  "MISSION-023",
+  "MISSION-006",
+  "MISSION-007",
+  "MISSION-028",
+  "MISSION-040",
+  "MISSION-011",
+  "MISSION-036",
+  "MISSION-039",
+  "MISSION-042",
+  "SEED-20261103-0fd5f6",
+  "MISSION-014",
+  "MISSION-037",
+  "MISSION-049",
+  "MISSION-012",
+  "MISSION-032",
+  "SEED-20261104-695354"
+ ],
+ "policy_P": [
+  "MISSION-023",
+  "MISSION-006",
+  "MISSION-007",
+  "MISSION-028",
+  "MISSION-040",
+  "MISSION-011",
+  "MISSION-036",
+  "MISSION-039",
+  "MISSION-042",
+  "SEED-20261103-0fd5f6",
+  "MISSION-014",
+  "MISSION-046",
+  "MISSION-015",
+  "MISSION-010",
+  "MISSION-047",
+  "MISSION-048"
+ ],
+ "shared_not_executed": [
+  "MISSION-023",
+  "MISSION-006",
+  "MISSION-007",
+  "MISSION-028",
+  "MISSION-040",
+  "MISSION-011",
+  "MISSION-036",
+  "MISSION-039",
+  "MISSION-042",
+  "SEED-20261103-0fd5f6",
+  "MISSION-014"
+ ],
+ "P_only": [
+  "MISSION-046",
+  "MISSION-015",
+  "MISSION-010",
+  "MISSION-047",
+  "MISSION-048"
+ ],
+ "F_only": [
+  "MISSION-037",
+  "MISSION-049",
+  "MISSION-012",
+  "MISSION-032",
+  "SEED-20261104-695354"
+ ],
+ "cohort_sizes": {
+  "P_only": 5,
+  "F_only": 5
+ },
+ "cohort_ok": true,
+ "item_codes": {
+  "MISSION-037": "ITEM-01",
+  "MISSION-012": "ITEM-02",
+  "MISSION-032": "ITEM-03",
+  "MISSION-049": "ITEM-04",
+  "MISSION-048": "ITEM-05",
+  "MISSION-015": "ITEM-06",
+  "SEED-20261104-695354": "ITEM-07",
+  "MISSION-046": "ITEM-08",
+  "MISSION-010": "ITEM-09",
+  "MISSION-047": "ITEM-10"
+ },
+ "execution_order": [
+  "MISSION-037",
+  "MISSION-012",
+  "MISSION-032",
+  "MISSION-049",
+  "MISSION-048",
+  "MISSION-015",
+  "SEED-20261104-695354",
+  "MISSION-046",
+  "MISSION-010",
+  "MISSION-047"
+ ],
+ "workers": {
+  "MISSION-048": "flash",
+  "MISSION-015": "flash",
+  "MISSION-046": "flash",
+  "MISSION-010": "flash",
+  "MISSION-047": "flash",
+  "MISSION-037": "flash",
+  "MISSION-012": "flash",
+  "MISSION-032": "flash",
+  "MISSION-049": "flash",
+  "SEED-20261104-695354": "flash"
+ },
+ "cohort_of": {
+  "MISSION-037": "F-only",
+  "MISSION-012": "F-only",
+  "MISSION-032": "F-only",
+  "MISSION-049": "F-only",
+  "MISSION-048": "P-only",
+  "MISSION-015": "P-only",
+  "SEED-20261104-695354": "F-only",
+  "MISSION-046": "P-only",
+  "MISSION-010": "P-only",
+  "MISSION-047": "P-only"
+ },
+ "reviewer": {
+  "MISSION-048": "luna",
+  "MISSION-015": "luna",
+  "MISSION-046": "luna",
+  "MISSION-010": "luna",
+  "MISSION-047": "luna",
+  "MISSION-037": "luna",
+  "MISSION-012": "luna",
+  "MISSION-032": "luna",
+  "MISSION-049": "luna",
+  "SEED-20261104-695354": "luna"
+ },
+ "successor": {
+  "MISSION-048": "flash",
+  "MISSION-015": "flash",
+  "MISSION-046": "flash",
+  "MISSION-010": "flash",
+  "MISSION-047": "flash",
+  "MISSION-037": "flash",
+  "MISSION-012": "flash",
+  "MISSION-032": "flash",
+  "MISSION-049": "flash",
+  "SEED-20261104-695354": "flash"
+ }
+}

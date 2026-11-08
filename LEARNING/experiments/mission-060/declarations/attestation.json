@@ -1,0 +1,34 @@
+{
+ "blind": true,
+ "neutral_cwd": "/private/tmp/study060/neutral",
+ "input_sha256": "6c9949a5fafebc074472905342361eb92e36b6b3ca150b4f47fde9e0b4bbec18",
+ "input_keys": [
+  "brief_checklist",
+  "first_unit",
+  "id",
+  "kind",
+  "summary",
+  "title"
+ ],
+ "basis": "Input carried only id, kind, title, summary, first_unit and brief_checklist. Agents ran in an empty directory with no project files or hooks, before selection.py was run.",
+ "declarations": {
+  "sonnet": {
+   "declared_at": "2026-11-08T06:10:50Z",
+   "rated": 34,
+   "of": 34,
+   "sha256": "84ff9f670a18626782879a32176dcdb3fcab85f6f8409d2a20025b4793fe8e54"
+  },
+  "flash": {
+   "declared_at": "2026-11-08T06:11:18Z",
+   "rated": 34,
+   "of": 34,
+   "sha256": "7e052fcdd5f71bc952270f2666ffd143b79976dc264d4c23b1f594f0e59fc20a"
+  },
+  "luna": {
+   "declared_at": "2026-11-08T06:12:16Z",
+   "rated": 34,
+   "of": 34,
+   "sha256": "45ec03552f29e9426c9cc70f03821cb3b672c0d71bda410f371dd5847632bcbe"
+  }
+ }
+}

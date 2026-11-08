@@ -1,0 +1,85 @@
+{
+ "verdict": "UNASSESSED",
+ "why": [
+  "cohort_sizes",
+  "usage_measured",
+  "review_contract",
+  "attempt_records_complete"
+ ],
+ "validity_gates": {
+  "calibration_reliability": true,
+  "declarations_blind": true,
+  "cohort_sizes": false,
+  "usage_measured": false,
+  "review_contract": false,
+  "item_caps": true,
+  "execution_limit": true,
+  "attempt_records_complete": false
+ },
+ "claim_B": {
+  "B1": {
+   "met": null,
+   "reason": "validity gate not satisfied"
+  },
+  "B2": {
+   "met": true,
+   "total_additional_tokens": 194214,
+   "known_subtotal": 194214,
+   "ceiling": 700000,
+   "calls": 23,
+   "calls_without_usage": []
+  },
+  "B3": {
+   "met": true,
+   "note": "Ranks 1-11 are the same items under F and P and are not executed; the formula share is retained by construction, not measured. The real diversion cost is the F-only cohort, reported here.",
+   "diversion_cost_spo": 0
+  }
+ },
+ "claim_A": {
+  "result": "MET",
+  "summary": {
+   "f_blocked": 40,
+   "p_blocked": 15,
+   "blocker_reduction": 0.625,
+   "depth_retention": 0.9936842105263158,
+   "f_high_interest": 34,
+   "p_high_interest": 51
+  },
+  "bootstrap_pass_probability": 1.0
+ },
+ "cohorts": {
+  "P_only": {
+   "items": 0,
+   "spo": 0,
+   "tokens": null,
+   "tokens_known": false,
+   "spo_by_kind": {
+    "discovery": 0,
+    "creative": 0
+   },
+   "spo_by_worker": {
+    "flash": 0
+   },
+   "cap_exceeded": 0
+  },
+  "F_only": {
+   "items": 0,
+   "spo": 0,
+   "tokens": null,
+   "tokens_known": false,
+   "spo_by_kind": {
+    "discovery": 0,
+    "creative": 0
+   },
+   "spo_by_worker": {
+    "flash": 0
+   },
+   "cap_exceeded": 0
+  }
+ },
+ "items": {},
+ "natural_observation": {
+  "note": "reported separately; does not affect the verdict",
+  "target": 8
+ }
+}

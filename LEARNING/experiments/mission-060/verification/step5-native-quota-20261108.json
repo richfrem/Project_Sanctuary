@@ -1,0 +1,17 @@
+{
+  "method": "account/rateLimits/read",
+  "captured_utc": "2026-11-08T06:06:33.704718+00:00",
+  "ordinaryUsageAllowed": true,
+  "primary": {
+    "usedPercent": 46,
+    "windowDurationMins": 300,
+    "resetsAt": 1794133042
+  },
+  "secondary": {
+    "usedPercent": 73,
+    "windowDurationMins": 10080,
+    "resetsAt": 1794406954
+  },
+  "rateLimitReachedType": null,
+  "spendControlReached": false
+}

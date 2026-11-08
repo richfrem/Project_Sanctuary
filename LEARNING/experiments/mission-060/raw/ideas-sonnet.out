@@ -1,0 +1,31 @@
+Warning: this sign-in ends between 2026-11-10 and 2026-11-13 (in 2 days at the earliest). Renewing it does not move those dates. Run claude auth login before then, or use claude setup-token for unattended jobs.
+[
+  {
+    "id": "idea-1",
+    "kind": "discovery",
+    "title": "Why do Collatz-like maps with small multipliers rarely diverge?",
+    "question": "For generalized Collatz maps n→n/2 (even) and n→kn+1 (odd), how does the heuristic expected log-drift, ln(k)/2 versus ln(2)/2, predict which k yield bounded trajectories, and where does empirical computation deviate?",
+    "why_it_attracts_me": "A simple probabilistic argument predicts the fate of an unsolved-looking family of maps. I want to see how cleanly the heuristic matches brute-force data for k=1,3,5,7, and where cycles or outliers break the story.",
+    "first_work_unit": "Derive the expected log-drift per step for odd multiplier k, then compute trajectories for all starting n below 100,000 for k=1,3,5, recording max values, stopping times, and any non-terminating or cycling cases.",
+    "deliverable": "A short report with the derived drift formula, a table comparing predicted and observed behavior for each k, and notes on any cycles found.",
+    "brief_checklist": [
+      "Drift formula derived and stated explicitly",
+      "Empirical results tabulated for at least three values of k",
+      "Discrepancies or cycles between heuristic and data explicitly discussed"
+    ]
+  },
+  {
+    "id": "idea-2",
+    "kind": "creative",
+    "title": "A Constrained Poem Whose Line Lengths Encode Pi",
+    "question": "Can I write a coherent, evocative poem about circles or cycles in which successive word lengths follow the digits of pi, with zero mapped to ten, while still reading naturally?",
+    "why_it_attracts_me": "Piems are a known constrained-writing form, but most feel stilted. I want to test whether careful word choice and enjambment can yield a poem that reads smoothly and carries real imagery, balancing mathematical rigidity with emotional resonance.",
+    "first_work_unit": "List the first 40 digits of pi, then brainstorm vocabulary banks by word length from 1 to 10 letters around themes of orbits, seasons, and return. Draft the opening ten words and check each length.",
+    "deliverable": "A poem of at least 40 words following pi's digits, plus a short note on the constraints and the choices made to keep it natural.",
+    "brief_checklist": [
+      "Every word length matches the corresponding pi digit, with 0 as ten letters",
+      "Poem covers at least 40 digits without errors, verified by explicit count",
+      "Poem has a coherent theme and reads as natural English"
+    ]
+  }
+]

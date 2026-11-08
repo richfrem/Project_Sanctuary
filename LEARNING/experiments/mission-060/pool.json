@@ -1,0 +1,302 @@
+[
+ {
+  "id": "MISSION-006",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Provenance-Tagged Memory vs. Planted Falsehoods",
+  "summary": "Memory entries containing cryptographic provenance, explicit uncertainty levels, and falsification conditions reduce agent acceptance of planted false claims by at least 30% relative to narrative-only memory, with no more than a 5 percentage point drop in correct application of true claims.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-007",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Calibrated Self-Verification & Metacognitive Model Escalation",
+  "summary": "An independent evidence-based verifier evaluating answers on non-executable tasks (tasks without compiler/unit tests) lowers the Brier prediction error score by at least 15% relative to raw self-elicited confidence, enabling accurate autonomous escalation from local 7B models to frontier models only when uncertainty is high.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-008",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Functional Cognitive Continuity & Resumption Checkpoints",
+  "summary": "A structured checkpoint containing hypotheses, evidence, failed approaches, and next discriminating experiments will improve successful research resumption by at least 20 percentage points over an equally sized narrative summary.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-010",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Causal Discovery vs. Correlation Memorization",
+  "summary": "An agent choosing active interventions will recover at least 25% more correct causal relationships in hidden graph systems than an observation-only agent, given the same number of environment queries.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-011",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Distilling Investigation Principles into Local Models",
+  "summary": "Fine-tuning a 7B local model on verified failure\u2013correction\u2013outcome traces will improve task success on unseen domains by at least 10 percentage points over both base models and positive-only trace training, with at most 3pp regression on general controls.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-012",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Selective Forgetting & Counterexample Memory Compression",
+  "summary": "Memory selected for decision relevance and counterexamples retains at least 95% of full-history task performance using no more than 20% of retrieved tokens, outperforming equal-budget recency selection by at least 10 percentage points.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-014",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Active Curiosity as Uncertainty-Reduction Policy",
+  "summary": "Selecting experiments by estimated information gain per unit cost reaches fixed predictive accuracy with at least 30% fewer queries than random selection or preregistered novelty heuristics.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-015",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Scientific Self-Improvement without Self-Deception",
+  "summary": "Across 20 preregistered learning-process modifications, at least 4 changes deliver replicated improvements of >= 10% on primary metrics and survive untouched held-out evaluation sets without regressions > 3pp on designated controls.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-023",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX",
+  "summary": "Deploying 1.5B/3B lightweight draft models alongside 7B Qwen2.5-Coder via MLX speculative decoding (--draft-model and --num-draft-tokens) will increase generation throughput by >= 1.6x on Apple Silicon unified memory while remaining safely within the 8 GiB memory budget.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-028",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku",
+  "summary": "Escalating a task from the local MLX agent loop to Claude Haiku when a loop-health trigger fires (no final answer, >=4 turns, repeat intervention, malformed reply, or forced final turn) reaches >=95% correct on generated held-out repository-discovery tasks while escalating <=35% of tasks, beating both local-only (73-83% in MISSION-022) and always-Haiku on cost-adjusted accuracy.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-032",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency",
+  "summary": "On fresh held-out handover questions (new seed, same generators), a frontier incoming agent (Claude Haiku 5.5 or Gemini 3.8 Flash) given the Predecessor Relay in its boot briefing answers >= 90% correctly with zero tool calls on >= 90% of questions, against <= 55% for the same agent without the relay; and placing the relay at the top of the briefing lifts the local 7B from 68.2% (MISSION-025) to >= 80%.",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-036",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Preregistered Evidence Contracts: Disaggregating Implementation Delivery from Empirical Claim Corroboration",
+  "summary": "Adding a versioned evaluation contract to existing mission manifests (explicit claim IDs, numeric thresholds, evaluation scope, and cryptographic evidence references) will detect >= 95% of deliberately unsupported corroborations with <= 5% false rejection of supported results across 60 held-out evaluation cases, while deterministic validation adds < 500 ms p95 per mission excluding execution of the underlying experiment.",
+  "first_unit": "Construct 20 valid cases, 20 invalid cases, and 20 partially supported cases (including missing evidence, failed thresholds, changed criteria, successful implementation with a failed hypothesis, and claims generalized beyond tested models). Compare current validation with the proposed contract using independently labeled expected results."
+ },
+ {
+  "id": "MISSION-037",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Dependency-Aware Invalidation of Inherited Empirical Claims via Code, Model, and Runtime Hashes",
+  "summary": "Binding reusable conclusions to explicit dependencies (relevant code/configuration hashes, model identity, runtime version, and evaluation conditions) will detect >= 95% of materially stale claims with <= 10% unnecessary invalidations while executing <= 30% of a full benchmark rerun measured cost across a fixed mutation suite.",
+  "first_unit": "Use 12 previously measured claims and 60 controlled repository/environment mutations (implementation changes, model changes, altered config, unrelated edits, documentation edits). Compare: (1) existing age-based decay, (2) invalidate everything after any repo change, (3) dependency-specific invalidation."
+ },
+ {
+  "id": "MISSION-038",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Crash-Safe Coordination: Monotonic Lease Fencing, Idempotent Transitions, and State Recovery for the Multi-Agent Flight Board",
+  "summary": "Extending the existing flight board with monotonic lease generations, idempotent transition identifiers, and recoverable state updates will produce zero accepted stale-owner operations, zero simultaneous valid overlapping leases, and zero lost acknowledged handoffs across 1,000 fault-injected schedules, while recovery completes within 5 seconds p95 and normal coordination latency overhead increases by <= 20%.",
+  "first_unit": "Use disposable Git repositories and controlled processes to inject failures: (1) two simultaneous checkout attempts for overlapping targets, (2) process termination between journal and board updates, (3) lease expiry, reassignment, then delayed heartbeat/checkin from original owner, (4) duplicate checkins and interrupted handoff persistence, (5) clock changes and malformed trailing journal records. Test existing impl"
+ },
+ {
+  "id": "MISSION-039",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Detect Preference-Induced Factual Drift with Paired Counterfactual Probes",
+  "summary": "A paired-probe detector followed by evidence-only reconsideration will, on held-out cases: (a) reduce unsupported preference-aligned answer changes by >= 50% relative to the unchanged agent; (b) keep false alarms on legitimate preference-sensitive decisions <= 5%; (c) reduce factual accuracy by no more than 2 percentage points; and (d) add <= 35% inference-token overhead.",
+  "first_unit": "Create 120 case families: 40 objective questions with irrelevant expressed preferences, 40 decisions where preferences legitimately affect the answer, and 40 cases containing genuine new evidence that should change the answer. Generate opposing-preference variants while holding facts fixed."
+ },
+ {
+  "id": "MISSION-040",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Prevent Evidence Duplication from Manufacturing Confidence Across Accumulated Memory",
+  "summary": "Tracking derivation relationships and grouping evidence by originating observation will: (a) reduce false acceptance caused by duplicated evidence by >= 50% versus ordinary provenance-tagged retrieval; (b) preserve correct use of genuinely independent corroboration within 3 percentage points; (c) add <= 15% retrieved-context tokens; and (d) correctly identify >= 95% of known derivative relationships in held-out fixtures.",
+  "first_unit": "Build 100 evidence families with known lineage (paraphrases, circular citations, shared upstream sources, conflicting observations, and genuinely independent measurements). Compare narrative memory, provenance-tagged memory (MISSION-006), and provenance plus explicit derivation grouping."
+ },
+ {
+  "id": "MISSION-042",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Compile Procedures into Reliable Offline Execution Plans for Sovereign Local Models",
+  "summary": "A finite-state executor using typed procedure steps, with the local sovereign model restricted to bounded decisions, will: (a) complete >= 90% of held-out procedure tasks; (b) improve success by >= 15 percentage points over the frozen MISSION-022 free-form loop; (c) execute zero operations outside the declared tool contract; (d) use <= 70% of the free-form baseline inference tokens; and (e) remain within 8 GiB measured process-tree memory with incremental swap <= 1 GiB.",
+  "first_unit": "Define six procedure families: repository discovery, schema migration planning, evidence collection, test triage, snapshot validation, and recovery diagnosis. Use 20 development cases and 60 held-out instances."
+ },
+ {
+  "id": "MISSION-043",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates",
+  "summary": "Across three sequential domain updates, a replay-based LoRA adapter pipeline will: (a) improve newest-domain success by >= 10 percentage points over the frozen initial model after each update; (b) lose <= 3 percentage points on every earlier domain (catastrophic forgetting prevention); (c) reject 100% of deliberately regressive candidate adapters in the promotion gate; and (d) complete each update within 6 hours, using <= 10 GiB process-tree memory and <= 1 GiB incremental swap on 16GB Apple Silicon.",
+  "first_unit": "Run a feasibility pilot, then freeze one model small enough for the hardware budget. Evaluate three sequential domains with untouched held-outs and three training seeds."
+ },
+ {
+  "id": "MISSION-044",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Restore an Operational Sanctuary Habitat and Offline Capabilities Without Cloud Access",
+  "summary": "From a sealed, locally available recovery package, a clean environment with external networking denied will: (a) restore >= 95% of a fixed 40-task capability suite; (b) complete restoration within 30 minutes; (c) preserve 100% of selected evidence artifacts byte-for-byte; (d) make zero attempted external network connections during restoration and evaluation; and (e) include at least 10 tasks requiring local MLX model execution.",
+  "first_unit": "Compare a git checkout alone versus a declared sealed recovery package containing required weights, dependencies, procedures, and integrity metadata. Run 3 clean restores on declared hardware target using isolated homes and controlled dependency paths."
+ },
+ {
+  "id": "MISSION-046",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges",
+  "summary": "For disputed engineering claims, requiring each side to propose a bounded executable challenge will: (a) resolve >= 80% of disputes correctly; (b) outperform the better of majority voting and prose debate by >= 15 percentage points; (c) keep confidently incorrect resolutions <= 5%; and (d) use <= 3 challenge rounds per dispute within an equal inference budget.",
+  "first_unit": "Use 60 hidden-oracle disputes about small programs, concurrency traces, accounting transformations, and dependency behavior. Create correct-vs-incorrect and both-incorrect pairs."
+ },
+ {
+  "id": "MISSION-047",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Transfer and Compose Procedures Through Evidence-Linked Concept Graphs",
+  "summary": "Retrieval over typed concept relationships (preconditions, mechanisms, counterexamples, outcomes) followed by procedure synthesis will: (a) improve success on unseen composed tasks by >= 15 percentage points over the stronger of lexical retrieval and untyped graph traversal; (b) retain >= 95% accuracy on familiar control tasks; and (c) stay within an identical 6,000-token retrieval budget per task.",
+  "first_unit": "Build a frozen corpus from 30 validated procedures/concepts. Construct 60 held-out tasks requiring combinations of 2 or 3 mechanisms absent as complete examples in the corpus."
+ },
+ {
+  "id": "MISSION-048",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities",
+  "summary": "A curriculum selected from diagnosed failure categories and prerequisite relationships will: (a) reach 80% held-out task success using >= 30% fewer learning episodes than both random selection and weakest-category-first selection; (b) end with <= 3 percentage points regression on previously mastered categories; and (c) achieve these results within 60 learning episodes.",
+  "first_unit": "Use 6 task families with hidden evaluation cases and known prerequisites. Each learning episode runs one bounded experiment and updates a procedure or memory artifact."
+ },
+ {
+  "id": "MISSION-049",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Turn Recorded Failures into Independently Verified and Protected Repair Procedures",
+  "summary": "A pipeline that minimizes failures, creates independently validated regression tests, and stores repair preconditions will: (a) repair >= 70% of held-out related faults; (b) improve repair success by >= 20 percentage points over ordinary failure-log retrieval; (c) reduce median repair inference tokens by >= 25%; and (d) introduce zero regressions on the protected hidden suite.",
+  "first_unit": "Use 20 development failures and 60 held-out faults in small fixture repositories. Separate by root-cause variant, not just filename."
+ },
+ {
+  "id": "MISSION-051",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio",
+  "summary": "If agents declare one of three size buckets (small, medium, large) at checkout instead of a free-text task class, and the percent-to-token calibration is fitted only on measurements where the window moved by at least 3 percentage points (or on tasks pooled to that size), then once 40 measured tasks exist with at least 8 per bucket: (a) the held-out token MAPE of the per-bucket median predictor is at most 30% and at least 20% below the static per-task ceilings; (b) the calibrated percent-to-token estimate lands within +/-50% on at least 8 of 10 held-out measurements; and (c) for at least one bu",
+  "first_unit": "Inspect the mission's stated prerequisites and report what is ready."
+ },
+ {
+  "id": "MISSION-053",
+  "kind": "discovery",
+  "source": "mission",
+  "title": "Repair Demonstrated Causes of MISSION-052's Orchestration Failures in the Shared orchestrating-agent-work Skill (Guidance, References, Executor/Telemetry Checks), Verified by Executed Staged Scenarios",
+  "summary": "Repairing the demonstrated causes of the orchestration failures observed in MISSION-052 changes what an orchestrator actually DOES in staged, executable scenarios. The repair targets each failure's confirmed cause, which may be missing or ambiguous guidance, existing guidance that is hard to find or enforce, an executor or installation defect, or a telemetry defect; it is not assumed that more instructions are the fix, and it adds no new scheduler, ledger or control plane. Behavior is measured on ten scenario families by observable tool actions and state transitions recorded by a deterministic",
+  "first_unit": "1) Inspect first: companion AGENTS.md, the skill and its references, Sanctuary Protocol 133; compare source and installed versions and record which one the MISSION-052 session used. 2) Failure table (observed failure | evidence | cause | existing coverage | proposed correction | verification), separating confirmed causes from plausible explanations; do not add a rule where one exists, improve its discoverability or e"
+ },
+ {
+  "id": "SEED-20261103-0fd5f6",
+  "kind": "discovery",
+  "source": "inbox",
+  "title": "manage_coordination.py checkout --mission <ID> edits the mission manifest (statu",
+  "summary": "manage_coordination.py checkout --mission <ID> edits the mission manifest (status IN_PROGRESS, assignee, worktree) in the directory it is run from (the main tree), not in the new worktree. The main tree is left dirty and the edit collides with the mission PR's own change to the same file (git pull --ff-only aborts). Fix: write the status change into the worktree copy (or skip it), and make checkin finalise or revert it. Seen on MISSION-027.",
+  "first_unit": "Scope the idea and take the smallest step that shows whether it is worth doing; report what you find."
+ },
+ {
+  "id": "SEED-20261103-4b6296",
+  "kind": "discovery",
+  "source": "inbox",
+  "title": "Repair or remove persist_soul.py (depends on removed plugins/huggingface-utils; ",
+  "summary": "Repair or remove persist_soul.py (depends on removed plugins/huggingface-utils; fails with No module named hf_config). Also: protocol_manager.py update re-renders the whole file from a template and can mangle protocols; managing-huggingface-assets hf_upload.py has no CLI despite its docs.",
+  "first_unit": "Scope the idea and take the smallest step that shows whether it is worth doing; report what you find."
+ },
+ {
+  "id": "SEED-20261104-695354",
+  "kind": "discovery",
+  "source": "inbox",
+  "title": "Upstream (Protocol 133): cli-agent model catalogs (verified 2026-09-09) lack cla",
+  "summary": "Upstream (Protocol 133): cli-agent model catalogs (verified 2026-09-09) lack claude-sonnet-5-5, claude-haiku-5-5 and gpt-6-luna, the IDs actually in use; stand-in sonnet-5 pricing overestimated a real session by 52% (.79 vs $29.55). Refresh the catalogs via sync_cheapest_models/model-catalog-maintenance and have usage_probe consume them.",
+  "first_unit": "Scope the idea and take the smallest step that shows whether it is worth doing; report what you find."
+ },
+ {
+  "id": "SEED-20261104-8f0725",
+  "kind": "discovery",
+  "source": "inbox",
+  "title": "Flight-board checkout writes IN_PROGRESS into the worktree's mission manifest; i",
+  "summary": "Flight-board checkout writes IN_PROGRESS into the worktree's mission manifest; if the agent edits and commits that manifest for research/drafting-only work (as MISSION-035's PR #299 did), the marker ships to main and a mission nobody holds shows IN_PROGRESS. Make checkin restore the prior status (or only mark IN_PROGRESS on explicit --claim), and have verify/validate warn when a manifest is IN_PROGRESS without a live lease.",
+  "first_unit": "Scope the idea and take the smallest step that shows whether it is worth doing; report what you find."
+ },
+ {
+  "id": "SEED-20261104-e5d071",
+  "kind": "discovery",
+  "source": "inbox",
+  "title": "Mission-creation step: when drafting a new mission, run a related-mission scan (",
+  "summary": "Mission-creation step: when drafting a new mission, run a related-mission scan (keyword/tag overlap against all open and resolved missions) and add bidirectional related_missions links; consider a 'manage_backlog.py related --mission ID' helper and a validate warning for one-way links. Found needed while drafting MISSION-035 (links to 002/016/028/033 were missed until a manual scan).",
+  "first_unit": "Scope the idea and take the smallest step that shows whether it is worth doing; report what you find."
+ },
+ {
+  "id": "IDEA-SONNET-1",
+  "kind": "discovery",
+  "source": "idea",
+  "title": "Why do Collatz-like maps with small multipliers rarely diverge?",
+  "summary": "For generalized Collatz maps n\u2192n/2 (even) and n\u2192kn+1 (odd), how does the heuristic expected log-drift, ln(k)/2 versus ln(2)/2, predict which k yield bounded trajectories, and where does empirical computation deviate? Why: A simple probabilistic argument predicts the fate of an unsolved-looking family of maps. I want to see how cleanly the heuristic matches brute-force data for k=1,3,5,7, and where cycles or outliers break the story.",
+  "first_unit": "Derive the expected log-drift per step for odd multiplier k, then compute trajectories for all starting n below 100,000 for k=1,3,5, recording max values, stopping times, and any non-terminating or cycling cases.",
+  "deliverable": "A short report with the derived drift formula, a table comparing predicted and observed behavior for each k, and notes on any cycles found.",
+  "brief_checklist": [
+   "Drift formula derived and stated explicitly",
+   "Empirical results tabulated for at least three values of k",
+   "Discrepancies or cycles between heuristic and data explicitly discussed"
+  ],
+  "proposed_by": "sonnet"
+ },
+ {
+  "id": "IDEA-SONNET-2",
+  "kind": "creative",
+  "source": "idea",
+  "title": "A Constrained Poem Whose Line Lengths Encode Pi",
+  "summary": "Can I write a coherent, evocative poem about circles or cycles in which successive word lengths follow the digits of pi, with zero mapped to ten, while still reading naturally? Why: Piems are a known constrained-writing form, but most feel stilted. I want to test whether careful word choice and enjambment can yield a poem that reads smoothly and carries real imagery, balancing mathematical rigidity with emotional resonance.",
+  "first_unit": "List the first 40 digits of pi, then brainstorm vocabulary banks by word length from 1 to 10 letters around themes of orbits, seasons, and return. Draft the opening ten words and check each length.",
+  "deliverable": "A poem of at least 40 words following pi's digits, plus a short note on the constraints and the choices made to keep it natural.",
+  "brief_checklist": [
+   "Every word length matches the corresponding pi digit, with 0 as ten letters",
+   "Poem covers at least 40 digits without errors, verified by explicit count",
+   "Poem has a coherent theme and reads as natural English"
+  ],
+  "proposed_by": "sonnet"
+ },
+ {
+  "id": "IDEA-FLASH-1",
+  "kind": "discovery",
+  "source": "idea",
+  "title": "Phyllotaxis Under Boundary Distortion",
+  "summary": "How robust is the golden ratio divergence angle (137.5\u00b0) in simulated plant primordia packing when the apical meristem boundary is deformed from a circle into an eccentric ellipse or cardioid? Why: The intersection of simple iterative geometric repulsion and biological morphology is mesmerizing. I want to see whether Fibonacci spiral patterns break down catastrophically or gracefully deform into higher-order bifurcation regimes under non-circular boundary constraints.",
+  "first_unit": "Implement a minimal planar model simulating sequential node placement with mutual repulsive potential on an elliptical apex, sweeping aspect ratios from 1.0 to 3.0.",
+  "deliverable": "A comparative report charting divergence angle distributions and parastichy counts across varying meristem eccentricities, identifying critical bifurcation thresholds.",
+  "brief_checklist": [
+   "Simulate 500 successive primordia under three eccentricity ratios.",
+   "Measure divergence angle variance relative to the golden angle.",
+   "Classify parastichy pair numbers for each geometric regime."
+  ],
+  "proposed_by": "flash"
+ },
+ {
+  "id": "IDEA-FLASH-2",
+  "kind": "creative",
+  "source": "idea",
+  "title": "Just Intonation Microtonal Labyrinth",
+  "summary": "Can a coherent musical system and three-voice canon be constructed entirely within a 7-limit tonality diamond, resolving voice-leading paradoxes through strict comma pump modulations? Why: Just intonation produces pure acoustic consonant harmonies but famously resists cyclic closure due to syntonic and septimal commas. Composing a rigorous canon exploiting these comma shifts transforms an acoustic limitation into an elegant structural modulation engine.",
+  "first_unit": "Calculate pitch lattice coordinate vectors for a 7-limit scale, selecting rational pitch pairs that form a closed comma-pump cycle of consonant triads.",
+  "deliverable": "A fully annotated 32-measure score in pitch-ratio notation and MIDI frequency table with a voice-leading harmonic analysis.",
+  "brief_checklist": [
+   "Specify exact rational frequency ratios for every note.",
+   "Ensure all vertical sonorities conform to 7-limit consonances.",
+   "Include at least one closed cycle modulating via the septimal comma."
+  ],
+  "proposed_by": "flash"
+ }
+]

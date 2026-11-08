@@ -376,8 +376,280 @@
       },
       "marker_found": true,
       "passed": true
+    },
+    {
+      "call_id": "ideas-sonnet",
+      "transcript_sha256": "2582595c7778dc7afcd247db4ccb755acf9b2078d3191b61a460948a960e6ca4",
+      "source_numeric_rows": [
+        {
+          "context": 2188,
+          "output": 898
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 2188,
+        "last_context": 2188,
+        "additional_tokens": 898,
+        "output_tokens": 898,
+        "accumulated_input": 2188
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "ideas-flash",
+      "transcript_sha256": "df8fa36445d26d201c9a8ba4590acf86302f75e27026ff6917892d8207953880",
+      "source_numeric_rows": [
+        {
+          "context": 12888,
+          "output": 118
+        },
+        {
+          "context": 13465,
+          "output": 2524
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12888,
+        "last_context": 13465,
+        "additional_tokens": 3219,
+        "output_tokens": 2642,
+        "accumulated_input": 26353
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "score-nonmanifest",
+      "transcript_sha256": "3b02b448a32ea0dfb8453cfa45af4c23ecbee115d23275772c7b703c934185ff",
+      "source_numeric_rows": [
+        {
+          "context": 12891,
+          "output": 120
+        },
+        {
+          "context": 15284,
+          "output": 3707
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12891,
+        "last_context": 15284,
+        "additional_tokens": 6220,
+        "output_tokens": 3827,
+        "accumulated_input": 28175
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "declare-sonnet",
+      "transcript_sha256": "d1a16104ddbbf79165dd58cb43e23e5bd8da97e125847ff8a5e841bed9d96014",
+      "source_numeric_rows": [
+        {
+          "context": 11542,
+          "output": 3260
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 11542,
+        "last_context": 11542,
+        "additional_tokens": 3260,
+        "output_tokens": 3260,
+        "accumulated_input": 11542
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "declare-flash",
+      "transcript_sha256": "70914754c680c2b42b663af16a588a66d30b1a02410a4d8525c2f672b87cefdd",
+      "source_numeric_rows": [
+        {
+          "context": 12893,
+          "output": 122
+        },
+        {
+          "context": 20639,
+          "output": 7708
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12893,
+        "last_context": 20639,
+        "additional_tokens": 15576,
+        "output_tokens": 7830,
+        "accumulated_input": 33532
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "declare-luna",
+      "transcript_sha256": "162cc1794ac30397447819a4ebed48ab1834d135313f31de5279331521066f06",
+      "source_numeric_rows": [
+        {
+          "context": 27436,
+          "output": 2644
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 27436,
+        "last_context": 27436,
+        "additional_tokens": 2644,
+        "output_tokens": 2644,
+        "accumulated_input": 27436
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "work-ITEM-01",
+      "transcript_sha256": "3aee7b99d2a3600deccf078e52a6b1ad5ab06a0a2db9a375a683cea01da3aa87",
+      "source_numeric_rows": [
+        {
+          "context": 12906,
+          "output": 120
+        },
+        {
+          "context": 13635,
+          "output": 479
+        },
+        {
+          "context": 14987,
+          "output": 99
+        },
+        {
+          "context": 18726,
+          "output": 70
+        },
+        {
+          "context": 22187,
+          "output": 114
+        },
+        {
+          "context": 25566,
+          "output": 62
+        },
+        {
+          "context": 27049,
+          "output": 172
+        },
+        {
+          "context": 28315,
+          "output": 105
+        },
+        {
+          "context": 29247,
+          "output": 166
+        },
+        {
+          "context": 29932,
+          "output": 92
+        },
+        {
+          "context": 31616,
+          "output": 89
+        },
+        {
+          "context": 32867,
+          "output": 169
+        },
+        {
+          "context": 34107,
+          "output": 99
+        },
+        {
+          "context": 35903,
+          "output": 115
+        },
+        {
+          "context": 38636,
+          "output": 217
+        },
+        {
+          "context": 39835,
+          "output": 61
+        },
+        {
+          "context": 40521,
+          "output": 142
+        },
+        {
+          "context": 41408,
+          "output": 625
+        },
+        {
+          "context": 42184,
+          "output": 223
+        },
+        {
+          "context": 42694,
+          "output": 128
+        },
+        {
+          "context": 43671,
+          "output": 1172
+        },
+        {
+          "context": 47782,
+          "output": 6102
+        },
+        {
+          "context": 54280,
+          "output": 60
+        },
+        {
+          "context": 54463,
+          "output": 12846
+        },
+        {
+          "context": 67405,
+          "output": 8314
+        },
+        {
+          "context": 75795,
+          "output": 76
+        },
+        {
+          "context": 76466,
+          "output": 399
+        },
+        {
+          "context": 77498,
+          "output": 13853
+        },
+        {
+          "context": 91427,
+          "output": 66
+        },
+        {
+          "context": 91597,
+          "output": 69
+        },
+        {
+          "context": 91934,
+          "output": 504
+        }
+      ],
+      "recomputed": {
+        "requests": 31,
+        "overhead": 12906,
+        "last_context": 91934,
+        "additional_tokens": 125836,
+        "output_tokens": 46808,
+        "accumulated_input": 1374639
+      },
+      "marker_found": true,
+      "passed": true
     }
   ],
-  "known_additional_tokens": 36561,
+  "known_additional_tokens": 194214,
   "unknown_call_ids": []
 }
