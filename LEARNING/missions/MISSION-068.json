@@ -1,0 +1,110 @@
+{
+  "id": "MISSION-068",
+  "title": "Do Explicit Semantic and Lifecycle Contracts Improve Sanctuary Agent Reliability?",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Sanctuary mission schema, coordination, lifecycle, preservation and authorization scripts, compared on isolated fixtures with simulated publication (no live remote writes)",
+  "created_at": "2026-11-08T19:00:00Z",
+  "updated_at": "2026-11-08T19:00:00Z",
+  "confidence_reviewed": "2026-11-08",
+  "proposed_by": "Richard (question, after Frank Coyle's talk 'Why Agentic Systems Need Ontologies', https://www.youtube.com/watch?v=Sir59K8ZDPU); ChatGPT (comparative research design); registered by claude-code",
+  "interest_statement": "Determine whether a small, explicit model of entities, relationships and permitted state transitions prevents errors that Sanctuary's current schemas, scripts and operating instructions do not already prevent. This is a research question; it does not assume RDF, OWL, SHACL, Z3, a knowledge graph or a new control plane must be adopted.",
+  "hypothesis": "Provisional: explicit cross-record and transition checks reduce invalid transitions accepted by the current baseline (A: installed scripts and validators) without materially blocking valid work. A specialized semantic implementation (C: SHACL or a solver) adds value only if it improves coverage, clarity or maintenance over equivalent ordinary-code checks (B), with policy requirements and available evidence held equivalent across B and C. Numeric thresholds and case counts are not yet defined; they are set after the inventory and development phase and frozen before held-out execution.",
+  "falsification_criteria": "Not yet frozen. To be specified with numeric thresholds after the inventory/development phase and before held-out execution. In outline: the hypothesis fails if B and C accept no fewer held-out invalid transitions than A, or block valid transitions materially more often; C's added value fails if it does not exceed B on coverage, clarity or maintenance at equal rules and evidence. Rules must not be derived from held-out failures. Acceptable outcomes include: existing enforcement sufficient; small script improvements sufficient; semantic validator adds measurable value; evidence insufficient.",
+  "baseline_evidence": "Sources inspected at abstract/introduction depth only (by ChatGPT): W3C OWL 2 Primer (https://www.w3.org/TR/owl2-primer/); W3C SHACL (https://www.w3.org/TR/shacl/); Solver-Aided Verification of Policy Compliance in Tool-Augmented LLM Agents (https://arxiv.org/abs/2603.20449; authors report fewer policy violations while maintaining task accuracy); VeriMAP, Verification-Aware Planning for Multi-Agent Systems (https://arxiv.org/abs/2510.17109). The talk was inspected through its indexed description and chapters, not a full transcript. Full-text methodological review is part of execution. Candidate historical failures (startup preservation writes, lease reset of a resolved mission to IN_PROGRESS, premature delivery claims, unassessed vs falsified confusion, stale receipt as proof of persistence) are not yet confirmed from repository records. Synthesis: LEARNING/research/semantic_lifecycle_contracts/README.md.",
+  "experiment": "1) Inventory existing enforcement: map each relevant invariant to the code that enforces it; examine Agentic OS capabilities; separate missing from bypassable checks. 2) Define a small domain model (candidates: Mission, Attempt, Evidence, Verdict, Authorization, Lease, SourceRevision, Export, RemoteReceipt), only the relationships the selected cases need, marking trusted observations vs agent assertions. 3) Compare A (current scripts), B (minimal ordinary-code preconditions/transition checks) and C (one semantic implementation, SHACL or solver, only if research shows a fit) on identical cases. 4) Use confirmed historical failures plus valid and already-fixed counterparts as development examples. 5) Freeze a bounded evaluation (invalid/valid transitions, stale/missing evidence, interruption/resume, duplicate requests, concurrent change between validation and execution; rejection before side effect) and run held-out cases on isolated fixtures with simulated publication.",
+  "phases": [
+    "Inventory existing enforcement",
+    "Define a small domain model",
+    "Development on confirmed historical cases",
+    "Freeze thresholds, case counts and budget",
+    "Held-out comparison of A, B and C",
+    "Assessment and preservation"
+  ],
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "cost_weight": 1,
+    "operational_friction": 3,
+    "priority_score": 5.33
+  },
+  "priority_score": 5.33,
+  "score_basis": "Provisional planning estimates, not measured ROI. Leverage 4: potentially reusable reliability improvement. Depth 4: comparative test of where enforcement belongs. Cost weight 1 and friction 3: moderate experimental and integration complexity (inventory, fixtures, possible new dependency). Priority = (4x4)/(1x3) = 5.33. Zero model calls in a CPU evaluator must not be read as the total mission cost.",
+  "strategic_intent": "Decide on evidence whether Sanctuary needs explicit semantic or lifecycle contracts, small script improvements, or nothing new.",
+  "design_constraints": [
+    "Do not assume adoption of RDF, OWL, SHACL, Z3, a knowledge graph or a new control plane",
+    "Select one semantic implementation, not every stack",
+    "Hold policy requirements and evidence equivalent across B and C",
+    "Isolated fixtures and simulated publication only; no live destructive operations or remote writes",
+    "Freeze thresholds before held-out execution; never derive rules from held-out failures",
+    "A deterministic fixture study cannot establish improved real-agent behaviour",
+    "An ontology does not provide locking, authorization or idempotency by describing them"
+  ],
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Registration ready. Execution requires an inventory, a bounded design, verified dependencies and an explicit resource budget.",
+    "verified_present": [
+      "Mission schema and validators",
+      "manage_coordination.py",
+      "soul_coverage.py"
+    ],
+    "missing_prerequisites": [
+      "Enforcement inventory",
+      "Full-text source review",
+      "Confirmed historical failure cases",
+      "Explicit resource budget",
+      "Verified SHACL or solver dependency (only if C is selected)"
+    ],
+    "first_enabling_step": "Inventory existing enforcement (phase 1)."
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "claude-opus-5-5",
+    "cost_weight": 1,
+    "cli_target": "none",
+    "fallback_models": [
+      "claude-sonnet-5-5"
+    ],
+    "frontier_escalation_condition": "Domain-model design or held-out assessment disagreement",
+    "routing_guidance": "Inventory and fixture work are deterministic; model use is for design and review. Any live-agent token test needs separate justification and a bounded budget."
+  },
+  "tags": [
+    "reliability",
+    "lifecycle",
+    "ontology",
+    "shacl",
+    "solver-verification",
+    "state-transitions",
+    "governance",
+    "proposed-by-richard"
+  ],
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "reference_doctrines": [
+    "LEARNING/research/semantic_lifecycle_contracts/README.md",
+    ".agent/rules/mission-execution.md"
+  ],
+  "related_missions": {
+    "MISSION-036": "SIBLING (overlap, partial): evidence and verdict contracts; shares the unassessed-vs-falsified and evidence-validity cases but does not compare enforcement approaches across the lifecycle.",
+    "MISSION-038": "SIBLING (overlap, partial): lease fencing and idempotent transitions; shares concurrency and duplicate-request cases but tests coordination mechanics, not a semantic model."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-068.json",
+      "LEARNING/research/semantic_lifecycle_contracts/",
+      "LEARNING/experiments/mission-068/"
+    ],
+    "resources": [
+      "local CPU fixtures; model use for design and review (budget to be set before execution)"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl",
+      "chronicle/ledger.json"
+    ]
+  }
+}
