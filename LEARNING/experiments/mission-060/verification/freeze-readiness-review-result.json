@@ -1,0 +1,57 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": "freeze-contract-review",
+ "owner": "codex",
+ "backend": "agy",
+ "executable": "/opt/homebrew/bin/agy",
+ "version": "1.5.3",
+ "cwd": "/private/tmp/mission060-freeze-review",
+ "started": 1794116709.303762,
+ "ended": 1794116823.5269818,
+ "duration_s": 114.223,
+ "output_file": "/private/tmp/mission060-freeze-review/result.md",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/private/tmp/mission060-freeze-review"
+  },
+  {
+   "name": "unit_claim",
+   "ok": true,
+   "detail": "codex"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary",
+  "unit_claim"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": null,
+  "source": "not reported by backend"
+ },
+ "attempts": [
+  {
+   "backend": "agy",
+   "status": "ok",
+   "exit": 0,
+   "started": 1794116709.826271,
+   "ended": 1794116823.5256279,
+   "usage": {
+    "total_tokens": null,
+    "source": "not reported by backend"
+   }
+  }
+ ],
+ "claim_mode": "executor-acquired",
+ "cleanup_confirmed": true
+}

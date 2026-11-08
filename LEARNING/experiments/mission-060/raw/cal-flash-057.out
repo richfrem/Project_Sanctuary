@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "D1": {
+      "value": true,
+      "evidence": "Real primes repel their own last digit by a clearly measurable amount beyond the random model, but that extra repulsion did not fade"
+    },
+    "D2": {
+      "value": true,
+      "evidence": "| 10^7-10^8 | 5,096,876 | 1 / 3 / 7 / 9 | 17.8 / 16.8 / 16.8 / 17.8 % | 19.6 / 19.6 / 19.6 / 19.6 %"
+    },
+    "D3": {
+      "value": true,
+      "evidence": "Lemke Oliver and Soundararajan, 2016... numpy sieve... What remains uncertain: Two windows only... One random model"
+    }
+  },
+  "notes": "All discovery checks pass with informative empirical findings, tabular computational outputs, and explicit disclosure of sources, methods, and limitations."
+}

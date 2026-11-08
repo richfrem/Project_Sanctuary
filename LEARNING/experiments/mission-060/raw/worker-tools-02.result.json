@@ -1,0 +1,51 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": null,
+ "owner": null,
+ "backend": "agy",
+ "executable": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/LEARNING/experiments/mission-060/contained_agy.py",
+ "version": "unavailable (--version exit 1)",
+ "cwd": "/private/tmp/study060/work/worker-tools-02",
+ "started": 1794035926.119533,
+ "ended": 1794035943.190818,
+ "duration_s": 17.071,
+ "output_file": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/LEARNING/experiments/mission-060/raw/worker-tools-02.out",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/private/tmp/study060/work/worker-tools-02"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": null,
+  "source": "not reported by backend"
+ },
+ "attempts": [
+  {
+   "backend": "agy",
+   "status": "ok",
+   "exit": 0,
+   "started": 1794035926.15764,
+   "ended": 1794035943.190573,
+   "usage": {
+    "total_tokens": null,
+    "source": "not reported by backend"
+   }
+  }
+ ],
+ "claim_mode": null,
+ "cleanup_confirmed": true
+}

@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-08T05:55:49Z",
+  "backends": {
+    "claude": {
+      "session_pct_used": 0,
+      "session_resets": null,
+      "week_pct_used": 65,
+      "week_resets": "Nov 9 at 8:59pm (America/Vancouver)",
+      "status": "ok"
+    },
+    "agy": {
+      "status": "ok",
+      "buckets": [
+        {
+          "group": "Gemini Models",
+          "bucket": "Weekly Limit Remaining",
+          "window": "weekly",
+          "remaining_pct": 69.414,
+          "resets_at": "2026-11-14T01:12:47Z"
+        },
+        {
+          "group": "Gemini Models",
+          "bucket": "Five Hour Limit Remaining",
+          "window": "5h",
+          "remaining_pct": 98.665,
+          "resets_at": "2026-11-08T10:34:10Z"
+        },
+        {
+          "group": "Claude and GPT models",
+          "bucket": "Weekly Limit Remaining",
+          "window": "weekly",
+          "remaining_pct": 49.857,
+          "resets_at": "2026-11-08T17:57:28Z"
+        },
+        {
+          "group": "Claude and GPT models",
+          "bucket": "Five Hour Limit Remaining",
+          "window": "5h",
+          "remaining_pct": 100.0,
+          "resets_at": "2026-11-08T10:55:53Z"
+        },
+        {
+          "group": "Gemini 4 Argon",
+          "bucket": "Gemini 4 Argon Weekly Limit",
+          "window": "weekly",
+          "remaining_pct": 100.0,
+          "resets_at": "2026-11-15T05:55:53Z"
+        }
+      ],
+      "probe_tokens": 0
+    },
+    "codex": {
+      "status": "ok",
+      "five_hour_pct_used": 18.0,
+      "weekly_pct_used": 69.0,
+      "five_hour_resets_at": 1794133042,
+      "weekly_resets_at": 1794406954,
+      "session_total_tokens": 27929,
+      "source_timestamp": "2026-11-08T05:36:06.517Z",
+      "source_file": "rollout-2026-11-07T22-36-00-01a1b9a8-0adc-7aa3-b32a-2c36500739a1.jsonl"
+    }
+  }
+}

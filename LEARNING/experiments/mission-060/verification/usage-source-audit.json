@@ -1,0 +1,383 @@
+{
+  "status": "PASS",
+  "calls": [
+    {
+      "call_id": "meter-flash-03",
+      "transcript_sha256": "25df5883a65f67eb0764c0035a76b49a46e8e5d3681ec4bf285e0c9126141e5e",
+      "source_numeric_rows": [
+        {
+          "context": 12891,
+          "output": 113
+        },
+        {
+          "context": 13258,
+          "output": 63
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12891,
+        "last_context": 13258,
+        "additional_tokens": 543,
+        "output_tokens": 176,
+        "accumulated_input": 26149
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "meter-luna-01",
+      "transcript_sha256": "e323e941c6175e89b9cb6ccd4ede1a4204f5b5df4f1da2b38f6d06cb74236247",
+      "source_numeric_rows": [
+        {
+          "context": 21715,
+          "output": 8
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 21715,
+        "last_context": 21715,
+        "additional_tokens": 8,
+        "output_tokens": 8,
+        "accumulated_input": 21715
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "meter-luna-03",
+      "transcript_sha256": "a07d0f499ce8e08dc6824a51f48ab5265ecf6bb02b17e228283f2829c048a3ca",
+      "source_numeric_rows": [
+        {
+          "context": 21622,
+          "output": 8
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 21622,
+        "last_context": 21622,
+        "additional_tokens": 8,
+        "output_tokens": 8,
+        "accumulated_input": 21622
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "meter-sonnet-01",
+      "transcript_sha256": "935fc7f8c7a11cd34bc1e559c390dca0bed5b4c6cba3891b668a58c6e50ff7fe",
+      "source_numeric_rows": [
+        {
+          "context": 24100,
+          "output": 8
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 24100,
+        "last_context": 24100,
+        "additional_tokens": 8,
+        "output_tokens": 8,
+        "accumulated_input": 24100
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "meter-sonnet-02",
+      "transcript_sha256": "96551747e7eb8e8cae862b5efcf92f20c3973879f7e9a7e3f2a773176e39c8e7",
+      "source_numeric_rows": [
+        {
+          "context": 1897,
+          "output": 8
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 1897,
+        "last_context": 1897,
+        "additional_tokens": 8,
+        "output_tokens": 8,
+        "accumulated_input": 1897
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "meter-flash-contained-01",
+      "transcript_sha256": "f72091be4a1d87948cf6d97d01ccd16ee8802e27423e8e8ad1c9866bc43477f9",
+      "source_numeric_rows": [
+        {
+          "context": 13699,
+          "output": 117
+        },
+        {
+          "context": 14067,
+          "output": 98
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 13699,
+        "last_context": 14067,
+        "additional_tokens": 583,
+        "output_tokens": 215,
+        "accumulated_input": 27766
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "worker-tools-01",
+      "transcript_sha256": "263ac3fc77fea15ff5fad50ff852ce3fe01d02a90bea28d604ebe22c257fb797",
+      "source_numeric_rows": [
+        {
+          "context": 13687,
+          "output": 116
+        },
+        {
+          "context": 14386,
+          "output": 795
+        },
+        {
+          "context": 15276,
+          "output": 353
+        },
+        {
+          "context": 15724,
+          "output": 185
+        }
+      ],
+      "recomputed": {
+        "requests": 4,
+        "overhead": 13687,
+        "last_context": 15724,
+        "additional_tokens": 3486,
+        "output_tokens": 1449,
+        "accumulated_input": 59073
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "worker-tools-02",
+      "transcript_sha256": "cf63386b12f83f665342c9c9c59c13fa0064fb1e7f346dddb1cf7d2c11ab941f",
+      "source_numeric_rows": [
+        {
+          "context": 13696,
+          "output": 124
+        },
+        {
+          "context": 14401,
+          "output": 735
+        },
+        {
+          "context": 15248,
+          "output": 586
+        }
+      ],
+      "recomputed": {
+        "requests": 3,
+        "overhead": 13696,
+        "last_context": 15248,
+        "additional_tokens": 2997,
+        "output_tokens": 1445,
+        "accumulated_input": 43345
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "worker-tools-03",
+      "transcript_sha256": "eb79076fccb964dd977e73581f11430e0ce049b2eb3d40038a7dd2631647b038",
+      "source_numeric_rows": [
+        {
+          "context": 13693,
+          "output": 119
+        },
+        {
+          "context": 14395,
+          "output": 1016
+        },
+        {
+          "context": 15509,
+          "output": 495
+        }
+      ],
+      "recomputed": {
+        "requests": 3,
+        "overhead": 13693,
+        "last_context": 15509,
+        "additional_tokens": 3446,
+        "output_tokens": 1630,
+        "accumulated_input": 43597
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "worker-tools-04",
+      "transcript_sha256": "6d19c03e39f97a73140a41bbcd7ab22933555b84666e27a5ccc825869a859890",
+      "source_numeric_rows": [
+        {
+          "context": 12905,
+          "output": 117
+        },
+        {
+          "context": 13606,
+          "output": 1004
+        },
+        {
+          "context": 14717,
+          "output": 120
+        }
+      ],
+      "recomputed": {
+        "requests": 3,
+        "overhead": 12905,
+        "last_context": 14717,
+        "additional_tokens": 3053,
+        "output_tokens": 1241,
+        "accumulated_input": 41228
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-flash-056",
+      "transcript_sha256": "eeba2475cab71d8a9472e34a396c48e7b3aead81aa0ca80a7add700d17b45b1a",
+      "source_numeric_rows": [
+        {
+          "context": 12894,
+          "output": 119
+        },
+        {
+          "context": 16158,
+          "output": 2408
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12894,
+        "last_context": 16158,
+        "additional_tokens": 5791,
+        "output_tokens": 2527,
+        "accumulated_input": 29052
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-flash-057",
+      "transcript_sha256": "e4a790f767cdb5acd4f9b84f1300d63e21027d9b52eb8744d2e75fb899e55a7c",
+      "source_numeric_rows": [
+        {
+          "context": 12892,
+          "output": 124
+        },
+        {
+          "context": 16145,
+          "output": 2390
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12892,
+        "last_context": 16145,
+        "additional_tokens": 5767,
+        "output_tokens": 2514,
+        "accumulated_input": 29037
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-flash-058",
+      "transcript_sha256": "7822e47b949edaf282da4a1b63869ff535c80200ac6a6a606ab855d038bd343c",
+      "source_numeric_rows": [
+        {
+          "context": 12893,
+          "output": 116
+        },
+        {
+          "context": 20358,
+          "output": 2841
+        }
+      ],
+      "recomputed": {
+        "requests": 2,
+        "overhead": 12893,
+        "last_context": 20358,
+        "additional_tokens": 10422,
+        "output_tokens": 2957,
+        "accumulated_input": 33251
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-luna-056",
+      "transcript_sha256": "17a80d251136496f1a187ffffd97a6c01d75d4a8a0ad407b5ea9daf13e8f103b",
+      "source_numeric_rows": [
+        {
+          "context": 24006,
+          "output": 143
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 24006,
+        "last_context": 24006,
+        "additional_tokens": 143,
+        "output_tokens": 143,
+        "accumulated_input": 24006
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-luna-057",
+      "transcript_sha256": "224cf3425de0507ee3260f06a98b0e55b7a062acdc5016ed470a94baa621e05c",
+      "source_numeric_rows": [
+        {
+          "context": 24110,
+          "output": 132
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 24110,
+        "last_context": 24110,
+        "additional_tokens": 132,
+        "output_tokens": 132,
+        "accumulated_input": 24110
+      },
+      "marker_found": true,
+      "passed": true
+    },
+    {
+      "call_id": "cal-luna-058",
+      "transcript_sha256": "224c52f0b56bf4f281d967fa5389731ca28798332affe1840362fb53da18896d",
+      "source_numeric_rows": [
+        {
+          "context": 27763,
+          "output": 166
+        }
+      ],
+      "recomputed": {
+        "requests": 1,
+        "overhead": 27763,
+        "last_context": 27763,
+        "additional_tokens": 166,
+        "output_tokens": 166,
+        "accumulated_input": 27763
+      },
+      "marker_found": true,
+      "passed": true
+    }
+  ],
+  "known_additional_tokens": 36561,
+  "unknown_call_ids": []
+}

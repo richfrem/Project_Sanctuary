@@ -1,0 +1,19 @@
+```json
+{
+  "checks": {
+    "D1": {
+      "value": true,
+      "evidence": "The originating posts were partly corrected: Landauer's floor is real but 10^10-10^14 below actual energies, logical deletion is not erasure"
+    },
+    "D2": {
+      "value": true,
+      "evidence": "Berut et al., Nature 483, 187-189, 2012... Shimizu, Chida, Yamahata, Nishiguchi, Phys. Rev. Lett. 136, 117103 (2026)"
+    },
+    "D3": {
+      "value": true,
+      "evidence": "Method and evidence requirements. Primary or near-primary sources only... Limits of the claim. This is one bounded pilot."
+    }
+  },
+  "notes": "Answers the physical forgetting question using calculations and citations. Sources, methodology, and epistemic limits are explicitly documented."
+}
+```

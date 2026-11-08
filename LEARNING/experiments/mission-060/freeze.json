@@ -1,0 +1,183 @@
+{
+  "cli_versions": {
+    "agy": "1.5.3",
+    "claude": "2.1.319 (Claude Code)",
+    "codex": "codex-cli 0.167.0",
+    "driver_python": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "worker_python": "Python 3.13.4"
+  },
+  "created_at": "2026-11-08T06:00:19Z",
+  "dependencies": {
+    "cli-agent/scripts/capability_profile.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/capability_profile.py",
+      "sha256": "8adc4fefa46a72fe1779e8cc57f4b41f8bb1b384301348d704def18bc7e5a9e7"
+    },
+    "cli-agent/scripts/check_routing_readiness.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/check_routing_readiness.py",
+      "sha256": "e943d4bdc3a1ce7908966e7b86566b464cff82a4472242b7154683529ea52ad2"
+    },
+    "cli-agent/scripts/disable_global_routing.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/disable_global_routing.py",
+      "sha256": "d13598cc5ad22e2a1982de2e2c76abd0f7ce97dae69cd82380595ec7df876eb9"
+    },
+    "cli-agent/scripts/dispatch_guard.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/dispatch_guard.py",
+      "sha256": "76b1dc8ea8550fb0f8cce65f4c376d38cf32e4e7e34435d4a59daaaf72ac8335"
+    },
+    "cli-agent/scripts/enable_global_routing.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/enable_global_routing.py",
+      "sha256": "f462231c74f74af910c574b1f14f0684d62a9a405ace99e9acf2e8a5b47e8f2a"
+    },
+    "cli-agent/scripts/kv_cache_orchestrator.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/kv_cache_orchestrator.py",
+      "sha256": "217e6d1318a92e8539b99dc84a3d4578e763844a791a7925b06ba154aed51e67"
+    },
+    "cli-agent/scripts/model_catalog.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/model_catalog.py",
+      "sha256": "d6b2695a8476aa2e66578010dc72d628237fe51515a4abfdefe67d62ede600b9"
+    },
+    "cli-agent/scripts/routing_proxy.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/routing_proxy.py",
+      "sha256": "ab52ec511c3e404389efe19680d2145985e64745a37bca13e6dee222f81cf267"
+    },
+    "cli-agent/scripts/run_agent.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/run_agent.py",
+      "sha256": "a9bd2ac9f7211458fd7f5626d1e3445ff153df22a80669a034af76e84e59563a"
+    },
+    "cli-agent/scripts/run_server.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/run_server.py",
+      "sha256": "1bdb2a9424f16b82fd4639308331cee0e08950d4bea40d4dbd9f1380c297c84e"
+    },
+    "cli-agent/scripts/smoke_test_kv_cache.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/smoke_test_kv_cache.py",
+      "sha256": "13e9d5ebcdeaf99cd26204cedcaa32f08ac02e38d25ee9d835e2c1282bd21c83"
+    },
+    "cli-agent/scripts/sync_cheapest_models.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/sync_cheapest_models.py",
+      "sha256": "e58e86d94645404640102f3d0d28444a30697d792cf4af409d7f31cae14db1b1"
+    },
+    "cli-agent/scripts/test_capability_profile.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_capability_profile.py",
+      "sha256": "652669a1faaa0e39c04ba13c0e453268715c6fdd57f7a8378e4b8f617a5c2478"
+    },
+    "cli-agent/scripts/test_check_routing_readiness.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_check_routing_readiness.py",
+      "sha256": "a10f210da85ee717eda6bd8c336a8babd760867181d9c14c1b70adc5b886892e"
+    },
+    "cli-agent/scripts/test_dispatch_guard.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_dispatch_guard.py",
+      "sha256": "166ce872d640fdd63c71c88fa79fc2ae81d515d650307c6746a7d7e9ee724205"
+    },
+    "cli-agent/scripts/test_kv_cache.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_kv_cache.py",
+      "sha256": "56a6fa90c8a27a3d5a1125a9fe49b9bd3c871a16b8de6fd59cbbcd6617f36016"
+    },
+    "cli-agent/scripts/test_model_catalog_contract.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_model_catalog_contract.py",
+      "sha256": "c9b302519085c07f5d7404a3491cc907d1122b78704b61050658cc11c5242291"
+    },
+    "cli-agent/scripts/test_routing_proxy.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_routing_proxy.py",
+      "sha256": "2d01fb56cf4468d2d69ed37fd834203dc40d7cb7f8282d7d1dac48549f379a94"
+    },
+    "cli-agent/scripts/test_run_agent.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_run_agent.py",
+      "sha256": "1a72ead1d1da15aacb3d9f038e45504e752619ffe5c543f00a99f2821b1b9e3a"
+    },
+    "cli-agent/scripts/test_run_agent_controls.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_run_agent_controls.py",
+      "sha256": "f2f2478d3cdba39c6aa6c012796b13bdb4141c923208a1f64dbc83c10e5fa64c"
+    },
+    "cli-agent/scripts/test_run_agent_runtime.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/cli-agent/scripts/test_run_agent_runtime.py",
+      "sha256": "6bf398fac9cd83683e71a053a8586f998a29094744c468d28c99cc2b8d2fffbe"
+    },
+    "evaluating-agent-outcomes/scripts/accounting.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/accounting.py",
+      "sha256": "533d23da16ab156956abc5f6a94d3bf561d334d4e8e29dea6d642dc475f6c62b"
+    },
+    "evaluating-agent-outcomes/scripts/eval_cli.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/eval_cli.py",
+      "sha256": "c268a5a8fc7f0a086e132da17cc03c2b6e2a9cc6154422440e6f46b4b0910c2b"
+    },
+    "evaluating-agent-outcomes/scripts/eval_core.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/eval_core.py",
+      "sha256": "1a75d261655856abfb8a514966245a0ac4565a47e039046daf7d09916271f954"
+    },
+    "evaluating-agent-outcomes/scripts/lessons.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/lessons.py",
+      "sha256": "3f8eab19bc9b7735d3011cd96acf5b084f243b1c6722811a3e402bd1d8116033"
+    },
+    "evaluating-agent-outcomes/scripts/outcome_eval.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/outcome_eval.py",
+      "sha256": "95fea754cbd8c09f03b94ac7de3e1fefc544094298f963b06ceb704116cbcd98"
+    },
+    "evaluating-agent-outcomes/scripts/scoring.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/scoring.py",
+      "sha256": "e71f3212fbacca6f4a92732f4fb2359695b471a92b17627e92130fcbbdaa9a94"
+    },
+    "evaluating-agent-outcomes/scripts/usage_measure.py": {
+      "path": "/Users/richardfremmerlid/.claude/skills/evaluating-agent-outcomes/scripts/usage_measure.py",
+      "sha256": "91d6269a2b4f03ae8970e4b7dc57a93cee3e38a5816156739100a92662aee66f"
+    },
+    "sanctuary-evaluation/_shared.py": {
+      "path": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/_shared.py",
+      "sha256": "fdd4127734c59565940116da46590f470f796cbc761bf329aef3a4ad9e7b5554"
+    },
+    "sanctuary-evaluation/usage_probe.py": {
+      "path": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
+      "sha256": "37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78"
+    },
+    "sanctuary-guardian/manage_coordination.py": {
+      "path": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py",
+      "sha256": "d23f9ec4437ac54672260c3036ce825a42f5f7fb3b01f0e369b43c527e7d2912"
+    }
+  },
+  "effective_when": "every frozen repository file and freeze.json are byte-identical on origin/main",
+  "files": {
+    "LEARNING/experiments/mission-060/analyze.py": "d7a5e5361a479e639c26091e912f7f40041b07f0eb7f2e67a99306abc0e8261f",
+    "LEARNING/experiments/mission-060/audit_live_usage.py": "2f24c40a93d7bd9555fcebd0aa2ee5c5843782fcbd186f6ec0e488db354d8486",
+    "LEARNING/experiments/mission-060/calibration-results.json": "386e2db2d7ee6aa5032cbda5a9ef564d95be40eb4f0f2851238b2f8ab7b9087e",
+    "LEARNING/experiments/mission-060/choose.py": "64a2aee4621c561776fe3668e8302c0072e73498a041334050bc0152b45980bb",
+    "LEARNING/experiments/mission-060/claude_isolated.sh": "834fb5b5c18ebf0804fed569e4b9b5272bba49d7216ac81d9c7ec2fd3aa954f5",
+    "LEARNING/experiments/mission-060/codex_medium.sh": "e925d6a8ef74556ebbb0391e66511cc51ee862e691e322e40ab5de7397a6d92c",
+    "LEARNING/experiments/mission-060/common.py": "12bcd62a1e2cd4da6c1b2866ac235e520b2adbf2d7593dfd6558619ca7147f8e",
+    "LEARNING/experiments/mission-060/contained_agy.py": "1d9524d4824c48ca51bc7ded74d4ed65a8e437f6fc2f494f4537e104f07a005a",
+    "LEARNING/experiments/mission-060/formula-base.json": "bb4d0b6147c177d91801be3e2f5aef4eb32728bb16958cdc1161eda4f0ede3ed",
+    "LEARNING/experiments/mission-060/freeze_study.py": "f8dd17932a634fd28913ab552dcdf52d06fccd908db79aae919cc324c3ec3521",
+    "LEARNING/experiments/mission-060/pool-base.json": "b1c4c32e57cb173d1d439e2f1eae1b6808c755f0cc6af74e3c1904ba450ea92c",
+    "LEARNING/experiments/mission-060/pool.py": "21ca6c03ccd48429792c26b7f2f466786b4764d83514f16b474628d73043e619",
+    "LEARNING/experiments/mission-060/prompts.py": "50e15aed66f9eaaeab7c96e7eba17f93beb9e070bbdef3635fa07d22377e0cd7",
+    "LEARNING/experiments/mission-060/protocol.md": "e8c25017c9deecc1b0d210aeef76f29c6ac476fc6703424ff997a9ea483f544a",
+    "LEARNING/experiments/mission-060/raw/cal-flash-056.out": "5689f788c7bdacf40fd366b7ba362ca4ed2a8577762a991a5769ce9086afb627",
+    "LEARNING/experiments/mission-060/raw/cal-flash-056.result.json": "46358435fe047e341c70c6f5ecb8781efc129e17aae6026507afbd1a7956c0a1",
+    "LEARNING/experiments/mission-060/raw/cal-flash-057.out": "a3f9e1974c8d9633e3e3cf3eecbbb55125587374871372bce79755aeff7ededb",
+    "LEARNING/experiments/mission-060/raw/cal-flash-057.result.json": "b51a9ab94ff5133ded13e5705c2d1c770cb81ca1bbfbf0d903629d66179d80d1",
+    "LEARNING/experiments/mission-060/raw/cal-flash-058.out": "640800a4a87d991f8e7374bb65907d710c8723a761e012699b080e3a95e5c07f",
+    "LEARNING/experiments/mission-060/raw/cal-flash-058.result.json": "ebf262da0b1dcf47eec3f84e1e9230e2830de90d6a60264e3514af289717d318",
+    "LEARNING/experiments/mission-060/raw/cal-luna-056.out": "340af2c7ffe0e69c79a5773cbcc8f066afe7081b9e6d363f1dbe0e70630a68be",
+    "LEARNING/experiments/mission-060/raw/cal-luna-056.result.json": "91f2a18a5a09182f68530da37b2342f0901c9fd7f84c07613ee8bd9ede07f466",
+    "LEARNING/experiments/mission-060/raw/cal-luna-057.out": "167efddb888d14290bea979978f4a971198c73a54b2cd588514245e28cf4708f",
+    "LEARNING/experiments/mission-060/raw/cal-luna-057.result.json": "14686e0b749c9445094ccdbc5dc934e21936316543cbc8cb250055ba15821ecc",
+    "LEARNING/experiments/mission-060/raw/cal-luna-058.out": "6f1c5258bb9e13fcbbcb459397c035583c3e2dec1c8a0aaf1de7b49ec026ed58",
+    "LEARNING/experiments/mission-060/raw/cal-luna-058.result.json": "31c115ed14b9cd9f3d3f93c7a37e7190e5f51801c465394d6cea5af48bfa66c1",
+    "LEARNING/experiments/mission-060/run_study.py": "3a71c4ca1d2a46cb3b31cb3d2f4a2ec24c8575e0ca39eec07e2dd7b4b2827af6",
+    "LEARNING/experiments/mission-060/scenario-results-dev.json": "811761128bb7d2ee660b21076db1114d9726b8352388fd828eedf8e755b8a166",
+    "LEARNING/experiments/mission-060/scenarios.py": "b22c715e48a07165b0bb9486a4547391e7c9f8c5a5c68bec6c4c07827c9f1b08",
+    "LEARNING/experiments/mission-060/stop-baseline.json": "720e4ec94801457b27b7cef519e9e8b3745bafae3181a105fcd8e3147bcc6fe0",
+    "LEARNING/experiments/mission-060/test_instruments.py": "098346432d3cddded61ebd47a7b11d91e870a192bf1169f69d5715b33eefb2f0",
+    "LEARNING/experiments/mission-060/thresholds.json": "11aff0db44bdd4e3ab389cab90ef0e33cd7a336d25bee9ec1b16d853f1c961a7",
+    "LEARNING/experiments/mission-060/verify_containment.py": "b3d4591f0c89298d288d22be929c747d4ee46d046f7d223cef63fd452ae8f538",
+    "LEARNING/experiments/mission-060/verify_live_metering.py": "55f4252a3771b7983c3c8a331c6309705bdda3f95dbd10b99a823e98c0d99695",
+    "LEARNING/experiments/mission-060/verify_worker_tools.py": "9b4aeed5b295b5844d0148495658a780abcb0d86fc65f6508946cca879230fb1",
+    "LEARNING/experiments/mission-060/worker_containment.py": "7aa6c5b432b99eaaf606c7b66246b25732df23f714d78ea19b743a43ec2982b3",
+    "LEARNING/missions/MISSION-060.json": "58a8589752b615f4ca5acab634e9d08844f89e837aa25f9f5b1d06e898f5e648"
+  },
+  "mission": "MISSION-060",
+  "schema": 1,
+  "usage_prefix": {
+    "bytes": 9719,
+    "path": "LEARNING/experiments/mission-060/usage-log.jsonl",
+    "sha256": "1c66c8b08d98718e69fbe8a91928ff624e5dad72bc6b19721e0af7ce367f8bc5"
+  }
+}

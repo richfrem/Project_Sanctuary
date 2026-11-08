@@ -1,0 +1,43 @@
+{
+  "captured_by": "Claude CLI Haiku 5.5 delegate under codex lease (read-only; no model calls)",
+  "floor_percent_remaining": 25,
+  "claude": {
+    "method": "claude -p /usage (zero-token display command), PATH includes ~/.local/bin",
+    "raw_session_line": "Current session: 0% used · resets Nov 7 at 3:39pm (America/Vancouver)",
+    "raw_week_line": "Current week (all models): 65% used · resets Nov 9 at 8:59pm (America/Vancouver)",
+    "session_remaining_percent": 100,
+    "week_remaining_percent": 35,
+    "installed_parser_on_live_output": "parsed (session 0, week 65)",
+    "installed_parser_on_reset_less_session_line": "session_pct_used=None (defect; reproduced from gate snapshot text)",
+    "note": "Reset-less form was captured in the earlier gate snapshot but is not reproduced in this live read. Repair committed in companion feature branch, not installed.",
+    "sign_in_warning": "Sign-in ends between 2026-11-10 and 2026-11-13; human action required (claude auth login). Not acted on."
+  },
+  "codex": {
+    "method": "codex app-server stdio JSON-RPC account/rateLimits/read after initialize (no model call)",
+    "read_utc": "2026-11-07T17:50:08Z",
+    "plan": "plus",
+    "five_hour": {"used_percent": 12, "remaining_percent": 88, "resets_utc": "2026-11-07T21:52:27Z"},
+    "weekly": {"used_percent": 63, "remaining_percent": 37, "resets_utc": "2026-11-11T14:22:34Z"},
+    "rate_limit_reached_type": null,
+    "supersedes": "07:14 UTC rollout reading (stale; its five-hour window had reset)",
+    "boundary_note": "A prior read at 17:48:35 UTC showed the previous window (10% used) whose reset had just passed; the 17:50:08 read reflects the rolled-over window."
+  },
+  "agy": {
+    "method": "agy -p /usage --output-format json (usage.total_tokens reported 0)",
+    "read_utc_approx": "2026-11-07T17:49Z",
+    "buckets_remaining_percent": {
+      "gemini_weekly": 92.8,
+      "gemini_five_hour": 90,
+      "claude_and_gpt_weekly": 50,
+      "claude_and_gpt_five_hour": 100,
+      "gemini_4_argon_weekly": 100
+    },
+    "smallest_remaining_percent": 50
+  },
+  "floor_check": {
+    "claude_min_remaining_percent": 35,
+    "codex_min_remaining_percent": 37,
+    "agy_min_remaining_percent": 50,
+    "all_above_floor_on_these_fresh_reads": true
+  }
+}

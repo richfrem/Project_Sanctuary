@@ -1,0 +1,2 @@
+# Preserve archived unified-diff context lines verbatim.
+verification/*.patch -whitespace

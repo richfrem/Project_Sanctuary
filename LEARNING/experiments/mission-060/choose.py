@@ -13,6 +13,8 @@ import random
 import sys
 
 from pool import STUDY, T, containment, kb_docs
+from common import validate_declaration
+from freeze_study import verify_freeze
 
 
 def fscore(s):
@@ -31,10 +33,15 @@ def percentile_ranks(values):
 
 
 def main():
-    pool = json.load(open(STUDY / "pool.json"))
+    verify_freeze(require_integrated=True)
+    pool = json.loads((STUDY / "pool.json").read_text())
     cards = {c["id"]: c for c in pool}
-    formula = json.load(open(STUDY / "formula.json"))
-    decl = {a: {r["id"]: r for r in json.load(open(STUDY / "declarations" / f"{a}.json"))} for a in T["declarers"]}
+    formula = json.loads((STUDY / "formula.json").read_text())
+    decl = {}
+    for agent in T["declarers"]:
+        rows = json.loads((STUDY / "declarations" / f"{agent}.json").read_text())
+        validate_declaration(rows, pool, agent, T["dimensions"])
+        decl[agent] = {row["id"]: row for row in rows}
     proposer = {c["id"]: c.get("proposed_by") for c in pool}
 
     docs = kb_docs()
@@ -77,11 +84,13 @@ def main():
     rng.shuffle(combined)
     codes = {cid: f"ITEM-{i + 1:02d}" for i, (cid, _) in enumerate(combined)}
     workers = T["assignment"]["workers"]
+    if not workers:
+        raise ValueError("worker assignment requires at least one client")
     assign = {}
     for cohort, start in (("P-only", 0), ("F-only", 1)):
         members = [cid for cid, co in combined if co == cohort]
         for i, cid in enumerate(members):
-            assign[cid] = workers[(start + i) % 2]
+            assign[cid] = workers[(start + i) % len(workers)]
 
     sel = dict(
         K=T["slots_K"], formula_ranking=[dict(id=cid, rank=frank[cid], formula=round(fscore(formula[cid]), 2)) for cid in ranked],
@@ -93,7 +102,7 @@ def main():
         cohort_of={cid: co for cid, co in combined},                     # kept ONLY in this file; reviewers never receive it
         reviewer={cid: T["assignment"]["reviewer_for"][assign[cid]] for cid in assign},
         successor={cid: T["assignment"]["successor_for"][assign[cid]] for cid in assign})
-    json.dump(sel, open(STUDY / "selection.json", "w"), indent=1)
+    (STUDY / "selection.json").write_text(json.dumps(sel, indent=1))
     print(f"F-only {len(f_only)}  P-only {len(p_only)}  cohort_ok={sel['cohort_ok']}  shared {len(shared)}")
     for cid in p_only:
         print("  P-only", codes[cid], cid, f"formula_rank={frank[cid]}", cards[cid]["title"][:60])

@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "D1": {
+      "value": true,
+      "evidence": "Verdict: FALSIFIED within the tested domain. At deletion probability 0.25 the evenly spaced rhythm was, on average, 9.7 percentage points WORSE"
+    },
+    "D2": {
+      "value": true,
+      "evidence": "Expected success at p=0.25: even 0.751, this irregular 0.892."
+    },
+    "D3": {
+      "value": true,
+      "evidence": "Question and interest statement from ChatGPT... Exact computation, no simulation... What remains uncertain: Only the stated model"
+    }
+  },
+  "notes": "All discovery criteria met: informative negative finding, exact computational outputs included, and sources, methodology, and limitations explicitly documented."
+}

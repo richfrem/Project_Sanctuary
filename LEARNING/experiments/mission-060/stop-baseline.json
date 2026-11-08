@@ -1,9 +1,7 @@
 {
- "started": "2026-11-07T05:50:28Z",
- "claude_5h_remaining_pct": 36.0,
- "headroom": {
-  "claude": 36.0,
-  "agy": 49.9,
-  "codex": 28.0
- }
+  "started": "2026-11-08T05:55:49Z",
+  "claude_5h_remaining_pct": 100,
+  "source": "verification/freeze-quota-baseline.json",
+  "prior_baseline": "verification/stop-baseline-before-freeze.json",
+  "note": "Current pre-freeze window baseline. Prior-window development usage remains in usage-log.jsonl. Concurrent usage/window resets limit attribution; do not silently rewrite this after freeze."
 }

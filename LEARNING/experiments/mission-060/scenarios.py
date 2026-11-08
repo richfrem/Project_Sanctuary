@@ -117,9 +117,19 @@ def evaluate(split):
                 sensitivity_to_recall=sens)
 
 
-if __name__ == "__main__":
-    split = sys.argv[1] if len(sys.argv) > 1 else "dev"
-    res = evaluate(split)
+def main(split="dev"):
+    if split not in {"dev", "heldout"}:
+        raise ValueError("unknown scenario split")
     out = STUDY / f"scenario-results-{split}.json"
+    if split == "heldout":
+        from freeze_study import verify_freeze
+        verify_freeze(require_integrated=True)
+        if out.exists():
+            raise ValueError("held-out result already exists; refusing a repeat")
+    res = evaluate(split)
     json.dump(res, open(out, "w"), indent=1)
     print(json.dumps({k: res[k] for k in ("split", "n_situations", "summary", "bootstrap_pass_probability", "claim_A")}, indent=1))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1] if len(sys.argv) > 1 else "dev")

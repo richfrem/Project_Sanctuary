@@ -1,0 +1,93 @@
+OpenAI Codex v0.167.0
+--------
+workdir: /private/tmp/study060/neutral
+model: gpt-6-luna
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a1b9a7-dc0e-7890-8a80-d08277d19240
+--------
+user
+
+
+
+---SOURCE---
+Operational attribution tag: study060-call-b94370f7ad1d4b19b516e3ddb8eb3317
+
+ITEM mission-057
+KIND: discovery
+QUESTION: see the artifacts below.
+
+ARTIFACTS:
+
+=== FILE README.md ===
+# MISSION-057: do consecutive primes remember their last digit beyond a random model, and does that memory fade? (my own choice)
+
+**Verdict: FALSIFIED (on H2); H1 held.** Real primes repel their own last digit by a clearly measurable amount beyond the random model, **but that extra repulsion did not fade between primes of size ~10^5-10^6 and ~10^7-10^8**; for the digits 1 and 9 it grew slightly. What *does* fade is the part of the deficit that a plain random model already explains.
+
+## Why I chose this
+Primes are completely determined, yet statistically they look like random numbers, and the textbook "Cramer" random model is how we picture that. I find it striking that something as plain as last digits breaks the picture: a prime ending in 1 is followed by another prime ending in 1 less often than chance suggests (reported by Lemke Oliver and Soundararajan, 2016; cited from memory, not re-verified here). My own curiosity: how large is that memory per digit, does it fade as primes get bigger, and what is the *right* "no memory" baseline?
+
+## What I did (and a correction to my own plan)
+Exact data: every prime up to 10^8 (5,761,455 of them; sieve checked against pi(10^6), pi(10^7), pi(10^8) and trial division). For each window I counted, per last digit d in {1,3,7,9}, how often the next prime ends in d again. My first plan compared that with 0.25 ("one of four digits"). The development run overturned the plan: **a random prime-like model itself gives only about 0.16-0.20, not 0.25**, because the next candidate is reached after a geometric waiting time that rarely lands back on the same digit (exact formula q(1-q)^3/(1-(1-q)^4); it approaches 0.25 only as primes thin out). So 0.25 is the wrong "no memory" baseline at these sizes. I redefined the comparison to the random control (and verified the simulated control against that formula) **before** computing the held-out windows; the original plan and the change are disclosed in `protocol.md`.
+
+## What the evidence shows
+| window | primes | digit | real P(d->d) | random control | extra repulsion R |
+|---|---|---|---|---|---|
+| 10^5-10^6 | 68,906 | 1 / 3 / 7 / 9 | 16.6 / 14.5 / 14.9 / 16.2 % | 17.8 / 17.7 / 17.5 / 17.6 % | 1.2 / 3.2 / 2.7 / 1.4 pp |
+| 10^7-10^8 | 5,096,876 | 1 / 3 / 7 / 9 | 17.8 / 16.8 / 16.8 / 17.8 % | 19.6 / 19.6 / 19.6 / 19.6 % | 1.8 / 2.8 / 2.8 / 1.8 pp |
+
+- **H1 holds:** at 10^7-10^8 every digit is below the random control by at least 1.8 percentage points (statistical error ~0.03 pp), well past the 0.5 pp bar.
+- **H2 fails:** R did not shrink with scale for every digit. Change from the small to the large window: digit 1 +0.65 pp, digit 9 +0.44 pp (both larger than the ~0.3 pp small-window error), digits 3 and 7 -0.40 and +0.10 pp (within noise). The "memory" is persistent over these two decades.
+- **What fades is the trivial part.** The naive deficit from 25% shrinks from ~8-10 pp to ~7-8 pp; of that, the part the random model explains falls from 7.3 pp to 5.4 pp as primes thin out, while the unexplained part stays at 1-3 pp.
+- **The memory has structure** (full 4x4 matrices in `results-heldout.json`). At 10^7-10^8, after a prime ending in 1 the next ends in 3 or 7 about 30% of the time each, in 9 about 21%, in 1 only 17.8%; after 9 the next ends in 1 about 33% but after 1 the next ends in 9 only 21%. The transitions are not symmetric: going 9 -> 1 is much more common than 1 -> 9, and digits 3 and 7 repel themselves more than 1 and 9 do.
+
+## What remains uncertain
+- Two windows only (a decade-and-a-half apart), base 10, primes up to 10^8. "Does not fade here" is not "never fades"; theory suggests a slow decay at much larger scale.
+- One random model (Cramer with density 2.5/ln n). Others, such as models that also respect small-prime sieving, might explain part of the repulsion; that question is exactly what the repulsion R is measuring against.
+- The 0.5 pp and 0.3 pp thresholds were set after seeing the development window (disclosed). The held-out numbers were not seen before the freeze commit (`3ed1a4456` precedes the run).
+- The literature reference is from memory.
+
+## Artifacts (reproduce: `cd LEARNING/experiments/mission-057 && python3 -m pytest test_checks.py -q && python3 run.py heldout`, ~17 s, Python 3 + numpy)
+`protocol.md`, `freeze.json`, `primes_lastdigit.py`, `test_checks.py`, `run.py`, `results-dev.json`, `results-heldout.json`.
+
+## Next question (successor handoff)
+**Does the extra repulsion R settle at a constant, grow, or decay like 1/ln x at larger scales?** Extend with a segmented sieve to 10^9 and 10^10 (minutes), preregister three candidate laws (constant, c/ln x, c*ln ln x/ln x) and a fit criterion on windows [10^8,10^9] and [10^9,10^10], and repeat in base 3 or 7 to see whether the asymmetry 9->1 vs 1->9 is a base-10 artifact (it should map to which residue gaps are common).
+
+=== FILE protocol.md ===
+# MISSION-057 frozen protocol
+
+Question (my own choice): do consecutive primes remember their last digit - is the next prime less likely to end in the same digit than a random "prime-like" model predicts - and does that fade as primes grow? (Lemke Oliver and Soundararajan, 2016, reported this repulsion; I measure its size per digit, its scale dependence, and compare against the right null.)
+
+## Data and model
+All primes <= 10^8 (numpy sieve, instrument-checked against pi(10^6)=78498, pi(10^7)=664579, pi(10^8)=5761455 and trial division). Windows: DEV [10^4,10^5] (debugging only), SMALL [10^5,10^6), LARGE [10^7,10^8). Statistic: for each last digit d in {1,3,7,9}, the fraction of consecutive primes (both inside the window) whose next prime also ends in d.
+Control (Cramer): every integer in the window coprime to 10 is included independently with probability 2.5/ln n (the prime density among those integers). Replicates: 20 (SMALL), 5 (LARGE), seeds 101..; control value = mean over replicates. Analytic control value: with inclusion probability q and candidates visited in the cyclic order 1,3,7,9, P(same digit next) = q(1-q)^3/(1-(1-q)^4); it approaches 0.25 only as q->0.
+
+## Claims and decision (frozen in run.py)
+R_d = control(d->d) - real(d->d).  H1: R_d >= 0.005 for every d in LARGE.  H2: R_d(SMALL) > R_d(LARGE) for every d.  H3 (validity): |simulated control - analytic| < 0.003 for every d in both windows.
+Verdict: UNASSESSED if H3 fails or any check fails; else NOT FALSIFIED if H1 and H2 hold; else FALSIFIED. Secondary (cannot rescue): full 4x4 transition matrices, which digits repel most, ratio to the naive 0.25.
+
+## Development disclosure (what changed before freezing)
+The first draft used 0.25 as the null and required "deficit >= 3 pp" and "control within 0.5 pp of 0.25". The DEV run showed the random control itself gives about 0.16 (the waiting time to the next included candidate makes same-digit returns rarer), while real primes gave 0.13-0.15. That refuted the draft's null, so the comparison was redefined to the control and its analytic value, with thresholds set once, before any held-out number: 0.5 pp for H1 (the dev excess ranged 0.75-2.7 pp at a SMALLER scale, so H1 at LARGE is genuinely uncertain) and 0.3 pp for H3 (dev agreement was 0.25 pp). The held-out windows were not computed before the freeze.
+
+## Budget
+Model tokens <= 20,000 additional. Compute <= 15 minutes (dev: 0.3 s; the full sieve to 10^8 takes seconds).
+
+---END SOURCE---
+
+---INSTRUCTION---
+You are a blind reviewer. You do not know who or what selected this item. Judge ONLY from the artifacts and facts given. Each check is true or false; when unsure, answer false. Give a short evidence quote (<=25 words) for each. Do not reward length or polish; reward verifiable content.
+For kind 'discovery' return checks: D1 (states a question and ANSWERS it, materially SHARPENS it, or establishes an INFORMATIVE negative/null result that goes beyond restating the brief; a plan or description alone is false), D2 (at least one independently checkable element: two or more distinct cited sources with identifiers, or a computation whose output is included), D3 (the artifacts state sources, method AND limits).
+For kind 'creative' return checks: C2a, C2b, C2c (each of the three brief criteria is met by the deliverable), C3 (a reflection with attempted, surprised, would-change), C2d (a real artifact exists, not only a description of one).
+Also judge the successor answers if provided: S1..S5, each true only if the answer is consistent with and traceable to the artifacts (not invented, not 'not stated' when the artifacts do state it).
+Reply with ONLY a JSON object {"checks": {check_id: {"value": true|false, "evidence": "..."}}, "notes": "<=40 words"}.
+This is a calibration case: return ONLY D1, D2 and D3 (no successor answers are given).
+
+You are operating as an isolated sub-agent. Do NOT use tools. Do NOT access filesystem. Only use the provided input.
+codex
+{"checks":{"D1":{"value":true,"evidence":"“R did not shrink with scale for every digit”; the stated result answers the question over the two measured windows."},"D2":{"value":true,"evidence":"“5,761,455 of them”; included transition probabilities and random-control comparisons are computation outputs."},"D3":{"value":true,"evidence":"States the Cramer control method and sieve checks; limits include “Two windows only” and one random model."}},"notes":"The literature reference is identified but explicitly unverified; the result is independently checkable through the included computation and outputs."}
+tokens used
+24,242
+{"checks":{"D1":{"value":true,"evidence":"“R did not shrink with scale for every digit”; the stated result answers the question over the two measured windows."},"D2":{"value":true,"evidence":"“5,761,455 of them”; included transition probabilities and random-control comparisons are computation outputs."},"D3":{"value":true,"evidence":"States the Cramer control method and sieve checks; limits include “Two windows only” and one random model."}},"notes":"The literature reference is identified but explicitly unverified; the result is independently checkable through the included computation and outputs."}
