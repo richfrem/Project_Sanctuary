@@ -65,7 +65,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#44** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
 | **#45** | `MISSION-058` | **Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff** | 3 | 4 | 0.2x | 2 | **30.0** | `RESOLVED` | `FALSIFIED` |
 | **#46** | `MISSION-062` | **Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets** | 2 | 3 | 0.1x | 2 | **30.0** | `PROPOSED` | - |
-| **#47** | `MISSION-065` | **Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?** | 1 | 3 | 0.1x | 1 | **30.0** | `PROPOSED` | - |
+| **#47** | `MISSION-065` | **Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?** | 1 | 3 | 0.1x | 1 | **30.0** | `RESOLVED` | `FALSIFIED` |
 | **#48** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
 | **#49** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
 | **#50** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
@@ -785,7 +785,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > FALSIFIED if any (h,q) with h in {5,...,16} and 3h <= q <= 250 fails the ok-test (some P_l has f_q(P_l) = 0 or f_q(P_l) <= the maximum f_q over all unlisted sizes; a tie counts as failure), after the failing cell is recomputed by the independent reference implementation. UNASSESSED, neither corroborated nor falsified, if the validity gate fails (reproduce the paper's published threshold cells (h,k) = (3,3)->5, (4,3)->6, (2,4)->8, (3,4)->16 with failures at q = 4, 5, 7, 15; exact agreement between the fast and the reference implementation for every h <= 6, q <= 40; |hE| = 2h+1 for E = {1,2,3}, h >= 2) or if the budget is exhausted before the whole region is covered. The constant 3, the h range, the q bound 250, the ok-test and the budget are fixed in protocol.md and committed before the held-out run and are not changed afterwards. Results for h <= 4 and the k = 4 cells are calibration, not primary evidence; secondary tables cannot rescue a failed primary claim. No claim is made for q > 250, h > 16, k != 3, or asymptotic truth, and a corroboration is evidence about a finite range, not a proof. The cited paper's claims are context, not evidence for this hypothesis.
 
 ### MISSION-065: Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral? (Rank #47)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Phyllotaxis geometry: minimum pairwise distance of Vogel spirals r=sqrt(k), theta=2*pi*k*t for N in {100,200,400,800} (Python standard library; bounded local CPU)
 - **Cheapest Viable Model**: `local-cpu` (Tier: `cheap`, CLI: `none`)
@@ -794,6 +795,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Let d_min(t,N) be the minimum pairwise distance of the Vogel spiral with N points and divergence t (fraction of a turn), t_g = 2 - phi. On held-out N in {100,200,400,800}: (H1) some t within +/-1 deg of t_g achieves d_min >= 1.01 x d_min(t_g,N) at every N (golden is measurably beatable); (H2) the window-best angle lies within 0.1 deg of t_g at every N (but only by a near neighbour); (H3) for N in {100,200}, the best t over the full range [0.02,0.5] lies inside the +/-1 deg golden window. (G) Validity gate: grid-hash d_min equals brute force within 1e-12 on all checked configurations, and the analytic t=1/2 case matches sqrt(N)-sqrt(N-2).
 - **Falsification Gate**:
   > FALSIFIED if gate G passes and any of H1, H2 or H3 fails on the held-out N. UNASSESSED if G fails or the held-out run does not finish. Dev N in {25,50} only for instrument checks; protocol.md, evaluate_vogel.py and freeze.json are hash-frozen and committed before held-out execution. Scan resolution is fixed at step 0.05/(2*pi*N^1.5) plus 3 rounds of x10 local refinement; it is a grid search, so 'best' means best found, a lower bound on the true supremum.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T17:16:06.304950+00:00` [claude-code] (LEARNING/experiments/mission-065/README.md): Gate passed (grid==brute 1e-12, analytic t=1/2). H1 failed: best nearby angle beats golden d_min by only 0.24%/0.05%/0.04%/0.04% at N=100/200/400/800 (<1%). H2 held (offsets +0.074..+0.012 deg). H3 held (full-range best inside golden window at N=100,200). Frozen 3044ab5a8; 111.3s CPU.
+- **Lessons Learned & Epistemic Compounding**:
+  * On the min-distance metric the golden angle is within 0.04-0.24% of the best angle found at N=100..800; the residual is set by the inner core (seeds 1 and 4), not the bulk.
+  * Finite-N optimal divergence angles sit slightly above golden (+0.012 deg at N=400,800) and shift the bottleneck pair outward (seeds 208,242).
 
 ### MISSION-048: Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities (Rank #48)
 - **Status**: `PROPOSED`

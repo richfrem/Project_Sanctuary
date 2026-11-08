@@ -1,6 +1,13 @@
 {
-  "total_entries": 376,
+  "total_entries": 377,
   "entries": [
+    {
+      "id": 385,
+      "title": "MISSION-065: The golden angle is nearly, not exactly, optimal",
+      "filename": "385_mission_065_the_golden_angle_is_nearly_not_exactly_optimal.md",
+      "date": "2026-11-08",
+      "status": "draft"
+    },
     {
       "id": 384,
       "title": "MISSION-063: Random-walk Braess paradox in trees falsified on monotonicity and diameter immunity across 16,355 held-out edge additions",

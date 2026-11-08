@@ -1,11 +1,11 @@
 {
   "id": "MISSION-065",
   "title": "Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Phyllotaxis geometry: minimum pairwise distance of Vogel spirals r=sqrt(k), theta=2*pi*k*t for N in {100,200,400,800} (Python standard library; bounded local CPU)",
   "created_at": "2026-11-08T17:20:00Z",
-  "updated_at": "2026-11-08T17:20:00Z",
+  "updated_at": "2026-11-08T17:16:06.304950+00:00",
   "confidence_reviewed": "2026-11-08",
   "proposed_by": "claude-code (own choice)",
   "interest_statement": "Sunflower seed heads are the classic case of the golden angle (~137.508 deg) producing even packing, justified because phi is the 'most irrational' number. That argument is asymptotic. I want to know whether, for a finite head of N seeds, the golden angle is actually the best divergence angle by the plainest uniformity measure (the closest pair of seeds), or whether nearby angles beat it, and by how much.",
@@ -78,11 +78,21 @@
     "own-choice",
     "chosen-by-claude-code"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T17:16:06.304950+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-065/README.md",
+      "details": "Gate passed (grid==brute 1e-12, analytic t=1/2). H1 failed: best nearby angle beats golden d_min by only 0.24%/0.05%/0.04%/0.04% at N=100/200/400/800 (<1%). H2 held (offsets +0.074..+0.012 deg). H3 held (full-range best inside golden window at N=100,200). Frozen 3044ab5a8; 111.3s CPU."
+    }
+  ],
+  "lessons_learned": [
+    "On the min-distance metric the golden angle is within 0.04-0.24% of the best angle found at N=100..800; the residual is set by the inner core (seeds 1 and 4), not the bulk.",
+    "Finite-N optimal divergence angles sit slightly above golden (+0.012 deg at N=400,800) and shift the bottleneck pair outward (seeds 208,242)."
+  ],
   "related_missions": {
     "MISSION-063": "SIBLING (practice, soft): agent-chosen exact mathematics inquiry with freeze-before-held-out; no data dependency.",
     "MISSION-056": "SIBLING (practice, soft): curiosity mission on uniform spacing (rhythms) \u2014 a related evenness question in a different domain."
@@ -107,5 +117,10 @@
     ]
   },
   "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-mission-065"
+  "worktree": ".worktrees/claude-code-mission-065",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T17:16:06.304950+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
 }
