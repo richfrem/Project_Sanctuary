@@ -1,3 +1,13 @@
+---
+id: res-network-connectivity-neural-flow
+title: "Network Connectivity and Neural Information Flow"
+status: KEEP
+tags: ["spectral-graph-theory", "random-walks", "over-squashing", "oversmoothing", "curvature-rewiring", "gnn"]
+related_missions: ["MISSION-063", "MISSION-064"]
+source_reading_depth: "abstract_inspection"
+last_substantive_review: "2026-11-08"
+---
+
 # Network Connectivity and Neural Information Flow
 
 **Status:** KEEP  
