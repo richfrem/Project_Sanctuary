@@ -1,0 +1,193 @@
+{
+ "mode": "heldout",
+ "mlx_lm": "0.32.2",
+ "configs": {
+  "baseline": [
+   {
+    "prompt": "Write a Python function that checks whether a string is a pa",
+    "gen_tokens": 242,
+    "gen_tps": 14.099555793890248,
+    "wall_s": 17.762142874998972,
+    "peak_gib": 4.1399033814668655,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Implement binary search in Python on a sorted list and retur",
+    "gen_tokens": 202,
+    "gen_tps": 14.12916220223111,
+    "wall_s": 14.891124999965541,
+    "peak_gib": 4.136592224240303,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a SQL query that returns the top 5 customers by total ",
+    "gen_tokens": 173,
+    "gen_tps": 13.989274983805846,
+    "wall_s": 12.977036542026326,
+    "peak_gib": 4.1706956718117,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a JavaScript function that debounces another function ",
+    "gen_tokens": 200,
+    "gen_tps": 14.200669603714545,
+    "wall_s": 14.672202457906678,
+    "peak_gib": 4.156779691576958,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Explain the difference between a process and a thread in thr",
+    "gen_tokens": 52,
+    "gen_tps": 14.282515108281219,
+    "wall_s": 4.251767375040799,
+    "peak_gib": 4.150676175951958,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a Python class for a stack with push, pop, peek and is",
+    "gen_tokens": 256,
+    "gen_tps": 14.147199850118561,
+    "wall_s": 18.691158749978058,
+    "peak_gib": 4.149636805057526,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a Python script that reads a CSV file named data.csv a",
+    "gen_tokens": 144,
+    "gen_tps": 14.236536327691024,
+    "wall_s": 10.705830208025873,
+    "peak_gib": 4.149636805057526,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a Rust function that reverses a vector of integers in ",
+    "gen_tokens": 227,
+    "gen_tps": 13.99971230667588,
+    "wall_s": 16.84303279093001,
+    "peak_gib": 4.15063039958477,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a regular expression that matches ISO 8601 dates (YYYY",
+    "gen_tokens": 256,
+    "gen_tps": 13.996851911174053,
+    "wall_s": 18.883545416989364,
+    "peak_gib": 4.155101180076599,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a Python function that merges two sorted lists into on",
+    "gen_tokens": 256,
+    "gen_tps": 14.013155127934091,
+    "wall_s": 18.859404291957617,
+    "peak_gib": 4.136592268943787,
+    "draft_accept_frac": 0.0
+   }
+  ],
+  "1.5B_k2": [
+   {
+    "prompt": "Write a Python function that checks whether a string is a pa",
+    "gen_tokens": 242,
+    "gen_tps": 20.042640440916653,
+    "wall_s": 12.79002162499819,
+    "peak_gib": 4.958441313356161,
+    "draft_accept_frac": 0.6363636363636364
+   },
+   {
+    "prompt": "Implement binary search in Python on a sorted list and retur",
+    "gen_tokens": 202,
+    "gen_tps": 19.77606583210298,
+    "wall_s": 10.930212500039488,
+    "peak_gib": 4.955694735050201,
+    "draft_accept_frac": 0.6336633663366337
+   },
+   {
+    "prompt": "Write a SQL query that returns the top 5 customers by total ",
+    "gen_tokens": 173,
+    "gen_tps": 21.135048946493423,
+    "wall_s": 8.900784750003368,
+    "peak_gib": 4.989782923832536,
+    "draft_accept_frac": 0.653179190751445
+   },
+   {
+    "prompt": "Write a JavaScript function that debounces another function ",
+    "gen_tokens": 200,
+    "gen_tps": 19.56731146582288,
+    "wall_s": 10.936789667000994,
+    "peak_gib": 4.975882202386856,
+    "draft_accept_frac": 0.625
+   },
+   {
+    "prompt": "Explain the difference between a process and a thread in thr",
+    "gen_tokens": 52,
+    "gen_tps": 18.54251383930537,
+    "wall_s": 3.4959668329684064,
+    "peak_gib": 4.969732910394669,
+    "draft_accept_frac": 0.6153846153846154
+   },
+   {
+    "prompt": "Write a Python class for a stack with push, pop, peek and is",
+    "gen_tokens": 256,
+    "gen_tps": 19.83649606788036,
+    "wall_s": 13.64983700006269,
+    "peak_gib": 4.96873639523983,
+    "draft_accept_frac": 0.6328125
+   },
+   {
+    "prompt": "Write a Python script that reads a CSV file named data.csv a",
+    "gen_tokens": 144,
+    "gen_tps": 19.632842999280207,
+    "wall_s": 8.095304624992423,
+    "peak_gib": 4.968461725860834,
+    "draft_accept_frac": 0.6319444444444444
+   },
+   {
+    "prompt": "Write a Rust function that reverses a vector of integers in ",
+    "gen_tokens": 227,
+    "gen_tps": 19.519691057463387,
+    "wall_s": 12.343042416032404,
+    "peak_gib": 4.969732899218798,
+    "draft_accept_frac": 0.6299559471365639
+   },
+   {
+    "prompt": "Write a regular expression that matches ISO 8601 dates (YYYY",
+    "gen_tokens": 256,
+    "gen_tps": 19.43504881697371,
+    "wall_s": 13.9247551249573,
+    "peak_gib": 4.9744741059839725,
+    "draft_accept_frac": 0.625
+   },
+   {
+    "prompt": "Write a Python function that merges two sorted lists into on",
+    "gen_tokens": 256,
+    "gen_tps": 21.323028683021892,
+    "wall_s": 12.722907208022662,
+    "peak_gib": 4.955694768577814,
+    "draft_accept_frac": 0.66015625
+   }
+  ]
+ },
+ "summary": {
+  "baseline": {
+   "median_gen_tps": 14.114358998060679,
+   "median_speedup": 1.0,
+   "min_speedup": 1.0,
+   "max_peak_gib": 4.1706956718117,
+   "identical_outputs": 10,
+   "n": 10,
+   "median_accept": 0.0
+  },
+  "1.5B_k2": {
+   "median_gen_tps": 19.704454415691593,
+   "median_speedup": 1.3969776592915117,
+   "min_speedup": 1.2982667057396733,
+   "max_peak_gib": 4.989782923832536,
+   "identical_outputs": 10,
+   "n": 10,
+   "median_accept": 0.6323784722222222
+  }
+ },
+ "H_speed": false,
+ "H_memory": true,
+ "verdict": "FALSIFIED"
+}

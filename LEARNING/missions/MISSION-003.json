@@ -54,5 +54,8 @@
     "MLX 4-bit quantization on M1 16GB provides immediate prompt evaluation at 37.7 tok/sec with 4.43 GB peak memory.",
     "Unquantized KV cache overhead for Qwen2.5-Coder-7B is only 0.44 GiB at 8K context, compared to 1.13 GiB on Qwen3-8B.",
     "8-bit variants should be avoided on 16GB Macs due to risk of crossing the APFS paging boundary when running alongside an IDE."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-023": "EXTENDED BY: MISSION-023 tested speculative decoding on the same MLX stack."
+  }
 }

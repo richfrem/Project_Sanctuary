@@ -29,7 +29,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#8** | `MISSION-020` | **Upstream Agent-Plugins-Skills Local LLM MLX Reference & Global APM Skill Reinstallation** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#9** | `MISSION-021` | **Local Tool Use & Structured JSON Function-Calling via Sovereign 4-bit Qwen2.5-Coder on MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CONFIRMED` |
 | **#10** | `MISSION-022` | **Multi-Turn Sovereign Local Agent Execution & Autonomous Scratchpad Planning via MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `FALSIFIED` |
-| **#11** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `PROPOSED` | - |
+| **#11** | `MISSION-023` | **Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `FALSIFIED` |
 | **#12** | `MISSION-024` | **Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#13** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `RESOLVED` | `CORROBORATED` |
@@ -299,7 +299,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * MLX server strips the <tool_call> special token; parse bare JSON calls.
 
 ### MISSION-023: Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX (Rank #11)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Apple Silicon M1 (16GB Unified Memory) via Apple MLX
 - **Cheapest Viable Model**: `qwen2-7b-mlx-4bit` (Tier: `free-local`, CLI: `mlx-lm`)
@@ -308,6 +309,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Deploying 1.5B/3B lightweight draft models alongside 7B Qwen2.5-Coder via MLX speculative decoding (--draft-model and --num-draft-tokens) will increase generation throughput by >= 1.6x on Apple Silicon unified memory while remaining safely within the 8 GiB memory budget.
 - **Falsification Gate**:
   > Draft model acceptance rate falls below 50% or combined unified memory footprint causes macOS swap pressure > 1 GiB.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T21:19:10.102541+00:00` [claude-code] (LEARNING/experiments/mission-023/README.md): Held-out 10 prompts, frozen config 1.5B draft k=2 (selected on dev): median speedup 1.40x (min 1.30x) < 1.6x; peak 4.99 GiB <= 8 GiB; 10/10 outputs identical. Dev: 3B drafts 1.05-1.15x. Frozen 1e43214ab.
+- **Lessons Learned & Epistemic Compounding**:
+  * On an M1 16GB, a Qwen2.5-Coder-1.5B draft with k=2 speeds up 7B-4bit greedy generation about 1.4x (14.1 to 19.7 tok/s), losslessly, for +0.8 GiB; not 1.6x.
+  * Bigger drafts and larger k raised acceptance but lowered throughput: 3B gave only 1.05-1.15x.
 
 ### MISSION-024: Deterministic Protocol 128 Fast-Boot Lifecycle Hook & Zero-Turn Context Hydration (Rank #12)
 - **Status**: `RESOLVED`

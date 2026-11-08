@@ -47,5 +47,8 @@
   "lessons_learned": [
     "Retaining the MLX model in unified memory avoids the ~10s process startup penalty of one-shot CLI execution, while an idle reaper guarantees no persistent RAM lockup.",
     "Checking existing port occupancy prior to launching prevents port conflicts if a server was already started manually by the developer."
-  ]
+  ],
+  "related_missions": {
+    "MISSION-023": "SIBLING (shared resource): MISSION-023 benchmark paused and restarted the managed MLX server."
+  }
 }
