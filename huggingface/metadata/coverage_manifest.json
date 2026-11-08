@@ -1,9 +1,9 @@
 {
- "base_commit": "17d781a933697405f321ca4b03c9aeb0760ae375",
- "dataset_records": 1380,
+ "base_commit": "ba8a07e2966b90d9fff48af47411dedf5690e097",
+ "dataset_records": 1387,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T06:39:35Z",
+ "generated_at": "2026-11-08T15:25:11Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -44,12 +44,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 11352,
+   "bytes": 11462,
    "category": "derived_projections",
    "path": ".agent/learning/cognitive_ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "98fb82f56982ecd9b7923e442903d88b409c0a359e091f48638b4351f9950500",
+   "source_sha256": "3b8f82ed5ed063e19be94e09a2229fd546d557b3b61b3d6900ccdfd7e9ff42b4",
    "status": "excluded"
   },
   {
@@ -57,7 +57,7 @@
     "unchanged": 6,
     "updated": 6
    },
-   "bytes": 140753,
+   "bytes": 145502,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -78,27 +78,27 @@
     "96bc3136e8a41c89a9da88dae6365a76e8a23d897493231b513ec26cb132e892",
     "8268c2245cae102ac457e81ee3582def7a633262b6fd8992a0ced92c4cea1aa1",
     "d779f93433951519c4a338546cdb651acbd980661b2e26dc759add292e01785f",
-    "2a15aa575abd139df37e394551078b31785ed7d2d4aad68758de351b9dc83e1c",
-    "6f1719ba97ced659727cdb98a4374ab4bd651bcf0faebf4ca8af3942dd7273ab",
-    "2a11eb75e1596f9c40efd87c07c34884bf88a1f454b5ad12e3e02c376dc589be",
-    "94cff454e3ac251ede243acf46a13742ebf8956e4a223a42dc8312c790a922c1",
-    "1f4b8698f6dcc9b332d57260c720f94755c6fa4fa3687b1e5c82cba0e2f02390",
+    "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
+    "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
+    "2605a65b3f3eaf53d5af2cefc859d5357528583496017c0557b45dce82736492",
+    "750d88f2e42123f1b480f6bacbf50629ae3a490553a705b297f01c4d86f996e5",
+    "f011d0cdf314d33ec5b4420d63bde84557d68f9589195b228a4854556129c6e2",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
-    "0d2874115fa998b275fbe982f48cc65b87f4e604254e80548e3ed4f800dbfa98",
+    "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "7d68c4970fdc2b0069513fe6bfeb9216d66ce35e6c4808ae659e4db1c6a08ada",
+   "source_sha256": "c5c32010b08681b3b4292c1f675647954196e4c218cbcee7918183ef394536ff",
    "status": "included"
   },
   {
-   "bytes": 5935,
+   "bytes": 7145,
    "category": "transient_state",
    "path": ".agent/learning/guardian_boot_digest.md",
    "reason": "regenerated or per-session operational state with no durable learning content",
    "required": false,
-   "source_sha256": "c0fe5cb997d3946e61d801136d8186052bdd118c3e5c6ba3ac89a293609a76b9",
+   "source_sha256": "fd26320cefd11f43e751310c1657bb7c2e0efffcc8d86f0c3e456695239bdfc0",
    "status": "excluded"
   },
   {
@@ -814,12 +814,12 @@
    "status": "included"
   },
   {
-   "bytes": 129737,
+   "bytes": 135570,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "9e924acf7e5f56aa498f388de35bf148e778a756f8166c94f2fa338e4a26773e",
+   "source_sha256": "93a1385b88f431b54554152f956d9e494b5b0bf629e95306dffb2adb539cdb02",
    "status": "excluded"
   },
   {
@@ -892,7 +892,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1852,
    "category": "knowledge_topics_concepts_research",
@@ -23265,7 +23265,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23285,7 +23285,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3348,
    "category": "experiment_knowledge",
@@ -23302,7 +23302,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 5871,
    "category": "experiment_knowledge",
@@ -23319,7 +23319,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 5225,
    "category": "experiment_knowledge",
@@ -23336,7 +23336,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 9569,
    "category": "experiment_knowledge",
@@ -23353,7 +23353,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 12170,
    "category": "experiment_knowledge",
@@ -23370,7 +23370,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 5190,
    "category": "experiment_knowledge",
@@ -23387,7 +23387,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 42654,
    "category": "experiment_knowledge",
@@ -23404,7 +23404,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23424,7 +23424,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23444,7 +23444,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23464,7 +23464,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23484,7 +23484,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23504,7 +23504,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23524,7 +23524,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23544,7 +23544,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23564,7 +23564,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23584,7 +23584,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23604,7 +23604,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23624,7 +23624,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23661,7 +23661,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 18737,
    "category": "experiment_knowledge",
@@ -23678,7 +23678,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23698,7 +23698,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 11152,
    "category": "experiment_knowledge",
@@ -23715,7 +23715,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23735,7 +23735,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23755,7 +23755,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23775,7 +23775,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23795,7 +23795,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23815,7 +23815,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23835,7 +23835,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23855,7 +23855,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23875,7 +23875,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23895,7 +23895,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23915,7 +23915,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23935,7 +23935,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 12789,
    "category": "experiment_knowledge",
@@ -23952,7 +23952,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23972,7 +23972,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -23992,7 +23992,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24012,7 +24012,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24032,7 +24032,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24052,7 +24052,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24072,7 +24072,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24092,7 +24092,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24112,7 +24112,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24132,7 +24132,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24152,7 +24152,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24172,7 +24172,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24192,7 +24192,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24212,7 +24212,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24232,7 +24232,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24252,7 +24252,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24272,7 +24272,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24292,7 +24292,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24312,7 +24312,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24332,7 +24332,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24352,7 +24352,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24372,7 +24372,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24392,7 +24392,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24412,7 +24412,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24432,7 +24432,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24452,7 +24452,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24472,7 +24472,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24492,7 +24492,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24512,7 +24512,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24532,7 +24532,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24552,7 +24552,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24572,7 +24572,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24592,7 +24592,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24612,7 +24612,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24632,7 +24632,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24652,7 +24652,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24672,7 +24672,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24692,7 +24692,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24712,7 +24712,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24732,7 +24732,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24752,7 +24752,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24772,7 +24772,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24792,7 +24792,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24812,7 +24812,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24832,7 +24832,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24852,7 +24852,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24872,7 +24872,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24892,7 +24892,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24912,7 +24912,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24932,7 +24932,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24952,7 +24952,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24972,7 +24972,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -24992,7 +24992,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25012,7 +25012,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25032,7 +25032,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25052,7 +25052,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25072,7 +25072,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 813,
    "category": "experiment_knowledge",
@@ -25089,7 +25089,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25109,7 +25109,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25129,7 +25129,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25149,7 +25149,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25169,7 +25169,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25189,7 +25189,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25209,7 +25209,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25229,7 +25229,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25249,7 +25249,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25269,7 +25269,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25289,7 +25289,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25309,7 +25309,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25329,7 +25329,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25349,7 +25349,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25369,7 +25369,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 8643,
    "category": "experiment_knowledge",
@@ -25386,7 +25386,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3003,
    "category": "experiment_knowledge",
@@ -25403,7 +25403,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3744,
    "category": "experiment_knowledge",
@@ -25420,7 +25420,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25440,7 +25440,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25460,7 +25460,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25480,7 +25480,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25500,7 +25500,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25520,7 +25520,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25540,7 +25540,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25560,7 +25560,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25580,7 +25580,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25600,7 +25600,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25620,7 +25620,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25640,7 +25640,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25660,7 +25660,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25680,7 +25680,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 54,
    "category": "experiment_knowledge",
@@ -25697,7 +25697,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1086,
    "category": "experiment_knowledge",
@@ -25714,7 +25714,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 63,
    "category": "experiment_knowledge",
@@ -25731,7 +25731,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 276,
    "category": "experiment_knowledge",
@@ -25748,7 +25748,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 201,
    "category": "experiment_knowledge",
@@ -25765,7 +25765,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25785,7 +25785,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 27,
    "category": "experiment_knowledge",
@@ -25802,7 +25802,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 6244,
    "category": "experiment_knowledge",
@@ -25819,7 +25819,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 21,
    "category": "experiment_knowledge",
@@ -25836,7 +25836,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25856,7 +25856,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25876,7 +25876,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25896,7 +25896,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25916,7 +25916,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25936,7 +25936,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25956,7 +25956,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25976,7 +25976,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -25996,7 +25996,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26016,7 +26016,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26036,7 +26036,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26056,7 +26056,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26076,7 +26076,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26130,6 +26130,154 @@
   },
   {
    "action": {
+    "added": 1
+   },
+   "bytes": 9074,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-063/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-063_README"
+   ],
+   "record_sha256": [
+    "87b2d5735ecf6a6d96b8f0391fd62132805eec847300339769f0ea6d7c94dba2"
+   ],
+   "required": true,
+   "source_sha256": "311def60a8a938d86a269825234cc448757dc45007f3a348fc88eee90ed48da6",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "d584005b2926c1b80debf9ab3bf78b636599a17e",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "1f88ba6911d43103a8bb7d73cc57bf6070c01ec6f5d472d90585cae8edf6542a"
+   },
+   "bytes": 6271,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-063/dev-calibration.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_063"
+   ],
+   "required": true,
+   "source_sha256": "1f88ba6911d43103a8bb7d73cc57bf6070c01ec6f5d472d90585cae8edf6542a",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "d584005b2926c1b80debf9ab3bf78b636599a17e",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "fe9253df4d7b5d71ae5c4d19e947e5ae1fb2e4f9fdfd45e544f95994aa5de7a8"
+   },
+   "bytes": 39364,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-063/evaluate_braess_trees.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_063"
+   ],
+   "required": true,
+   "source_sha256": "fe9253df4d7b5d71ae5c4d19e947e5ae1fb2e4f9fdfd45e544f95994aa5de7a8",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "d584005b2926c1b80debf9ab3bf78b636599a17e",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "4c147e5abef82806844450e65bf79f8eb3cda7d2ae245eda286f739927cd4ce4"
+   },
+   "bytes": 627,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-063/freeze.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_063"
+   ],
+   "required": true,
+   "source_sha256": "4c147e5abef82806844450e65bf79f8eb3cda7d2ae245eda286f739927cd4ce4",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 12161,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-063/independent-review-opus.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-063_independent-review-opus"
+   ],
+   "record_sha256": [
+    "a33d4b317590867a99ced68ff7efaef545af374a6a42d4ba4f1ea53548c4d16b"
+   ],
+   "required": true,
+   "source_sha256": "ac65a4a9417f68c912c8510b9a0673d61c31bfcd6826fa79f6837195f8be84cc",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5750,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-063/protocol.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-063_protocol"
+   ],
+   "record_sha256": [
+    "c4f4b7f62e975aecca69b3ccc6a72855cda20fb76ab6b0ba8be49080ab74a901"
+   ],
+   "required": true,
+   "source_sha256": "e2010366d62a8928b9963d49ecc0d653ea0adfec2d174a24b247fdccdf691435",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5603,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-063/registration-design.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-063_registration-design"
+   ],
+   "record_sha256": [
+    "c9a8889d8387e516a6b18e310cf520c807170d36c78db660252d14ff7562ab6d"
+   ],
+   "required": true,
+   "source_sha256": "a2af6237c84c478edf79e9aa3b66b6a54f0fb1076c49fcc138a1a7613ae82660",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "ccb41f4319f52b5b6a9a5b5ff32fd32b2b565929",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "bac654e48098144a25ef9f73e99c375e864143473a3f2cbfaa73eb1312b0d4cb"
+   },
+   "bytes": 15812,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-063/results.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_063"
+   ],
+   "required": true,
+   "source_sha256": "bac654e48098144a25ef9f73e99c375e864143473a3f2cbfaa73eb1312b0d4cb",
+   "status": "included"
+  },
+  {
+   "action": {
     "unchanged": 1
    },
    "bytes": 4838,
@@ -26168,27 +26316,27 @@
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "fde5f732a55c174691d0bc4780cb58f528e7c33a",
+    "git_commit": "ccb41f4319f52b5b6a9a5b5ff32fd32b2b565929",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "a519a695d73a90d0c37cbe610eb93858c431b51d39660ddd40623912b9be5368"
+    "sha256": "f1b3faf2563e42b5d33b86857135d3cbba68004bfd9e9a4a9183532e057534b7"
    },
-   "bytes": 5971,
+   "bytes": 6723,
    "category": "knowledge_supporting_data",
    "path": "LEARNING/inbox.jsonl",
    "record_ids": [
     "artifacts__LEARNING_inbox_jsonl"
    ],
    "required": false,
-   "source_sha256": "a519a695d73a90d0c37cbe610eb93858c431b51d39660ddd40623912b9be5368",
+   "source_sha256": "f1b3faf2563e42b5d33b86857135d3cbba68004bfd9e9a4a9183532e057534b7",
    "status": "included"
   },
   {
-   "bytes": 47891,
+   "bytes": 48707,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "0ff3fdb35614a4be2e0de5bee021b13745de15d157384865665fefe7fad086ad",
+   "source_sha256": "cd72824c13b3301b33dac6b1caf6cca1fe9a7be0b2ba4ae06c4097e94c1b87a8",
    "status": "excluded"
   },
   {
@@ -27128,36 +27276,36 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 5943,
+   "bytes": 6219,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-056.json",
    "record_ids": [
     "mission__MISSION-056"
    ],
    "record_sha256": [
-    "93bb1f3a9122e215149409212ee35305f122194e865c5124a162269344a5ec1c"
+    "56752bc031c96276aeff9aae90c1b32700454448a1cdb5b78991462cbd1bc4c9"
    ],
    "required": true,
-   "source_sha256": "b169b48cdedba15d871f6181f9315a23f4c58362a9e2d80f050efe6262f9da45",
+   "source_sha256": "cea38827b9e0d549e8fb67af2378cf0820b4f516725efad0dcaeb879ae86e9f1",
    "status": "included"
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 6903,
+   "bytes": 7151,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-057.json",
    "record_ids": [
     "mission__MISSION-057"
    ],
    "record_sha256": [
-    "06ab5867a23f65e4a04a3d19fdd6b96d62fb2aa7d22b73b2b06563f0daf1e336"
+    "a7a83d78effe5bab9e3fe4c6fe79888411c71acedfeca0cdea306ffc405086a3"
    ],
    "required": true,
-   "source_sha256": "bd31a1ea9afdc6a8b9bde7f5d2dfbde2e0d5120996370ecdad6ec183665d28e5",
+   "source_sha256": "0eb522dbf7f27d979d1b89e16cb58f9a7ed29618150d2be79f6cec48fea887e1",
    "status": "included"
   },
   {
@@ -27198,17 +27346,17 @@
    "action": {
     "updated": 1
    },
-   "bytes": 29771,
+   "bytes": 29987,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-060.json",
    "record_ids": [
     "mission__MISSION-060"
    ],
    "record_sha256": [
-    "f5dd9f19446c23d33f1545ac7710c341708099cf485e600aad645cf8cb2460af"
+    "5ded7ce4f361ae64aa56e0c4e6124ff63891864c122e27bfd4ecb8dacacb8204"
    ],
    "required": true,
-   "source_sha256": "395ae8afbb3d85154300a2c6dc21fbd4dd8b2f662102397f957457a655eae6b7",
+   "source_sha256": "b53a4fb900acff993c4dd9e31e82f2ed183e142fc40354f2e9a59e3334576c11",
    "status": "included"
   },
   {
@@ -27230,19 +27378,36 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 13903,
+   "bytes": 14094,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-062.json",
    "record_ids": [
     "mission__MISSION-062"
    ],
    "record_sha256": [
-    "fe22927eb824e384315f52f41ea1d05e673ccb076977526b3f9791b269e47729"
+    "9f80581a32d1e058d70cad1e2eb03b95737a66a80b5d75c8eb3f28285d6635c3"
    ],
    "required": true,
-   "source_sha256": "85bc3adb325f612c3ab854fd933eec14a63e2fc6bae6adbb2b667737dacc2d7b",
+   "source_sha256": "336ac06d489465cb7adbc604608335710ff2225b2b2ee8790944299c8d833e85",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 17079,
+   "category": "mission_manifests",
+   "path": "LEARNING/missions/MISSION-063.json",
+   "record_ids": [
+    "mission__MISSION-063"
+   ],
+   "record_sha256": [
+    "0538552325da1f99fbe30cb68524cbfea95524716486fbc4d1f92c035baa8493"
+   ],
+   "required": true,
+   "source_sha256": "cba3d8264599e5c4a46b4b7a7d0d03edda1f4f4cb631a7a2ce4a4bae40b215fe",
    "status": "included"
   },
   {
@@ -35150,7 +35315,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1483,
    "category": "chronicle",
@@ -35166,12 +35331,29 @@
    "status": "included"
   },
   {
-   "bytes": 97486,
+   "action": {
+    "added": 1
+   },
+   "bytes": 3922,
+   "category": "chronicle",
+   "path": "chronicle/entries/384_mission_063_random_walk_braess_paradox_in_trees_falsified_on_monotonicity_and_diameter_immunity_across_16355_held_out_edge_additions.md",
+   "record_ids": [
+    "chronicle_entries_384_mission_063_random_walk_braess_paradox_in_trees_falsified_on_monotonicity_and_diameter_immunity_across_16355_held_out_edge_additions"
+   ],
+   "record_sha256": [
+    "7c5bb336dc626ad7bab62d38fd1153e78fa955d0bb862e4c14a2aba13d75aacb"
+   ],
+   "required": true,
+   "source_sha256": "cec3b6b5c7cf4c023428a5841b2c7fbf0384bd546156a79c29d5508b523e4b85",
+   "status": "included"
+  },
+  {
+   "bytes": 97886,
    "category": "derived_projections",
    "path": "chronicle/ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "08d556a44c29d2afe083cac977f7d73faf2a575bb9bb07350e01ea191b64b6c1",
+   "source_sha256": "b8d16c90335456d27d058eaab8b33dac2b20127229d6d553458a437f8e72a704",
    "status": "excluded"
   },
   {
@@ -39234,11 +39416,11 @@
     "required": false
    },
    "chronicle": {
-    "discovered": 376,
+    "discovered": 377,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 376,
+    "included": 377,
     "required": true
    },
    "curated_memory_identity": {
@@ -39266,19 +39448,19 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 147,
+    "discovered": 151,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 147,
+    "included": 151,
     "required": true
    },
    "experiment_supporting_artifacts": {
-    "discovered": 1131,
+    "discovered": 1135,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 1131,
+    "included": 1135,
     "required": true
    },
    "governance_protocols_adrs": {
@@ -39322,11 +39504,11 @@
     "required": false
    },
    "mission_manifests": {
-    "discovered": 62,
+    "discovered": 63,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 62,
+    "included": 63,
     "required": true
    },
    "mission_schema": {
