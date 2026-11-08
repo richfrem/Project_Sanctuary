@@ -262,6 +262,7 @@ apm_modules/
 # Ephemeral usage snapshot cache (MISSION-035), read by the boot briefing
 .agent/learning/usage_latest.json
 .agent/learning/precompact/
+.agent/learning/guardian_boot_digest.md
 
 # Flight board: per-machine runtime state, not history. Handoff notes are mirrored into the tracked .agent/learning/events.jsonl
 # (see manage_coordination.mirror_checkin_to_events); scripts resolve the shared copy in the main checkout from any worktree.
@@ -276,3 +277,9 @@ apm_modules/
 
 # Resumable preservation progress; obligations are tracked in final mission manifests.
 .agent/coordination/soul_preservation.json
+.agent/coordination/retired-*/
+
+# Local control-plane mode setting and backup hooks
+context/control-plane-mode
+context/control-plane-mode.log
+context/control-plane-backup/
