@@ -1,11 +1,11 @@
 {
   "id": "MISSION-017",
   "title": "Local SSD Space Reclamation & External Storage Archive Pipeline",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "macOS M1 (APFS / External USB-C Storage)",
   "created_at": "2026-11-03T04:12:00Z",
-  "updated_at": "2026-11-03T04:30:00Z",
+  "updated_at": "2026-11-08T23:44:07.131183+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -27,7 +27,7 @@
     ],
     "frontier_escalation_condition": "Only escalate to cloud LLM if automated dependency resolution encounters circular symlink deadlock"
   },
-  "verdict": null,
+  "verdict": "ABANDONED",
   "human_gate_required": true,
   "issue_ref": null,
   "tags": [
@@ -37,13 +37,30 @@
     "apple-silicon-m1",
     "operational-hygiene"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T23:44:07.131183+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/missions/MISSION-017.json",
+      "details": "Closed at Richard's request 2026-11-08 without testing the hypothesis: no automated cold-artifact identification pipeline or external-drive runbook was built (no external drive attached). Operational goal met manually: Richard approved deleting ~/.crc/cache (unused 2023 OpenShift Local 4.12/4.13 bundles, 44 GB); free space 11 GiB -> 56 GiB; git and skill discovery unaffected."
+    }
+  ],
+  "lessons_learned": [
+    "The largest reclaimable item on the M1 was an unused OpenShift Local (crc) bundle cache (44 GB); Podman's VM disk (~22 GB) had only 1.25 GB reclaimable images.",
+    "Remaining candidates if needed: Chrome cache 5.5 GB, uv cache 2 GB, copilot/node-gyp/apm caches ~2.5 GB, Podman images plus VM disk compaction."
+  ],
   "projected_impact": {
     "paths": [
       "LEARNING/experiments/mission-017/"
     ],
     "resources": [],
     "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-017",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T23:44:07.131183+00:00",
+    "workflow": "soul_coverage.py closure"
   }
 }
