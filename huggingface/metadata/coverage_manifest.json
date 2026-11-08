@@ -1,9 +1,9 @@
 {
- "base_commit": "723d77f67ab4d459da004413ed4b7e0332616649",
+ "base_commit": "ce2b46db0c03c7888f856ae5acd1eb19df0a43bb",
  "dataset_records": 1398,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T17:38:24Z",
+ "generated_at": "2026-11-08T17:50:42Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 3
    },
-   "bytes": 152376,
+   "bytes": 152800,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "9d87f0bdea3e81d52ed539c5d85583f57b7569bbfa8abfe0a5e2c3966c903bc8",
-    "009714583dfe26f842cf7ae464b268385a1673956f5bcc130195a6365a00d544",
-    "772fb48a3bff7cfa811f6f7c51754f0ee35ec835e39398aba6c072c3fc23bce4",
-    "ccd16f374e43bfe58f0f93b34ae486c35d40a09db313ed08eebf93e75f8fa956",
+    "1ab9dff5e074a499820bd740cf73e3282c23c5f2b2ebe7b34c45c2711719a3e7",
+    "74b98cb89b06f2e0bd0981c9a2594a5997f704df07c2b480c6c4687f98c1379c",
+    "2fc0ec7fa8d3d7cd12290072ec0a7cf3d77b2dafc3286d82ec1020289cdde09c",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "e5ea1b1efff55f7742d6ed8a20a4047eb37893ccc81460c1efea6482ac2f9eaf",
+   "source_sha256": "9dd5bc654cd47db0d956d059a4c7bacf710011cee4c14e5ffda933db212a6091",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 9088,
+   "bytes": 9656,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "c7a51bd5c8261681d202267e7b89d246a305ac30db9e1515ca7233ebfc26563e",
+   "source_sha256": "187560bc1ee6a11cc1eed1bdaa476991c54eba09c9ee4e804727a8c71fae463a",
    "status": "excluded"
   },
   {
@@ -140,7 +140,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 20258,
    "category": "root_architecture_docs",
@@ -29098,7 +29098,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 6678,
    "category": "root_architecture_docs",
@@ -37527,7 +37527,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5215,
    "category": "skill_documentation",
@@ -37579,7 +37579,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 8525,
    "category": "skill_documentation",
@@ -37613,19 +37613,19 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
-   "bytes": 6532,
+   "bytes": 6592,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/preservation-purpose.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_preserving-soul-traces_references_preservation-purpose"
    ],
    "record_sha256": [
-    "c8c6b85b23cc36f917c7ac5ceccc939842d8cded47e32846ec040344379e6ebb"
+    "63b4d5f14cf0e06a7176982f5121db6a259053e3573056c82fdc471b5ad2b1ec"
    ],
    "required": false,
-   "source_sha256": "70ca147b7c3eed9e3ca1a537640cdf4c4d8ea8bd3207fc296d2039b36c8d73e3",
+   "source_sha256": "cf90d146c717dd94740b8aa97e28d09b75bfc0a289d935bdfeeacf4cba4838fb",
    "status": "included"
   },
   {
