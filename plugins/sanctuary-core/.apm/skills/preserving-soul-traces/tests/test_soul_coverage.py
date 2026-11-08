@@ -198,6 +198,24 @@ class Check(unittest.TestCase):
         self.assertFalse(bad["verified"]); self.assertEqual(len(bad["problems"]), 2)
         self.assertFalse(SYNC.verify_remote("o/r", ds, mf, "rev1", fetch=lambda *a: (_ for _ in ()).throw(OSError("net down")))["verified"])
 
+    def test_preservation_purpose_reference_is_covered_under_skill_documentation(self):
+        d = make_repo()
+        purpose_doc = d / "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/preservation-purpose.md"
+        purpose_doc.parent.mkdir(parents=True, exist_ok=True)
+        purpose_doc.write_text("# Preservation Purpose\n\nPreserve intellectual inheritance faithfully.\n")
+        git(d, "add", "-A"); git(d, "commit", "-qm", "add purpose ref"); git(d, "push", "-q")
+        policy = S.load_policy()
+        rule = S.classify("plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/preservation-purpose.md", policy)
+        self.assertEqual(rule["name"], "skill_documentation")
+        manifest = S.export(d)
+        src = [s for s in manifest["sources"] if "preservation-purpose.md" in s["path"]]
+        self.assertEqual(len(src), 1)
+        self.assertEqual(src[0]["status"], "included")
+        recs = S.load_dataset(d)
+        rec = [r for r in recs.values() if "preservation-purpose.md" in r["source_file"]]
+        self.assertEqual(len(rec), 1)
+        self.assertIn("Preserve intellectual inheritance faithfully.", rec[0]["content"])
+
 
 if __name__ == "__main__":
     unittest.main()

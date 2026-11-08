@@ -8,6 +8,8 @@ allowed-tools: Bash, Read, Write, Glob, Grep
 
 Coordinates the cognitive lineage preservation lifecycle: scanning markdown knowledge, computing SHA-256 integrity digests, formulating canonical JSONL records per ADR 084, maintaining dataset manifests, and delegating remote persistence to the global `managing-huggingface-assets` skill.
 
+Preservation serves two purposes: local operational continuity across sessions and public intellectual inheritance via the open Hugging Face Commons (the "Johnny Appleseed" doctrine). See [preservation-purpose.md](references/preservation-purpose.md) for foundational principles, attribution standards, and evidence boundaries.
+
 ## Contents
 - [Constraints](#constraints) • [Quick Start](#quick-start) • [Workflow](#workflow) • [Verification](#verification) • [References](#references)
 
@@ -59,6 +61,7 @@ Review [acceptance-criteria.md](references/acceptance-criteria.md) before declar
 
 ## References
 
+- [Preservation Purpose](references/preservation-purpose.md) — local continuity, public intellectual inheritance, Johnny Appleseed hypothesis, and evidence boundaries.
 - [Coverage](references/coverage.md) - what is preserved, the policy, the four verifiable facts, recovery.
 
 - [soul-trace-schema.md](references/soul-trace-schema.md) — 13-field canonical record schema, typing, and validation rules per ADR 084.

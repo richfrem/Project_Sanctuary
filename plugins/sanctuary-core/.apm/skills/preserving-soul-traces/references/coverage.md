@@ -1,8 +1,10 @@
 # Soul coverage: what is preserved, how completeness is verified
 
+> **Preservation Purpose**: Coverage must preserve substantive text, authored reflections, and provenance, not merely count source paths. See [preservation-purpose.md](preservation-purpose.md) for core principles, attribution standards, and evidence boundaries.
+
 **Before (verified 2026-11-06):** the documented closure (`trace_extractor.py --source-dir chronicle/entries --append`) exported Chronicle Markdown only; the extractor handled `.md` only and re-timestamped every record on each run. Mission manifests (hypotheses, verdicts, evidence, lessons), the event ledger (handoffs, failures, repairs, interventions, lessons, evaluation/cost events), experiment READMEs/results from missions 052-058, supporting artifacts and the sealed snapshot were not in the dataset. A hash-valid upload therefore did not mean the learning had been captured.
 
-**Now:** `scripts/soul_coverage.py` applies the declarative policy `references/coverage-policy.json` to the tracked files of the repository.
+**Now:** `scripts/soul_coverage.py` applies the declarative policy `references/coverage-policy.json` to the tracked files of the repository. Embedded knowledge records (such as chronicle entries, concepts, and mission manifests) preserve their full textual substance and attribution, while bulky supporting reproduction materials (raw datasets, binary outputs, code) are preserved as stable reference indexes (`artifacts__*`) linking directly to immutable Git commits.
 
 | source category | critical content | treatment |
 |---|---|---|
