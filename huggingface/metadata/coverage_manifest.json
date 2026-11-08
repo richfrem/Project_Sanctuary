@@ -1,9 +1,9 @@
 {
- "base_commit": "68d840627550fe27614a333c98257557ff4db8e9",
- "dataset_records": 1397,
+ "base_commit": "723d77f67ab4d459da004413ed4b7e0332616649",
+ "dataset_records": 1398,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T17:17:11Z",
+ "generated_at": "2026-11-08T17:38:24Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,10 +54,10 @@
   },
   {
    "action": {
-    "unchanged": 9,
-    "updated": 4
+    "unchanged": 10,
+    "updated": 3
    },
-   "bytes": 151877,
+   "bytes": 152376,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "9d87f0bdea3e81d52ed539c5d85583f57b7569bbfa8abfe0a5e2c3966c903bc8",
-    "96307a779f9e5c00dab7f973561f048cb07d3d0576d79353a378b4b258eeeed4",
-    "33afacd309459b342598eee0e82e6797db442dd90d66fb731f1e160266fc2dce",
-    "a9443f496571111d43f9f3d5923e1d8b3ac138dc4d1c8b6adaddde2389786f23",
+    "009714583dfe26f842cf7ae464b268385a1673956f5bcc130195a6365a00d544",
+    "772fb48a3bff7cfa811f6f7c51754f0ee35ec835e39398aba6c072c3fc23bce4",
+    "ccd16f374e43bfe58f0f93b34ae486c35d40a09db313ed08eebf93e75f8fa956",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "21dabfbe85c013c81139f46341eb26abc07c998b937daf2f599ff0f503de8128",
+   "source_sha256": "e5ea1b1efff55f7742d6ed8a20a4047eb37893ccc81460c1efea6482ac2f9eaf",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 8520,
+   "bytes": 9088,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "8d6fb3c33c095ebb62a07d26233cb2aea4331a762be747fb6c321654034207f4",
+   "source_sha256": "c7a51bd5c8261681d202267e7b89d246a305ac30db9e1515ca7233ebfc26563e",
    "status": "excluded"
   },
   {
@@ -140,19 +140,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 20004,
+   "bytes": 20258,
    "category": "root_architecture_docs",
    "path": "AGENTS.md",
    "record_ids": [
     "AGENTS"
    ],
    "record_sha256": [
-    "92c2e0ed3176f3e24d0cb96e7effb5138c103f147679c543cadfdc673c9ce66d"
+    "4462741e64680b8b9a6b0c531e2ec0cfb8969ea20025047b783db8193d822b99"
    ],
    "required": true,
-   "source_sha256": "07b2a36fe61e9a7e3e63ce86e6b87d674be535c67c29b7a6d564ce7c157398ad",
+   "source_sha256": "d889dbbb4632c34176612f704900dc8553192f434c81b3dce315ad51c8b343ae",
    "status": "included"
   },
   {
@@ -26288,7 +26288,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 2517,
    "category": "experiment_knowledge",
@@ -26305,7 +26305,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26325,7 +26325,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26345,7 +26345,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26365,7 +26365,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1663,
    "category": "experiment_knowledge",
@@ -26382,7 +26382,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1155,
    "category": "experiment_knowledge",
@@ -26399,7 +26399,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -26453,7 +26453,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27417,7 +27417,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 6341,
    "category": "mission_manifests",
@@ -27536,7 +27536,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 17418,
    "category": "mission_manifests",
@@ -27570,7 +27570,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 7365,
    "category": "mission_manifests",
@@ -29098,19 +29098,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 6420,
+   "bytes": 6678,
    "category": "root_architecture_docs",
    "path": "START_HERE.md",
    "record_ids": [
     "START_HERE"
    ],
    "record_sha256": [
-    "72c1531d7f7520e465f220a164f625fd74dc7a04c20a3e0a24af4bfb880cb370"
+    "6cddfeb7eb6415d2407323f8c20e07f15d20c1578acab258e60f78191fac8832"
    ],
    "required": true,
-   "source_sha256": "5e9ba83a00077cd40b6b227bdae017e730a0ea2a525519f358d5e473e1859dde",
+   "source_sha256": "15ec6f215ebfe64f22f5b703258ff7292482349f4959fedff057149a819590cc",
    "status": "included"
   },
   {
@@ -35541,7 +35541,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 747,
    "category": "chronicle",
@@ -37527,19 +37527,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 4417,
+   "bytes": 5215,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/SKILL.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_preserving-soul-traces_SKILL"
    ],
    "record_sha256": [
-    "db04b6831123f5212b75fc027ed40c9dbc06eb2cb3d21b8781e1272b0fb46366"
+    "8214265f8749fdf1127ef4ccf3bce4e5614b5bd606580f18e07292dd35fa2f4d"
    ],
    "required": false,
-   "source_sha256": "7c379904acdecf426e083ccd759645004b6b80789b8500092ae6e2723abcfc5e",
+   "source_sha256": "b51ae9b5c683062f21912fec4c0dcb20d9b1d7ae0166efeb75b59e79d5daa9a9",
    "status": "included"
   },
   {
@@ -37579,19 +37579,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 7934,
+   "bytes": 8525,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/coverage.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_preserving-soul-traces_references_coverage"
    ],
    "record_sha256": [
-    "ca225e13d290513da2b4cd0c689f9119bf0621c16b1522938863bba4fed8a527"
+    "6c82a4e749fffa84babb4835957e79c20df03bc7b60706adac7b0a7e54ea6367"
    ],
    "required": false,
-   "source_sha256": "f860c52e90face24cebb1732936fd0222f47b9a47b5dff7217e97e07a2a1cbe3",
+   "source_sha256": "f5fd73714026654ca72373a89cf5acf0bb5b33cb230a91d4b57f72a2b80593d2",
    "status": "included"
   },
   {
@@ -37609,6 +37609,23 @@
    ],
    "required": false,
    "source_sha256": "0bcb1f3a89264349b5b1f7ecf71925ec35dcb10630b4ce3abbd4f162db4bc5fa",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 6532,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/preservation-purpose.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_preserving-soul-traces_references_preservation-purpose"
+   ],
+   "record_sha256": [
+    "c8c6b85b23cc36f917c7ac5ceccc939842d8cded47e32846ec040344379e6ebb"
+   ],
+   "required": false,
+   "source_sha256": "70ca147b7c3eed9e3ca1a537640cdf4c4d8ea8bd3207fc296d2039b36c8d73e3",
    "status": "included"
   },
   {
@@ -37647,12 +37664,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 11385,
+   "bytes": 13483,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/scripts/sync_soul_dataset.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "66922fc6d378d18241ec277b73c98ababd52999148b0ba9b52cf3d5d6abae5c3",
+   "source_sha256": "d961884fbe5ba50954d255ff2b1e968df18ee895852d7d0eefa203ccd5cb08d0",
    "status": "excluded"
   },
   {
@@ -37674,12 +37691,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 13849,
+   "bytes": 15036,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/tests/test_soul_coverage.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "2e512d32009d670594d4e31cccc461770c4f7a5945351b94e313db228900304b",
+   "source_sha256": "ba1c6751163619797d6d3481e4da1333aa895239241cc7f40c1a27d2dfb146e7",
    "status": "excluded"
   },
   {
@@ -37689,6 +37706,15 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "f1871c4ceb4eaa6906cfe17613ae3b13e850b923d6b5a616e43e39f5fe121e4b",
+   "status": "excluded"
+  },
+  {
+   "bytes": 1035,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/preserving-soul-traces/tests/test_sync_env.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "bd31456d3b64b3f0ca13d2c38946d32e99659f1418e79c8a473ac664562d4979",
    "status": "excluded"
   },
   {
@@ -39753,19 +39779,19 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 119,
-    "excluded": 119,
+    "discovered": 120,
+    "excluded": 120,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
     "required": false
    },
    "skill_documentation": {
-    "discovered": 59,
+    "discovered": 60,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 59,
+    "included": 60,
     "required": false
    },
    "sync_receipts": {
