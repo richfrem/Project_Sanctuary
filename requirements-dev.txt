@@ -8,12 +8,26 @@ astroid==4.0.3
     # via pylint
 black==26.10.1
     # via -r requirements-dev.in
+certifi==2026.10.23
+    # via requests
+charset-normalizer==3.5.2
+    # via requests
 click==8.3.1
     # via black
 coverage[toml]==7.13.1
     # via pytest-cov
 dill==0.4.0
     # via pylint
+filelock==4.2.9
+    # via huggingface-hub
+fsspec==2026.9.0
+    # via huggingface-hub
+hf-xet==1.8.0
+    # via huggingface-hub
+huggingface-hub==0.36.0
+    # via -r requirements-dev.in
+idna==3.20
+    # via requests
 iniconfig==2.3.0
     # via pytest
 isort==7.0.0
@@ -31,6 +45,7 @@ mypy-extensions==1.1.0
 packaging==25.0
     # via
     #   black
+    #   huggingface-hub
     #   pytest
 pathspec==1.0.2
     # via
@@ -54,11 +69,25 @@ pytest==9.0.2
     #   pytest-cov
 pytest-cov==7.0.0
     # via -r requirements-dev.in
+python-dotenv==1.2.1
+    # via -r requirements-dev.in
 pytokens==0.4.1
     # via black
+pyyaml==6.0.3
+    # via
+    #   -r requirements-dev.in
+    #   huggingface-hub
+requests==2.34.2
+    # via huggingface-hub
 ruff==0.14.10
     # via -r requirements-dev.in
 tomlkit==0.13.3
     # via pylint
+tqdm==4.70.1
+    # via huggingface-hub
 typing-extensions==4.15.0
-    # via mypy
+    # via
+    #   huggingface-hub
+    #   mypy
+urllib3==2.8.0
+    # via requests

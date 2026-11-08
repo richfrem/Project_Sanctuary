@@ -8,3 +8,11 @@ ruff
 black
 mypy
 pylint
+
+# Sanctuary skill script runtime (install into .venv: .venv/bin/pip install -r requirements-dev.txt)
+# - pyyaml: forge_soul.py, record_procedure_outcome.py
+# - huggingface_hub, python-dotenv: preserving-soul-traces sync_soul_dataset.py via managing-huggingface-assets
+#   (sync_soul_dataset.py re-runs itself under .venv when huggingface_hub is missing)
+pyyaml==6.0.3
+huggingface_hub==0.36.0
+python-dotenv==1.2.1
