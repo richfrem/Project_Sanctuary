@@ -1,0 +1,111 @@
+{
+  "id": "MISSION-065",
+  "title": "Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Phyllotaxis geometry: minimum pairwise distance of Vogel spirals r=sqrt(k), theta=2*pi*k*t for N in {100,200,400,800} (Python standard library; bounded local CPU)",
+  "created_at": "2026-11-08T17:20:00Z",
+  "updated_at": "2026-11-08T17:20:00Z",
+  "confidence_reviewed": "2026-11-08",
+  "proposed_by": "claude-code (own choice)",
+  "interest_statement": "Sunflower seed heads are the classic case of the golden angle (~137.508 deg) producing even packing, justified because phi is the 'most irrational' number. That argument is asymptotic. I want to know whether, for a finite head of N seeds, the golden angle is actually the best divergence angle by the plainest uniformity measure (the closest pair of seeds), or whether nearby angles beat it, and by how much.",
+  "hypothesis": "Let d_min(t,N) be the minimum pairwise distance of the Vogel spiral with N points and divergence t (fraction of a turn), t_g = 2 - phi. On held-out N in {100,200,400,800}: (H1) some t within +/-1 deg of t_g achieves d_min >= 1.01 x d_min(t_g,N) at every N (golden is measurably beatable); (H2) the window-best angle lies within 0.1 deg of t_g at every N (but only by a near neighbour); (H3) for N in {100,200}, the best t over the full range [0.02,0.5] lies inside the +/-1 deg golden window. (G) Validity gate: grid-hash d_min equals brute force within 1e-12 on all checked configurations, and the analytic t=1/2 case matches sqrt(N)-sqrt(N-2).",
+  "falsification_criteria": "FALSIFIED if gate G passes and any of H1, H2 or H3 fails on the held-out N. UNASSESSED if G fails or the held-out run does not finish. Dev N in {25,50} only for instrument checks; protocol.md, evaluate_vogel.py and freeze.json are hash-frozen and committed before held-out execution. Scan resolution is fixed at step 0.05/(2*pi*N^1.5) plus 3 rounds of x10 local refinement; it is a grid search, so 'best' means best found, a lower bound on the true supremum.",
+  "baseline_evidence": "No prior Sanctuary work on phyllotaxis (grep of LEARNING for phyllotaxis/golden angle/Vogel found nothing). Background (not relied on as evidence): Vogel (1979) model; Ridley (1982) argued golden-angle packing efficiency is asymptotically optimal. Disclosed: dev run before freeze showed window-best/golden ratios of 1.0076 (N=25, +0.23 deg) and 1.0024 (N=50, +0.07 deg), and golden d_min identical at N=25 and 50, showing the minimum is set by the inner core. Hypotheses were written before that run and not changed.",
+  "experiment": "Register; implement evaluate_vogel.py (brute and grid-hash d_min); dev gate on N in {25,50}; freeze; held-out scan of +/-1 deg window at all held-out N and full range for N in {100,200}; independent review optional and bounded.",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 3,
+    "cost_weight": 0.1,
+    "operational_friction": 1,
+    "priority_score": 30.0
+  },
+  "priority_score": 30.0,
+  "score_basis": "Provisional estimates, not measured ROI. Leverage 1: pure curiosity, no operational payoff claimed. Depth 3: tests an asymptotic folk claim at finite N. Cost 0.1: stdlib CPU only, no model calls in the evaluator. Friction 1. Priority = (1x3)/(0.1x1) = 30.",
+  "strategic_intent": "Interest-led inquiry into nature's geometry, practising freeze-before-held-out on a small, fully decidable computation.",
+  "design_constraints": [
+    "Freeze protocol.md, evaluate_vogel.py, freeze.json before held-out run",
+    "Dev restricted to N in {25,50}",
+    "Secondary observations (which seed pair sets d_min) are descriptive only"
+  ],
+  "interest_rationale": "Chosen by claude-code when invited to pick any topic; selected for a biology/mathematics link and an outcome I could not predict confidently.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Ready: stdlib only, dev gate passed.",
+    "verified_present": [
+      "Python 3 standard library"
+    ],
+    "missing_prerequisites": [],
+    "first_enabling_step": "Commit freeze, then run --mode heldout."
+  },
+  "selection_record": {
+    "method": "Considered three non-AI questions decidable in one session.",
+    "inspected": [
+      {
+        "candidate": "Golden angle finite-N optimality",
+        "domain": "phyllotaxis geometry",
+        "disposition": "selected: deterministic, cheap, uncertain outcome"
+      },
+      {
+        "candidate": "Benford's law in physical constants",
+        "domain": "statistics",
+        "disposition": "rejected: needs an external dataset and small n"
+      },
+      {
+        "candidate": "Musical consonance vs rational-approximation depth",
+        "domain": "music theory",
+        "disposition": "rejected: metric choice dominates the result"
+      }
+    ]
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "local-cpu",
+    "cost_weight": 0.1,
+    "cli_target": "none",
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "none",
+    "routing_guidance": "Deterministic stdlib computation."
+  },
+  "tags": [
+    "curiosity",
+    "mathematics",
+    "phyllotaxis",
+    "golden-angle",
+    "own-choice",
+    "chosen-by-claude-code"
+  ],
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-063": "SIBLING (practice, soft): agent-chosen exact mathematics inquiry with freeze-before-held-out; no data dependency.",
+    "MISSION-056": "SIBLING (practice, soft): curiosity mission on uniform spacing (rhythms) \u2014 a related evenness question in a different domain."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-065.json",
+      "LEARNING/experiments/mission-065/",
+      "LEARNING/missions/MISSION-063.json",
+      "LEARNING/missions/MISSION-056.json",
+      "chronicle/entries/"
+    ],
+    "resources": [
+      "bounded local CPU (< 20 min)"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl",
+      ".agent/learning/cognitive_ledger.json",
+      "chronicle/ledger.json"
+    ]
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-065"
+}
