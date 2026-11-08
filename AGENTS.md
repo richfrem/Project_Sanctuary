@@ -64,6 +64,8 @@ Use existing tools to regenerate `LEARNING/index.jsonl`, `LEARNING/backlog.md` a
 
 ## Mission registration and closure
 
+For mission registration, execution, interruption and closeout, follow [.agent/rules/mission-execution.md](.agent/rules/mission-execution.md). Continue through every authorized delivery stage; if a required action needs authorization, ask a concrete question rather than silently ending the task.
+
 Registration follows the creation checklist in [agent-native-backlog.md](plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/agent-native-backlog.md):
 
 1. Recover the requested draft; check existing IDs and manifests to prevent duplicates.
