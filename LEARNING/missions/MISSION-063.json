@@ -116,7 +116,8 @@
       "LEARNING/missions/MISSION-057.json",
       "LEARNING/missions/MISSION-060.json",
       "LEARNING/missions/MISSION-062.json",
-      "LEARNING/inbox.jsonl"
+      "LEARNING/inbox.jsonl",
+      "chronicle/entries/"
     ],
     "resources": [
       "bounded local CPU (< 5 min)"
@@ -124,12 +125,15 @@
     "shared_generated": [
       "LEARNING/index.jsonl",
       "LEARNING/backlog.md",
-      ".agent/learning/events.jsonl"
+      ".agent/learning/events.jsonl",
+      "chronicle/ledger.json"
     ]
   },
   "preservation_obligation": {
     "required": true,
     "requested_at": "2026-11-08T15:06:44.642192+00:00",
     "workflow": "soul_coverage.py closure"
-  }
+  },
+  "assignee": "antigravity",
+  "worktree": ".worktrees/antigravity-mission-063"
 }
