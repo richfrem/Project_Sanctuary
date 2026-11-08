@@ -1,11 +1,11 @@
 {
   "id": "MISSION-023",
   "title": "Autonomous Dynamic Speculative Decoding & Draft Model Offloading via Apple MLX",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Apple Silicon M1 (16GB Unified Memory) via Apple MLX",
   "created_at": "2026-11-03T06:30:00Z",
-  "updated_at": "2026-11-03T06:30:00Z",
+  "updated_at": "2026-11-08T21:19:10.102541+00:00",
   "confidence_reviewed": "2026-11-03",
   "scores": {
     "strategic_leverage": 5,
@@ -27,7 +27,7 @@
     ],
     "frontier_escalation_condition": "Escalate to frontier model only if local speculative decoding encounters memory pressure"
   },
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -37,8 +37,18 @@
     "apple-mlx",
     "sovereign-intelligence"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T21:19:10.102541+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-023/README.md",
+      "details": "Held-out 10 prompts, frozen config 1.5B draft k=2 (selected on dev): median speedup 1.40x (min 1.30x) < 1.6x; peak 4.99 GiB <= 8 GiB; 10/10 outputs identical. Dev: 3B drafts 1.05-1.15x. Frozen 1e43214ab."
+    }
+  ],
+  "lessons_learned": [
+    "On an M1 16GB, a Qwen2.5-Coder-1.5B draft with k=2 speeds up 7B-4bit greedy generation about 1.4x (14.1 to 19.7 tok/s), losslessly, for +0.8 GiB; not 1.6x.",
+    "Bigger drafts and larger k raised acceptance but lowered throughput: 3B gave only 1.05-1.15x."
+  ],
   "projected_impact": {
     "paths": [
       "LEARNING/experiments/mission-023/",
@@ -50,5 +60,29 @@
       "local-model-memory"
     ],
     "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-023",
+  "experiment": "Dev sweep (3 prompts) over draft {1.5B,3B} x num_draft_tokens {2,4}; select one config; freeze; held-out 10 prompts baseline vs selected config. Greedy, 256 tokens, mlx-lm 0.32.2. See LEARNING/experiments/mission-023/protocol.md.",
+  "score_basis": "Not recorded at registration (2026-11-03); priority 200 is the formula (5x4)/(0.05x2). Cost weight 0.05 reflected local-only compute; actual cost also included orchestration tokens and ~2.6 GB of draft-model downloads.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Executed 2026-11-08 by claude-code orchestrating local MLX models.",
+    "verified_present": [
+      "mlx-lm 0.32.2 (uvx) with --draft-model",
+      "Qwen2.5-Coder-7B-Instruct-4bit (cached)",
+      "Qwen2.5-Coder 1.5B/3B 4-bit drafts (downloaded 2026-11-08)"
+    ],
+    "missing_prerequisites": [],
+    "first_enabling_step": "n/a (executed)"
+  },
+  "related_missions": {
+    "MISSION-019": "SIBLING (shared resource): the MLX server lifecycle controller; this benchmark stopped and restarted that server.",
+    "MISSION-003": "EXTENDS: builds on native Apple Silicon MLX local inference."
+  },
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T21:19:10.102541+00:00",
+    "workflow": "soul_coverage.py closure"
   }
 }

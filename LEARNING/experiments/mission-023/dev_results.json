@@ -1,0 +1,183 @@
+{
+ "mode": "dev",
+ "mlx_lm": "0.32.2",
+ "configs": {
+  "baseline": [
+   {
+    "prompt": "Write a Python function that returns the n-th Fibonacci numb",
+    "gen_tokens": 116,
+    "gen_tps": 13.788962729294894,
+    "wall_s": 9.010907417046838,
+    "peak_gib": 4.142314273864031,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Explain in two short paragraphs what a Python context manage",
+    "gen_tokens": 256,
+    "gen_tps": 14.058037909308409,
+    "wall_s": 18.812044250080362,
+    "peak_gib": 4.140193302184343,
+    "draft_accept_frac": 0.0
+   },
+   {
+    "prompt": "Write a bash script that counts lines in every .py file unde",
+    "gen_tokens": 256,
+    "gen_tps": 13.436443809509266,
+    "wall_s": 19.67056491691619,
+    "peak_gib": 4.148646678775549,
+    "draft_accept_frac": 0.0
+   }
+  ],
+  "1.5B_k2": [
+   {
+    "prompt": "Write a Python function that returns the n-th Fibonacci numb",
+    "gen_tokens": 116,
+    "gen_tps": 20.560119542063884,
+    "wall_s": 6.392909667105414,
+    "peak_gib": 4.960852172225714,
+    "draft_accept_frac": 0.6637931034482759
+   },
+   {
+    "prompt": "Explain in two short paragraphs what a Python context manage",
+    "gen_tokens": 256,
+    "gen_tps": 18.097138387243692,
+    "wall_s": 14.896712666959502,
+    "peak_gib": 4.959295779466629,
+    "draft_accept_frac": 0.609375
+   },
+   {
+    "prompt": "Write a bash script that counts lines in every .py file unde",
+    "gen_tokens": 256,
+    "gen_tps": 19.910116904820093,
+    "wall_s": 13.625504333991557,
+    "peak_gib": 4.967973180115223,
+    "draft_accept_frac": 0.640625
+   }
+  ],
+  "1.5B_k4": [
+   {
+    "prompt": "Write a Python function that returns the n-th Fibonacci numb",
+    "gen_tokens": 116,
+    "gen_tps": 19.415922057927578,
+    "wall_s": 6.800875667016953,
+    "peak_gib": 4.96085218898952,
+    "draft_accept_frac": 0.7931034482758621
+   },
+   {
+    "prompt": "Explain in two short paragraphs what a Python context manage",
+    "gen_tokens": 256,
+    "gen_tps": 15.206829702056929,
+    "wall_s": 17.669054750003852,
+    "peak_gib": 4.959860371425748,
+    "draft_accept_frac": 0.7265625
+   },
+   {
+    "prompt": "Write a bash script that counts lines in every .py file unde",
+    "gen_tokens": 256,
+    "gen_tps": 18.21445845783501,
+    "wall_s": 14.907642832957208,
+    "peak_gib": 4.968263104557991,
+    "draft_accept_frac": 0.76953125
+   }
+  ],
+  "3B_k2": [
+   {
+    "prompt": "Write a Python function that returns the n-th Fibonacci numb",
+    "gen_tokens": 116,
+    "gen_tps": 15.994181427226394,
+    "wall_s": 8.152114458032884,
+    "peak_gib": 5.7951695173978806,
+    "draft_accept_frac": 0.6637931034482759
+   },
+   {
+    "prompt": "Explain in two short paragraphs what a Python context manage",
+    "gen_tokens": 256,
+    "gen_tps": 14.592238803514189,
+    "wall_s": 18.45242391701322,
+    "peak_gib": 5.792392421513796,
+    "draft_accept_frac": 0.62890625
+   },
+   {
+    "prompt": "Write a bash script that counts lines in every .py file unde",
+    "gen_tokens": 256,
+    "gen_tps": 15.485983079483011,
+    "wall_s": 17.486467957962304,
+    "peak_gib": 5.8040654100477695,
+    "draft_accept_frac": 0.6484375
+   }
+  ],
+  "3B_k4": [
+   {
+    "prompt": "Write a Python function that returns the n-th Fibonacci numb",
+    "gen_tokens": 116,
+    "gen_tps": 14.454602010483702,
+    "wall_s": 9.058033790905029,
+    "peak_gib": 5.7955052349716425,
+    "draft_accept_frac": 0.7844827586206896
+   },
+   {
+    "prompt": "Explain in two short paragraphs what a Python context manage",
+    "gen_tokens": 256,
+    "gen_tps": 12.17848666349049,
+    "wall_s": 22.061411374947056,
+    "peak_gib": 5.793506337329745,
+    "draft_accept_frac": 0.73828125
+   },
+   {
+    "prompt": "Write a bash script that counts lines in every .py file unde",
+    "gen_tokens": 256,
+    "gen_tps": 15.089370925895661,
+    "wall_s": 17.977854958036914,
+    "peak_gib": 5.804828356951475,
+    "draft_accept_frac": 0.77734375
+   }
+  ]
+ },
+ "summary": {
+  "baseline": {
+   "median_gen_tps": 13.788962729294894,
+   "median_speedup": 1.0,
+   "min_speedup": 1.0,
+   "max_peak_gib": 4.148646678775549,
+   "identical_outputs": 3,
+   "n": 3,
+   "median_accept": 0.0
+  },
+  "1.5B_k2": {
+   "median_gen_tps": 19.910116904820093,
+   "median_speedup": 1.4817995882756765,
+   "min_speedup": 1.2873160894850646,
+   "max_peak_gib": 4.967973180115223,
+   "identical_outputs": 3,
+   "n": 3,
+   "median_accept": 0.640625
+  },
+  "1.5B_k4": {
+   "median_gen_tps": 18.21445845783501,
+   "median_speedup": 1.355601133459453,
+   "min_speedup": 1.0817177902179262,
+   "max_peak_gib": 4.968263104557991,
+   "identical_outputs": 3,
+   "n": 3,
+   "median_accept": 0.76953125
+  },
+  "3B_k2": {
+   "median_gen_tps": 15.485983079483011,
+   "median_speedup": 1.1525358420003395,
+   "min_speedup": 1.037999676601531,
+   "max_peak_gib": 5.8040654100477695,
+   "identical_outputs": 3,
+   "n": 3,
+   "median_accept": 0.6484375
+  },
+  "3B_k4": {
+   "median_gen_tps": 14.454602010483702,
+   "median_speedup": 1.048273339645385,
+   "min_speedup": 0.8663005991345784,
+   "max_peak_gib": 5.804828356951475,
+   "identical_outputs": 3,
+   "n": 3,
+   "median_accept": 0.77734375
+  }
+ }
+}

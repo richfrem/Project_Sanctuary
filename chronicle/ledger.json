@@ -1,6 +1,13 @@
 {
-  "total_entries": 379,
+  "total_entries": 380,
   "entries": [
+    {
+      "id": 388,
+      "title": "MISSION-023: Speculative decoding gives 1.4x on the M1, not 1.6x",
+      "filename": "388_mission_023_speculative_decoding_gives_14x_on_the_m1_not_16x.md",
+      "date": "2026-11-08",
+      "status": "COMPLETE"
+    },
     {
       "id": 387,
       "title": "MISSION-067: Random change ringing mixes faster but not cheaper",
