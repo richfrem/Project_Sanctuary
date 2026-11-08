@@ -95,7 +95,8 @@
   ],
   "related_missions": {
     "MISSION-065": "SIBLING (practice, soft): agent-chosen exact mathematics inquiry with freeze-before-held-out; its selection record rejected a music question over metric choice, which this mission addresses by fixing the metric.",
-    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing, another music-adjacent evenness question."
+    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing, another music-adjacent evenness question.",
+    "MISSION-067": "SIBLING (practice, soft): follow-on music-practice exact computation (change ringing as a shuffle)."
   },
   "projected_impact": {
     "paths": [
