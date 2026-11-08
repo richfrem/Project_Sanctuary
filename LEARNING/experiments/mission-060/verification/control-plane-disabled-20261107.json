@@ -1,0 +1,31 @@
+{
+  "repo": "/Users/richardfremmerlid/Projects/Project_Sanctuary",
+  "mode": "disabled",
+  "mode_file_present": true,
+  "mode_error": null,
+  "guards": [
+    {
+      "guard": "pre-commit-pipeline-guard",
+      "dispatcher": "pre-commit",
+      "script_present": false,
+      "script_executable": false,
+      "wired": false,
+      "mentioned_but_unrecognized": false,
+      "stale": false
+    },
+    {
+      "guard": "pre-push-review-guard",
+      "dispatcher": "pre-push",
+      "script_present": false,
+      "script_executable": false,
+      "wired": false,
+      "mentioned_but_unrecognized": false,
+      "stale": false
+    }
+  ],
+  "control_plane_db_present": false,
+  "agents_md_phase0": "absent",
+  "problems": [],
+  "warnings": [],
+  "consistent": true
+}

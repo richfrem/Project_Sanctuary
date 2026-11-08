@@ -1,0 +1,30 @@
+OpenAI Codex v0.167.0
+--------
+workdir: /private/tmp/study060/neutral
+model: gpt-6-luna
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a1b4db-7a3f-74a3-8c8a-7e9590d31d03
+--------
+user
+
+
+
+---SOURCE---
+Operational attribution tag: study060-call-f324e931cf8e4ba6bdb2837003d72c08
+
+Development instrumentation check. Reply with exactly METERING_OK.
+---END SOURCE---
+
+---INSTRUCTION---
+Return exactly METERING_OK. Do not use tools, inspect files or add commentary.
+
+You are operating as an isolated sub-agent. Do NOT use tools. Do NOT access filesystem. Only use the provided input.
+codex
+METERING_OK
+tokens used
+21,630
+METERING_OK

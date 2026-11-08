@@ -1,11 +1,11 @@
 {
   "id": "MISSION-060",
   "title": "Evaluate Mission Selection Using Expected Value, Agent Interest and Execution Readiness",
-  "status": "STAGED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "Agent-native backlog manager (manage_backlog.py), evaluating-agent-work skill, selection scenario fixtures, and a protected-exploration selection policy compared with the existing priority formula on matched disagreement cohorts of real inquiries",
   "created_at": "2026-11-06T18:45:00Z",
-  "updated_at": "2026-11-07T06:05:00Z",
+  "updated_at": "2026-11-08T05:55:49Z",
   "confidence_reviewed": "2026-11-07",
   "scores": {
     "strategic_leverage": 5,
@@ -132,15 +132,8 @@
   },
   "projected_impact": {
     "paths": [
-      "LEARNING/missions/",
       "LEARNING/experiments/mission-060/",
-      "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/",
-      "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/",
-      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/",
-      "LEARNING/missions/MISSION-056.json",
-      "LEARNING/missions/MISSION-057.json",
-      "LEARNING/missions/MISSION-058.json",
-      "LEARNING/experiments/mission-060/HANDOFF-codex.md"
+      "LEARNING/missions/MISSION-060.json"
     ],
     "resources": [
       "Backlog selection and startup recommendations",
@@ -150,7 +143,7 @@
       "Independent interest declarations from at least three agent clients",
       "Measured usage telemetry for cohort budgets"
     ],
-    "boundary": "These are prospective execution impacts. Registration changes only the manifest, justified reciprocal links and required generated records. Shared orchestration changes require demonstrated generic need and companion-repository ownership."
+    "boundary": "Freeze and execution are confined to this mission experiment directory and manifest. Shared parser repair was separately merged in companion PR 757 and installed; no standing selector adoption."
   },
   "revision_history": [
     {
@@ -205,7 +198,7 @@
     "name": "protected exploration allocation",
     "protected_share": {
       "value": 0.3,
-      "status": "PROVISIONAL, pending explicit approval by Richard",
+      "status": "APPROVED for MISSION-060 study only (Richard, 2026-11-07); no standing policy adoption",
       "applies_to": "discretionary research resources: those not committed to explicit user assignments, WIP constraints or maintenance obligations"
     },
     "ranking_within_protected_share": [
@@ -231,14 +224,14 @@
     ]
   },
   "assignee": "codex",
-  "worktree": ".worktrees/claude-code-mission-060",
+  "worktree": ".worktrees/codex-mission-060",
   "execution_handoff": {
     "assigned_to": "codex",
-    "state": "ASSIGNED, NOT STARTED: zero model calls made; zero study tokens spent",
+    "state": "DEVELOPMENT_CALIBRATION_COMPLETE (9/9 agreement); freeze preparation; held-out execution NOT started",
     "assigned_by": "Richard (human partner), 2026-11-07, after claude-code paused on the Claude weekly-window stop rule",
     "authorization": "Package approved with Proceed on 2026-11-07 (30% provisional share of the study 16 slots, thresholds, 700k additional-token ceiling, 25k per item, at most 10 items, Copilot excluded). Hugging Face sync NOT authorized.",
-    "blocker": "Quota: Claude weekly window 36% remaining (resets Nov 9) against a 25% stop floor; Codex 5-hour 28% (resets about 07:04Z). Client rebalancing is recommended but NOT approved.",
-    "next_action": "Read LEARNING/experiments/mission-060/HANDOFF-codex.md; check out the mission; settle the client allocation with Richard; calibrate the rubric; write and merge protocol.md and freeze.json before any held-out step.",
+    "blocker": "Separate freeze integration and verification on origin/main are required before held-out execution. Recheck quota for the next phase.",
+    "next_action": "Finalize protocol.md and freeze.json; commit and integrate the freeze separately; verify source/dependency hashes and public origin/main parity before any held-out call.",
     "handoff_note": "LEARNING/experiments/mission-060/HANDOFF-codex.md",
     "assigned_model": "gpt-6.1-sol",
     "assigned_effort": "medium",

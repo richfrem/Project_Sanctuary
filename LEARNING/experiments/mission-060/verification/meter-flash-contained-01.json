@@ -1,0 +1,31 @@
+{
+  "client": "flash",
+  "call_id": "meter-flash-contained-01",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:16:05Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "contained": true,
+  "status": "PASS",
+  "measured_usage": {
+    "requests": 2,
+    "overhead": 13699,
+    "additional_tokens": 583,
+    "accumulated_input": 27766,
+    "output_tokens": 215,
+    "last_context": 14067,
+    "transcript": "/Users/richardfremmerlid/.gemini/antigravity-cli/brain/66c5c6e2-3b03-48d7-8e2b-f5dd4318c12c/.system_generated/logs/transcript_full.jsonl"
+  },
+  "response_matches": true,
+  "usage_valid": true,
+  "transcript_sha256": "f72091be4a1d87948cf6d97d01ccd16ee8802e27423e8e8ad1c9866bc43477f9",
+  "sandbox_profile_sha256": "27f4e40465ab1f9d02c7d1877d5e990a2291f3347ded309efb6fbab902314dbe",
+  "sandbox_profile_text": "(version 1)\n(allow default)\n(deny file-write*)\n(allow file-write* (subpath \"/private/tmp/study060/work/meter-flash-contained-01/deliverables\"))\n(allow file-write* (subpath \"/private/tmp/study060/work/.runtime-meter-flash-contained-01\"))\n(allow file-write* (subpath \"/Users/richardfremmerlid/.gemini/antigravity-cli\"))\n(allow file-write-data (literal \"/dev/null\"))\n"
+}

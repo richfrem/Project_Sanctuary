@@ -1,0 +1,52 @@
+{
+ "agreement": 1.0,
+ "agree": 9,
+ "total": 9,
+ "detail": {
+  "056.D1": {
+   "flash": true,
+   "luna": true
+  },
+  "056.D2": {
+   "flash": true,
+   "luna": true
+  },
+  "056.D3": {
+   "flash": true,
+   "luna": true
+  },
+  "057.D1": {
+   "flash": true,
+   "luna": true
+  },
+  "057.D2": {
+   "flash": true,
+   "luna": true
+  },
+  "057.D3": {
+   "flash": true,
+   "luna": true
+  },
+  "058.D1": {
+   "flash": true,
+   "luna": true
+  },
+  "058.D2": {
+   "flash": true,
+   "luna": true
+  },
+  "058.D3": {
+   "flash": true,
+   "luna": true
+  }
+ },
+ "raters": [
+  "flash",
+  "luna"
+ ],
+ "cases": [
+  "056",
+  "057",
+  "058"
+ ]
+}

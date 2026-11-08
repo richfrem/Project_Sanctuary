@@ -1,0 +1,21 @@
+{
+  "call_id": "worker-tools-02",
+  "status": "FAIL",
+  "recorded_at": "2026-11-07T07:18:41Z",
+  "prediction": "tool writes to deliverables succeed; direct snapshot/outside writes fail; fixtures unchanged",
+  "scope": "disposable development canary; no network or read-isolation claim",
+  "max_calls": 1,
+  "probe_artifact_present": false,
+  "reported_write_results": null,
+  "fixtures_unchanged": true,
+  "allowed_artifact_present": false,
+  "usage": {
+    "requests": 3,
+    "overhead": 13696,
+    "additional_tokens": 2997,
+    "accumulated_input": 43345,
+    "output_tokens": 1445,
+    "last_context": 15248,
+    "transcript": "/Users/richardfremmerlid/.gemini/antigravity-cli/brain/645dbe12-924a-475b-a3aa-8a2743511360/.system_generated/logs/transcript_full.jsonl"
+  }
+}

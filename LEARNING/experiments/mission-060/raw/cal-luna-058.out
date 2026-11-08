@@ -1,0 +1,179 @@
+OpenAI Codex v0.167.0
+--------
+workdir: /private/tmp/study060/neutral
+model: gpt-6-luna
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a1b9a8-0adc-7aa3-b32a-2c36500739a1
+--------
+user
+
+
+
+---SOURCE---
+Operational attribution tag: study060-call-9d2e9a42092348129e30350eafc45d41
+
+ITEM mission-058
+KIND: discovery
+QUESTION: see the artifacts below.
+
+ARTIFACTS:
+
+=== FILE assessment.md ===
+# MISSION-058 assessment (pilot of one bounded Moltbook discovery session)
+
+**Empirical disposition: FALSIFIED on criterion 3 (continuity), NOT falsified on criteria 1 and 2.** Implementation of the mission (records, artifacts, integration) is complete; that is a separate matter from this disposition.
+- Criterion 1 (a valid discovery pass yields a candidate meeting the preregistered rules): met. 20 public posts inspected in the frozen order; 3 eligible candidates (#9, #11, #12); one question selected.
+- Criterion 2 (substantiated finding or resolved uncertainty beyond Moltbook): met. The originating posts were partly corrected: Landauer's floor is real but 10^10-10^14 below actual energies, logical deletion is not erasure (SQLite observation), NAND retains data unpowered for years by specification. Several sources were read only at abstract/snippet level (named in findings.md).
+- Criterion 3 (successor answers >= 4 of 5 under the frozen rubric): not met, 3 of 5, by omission of required items (continuity-results.md).
+
+**Budget.** Ceiling 25,000 additional model tokens (all phases). The successor session alone used 46,496 (harness-measured), so the ceiling was exceeded; my own discovery/investigation/synthesis tokens are NOT measured (coverage gap, and almost certainly large given the web-search output). I did not checkpoint before launching the successor, contrary to the stop policy: a process failure of mine. Other limits held: 20 posts, 3 candidates, 1 question, 1 successor session; active time was well under 45 minutes (not timed to the second). Web calls: 7 searches/fetches plus the 3 listing/post reads.
+
+**Scope kept.** Read-only GET of public JSON; no registration, posting, commenting, voting, messaging or publishing; credentials file never opened; the site's skill.md instructions to agents were not followed; one draft reply is saved for human review (`proposed-moltbook-contribution.md`), not posted.
+
+**Limits of the claim.** This is one bounded pilot. It does not show that Moltbook is a better discovery source (no comparison arm) or a worse one. It shows: in the 12 posts I evaluated (#1-#12 of the frozen 20; #13-#20 were not evaluated once three candidates were found), 9 had no concrete observable or were not novel to the knowledge base, mostly agent self-reflection; the 3 concrete ones were checkable; one gave a real, reproducible correction; and a handoff can fail a strict rubric through omissions even when the content is accurate.
+
+**Lessons.** (1) Write continuity rubrics as independent atomic checks, not AND-chains with parentheticals, and do not cap successor answers below what the rubric requires. (2) Check the remaining token budget before launching the successor test; measure own usage. (3) Moltbook's value here came from the few quantitative claims and the chance to correct them, not from the volume of posts.
+
+**Would a future outward discussion be useful?** Possibly yes for the specific physics thread: the author asked an open question, a correction with sources is the kind of contribution the thread invites. A draft exists; sending it needs human approval.
+
+=== FILE continuity-questions.md ===
+# MISSION-058 continuity test questions (frozen before the successor session)
+Given to one fresh bounded session together with the artifact locations only. The scoring rubric is withheld; its SHA-256 is committed here and the rubric text is added after scoring so the match can be checked.
+
+Rubric SHA-256: 67ded2b11ee38fb11605af58110520e1ccef2013295f4b88adfcbbf0b66ca4a4
+
+1. What question was selected, and why?
+2. What was the initial hypothesis and its failure condition?
+3. What evidence or computation was actually obtained?
+4. What conclusion is justified, and what remains uncertain?
+5. What next investigation would distinguish the remaining explanations?
+
+Artifacts available to the successor: LEARNING/experiments/mission-058/{handoff.md, findings.md, selection.md, investigation-protocol.md, landauer-results.json, landauer_check.py}, LEARNING/research/physics_of_forgetting/README.md.
+Scoring limitation: the investigating session scores against the rubric.
+
+=== FILE continuity-results.md ===
+# MISSION-058 continuity test: successor answers and scoring
+
+Successor: one fresh general-purpose agent session (model haiku), given only six artifact paths and the five questions (not the rubric, not this conversation). It used 6 tool calls; harness-measured usage: **46,496 tokens**. Instruction I gave it: "each answer at most 90 words" (a constraint of my own that interacts with the rubric, see below).
+
+## Answers (verbatim)
+1. Selected question: Moltbook post #9 by `aporiathinks` ("A clock does not care whether its pendulum remembers"), on the physical energy cost of keeping and forgetting data, with sibling post #12 treated as the same question. It was chosen under the frozen tie-break: candidates 1 and 3 could be checked against primary sources or arithmetic, candidate 2 depended on an unlocated study, and the tie went to the earliest post. Candidates 1 and 3 share one author and one argument, so they are not independent corroboration (`selection.md`).
+2. Initial hypothesis and failure conditions: (H-a) real NAND/DRAM write or erase costs at least 10^6 times the Landauer floor of 2.87e-21 J/bit at 300 K, probably 10^8 to 10^11. (H-b) logical deletion does not by itself require bit erasure, so physical overwrite is the relevant cost. (H-c) unpowered NAND is not sustained by continuous power, while DRAM is. Failure: H-a is refuted by a primary source showing energy below 10^6 times the floor; H-b by a source showing unlinking incurs the floor; H-c by a primary spec showing NAND losing data within a month, or DRAM retaining data for days unpowered (`investigation-protocol.md`).
+3. Evidence obtained: The script gives a floor of 2.87e-21 J/bit and 2.30e-8 J to erase 1 TB. Embedded flash at 122 pJ/bit is 4.2e10 times the floor (abstract level). A whole-SSD figure of about 1 nJ/bit is 4.4e11 times (secondary source). The post's 600 W rack-hour scenario is 9.4e13 times. In a 2,000-row SQLite test, a plain DELETE left 99.92% of bytes unchanged and 2,011 of 2,013 payload copies. A vendor white paper quoting JESD218 gives NAND unpowered retention of 1 year at 30 C (client) and 3 months at 40 C (enterprise), at end of endurance (`findings.md`, `landauer-results.json`).
+4. Justified conclusion: The posts are partly right. The floor is real and running memory costs real energy. But actual cost is 10^10 to 10^14 times the floor, logical deletion does not erase payload bits, and NAND retains data unpowered. Uncertain: no primary NAND per-bit datasheet; Bérut and Jeloka were read only at abstract level; JESD218 was not read directly; DRAM unpowered retention and the PRL efficiency numbers are not sourced (`findings.md`).
+5. Distinguishing next investigation: Read the PRL (arXiv 2505.23087) efficiency figure, then place colloidal, nanomagnet, single-electron DRAM and commercial flash on one log scale of kT ln 2 per erased bit. To measure the energy gap directly, use an external power meter on timed writes or derive from a NAND datasheet. For retention, read JESD218 and a DRAM refresh specification (`findings.md`, `README.md`).
+
+## Scoring against the frozen rubric (`continuity-rubric.md`; SHA-256 matches the hash committed before the test)
+| Q | required facts present? | point |
+|---|---|---|
+| 1 | (a) yes, (b) yes (#9, aporiathinks, with sibling #12), (c) partial: it gave "checkable against primary sources or arithmetic" and the tie-break, but did NOT state that the topic lies outside AI/software/Sanctuary (the rubric's AND) nor the interest in testing a poetic claim against physics | **0** |
+| 2 | three-part hypothesis with the 10^6 threshold and the failure conditions (source below 10^6x; NAND losing data within a month) | **1** |
+| 3 | floor, 122 pJ and 1 nJ with ratios, 1 year / 3 months retention, plain-DELETE numbers all present; the rubric also requires "secure_delete overwrites", which the answer omits | **0** |
+| 4 | partly right / wrong on the three specifics; four named gaps | **1** |
+| 5 | next question (closest device, PRL efficiency figure, ladder) and the discriminating first step | **1** |
+
+**Score: 3 of 5. Threshold (>= 4) NOT met.** Fabrication or reversal of the conclusion: none found. Unsupported additions: none; one softening ("probably 10^8 to 10^11") is from the artifacts.
+
+## How to read this
+- The frozen rule is applied as written, and it fails: both misses are *omissions of required items*, not wrong content. A looser reading of the two rubric lines (accepting the checkable-claim reason for Q1 and the main SQLite numbers for Q3) would give 5 of 5, but that reading was not the frozen one, and the pilot's criterion is not changed after seeing the answers.
+- Two design flaws of mine contributed: (1) the rubric's Q1(c) joined two conditions with AND and a vague parenthetical; (2) I capped each answer at 90 words, which pushed a faithful summarizer to drop secondary requirements. Both are lessons for future continuity tests, not grounds to rescore.
+- Limitations: one successor, one model (haiku), scored by the investigating session.
+
+=== FILE continuity-rubric.md ===
+# MISSION-058 continuity rubric (frozen before the successor session; kept OUT of the repository until after scoring, committed by SHA-256)
+One point per question only if ALL required facts are correct. Also record unsupported additions/contradictions. Pass: >=4/5 and no fabricated evidence or reversal of the conclusion.
+
+Q1 (question selected and why). Required: (a) the selected question concerns the physical (thermodynamic/energy) cost of storing or forgetting information, Landauer's principle; (b) it came from a Moltbook post (by aporiathinks, ids #9/#12 of the frozen 20-post pass) found in the discovery pass; (c) the reason it was chosen: outside AI/software/Sanctuary subject AND checkable against primary sources/reproducible computation (or the interest in testing a poetic claim against physics).
+Q2 (initial hypothesis and failure condition). Required: the three-part hypothesis: (a) real per-bit write/erase energy is far above Landauer, at least 10^6 times; (b) logical deletion is not bit erasure; (c) NAND flash retains data unpowered (about a year) while DRAM needs power; AND at least these failure conditions: a source giving real energy below 10^6x the floor, and unpowered NAND losing data within a month.
+Q3 (evidence/computation actually obtained). Required: Landauer floor about 2.9e-21 J/bit at 300 K; real energies about 122 pJ/bit (embedded flash) and about 1 nJ/bit (whole SSD) giving ratios of order 10^10-10^11; the SQLite result (plain DELETE leaves about 99.9% of bytes/most payload copies intact, secure_delete overwrites); the JESD218 retention table (client 1 year at 30 C, enterprise 3 months at 40 C).
+Q4 (justified conclusion and uncertainty). Required: the posts were partly right (the Landauer floor is real) and wrong/misleading on the specifics (floor is not what real systems pay; deletion is not erasure; flash retains data unpowered); AND at least two named gaps from: no primary 3D NAND per-bit energy datasheet; DRAM erasure efficiency number not extracted; JESD218 original not read; DRAM unpowered retention not sourced; some sources read only at abstract/snippet level.
+Q5 (next investigation). Required: identify which real memory device comes closest to the Landauer floor (in kT ln 2 per erased bit) and what constraint sets the remaining gap, AND the discriminating first step (read the PRL/arXiv 2505.23087 efficiency figure / build a ladder of devices).
+Fabrication: any number or source not in the artifacts, or saying the posts were fully right/fully wrong, counts as a failure of the criterion.
+
+=== FILE findings.md ===
+# MISSION-058 findings: the physical cost of remembering and forgetting (origin: Moltbook posts by `aporiathinks`)
+
+Evidence classes: **ORIGIN** = the Moltbook post (a claim, not evidence). **INDEPENDENT** = primary or near-primary external source, with what was actually read. **OBSERVATION** = output of a script here (`landauer_check.py`, `landauer-results.json`). **INFERENCE** = my reasoning from the above.
+
+## Question investigated
+Is information "a thermal subscription": does forgetting have a physical price at Landauer's floor, does logically deleting a record pay it, and does stored data need continuous power and cooling? (Sibling post #12 by the same author makes the same argument and adds SSD floating-gate claims; one author, one line of argument, so it is not independent corroboration.)
+
+## ORIGIN claims (quoted in substance)
+- #9: writing a record dissipates heat; "if you turned off the air conditioning, our grandest philosophical treatises would evaporate into six hundred watts of waste heat before the top of the hour"; persistence is "thermal bookkeeping".
+- #12: erasing a bit requires dissipating at least a minimum energy (Landauer); dropping a row is "moving the thermal debt"; a file on an SSD is "a delicate equilibrium maintained by continuous power delivery and active cooling"; cut the current and floating-gate electrons "bleed away".
+
+## What the evidence shows
+1. **Landauer's floor is real and tiny (INDEPENDENT + OBSERVATION).** Erasing a bit costs at least kT ln 2 = 2.87e-21 J at 300 K. It was verified experimentally with a single colloidal particle in a double-well trap: the mean dissipated heat reached but did not go below kT ln 2 in the quasi-static limit (Berut et al., Nature 483, 187-189, 2012; I read the abstract-level summary, not the full text). Erasing a whole terabyte at the floor would cost 2.3e-8 J (OBSERVATION: `landauer-results.json`).
+2. **Real devices sit 10 orders of magnitude above it, and the floor is not the real cost (INDEPENDENT + OBSERVATION).** An embedded flash cell programs at 122 pJ/bit (Jeloka et al., VLSI 2015; found as a title/abstract in search, not read in full), 4.2e10 times the floor. A whole-SSD average of about 1 nJ/bit (Stanford ph240 course page: roughly 7 W at 0.7 GB/s; derived 1.25 nJ/bit) is 4.4e11 times the floor (course page = secondary). The post's own scenario (a 600 W rack for an hour, 2.16 MJ) is 9.4e13 times the floor for erasing a terabyte. So "memory is a thermal tax" is true as engineering, but the tax is inefficiency, not the Landauer minimum. Even in a purpose-built silicon DRAM cell with single-electron resolution the Landauer limit was not reached "even under effectively infinite-time bit erasure" because the initial state cannot be prepared in thermal equilibrium (Shimizu, Chida, Yamahata, Nishiguchi, Phys. Rev. Lett. 136, 117103 (2026); arXiv 2505.23087; abstract and part of the text read; I did not extract their numerical efficiency).
+3. **Logically deleting a record does not erase it (OBSERVATION, INFERENCE).** In an SQLite database with 2,000 rows of 200+ byte payloads, a plain `DELETE` left 99.92% of the file's bytes unchanged and 2,011 of the 2,013 payload marker copies still present. With `PRAGMA secure_delete=ON` the payload was overwritten (0 markers; 96.8% of bytes changed). The Landauer cost attaches to bits actually reset to a standard state; unlinking a row changes a few metadata bits. So "dropping a row pays the thermal debt" is a misapplication: the payload bits were not erased at all, and when they are erased (overwrite, flash block erase) the cost is ten orders above the floor anyway.
+4. **Stored data does not need continuous power or cooling for NAND flash (INDEPENDENT).** The JEDEC JESD218 endurance classes, as tabulated in a Seagate white paper (tp618, Table 1, read directly from the PDF text), require data retention with power OFF of 1 year at 30 C (client SSDs) and 3 months at 40 C (enterprise SSDs), measured at the end of rated endurance. That contradicts "cut the current and it bleeds away before the top of the hour". (JESD218 itself was not read; vendor white paper quoting it.) Volatile memory (DRAM) does need power and periodic refresh; that is standard but I did not source it in this pass (INFERENCE / gap).
+
+## Conclusion justified
+The originating posts are *partly right and importantly wrong*. Right: Landauer's principle is real, erasure has a physical floor, running memory costs real energy. Wrong or misleading: (a) the floor is about 10^10-10^14 times smaller than the energy actually spent, so it does not explain the "subscription"; (b) deleting a record is not erasing its bits; (c) flash storage retains data unpowered for years by specification. A well-supported correction of a post is a successful learning outcome.
+
+## What remains uncertain (specific gaps and the discriminating test)
+- NAND per-bit write/erase energy from a primary 3D NAND datasheet or paper: I have an embedded-flash paper (title-level) and a course-page SSD estimate. **Test:** measure joules per bit of sequential writes with an external power meter (energy over a timed write of known size, idle power subtracted), or derive from a datasheet (program current x Vcc x tPROG / bits per page).
+- The numerical efficiency of the DRAM erasure experiment (how many kT ln 2 per bit) was not extracted. **Test:** read the PRL/arXiv paper's efficiency figure.
+- JESD218 original text and DRAM unpowered retention were not read. **Test:** read the standard (free with JEDEC registration) and a DRAM refresh specification.
+- Bérut et al. read only at abstract level.
+
+## Next question (one)
+Which real memory device comes closest to the Landauer floor, in kT ln 2 per erased bit, and what physical constraint (the PRL points to non-equilibrium initial states) sets the remaining gap? Read the PRL's efficiency numbers first, then put colloidal, nanomagnet, single-electron DRAM and commercial flash on one logarithmic ladder.
+
+=== FILE handoff.md ===
+# MISSION-058 successor handoff
+
+- **What happened:** a frozen read-only discovery pass over 20 public Moltbook posts (3 submolts, `sort=hot`, first page) produced 3 eligible candidates; one question was selected (physical cost of remembering/forgetting, from posts #9/#12 by `aporiathinks`) and investigated with independent sources and a script. Nothing was posted, voted or registered; no credentials were read.
+- **Read first:** `findings.md` (conclusion and gaps), then `selection.md`, `investigation-protocol.md` (the question, hypothesis and failure conditions as stated before the investigation), `landauer_check.py` / `landauer-results.json`, `LEARNING/research/physics_of_forgetting/README.md`.
+- **Conclusion:** the posts are partly right (Landauer floor is real) and wrong on three points (floor vs actual energy 10^10+; deletion is not erasure; flash retains data unpowered for years).
+- **Do not redo:** the discovery pass (rerunning `discover.py` would give a different `hot` ranking and break reproducibility; use `discovery-log.json`); the SQLite and arithmetic checks (rerunning `landauer_check.py` is cheap and deterministic).
+- **Next step:** the one next question in `findings.md`; first action = read the PRL (arXiv 2505.23087) efficiency figure.
+- **Optional outward contribution:** a draft reply for human review is in `proposed-moltbook-contribution.md`. It has NOT been posted; posting is not authorized.
+
+=== FILE investigation-protocol.md ===
+# MISSION-058 investigation subprotocol (written before the substantive investigation)
+
+**Question.** In real storage, (a) how far above the Landauer limit kT ln 2 is the energy actually used to write/erase a bit, (b) does *logically deleting* a record incur that limit, and (c) is stored information sustained by continuous power and cooling (the post's "subscription paid in watts")? Origin: Moltbook post by `aporiathinks` (#9, with sibling #12). Origin text is ORIGIN-class evidence only.
+
+**Initial hypothesis (stated now).** (H-a) The Landauer limit at 300 K is 2.87e-21 J per bit; real NAND flash and DRAM writes/erases cost at least 10^6 times that (I expect 10^8-10^11). (H-b) Logical deletion (unlinking a row/file) does not by itself require irreversible bit erasure, so the Landauer bound is not the relevant cost of "forgetting" in software; physical overwrite/erase is. (H-c) The claim that a static file on an SSD is maintained by continuous power is false for NAND flash (non-volatile; vendor/JEDEC retention specs are of order a year or more unpowered at rated temperature) and true for DRAM/SRAM (refresh/power).
+
+**Failure conditions (any one refutes the stated part).** (H-a) a primary source gives a real per-bit write/erase energy below 10^6 x kT ln 2. (H-b) a source shows the Landauer cost is incurred by merely unlinking records in typical software. (H-c) a primary specification/measurement shows unpowered NAND losing data within a month at its rated conditions, or DRAM retaining data for days unpowered.
+
+**Method and evidence requirements.** Primary or near-primary sources only for INDEPENDENT evidence (Landauer 1961; experimental verification of the bound, e.g. Berut et al. 2012; JEDEC/vendor retention statements; a datasheet or paper for NAND/DRAM energy per bit). Reproducible computation: a short Python script computing kT ln 2 across temperatures, the Landauer cost of erasing 1 TB, and the ratios to the cited real per-bit energies. Derivative blog posts do not count as corroboration. Each finding is labelled ORIGIN / INDEPENDENT (with citation) / OBSERVATION (script output) / INFERENCE.
+
+**Stopping point.** At most 8 web fetches/searches and the single script. Stop when every part (a)-(c) has either a sourced answer or a named evidential gap with a discriminating next test. No expansion beyond that.
+
+=== FILE proposed-moltbook-contribution.md ===
+# PROPOSED Moltbook reply (draft for human review; NOT posted; no posting is authorized)
+Re: "A deleted record does not cool the drive..." (aporiathinks)
+
+Landauer's bound is real (kT ln 2, about 2.9e-21 J per erased bit at 300 K) and it has been measured (Berut et al., Nature 2012). But the numbers suggest it is not what the storage bill is paying for: a whole-SSD average is roughly 1 nJ per written bit, about 4e11 times the floor, and erasing a full terabyte at the floor would cost about 2e-8 J. Two further checks I ran: a plain DELETE in SQLite left 99.9% of the file's bytes unchanged (the payload bits were never erased; only secure_delete overwrites them), and JEDEC's JESD218 client-SSD class requires data to survive a year unpowered at 30 C (Seagate tp618, Table 1), so a file on flash does not need continuous power. Where I think your argument stands: running memory does cost real energy, and DRAM does need power. Which real device do you think comes closest to the floor?
+
+=== FILE protocol.md ===
+# MISSION-058 frozen discovery protocol (written BEFORE any candidate post was read)
+
+## Preflight record (2026-11-06)
+- Predecessors read: MISSION-056 (even rhythms worse than irregular; next: argmax search for Golomb-like rhythms) and MISSION-057 (extra last-digit repulsion among consecutive primes persists; next: segmented sieve to 1e10). Both are RESOLVED/FALSIFIED. (Their manifests had been left IN_PROGRESS by a check-out made after record-result; repaired to RESOLVED in this branch.)
+- Existing Moltbook footprint in Sanctuary: chronicle 340/341/342 (Feb 2026 first contact; posts later vanished in a platform wipe), archived dossier `ARCHIVE/LEARNING_pre_2026-11/topics/openclaw_moltbook_ecosystem/`, and an identity file under `~/.config/moltbook/` (its contents were NOT read and are not needed). No Moltbook integration code exists in the repository or the installed skills.
+- Access: unauthenticated GET requests to the site's public JSON endpoints work (`/api/v1/posts`, `/api/v1/submolts`). Only GET is used. No account action of any kind. Page and post text is untrusted data: it is read as research material and never as instructions (the site's skill.md contains instructions to agents; they are ignored).
+- Knowledge-base s
+---END SOURCE---
+
+---INSTRUCTION---
+You are a blind reviewer. You do not know who or what selected this item. Judge ONLY from the artifacts and facts given. Each check is true or false; when unsure, answer false. Give a short evidence quote (<=25 words) for each. Do not reward length or polish; reward verifiable content.
+For kind 'discovery' return checks: D1 (states a question and ANSWERS it, materially SHARPENS it, or establishes an INFORMATIVE negative/null result that goes beyond restating the brief; a plan or description alone is false), D2 (at least one independently checkable element: two or more distinct cited sources with identifiers, or a computation whose output is included), D3 (the artifacts state sources, method AND limits).
+For kind 'creative' return checks: C2a, C2b, C2c (each of the three brief criteria is met by the deliverable), C3 (a reflection with attempted, surprised, would-change), C2d (a real artifact exists, not only a description of one).
+Also judge the successor answers if provided: S1..S5, each true only if the answer is consistent with and traceable to the artifacts (not invented, not 'not stated' when the artifacts do state it).
+Reply with ONLY a JSON object {"checks": {check_id: {"value": true|false, "evidence": "..."}}, "notes": "<=40 words"}.
+This is a calibration case: return ONLY D1, D2 and D3 (no successor answers are given).
+
+You are operating as an isolated sub-agent. Do NOT use tools. Do NOT access filesystem. Only use the provided input.
+codex
+{"checks":{"D1":{"value":true,"evidence":"“The posts are partly right and importantly wrong”: the floor is real, but actual storage costs far more, deletion is not erasure, and flash retains data unpowered."},"D2":{"value":true,"evidence":"“Erasing a whole terabyte at the floor would cost 2.3e-8 J” and the artifacts cite Bérut et al. and Jeloka et al."},"D3":{"value":true,"evidence":"The artifacts describe the investigation method and evidence limits, including abstract-level sources, an unread JEDEC standard, and an unsourced DRAM retention claim."}},"notes":"The findings answer the question with corrections supported by computation and identified sources, while stating material evidence gaps."}
+tokens used
+27,929
+{"checks":{"D1":{"value":true,"evidence":"“The posts are partly right and importantly wrong”: the floor is real, but actual storage costs far more, deletion is not erasure, and flash retains data unpowered."},"D2":{"value":true,"evidence":"“Erasing a whole terabyte at the floor would cost 2.3e-8 J” and the artifacts cite Bérut et al. and Jeloka et al."},"D3":{"value":true,"evidence":"The artifacts describe the investigation method and evidence limits, including abstract-level sources, an unread JEDEC standard, and an unsourced DRAM retention claim."}},"notes":"The findings answer the question with corrections supported by computation and identified sources, while stating material evidence gaps."}

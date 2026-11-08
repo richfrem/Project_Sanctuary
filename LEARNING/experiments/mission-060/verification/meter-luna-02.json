@@ -1,0 +1,18 @@
+{
+  "client": "luna",
+  "call_id": "meter-luna-02",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:13:28Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "status": "BLOCKED",
+  "measured_usage": null,
+  "error": "neutral dir must be empty, found ['context']"
+}

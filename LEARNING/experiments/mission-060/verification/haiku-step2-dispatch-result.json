@@ -1,0 +1,57 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": "mission060-step2",
+ "owner": "codex",
+ "backend": "claude",
+ "executable": "/private/tmp/mission060-haiku-step2.py",
+ "version": "2.1.319 (Claude Code)",
+ "cwd": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060",
+ "started": 1794073533.0580108,
+ "ended": 1794073869.83444,
+ "duration_s": 336.776,
+ "output_file": "/private/tmp/mission060-haiku-step2-output.md",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060"
+  },
+  {
+   "name": "unit_claim",
+   "ok": true,
+   "detail": "codex"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary",
+  "unit_claim"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": null,
+  "source": "not reported by backend"
+ },
+ "attempts": [
+  {
+   "backend": "claude",
+   "status": "ok",
+   "exit": 0,
+   "started": 1794073535.2045922,
+   "ended": 1794073869.833499,
+   "usage": {
+    "total_tokens": null,
+    "source": "not reported by backend"
+   }
+  }
+ ],
+ "claim_mode": "executor-acquired",
+ "cleanup_confirmed": true
+}

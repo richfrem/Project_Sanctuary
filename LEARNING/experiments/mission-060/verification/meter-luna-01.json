@@ -1,0 +1,28 @@
+{
+  "client": "luna",
+  "call_id": "meter-luna-01",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:12:17Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "status": "FAIL",
+  "measured_usage": {
+    "requests": 1,
+    "overhead": 21715,
+    "additional_tokens": 8,
+    "accumulated_input": 21715,
+    "output_tokens": 8,
+    "last_context": 21715,
+    "transcript": "/Users/richardfremmerlid/.codex/sessions/2026/11/07/rollout-2026-11-07T00-12-22-01a1b4d9-e8e0-77d0-9887-f0030f3b219b.jsonl"
+  },
+  "response_matches": false,
+  "usage_valid": true,
+  "transcript_sha256": "e323e941c6175e89b9cb6ccd4ede1a4204f5b5df4f1da2b38f6d06cb74236247"
+}

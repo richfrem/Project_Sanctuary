@@ -1,0 +1,28 @@
+{
+  "client": "flash",
+  "call_id": "meter-flash-03",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:11:46Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "status": "PASS",
+  "measured_usage": {
+    "requests": 2,
+    "overhead": 12891,
+    "additional_tokens": 543,
+    "accumulated_input": 26149,
+    "output_tokens": 176,
+    "last_context": 13258,
+    "transcript": "/Users/richardfremmerlid/.gemini/antigravity-cli/brain/03460368-e4e5-4107-ae50-fea3e8723bfb/.system_generated/logs/transcript_full.jsonl"
+  },
+  "response_matches": true,
+  "usage_valid": true,
+  "transcript_sha256": "25df5883a65f67eb0764c0035a76b49a46e8e5d3681ec4bf285e0c9126141e5e"
+}

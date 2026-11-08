@@ -1,0 +1,30 @@
+{
+  "client": "sonnet",
+  "call_id": "meter-sonnet-01",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:14:39Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "contained": false,
+  "status": "BLOCKED",
+  "measured_usage": {
+    "requests": 1,
+    "overhead": 24100,
+    "additional_tokens": 8,
+    "accumulated_input": 24100,
+    "output_tokens": 8,
+    "last_context": 24100,
+    "transcript": "/Users/richardfremmerlid/.claude/projects/-private-tmp-study060-neutral/e7fb6709-2719-4e31-b728-2cb998ebf37e.jsonl"
+  },
+  "response_matches": false,
+  "usage_valid": true,
+  "transcript_sha256": "935fc7f8c7a11cd34bc1e559c390dca0bed5b4c6cba3891b668a58c6e50ff7fe",
+  "error": "neutral dir must be empty, found ['context']"
+}

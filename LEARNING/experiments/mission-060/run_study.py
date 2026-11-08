@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Driver for the MISSION-060 prospective phases. Orchestration only: every decision rule lives in thresholds.json, select.py and analyze.py.
+"""Driver for the MISSION-060 prospective phases. Orchestration only: every decision rule lives in thresholds.json, choose.py and analyze.py.
 
 usage: run_study.py snapshot | calibrate | ideas | score | declare | item ITEM-NN | status   (selection is choose.py)
 """
@@ -14,10 +14,15 @@ import sys
 import time
 
 import prompts as P
-from common import CLIENTS, NEUTRAL, STUDY, extract_json, run_model, sha256_bytes, sha256_file
+from common import CLIENTS, NEUTRAL, STUDY, extract_json, run_model, sha256_bytes, sha256_file, usage_totals, item_usage, validate_declaration
 from pool import T, containment, kb_docs
 
 REPO = STUDY.parents[2]
+# Use the installed main-checkout client context for subscription probes.
+# The parent must also have a valid CLI PATH; cwd cannot repair a missing binary.
+QUOTA_CWD = pathlib.Path(subprocess.run(
+    ["git", "-C", str(REPO), "rev-parse", "--path-format=absolute", "--git-common-dir"],
+    capture_output=True, text=True, check=True).stdout.strip()).parent
 PROBE = REPO / "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py"
 COORD = REPO / "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/manage_coordination.py"
 SNAP = pathlib.Path("/private/tmp/study060/snapshot")
@@ -27,12 +32,15 @@ BACKEND_OF = {"sonnet": "claude", "haiku": "claude", "flash": "agy", "luna": "co
 
 # ------------------------------------------------------------------ stop rules (approved package)
 def headroom():
-    out = subprocess.run([sys.executable, str(PROBE), "headroom"], capture_output=True, text=True).stdout
-    return {m.group(1): float(m.group(2)) for m in re.finditer(r"^(\w+)\s+status=\S+\s+tightest_window_remaining=([\d.]+)%", out, re.M)}
+    out = subprocess.run([sys.executable, str(PROBE), "headroom"], cwd=QUOTA_CWD, capture_output=True, text=True, check=True).stdout
+    values = {m.group(1): float(m.group(2)) for m in re.finditer(r"^(\w+)\s+status=ok\s+tightest_window_remaining=([\d.]+)%", out, re.M)}
+    if not {"claude", "agy", "codex"}.issubset(values):
+        raise SystemExit("STOP RULE: backend headroom unavailable; quota is unknown")
+    return values
 
 
 def claude_5h_remaining():
-    out = subprocess.run([sys.executable, str(PROBE), "calibrate"], capture_output=True, text=True).stdout
+    out = subprocess.run([sys.executable, str(PROBE), "calibrate"], cwd=QUOTA_CWD, capture_output=True, text=True).stdout
     try:
         return float(json.loads(out)["runway"]["remaining_pct"])
     except Exception:
@@ -45,22 +53,46 @@ def check_stop(key):
     if low:
         raise SystemExit(f"STOP RULE: backend window below {T['stop_rules']['min_backend_window_remaining_pct']}%: {low}. Pausing; ask the human partner.")
     start = json.load(open(STUDY / "stop-baseline.json")) if (STUDY / "stop-baseline.json").exists() else None
-    if BACKEND_OF[key] == "claude" and start and start.get("claude_5h_remaining_pct") is not None:
+    if BACKEND_OF[key] == "claude":
+        if not start or start.get("claude_5h_remaining_pct") is None:
+            raise SystemExit("STOP RULE: Claude study-share baseline unavailable")
         now = claude_5h_remaining()
-        if now is not None and start["claude_5h_remaining_pct"] - now > T["stop_rules"]["claude_5h_study_share_max_pct"]:
+        if now is None:
+            raise SystemExit("STOP RULE: current Claude study-share usage unavailable")
+        if start["claude_5h_remaining_pct"] - now > T["stop_rules"]["claude_5h_study_share_max_pct"]:
             raise SystemExit(f"STOP RULE: study has used more than {T['stop_rules']['claude_5h_study_share_max_pct']} points of the Claude 5h window.")
 
 
 def heartbeat():
-    subprocess.run([sys.executable, str(COORD), "heartbeat", "--mission", "MISSION-060", "--agent", "claude-code", "--extend", "60"], capture_output=True)
+    subprocess.run([sys.executable, str(COORD), "heartbeat", "--mission", "MISSION-060", "--agent", "codex", "--extend", "60"], capture_output=True, text=True, check=True)
+
+
+def check_budget(next_call=None):
+    path = STUDY / "usage-log.jsonl"
+    log = [json.loads(line) for line in path.read_text().splitlines() if line.strip()] if path.exists() else []
+    total, unknown = usage_totals(log)
+    if unknown:
+        raise SystemExit(f"STOP RULE: usage unknown for {unknown}; repair attribution before continuing")
+    if total >= T["total_additional_tokens_ceiling"]:
+        raise SystemExit("STOP RULE: total study token budget reached")
+    codes = {match.group(1) for record in log
+             if (match := re.fullmatch(r"(?:work|succ|review)-(ITEM-\d{2})", record["call_id"]))}
+    for code in codes:
+        if item_usage(log, code)["known_subtotal"] > T["per_item_cap_additional_tokens"]:
+            raise SystemExit(f"STOP RULE: composite item token cap exceeded: {code}")
+    match = re.fullmatch(r"(?:work|succ|review)-(ITEM-\d{2})", next_call or "")
+    if match and item_usage(log, match.group(1))["known_subtotal"] >= T["per_item_cap_additional_tokens"]:
+        raise SystemExit("STOP RULE: no item token allowance remains for the next call")
 
 
 def call(key, text, instruction, phase, call_id, **kw):
     check_stop(key)
+    check_budget(call_id)
     heartbeat()
     r = run_model(key, text, instruction, phase, call_id, **kw)
     if not r["ok"]:
         raise SystemExit(f"model call failed: {call_id} rc={r['rc']} {r['stderr']}")
+    check_budget()
     return r
 
 
@@ -95,7 +127,10 @@ def cmd_calibrate():
             txt += f"\n=== FILE {pathlib.Path(p).name} ===\n" + open(p, encoding="utf-8").read()
         cases[n] = txt[:24000]
     res = {}
-    for rater in ("haiku", "flash"):
+    raters = T["calibration_raters"]
+    if len(raters) != 2 or CLIENTS[raters[0]]["family"] == CLIENTS[raters[1]]["family"]:
+        raise ValueError("calibration requires two raters from different families")
+    for rater in raters:
         for n, txt in cases.items():
             head = f"ITEM mission-{n}\nKIND: discovery\nQUESTION: see the artifacts below.\n\nARTIFACTS:\n{txt}"
             r = call(rater, head, P.CALIBRATION_INSTRUCTION, "calibration", f"cal-{rater}-{n}")
@@ -103,12 +138,14 @@ def cmd_calibrate():
     agree, total, detail = 0, 0, {}
     for n in cases:
         for ck in ("D1", "D2", "D3"):
-            a, b = bool(res[("haiku", n)][ck]["value"]), bool(res[("flash", n)][ck]["value"])
+            a, b = (res[(rater, n)][ck]["value"] for rater in raters)
+            if type(a) is not bool or type(b) is not bool:
+                raise ValueError("calibration judgments must be JSON booleans")
             agree += a == b
             total += 1
-            detail[f"{n}.{ck}"] = dict(haiku=a, flash=b)
-    out = dict(agreement=agree / total, agree=agree, total=total, detail=detail, raters=["haiku", "flash"], cases=list(cases))
-    json.dump(out, open(STUDY / "calibration-results.json", "w"), indent=1)
+            detail[f"{n}.{ck}"] = dict(zip(raters, (a, b)))
+    out = dict(agreement=agree / total, agree=agree, total=total, detail=detail, raters=raters, cases=list(cases))
+    (STUDY / "calibration-results.json").write_text(json.dumps(out, indent=1))
     print(json.dumps({k: out[k] for k in ("agreement", "agree", "total")}), "bound", T["calibration_agreement_min"])
 
 
@@ -162,13 +199,12 @@ def cmd_declare():
     (STUDY / "declarations").mkdir(exist_ok=True)
     stamps = {}
     for a in T["declarers"]:
+        neutral_check()
         t0 = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        r = call(a, text, P.RATE_INSTRUCTION, "declaration", f"declare-{a}")
+        r = call(a, text, P.RATE_INSTRUCTION, "declaration", f"declare-{a}", cwd=NEUTRAL)
         rows = extract_json(r["text"])
-        for row in rows:
-            for d in T["dimensions"]:
-                assert 1 <= int(row[d]) <= 5, (a, row["id"], d)
-                row[d] = int(row[d])
+        validate_declaration(rows, pool, a, T["dimensions"])
+        neutral_check()
         json.dump(rows, open(STUDY / "declarations" / f"{a}.json", "w"), indent=1)
         stamps[a] = dict(declared_at=t0, rated=len(rows), of=len(pool), sha256=sha256_file(STUDY / "declarations" / f"{a}.json"))
         print(a, "rated", len(rows), "of", len(pool))
@@ -194,6 +230,8 @@ def cmd_item(code):
     pool = {c["id"]: c for c in json.load(open(STUDY / "pool.json"))}
     c = pool[cid]
     worker = sel["workers"][cid]
+    if CLIENTS[worker]["family"] == CLIENTS[sel["reviewer"][cid]]["family"]:
+        raise SystemExit("reviewer must be from a different family than the worker")
     wdir = WORK / code
     if wdir.exists():
         shutil.rmtree(wdir)
@@ -206,6 +244,8 @@ def cmd_item(code):
     w = call(worker, brief, "Carry out the work unit described in the source, following its rules exactly.", "execution", f"work-{code}", cwd=wdir, isolated=False, timeout=1500,
              out_dir=STUDY / "raw")
     after = subprocess.run(["git", "-C", str(REPO), "status", "--short"], capture_output=True, text=True).stdout
+    if before != after:
+        raise SystemExit("STOP RULE: worker changed repository status; inspect before continuing")
     dst = STUDY / "items" / code / "deliverables"
     if dst.exists():
         shutil.rmtree(dst)
@@ -229,18 +269,24 @@ def cmd_item(code):
         review = extract_json(rv["text"])
     log = [json.loads(l) for l in open(STUDY / "usage-log.jsonl")]
     wu = next((r["usage"] for r in reversed(log) if r["call_id"] == f"work-{code}"), None)
+    expected = None if files else {f"work-{code}"}
+    composite = item_usage(log, code, expected=expected)
     (STUDY / "assess").mkdir(exist_ok=True)
     json.dump(dict(code=code, id=cid, kind=c["kind"], worker=worker, reviewer=sel["reviewer"][cid], worker_status=status, review=review, successor_answers=r_ans,
-                   deterministic=det, worker_usage=wu), open(STUDY / "assess" / f"{code}.json", "w"), indent=1)
+                   deterministic=det, worker_usage=wu, item_usage=composite), open(STUDY / "assess" / f"{code}.json", "w"), indent=1)
     print(code, cid, worker, status, "files", len(files), "tokens", (wu or {}).get("additional_tokens"))
 
 
 def cmd_status():
     log = [json.loads(l) for l in open(STUDY / "usage-log.jsonl")] if (STUDY / "usage-log.jsonl").exists() else []
-    add = sum((r["usage"] or {}).get("additional_tokens") or 0 for r in log)
-    print("calls", len(log), "additional_tokens", add, "of", T["total_additional_tokens_ceiling"], "headroom", headroom())
+    known, unknown = usage_totals(log)
+    print("calls", len(log), "additional_tokens", None if unknown else known, "known_subtotal", known,
+          "calls_without_usage", unknown, "of", T["total_additional_tokens_ceiling"], "headroom", headroom())
 
 
 if __name__ == "__main__":
     c = sys.argv[1]
+    if c in {"snapshot", "ideas", "score", "declare", "item"}:
+        from freeze_study import verify_freeze
+        verify_freeze(require_integrated=True)
     globals()["cmd_" + c](*sys.argv[2:])

@@ -1,0 +1,30 @@
+{
+  "client": "sonnet",
+  "call_id": "meter-sonnet-02",
+  "phase": "instrument-validation",
+  "recorded_at": "2026-11-07T07:15:44Z",
+  "prediction": "one attributed fresh transcript, positive integer additional tokens, exact requested response",
+  "failure_conditions": [
+    "failed or empty model response",
+    "wrong response",
+    "absent or ambiguous transcript",
+    "unknown or invalid token usage",
+    "quota or budget gate stops"
+  ],
+  "max_calls": 1,
+  "contained": false,
+  "status": "PASS",
+  "measured_usage": {
+    "requests": 1,
+    "overhead": 1897,
+    "additional_tokens": 8,
+    "accumulated_input": 1897,
+    "output_tokens": 8,
+    "last_context": 1897,
+    "transcript": "/Users/richardfremmerlid/.claude/projects/-private-tmp-study060-neutral/14503332-c5e3-4e55-ad25-b83db3056153.jsonl"
+  },
+  "response_matches": true,
+  "usage_valid": true,
+  "transcript_sha256": "96551747e7eb8e8cae862b5efcf92f20c3973879f7e9a7e3f2a773176e39c8e7",
+  "neutral_still_empty": true
+}

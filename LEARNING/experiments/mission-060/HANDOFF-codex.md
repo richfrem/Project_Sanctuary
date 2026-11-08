@@ -56,3 +56,32 @@ A recorded verdict (or an explicit UNASSESSED with the failed gate), results.jso
 
 ## 8. Dispatching other CLIs: use the `cli-agent` skill (added after Richard's note)
 `cli-agent` (`~/.claude/skills/cli-agent`, also installed for Codex and AGY; see AGENTS.md "Multi-Agent Orchestration") is how any agent launches a fresh session on another CLI; `common.py` and `run_study.py` already call its `run_agent.py`. Read its `SKILL.md` and `references/{codex,agy,claude}-cli-dispatch.md` before dispatching. Two limits to plan around: a Codex session runs in `workspace-write` with network disabled, so it cannot itself spawn `claude`/`agy`/`codex` unless Richard authorizes a wider sandbox (permission-bypass launches need explicit authorization and external containment); and the router cannot set Codex reasoning effort (use the `--executable` wrapper). If you are Codex, you may need Richard to run the pipeline commands from a Claude or plain shell session, or to authorize the wider sandbox; do not work around the sandbox.
+
+## 9. Local implementation update
+
+Current continuation: development calibration passed 9/9 with Flash/Luna and no
+rubric revision. The candidate protocol/freeze package is prepared (37 repository
+files, 31 runtime dependencies); public integration must still be verified before
+any held-out execution. See PROGRESS-HANDOFF.md for latest commit/PR status.
+Current wrappers are tracked claude_isolated.sh, codex_medium.sh and
+contained_agy.py, superseding the old /tmp Codex helper path above. Earlier
+not-started/uncalibrated descriptions are historical handoff context.
+
+Live step-by-step continuation record: `PROGRESS-HANDOFF.md`. Update it immediately
+after each completed step, including each prospective item, and before continuing.
+It records the worktree, branch, current delivery/lease state and next action for
+an AGY takeover if needed.
+
+Live verification subsequently completed: Flash/Luna/Sonnet metering and the
+actual contained Flash terminal canary passed. Ten development validation calls
+used 14,140 measured additional tokens, including failures/repairs. See the live
+handoff for new wrappers, source-token audit, containment scope and next action.
+No calibration, freeze or held-out phase has run.
+
+Richard subsequently authorized AGY Flash delegation and implementation of the
+patches. See `PATCH-NOTES.md` for the implemented Flash/Luna allocation, instrument
+repairs, 15 deterministic checks, and remaining metering/containment limitations.
+The earlier client configuration and unimplemented-defect descriptions above are
+historical baseline context. No study phase or freeze has run. Review the notes
+before continuing; retain the original phase order and quota rule. Preparation
+drafts are proposals, not authoritative protocol or calibration evidence.

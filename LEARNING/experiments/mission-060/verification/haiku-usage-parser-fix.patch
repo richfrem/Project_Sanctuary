@@ -1,0 +1,99 @@
+From c93f4b7ba1ee9cb2cf30438f8f68bc00155377df Mon Sep 17 00:00:00 2001
+From: Richard Fremmerlid <connect.richfrem@gmail.com>
+Date: Sat, 7 Nov 2026 10:49:37 -0700
+Subject: [PATCH] fix(evaluating-agent-outcomes): parse Claude session usage
+ without a reset suffix
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The shared parse_claude_usage required "· resets ..." after the percentage, so
+the CLI line "Current session: 0% used" parsed as unknown and quota status
+reported unparsed. The reset is now optional for both windows: the displayed
+percentage is kept and an absent reset is recorded as None, never imputed.
+
+Adds a reset-less fixture and regression test (33 tests pass; audit_skill
+--mode source PASS). Map-debt: DEBT-20261107-USAGE-RESETLESS-SESSION (RESOLVED).
+
+Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>
+---
+ .../scripts/usage_measure.py                        | 13 +++++++++----
+ .../tests/fixtures/claude_usage_resetless.txt       |  6 ++++++
+ .../tests/test_scoring_accounting.py                | 12 ++++++++++++
+ .../agent-orchestration/references/evolution-log.md |  1 +
+ 4 files changed, 28 insertions(+), 4 deletions(-)
+ create mode 100644 plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/fixtures/claude_usage_resetless.txt
+
+diff --git a/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/scripts/usage_measure.py b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/scripts/usage_measure.py
+index c9c12592..5403193a 100644
+--- a/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/scripts/usage_measure.py
++++ b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/scripts/usage_measure.py
+@@ -34,12 +34,17 @@ def parse_claude_usage(text: str) -> Dict[str, Any]:
+     """Parse headless `claude -p /usage` text into session (5-hour) and weekly percent used."""
+     out: Dict[str, Any] = {"session_pct_used": None, "session_resets": None,
+                            "week_pct_used": None, "week_resets": None}
+-    m = re.search(r"Current session:\s*(\d+)%\s*used\s*[·\-]\s*resets\s*(.+)", text)
++    # The reset suffix is optional: the CLI omits "· resets ..." for some windows (observed for
++    # "Current session: 0% used"). The displayed percentage is kept as displayed; an absent
++    # reset is recorded as None, never as a zero or an imputed value.
++    m = re.search(r"Current session:\s*(\d+)%\s*used(?:\s*[·\-]\s*resets\s*(.+))?", text)
+     if m:
+-        out["session_pct_used"], out["session_resets"] = int(m.group(1)), m.group(2).strip()
+-    m = re.search(r"Current week \(all models\):\s*(\d+)%\s*used\s*[·\-]\s*resets\s*(.+)", text)
++        out["session_pct_used"] = int(m.group(1))
++        out["session_resets"] = m.group(2).strip() if m.group(2) else None
++    m = re.search(r"Current week \(all models\):\s*(\d+)%\s*used(?:\s*[·\-]\s*resets\s*(.+))?", text)
+     if m:
+-        out["week_pct_used"], out["week_resets"] = int(m.group(1)), m.group(2).strip()
++        out["week_pct_used"] = int(m.group(1))
++        out["week_resets"] = m.group(2).strip() if m.group(2) else None
+     return out
+ 
+ 
+diff --git a/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/fixtures/claude_usage_resetless.txt b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/fixtures/claude_usage_resetless.txt
+new file mode 100644
+index 00000000..3b8c140a
+--- /dev/null
++++ b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/fixtures/claude_usage_resetless.txt
+@@ -0,0 +1,6 @@
++You are currently using your subscription to power your Claude Code usage
++
++Current session: 0% used
++Current week (all models): 65% used · resets Nov 9 at 9pm (America/Vancouver)
++
++What's contributing to your usage?
+diff --git a/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/test_scoring_accounting.py b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/test_scoring_accounting.py
+index 6c0fe163..03574c64 100644
+--- a/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/test_scoring_accounting.py
++++ b/plugins/agent-orchestration/.apm/skills/evaluating-agent-outcomes/tests/test_scoring_accounting.py
+@@ -73,6 +73,18 @@ class UsageMeasure(unittest.TestCase):
+         rows = um.parse_agy_usage(json.loads((FIX / "agy_usage.json").read_text()))
+         self.assertTrue(rows and all(0 <= x["remaining_pct"] <= 100 for x in rows))
+ 
++    def test_resetless_session_is_parsed_as_displayed_not_unparsed(self):
++        # Observed 2026-11-07: "Current session: 0% used" has no "· resets" suffix. The displayed value
++        # is parsed; the missing reset stays None, and absent text stays None (never imputed as zero).
++        r = um.parse_claude_usage((FIX / "claude_usage_resetless.txt").read_text())
++        self.assertEqual(r["session_pct_used"], 0)
++        self.assertIsNone(r["session_resets"])
++        self.assertEqual(r["week_pct_used"], 65)
++        self.assertEqual(r["week_resets"], "Nov 9 at 9pm (America/Vancouver)")
++        empty = um.parse_claude_usage("Current week (all models): 65% used")
++        self.assertIsNone(empty["session_pct_used"])
++        self.assertEqual(empty["week_pct_used"], 65)
++
+     def test_secrets_rejected_and_unknown_price_is_none_not_zero(self):
+         with self.assertRaises(ValueError): um.assert_no_secrets({"k": "sk-" + "a" * 20})
+         self.assertIsNone(um.cost_usd("absent", 1000, 1000, prices={}))
+diff --git a/plugins/agent-orchestration/references/evolution-log.md b/plugins/agent-orchestration/references/evolution-log.md
+index e886c0e9..ecc6d81b 100644
+--- a/plugins/agent-orchestration/references/evolution-log.md
++++ b/plugins/agent-orchestration/references/evolution-log.md
+@@ -23,3 +23,4 @@
+ | 2026-11-06 | Tier 1 | A real claude worker run through the loop recorded usage as unknown (the CLI text mode prints none), so token ceilings needed a reserve even though Claude records usage in its own transcripts. | work_loop attributes unknown claude usage from the existing supported source (usage_measure.claude_tokens_between over the worker cwd transcript dir and attempt window); concurrent sessions or missing transcripts leave it unknown; cache reads reported but not budgeted. | Verified with mocked transcripts and one live Haiku run window; no new tracker. |
+ | 2026-11-06 | Tier 2 | A real repair attempt failed to converge because repair notes said only "criterion A2 not met"; consecutive real attempts looked concurrent because the transcript window was padded by 1 s; the loop kept its own usage vocabulary next to the control plane's P02 measurement schema. | Failed command checks keep a bounded output tail and repair instructions carry criterion text plus that detail; attribution uses the exact window; every attempt exports P02 observations (validated against the control plane schema); reuse map for agent-agentic-os. | Convergence of repairs demonstrated separately (neutral-repo demo). |
+ | 2026-11-06 | Tier 1 | Real neutral-repo demo: a lesson was supplied but the worker obeyed the narrow instruction; the worker brief never contained the contract (scope/acceptance), so the instruction silently contradicted the acceptance set. Lesson candidates were empty for an attempt that finished ok but failed its criteria. | Worker brief now carries a bounded Assignment contract section (scope, acceptance texts, must-not-happen; criteria win within scope); candidates also derive from evaluations that left criteria unmet before a later acceptance. | Effect on lesson uptake measured in the demo (n=1). |
++| 2026-11-07 | Tier 1 | Shared Claude usage parser (usage_measure.parse_claude_usage) required a "· resets ..." suffix, so the displayed "Current session: 0% used" (no suffix) parsed as unknown and the Sanctuary quota gate reported unparsed. | Made the reset suffix optional for both windows; the displayed percentage is kept, an absent reset is recorded as None (never imputed). Added reset-less fixture and regression test (33 tests pass). | Fix forward + regression test | DEBT-20261107-USAGE-RESETLESS-SESSION (RESOLVED) |
+-- 
+2.51.0
+
