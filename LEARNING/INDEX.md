@@ -14,7 +14,7 @@
 | [`index.jsonl`](./index.jsonl) | Tier-1 machine index of the missions. **Generated** by `manage_backlog.py compile`; not the same file as this `INDEX.md`. | generated |
 | [`backlog.md`](./backlog.md) | Human view of the same ranking. **Generated.** | generated |
 | [`inbox.jsonl`](./inbox.jsonl) | Raw ideas awaiting promotion to missions (`manage_backlog.py capture`). | live |
-| [`research/`](./research/) | Self-directed research dossiers (17), each marked KEEP or HISTORICAL in [`research/README.md`](./research/README.md). Six are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. Formerly `topics/`. | mixed |
+| [`research/`](./research/) | Self-directed research dossiers (18), each marked KEEP or HISTORICAL in [`research/README.md`](./research/README.md). Seven are live (recent, or the evidence base of Protocol 126 / 131); the rest are background. Formerly `topics/`. | mixed |
 | [`README.md`](./README.md) | Pointer to this file. | - |
 
 Retired material (2025 security briefings, eight retired topic dossiers, two loose files) lives in [`ARCHIVE/LEARNING_pre_2026-11/`](../ARCHIVE/LEARNING_pre_2026-11/README.md), with a map of what moved and why.
