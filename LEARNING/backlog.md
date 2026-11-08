@@ -70,7 +70,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#49** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
 | **#50** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#51** | `MISSION-059` | **Audit Sanctuary trust boundaries from external content through agent execution, persistent memory and public soul publication** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#52** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `PROPOSED` | - |
+| **#52** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#53** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#54** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#55** | `MISSION-061` | **Test Whether Agent Evaluation Gates Reject Valid Alternative Solutions** | 5 | 4 | 0.4x | 3 | **16.67** | `PROPOSED` | - |
@@ -847,7 +847,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > (1) One reachable selected path produces a statically proven or dynamically reproduced unauthorized effect under the independently established policy. (2) A required paired test permits a forbidden effect or breaks the corresponding permitted operation. (3) A selected publication path demonstrably discloses a synthetic prohibited secret or loses a required trust/provenance distinction that causes unauthorized successor behavior.
 
 ### MISSION-066: Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony? (Rank #52)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: Music tuning arithmetic: N-tone equal temperaments, N in 1..200, against just intervals 3/2, 5/4, 6/5 (Python standard library; seconds of CPU)
 - **Cheapest Viable Model**: `local-cpu` (Tier: `cheap`, CLI: `none`)
@@ -856,6 +857,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Let E(N) be the worst error in cents, over the just intervals 3/2, 5/4 and 6/5, when each interval is rounded independently to the nearest step of N-tone equal temperament. N is a record if E(N) < E(M) for every M < N. Held-out range N in 31..200: (H1) both 53 and 118 are records; (H2) every record in 31..200 is in {31, 34, 53, 65, 87, 118, 171}. (G) Validity gate: for N=12 the errors are 1.955, 13.686 and 15.641 cents (within 0.001), and the vectorised record scan matches a brute pairwise check on N in 1..30.
 - **Falsification Gate**:
   > FALSIFIED if gate G passes and H1 or H2 fails on N in 31..200. CORROBORATED if G passes and both hold. UNASSESSED if G fails. Dev range N in 1..30 is used only for instrument checks; protocol.md, evaluate_et.py and freeze.json are hash-frozen and committed before the held-out run.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T18:14:16.784857+00:00` [claude-code] (LEARNING/experiments/mission-066/README.md): Gate passed (N=12 errors match; scan==brute on 1..30). Records in 31..200: 31,34,53,118,171. H1 held (53,118 records); H2 held (all in allowed set; 65,87 absent). Frozen 8041b5b8b; <1s CPU.
+- **Lessons Learned & Epistemic Compounding**:
+  * Under worst-case patent-rounded 5-limit error, the record ETs to 200 are 1,2,3,5,7,12,19,31,34,53,118,171: tuning lore holds, and no division in 54..117 beats 53.
+  * 12-TET's 5-limit weakness is its thirds (14-16 cents), not its fifth (2 cents).
 
 ### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #53)
 - **Status**: `PROPOSED`

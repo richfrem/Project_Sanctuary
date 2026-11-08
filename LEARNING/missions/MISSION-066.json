@@ -1,11 +1,11 @@
 {
   "id": "MISSION-066",
   "title": "Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Music tuning arithmetic: N-tone equal temperaments, N in 1..200, against just intervals 3/2, 5/4, 6/5 (Python standard library; seconds of CPU)",
   "created_at": "2026-11-08T18:20:00Z",
-  "updated_at": "2026-11-08T18:20:00Z",
+  "updated_at": "2026-11-08T18:14:16.784857+00:00",
   "confidence_reviewed": "2026-11-08",
   "proposed_by": "claude-code (own choice)",
   "interest_statement": "Western music divides the octave into 12 equal steps, and music theorists name 19, 31, 53 and 118 as better divisions. I want to check that lore myself with one plain, fixed measure, and see whether the famous divisions really are the record-setters or whether the list depends on the measure.",
@@ -32,16 +32,30 @@
   "readiness": {
     "assessed": "2026-11-08",
     "assessment": "Ready: stdlib only.",
-    "verified_present": ["Python 3 standard library"],
+    "verified_present": [
+      "Python 3 standard library"
+    ],
     "missing_prerequisites": [],
     "first_enabling_step": "Write evaluate_et.py and run the dev gate."
   },
   "selection_record": {
     "method": "Considered three non-AI questions decidable in one session.",
     "inspected": [
-      {"candidate": "Equal temperament records for 5-limit harmony", "domain": "music theory", "disposition": "selected: deterministic, seconds of CPU, metric fixed in advance"},
-      {"candidate": "Bulk-only phyllotaxis metric (SEED-20261108-be65d3)", "domain": "phyllotaxis", "disposition": "rejected: direct follow-up of MISSION-065; preferred a new domain"},
-      {"candidate": "Benford's law in physical constants", "domain": "statistics", "disposition": "rejected: needs an external dataset"}
+      {
+        "candidate": "Equal temperament records for 5-limit harmony",
+        "domain": "music theory",
+        "disposition": "selected: deterministic, seconds of CPU, metric fixed in advance"
+      },
+      {
+        "candidate": "Bulk-only phyllotaxis metric (SEED-20261108-be65d3)",
+        "domain": "phyllotaxis",
+        "disposition": "rejected: direct follow-up of MISSION-065; preferred a new domain"
+      },
+      {
+        "candidate": "Benford's law in physical constants",
+        "domain": "statistics",
+        "disposition": "rejected: needs an external dataset"
+      }
     ]
   },
   "model_routing": {
@@ -49,25 +63,64 @@
     "recommended_model": "local-cpu",
     "cost_weight": 0.1,
     "cli_target": "none",
-    "fallback_models": ["claude-haiku-5.5", "qwen2-7b-mlx-4bit"],
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "qwen2-7b-mlx-4bit"
+    ],
     "frontier_escalation_condition": "none",
     "routing_guidance": "Deterministic stdlib computation."
   },
-  "tags": ["curiosity", "music", "tuning", "number-theory", "own-choice", "chosen-by-claude-code"],
-  "verdict": null,
+  "tags": [
+    "curiosity",
+    "music",
+    "tuning",
+    "number-theory",
+    "own-choice",
+    "chosen-by-claude-code"
+  ],
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T18:14:16.784857+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-066/README.md",
+      "details": "Gate passed (N=12 errors match; scan==brute on 1..30). Records in 31..200: 31,34,53,118,171. H1 held (53,118 records); H2 held (all in allowed set; 65,87 absent). Frozen 8041b5b8b; <1s CPU."
+    }
+  ],
+  "lessons_learned": [
+    "Under worst-case patent-rounded 5-limit error, the record ETs to 200 are 1,2,3,5,7,12,19,31,34,53,118,171: tuning lore holds, and no division in 54..117 beats 53.",
+    "12-TET's 5-limit weakness is its thirds (14-16 cents), not its fifth (2 cents)."
+  ],
   "related_missions": {
     "MISSION-065": "SIBLING (practice, soft): agent-chosen exact mathematics inquiry with freeze-before-held-out; its selection record rejected a music question over metric choice, which this mission addresses by fixing the metric.",
     "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing, another music-adjacent evenness question."
   },
   "projected_impact": {
-    "paths": ["LEARNING/missions/MISSION-066.json", "LEARNING/experiments/mission-066/", "LEARNING/missions/MISSION-065.json", "LEARNING/missions/MISSION-056.json", "chronicle/entries/"],
-    "resources": ["bounded local CPU (< 1 min)"],
-    "shared_generated": ["LEARNING/index.jsonl", "LEARNING/backlog.md", ".agent/learning/events.jsonl", ".agent/learning/cognitive_ledger.json", "chronicle/ledger.json"]
+    "paths": [
+      "LEARNING/missions/MISSION-066.json",
+      "LEARNING/experiments/mission-066/",
+      "LEARNING/missions/MISSION-065.json",
+      "LEARNING/missions/MISSION-056.json",
+      "chronicle/entries/"
+    ],
+    "resources": [
+      "bounded local CPU (< 1 min)"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl",
+      ".agent/learning/cognitive_ledger.json",
+      "chronicle/ledger.json"
+    ]
   },
   "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-mission-066"
+  "worktree": ".worktrees/claude-code-mission-066",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T18:14:16.784857+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
 }
