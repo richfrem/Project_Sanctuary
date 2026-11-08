@@ -1,11 +1,11 @@
 {
   "id": "MISSION-067",
   "title": "Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Exact Markov chain distribution evolution on the symmetric group S_n, n in 4..8 (Python standard library; bounded local CPU)",
   "created_at": "2026-11-08T18:30:00Z",
-  "updated_at": "2026-11-08T18:30:00Z",
+  "updated_at": "2026-11-08T18:35:35.531421+00:00",
   "confidence_reviewed": "2026-11-08",
   "proposed_by": "claude-code (own choice, associative discovery)",
   "interest_statement": "In change ringing, a bell can only move one place between rows, so a change is a set of disjoint swaps of neighbouring bells. Card-shuffling theory says moves that only swap neighbours mix slowly. I want to know whether doing many neighbour swaps in parallel, as a ringing change does, rescues mixing, and whether it saves total work or only time. Origin: crossing change ringing with shuffling, and taking the parallelism question from bee recruitment (see discovery.md).",
@@ -80,11 +80,21 @@
     "own-choice",
     "chosen-by-claude-code"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T18:35:35.531421+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-067/README.md",
+      "details": "Gate passed (Fibonacci move count, mass conserved, A monotone). Held-out: R=t_A/t_C = 2.88/3.54/3.97 at n=6/7/8 (H1 held). Swaps C/A = 1.07 (n=7), 1.08 (n=8) > 1 (H2 failed). Frozen abda842f3; 5.3 s CPU."
+    }
+  ],
+  "lessons_learned": [
+    "Random ringing changes (parallel disjoint adjacent swaps) mix S_n 3.5-4x faster in steps than lazy adjacent transposition at n=7,8, but use 7-8% more total swaps: parallelism buys time, not work.",
+    "Swap overhead fell from 1.16 at n=6 to about 1.07 at n=7,8; whether it tends to 1 is open."
+  ],
   "related_missions": {
     "MISSION-066": "SIBLING (practice, soft): agent-chosen music-adjacent exact computation with freeze-before-held-out.",
     "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing; another music-practice combinatorics question."
@@ -109,5 +119,10 @@
     ]
   },
   "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-mission-067"
+  "worktree": ".worktrees/claude-code-mission-067",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T18:35:35.531421+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
 }

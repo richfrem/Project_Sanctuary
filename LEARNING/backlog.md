@@ -71,7 +71,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#50** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#51** | `MISSION-059` | **Audit Sanctuary trust boundaries from external content through agent execution, persistent memory and public soul publication** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#52** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
-| **#53** | `MISSION-067` | **Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?** | 1 | 2 | 0.1x | 1 | **20.0** | `PROPOSED` | - |
+| **#53** | `MISSION-067` | **Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `FALSIFIED` |
 | **#54** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#55** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#56** | `MISSION-061` | **Test Whether Agent Evaluation Gates Reject Valid Alternative Solutions** | 5 | 4 | 0.4x | 3 | **16.67** | `PROPOSED` | - |
@@ -865,7 +865,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * 12-TET's 5-limit weakness is its thirds (14-16 cents), not its fifth (2 cents).
 
 ### MISSION-067: Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel? (Rank #53)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
 - **Target Platform**: Exact Markov chain distribution evolution on the symmetric group S_n, n in 4..8 (Python standard library; bounded local CPU)
 - **Cheapest Viable Model**: `local-cpu` (Tier: `cheap`, CLI: `none`)
@@ -874,6 +875,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Chain C (random change): from rounds (identity), each step applies a uniformly random nonempty set of disjoint adjacent transpositions on n bells. Chain A (baseline): lazy random adjacent transposition (stay with prob 1/2, else swap a uniform adjacent pair). t_X(n) = least t with total variation distance to uniform on S_n <= 0.25. Held-out n in {7,8}: (H1) speedup R(n) = t_A(n)/t_C(n) is larger than R(6) for both n=7 and n=8, and R(8) > R(7); (H2) total expected swaps to mix, t_C(n)*s_C(n), is below t_A(n)*0.5 at both n=7 and n=8, where s_C(n) is the mean swaps per change (parallelism saves work, not just time). (G) Gate: exact evolution conserves probability within 1e-9; the number of nonempty changes equals F(n+1)-1 (Fibonacci); TV is non-increasing in t for chain A; dev n in {4,5,6}.
 - **Falsification Gate**:
   > FALSIFIED if gate G passes and H1 or H2 fails at held-out n. CORROBORATED if G passes and both hold. UNASSESSED if G fails or the held-out run does not finish within budget (t cap 5000 steps, 20 min CPU). Dev n in {4,5,6} only; protocol.md, evaluate_ringing.py and freeze.json are hash-frozen and committed before the held-out run.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T18:35:35.531421+00:00` [claude-code] (LEARNING/experiments/mission-067/README.md): Gate passed (Fibonacci move count, mass conserved, A monotone). Held-out: R=t_A/t_C = 2.88/3.54/3.97 at n=6/7/8 (H1 held). Swaps C/A = 1.07 (n=7), 1.08 (n=8) > 1 (H2 failed). Frozen abda842f3; 5.3 s CPU.
+- **Lessons Learned & Epistemic Compounding**:
+  * Random ringing changes (parallel disjoint adjacent swaps) mix S_n 3.5-4x faster in steps than lazy adjacent transposition at n=7,8, but use 7-8% more total swaps: parallelism buys time, not work.
+  * Swap overhead fell from 1.16 at n=6 to about 1.07 at n=7,8; whether it tends to 1 is open.
 
 ### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #54)
 - **Status**: `PROPOSED`
