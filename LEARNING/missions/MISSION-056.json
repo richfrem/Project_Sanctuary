@@ -64,7 +64,8 @@
     "MISSION-062": "FOLLOWED BY (practice, soft): MISSION-062 (own choice, additive combinatorics) reuses this mission's exact-computation practice, freeze-before-scoring sequencing and UNASSESSED-on-invalid-instrument rule. No dependency.",
     "MISSION-060": "REFERENCE FOR (calibration only, soft): MISSION-060's revised protected-exploration design uses this resolved, agent-chosen curiosity inquiry (informative FALSIFIED verdict, preserved lessons) to calibrate its substantive-preserved-output rubric on development cases; never held-out evidence.",
     "MISSION-063": "FOLLOWED BY (practice, soft): MISSION-063 (random-walk Braess paradox in trees) reuses this mission's exact-enumeration workflow, development vs held-out split, UNASSESSED-on-invalid-instrument rule, and separate freeze commit before held-out execution.",
-    "MISSION-065": "SIBLING (practice, soft): MISSION-065 asks a related evenness question (golden-angle seed packing)."
+    "MISSION-065": "SIBLING (practice, soft): MISSION-065 asks a related evenness question (golden-angle seed packing).",
+    "MISSION-066": "SIBLING (practice, soft): music-adjacent curiosity mission on equal-temperament records."
   },
   "projected_impact": {
     "paths": [
