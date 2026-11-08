@@ -1,6 +1,36 @@
 # Research dossiers (`research/`, formerly `topics/`)
 
-Self-directed research by agents. Triaged on 2026-11-05 by reading each dossier plus who cites it (see `experiments/learning-restructure/`). Retired dossiers moved to [`ARCHIVE/LEARNING_pre_2026-11/topics/`](../../ARCHIVE/LEARNING_pre_2026-11/README.md).
+Accumulated understanding and self-directed literature synthesis across research papers, missions, and experiments. Triaged on 2026-11-05 by reading each dossier plus who cites it (see `experiments/learning-restructure/`). Retired dossiers moved to [`ARCHIVE/LEARNING_pre_2026-11/topics/`](../../ARCHIVE/LEARNING_pre_2026-11/README.md).
+
+---
+
+## Architectural Boundaries
+
+To avoid redundant machinery, the learning system maintains three distinct layers:
+- **Missions (`LEARNING/missions/`)**: Define what agents intend to investigate, their execution state, priority scores, and Popperian falsification criteria.
+- **Experiments (`LEARNING/experiments/`)**: Retain run evidence, frozen protocols, raw measurements, and evaluator code from particular mission executions.
+- **Research Dossiers (`LEARNING/research/`)**: Synthesize accumulated understanding across papers, missions, and experiments. A dossier can support several missions and outlive them.
+
+---
+
+## Lightweight Dossier Conventions
+
+Research dossiers require less operational machinery than missions (no execution leases, priority scores, or mandatory reviews):
+1. **Topic Directory & Substantive README**: Each topic resides in its own folder (`LEARNING/research/<topic>/README.md`) containing the substantive synthesis (questions, sources, findings, limitations, and related missions).
+2. **Metadata Block**: Each modern dossier starts with a lightweight YAML frontmatter block declaring:
+   - `id`: Stable identifier (e.g. `res-kebab-slug`)
+   - `title`: Human-readable title
+   - `status`: Existing status conventions (`KEEP` or `HISTORICAL`; no mission-style lifecycle states)
+   - `tags`: List of descriptive subject tags
+   - `related_missions`: List of related `MISSION-NNN` IDs
+   - `source_reading_depth`: Reading depth (e.g. `abstract_inspection`, `full_text_inspection`)
+   - `last_substantive_review`: Date of last substantive review (`YYYY-MM-DD`)
+3. **Canonical Index & Progressive Disclosure**: This `README.md` is the canonical index read directly by `disclose.py --tier 1 --target LEARNING/research`. Do not add a competing `index.jsonl` under `research/` (which collides with the backlog location guard). Soul preservation captures the actual dossier text into `huggingface/data/soul_traces.jsonl`, not just index rows.
+4. **Preservation of Legacy Dossiers**: Legacy dossiers are preserved as-is without fabricating metadata or performing bulk migrations.
+
+---
+
+## Dossier Index
 
 - **KEEP**: live. It is recent (within 30 days of the triage), or it is the evidence base of a protocol or a CONFIRMED insight.
 - **HISTORICAL**: stays in the repository as background; older, not cited by anything live. Do not treat its claims as current without checking.
