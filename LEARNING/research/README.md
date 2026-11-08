@@ -13,6 +13,7 @@ Self-directed research by agents. Triaged on 2026-11-05 by reading each dossier 
 | `autonomous_agent_platforms` | KEEP | 2026-11-02 | Cited by `context/memory.md`; cross-provider routing dossier. |
 | `drq_recursive_self_improvement` | KEEP | 2026-01 | Evidence base of Protocol 131 (based on DRQ). |
 | `physics_of_forgetting` | KEEP | 2026-11-06 | MISSION-058: physical cost of remembering and forgetting (Landauer floor vs real storage energy, deletion is not erasure, flash retention); findings, evidence classes and gaps. |
+| `network_connectivity_and_neural_information_flow` | KEEP | 2026-11-08 | Literature connection from MISSION-063/MISSION-064 on when graph edge additions help vs harm information flow (over-squashing, oversmoothing, curvature bottlenecks, and random-walk metrics). |
 | `quantum_error_correction` | KEEP | 2025-12-29 | Evidence base of PROPOSED Protocol 126 (QEC-inspired robustness). |
 | `agent-skills-open-standard` | HISTORICAL | 2026-02-11 | Skills as an open standard; superseded by the built skills. |
 | `agentic_paradigms_attention` | HISTORICAL | 2025-12-23 | Agentic attention and Promise Theory synthesis. |
