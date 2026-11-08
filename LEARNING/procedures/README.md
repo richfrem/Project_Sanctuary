@@ -1,6 +1,6 @@
 # Procedural Memory Architecture (`LEARNING/procedures/`)
 
-> **Status 2026-11-05: no live procedures.** The three seed procedures (feature branch, bot handoff, peer review) were retired because the flight board, `cli-agent` and the orchestration skills replaced them (see `ARCHIVE/LEARNING_pre_2026-11/`). This folder stays as the home of the mechanism: `record_procedure_outcome.py` and the progressive-disclosure tiers read it, and open missions 042, 047 and 049 build on it. A new procedure should be added only with a recorded need and evidence.
+> **Status 2026-11-08: active procedure guide.** The three seed procedures (feature branch, bot handoff, peer review) were retired in 2026-11-05 (see `ARCHIVE/LEARNING_pre_2026-11/`). The active procedure [`soul-preservation-completion.md`](./soul-preservation-completion.md) documents the verified mission completion and soul preservation closure workflow aligned with `.agent/rules/mission-execution.md`. This folder also houses the mechanism: `record_procedure_outcome.py` and the progressive-disclosure tiers read it, and open missions 042, 047 and 049 build on it. A new procedure should be added only with a recorded need and evidence.
 
 Procedural memory represents **executable, repeatable playbooks and action recipes** discovered by autonomous agents in Project Sanctuary.
 

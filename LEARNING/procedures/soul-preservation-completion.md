@@ -9,7 +9,7 @@ or transport. Deterministic fixtures test this prediction; verdicts remain indep
 
 ## Verified behavior
 
-`record-result` saves the final disposition and obligation together. After sources are
+`record-result` saves the final disposition and obligation together for completed evaluations (`CORROBORATED`, `FALSIFIED`, or `ABANDONED`). Interrupted or unassessed closeouts preserve `"verdict": null` without manufacturing a verdict. After sources are
 integrated, run `merge_prep.py regenerate` in a checkout containing their published
 commits (normally updated main). It runs the existing incremental export and validation.
 A feature checkout whose artifact commits were squash-merged may need a fresh branch
@@ -27,6 +27,14 @@ are atomic; a shared OS lock serializes supported local writers. Local status li
 ignored coordination state and is reconstructed from tracked obligations and export hashes.
 Export-only/receipt commits do not stale learning. Arbitrary external merges are detected
 at startup and by staleness checks, rather than intercepted.
+
+## Protocol & Rule Alignment (2026-11-08)
+
+Aligned with `.agent/rules/mission-execution.md` (ratified 2026-11-08) and `coverage.md`:
+1. **Separation of Scientific Outcome and Delivery**: The empirical verdict (`record-result` for completed evaluations, or `verdict: null` with `UNASSESSED` closeout note) is distinct from engineering delivery (PR merge) and preservation state (`soul_coverage.py check`).
+2. **Check-In Before Capture Ordering**: `manage_coordination.py checkin` appends to the feature branch's tracked `.agent/learning/events.jsonl`. Commit the final check-in on the feature branch and merge it to `origin/main` before running `merge_prep.py regenerate` / `soul_coverage.py closure`, so final learning events are included in the capture.
+3. **Non-Recursive Export Publication**: Publish the resulting export (`huggingface/`) and sync receipt (`.agent/learning/soul_sync_receipts.jsonl`) in a scoped follow-up PR without appending another check-in that would re-dirty watched sources.
+4. **Remote Verification**: Verify both remote dataset and coverage manifest SHA-256 hashes via `sync_soul_dataset.py` before claiming `SOUL PERSISTED`. Local capture alone never grants remote authority; startup observes read-only while capture runs at closure.
 
 ## Bootstrap hook friction
 
