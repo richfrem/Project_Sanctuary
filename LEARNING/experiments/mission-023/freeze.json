@@ -1,0 +1,12 @@
+{
+  "frozen_at": "2026-11-08",
+  "selected": {
+    "draft": "1.5B",
+    "k": 2
+  },
+  "sha256": {
+    "protocol.md": "b9036810ff1e56398255dc746e0b6f5832f8f9db3a7aaf910b6dbb84f3123756",
+    "bench_spec.py": "b1a0918972800adf4075d11da05478b0257d2d6fa3db6c779c4480d0be385f28",
+    "dev_results.json": "db07a923df8c8505cd168939f8939cedbd2fcba0a2ab7017a2faa2e6dd9640ae"
+  }
+}
