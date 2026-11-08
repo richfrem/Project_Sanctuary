@@ -1,9 +1,9 @@
 {
- "base_commit": "3b99d4bbbf2ca28d0da230891fef562d1b54471d",
- "dataset_records": 1387,
+ "base_commit": "1c526e9942e1816078dd010809b1457cf1a7a859",
+ "dataset_records": 1388,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T15:57:55Z",
+ "generated_at": "2026-11-08T16:04:18Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,10 +54,11 @@
   },
   {
    "action": {
+    "added": 1,
     "unchanged": 10,
     "updated": 2
    },
-   "bytes": 147196,
+   "bytes": 147805,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -69,6 +70,7 @@
     "events__MISSION_RESOLVED__001",
     "events__CHECKIN__001",
     "events__CHECKIN__002",
+    "events__CHECKIN__003",
     "events__FAILURE_REPAIR__001",
     "events__intervention__001",
     "events__repair__001",
@@ -81,25 +83,17 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "2605a65b3f3eaf53d5af2cefc859d5357528583496017c0557b45dce82736492",
-    "2639229d6557aef86a5093e40cf46b6af4e4a80d518059883c7e59287b1db0c5",
-    "f3486671c877d22c5674bde8a91213cee5589a9db596e5e1db790590429bda06",
+    "fa01f6cfb7692d80c42e17a933a857844911273bbc638c683b02c8aab7ba6d5c",
+    "726e3bc557f2be84669c8a7859c9ceecb96052ad53417f7c6ee138e2241abdae",
+    "1b8d92ae2488c001aec9757a511d9fe9a77e70d030e51c9c345a2a96989abf5c",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "0b15dc1cb1fa141ccaea9ac23d7be82fef08388831435e53b0dd9825e120c725",
+   "source_sha256": "4dd4f2a4c4c9e34da25921699894f6f1fa198fa57ca4ce422ded802b7cdbe622",
    "status": "included"
-  },
-  {
-   "bytes": 7145,
-   "category": "transient_state",
-   "path": ".agent/learning/guardian_boot_digest.md",
-   "reason": "regenerated or per-session operational state with no durable learning content",
-   "required": false,
-   "source_sha256": "fd26320cefd11f43e751310c1657bb7c2e0efffcc8d86f0c3e456695239bdfc0",
-   "status": "excluded"
   },
   {
    "bytes": 1164,
@@ -128,12 +122,12 @@
    "status": "included"
   },
   {
-   "bytes": 5112,
+   "bytes": 5680,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "7bec8af92379020831c44394a36b6d9d890c098fa3608195a92bb2755f08ce4d",
+   "source_sha256": "24438cbf277659c23188991fbdf5a2649fcf98a50613f0d6b6d2b69db2670d1d",
    "status": "excluded"
   },
   {
@@ -39568,8 +39562,8 @@
     "required": false
    },
    "transient_state": {
-    "discovered": 3,
-    "excluded": 3,
+    "discovered": 2,
+    "excluded": 2,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
