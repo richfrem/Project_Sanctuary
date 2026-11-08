@@ -34,7 +34,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#13** | `MISSION-026` | **Decentralized Multi-Agent Concurrency Control: Git Worktree Isolation & Optimistic File Lease Protocol** | 5 | 4 | 0.05x | 2 | **200.0** | `RESOLVED` | `CORROBORATED` |
 | **#14** | `MISSION-029` | **Cold-Start Cost vs Memory Reclamation: Idle-Reap Policy for the Local MLX Server** | 3 | 3 | 0.05x | 1 | **180.0** | `RESOLVED` | `CORROBORATED` |
 | **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `RESOLVED` | `CORROBORATED` |
-| **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `IN_PROGRESS` | - |
+| **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `RESOLVED` | `ABANDONED` |
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
 | **#18** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
 | **#19** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
@@ -384,7 +384,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Codex can write a passing test file from a spec, but extraction of its output needs care (log lines leak into captured output).
 
 ### MISSION-017: Local SSD Space Reclamation & External Storage Archive Pipeline (Rank #16)
-- **Status**: `IN_PROGRESS`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `ABANDONED`
 - **Execution Surface**: `local`
 - **Target Platform**: macOS M1 (APFS / External USB-C Storage)
 - **Cheapest Viable Model**: `local-shell` (Tier: `free-local`, CLI: `bash / zsh`)
@@ -393,6 +394,11 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Automating the identification of cold historical artifacts, legacy package caches, and oversized model checkpoints, paired with an external drive migration runbook, will reclaim >= 40 GiB on the 16GB M1 MacBook Pro internal drive without breaking git continuity or agent skill discovery.
 - **Falsification Gate**:
   > Archive procedure breaks active APM skill symlinks, deletes unarchived source files, or reclaims < 15 GiB of storage.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T23:44:07.131183+00:00` [claude-code] (LEARNING/missions/MISSION-017.json): Closed at Richard's request 2026-11-08 without testing the hypothesis: no automated cold-artifact identification pipeline or external-drive runbook was built (no external drive attached). Operational goal met manually: Richard approved deleting ~/.crc/cache (unused 2023 OpenShift Local 4.12/4.13 bundles, 44 GB); free space 11 GiB -> 56 GiB; git and skill discovery unaffected.
+- **Lessons Learned & Epistemic Compounding**:
+  * The largest reclaimable item on the M1 was an unused OpenShift Local (crc) bundle cache (44 GB); Podman's VM disk (~22 GB) had only 1.25 GB reclaimable images.
+  * Remaining candidates if needed: Chrome cache 5.5 GB, uv cache 2 GB, copilot/node-gyp/apm caches ~2.5 GB, Podman images plus VM disk compaction.
 
 ### MISSION-034: Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches (Rank #17)
 - **Status**: `RESOLVED`
