@@ -1,6 +1,13 @@
 {
-  "total_entries": 375,
+  "total_entries": 376,
   "entries": [
+    {
+      "id": 384,
+      "title": "MISSION-063: Random-walk Braess paradox in trees falsified on monotonicity and diameter immunity across 16,355 held-out edge additions",
+      "filename": "384_mission_063_random_walk_braess_paradox_in_trees_falsified_on_monotonicity_and_diameter_immunity_across_16355_held_out_edge_additions.md",
+      "date": "2026-11-08",
+      "status": "published"
+    },
     {
       "id": 383,
       "title": "MISSION-060 run closed UNASSESSED after first-item budget stop",

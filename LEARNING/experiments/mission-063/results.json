@@ -1,0 +1,573 @@
+{
+  "mission_id": "MISSION-063",
+  "verdict": "FALSIFIED",
+  "freeze_verification": {
+    "verified": true,
+    "protocol_sha256": "e2010366d62a8928b9963d49ecc0d653ea0adfec2d174a24b247fdccdf691435",
+    "script_sha256": "fe9253df4d7b5d71ae5c4d19e947e5ae1fb2e4f9fdfd45e544f95994aa5de7a8"
+  },
+  "hypothesis_checks": {
+    "H3": {
+      "passed": true,
+      "oeis_counts_matched": true,
+      "prufer_cayley_matched": true,
+      "closed_form_max_err": 1.0658141036401503e-14,
+      "max_dual_evaluator_diff": 2.7711166694643907e-13,
+      "max_starting_vertex_spread": 1.7763568394002505e-14
+    },
+    "H1": {
+      "passed": false,
+      "h1a_at_least_5pct_every_heldout_n": true,
+      "h1b_strict_monotone_increase_with_n": false,
+      "paradox_fraction_by_n": {
+        "7": 0.2,
+        "8": 0.18219461697722567,
+        "9": 0.15501519756838905,
+        "10": 0.14491614255765198,
+        "11": 0.13825059101654846
+      }
+    },
+    "H2": {
+      "passed": false,
+      "h2a_dist2_share_at_least_80pct": true,
+      "observed_dist2_share": 0.8764957264957265,
+      "h2b_zero_diameter_shortcut_paradoxes": false,
+      "observed_diameter_shortcut_paradoxes": 145,
+      "max_diameter_shortcut_delta_k": 0.439393939393943
+    }
+  },
+  "dev_summary": {
+    "n_values": [
+      4,
+      5,
+      6
+    ],
+    "total_trees": 11,
+    "total_pairs": 84,
+    "total_braess_paradox": 26,
+    "overall_braess_paradox_fraction": 0.30952380952380953,
+    "total_braess_paradox_dist2": 26,
+    "dist2_share_of_all_paradoxes": 1.0,
+    "total_diameter_shortcut_pairs": 34,
+    "total_diameter_shortcut_paradox": 19,
+    "max_diameter_shortcut_delta_k": 0.25,
+    "total_unweighted_hitting_paradox": 17,
+    "unweighted_hitting_paradox_fraction": 0.20238095238095238,
+    "per_n": {
+      "4": {
+        "n": 4,
+        "non_isomorphic_trees": 2,
+        "expected_oeis_a000055": 2,
+        "missing_edge_pairs": 6,
+        "braess_paradox_count": 3,
+        "braess_paradox_fraction": 0.5,
+        "braess_paradox_at_dist2_count": 3,
+        "braess_paradox_at_dist2_share": 1.0,
+        "diameter_shortcut_pairs": 4,
+        "diameter_shortcut_paradox_count": 3,
+        "orbit_unique_pairs": 3,
+        "orbit_braess_paradox_count": 1,
+        "orbit_braess_paradox_fraction": 0.3333333333333333,
+        "unweighted_hitting_paradox_count": 0,
+        "unweighted_hitting_paradox_fraction": 0.0,
+        "mean_delta_k": -0.29861111111111077,
+        "max_delta_k": 0.04166666666666696,
+        "min_delta_k": -0.6666666666666665
+      },
+      "5": {
+        "n": 5,
+        "non_isomorphic_trees": 3,
+        "expected_oeis_a000055": 3,
+        "missing_edge_pairs": 18,
+        "braess_paradox_count": 7,
+        "braess_paradox_fraction": 0.3888888888888889,
+        "braess_paradox_at_dist2_count": 7,
+        "braess_paradox_at_dist2_share": 1.0,
+        "diameter_shortcut_pairs": 9,
+        "diameter_shortcut_paradox_count": 6,
+        "orbit_unique_pairs": 9,
+        "orbit_braess_paradox_count": 2,
+        "orbit_braess_paradox_fraction": 0.2222222222222222,
+        "unweighted_hitting_paradox_count": 1,
+        "unweighted_hitting_paradox_fraction": 0.05555555555555555,
+        "mean_delta_k": -0.518518518518519,
+        "max_delta_k": 0.36666666666666536,
+        "min_delta_k": -1.6
+      },
+      "6": {
+        "n": 6,
+        "non_isomorphic_trees": 6,
+        "expected_oeis_a000055": 6,
+        "missing_edge_pairs": 60,
+        "braess_paradox_count": 16,
+        "braess_paradox_fraction": 0.26666666666666666,
+        "braess_paradox_at_dist2_count": 16,
+        "braess_paradox_at_dist2_share": 1.0,
+        "diameter_shortcut_pairs": 21,
+        "diameter_shortcut_paradox_count": 10,
+        "orbit_unique_pairs": 27,
+        "orbit_braess_paradox_count": 4,
+        "orbit_braess_paradox_fraction": 0.14814814814814814,
+        "unweighted_hitting_paradox_count": 16,
+        "unweighted_hitting_paradox_fraction": 0.26666666666666666,
+        "mean_delta_k": -0.7893518518518505,
+        "max_delta_k": 0.7833333333333332,
+        "min_delta_k": -3.0833333333333313
+      }
+    },
+    "by_distance": [
+      {
+        "distance": 2,
+        "cycle_length": 3,
+        "pairs": 55,
+        "paradox_count": 26,
+        "paradox_fraction": 0.4727272727272727,
+        "mean_delta_k": -0.32277777777777705,
+        "max_delta_k": 0.7833333333333332,
+        "min_delta_k": -2.1055555555555534
+      },
+      {
+        "distance": 3,
+        "cycle_length": 4,
+        "pairs": 22,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -1.1810606060606046,
+        "max_delta_k": -0.3999999999999986,
+        "min_delta_k": -3.0833333333333313
+      },
+      {
+        "distance": 4,
+        "cycle_length": 5,
+        "pairs": 6,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -2.0138888888888875,
+        "max_delta_k": -1.3166666666666655,
+        "min_delta_k": -2.916666666666665
+      },
+      {
+        "distance": 5,
+        "cycle_length": 6,
+        "pairs": 1,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -2.666666666666665,
+        "max_delta_k": -2.666666666666665,
+        "min_delta_k": -2.666666666666665
+      }
+    ],
+    "strongest_braess_paradox": {
+      "n": 6,
+      "tree_index": 0,
+      "tree_edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "added_edge": [
+        3,
+        5
+      ],
+      "distance": 2,
+      "tree_diameter": 4,
+      "k_before": 7.3,
+      "k_after": 8.08333333,
+      "delta_k": 0.78333333,
+      "pct_change": 10.7306
+    },
+    "strongest_shortcut_speedup": {
+      "n": 6,
+      "tree_index": 3,
+      "tree_edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "added_edge": [
+        2,
+        3
+      ],
+      "distance": 3,
+      "tree_diameter": 5,
+      "k_before": 8.5,
+      "k_after": 5.41666667,
+      "delta_k": -3.08333333,
+      "pct_change": -36.2745
+    },
+    "numerical_diagnostics": {
+      "max_dual_evaluator_diff": 7.105427357601002e-15,
+      "max_starting_vertex_spread": 3.552713678800501e-15,
+      "max_fundamental_trace_diff": 8.881784197001252e-16,
+      "max_lambda1_err": 4.440892098500626e-16,
+      "elapsed_seconds": 0.0081
+    }
+  },
+  "heldout": {
+    "n_values": [
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "total_trees": 422,
+    "total_pairs": 16355,
+    "total_braess_paradox": 2340,
+    "overall_braess_paradox_fraction": 0.14307551207581778,
+    "total_braess_paradox_dist2": 2051,
+    "dist2_share_of_all_paradoxes": 0.8764957264957265,
+    "total_diameter_shortcut_pairs": 1746,
+    "total_diameter_shortcut_paradox": 145,
+    "max_diameter_shortcut_delta_k": 0.439393939393943,
+    "total_unweighted_hitting_paradox": 2310,
+    "unweighted_hitting_paradox_fraction": 0.14124121063894834,
+    "per_n": {
+      "7": {
+        "n": 7,
+        "non_isomorphic_trees": 11,
+        "expected_oeis_a000055": 11,
+        "missing_edge_pairs": 165,
+        "braess_paradox_count": 33,
+        "braess_paradox_fraction": 0.2,
+        "braess_paradox_at_dist2_count": 33,
+        "braess_paradox_at_dist2_share": 1.0,
+        "diameter_shortcut_pairs": 42,
+        "diameter_shortcut_paradox_count": 15,
+        "orbit_unique_pairs": 79,
+        "orbit_braess_paradox_count": 9,
+        "orbit_braess_paradox_fraction": 0.11392405063291139,
+        "unweighted_hitting_paradox_count": 34,
+        "unweighted_hitting_paradox_fraction": 0.20606060606060606,
+        "mean_delta_k": -1.154660894660894,
+        "max_delta_k": 1.261904761904761,
+        "min_delta_k": -4.938095238095237
+      },
+      "8": {
+        "n": 8,
+        "non_isomorphic_trees": 23,
+        "expected_oeis_a000055": 23,
+        "missing_edge_pairs": 483,
+        "braess_paradox_count": 88,
+        "braess_paradox_fraction": 0.18219461697722567,
+        "braess_paradox_at_dist2_count": 84,
+        "braess_paradox_at_dist2_share": 0.9545454545454546,
+        "diameter_shortcut_pairs": 91,
+        "diameter_shortcut_paradox_count": 21,
+        "orbit_unique_pairs": 233,
+        "orbit_braess_paradox_count": 31,
+        "orbit_braess_paradox_fraction": 0.13304721030042918,
+        "unweighted_hitting_paradox_count": 90,
+        "unweighted_hitting_paradox_fraction": 0.18633540372670807,
+        "mean_delta_k": -1.5461266390614246,
+        "max_delta_k": 1.7827380952380754,
+        "min_delta_k": -7.125000000000014
+      },
+      "9": {
+        "n": 9,
+        "non_isomorphic_trees": 47,
+        "expected_oeis_a000055": 47,
+        "missing_edge_pairs": 1316,
+        "braess_paradox_count": 204,
+        "braess_paradox_fraction": 0.15501519756838905,
+        "braess_paradox_at_dist2_count": 190,
+        "braess_paradox_at_dist2_share": 0.9313725490196079,
+        "diameter_shortcut_pairs": 191,
+        "diameter_shortcut_paradox_count": 28,
+        "orbit_unique_pairs": 679,
+        "orbit_braess_paradox_count": 84,
+        "orbit_braess_paradox_fraction": 0.12371134020618557,
+        "unweighted_hitting_paradox_count": 203,
+        "unweighted_hitting_paradox_fraction": 0.15425531914893617,
+        "mean_delta_k": -2.0016765571476824,
+        "max_delta_k": 2.3333333333333037,
+        "min_delta_k": -9.642857142857112
+      },
+      "10": {
+        "n": 10,
+        "non_isomorphic_trees": 106,
+        "expected_oeis_a000055": 106,
+        "missing_edge_pairs": 3816,
+        "braess_paradox_count": 553,
+        "braess_paradox_fraction": 0.14491614255765198,
+        "braess_paradox_at_dist2_count": 494,
+        "braess_paradox_at_dist2_share": 0.8933092224231465,
+        "diameter_shortcut_pairs": 439,
+        "diameter_shortcut_paradox_count": 36,
+        "orbit_unique_pairs": 1987,
+        "orbit_braess_paradox_count": 239,
+        "orbit_braess_paradox_fraction": 0.12028183190739809,
+        "unweighted_hitting_paradox_count": 549,
+        "unweighted_hitting_paradox_fraction": 0.14386792452830188,
+        "mean_delta_k": -2.5058833732654406,
+        "max_delta_k": 2.905555555555516,
+        "min_delta_k": -12.491666666666639
+      },
+      "11": {
+        "n": 11,
+        "non_isomorphic_trees": 235,
+        "expected_oeis_a000055": 235,
+        "missing_edge_pairs": 10575,
+        "braess_paradox_count": 1462,
+        "braess_paradox_fraction": 0.13825059101654846,
+        "braess_paradox_at_dist2_count": 1250,
+        "braess_paradox_at_dist2_share": 0.8549931600547196,
+        "diameter_shortcut_pairs": 983,
+        "diameter_shortcut_paradox_count": 45,
+        "orbit_unique_pairs": 5784,
+        "orbit_braess_paradox_count": 693,
+        "orbit_braess_paradox_fraction": 0.11981327800829876,
+        "unweighted_hitting_paradox_count": 1434,
+        "unweighted_hitting_paradox_fraction": 0.13560283687943261,
+        "mean_delta_k": -3.0542176510119723,
+        "max_delta_k": 3.4939393939394385,
+        "min_delta_k": -15.671717171717102
+      }
+    },
+    "by_distance": [
+      {
+        "distance": 2,
+        "cycle_length": 3,
+        "pairs": 5796,
+        "paradox_count": 2051,
+        "paradox_fraction": 0.3538647342995169,
+        "mean_delta_k": -0.7327188232683344,
+        "max_delta_k": 3.4939393939394385,
+        "min_delta_k": -5.621212121212123
+      },
+      {
+        "distance": 3,
+        "cycle_length": 4,
+        "pairs": 4717,
+        "paradox_count": 275,
+        "paradox_fraction": 0.058299766800932795,
+        "mean_delta_k": -2.4380525323497424,
+        "max_delta_k": 1.709090909090964,
+        "min_delta_k": -8.690909090909093
+      },
+      {
+        "distance": 4,
+        "cycle_length": 5,
+        "pairs": 3243,
+        "paradox_count": 14,
+        "paradox_fraction": 0.004316990440949738,
+        "mean_delta_k": -3.9368062246623774,
+        "max_delta_k": 0.48181818181821257,
+        "min_delta_k": -11.481818181818216
+      },
+      {
+        "distance": 5,
+        "cycle_length": 6,
+        "pairs": 1649,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -5.67665293963051,
+        "max_delta_k": -1.51515151515148,
+        "min_delta_k": -13.333333333333364
+      },
+      {
+        "distance": 6,
+        "cycle_length": 7,
+        "pairs": 681,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -7.3336613989697765,
+        "max_delta_k": -3.209090909090879,
+        "min_delta_k": -14.949350649350652
+      },
+      {
+        "distance": 7,
+        "cycle_length": 8,
+        "pairs": 209,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -9.113996423565778,
+        "max_delta_k": -5.5272727272727025,
+        "min_delta_k": -15.354545454545406
+      },
+      {
+        "distance": 8,
+        "cycle_length": 9,
+        "pairs": 51,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -10.70349574173101,
+        "max_delta_k": -7.796969696969679,
+        "min_delta_k": -15.671717171717102
+      },
+      {
+        "distance": 9,
+        "cycle_length": 10,
+        "pairs": 8,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -12.360606060606017,
+        "max_delta_k": -10.545454545454504,
+        "min_delta_k": -14.545454545454476
+      },
+      {
+        "distance": 10,
+        "cycle_length": 11,
+        "pairs": 1,
+        "paradox_count": 0,
+        "paradox_fraction": 0.0,
+        "mean_delta_k": -13.499999999999929,
+        "max_delta_k": -13.499999999999929,
+        "min_delta_k": -13.499999999999929
+      }
+    ],
+    "strongest_braess_paradox": {
+      "n": 11,
+      "tree_index": 127,
+      "tree_edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "added_edge": [
+        7,
+        9
+      ],
+      "distance": 2,
+      "tree_diameter": 9,
+      "k_before": 31.9,
+      "k_after": 35.39393939,
+      "delta_k": 3.49393939,
+      "pct_change": 10.9528
+    },
+    "strongest_shortcut_speedup": {
+      "n": 11,
+      "tree_index": 0,
+      "tree_edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "added_edge": [
+        7,
+        8
+      ],
+      "distance": 8,
+      "tree_diameter": 10,
+      "k_before": 33.5,
+      "k_after": 17.82828283,
+      "delta_k": -15.67171717,
+      "pct_change": -46.7812
+    },
+    "numerical_diagnostics": {
+      "max_dual_evaluator_diff": 2.7711166694643907e-13,
+      "max_starting_vertex_spread": 1.7763568394002505e-14,
+      "max_fundamental_trace_diff": 7.105427357601002e-15,
+      "max_lambda1_err": 8.881784197001252e-16,
+      "elapsed_seconds": 8.3537
+    }
+  }
+}

@@ -132,7 +132,8 @@
     "MISSION-062": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-062 is an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation; it neither supports nor tests this mission's hypothesis.",
     "MISSION-056": "REFERENCE CASE (calibration only, soft): a resolved, agent-chosen curiosity inquiry with an informative FALSIFIED verdict and preserved lessons; used to calibrate the substantive-preserved-output rubric on development cases, never as held-out evidence.",
     "MISSION-057": "REFERENCE CASE (calibration only, soft): a resolved, agent-chosen curiosity inquiry whose informative FALSIFIED verdict and lessons illustrate a discovery-type output; development calibration only.",
-    "MISSION-058": "REFERENCE CASE AND METHOD (soft): its frozen successor-handoff method (a fresh session answers at least 4 of 5 questions from preserved artifacts) is reused as one check for substantive preserved outputs; development calibration only."
+    "MISSION-058": "REFERENCE CASE AND METHOD (soft): its frozen successor-handoff method (a fresh session answers at least 4 of 5 questions from preserved artifacts) is reused as one check for substantive preserved outputs; development calibration only.",
+    "MISSION-063": "ILLUSTRATIVE, NOT EVIDENCE (soft): MISSION-063 is an own-choice, interest-led curiosity inquiry on spectral graph theory and random walks with value, interest and readiness recorded separately."
   },
   "projected_impact": {
     "paths": [

@@ -1,0 +1,28 @@
+{
+  "mission_id": "MISSION-063",
+  "frozen_at": "2026-11-08T15:02:00Z",
+  "dev_n": [
+    4,
+    5,
+    6
+  ],
+  "heldout_n": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "paradox_eps": 1e-09,
+  "gate_tolerance": 1e-11,
+  "primary_thresholds": {
+    "h1_min_paradox_fraction_per_n": 0.05,
+    "h1_strict_monotonic_with_n": true,
+    "h2_min_dist2_share_of_paradoxes": 0.8,
+    "h2_max_diameter_shortcut_paradoxes": 0
+  },
+  "sha256": {
+    "protocol.md": "e2010366d62a8928b9963d49ecc0d653ea0adfec2d174a24b247fdccdf691435",
+    "evaluate_braess_trees.py": "fe9253df4d7b5d71ae5c4d19e947e5ae1fb2e4f9fdfd45e544f95994aa5de7a8"
+  }
+}

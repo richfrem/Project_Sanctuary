@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-06T18:40:42.021212+00:00",
-  "total_assessments": 35,
-  "cumulative_score": 482,
-  "average_fitness": 0.918,
+  "updated_at": "2026-11-08T15:23:20.118713+00:00",
+  "total_assessments": 36,
+  "cumulative_score": 496,
+  "average_fitness": 0.919,
   "dimension_totals": {
-    "useful_outcome": 97,
-    "learning_depth": 93,
-    "verification_rigor": 104,
-    "token_economy": 83,
-    "anti_asch_integrity": 105
+    "useful_outcome": 100,
+    "learning_depth": 96,
+    "verification_rigor": 107,
+    "token_economy": 85,
+    "anti_asch_integrity": 108
   },
   "agents": {
     "astra": {
@@ -23,8 +23,8 @@
       "average_fitness": 0.967
     },
     "claude": {
-      "assessments": 7,
-      "cumulative_score": 98,
+      "assessments": 8,
+      "cumulative_score": 112,
       "average_fitness": 0.933
     },
     "claude-haiku-5.5": {
@@ -49,6 +49,15 @@
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "467d4e89-d9b6-49aa-9860-ea0e12ff21f3",
+      "timestamp": "2026-11-08T15:23:20.118113+00:00",
+      "task_id": "mission-063-review-opus",
+      "agent_id": "claude",
+      "raw_score": 14,
+      "fitness": 0.933,
+      "notes": "Adversarial review confirmed FALSIFIED verdict and numerics while identifying 11 concrete defects (README template bug <0, overstated Rayleigh/causal claims, dev pair count 95->84, tautological H3 sub-checks, and representation sensitivity between raw and orbit-deduplicated paradox fractions)."
+    },
     {
       "assessment_id": "9726bf51-df9e-4898-a898-bce9db7d9bff",
       "timestamp": "2026-11-06T18:40:42.020469+00:00",
@@ -219,15 +228,6 @@
       "raw_score": 13,
       "fitness": 0.867,
       "notes": "Pre-registered 5 predictions, all held; harness 60 merges x2 arms; reported (did not hide) a real ledger orphan; qualified the git-still-marks-conflict limit; one wrong start (opened 034 unasked earlier, cancelled)"
-    },
-    {
-      "assessment_id": "3c406161-1cbf-458a-834b-df822170d4ff",
-      "timestamp": "2026-11-04T15:36:12.255737+00:00",
-      "task_id": "MISSION-035-catalog-refresh",
-      "agent_id": "claude-code",
-      "raw_score": 14,
-      "fitness": 0.933,
-      "notes": "Upstream catalog refresh with evidence, real-session cost cross-check (29.49 vs 29.55), select_model fix, TDD, protocol correction (apm update); two OPEN upstream debts reported"
     }
   ]
 }
