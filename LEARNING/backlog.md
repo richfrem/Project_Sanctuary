@@ -54,7 +54,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#33** | `MISSION-012` | **Selective Forgetting & Counterexample Memory Compression** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#34** | `MISSION-032` | **Frontier Incoming Agents and Relay Placement: Reaching 90% Handover Consistency** | 4 | 4 | 0.2x | 2 | **40.0** | `PROPOSED` | - |
 | **#35** | `MISSION-056` | **Can evenly spaced rhythms survive missing beats better than irregular rhythms?** | 2 | 4 | 0.1x | 2 | **40.0** | `RESOLVED` | `FALSIFIED` |
-| **#36** | `MISSION-063` | **Braess's Paradox for Random Walks in Trees: Does Adding a Shortcut Edge Increase Kemeny's Constant, and Is the Paradox Concentrated at Distance 2?** | 2 | 4 | 0.1x | 2 | **40.0** | `PROPOSED` | - |
+| **#36** | `MISSION-063` | **Braess's Paradox for Random Walks in Trees: Does Adding a Shortcut Edge Increase Kemeny's Constant, and Is the Paradox Concentrated at Distance 2?** | 2 | 4 | 0.1x | 2 | **40.0** | `RESOLVED` | `FALSIFIED` |
 | **#37** | `MISSION-057` | **Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow?** | 1 | 4 | 0.1x | 1 | **40.0** | `RESOLVED` | `FALSIFIED` |
 | **#38** | `MISSION-041` | **Compile Falsification Criteria into Executable Property Tests and Counterexample Searches** | 5 | 5 | 0.25x | 3 | **33.33** | `RESOLVED` | `FALSIFIED` |
 | **#39** | `MISSION-047` | **Transfer and Compose Procedures Through Evidence-Linked Concept Graphs** | 5 | 5 | 0.25x | 3 | **33.33** | `PROPOSED` | - |
@@ -626,15 +626,21 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Sequence the freeze commit before the scoring command, not in the same chain: a blocked commit let the held-out run happen first (integrity kept by hash guard).
 
 ### MISSION-063: Braess's Paradox for Random Walks in Trees: Does Adding a Shortcut Edge Increase Kemeny's Constant, and Is the Paradox Concentrated at Distance 2? (Rank #36)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `FALSIFIED`
 - **Execution Surface**: `local`
-- **Target Platform**: Spectral graph theory and finite Markov chains: Kemeny's constant under single-edge additions across all non-isomorphic trees on n = 4..11 vertices (exact enumeration in Python/NumPy; bounded local CPU)
+- **Target Platform**: Spectral graph theory and finite Markov chains: Kemeny's constant under single-edge additions across all non-isomorphic trees on n = 4..11 vertices (exact enumeration in zero-dependency Python standard library; bounded local CPU)
 - **Cheapest Viable Model**: `gemini-3.8-flash` (Tier: `cheap`, CLI: `agy`)
 - **Fallback Models**: `claude-haiku-5.5`, `qwen2-7b-mlx-4bit`
 - **Hypothesis (Popperian Prediction)**:
   > Let Delta_K(T, e) = K(T + e) - K(T) be the change in Kemeny's constant when adding a single missing edge e = {u, v} at tree distance d_T(u, v) >= 2 to a tree T on n vertices. Across all non-isomorphic free trees on each held-out vertex count n in {7, 8, 9, 10, 11}: (H1, Prevalence & Growth) At least 5% of all missing-edge additions (T, e) at each n in {7, 8, 9, 10, 11} exhibit Braess's paradox (Delta_K(T, e) > 10^-9), and the paradox fraction p(n) increases strictly monotonically across n = 7, 8, 9, 10, 11. (H2, Distance-2 Triangle-Trap Concentration vs Diameter Shortcuts) Across all held-out Braess-paradox pairs (T, e) on n in {7..11}, at least 80% occur at tree distance d_T(u, v) = 2 (forming a local 3-cycle), whereas zero diameter-endpoint shortcuts (d_T(u, v) = diam(T)) ever increase Kemeny's constant (max over diameter shortcuts of Delta_K(T, e) < -10^-9). (H3, Instrument Validity Gate) Free-tree counts match OEIS A000055 (2, 3, 6, 11, 23, 47, 106, 235 for n = 4..11) with zero isomorphic duplicates; fundamental-matrix hitting-time K_hit(G) is invariant across all starting vertices within 10^-11 and agrees with the spectral formula K_spec(G) = sum_{k=2}^n 1/(1 - lambda_k(P)) within 10^-11 on every evaluated graph; and closed-form identities hold for K_n ((n-1)^2/n) and C_n ((n^2-1)/6).
 - **Falsification Gate**:
   > The hypothesis is FALSIFIED if either H1 (paradox prevalence >= 5% at every n in {7..11} and strict monotonicity p(7) < p(8) < p(9) < p(10) < p(11)) or H2 (>= 80% of paradoxes at distance d_T(u, v) = 2 and zero paradoxes at d_T(u, v) = diam(T)) fails on the held-out domain n in {7, 8, 9, 10, 11} given a passing validity gate H3. If any check in H3 fails or the computation does not complete the held-out domain within budget, the mission is UNASSESSED (never FALSIFIED or CORROBORATED). Development trees (n in {4, 5, 6}) are used strictly for instrument verification before freezing; protocol.md, freeze.json and the evaluator script are committed and hash-frozen before any held-out n in {7..11} is evaluated. Secondary breakdowns (by tree diameter, maximum degree, or unweighted mean first passage time) are descriptive only and cannot rescue a failed primary claim.
+- **Empirical Evidence & Trials**:
+  * `2026-11-08T15:06:44.642192+00:00` [antigravity] (LEARNING/experiments/mission-063/README.md): H3 passed (OEIS A000055 exact on n=4..11; dual-evaluator max diff 2.77e-13 across 16,355 held-out pairs). H1a held (paradox rate 20.00%, 18.22%, 15.50%, 14.49%, 13.83% >= 5% on n=7..11; 2340/16355 = 14.31% overall) and H2a held (87.65% of paradoxes at distance d=2, 11.75% at d=3, 0.60% at d=4, 0% at d>=5). Falsified on H1b (paradox fraction decreases monotonically with n even as max Delta_K grows from +1.26 to +3.49) and H2b (145/1746 diameter-endpoint shortcuts in low-diameter star/spider trees with diam<=4 increase K(T); 0 for diam>=5).
+- **Lessons Learned & Epistemic Compounding**:
+  * Random-walk Braess paradox in trees is strictly local in cycle length (100% at d<=4, 87.65% at d=2 across n=7..11), so its share of all C(n-1,2) missing edges falls with n even as maximum slowdown magnitude grows linearly with n.
+  * Diameter-endpoint shortcuts are not immune when tree diameter itself is small (diam in {2,3,4}, e.g., connecting leaves of a star or double-star); immunity holds only when shortcut distance d_T(u,v) >= 5.
 
 ### MISSION-057: Do consecutive primes remember their last digit beyond what a random model predicts, and does that memory fade as the primes grow? (Rank #37)
 - **Status**: `RESOLVED`

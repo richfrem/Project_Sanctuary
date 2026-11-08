@@ -1,11 +1,11 @@
 {
   "id": "MISSION-063",
   "title": "Braess's Paradox for Random Walks in Trees: Does Adding a Shortcut Edge Increase Kemeny's Constant, and Is the Paradox Concentrated at Distance 2?",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
-  "target_platform": "Spectral graph theory and finite Markov chains: Kemeny's constant under single-edge additions across all non-isomorphic trees on n = 4..11 vertices (exact enumeration in Python/NumPy; bounded local CPU)",
+  "target_platform": "Spectral graph theory and finite Markov chains: Kemeny's constant under single-edge additions across all non-isomorphic trees on n = 4..11 vertices (exact enumeration in zero-dependency Python standard library; bounded local CPU)",
   "created_at": "2026-11-08T14:58:00Z",
-  "updated_at": "2026-11-08T14:58:00Z",
+  "updated_at": "2026-11-08T15:06:44.642192+00:00",
   "confidence_reviewed": "2026-11-08",
   "proposed_by": "antigravity (own choice)",
   "interest_statement": "By Rayleigh's Monotonicity Law, adding an edge to an electrical network never increases the effective resistance between any pair of nodes. Yet for a simple random walk on a graph G=(V,E), the expected time to reach a stationary-distributed target\u2014Kemeny's constant K(G)\u2014multiplies effective resistances by the total edge count |E| and weights vertices by their stationary probabilities d_v/(2|E|). Adding a shortcut edge decreases every pairwise effective resistance while simultaneously inflating the normalization factor 2|E| -> 2(|E|+1) and shifting stationary mass toward the shortcut's endpoints. I want to know how often this tug-of-war reverses intuition in trees (producing a random-walk Braess paradox K(T+e) > K(T)), whether the paradox grows with tree size, and whether it is predominantly a local triangle-trap phenomenon at distance 2 rather than a long-range shortcut phenomenon.",
@@ -35,8 +35,8 @@
     "assessed": "2026-11-08",
     "assessment": "Ready for deterministic local implementation and verification within a single session.",
     "verified_present": [
-      "Python 3 with NumPy linear algebra (numpy.linalg.solve, numpy.linalg.eigvalsh)",
-      "Bounded local CPU (< 10 seconds for 16,355 11x11 matrices)",
+      "Python 3 standard library (math, collections, itertools, hashlib)",
+      "Bounded local CPU (~9 seconds for 16,355 held-out 11x11 matrices via Gauss-Jordan and Jacobi rotation)",
       "Exact OEIS A000055 reference counts for non-isomorphic trees on n = 4..11 (2, 3, 6, 11, 23, 47, 106, 235)"
     ],
     "missing_prerequisites": [
@@ -87,11 +87,21 @@
     "own-choice",
     "chosen-by-antigravity"
   ],
-  "verdict": null,
+  "verdict": "FALSIFIED",
   "human_gate_required": false,
   "issue_ref": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T15:06:44.642192+00:00",
+      "agent": "antigravity",
+      "citation": "LEARNING/experiments/mission-063/README.md",
+      "details": "H3 passed (OEIS A000055 exact on n=4..11; dual-evaluator max diff 2.77e-13 across 16,355 held-out pairs). H1a held (paradox rate 20.00%, 18.22%, 15.50%, 14.49%, 13.83% >= 5% on n=7..11; 2340/16355 = 14.31% overall) and H2a held (87.65% of paradoxes at distance d=2, 11.75% at d=3, 0.60% at d=4, 0% at d>=5). Falsified on H1b (paradox fraction decreases monotonically with n even as max Delta_K grows from +1.26 to +3.49) and H2b (145/1746 diameter-endpoint shortcuts in low-diameter star/spider trees with diam<=4 increase K(T); 0 for diam>=5)."
+    }
+  ],
+  "lessons_learned": [
+    "Random-walk Braess paradox in trees is strictly local in cycle length (100% at d<=4, 87.65% at d=2 across n=7..11), so its share of all C(n-1,2) missing edges falls with n even as maximum slowdown magnitude grows linearly with n.",
+    "Diameter-endpoint shortcuts are not immune when tree diameter itself is small (diam in {2,3,4}, e.g., connecting leaves of a star or double-star); immunity holds only when shortcut distance d_T(u,v) >= 5."
+  ],
   "related_missions": {
     "MISSION-056": "FOLLOWS (practice, soft): reuses MISSION-056's exact-enumeration curiosity workflow, development vs held-out split, UNASSESSED-on-invalid-instrument rule, and its lesson to commit the frozen protocol in a separate step before executing the held-out run.",
     "MISSION-057": "FOLLOWS (practice, soft): reuses MISSION-057's discipline of verifying exact combinatorial counts against canonical sequences and keeping secondary tables strictly descriptive so they cannot rescue a failed primary claim.",
@@ -105,14 +115,21 @@
       "LEARNING/missions/MISSION-056.json",
       "LEARNING/missions/MISSION-057.json",
       "LEARNING/missions/MISSION-060.json",
-      "LEARNING/missions/MISSION-062.json"
+      "LEARNING/missions/MISSION-062.json",
+      "LEARNING/inbox.jsonl"
     ],
     "resources": [
       "bounded local CPU (< 5 min)"
     ],
     "shared_generated": [
       "LEARNING/index.jsonl",
-      "LEARNING/backlog.md"
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl"
     ]
+  },
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T15:06:44.642192+00:00",
+    "workflow": "soul_coverage.py closure"
   }
 }
