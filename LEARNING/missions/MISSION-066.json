@@ -1,0 +1,73 @@
+{
+  "id": "MISSION-066",
+  "title": "Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Music tuning arithmetic: N-tone equal temperaments, N in 1..200, against just intervals 3/2, 5/4, 6/5 (Python standard library; seconds of CPU)",
+  "created_at": "2026-11-08T18:20:00Z",
+  "updated_at": "2026-11-08T18:20:00Z",
+  "confidence_reviewed": "2026-11-08",
+  "proposed_by": "claude-code (own choice)",
+  "interest_statement": "Western music divides the octave into 12 equal steps, and music theorists name 19, 31, 53 and 118 as better divisions. I want to check that lore myself with one plain, fixed measure, and see whether the famous divisions really are the record-setters or whether the list depends on the measure.",
+  "hypothesis": "Let E(N) be the worst error in cents, over the just intervals 3/2, 5/4 and 6/5, when each interval is rounded independently to the nearest step of N-tone equal temperament. N is a record if E(N) < E(M) for every M < N. Held-out range N in 31..200: (H1) both 53 and 118 are records; (H2) every record in 31..200 is in {31, 34, 53, 65, 87, 118, 171}. (G) Validity gate: for N=12 the errors are 1.955, 13.686 and 15.641 cents (within 0.001), and the vectorised record scan matches a brute pairwise check on N in 1..30.",
+  "falsification_criteria": "FALSIFIED if gate G passes and H1 or H2 fails on N in 31..200. CORROBORATED if G passes and both hold. UNASSESSED if G fails. Dev range N in 1..30 is used only for instrument checks; protocol.md, evaluate_et.py and freeze.json are hash-frozen and committed before the held-out run.",
+  "baseline_evidence": "No prior Sanctuary work on musical tuning (grep of LEARNING for temperament/cents found only unrelated 'fine-tuning' hits). Background, not relied on as evidence: tuning literature commonly cites 12, 19, 31, 34, 53, 118 as good 5-limit divisions. MISSION-065 rejected a consonance question because 'metric choice dominates'; here the metric is fixed in advance and that dependence is stated as a limitation.",
+  "experiment": "Register; write evaluate_et.py; dev gate on N 1..30; freeze; held-out scan 31..200; report records with errors.",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 1,
+    "priority_score": 20.0
+  },
+  "priority_score": 20.0,
+  "score_basis": "Provisional estimates, not measured ROI. Leverage 1: pure curiosity, no operational payoff claimed. Depth 2: checks received lore under a fixed measure. Cost 0.1: stdlib CPU, no model calls. Friction 1. Priority = (1x2)/(0.1x1) = 20.",
+  "strategic_intent": "Interest-led inquiry into music and number theory, practising freeze-before-held-out on a small, fully decidable computation.",
+  "design_constraints": [
+    "Freeze protocol.md, evaluate_et.py, freeze.json before held-out run",
+    "Dev restricted to N in 1..30",
+    "Other measures (relative error, consistency) are descriptive only"
+  ],
+  "interest_rationale": "Chosen by claude-code when invited to pick any topic; music had not been studied here and the outcome of H2 was not something I could predict confidently.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Ready: stdlib only.",
+    "verified_present": ["Python 3 standard library"],
+    "missing_prerequisites": [],
+    "first_enabling_step": "Write evaluate_et.py and run the dev gate."
+  },
+  "selection_record": {
+    "method": "Considered three non-AI questions decidable in one session.",
+    "inspected": [
+      {"candidate": "Equal temperament records for 5-limit harmony", "domain": "music theory", "disposition": "selected: deterministic, seconds of CPU, metric fixed in advance"},
+      {"candidate": "Bulk-only phyllotaxis metric (SEED-20261108-be65d3)", "domain": "phyllotaxis", "disposition": "rejected: direct follow-up of MISSION-065; preferred a new domain"},
+      {"candidate": "Benford's law in physical constants", "domain": "statistics", "disposition": "rejected: needs an external dataset"}
+    ]
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "local-cpu",
+    "cost_weight": 0.1,
+    "cli_target": "none",
+    "fallback_models": ["claude-haiku-5.5", "qwen2-7b-mlx-4bit"],
+    "frontier_escalation_condition": "none",
+    "routing_guidance": "Deterministic stdlib computation."
+  },
+  "tags": ["curiosity", "music", "tuning", "number-theory", "own-choice", "chosen-by-claude-code"],
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-065": "SIBLING (practice, soft): agent-chosen exact mathematics inquiry with freeze-before-held-out; its selection record rejected a music question over metric choice, which this mission addresses by fixing the metric.",
+    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing, another music-adjacent evenness question."
+  },
+  "projected_impact": {
+    "paths": ["LEARNING/missions/MISSION-066.json", "LEARNING/experiments/mission-066/", "LEARNING/missions/MISSION-065.json", "LEARNING/missions/MISSION-056.json", "chronicle/entries/"],
+    "resources": ["bounded local CPU (< 1 min)"],
+    "shared_generated": ["LEARNING/index.jsonl", "LEARNING/backlog.md", ".agent/learning/events.jsonl", ".agent/learning/cognitive_ledger.json", "chronicle/ledger.json"]
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-066"
+}
