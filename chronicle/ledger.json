@@ -1,6 +1,13 @@
 {
-  "total_entries": 378,
+  "total_entries": 379,
   "entries": [
+    {
+      "id": 387,
+      "title": "MISSION-067: Random change ringing mixes faster but not cheaper",
+      "filename": "387_mission_067_random_change_ringing_mixes_faster_but_not_cheaper.md",
+      "date": "2026-11-08",
+      "status": "COMPLETE"
+    },
     {
       "id": 386,
       "title": "MISSION-066: The textbook equal temperaments really are the records",

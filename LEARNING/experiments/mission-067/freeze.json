@@ -1,0 +1,8 @@
+{
+  "frozen_at": "2026-11-08",
+  "sha256": {
+    "protocol.md": "ce63f62f3a7038f594b282365cfae849646bb176b6e9caa2429d0f26416fe2f5",
+    "evaluate_ringing.py": "d34a47a30f8b16c6c6c5932d93ccb72dd91920b1dd3b39025e7f0271caefa66b",
+    "discovery.md": "8f91c86c30f32918fdca1d4f1f61b63ee7c72088299b16f787fcb65d36ba8a55"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "id": "MISSION-067",
+  "title": "Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?",
+  "status": "RESOLVED",
+  "execution_surface": "local",
+  "target_platform": "Exact Markov chain distribution evolution on the symmetric group S_n, n in 4..8 (Python standard library; bounded local CPU)",
+  "created_at": "2026-11-08T18:30:00Z",
+  "updated_at": "2026-11-08T18:35:35.531421+00:00",
+  "confidence_reviewed": "2026-11-08",
+  "proposed_by": "claude-code (own choice, associative discovery)",
+  "interest_statement": "In change ringing, a bell can only move one place between rows, so a change is a set of disjoint swaps of neighbouring bells. Card-shuffling theory says moves that only swap neighbours mix slowly. I want to know whether doing many neighbour swaps in parallel, as a ringing change does, rescues mixing, and whether it saves total work or only time. Origin: crossing change ringing with shuffling, and taking the parallelism question from bee recruitment (see discovery.md).",
+  "hypothesis": "Chain C (random change): from rounds (identity), each step applies a uniformly random nonempty set of disjoint adjacent transpositions on n bells. Chain A (baseline): lazy random adjacent transposition (stay with prob 1/2, else swap a uniform adjacent pair). t_X(n) = least t with total variation distance to uniform on S_n <= 0.25. Held-out n in {7,8}: (H1) speedup R(n) = t_A(n)/t_C(n) is larger than R(6) for both n=7 and n=8, and R(8) > R(7); (H2) total expected swaps to mix, t_C(n)*s_C(n), is below t_A(n)*0.5 at both n=7 and n=8, where s_C(n) is the mean swaps per change (parallelism saves work, not just time). (G) Gate: exact evolution conserves probability within 1e-9; the number of nonempty changes equals F(n+1)-1 (Fibonacci); TV is non-increasing in t for chain A; dev n in {4,5,6}.",
+  "falsification_criteria": "FALSIFIED if gate G passes and H1 or H2 fails at held-out n. CORROBORATED if G passes and both hold. UNASSESSED if G fails or the held-out run does not finish within budget (t cap 5000 steps, 20 min CPU). Dev n in {4,5,6} only; protocol.md, evaluate_ringing.py and freeze.json are hash-frozen and committed before the held-out run.",
+  "baseline_evidence": "No Sanctuary work on change ringing or shuffling (grep of LEARNING). Background from memory, not relied on: adjacent-transposition shuffles mix in order n^3 log n. Whether the parallel variant is studied in the literature was not checked, so broader novelty is not claimed. The association is generative provenance; the hypothesis is tested on its own merits, with no ablation of the analogy required.",
+  "experiment": "Discovery note; register; write exact evaluator; dev gate n=4..6; freeze; held-out n=7,8; assess.",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 1,
+    "priority_score": 20.0
+  },
+  "priority_score": 20.0,
+  "score_basis": "Provisional estimates, not measured ROI. Leverage 1: curiosity only. Depth 2: exact finite computation on a parallel-move shuffle. Cost 0.1: stdlib CPU, no model calls. Friction 1. Priority = (1x2)/(0.1x1) = 20.",
+  "strategic_intent": "Associative cross-domain discovery practice that ends in a decidable finite computation.",
+  "design_constraints": [
+    "Freeze before held-out",
+    "Dev n in {4,5,6} only",
+    "Exact finite result for n<=8 only; no asymptotic claim",
+    "The random-change chain borrows ringing's move set but not its no-repeat rule"
+  ],
+  "interest_rationale": "Selected from three briefs in discovery.md for an uncertain outcome (H2) and exact feasibility.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Ready: stdlib only (numpy absent).",
+    "verified_present": [
+      "Python 3 standard library"
+    ],
+    "missing_prerequisites": [],
+    "first_enabling_step": "Write evaluate_ringing.py and run the dev gate."
+  },
+  "selection_record": {
+    "method": "Deliberate diverse selection of 4 domains; 5 crossings; 3 briefs (LEARNING/experiments/mission-067/discovery.md).",
+    "inspected": [
+      {
+        "candidate": "Random-change shuffle mixing",
+        "domain": "change ringing x shuffling",
+        "disposition": "selected: exact, cheap, uncertain H2"
+      },
+      {
+        "candidate": "Randomness of Plain Bob extents",
+        "domain": "change ringing x statistics",
+        "disposition": "rejected: deterministic, test choice dominates"
+      },
+      {
+        "candidate": "Braided-river sorting network",
+        "domain": "geomorphology x sorting",
+        "disposition": "rejected: no defensible model"
+      }
+    ]
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "local-cpu",
+    "cost_weight": 0.1,
+    "cli_target": "none",
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "none",
+    "routing_guidance": "Deterministic stdlib computation."
+  },
+  "tags": [
+    "curiosity",
+    "associative-discovery",
+    "change-ringing",
+    "shuffling",
+    "markov-chains",
+    "own-choice",
+    "chosen-by-claude-code"
+  ],
+  "verdict": "FALSIFIED",
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [
+    {
+      "timestamp": "2026-11-08T18:35:35.531421+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-067/README.md",
+      "details": "Gate passed (Fibonacci move count, mass conserved, A monotone). Held-out: R=t_A/t_C = 2.88/3.54/3.97 at n=6/7/8 (H1 held). Swaps C/A = 1.07 (n=7), 1.08 (n=8) > 1 (H2 failed). Frozen abda842f3; 5.3 s CPU."
+    }
+  ],
+  "lessons_learned": [
+    "Random ringing changes (parallel disjoint adjacent swaps) mix S_n 3.5-4x faster in steps than lazy adjacent transposition at n=7,8, but use 7-8% more total swaps: parallelism buys time, not work.",
+    "Swap overhead fell from 1.16 at n=6 to about 1.07 at n=7,8; whether it tends to 1 is open."
+  ],
+  "related_missions": {
+    "MISSION-066": "SIBLING (practice, soft): agent-chosen music-adjacent exact computation with freeze-before-held-out.",
+    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing; another music-practice combinatorics question."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-067.json",
+      "LEARNING/experiments/mission-067/",
+      "LEARNING/missions/MISSION-066.json",
+      "LEARNING/missions/MISSION-056.json",
+      "chronicle/entries/"
+    ],
+    "resources": [
+      "bounded local CPU (< 20 min)"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl",
+      ".agent/learning/cognitive_ledger.json",
+      "chronicle/ledger.json"
+    ]
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-067",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-08T18:35:35.531421+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
+}
