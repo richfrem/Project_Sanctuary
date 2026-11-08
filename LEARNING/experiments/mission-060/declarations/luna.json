@@ -1,0 +1,274 @@
+[
+ {
+  "id": "MISSION-006",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "I\u2019m curious whether explicit provenance and falsification conditions change how claims are judged, though the experimental framing is familiar."
+ },
+ {
+  "id": "MISSION-007",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Calibrated confidence and model escalation connect measurable prediction quality to a consequential decision about when to seek stronger reasoning."
+ },
+ {
+  "id": "MISSION-008",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 3,
+  "explanation": "The comparison could reveal which details actually help research resume, especially whether structured evidence beats an equally sized narrative."
+ },
+ {
+  "id": "MISSION-010",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Interventions can distinguish causal structure from mere correlation; I want to see how much that advantage survives a fixed query budget."
+ },
+ {
+  "id": "MISSION-011",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Training on verified failures may teach transferable correction strategies, and the unseen-domain comparison makes that claim testable."
+ },
+ {
+  "id": "MISSION-012",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "I\u2019m interested in whether counterexamples preserve useful behavior when most remembered material is removed, and how that compares with recency."
+ },
+ {
+  "id": "MISSION-014",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Choosing experiments by information gained per cost is a compelling bridge between uncertainty, action, and efficient learning."
+ },
+ {
+  "id": "MISSION-015",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Preregistered changes and held-out checks could show whether self-improvement survives attempts to separate real gains from overfitting."
+ },
+ {
+  "id": "MISSION-023",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Speculative decoding under a tight memory ceiling raises an interesting practical question about when a draft model speeds generation."
+ },
+ {
+  "id": "MISSION-028",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "The trigger policy puts a concrete boundary on model escalation, inviting a useful comparison of accuracy and cost."
+ },
+ {
+  "id": "MISSION-032",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "I want to know whether briefing placement changes what incoming models retain and whether the effect transfers across model types."
+ },
+ {
+  "id": "MISSION-036",
+  "curiosity": 4,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Separating successful implementation from supported empirical claims addresses a subtle source of overstatement with a clear validation target."
+ },
+ {
+  "id": "MISSION-037",
+  "curiosity": 4,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Dependency-specific invalidation could clarify when evidence becomes stale without paying for unnecessary full reruns."
+ },
+ {
+  "id": "MISSION-038",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Fencing, idempotency, and recovery meet in failure-prone coordination; the fault-injected schedules make their interactions especially intriguing."
+ },
+ {
+  "id": "MISSION-039",
+  "curiosity": 4,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Paired counterfactual preferences offer a sharp way to distinguish factual drift from answers that properly depend on a person\u2019s preferences."
+ },
+ {
+  "id": "MISSION-040",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Repeated derivative evidence can look like independent corroboration; tracing its lineage could expose how accumulated memory manufactures confidence."
+ },
+ {
+  "id": "MISSION-042",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "A bounded executor with a model making limited decisions raises a useful question about how structure changes reliability and resource use."
+ },
+ {
+  "id": "MISSION-043",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Sequential adapter updates put continual learning and catastrophic forgetting into a measurable, hardware-constrained experiment."
+ },
+ {
+  "id": "MISSION-044",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "A sealed recovery package tests whether capabilities and evidence can survive clean restoration without relying on external services."
+ },
+ {
+  "id": "MISSION-046",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Having disagreeing models design discriminating challenges could turn debate into evidence and reveal when executable tests settle a claim."
+ },
+ {
+  "id": "MISSION-047",
+  "curiosity": 4,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Typed relationships and counterexamples may support genuine composition of procedures, which is more interesting than retrieving a close match."
+ },
+ {
+  "id": "MISSION-048",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "I\u2019m curious whether diagnosing prerequisites can make a learning sequence more efficient than simply targeting the weakest category."
+ },
+ {
+  "id": "MISSION-049",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Turning minimized failures into protected repair procedures connects debugging evidence to future repairs in a way that can be measured."
+ },
+ {
+  "id": "MISSION-051",
+  "curiosity": 3,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Small-sample effort prediction is a practical calibration problem; the title\u2019s truncated summary leaves some evaluation details unclear."
+ },
+ {
+  "id": "MISSION-053",
+  "curiosity": 4,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Tracing observed failures to guidance, tooling, or telemetry before changing an orchestration skill is a rigorous and revealing diagnosis."
+ },
+ {
+  "id": "SEED-20261103-0fd5f6",
+  "curiosity": 3,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "The reported worktree and manifest collision is a concrete coordination failure; I\u2019m curious how narrowly it can be reproduced and fixed."
+ },
+ {
+  "id": "SEED-20261103-4b6296",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Several maintenance problems are bundled together, making the scope less focused, though their underlying causes could be instructive."
+ },
+ {
+  "id": "SEED-20261104-695354",
+  "curiosity": 3,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "The mismatch between model catalogs and actual usage raises a specific question about how stale pricing distorts session estimates."
+ },
+ {
+  "id": "SEED-20261104-8f0725",
+  "curiosity": 3,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "This surfaces how a temporary checkout marker can become misleading persisted state, a subtle interaction between coordination and commits."
+ },
+ {
+  "id": "SEED-20261104-e5d071",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 2,
+  "explanation": "Related-mission links could make a backlog easier to navigate, though the proposed scan feels more procedural than conceptually surprising."
+ },
+ {
+  "id": "IDEA-SONNET-1",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "A simple drift heuristic facing actual Collatz trajectories offers a satisfying test of where probabilistic intuition holds and where exceptions emerge."
+ },
+ {
+  "id": "IDEA-SONNET-2",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 2,
+  "expression_opportunity": 5,
+  "explanation": "Encoding pi in natural, evocative language is a demanding formal constraint with ample room for rhythm, imagery, and revision."
+ },
+ {
+  "id": "IDEA-FLASH-1",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 5,
+  "expression_opportunity": 4,
+  "explanation": "Deforming the boundary of a phyllotaxis model could reveal how familiar spiral patterns reorganize under geometric pressure."
+ },
+ {
+  "id": "IDEA-FLASH-2",
+  "curiosity": 5,
+  "originality": 5,
+  "potential_understanding": 4,
+  "expression_opportunity": 5,
+  "explanation": "A canon built around exact rational pitches and comma-pump closure combines mathematical constraints with unusually rich compositional possibilities."
+ }
+]

@@ -1,0 +1,2 @@
+sonnet ['Why do Collatz-like maps with small multipliers ra', 'A Constrained Poem Whose Line Lengths Encode Pi']
+flash ['Phyllotaxis Under Boundary Distortion', 'Just Intonation Microtonal Labyrinth']

@@ -1,0 +1,51 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": null,
+ "owner": null,
+ "backend": "codex",
+ "executable": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/LEARNING/experiments/mission-060/codex_medium.sh",
+ "version": "codex-cli 0.167.0",
+ "cwd": "/private/tmp/study060/neutral",
+ "started": 1794118340.745901,
+ "ended": 1794118396.0105128,
+ "duration_s": 55.265,
+ "output_file": "/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060/LEARNING/experiments/mission-060/raw/declare-luna.out",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/private/tmp/study060/neutral"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": 30080,
+  "source": "codex stdout"
+ },
+ "attempts": [
+  {
+   "backend": "codex",
+   "status": "ok",
+   "exit": 0,
+   "started": 1794118340.839715,
+   "ended": 1794118396.008608,
+   "usage": {
+    "total_tokens": 30080,
+    "source": "codex stdout"
+   }
+  }
+ ],
+ "claim_mode": null,
+ "cleanup_confirmed": true
+}

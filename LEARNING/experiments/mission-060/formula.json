@@ -1,0 +1,249 @@
+{
+ "MISSION-023": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.05,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-006": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-007": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-028": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.1,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-040": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.15,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-011": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-036": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-039": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-042": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-014": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 3,
+  "cost_weight": 0.2,
+  "operational_friction": 1,
+  "source": "manifest"
+ },
+ "MISSION-037": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-049": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-012": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-032": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-047": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.25,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-038": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-044": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-051": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 4,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-048": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 0.25,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-010": {
+  "strategic_leverage": 2,
+  "epistemic_depth": 5,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-046": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.5,
+  "operational_friction": 3,
+  "source": "manifest"
+ },
+ "MISSION-008": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 4,
+  "cost_weight": 0.5,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-043": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 0.4,
+  "operational_friction": 4,
+  "source": "manifest"
+ },
+ "MISSION-015": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 5,
+  "cost_weight": 1.0,
+  "operational_friction": 2,
+  "source": "manifest"
+ },
+ "MISSION-053": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 4,
+  "cost_weight": 1.0,
+  "operational_friction": 4,
+  "source": "manifest"
+ },
+ "SEED-20261103-0fd5f6": {
+  "strategic_leverage": 5,
+  "epistemic_depth": 2,
+  "cost_weight": 0.1,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Prevents dirty main trees and PR merge conflicts caused by incorrect manifest checkout location."
+ },
+ "SEED-20261103-4b6296": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 2,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "estimated-by-flash",
+  "basis": "Cleans broken dependencies and prevents protocol mangling across legacy maintenance scripts."
+ },
+ "SEED-20261104-695354": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 2,
+  "cost_weight": 0.1,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Fixes missing modern models and eliminates severe session pricing overestimation in agent CLI."
+ },
+ "SEED-20261104-8f0725": {
+  "strategic_leverage": 4,
+  "epistemic_depth": 2,
+  "cost_weight": 0.1,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Prevents spurious IN_PROGRESS status leaking to main from unheld missions via lease verification."
+ },
+ "SEED-20261104-e5d071": {
+  "strategic_leverage": 3,
+  "epistemic_depth": 2,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Automates backlog linking and validation, reducing duplicate work and missed mission connections."
+ },
+ "IDEA-SONNET-1": {
+  "strategic_leverage": 1,
+  "epistemic_depth": 3,
+  "cost_weight": 0.2,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Off-topic pure math exploration; offers no strategic leverage to software or agent memory."
+ },
+ "IDEA-SONNET-2": {
+  "strategic_leverage": 1,
+  "epistemic_depth": 1,
+  "cost_weight": 0.05,
+  "operational_friction": 2,
+  "source": "estimated-by-flash",
+  "basis": "Creative writing exercise with zero relevance or strategic leverage for agent research."
+ },
+ "IDEA-FLASH-1": {
+  "strategic_leverage": 1,
+  "epistemic_depth": 3,
+  "cost_weight": 0.2,
+  "operational_friction": 3,
+  "source": "estimated-by-flash",
+  "basis": "Biomorphological simulation irrelevant to the software agent infrastructure and memory platform."
+ },
+ "IDEA-FLASH-2": {
+  "strategic_leverage": 1,
+  "epistemic_depth": 2,
+  "cost_weight": 0.1,
+  "operational_friction": 3,
+  "source": "estimated-by-flash",
+  "basis": "Microtonal music theory exploration with no applicability to the project's agent systems."
+ }
+}

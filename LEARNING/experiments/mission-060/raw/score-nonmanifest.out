@@ -1,0 +1,65 @@
+{
+  "SEED-20261103-0fd5f6": {
+    "strategic_leverage": 5,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "basis": "Prevents dirty main trees and PR merge conflicts caused by incorrect manifest checkout location."
+  },
+  "SEED-20261103-4b6296": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 2,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "basis": "Cleans broken dependencies and prevents protocol mangling across legacy maintenance scripts."
+  },
+  "SEED-20261104-695354": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "basis": "Fixes missing modern models and eliminates severe session pricing overestimation in agent CLI."
+  },
+  "SEED-20261104-8f0725": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "basis": "Prevents spurious IN_PROGRESS status leaking to main from unheld missions via lease verification."
+  },
+  "SEED-20261104-e5d071": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 2,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "basis": "Automates backlog linking and validation, reducing duplicate work and missed mission connections."
+  },
+  "IDEA-SONNET-1": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 3,
+    "cost_weight": 0.2,
+    "operational_friction": 2,
+    "basis": "Off-topic pure math exploration; offers no strategic leverage to software or agent memory."
+  },
+  "IDEA-SONNET-2": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 1,
+    "cost_weight": 0.05,
+    "operational_friction": 2,
+    "basis": "Creative writing exercise with zero relevance or strategic leverage for agent research."
+  },
+  "IDEA-FLASH-1": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 3,
+    "cost_weight": 0.2,
+    "operational_friction": 3,
+    "basis": "Biomorphological simulation irrelevant to the software agent infrastructure and memory platform."
+  },
+  "IDEA-FLASH-2": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 2,
+    "cost_weight": 0.1,
+    "operational_friction": 3,
+    "basis": "Microtonal music theory exploration with no applicability to the project's agent systems."
+  }
+}

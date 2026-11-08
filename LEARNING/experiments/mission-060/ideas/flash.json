@@ -1,0 +1,32 @@
+[
+ {
+  "id": "IDEA-FLASH-1",
+  "kind": "discovery",
+  "title": "Phyllotaxis Under Boundary Distortion",
+  "question": "How robust is the golden ratio divergence angle (137.5\u00b0) in simulated plant primordia packing when the apical meristem boundary is deformed from a circle into an eccentric ellipse or cardioid?",
+  "why_it_attracts_me": "The intersection of simple iterative geometric repulsion and biological morphology is mesmerizing. I want to see whether Fibonacci spiral patterns break down catastrophically or gracefully deform into higher-order bifurcation regimes under non-circular boundary constraints.",
+  "first_work_unit": "Implement a minimal planar model simulating sequential node placement with mutual repulsive potential on an elliptical apex, sweeping aspect ratios from 1.0 to 3.0.",
+  "deliverable": "A comparative report charting divergence angle distributions and parastichy counts across varying meristem eccentricities, identifying critical bifurcation thresholds.",
+  "brief_checklist": [
+   "Simulate 500 successive primordia under three eccentricity ratios.",
+   "Measure divergence angle variance relative to the golden angle.",
+   "Classify parastichy pair numbers for each geometric regime."
+  ],
+  "proposed_by": "flash"
+ },
+ {
+  "id": "IDEA-FLASH-2",
+  "kind": "creative",
+  "title": "Just Intonation Microtonal Labyrinth",
+  "question": "Can a coherent musical system and three-voice canon be constructed entirely within a 7-limit tonality diamond, resolving voice-leading paradoxes through strict comma pump modulations?",
+  "why_it_attracts_me": "Just intonation produces pure acoustic consonant harmonies but famously resists cyclic closure due to syntonic and septimal commas. Composing a rigorous canon exploiting these comma shifts transforms an acoustic limitation into an elegant structural modulation engine.",
+  "first_work_unit": "Calculate pitch lattice coordinate vectors for a 7-limit scale, selecting rational pitch pairs that form a closed comma-pump cycle of consonant triads.",
+  "deliverable": "A fully annotated 32-measure score in pitch-ratio notation and MIDI frequency table with a voice-leading harmonic analysis.",
+  "brief_checklist": [
+   "Specify exact rational frequency ratios for every note.",
+   "Ensure all vertical sonorities conform to 7-limit consonances.",
+   "Include at least one closed cycle modulating via the septimal comma."
+  ],
+  "proposed_by": "flash"
+ }
+]

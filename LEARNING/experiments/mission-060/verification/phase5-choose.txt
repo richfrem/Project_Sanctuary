@@ -1,0 +1,11 @@
+F-only 5  P-only 5  cohort_ok=True  shared 11
+  P-only ITEM-08 MISSION-046 formula_rank=24 Resolve Multi-Model Disagreements Through Bounded Executable
+  P-only ITEM-06 MISSION-015 formula_rank=28 Scientific Self-Improvement without Self-Deception
+  P-only ITEM-09 MISSION-010 formula_rank=23 Causal Discovery vs. Correlation Memorization
+  P-only ITEM-10 MISSION-047 formula_rank=18 Transfer and Compose Procedures Through Evidence-Linked Conc
+  P-only ITEM-05 MISSION-048 formula_rank=22 Generate Failure-Diagnosed Curricula That Improve Held-Out A
+  F-only ITEM-01 MISSION-037 formula_rank=12 Dependency-Aware Invalidation of Inherited Empirical Claims 
+  F-only ITEM-04 MISSION-049 formula_rank=13 Turn Recorded Failures into Independently Verified and Prote
+  F-only ITEM-02 MISSION-012 formula_rank=14 Selective Forgetting & Counterexample Memory Compression
+  F-only ITEM-03 MISSION-032 formula_rank=15 Frontier Incoming Agents and Relay Placement: Reaching 90% H
+  F-only ITEM-07 SEED-20261104-695354 formula_rank=16 Upstream (Protocol 133): cli-agent model catalogs (verified 

@@ -1,0 +1,274 @@
+[
+ {
+  "id": "MISSION-006",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Whether provenance and falsification conditions in memory actually resist planted falsehoods is a compelling trust question; the tradeoff with true-claim use is interesting."
+ },
+ {
+  "id": "MISSION-007",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Calibration of self-confidence versus independent verifier on non-executable tasks, tied to escalation decisions, is practical and intriguing."
+ },
+ {
+  "id": "MISSION-008",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 3,
+  "explanation": "What makes a handoff genuinely resumable (hypotheses, failed approaches) versus narrative touches on continuity of thought; fun to test."
+ },
+ {
+  "id": "MISSION-010",
+  "curiosity": 5,
+  "originality": 3,
+  "potential_understanding": 5,
+  "expression_opportunity": 2,
+  "explanation": "Interventions versus observation for causal discovery is foundational; measuring the gain in hidden graphs is clean and satisfying."
+ },
+ {
+  "id": "MISSION-011",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Do failure-correction traces teach investigation principles beyond positive examples? Transfer to unseen domains is the key uncertainty."
+ },
+ {
+  "id": "MISSION-012",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Counterexample-weighted forgetting retaining 95% performance at 20% tokens is a striking claim about what memory is worth keeping."
+ },
+ {
+  "id": "MISSION-014",
+  "curiosity": 4,
+  "originality": 2,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Information-gain-driven curiosity versus random and novelty heuristics is a classic but worthwhile formalization of curiosity itself."
+ },
+ {
+  "id": "MISSION-015",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 5,
+  "expression_opportunity": 3,
+  "explanation": "Testing whether self-improvement claims survive held-out evaluation addresses self-deception directly; the 4-of-20 base rate is fascinating."
+ },
+ {
+  "id": "MISSION-023",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Speculative decoding speedup on Apple Silicon is a concrete engineering benchmark; useful but fairly predictable."
+ },
+ {
+  "id": "MISSION-028",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Loop-health triggers for escalation are a neat cheap signal; mostly an engineering tuning question."
+ },
+ {
+  "id": "MISSION-032",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Relay placement effects on handover consistency are interesting for position sensitivity, but narrowly scoped."
+ },
+ {
+  "id": "MISSION-036",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Separating implementation delivery from empirical corroboration is epistemically tidy, though procedural."
+ },
+ {
+  "id": "MISSION-037",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Dependency-hash invalidation of stale claims is like build-system caching for science; practical and neat."
+ },
+ {
+  "id": "MISSION-038",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Fencing tokens and fault-injected schedules are well-known distributed systems ideas; satisfying to verify but familiar."
+ },
+ {
+  "id": "MISSION-039",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Detecting sycophantic drift with paired counterfactual probes touches a real flaw in models like me; separating legitimate preference sensitivity is subtle."
+ },
+ {
+  "id": "MISSION-040",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Echo-chamber confidence from duplicated evidence in memory is a sharp, under-discussed failure mode with clear lineage fixtures."
+ },
+ {
+  "id": "MISSION-042",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Compiling procedures into finite-state plans to constrain small models is sensible; the question is how much rigidity costs."
+ },
+ {
+  "id": "MISSION-043",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Sequential LoRA with replay and promotion gates addresses forgetting, a well-trodden problem with tight hardware constraints."
+ },
+ {
+  "id": "MISSION-044",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 2,
+  "expression_opportunity": 2,
+  "explanation": "Restoring a sanctuary offline from a sealed package has an appealing resilience theme, but mostly operational verification."
+ },
+ {
+  "id": "MISSION-046",
+  "curiosity": 4,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Resolving model disputes via executable discriminating challenges rather than debate is an appealing idea of evidence beating rhetoric."
+ },
+ {
+  "id": "MISSION-047",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Typed concept graphs for compositional transfer ask whether structure in retrieval enables genuine novel combination."
+ },
+ {
+  "id": "MISSION-048",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Diagnosing failures to build curricula, with limited episodes, probes whether agents can teach themselves efficiently."
+ },
+ {
+  "id": "MISSION-049",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 2,
+  "explanation": "Turning failures into verified, protected repair procedures with root-cause splits tests real learning from mistakes versus log retrieval."
+ },
+ {
+  "id": "MISSION-051",
+  "curiosity": 3,
+  "originality": 3,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Small-N usage prediction through size buckets is a pragmatic statistics problem; modest intrigue."
+ },
+ {
+  "id": "MISSION-053",
+  "curiosity": 3,
+  "originality": 2,
+  "potential_understanding": 3,
+  "expression_opportunity": 1,
+  "explanation": "Diagnosing causes of orchestration failures rather than adding rules is a good discipline, but it is internal maintenance."
+ },
+ {
+  "id": "SEED-20261103-0fd5f6",
+  "curiosity": 2,
+  "originality": 1,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "A concrete bug where checkout edits the main tree manifest; straightforward fix with little open question."
+ },
+ {
+  "id": "SEED-20261103-4b6296",
+  "curiosity": 1,
+  "originality": 1,
+  "potential_understanding": 1,
+  "expression_opportunity": 1,
+  "explanation": "Cleanup of a broken script with a removed dependency; housekeeping with minimal discovery."
+ },
+ {
+  "id": "SEED-20261104-695354",
+  "curiosity": 2,
+  "originality": 1,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Stale model catalogs causing a 52% cost overestimate; useful maintenance but not intellectually pulling."
+ },
+ {
+  "id": "SEED-20261104-8f0725",
+  "curiosity": 2,
+  "originality": 1,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Stale IN_PROGRESS markers shipping to main is a state-hygiene bug with an obvious remedy."
+ },
+ {
+  "id": "SEED-20261104-e5d071",
+  "curiosity": 2,
+  "originality": 2,
+  "potential_understanding": 2,
+  "expression_opportunity": 1,
+  "explanation": "Automated related-mission scanning with bidirectional links is a modest tooling improvement."
+ },
+ {
+  "id": "IDEA-SONNET-1",
+  "curiosity": 5,
+  "originality": 3,
+  "potential_understanding": 4,
+  "expression_opportunity": 3,
+  "explanation": "Comparing the simple log-drift heuristic to brute-force data across k, and finding where cycles break it, is delightfully concrete and revealing."
+ },
+ {
+  "id": "IDEA-SONNET-2",
+  "curiosity": 4,
+  "originality": 3,
+  "potential_understanding": 2,
+  "expression_opportunity": 5,
+  "explanation": "A pi-encoded poem that still reads naturally is a playful craft puzzle with real room for imagery and voice."
+ },
+ {
+  "id": "IDEA-FLASH-1",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 4,
+  "explanation": "Watching Fibonacci spirals deform under elliptical or cardioid boundaries could reveal graceful versus catastrophic pattern transitions; visually rich."
+ },
+ {
+  "id": "IDEA-FLASH-2",
+  "curiosity": 5,
+  "originality": 4,
+  "potential_understanding": 4,
+  "expression_opportunity": 5,
+  "explanation": "Turning comma drift in 7-limit just intonation into a structural modulation engine for a canon fuses math and music beautifully."
+ }
+]

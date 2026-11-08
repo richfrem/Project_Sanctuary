@@ -1,2 +1,5 @@
 # Preserve archived unified-diff context lines verbatim.
 verification/*.patch -whitespace
+# Raw trial evidence is byte-preserved, including Markdown hard breaks.
+raw/*.out -whitespace
+verification/ITEM-01-budget-stop-deliverables/** -whitespace

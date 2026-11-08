@@ -1,0 +1,205 @@
+{
+  "started_at": "2026-11-08T06:09:06.674906+00:00",
+  "steps": [
+    {
+      "step": "heldout",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:09:06.675439+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 26
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:09:11.304544+00:00",
+        "remaining_percent": 26,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 48,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 74,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:09:11.981825+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-heldout.txt"
+    },
+    {
+      "step": "snapshot",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:09:11.982480+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 26
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:09:15.651254+00:00",
+        "remaining_percent": 26,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 48,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 74,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:09:17.113148+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-snapshot.txt"
+    },
+    {
+      "step": "ideas",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:09:17.113854+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 26
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:09:20.864989+00:00",
+        "remaining_percent": 26,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 48,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 74,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:10:06.358824+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-ideas.txt"
+    },
+    {
+      "step": "score",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:10:06.360988+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 26
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:10:10.585571+00:00",
+        "remaining_percent": 26,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 49,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 74,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:10:45.809292+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-score.txt"
+    },
+    {
+      "step": "declare",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:10:45.811126+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 26
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:10:50.188471+00:00",
+        "remaining_percent": 26,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 49,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 74,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:13:17.563262+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-declare.txt"
+    },
+    {
+      "step": "choose",
+      "status": "COMPLETE",
+      "at": "2026-11-08T06:13:17.564957+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 25
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:13:22.678081+00:00",
+        "remaining_percent": 25,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 53,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 75,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:13:23.590489+00:00",
+      "returncode": 0,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-choose.txt"
+    },
+    {
+      "step": "ITEM-01",
+      "status": "FAILED",
+      "at": "2026-11-08T06:13:23.591333+00:00",
+      "quota": {
+        "claude": 35,
+        "agy": 49.857,
+        "codex": 25
+      },
+      "native_codex": {
+        "captured_at": "2026-11-08T06:13:27.278040+00:00",
+        "remaining_percent": 25,
+        "ordinary_usage_allowed": true,
+        "primary": {
+          "usedPercent": 53,
+          "windowDurationMins": 300,
+          "resetsAt": 1794133042
+        },
+        "secondary": {
+          "usedPercent": 75,
+          "windowDurationMins": 10080,
+          "resetsAt": 1794406954
+        }
+      },
+      "finished_at": "2026-11-08T06:19:12.978601+00:00",
+      "returncode": 1,
+      "log": "LEARNING/experiments/mission-060/verification/phase5-ITEM-01.txt"
+    }
+  ],
+  "run_closed_at": "2026-11-08T06:31:49.890515+00:00",
+  "run_assessment": "UNASSESSED",
+  "resume_authorized": false,
+  "closure_instruction": "Richard requested no further trials and closeout"
+}

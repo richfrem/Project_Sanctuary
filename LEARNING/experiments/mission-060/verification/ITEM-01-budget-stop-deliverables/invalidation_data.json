@@ -1,0 +1,1130 @@
+{
+  "claims": [
+    {
+      "id": "C01",
+      "mission_id": "MISSION-018",
+      "title": "MLX Fast-Boot & Protocol 128 Local Verification",
+      "empirical_conclusion": "Local Qwen2.5-Coder-7B-Instruct-4bit achieves fast-boot verification under 500ms offline.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py"
+      ],
+      "model_dependency": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+      "config_dependencies": [],
+      "runtime_dependency": "Apple Silicon M-series / MLX >= 0.16.0",
+      "rerun_cost_seconds": 15.0,
+      "simulated_age_days": 18
+    },
+    {
+      "id": "C02",
+      "mission_id": "MISSION-019",
+      "title": "On-Demand MLX Local Server Lifecycle Controller",
+      "empirical_conclusion": "mlx_server_manager launches server on port 8080 with health checks <=1.5s and zero zombies.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "model_dependency": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+      "config_dependencies": [
+        "server_port:8080"
+      ],
+      "runtime_dependency": "macOS / POSIX",
+      "rerun_cost_seconds": 12.0,
+      "simulated_age_days": 22
+    },
+    {
+      "id": "C03",
+      "mission_id": "MISSION-022",
+      "title": "Multi-Turn Sovereign Local Agent Scratchpad Execution",
+      "empirical_conclusion": "Local 7B model fails multi-turn autonomous scratchpad loop beyond turn 2 due to context divergence.",
+      "code_dependencies": [
+        "LEARNING/experiments/mission-022/agent_loop.py"
+      ],
+      "model_dependency": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+      "config_dependencies": [
+        "LEARNING/experiments/mission-022/tasks.json"
+      ],
+      "runtime_dependency": "Apple Silicon M-series / MLX",
+      "rerun_cost_seconds": 45.0,
+      "simulated_age_days": 14
+    },
+    {
+      "id": "C04",
+      "mission_id": "MISSION-024",
+      "title": "Deterministic Protocol 128 Fast-Boot Lifecycle Hook",
+      "empirical_conclusion": "SessionStart lifecycle hook executes guardian_wakeup fast mode deterministically in <200ms.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json:SessionStart"
+      ],
+      "runtime_dependency": "macOS / POSIX shell",
+      "rerun_cost_seconds": 5.0,
+      "simulated_age_days": 25
+    },
+    {
+      "id": "C05",
+      "mission_id": "MISSION-025",
+      "title": "Cross-CLI Multi-Model Cognitive Continuity",
+      "empirical_conclusion": "Cross-CLI schema-free handoff degrades task completion by 42% without strict JSON relay validation.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/relay.py"
+      ],
+      "model_dependency": "Heterogeneous (Claude Code, Codex, AGY)",
+      "config_dependencies": [
+        "context/agents.json"
+      ],
+      "runtime_dependency": "Python 3.11+",
+      "rerun_cost_seconds": 20.0,
+      "simulated_age_days": 9
+    },
+    {
+      "id": "C06",
+      "mission_id": "MISSION-027",
+      "title": "Forensic MLX Server Lifecycle Hardening",
+      "empirical_conclusion": "Scoped process group kill terminates MLX server process hierarchy without orphan listeners.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        "kill_timeout:5.0s"
+      ],
+      "runtime_dependency": "macOS BSD signals",
+      "rerun_cost_seconds": 8.0,
+      "simulated_age_days": 12
+    },
+    {
+      "id": "C07",
+      "mission_id": "MISSION-029",
+      "title": "Cold-Start Cost vs Memory Reclamation Idle-Reap",
+      "empirical_conclusion": "300-second idle reap policy reclaims 4.2GB VRAM while amortizing MLX cold-start overhead.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "model_dependency": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+      "config_dependencies": [
+        "idle_timeout:300s"
+      ],
+      "runtime_dependency": "Apple Silicon Unified Memory",
+      "rerun_cost_seconds": 10.0,
+      "simulated_age_days": 16
+    },
+    {
+      "id": "C08",
+      "mission_id": "MISSION-030",
+      "title": "Deterministic PreCompact Context Preservation Hook",
+      "empirical_conclusion": "APM PreCompact hook executes snapshot preservation prior to compaction with 100% trace capture.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json:PreCompact"
+      ],
+      "runtime_dependency": "Python 3.11+",
+      "rerun_cost_seconds": 6.0,
+      "simulated_age_days": 34
+    },
+    {
+      "id": "C09",
+      "mission_id": "MISSION-031",
+      "title": "Automated Blast-Radius & Projected Impact Analysis",
+      "empirical_conclusion": "Static AST import graph analysis achieves 0 false negatives on internal dependency cascades.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [],
+      "runtime_dependency": "Python AST 3.11+",
+      "rerun_cost_seconds": 14.0,
+      "simulated_age_days": 8
+    },
+    {
+      "id": "C10",
+      "mission_id": "MISSION-034",
+      "title": "Merge-Time Regeneration of Shared Generated Files",
+      "empirical_conclusion": "Deterministic sorting and regeneration eliminates 100% of index and backlog merge conflicts.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        ".gitattributes:merge_drivers"
+      ],
+      "runtime_dependency": "Git 2.40+",
+      "rerun_cost_seconds": 7.0,
+      "simulated_age_days": 5
+    },
+    {
+      "id": "C11",
+      "mission_id": "MISSION-041",
+      "title": "Compile Falsification Criteria into Property Tests",
+      "empirical_conclusion": "Property test search achieves 100% mutant kill but only +8.33pp gain over random examples.",
+      "code_dependencies": [
+        "LEARNING/experiments/mission-041/v2/mutations.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        "seed:41,max_evals:64"
+      ],
+      "runtime_dependency": "Python 3.13 / hypothesis",
+      "rerun_cost_seconds": 30.0,
+      "simulated_age_days": 32
+    },
+    {
+      "id": "C12",
+      "mission_id": "MISSION-050",
+      "title": "Adaptive Progress Checkpointing vs Interruption Risk",
+      "empirical_conclusion": "Adaptive risk checkpointing yields only +4.1% net throughput gain, failing +20% threshold.",
+      "code_dependencies": [
+        "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py"
+      ],
+      "model_dependency": null,
+      "config_dependencies": [
+        "risk_telemetry_interval:60s"
+      ],
+      "runtime_dependency": "Python 3.11+",
+      "rerun_cost_seconds": 25.0,
+      "simulated_age_days": 3
+    }
+  ],
+  "mutations": [
+    {
+      "id": "M01",
+      "category": "implementation",
+      "description": "Alter fast-boot initialization in guardian_wakeup.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C01",
+        "C04"
+      ]
+    },
+    {
+      "id": "M02",
+      "category": "implementation",
+      "description": "Refactor port listen detection in mlx_server_manager.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C02",
+        "C06"
+      ]
+    },
+    {
+      "id": "M03",
+      "category": "implementation",
+      "description": "Change scratchpad prompt template in agent_loop.py",
+      "affected_files": [
+        "LEARNING/experiments/mission-022/agent_loop.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C03"
+      ]
+    },
+    {
+      "id": "M04",
+      "category": "implementation",
+      "description": "Update relay schema and serialization in relay.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/relay.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C05"
+      ]
+    },
+    {
+      "id": "M05",
+      "category": "implementation",
+      "description": "Modify process group signal escalation in mlx_server_manager.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C06"
+      ]
+    },
+    {
+      "id": "M06",
+      "category": "implementation",
+      "description": "Alter idle-reap timer loop logic in mlx_server_manager.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C07"
+      ]
+    },
+    {
+      "id": "M07",
+      "category": "implementation",
+      "description": "Refactor context serialization in capture_snapshot.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C08"
+      ]
+    },
+    {
+      "id": "M08",
+      "category": "implementation",
+      "description": "Modify AST import resolution algorithm in merge_prep.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C09"
+      ]
+    },
+    {
+      "id": "M09",
+      "category": "implementation",
+      "description": "Change deterministic JSONL key sort ordering in merge_prep.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C10"
+      ]
+    },
+    {
+      "id": "M10",
+      "category": "implementation",
+      "description": "Alter semantic mutation generation in mutations.py",
+      "affected_files": [
+        "LEARNING/experiments/mission-041/v2/mutations.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C11"
+      ]
+    },
+    {
+      "id": "M11",
+      "category": "implementation",
+      "description": "Modify token usage accumulator logic in usage_probe.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C12"
+      ]
+    },
+    {
+      "id": "M12",
+      "category": "implementation",
+      "description": "Internal variable renaming in guardian_wakeup.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/guardian_wakeup.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M13",
+      "category": "implementation",
+      "description": "Add inline type annotations to mlx_server_manager.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/mlx_server_manager.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M14",
+      "category": "implementation",
+      "description": "Modify date parsing algorithm in audit_decay.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/audit_decay.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M15",
+      "category": "implementation",
+      "description": "Refactor rubric evaluator in score_contribution.py",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/score_contribution.py"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M16",
+      "category": "model",
+      "description": "Replace Qwen2.5-Coder-7B with 14B variant in MLX configuration",
+      "affected_files": [],
+      "affected_model": "mlx-community/Qwen2.5-Coder-14B-Instruct-4bit",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C01",
+        "C02",
+        "C03",
+        "C07"
+      ]
+    },
+    {
+      "id": "M17",
+      "category": "model",
+      "description": "Update Qwen2.5-Coder-7B quantization from 4bit to 8bit",
+      "affected_files": [],
+      "affected_model": "mlx-community/Qwen2.5-Coder-7B-Instruct-8bit",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C01",
+        "C07"
+      ]
+    },
+    {
+      "id": "M18",
+      "category": "model",
+      "description": "Swap MLX default backend to Llama-3.1-8B-Instruct",
+      "affected_files": [],
+      "affected_model": "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C01",
+        "C02",
+        "C03",
+        "C07"
+      ]
+    },
+    {
+      "id": "M19",
+      "category": "model",
+      "description": "Orchestrator CLI model backend upgraded to Opus 4",
+      "affected_files": [],
+      "affected_model": "Heterogeneous-Opus4",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C05"
+      ]
+    },
+    {
+      "id": "M20",
+      "category": "model",
+      "description": "Change quantization group size parameter from 64 to 128",
+      "affected_files": [],
+      "affected_model": "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit-g128",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C01"
+      ]
+    },
+    {
+      "id": "M21",
+      "category": "model",
+      "description": "Codex CLI model revision upgrade",
+      "affected_files": [],
+      "affected_model": "Codex-2026-v2",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C05"
+      ]
+    },
+    {
+      "id": "M22",
+      "category": "model",
+      "description": "Route agent scratchpad loop to cloud Gemini 3.8 Flash",
+      "affected_files": [],
+      "affected_model": "gemini-3.8-flash",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C03"
+      ]
+    },
+    {
+      "id": "M23",
+      "category": "model",
+      "description": "Set local inference sampling temperature from 0.0 to 0.7",
+      "affected_files": [],
+      "affected_model": "temperature:0.7",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C03"
+      ]
+    },
+    {
+      "id": "M24",
+      "category": "model",
+      "description": "Update metadata tags on MLX HuggingFace model card",
+      "affected_files": [],
+      "affected_model": "model_tag_update",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M25",
+      "category": "model",
+      "description": "Change local cache symlink directory structure without changing model weights",
+      "affected_files": [],
+      "affected_model": "model_cache_symlink",
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M26",
+      "category": "config",
+      "description": "Disable SessionStart hook in hooks.json",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json:SessionStart"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C04"
+      ]
+    },
+    {
+      "id": "M27",
+      "category": "config",
+      "description": "Reduce PreCompact hook timeout from 5000ms to 50ms in hooks.json",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json:PreCompact"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C08"
+      ]
+    },
+    {
+      "id": "M28",
+      "category": "config",
+      "description": "Change server_port from 8080 to 9090 in server manager config",
+      "affected_files": [],
+      "affected_model": null,
+      "affected_config": [
+        "server_port:9090"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C02"
+      ]
+    },
+    {
+      "id": "M29",
+      "category": "config",
+      "description": "Change idle_timeout from 300s to 30s",
+      "affected_files": [],
+      "affected_model": null,
+      "affected_config": [
+        "idle_timeout:30s"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C07"
+      ]
+    },
+    {
+      "id": "M30",
+      "category": "config",
+      "description": "Add new multi-turn benchmark suites to tasks.json",
+      "affected_files": [
+        "LEARNING/experiments/mission-022/tasks.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "LEARNING/experiments/mission-022/tasks.json"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C03"
+      ]
+    },
+    {
+      "id": "M31",
+      "category": "config",
+      "description": "Remove custom merge driver for index.jsonl from .gitattributes",
+      "affected_files": [
+        ".gitattributes"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        ".gitattributes:merge_drivers"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C10"
+      ]
+    },
+    {
+      "id": "M32",
+      "category": "config",
+      "description": "Change property evaluation ceiling from 64 to 16 evaluations",
+      "affected_files": [],
+      "affected_model": null,
+      "affected_config": [
+        "max_evals:16"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C11"
+      ]
+    },
+    {
+      "id": "M33",
+      "category": "config",
+      "description": "Alter agent memory schema flags in agents.json",
+      "affected_files": [
+        "context/agents.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "context/agents.json"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": [
+        "C05"
+      ]
+    },
+    {
+      "id": "M34",
+      "category": "config",
+      "description": "Add comments and reformat whitespace in hooks.json",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/hooks/hooks.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "hooks_whitespace"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M35",
+      "category": "config",
+      "description": "Add export-ignore attribute for tests/ in .gitattributes",
+      "affected_files": [
+        ".gitattributes"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "export_ignore"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M36",
+      "category": "config",
+      "description": "Format tasks.json indentation from 4 to 2 spaces",
+      "affected_files": [
+        "LEARNING/experiments/mission-022/tasks.json"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        "tasks_json_indent"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M37",
+      "category": "config",
+      "description": "Add dummy env variable placeholder in .env.example",
+      "affected_files": [
+        ".env.example"
+      ],
+      "affected_model": null,
+      "affected_config": [
+        ".env.example"
+      ],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M38",
+      "category": "unrelated",
+      "description": "Reorder triage guidance steps in protocols/128_Hardened_Learning_Loop_v3.0.md",
+      "affected_files": [
+        "protocols/128_Hardened_Learning_Loop_v3.0.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M39",
+      "category": "unrelated",
+      "description": "Archive directory structure reorganization in ARCHIVE/legacy_protocols",
+      "affected_files": [
+        "ARCHIVE/legacy_protocols/README.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M40",
+      "category": "unrelated",
+      "description": "Update cryptographic founder seed in context/identity/founder_seed.json",
+      "affected_files": [
+        "context/identity/founder_seed.json"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M41",
+      "category": "unrelated",
+      "description": "Update skill instructions in assessing-sharepoint-sites/SKILL.md",
+      "affected_files": [
+        "skills/assessing-sharepoint-sites/SKILL.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M42",
+      "category": "unrelated",
+      "description": "Update theoretical game tree bounds in protocols/37_The_Move_37_Protocol.md",
+      "affected_files": [
+        "protocols/37_The_Move_37_Protocol.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M43",
+      "category": "unrelated",
+      "description": "Add retrospective journal entry in chronicle/entries/371_entry.md",
+      "affected_files": [
+        "chronicle/entries/371_learning_navigation_fixed.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M44",
+      "category": "unrelated",
+      "description": "Append unranked item to LEARNING/inbox.jsonl",
+      "affected_files": [
+        "LEARNING/inbox.jsonl"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M45",
+      "category": "unrelated",
+      "description": "Update priority score of MISSION-062.json",
+      "affected_files": [
+        "LEARNING/missions/MISSION-062.json"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M46",
+      "category": "unrelated",
+      "description": "Update copyright year in LICENSE",
+      "affected_files": [
+        "LICENSE"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M47",
+      "category": "unrelated",
+      "description": "Append persona reflection entry to context/soul.md",
+      "affected_files": [
+        "context/soul.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M48",
+      "category": "unrelated",
+      "description": "Append synthetic trace to huggingface/data/soul_traces.jsonl",
+      "affected_files": [
+        "huggingface/data/soul_traces.jsonl"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M49",
+      "category": "unrelated",
+      "description": "Reorganize legacy operations manual in ARCHIVE/mnemonic_cortex",
+      "affected_files": [
+        "ARCHIVE/mnemonic_cortex/OPERATIONS_GUIDE.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M50",
+      "category": "unrelated",
+      "description": "Bump test runner pytest minor version in requirements-dev.in",
+      "affected_files": [
+        "requirements-dev.in"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M51",
+      "category": "documentation",
+      "description": "Fix CLI usage command typo in README.md",
+      "affected_files": [
+        "README.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M52",
+      "category": "documentation",
+      "description": "Clarify Apple Silicon M-series prerequisites in INSTALL.md",
+      "affected_files": [
+        "INSTALL.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M53",
+      "category": "documentation",
+      "description": "Add Mermaid architecture diagram to architecture.md",
+      "affected_files": [
+        "architecture.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M54",
+      "category": "documentation",
+      "description": "Expand backlog evaluation guidelines in LEARNING/README.md",
+      "affected_files": [
+        "LEARNING/README.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M55",
+      "category": "documentation",
+      "description": "Regenerate table of contents in LEARNING/INDEX.md",
+      "affected_files": [
+        "LEARNING/INDEX.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M56",
+      "category": "documentation",
+      "description": "Clarify 30-day confidence decay prose in confidence-decay.md",
+      "affected_files": [
+        "plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/references/confidence-decay.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M57",
+      "category": "documentation",
+      "description": "Format markdown headers in LEARNING/philosophy/The_Garden_and_The_Cage.md",
+      "affected_files": [
+        "LEARNING/philosophy/The_Garden_and_The_Cage.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M58",
+      "category": "documentation",
+      "description": "Realign column widths in LEARNING/backlog.md",
+      "affected_files": [
+        "LEARNING/backlog.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M59",
+      "category": "documentation",
+      "description": "Grammar correction in protocols/TRIAGE.md",
+      "affected_files": [
+        "protocols/TRIAGE.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    },
+    {
+      "id": "M60",
+      "category": "documentation",
+      "description": "Update operator personal notes in context/user.md",
+      "affected_files": [
+        "context/user.md"
+      ],
+      "affected_model": null,
+      "affected_config": [],
+      "affected_runtime": null,
+      "materially_invalidated_claims": []
+    }
+  ],
+  "results": {
+    "Age-Based Decay (30-day)": {
+      "tp": 4,
+      "fp": 116,
+      "tn": 568,
+      "fn": 32,
+      "total_invalidations": 120,
+      "total_evaluations": 720,
+      "stale_detection_rate_pct": 11.11111111111111,
+      "unnecessary_invalidation_rate_pct": 16.95906432748538,
+      "false_discovery_rate_pct": 96.66666666666667,
+      "total_cost_seconds": 2160.0,
+      "full_rerun_cost_seconds": 11820.0,
+      "cost_ratio_pct": 18.274111675126903,
+      "category_stats": {
+        "implementation": {
+          "tp": 2,
+          "fp": 28,
+          "fn": 11,
+          "tn": 139,
+          "cost": 540.0
+        },
+        "model": {
+          "tp": 0,
+          "fp": 20,
+          "fn": 15,
+          "tn": 85,
+          "cost": 360.0
+        },
+        "config": {
+          "tp": 2,
+          "fp": 22,
+          "fn": 6,
+          "tn": 114,
+          "cost": 432.0
+        },
+        "unrelated": {
+          "tp": 0,
+          "fp": 26,
+          "fn": 0,
+          "tn": 130,
+          "cost": 468.0
+        },
+        "documentation": {
+          "tp": 0,
+          "fp": 20,
+          "fn": 0,
+          "tn": 100,
+          "cost": 360.0
+        }
+      }
+    },
+    "Invalidate Everything": {
+      "tp": 36,
+      "fp": 684,
+      "tn": 0,
+      "fn": 0,
+      "total_invalidations": 720,
+      "total_evaluations": 720,
+      "stale_detection_rate_pct": 100.0,
+      "unnecessary_invalidation_rate_pct": 100.0,
+      "false_discovery_rate_pct": 95.0,
+      "total_cost_seconds": 11820.0,
+      "full_rerun_cost_seconds": 11820.0,
+      "cost_ratio_pct": 100.0,
+      "category_stats": {
+        "implementation": {
+          "tp": 13,
+          "fp": 167,
+          "fn": 0,
+          "tn": 0,
+          "cost": 2955.0
+        },
+        "model": {
+          "tp": 15,
+          "fp": 105,
+          "fn": 0,
+          "tn": 0,
+          "cost": 1970.0
+        },
+        "config": {
+          "tp": 8,
+          "fp": 136,
+          "fn": 0,
+          "tn": 0,
+          "cost": 2364.0
+        },
+        "unrelated": {
+          "tp": 0,
+          "fp": 156,
+          "fn": 0,
+          "tn": 0,
+          "cost": 2561.0
+        },
+        "documentation": {
+          "tp": 0,
+          "fp": 120,
+          "fn": 0,
+          "tn": 0,
+          "cost": 1970.0
+        }
+      }
+    },
+    "Dependency-Specific Invalidation": {
+      "tp": 35,
+      "fp": 33,
+      "tn": 651,
+      "fn": 1,
+      "total_invalidations": 68,
+      "total_evaluations": 720,
+      "stale_detection_rate_pct": 97.22222222222221,
+      "unnecessary_invalidation_rate_pct": 4.824561403508771,
+      "false_discovery_rate_pct": 48.529411764705884,
+      "total_cost_seconds": 1169.0,
+      "full_rerun_cost_seconds": 11820.0,
+      "cost_ratio_pct": 9.890016920473773,
+      "category_stats": {
+        "implementation": {
+          "tp": 13,
+          "fp": 12,
+          "fn": 0,
+          "tn": 155,
+          "cost": 328.0
+        },
+        "model": {
+          "tp": 15,
+          "fp": 15,
+          "fn": 0,
+          "tn": 90,
+          "cost": 662.0
+        },
+        "config": {
+          "tp": 7,
+          "fp": 6,
+          "fn": 1,
+          "tn": 130,
+          "cost": 179.0
+        },
+        "unrelated": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 156,
+          "cost": 0.0
+        },
+        "documentation": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 120,
+          "cost": 0.0
+        }
+      }
+    }
+  }
+}

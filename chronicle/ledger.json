@@ -1,6 +1,13 @@
 {
-  "total_entries": 374,
+  "total_entries": 375,
   "entries": [
+    {
+      "id": 383,
+      "title": "MISSION-060 run closed UNASSESSED after first-item budget stop",
+      "filename": "383_mission_060_run_closed_unassessed_after_first_item_budget_stop.md",
+      "date": "2026-11-07",
+      "status": "published"
+    },
     {
       "id": 382,
       "title": "MISSION-060 prepared and handed to Codex; delegation struggles recorded",

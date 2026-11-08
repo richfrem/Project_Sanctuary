@@ -1,5 +1,106 @@
 # MISSION-060 progress and AGY handoff
 
+## Authoritative six-step status and successor pickup — 2026-11-08
+
+| Requested step | Delivered | Remaining |
+| --- | --- | --- |
+| 1. Live token metering and worker containment | Complete for tested scope; native probes, terminal canary and source audit recorded. | Precise in-generation caps are not enforced. |
+| 2. Quota and control-plane gates | Complete for execution performed; parser repair merged in companion PR 757 and installed; repo gating disabled with Richard's approval. | Fresh quota required for any future authorized dispatch. |
+| 3. Development calibration | Complete: Flash/Luna 9/9 agreement, no rubric revision. | No repetition authorized. |
+| 4. Protocol/freeze package | Complete and public: PR 416, merge a438b2df2, freeze source 3f2857ca8. | Preserve original freeze; post-run lifecycle metadata intentionally differs. |
+| 5. Held-out simulation and prospective study | Partial: Claim A MET once; 34-candidate preparation and ten-item selection complete. ITEM-01 worker ran. | Zero completed assessments; successor/reviewer and items 02–10 never ran. Run stopped at 125,836 versus 25,000 cap. |
+| 6. Analysis, findings and closure | Analysis UNASSESSED; reusable lesson, Chronicle 383, inbox candidates and final check-in recorded. | Publish this source package, then separate local coverage export. Scientific verdict remains null; remote upload unauthorized. |
+
+Pickup worktree: `/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060`,
+branch `feat/codex-mission-060`. Public freeze base is a438b2df2; discover the
+latest closeout/export commits with `git log`, rather than treating an embedded
+pre-publication HEAD as current. Read this section, CLOSEOUT.md, results.json,
+verification/ITEM-01-budget-stop.json and verification/phase5-run.json first.
+Final closeout check-in released codex's lease. Verify board and worktree status
+before new writes. Keep this worktree; leave unrelated main edits untouched.
+Richard authorized committing, pushing and merging this preservation package.
+He did not authorize further experimental execution. Next research owner must
+seek approval for a new bounded design; do not resume ITEM-02 or rerun this seed
+or worker. Historical entries below retain the state known at their timestamps.
+
+## RUN CLOSED UNASSESSED at Richard's request — 2026-11-08
+
+**Do not resume experimental execution.** Steps 1–4 completed. Step 5 ran Claim A
+once (MET), completed preparation/selection, then stopped on ITEM-01 worker cost:
+125,836 additional tokens versus 25,000 cap. No successor/reviewer or further item
+ran. Richard requested skipping further trials and completing closeout. Frozen
+analysis results.json is UNASSESSED; mission is STAGED with verdict null, not
+RESOLVED. See CLOSEOUT.md and verification/ITEM-01-budget-stop.json.
+
+Twenty-three study-call records source-audited: 194,214 additional tokens, zero
+unknown log entries; administrative/orchestration costs separate and unknown.
+No post-request experiments, worker script execution, new model calls or unit
+test runs. Only required metadata/schema/record and export-integrity validation.
+Worker findings preserved byte-exact as an unreviewed .raw artifact reference to
+avoid promoting unverified generated claims to canonical Markdown knowledge.
+
+Preserved learning: LEARNING/concepts/bounded_agent_budget_enforcement.md;
+Chronicle 383; lesson L-a572a65d; scope-change and budget repair events. Inbox
+SEED-20261108-fff6ba is the separate eight-opportunity/14-day natural-observation
+candidate; SEED-20261108-06388c is bounded-execution redesign. Neither was executed.
+
+Scope verification initially used the old shared-main manifest and reported
+newly declared closeout paths undeclared despite the updated worktree declaration
+and manual lease targets. Source confirms verify_impact loads main_root. Friction
+recorded; no tool code was patched. Recheck after public source integration and
+main fast-forward. Two document patch applications were refused for mistyped
+paths, with no partial patch writes; corrected operations preserved all artifacts.
+
+Closeout delivery sequence: final check-in (run closeout only), commit/integrate
+all sources and check-in, then coverage-aware local export and a separate export-
+only PR. Do not append another check-in or learning note after capture; that would
+stale the export. The final local schema/coverage/currentness/remote facts live in
+the generated coverage manifest and soul_coverage checker, whose paths remain
+stable. Remote Hugging Face synchronization is NOT authorized. No mission-complete
+or SOUL PERSISTED claim. Retain the clean mission worktree for future design review;
+the lease is released by final check-in. A new approved design is the only next
+research action; do not rerun the held-out seed or ITEM-01 or continue ITEM-02.
+
+2026-11-08T06:19:12.979682+00:00 — Step 5 ITEM-01: FAILED. Evidence: LEARNING/experiments/mission-060/verification/phase5-ITEM-01.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:13:23.590987+00:00 — Step 5 choose: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-choose.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:13:17.564188+00:00 — Step 5 declare: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-declare.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:10:45.810044+00:00 — Step 5 score: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-score.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:10:06.359628+00:00 — Step 5 ideas: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-ideas.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:09:17.113512+00:00 — Step 5 snapshot: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-snapshot.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+2026-11-08T06:09:11.982201+00:00 — Step 5 heldout: COMPLETE. Evidence: LEARNING/experiments/mission-060/verification/phase5-heldout.txt; phase5-run.json. Frozen instruments unchanged; no automatic retry. Next: next planned phase if COMPLETE, otherwise inspect this failure before any further dispatch.
+
+## Step 4 COMPLETE — 2026-11-08 06:06 UTC
+
+Freeze commit 3f2857ca8 integrated in PR #416 at public merge
+a438b2df2b296fdf176d9fa624a1c8264d3c543a. Feature worktree fast-forwarded to the
+public merge. Integrated verification PASS: all 37 frozen repository files and
+31 runtime dependencies match, versions/prefix intact. PR had no configured CI
+check rollup; local 30 tests, schema/index and pre-commit epistemic gates passed.
+Required merge_prep regenerate found no generated drift and changed no manifests;
+it returned exit 2 because current local progress notes are not yet public, leaving
+soul preservation pending_publication. This is recorded, not claimed PASS or
+SOUL PERSISTED; final handoff integration and preservation remain step 6.
+
+Richard requested step 5 next. It will run only with fresh native quota before
+each phase/item, stop on any backend below 25%, and never retry a failed/ambiguous
+step automatically. Sequencer source is retained as verification/phase5-sequencer.txt
+(operational CLI sequencing only; no frozen instrument changes). It updates this
+handoff after each completed step/item. No simulation has yet run at this entry.
+
+Freeze package committed as 3f2857ca8 on feat/codex-mission-060. Encoding and
+Cognitive Gate hooks passed. Staged whitespace review initially found Markdown
+hard-break/context whitespace in two nonauthoritative drafts and a literal patch;
+draft formatting normalized, scoped .gitattributes preserves unified-diff context,
+and staged check then passed. Frozen inputs were not modified and verification
+still passed. Public integration is now the remaining step-4 boundary. This
+post-commit progress note is local and will accompany the later handoff/results.
+
 ## Step 4 freeze candidate prepared — 2026-11-08
 
 protocol.md and freeze.json now exist. Freeze verification PASS: 37 frozen
@@ -387,7 +488,7 @@ next action, and current workspace/lease state. Do not mark a step complete mere
 because its draft exists. This is the live execution handoff; scientific findings
 and episodic Chronicle records still belong in their required separate records.
 
-## Resume location
+## Historical preparation checkout (superseded by authoritative pickup above)
 
 - Repository: `/Users/richardfremmerlid/Projects/Project_Sanctuary`
 - Worktree: `/Users/richardfremmerlid/Projects/Project_Sanctuary/.worktrees/codex-mission-060`
@@ -433,14 +534,9 @@ these tests.
 
 ## Current stop point and next action
 
-**Development calibration is complete: 9/9 agreement, no prompt revision. No
-freeze, held-out scenarios, declarations, item execution, analysis or verdict
-exists.** The mission remains IN_PROGRESS.
-
-Next: finalize protocol/freeze inventory, narrow manifest impact, then integrate
-the freeze separately before held-out execution. Refresh quota before that phase.
-Do not weaken the ANY-backend 25% stop rule. Do not repeat successful metering,
-containment or calibration without a new justified failure/change.
+Run closed UNASSESSED; mission STAGED/null. Source publication and local coverage
+export are the only authorized remaining closeout actions. The authoritative
+six-step table above supersedes older execution plans. No further trials.
 
 Verification recovery at 07:12 UTC: `meter-flash-02` also stopped before dispatch.
 Diagnosis refined: Claude probe raised FileNotFoundError because shells launched
@@ -469,21 +565,12 @@ reinterpret the prior refusals as model failures or silently discard them.
 - Driver heartbeat is currently fixed to owner `codex`. A formal AGY takeover
   must align driver ownership before execution; do not silently spoof the owner.
 
-## Remaining sequence — update this table after each step
+## Remaining delivery sequence
 
-| Order | Step | State | Completion evidence to add |
-| --- | --- | --- | --- |
-| 1 | Fresh quota/lease checks; resolve workflow gates | Complete | Mode disabled/consistent; parser merged/installed; all quota above floor before calibration. Recheck before next phase. |
-| 2 | Validate live metering and resolve containment/cap limitations | Complete for tested scope | See current summary and verification reports. Exact in-call cap remains a disclosed limit; reads/network and client state are not isolated. |
-| 3 | Calibrate on 056/057/058 with Flash/Luna | Complete | calibration-results.json: 9/9 agreement, 1.0 >= 0.80, no revision. Six calls, 22,421 additional tokens; source audit PASS. |
-| 4 | Final protocol, narrow manifest impact, freeze inventory | Pending | All 12 original operational disclosures plus implementation changes; hashes of every required source/config/base file and protocol. Include new tests and disclosures. |
-| 5 | Commit and integrate freeze separately | Pending | Approved integration and actual commit/PR references, before any held-out call. No direct main commit or protected-main push. |
-| 6 | Claim A held-out scenarios once | Pending | Frozen seed/output hashes and result; never rerun to improve scores. |
-| 7 | Prospective snapshot, ideas, score, declare, choose | Pending | Usage log, blinded declarations and attestation, selection; preserve exact order. |
-| 8 | ITEM-01 through ITEM-10 sequentially | Pending | Per-item worker/successor/reviewer outputs, assessments, usage, limits and interventions. Update this file after each item. |
-| 9 | Analyze and record supported verdict | Pending | results.json and per-claim evidence; UNASSESSED leaves mission open, not FALSIFIED by default. |
-| 10 | Knowledge, Chronicle, lessons and natural-observation inbox candidate | Pending | Paths/IDs; observation is separate, not manufactured and not verdict-gating. |
-| 11 | Final check-in, source integration, local soul closure/export | Pending | Lease/handoff, integration refs, schema/coverage/export checks and scoped export PR. HF remote sync is not authorized. |
+1. Commit and publicly integrate source evidence and the already-recorded final check-in.
+2. Regenerate supported projections and capture local soul coverage from public sources.
+3. Commit and integrate only the resulting export; verify schema, coverage and local currentness.
+4. Retain this worktree with no active lease. Remote sync remains unauthorized.
 
 ## Cost, delivery and preservation
 
