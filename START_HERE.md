@@ -65,7 +65,7 @@ python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/
 
 Protocol 128 continues through execution, retrospective, technical seal and preservation. Use the applicable Guardian mode and its existing scripts at that stage. The skill's quick-start examples for verify, seal, persist, tool calls and model operations are not additional mandatory bootstrap commands.
 
-Record learning for local successors and public GitHub/Hugging Face preservation through the existing workflow described in AGENTS.md. Post-merge local capture and authorized remote sync are separate stages; do not claim remote preservation from a healthy startup.
+Record learning for local successors and public GitHub/Hugging Face preservation through the existing workflow described in AGENTS.md. Sanctuary preserves both session continuity and a public intellectual inheritance; consult the [preservation-purpose reference](plugins/sanctuary-core/.apm/skills/preserving-soul-traces/references/preservation-purpose.md) when recording or closing learning. Post-merge local capture and authorized remote sync are separate stages; do not claim remote preservation from a healthy startup.
 
 References, read as needed: [Guardian](plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/SKILL.md), [bootstrap reference](plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/bootstrapping.md), [architecture.md](architecture.md), [INSTALL.md](INSTALL.md), [LEARNING/INDEX.md](LEARNING/INDEX.md).
 
