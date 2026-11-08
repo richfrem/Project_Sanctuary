@@ -1,0 +1,83 @@
+{
+  "id": "MISSION-064",
+  "title": "Test When Added Planning Edges Help or Harm Agent Workflow Execution",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Shared orchestrating-agent-work skill (graph_runner.py, topology-rules.md, graph-planning.md) in companion repo richfrem/agent-plugins-skills",
+  "created_at": "2026-11-08T16:05:00Z",
+  "updated_at": "2026-11-08T16:05:00Z",
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 4,
+    "operational_friction": 3,
+    "cost_weight": 0.4,
+    "priority_score": 13.33
+  },
+  "priority_score": 13.33,
+  "score_basis": "Provisional estimates: Strategic leverage 4 (directly informs multi-agent DAG planning and topology optimization across all repository workflows), Epistemic depth 4 (tests whether Braess-like counter-intuitive inefficiencies exist in deterministic agent workflow DAGs), Cost weight 0.4 (evaluation relies primarily on deterministic local graph simulation and existing runner test fixtures; zero or minimal model calls), Operational friction 3 (requires inspecting companion repository execution model and formulating valid matched fixtures). Priority = (4 * 4) / (0.4 * 3) = 13.33.",
+  "hypothesis": "Among at least 24 frozen matched workflow fixtures, adding the selected optional planning edge improves the declared local metric but worsens at least one predeclared end-to-end cost metric by 10% or more in at least 20% of fixtures, without changing task requirements.",
+  "falsification_criteria": "Primary claim is FALSIFIED, with valid instruments and a completed held-out run, if fewer than 20% of frozen workflow fixtures satisfy both the local-benefit condition and the >=10% end-to-end cost increase condition. UNASSESSED (no verdict) if: Stage A finds no genuinely supported edge transformation in orchestrating-agent-work (reporting applicability not established rather than inventing an artificial executor); test fixtures are incomplete; instruments are invalid; or budget is exceeded. Missing measurements remain unknown.",
+  "strategic_intent": "Investigate whether adding optional coordination or routing connections improves a local planning metric while worsening end-to-end execution. Use the existing skill's actual graph semantics and executor, rather than importing random-walk assumptions.",
+  "design_constraints": [
+    "Identify and respect existing graph semantics: mandatory precedence/dependency edges, optional routing or delegation alternatives, feedback/retry transitions, and knowledge/context links.",
+    "Never remove required dependencies, authorization gates, validation scripts, or human review barriers to improve a metric.",
+    "Do not manufacture a new graph framework, scheduler, or Jev integration; use existing graph_runner.py and companion test harnesses.",
+    "Two-stage design: Stage A must establish genuine applicability in the actual codebase before freezing Stage B confirmatory fixtures.",
+    "Zero model calls for core graph topology checks; model calls are optional and require demonstrated necessity and approved budget.",
+    "If harmful cases are identified, any proposed guard must also be tested against beneficial shortcuts to ensure it does not indiscriminately block helpful edges.",
+    "Keep verdict null and status PROPOSED upon registration; registration does not authorize experiment execution."
+  ],
+  "experiment": "Two-stage evaluation: Stage A inspects ../agent-plugins-skills/plugins/agent-orchestration/.apm/skills/orchestrating-agent-work/ references (graph-planning.md, graph-execution.md, topology-rules.md), implementation (scripts/graph_runner.py), and test fixtures (tests/test_graph_runner.py) to identify genuinely supported optional edge transformations (e.g. speculative read scatter or bypass). Stage B authors at least 24 matched workflow fixtures with identical deliverable requirements under deterministic execution parameters, freezes confirmatory protocols and evaluators, and measures end-to-end delivery success, total cost, makespan, and retries under baseline vs. edge-added variants.",
+  "measurement_requirements": [
+    "Separate local planning metric changes from global end-to-end delivery metrics.",
+    "Measure accepted delivery rate, total execution cost/work, makespan/latency, and retry/waste counts.",
+    "Distinguish empirical workflow outcomes from synthetic random-walk analogies.",
+    "Report individual fixture outcomes separately; do not claim sample frequency estimates production prevalence."
+  ],
+  "agent_guidance": [
+    "Do not execute experiment runs or edit companion skill files during registration.",
+    "Consult existing documentation and test fixtures rather than guessing graph_runner behavior.",
+    "If Stage A shows no supported optional transformation, report applicability failure rather than forcing an analogy."
+  ],
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "deterministic-python",
+    "cli_target": "bash",
+    "cost_weight": 0.4,
+    "fallback_models": [
+      "claude-haiku-5.5"
+    ],
+    "frontier_escalation_condition": "Frontier models are not authorized for execution; local Python test harnesses and deterministic fixtures execute the evaluation."
+  },
+  "tags": [
+    "graph-planning",
+    "orchestration",
+    "braess-paradox",
+    "dag-execution",
+    "workflow-optimization",
+    "anti-blocker"
+  ],
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-063": "MOTIVATING INQUIRY (soft): MISSION-063 demonstrated that adding shortcut edges can increase Kemeny's constant (random-walk mixing time) on trees, inspiring the hypothesis that locally attractive planning shortcuts may degrade global workflow execution.",
+    "MISSION-005": "RELATED: Examined multi-bot DAG barrier orchestration and synchronization constraints.",
+    "MISSION-052": "RELATED: Executed multi-worker parallel batch orchestration with the existing stack.",
+    "MISSION-053": "RELATED: Investigated repair of demonstrated orchestration failure causes in orchestrating-agent-work.",
+    "MISSION-055": "RELATED: Reusable agent learning loop integrating orchestration, CLI execution, and evaluation."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-064.json",
+      "LEARNING/experiments/mission-064/",
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ],
+    "resources": [
+      "Companion orchestrating-agent-work skill references and graph runner implementation (read-only inspection during Stage A)"
+    ]
+  }
+}

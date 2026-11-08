@@ -112,7 +112,8 @@
     "MISSION-056": "FOLLOWS (practice, soft): reuses MISSION-056's exact-enumeration curiosity workflow, development vs held-out split, UNASSESSED-on-invalid-instrument rule, and its lesson to commit the frozen protocol in a separate step before executing the held-out run.",
     "MISSION-057": "FOLLOWS (practice, soft): reuses MISSION-057's discipline of verifying exact combinatorial counts against canonical sequences and keeping secondary tables strictly descriptive so they cannot rescue a failed primary claim.",
     "MISSION-062": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent implementations and pre-registered validity gates. No code or data dependency.",
-    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an interest-led, agent-chosen curiosity inquiry outside AI with expected value, declared interest and readiness recorded separately."
+    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an interest-led, agent-chosen curiosity inquiry outside AI with expected value, declared interest and readiness recorded separately.",
+    "MISSION-064": "MOTIVATED FOLLOW-UP (soft): MISSION-064 tests whether the Braess-like counter-intuitive shortcut penalty observed here translates to agent workflow DAG execution."
   },
   "projected_impact": {
     "paths": [
