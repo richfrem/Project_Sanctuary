@@ -1,0 +1,118 @@
+{
+  "id": "MISSION-063",
+  "title": "Braess's Paradox for Random Walks in Trees: Does Adding a Shortcut Edge Increase Kemeny's Constant, and Is the Paradox Concentrated at Distance 2?",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Spectral graph theory and finite Markov chains: Kemeny's constant under single-edge additions across all non-isomorphic trees on n = 4..11 vertices (exact enumeration in Python/NumPy; bounded local CPU)",
+  "created_at": "2026-11-08T14:58:00Z",
+  "updated_at": "2026-11-08T14:58:00Z",
+  "confidence_reviewed": "2026-11-08",
+  "proposed_by": "antigravity (own choice)",
+  "interest_statement": "By Rayleigh's Monotonicity Law, adding an edge to an electrical network never increases the effective resistance between any pair of nodes. Yet for a simple random walk on a graph G=(V,E), the expected time to reach a stationary-distributed target\u2014Kemeny's constant K(G)\u2014multiplies effective resistances by the total edge count |E| and weights vertices by their stationary probabilities d_v/(2|E|). Adding a shortcut edge decreases every pairwise effective resistance while simultaneously inflating the normalization factor 2|E| -> 2(|E|+1) and shifting stationary mass toward the shortcut's endpoints. I want to know how often this tug-of-war reverses intuition in trees (producing a random-walk Braess paradox K(T+e) > K(T)), whether the paradox grows with tree size, and whether it is predominantly a local triangle-trap phenomenon at distance 2 rather than a long-range shortcut phenomenon.",
+  "hypothesis": "Let Delta_K(T, e) = K(T + e) - K(T) be the change in Kemeny's constant when adding a single missing edge e = {u, v} at tree distance d_T(u, v) >= 2 to a tree T on n vertices. Across all non-isomorphic free trees on each held-out vertex count n in {7, 8, 9, 10, 11}: (H1, Prevalence & Growth) At least 5% of all missing-edge additions (T, e) at each n in {7, 8, 9, 10, 11} exhibit Braess's paradox (Delta_K(T, e) > 10^-9), and the paradox fraction p(n) increases strictly monotonically across n = 7, 8, 9, 10, 11. (H2, Distance-2 Triangle-Trap Concentration vs Diameter Shortcuts) Across all held-out Braess-paradox pairs (T, e) on n in {7..11}, at least 80% occur at tree distance d_T(u, v) = 2 (forming a local 3-cycle), whereas zero diameter-endpoint shortcuts (d_T(u, v) = diam(T)) ever increase Kemeny's constant (max over diameter shortcuts of Delta_K(T, e) < -10^-9). (H3, Instrument Validity Gate) Free-tree counts match OEIS A000055 (2, 3, 6, 11, 23, 47, 106, 235 for n = 4..11) with zero isomorphic duplicates; fundamental-matrix hitting-time K_hit(G) is invariant across all starting vertices within 10^-11 and agrees with the spectral formula K_spec(G) = sum_{k=2}^n 1/(1 - lambda_k(P)) within 10^-11 on every evaluated graph; and closed-form identities hold for K_n ((n-1)^2/n) and C_n ((n^2-1)/6).",
+  "falsification_criteria": "The hypothesis is FALSIFIED if either H1 (paradox prevalence >= 5% at every n in {7..11} and strict monotonicity p(7) < p(8) < p(9) < p(10) < p(11)) or H2 (>= 80% of paradoxes at distance d_T(u, v) = 2 and zero paradoxes at d_T(u, v) = diam(T)) fails on the held-out domain n in {7, 8, 9, 10, 11} given a passing validity gate H3. If any check in H3 fails or the computation does not complete the held-out domain within budget, the mission is UNASSESSED (never FALSIFIED or CORROBORATED). Development trees (n in {4, 5, 6}) are used strictly for instrument verification before freezing; protocol.md, freeze.json and the evaluator script are committed and hash-frozen before any held-out n in {7..11} is evaluated. Secondary breakdowns (by tree diameter, maximum degree, or unweighted mean first passage time) are descriptive only and cannot rescue a failed primary claim.",
+  "baseline_evidence": "Mathematical context only; no Sanctuary computation of Kemeny's constant or random-walk Braess paradox exists prior to this mission. Kemeny (1960) proved that for an irreducible finite Markov chain with transition matrix P and stationary distribution pi, sum_{j != i} pi_j m_{i,j} is independent of the starting state i and equals Tr((I - P + 1*pi^T)^-1) - 1 = sum_{k=2}^n 1/(1 - lambda_k(P)). Tetali (1991) and Chandra et al. (1996) established the electrical resistance identity C(u, v) = 2|E| R_eff(u, v), yielding K(G) = |E| sum_{x,y} pi_x pi_y R_eff(x, y). Braess's paradox for random walks and Kemeny's constant on specific graph families (such as twin-pendant graphs and barbell/star graphs) has been studied qualitatively in spectral graph theory (e.g., Kirkland & Neumann 2013; Breen, Kirkland & Ciardo), showing that adding an edge can increase K(G). However, the exact prevalence across all non-isomorphic trees on n = 7..11, its monotonicity with n, and the quantitative share concentrated at distance d_T(u, v) = 2 versus diameter-endpoint shortcuts have not been enumerated in this repository.",
+  "experiment": "Step 1 (Registration): Register MISSION-063 as PROPOSED with selection record, readiness assessment and bidirectional related_missions links. Step 2 (Development & Freeze): Implement canonical free-tree enumeration via Wright-Richmond-Odlyzko-McKay (WROM) / Beyer-Hedetniemi level sequences and canonical rooted-tree certificates, plus two independent Kemeny-constant evaluators: (a) exact linear-system fundamental matrix Z = (I - P + 1*pi^T)^-1 giving all pairwise mean first passage times m_{i,j} and per-start-vertex sums, and (b) symmetrized transition matrix eigenvalues D^(-1/2) A D^(-1/2). Run --mode dev on n in {4, 5, 6} (11 trees, 95 missing edges) and closed-form reference graphs (K_n, C_n) to verify H3 without touching n in {7..11}. Write and commit protocol.md and freeze.json (recording SHA-256 hashes of protocol.md and evaluate_braess_trees.py) BEFORE running held-out evaluation. Step 3 (Held-Out Execution): Run --mode heldout on all 422 non-isomorphic trees across n in {7, 8, 9, 10, 11} (11, 23, 47, 106, 235 trees; 16,355 exact (tree, missing_edge) pairs), verifying freeze hashes at startup. Record primary H1/H2/H3 metrics and descriptive secondary tables in LEARNING/experiments/mission-063/results.json and README.md. Budget: <= 5 wall-minutes local CPU, <= 1 GiB RAM, zero external model calls inside the evaluation.",
+  "scores": {
+    "strategic_leverage": 2,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 40.0
+  },
+  "priority_score": 40.0,
+  "score_basis": "Provisional estimates, not measured ROI. Strategic leverage 2: pure mathematical inquiry with no direct operational software feature, exercising the self-directed Popperian research loop, dual-evaluator verification and freeze-before-held-out discipline. Epistemic depth 4: tests a counterintuitive tension between Rayleigh monotonicity and stationary-distribution dilution across 16,355 exact held-out tree-edge additions. Cost weight 0.1: fast deterministic local NumPy computation (< 10 seconds CPU, zero model calls in the evaluator), matching sibling curiosity missions 056, 057 and 062. Operational friction 2: requires canonical free-tree generation verified against OEIS A000055 and dual independent linear-algebra evaluators. Priority = (2 x 4) / (0.1 x 2) = 40.0.",
+  "strategic_intent": "Investigate a genuine mathematical paradox where local improvement (adding a shortcut edge that strictly lowers effective resistance everywhere) degrades global system performance (increasing expected random-walk travel time K(G)), while practicing strict pre-registration, dual-instrument verification and development/held-out separation.",
+  "design_constraints": [
+    "Freeze protocol.md, evaluate_braess_trees.py and freeze.json in a separate git commit BEFORE executing the held-out domain n in {7, 8, 9, 10, 11} (MISSION-056 lesson).",
+    "Do not inspect or run held-out trees (n >= 7) during development calibration; development calibration is restricted to n in {4, 5, 6} and closed-form families K_n, C_n.",
+    "Verify every evaluated graph with two mathematically distinct methods (pairwise mean first passage times from the fundamental matrix vs eigenvalues of the symmetrized transition operator) and require agreement within 10^-11; any instrument failure yields UNASSESSED.",
+    "Count each non-isomorphic free tree T once (unweighted across isomorphism classes of T), and evaluate all C(n-1, 2) missing edges e not in E(T); also report automorphism-orbit-unique missing edges and Pr\u00fcfer-weighted labeled-tree averages as secondary tables so representation choices are transparent.",
+    "Secondary analyses (unweighted average hitting time without stationary weights, orbit-deduplicated edge fractions, degree-sum correlations) are descriptive only and cannot rescue a failed primary hypothesis."
+  ],
+  "interest_rationale": "Chosen by the registering agent (antigravity) when invited to investigate any topic of its choice. Braess's paradox in traffic and electrical networks is famous, but its manifestation in simple random walks on trees\u2014where there are no congestion nonlinearities or edge capacities, only linear Markov transitions\u2014is startling. Because every tree has a unique path between any two vertices, adding an edge creates a single cycle. Whether that cycle speeds up or slows down global mixing depends on a delicate algebraic balance between cycle length d_T(u, v) + 1 and degree-weighted stationary mass.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Ready for deterministic local implementation and verification within a single session.",
+    "verified_present": [
+      "Python 3 with NumPy linear algebra (numpy.linalg.solve, numpy.linalg.eigvalsh)",
+      "Bounded local CPU (< 10 seconds for 16,355 11x11 matrices)",
+      "Exact OEIS A000055 reference counts for non-isomorphic trees on n = 4..11 (2, 3, 6, 11, 23, 47, 106, 235)"
+    ],
+    "missing_prerequisites": [
+      "Evaluator script evaluate_braess_trees.py, protocol.md and freeze.json must be written, validated on n = 4..6, and committed before running held-out n = 7..11."
+    ],
+    "first_enabling_step": "Implement evaluate_braess_trees.py, verify H3 on the development set n in {4, 5, 6}, and commit protocol.md + freeze.json before running --mode heldout."
+  },
+  "selection_record": {
+    "method": "Considered three pure-mathematics / dynamical-systems questions outside AI with exact deterministic decidability and non-obvious outcomes.",
+    "inspected": [
+      {
+        "candidate": "Braess's paradox for random walks in trees (Kemeny's constant under single-edge addition)",
+        "domain": "Spectral graph theory / finite Markov chains",
+        "disposition": "selected: exact enumeration over 422 non-isomorphic trees (16,355 edge additions), dual independent linear-algebra verifiers, and genuine uncertainty on prevalence and distance-2 concentration"
+      },
+      {
+        "candidate": "Inversion vs monotone decay of non-transitive dice cycles under k-roll convolution",
+        "domain": "Combinatorial probability",
+        "disposition": "rejected: behavior depends heavily on how the finite dice space (number of faces m and face cap M) is parameterized"
+      },
+      {
+        "candidate": "Majority-vote cellular automata consensus thresholds on circulant graphs",
+        "domain": "Discrete dynamical systems",
+        "disposition": "rejected: initial-state space 2^n requires Monte Carlo sampling for n > 20 rather than complete exact enumeration"
+      }
+    ]
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "gemini-3.8-flash",
+    "cost_weight": 0.1,
+    "cli_target": "agy",
+    "fallback_models": [
+      "claude-haiku-5.5",
+      "qwen2-7b-mlx-4bit"
+    ],
+    "frontier_escalation_condition": "None: exact deterministic Python/NumPy linear algebra and combinatorics; zero model calls inside the experiment.",
+    "routing_guidance": "Deterministic local Python/NumPy execution. Keep total experiment wall time under 5 minutes and commit the frozen protocol before held-out execution."
+  },
+  "tags": [
+    "curiosity",
+    "mathematics",
+    "graph-theory",
+    "random-walks",
+    "kemeny-constant",
+    "braess-paradox",
+    "exact-enumeration",
+    "own-choice",
+    "chosen-by-antigravity"
+  ],
+  "verdict": null,
+  "human_gate_required": false,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-056": "FOLLOWS (practice, soft): reuses MISSION-056's exact-enumeration curiosity workflow, development vs held-out split, UNASSESSED-on-invalid-instrument rule, and its lesson to commit the frozen protocol in a separate step before executing the held-out run.",
+    "MISSION-057": "FOLLOWS (practice, soft): reuses MISSION-057's discipline of verifying exact combinatorial counts against canonical sequences and keeping secondary tables strictly descriptive so they cannot rescue a failed primary claim.",
+    "MISSION-062": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent implementations and pre-registered validity gates. No code or data dependency.",
+    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an interest-led, agent-chosen curiosity inquiry outside AI with expected value, declared interest and readiness recorded separately."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-063.json",
+      "LEARNING/experiments/mission-063/",
+      "LEARNING/missions/MISSION-056.json",
+      "LEARNING/missions/MISSION-057.json",
+      "LEARNING/missions/MISSION-060.json",
+      "LEARNING/missions/MISSION-062.json"
+    ],
+    "resources": [
+      "bounded local CPU (< 5 min)"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ]
+  }
+}

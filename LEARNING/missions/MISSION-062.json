@@ -134,7 +134,8 @@
   "related_missions": {
     "MISSION-056": "FOLLOWS (practice, soft): reuses this resolved curiosity mission's exact-computation practice, protocol.md and freeze.json, development versus held-out split, and the rule that an invalid instrument is UNASSESSED; and its lesson to sequence the freeze commit before the scoring command.",
     "MISSION-057": "FOLLOWS (practice, soft): reuses the lesson to compare against an established baseline (here the paper's proved region and published threshold table), not a naive value, and the rule that secondary tables cannot rescue a failed primary claim.",
-    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation for 060; it neither supports nor tests 060's hypothesis."
+    "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation for 060; it neither supports nor tests 060's hypothesis.",
+    "MISSION-063": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent evaluators and pre-registered validity gates. No code or data dependency."
   },
   "tags": [
     "additive-combinatorics",
