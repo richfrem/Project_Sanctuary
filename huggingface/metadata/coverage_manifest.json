@@ -1,9 +1,9 @@
 {
- "base_commit": "8845f0e04ae524b9ca17abfd2122d35c0eee466b",
+ "base_commit": "a9f4ca26770c07d15dc8d66c0eb6fa9bbf07d913",
  "dataset_records": 1391,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T16:17:20Z",
+ "generated_at": "2026-11-08T16:35:10Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 3
    },
-   "bytes": 150377,
+   "bytes": 150855,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "2605a65b3f3eaf53d5af2cefc859d5357528583496017c0557b45dce82736492",
-    "18b6caa1d88067b994689fbf3fbad7f98a42374166679ff4992670b3b5adf6c0",
-    "17d39cee07a818f3f099289ba739a9907913596d480c57bc7c859b4dedaedbbe",
-    "b63561760ddee7b02fec783f5c08aabc11d0bd7c170eed8309696f92971851a3",
+    "d482f8936cdfd60a990e06fd1b99c8d1ac54e828404bbfc839f0ba661d851442",
+    "ceed9b7583454be6c9a138d3d38c370276e67eb7a59941f301447d13502c09e7",
+    "528dbed2c9d8b0ebdec1cfd42ad5d3664385940571aaecc85c186fd43a814484",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "ee48a5dbc83bf11b036461b22699b78475e46c809cbabdd727cac11930c79b32",
+   "source_sha256": "83c0d950caa1ab8d8935d01bd8e8e16d0c7e7b38ccddf7864d291216077fde6e",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 7384,
+   "bytes": 7952,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "1ee14374c439449194a47d1095ddfed6c6cfe13a40da502f6299feddd89f4de7",
+   "source_sha256": "6434bd06d30b796400757cc938a7cb92813c604045ec4a24e22baed58e5c24a3",
    "status": "excluded"
   },
   {
@@ -27686,19 +27686,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 3090,
+   "bytes": 5297,
    "category": "knowledge_topics_concepts_research",
    "path": "LEARNING/research/README.md",
    "record_ids": [
     "LEARNING_research_README"
    ],
    "record_sha256": [
-    "1296b504889e270cf42fe3901af2ec1ed74585a872ef3a51f3448dd2ca7c5e57"
+    "18948d9d1b17bc09b3afadff173b23c2c6d7e37870853688d4e3f380220bb4cd"
    ],
    "required": true,
-   "source_sha256": "5839c1aac22e5c0cf0c6b1d9d57d98b0789786543eecdb6eed4e53b94ecc96bb",
+   "source_sha256": "cf6ab4928a33d54e25d5fac6a72fcb1842ceebc9e40f076cd74a9050c5d7e18b",
    "status": "included"
   },
   {
