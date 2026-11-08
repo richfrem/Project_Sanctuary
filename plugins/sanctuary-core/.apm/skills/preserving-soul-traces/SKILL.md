@@ -38,6 +38,8 @@ python3 scripts/sync_soul_dataset.py --check-readiness
 python3 scripts/sync_soul_dataset.py --dry-run
 ```
 
+`sync_soul_dataset.py` reads `HUGGING_FACE_*` settings from the repo `.env` itself (no python-dotenv needed; `HUGGING_FACE_TOKEN` comes from the shell) and re-runs under `.venv/bin/python` when `huggingface_hub` is missing. Set up the venv once with `.venv/bin/pip install -r requirements-dev.txt`.
+
 ## Workflow
 
 1. **Extraction**: Identify new or updated session notes, chronicle entries, or wiki concepts using `trace_extractor.py`.

@@ -44,6 +44,52 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import soul_coverage as SC  # noqa: E402  (coverage manifest, check and receipts)
 
 
+# ---------------------------------------------------------------------------
+# Runtime preflight: .env loading and interpreter selection
+# ---------------------------------------------------------------------------
+
+REPO_ROOT = Path(__file__).resolve().parents[6]  # plugins/sanctuary-core/.apm/skills/<skill>/scripts
+
+
+def load_repo_env(env_file: Path = REPO_ROOT / ".env") -> list:
+    """Load KEY=VALUE lines from the repo .env into os.environ without overriding set values.
+
+    Standard library only: the shared hf_config only reads .env when python-dotenv is
+    installed, and silently skips it otherwise. Returns the keys it set.
+    """
+    loaded = []
+    if not env_file.is_file():
+        return loaded
+    for raw in env_file.read_text().splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.removeprefix("export ").strip()
+        value = value.strip().strip('"').strip("'")
+        if key and value and not os.environ.get(key):
+            os.environ[key] = value
+            loaded.append(key)
+    return loaded
+
+
+def reexec_in_repo_venv() -> None:
+    """If huggingface_hub is missing here, re-run this script under the repo .venv (once)."""
+    try:
+        import huggingface_hub  # noqa: F401
+        return
+    except ImportError:
+        pass
+    venv_python = REPO_ROOT / ".venv" / "bin" / "python"
+    if venv_python.exists() and not os.environ.get("SANCTUARY_SYNC_REEXEC"):
+        if Path(sys.executable).resolve() != venv_python.resolve():
+            sys.stderr.write(f"huggingface_hub not importable in {sys.executable}; re-running under {venv_python}\n")
+            os.environ["SANCTUARY_SYNC_REEXEC"] = "1"
+            os.execv(str(venv_python), [str(venv_python), str(Path(__file__).resolve()), *sys.argv[1:]])
+    sys.stderr.write("huggingface_hub is not installed. Install the dev requirements into .venv: "
+                     ".venv/bin/pip install -r requirements-dev.txt\n")
+
+
 # Discover the installed location of the global managing-huggingface-assets skill.
 def find_managing_hf_skill() -> Optional[Path]:
     """Locate the global APM skill managing-huggingface-assets."""
@@ -185,6 +231,8 @@ async def execute_sync(dataset_dir: Path, hf_scripts_dir: Path, commit_msg: str,
 # Command-line entrypoint: parse flags, validate readiness, and execute Hub sync.
 def main():
     """CLI entrypoint for soul trace dataset readiness and synchronization."""
+    reexec_in_repo_venv()
+    load_repo_env()
     parser = argparse.ArgumentParser(description="Sanctuary Soul Trace Dataset Sync")
     parser.add_argument(
         "--dataset-dir",
