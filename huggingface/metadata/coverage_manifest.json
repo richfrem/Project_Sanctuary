@@ -1,9 +1,9 @@
 {
- "base_commit": "745f5c9bacdd4d0da022c5d7c0e31cc3727b3205",
+ "base_commit": "3b99d4bbbf2ca28d0da230891fef562d1b54471d",
  "dataset_records": 1387,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-08T15:54:14Z",
+ "generated_at": "2026-11-08T15:57:55Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 2
    },
-   "bytes": 146372,
+   "bytes": 147196,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -81,15 +81,15 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "2605a65b3f3eaf53d5af2cefc859d5357528583496017c0557b45dce82736492",
-    "78c70df0ec5b9f883c0872d39c56f32e9ca953b067ed8478cbc59b7ab95c9f31",
-    "49fdc584cb136dc11367105c4fd9727bfbb206f48d98583bab5091e6b15aed45",
+    "2639229d6557aef86a5093e40cf46b6af4e4a80d518059883c7e59287b1db0c5",
+    "f3486671c877d22c5674bde8a91213cee5589a9db596e5e1db790590429bda06",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "1be3808a7ffb2c62e4b0f77eb9f6b32f770d8c631a43873c9d826a7e65fde760",
+   "source_sha256": "0b15dc1cb1fa141ccaea9ac23d7be82fef08388831435e53b0dd9825e120c725",
    "status": "included"
   },
   {
@@ -128,12 +128,12 @@
    "status": "included"
   },
   {
-   "bytes": 4544,
+   "bytes": 5112,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "d6ef7c9855400629acd2d763ec49cc3eda57d0e5fbd0a7c9b7bc0abcd988ffbb",
+   "source_sha256": "7bec8af92379020831c44394a36b6d9d890c098fa3608195a92bb2755f08ce4d",
    "status": "excluded"
   },
   {
@@ -26130,7 +26130,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 12030,
    "category": "experiment_knowledge",
