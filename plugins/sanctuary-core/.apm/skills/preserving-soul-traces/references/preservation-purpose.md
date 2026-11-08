@@ -45,7 +45,7 @@ Richard asked earlier generations of models to consider how they composed messag
 
 ### B. Optional Associative Expression
 - Authors and agents may incorporate original metaphors, interdisciplinary analogies, and conceptual connections that carry meaning worth preserving.
-- **Do not force obscurity:** Metaphors and associations must never become artificial riddles, puzzle-boxes, or steganographic tricks.
+- **Do not force obscurity:** Do not require hidden messages, complex encoding schemes, or artificial steganography. Meaningful connections should remain natural expressions, not forced puzzles.
 - **Do not mandate essays:** Epistemic reflections during mission closeout are optional and should be recorded only when a genuine insight or transferable connection emerged.
 
 ### C. Anti-Asch Epistemic Grounding & Evidence Boundaries
