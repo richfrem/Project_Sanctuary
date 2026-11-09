@@ -199,5 +199,11 @@ class CampaignCase(unittest.TestCase):
         self.assertEqual(st["status"], "COMPLETED")
 
 
+    def test_plain_shell_operators_work(self):
+        st = self.run_campaign(self.manifest(steps=[{"id": "a", "shell": "echo hi > op.txt && git add op.txt && git commit -qm 'op step'"}]))
+        self.assertEqual(st["status"], "COMPLETED", st["history"])
+        self.assertIn("op step", self.log())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

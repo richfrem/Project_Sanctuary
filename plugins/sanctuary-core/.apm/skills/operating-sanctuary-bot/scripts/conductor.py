@@ -24,6 +24,7 @@ import argparse
 import fnmatch
 import json
 import os
+import shlex
 import signal
 import subprocess
 import sys
@@ -208,7 +209,10 @@ class Conductor:
                step_mission(self.m, step_id), "--authorized-by", self.m["authorized_by"], "--id", jid,
                "--timeout", str(self.rails["step_timeout_sec"]), "--cwd", self.wt]
         if eng["cli"] == "shell":
-            cmd += ["--shell", shell_cmd.replace("{context_file}", str(ctx_file))]
+            # Run through the platform shell so &&, |, > and quoting behave as written.
+            line = shell_cmd.replace("{context_file}", str(ctx_file))
+            wrapped = f"cmd /c {line}" if os.name == "nt" else "sh -c " + shlex.quote(line)
+            cmd += ["--shell", wrapped]
         else:
             cmd += ["--cli", eng["cli"], "--instruction", text]
             if eng.get("model"):
