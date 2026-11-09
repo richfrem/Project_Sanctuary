@@ -1,6 +1,6 @@
 # How the conductor decides
 
-`scripts/campaign.py` (`Conductor.run`) with selection in `scripts/triage.py`. One step at a time; zero tokens between steps (it sleeps while polling the daemon job file).
+`scripts/conductor.py` (`Conductor.run`, internal; started by the bot for each run) with selection in `scripts/triage.py`. One step at a time; zero tokens between steps (it sleeps while polling the daemon job file).
 
 ## Contents
 - [Each cycle](#each-cycle) • [Prompt hand-off](#prompt-hand-off) • [Evaluation](#evaluation) • [Failure handling](#failure-handling) • [Limits](#limits)

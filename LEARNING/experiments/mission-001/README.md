@@ -3,7 +3,7 @@
 **Verdict: CORROBORATED** on amended confirmatory run 2 (`freeze_v2.json`, commit `800a9bc9f`). Run 1 (`freeze.json`, commit `00a0cda4d`) failed C2 because of a test-design defect; the defect, the amendment and an operator mistake are disclosed in `protocol.md`.
 
 ## What was built
-`sanctuary_daemon.py` (stdlib, about 400 lines): a kqueue file watcher on a job queue, an authorization and policy gate, an isolated process-group runner (shell commands, or agent CLIs through `cli-agent` `run_agent.py --isolated`), a hard SIGTERM/SIGKILL timeout, a 3-failure circuit breaker (BLOCKED_ON_HUMAN until `reset`), single-instance locking, atomic job writes and crash recovery. Supported copy: the new `running-sanctuary-daemon` skill. Sequence diagram: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd`.
+`sanctuary_daemon.py` (stdlib, about 400 lines): a kqueue file watcher on a job queue, an authorization and policy gate, an isolated process-group runner (shell commands, or agent CLIs through `cli-agent` `run_agent.py --isolated`), a hard SIGTERM/SIGKILL timeout, a 3-failure circuit breaker (BLOCKED_ON_HUMAN until `reset`), single-instance locking, atomic job writes and crash recovery. Supported copy: the `operating-sanctuary-bot` skill (Sanctuary Bot), which merged the original `running-sanctuary-daemon` skill on 2026-11-09. Sequence diagram: `plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd`.
 
 ## Results (`evidence/confirm_v2_results.json`)
 | Criterion | Result |

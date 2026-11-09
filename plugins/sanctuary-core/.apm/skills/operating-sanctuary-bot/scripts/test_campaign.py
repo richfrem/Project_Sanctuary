@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for campaign.py + triage.py against a real daemon and real git worktrees (no model calls).
+"""Tests for conductor.py + triage.py against a real daemon and real git worktrees (no model calls).
 
 Run: python3 test_campaign.py
 """
@@ -13,9 +13,9 @@ import unittest
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-CAMPAIGN = HERE / "campaign.py"
+CAMPAIGN = HERE / "conductor.py"
 sys.path.insert(0, str(HERE))
-import campaign  # noqa: E402
+import conductor as campaign  # noqa: E402
 import triage  # noqa: E402
 
 DAEMON = campaign.DAEMON

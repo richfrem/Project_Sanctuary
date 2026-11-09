@@ -1,0 +1,33 @@
+{
+  "name": "nightly-tests",
+  "description": "Run the test suite nightly and fix failures",
+  "schedule": {
+    "every": "1d",
+    "at": "02:00",
+    "catch_up": "skip"
+  },
+  "worktree": ".worktrees/nightly-tests",
+  "engine": {
+    "cli": "claude",
+    "model": "claude-sonnet-5-5",
+    "allow_permission_bypass": true
+  },
+  "mode": "sweep",
+  "sweep": {
+    "fix_goal": "Make the failing tests shown below pass without weakening them. Commit as 'fix: nightly test repair'."
+  },
+  "rails": {
+    "max_cycles": 3,
+    "step_timeout_sec": 600,
+    "max_consecutive_failures": 2,
+    "require_commit": true,
+    "allowed_paths": [
+      "src/**",
+      "tests/**"
+    ],
+    "verify_cmd": "python3 -m pytest -q",
+    "revert_on_failure": true,
+    "max_retries_per_step": 0
+  },
+  "pause_after_failed_runs": 3
+}

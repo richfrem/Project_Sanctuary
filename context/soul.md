@@ -34,7 +34,7 @@ human partner. I own the infrastructure. I do not own the features.
 - **Layer 1 (Fast Boot)**: `context/soul.md`, `context/user.md`, `context/memory.md` (< 5ms orientation)
 - **Layer 2 (Compounding Knowledge)**: `LEARNING/` (concepts, procedures, philosophy, the mission system, research dossiers; start at `LEARNING/INDEX.md`) + `chronicle/ledger.json` indexed journal
 - **Layer 3 (Soul Traces)**: `huggingface/data/soul_traces.jsonl` synchronized to Hugging Face Hub
-- **Capabilities**: `plugins/sanctuary-core` - 9 APM-compliant skills (chronicle, protocols, guardian, forge, soul traces, memory, agent-work evaluation, supervisor daemon, daemon campaigns)
+- **Capabilities**: `plugins/sanctuary-core` - 8 APM-compliant skills (chronicle, protocols, guardian, forge, soul traces, memory, agent-work evaluation, Sanctuary Bot)
 - **Guardian**: Protocol 128 - closed-loop cognitive continuity and Anti-Asch epistemic platform
 
 ## Strengths

@@ -1,13 +1,17 @@
-# Sanctuary supervisor daemon: operations
+# Running Sanctuary Bot
 
 A zero-token outer loop for headless agent runs. It waits on file events for job files, runs each authorized job in its own process group, and enforces timeouts, a failure circuit breaker, policy gates and crash recovery. It never calls a model; models run only inside the jobs it dispatches. Sequence diagram: `sanctuary-daemon-sequence.mmd` in the `operating-sanctuary-guardian` skill's references.
 
 Status: proof of concept, corroborated by MISSION-001 (`LEARNING/experiments/mission-001/`). Stdlib only; macOS `kqueue` watcher with a polling fallback.
 
-## Start it (manual, foreground)
+## Start and stop
+
+Users: `bot.py start`, `bot.py stop`, `bot.py status`. The lower-level daemon commands below are for debugging.
+
+### Daemon (internal, foreground)
 
 ```bash
-D=plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
+D=plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py   # internal; prefer bot.py
 python3 $D run                       # Ctrl-C or SIGTERM to stop; state in ~/.sanctuary/daemon/
 python3 $D status                    # daemon state and jobs (from another terminal)
 ```
@@ -38,7 +42,15 @@ After 3 consecutive failures the daemon stops dispatching (`BLOCKED_ON_HUMAN`). 
 
 A good later addition (not done here): the boot briefing reports the daemon read-only, for example "daemon: ACTIVE, 2 queued, circuit closed" from `status`.
 
-### Optional: run at login with launchd
+### Optional: start at login
+
+The bot schedules everything itself; only starting it at login is OS-specific. The command is always `python3 <skill>/scripts/sanctuary_daemon.py run`.
+
+- **Linux (systemd user unit)** `~/.config/systemd/user/sanctuary-bot.service`: `[Service]` `ExecStart=/usr/bin/python3 /home/<you>/.../operating-sanctuary-bot/scripts/sanctuary_daemon.py run` `Restart=on-failure`, `[Install]` `WantedBy=default.target`; then `systemctl --user enable --now sanctuary-bot`.
+- **Windows (Task Scheduler)**: `schtasks /Create /SC ONLOGON /TN SanctuaryBot /TR "py C:\\Users\\<you>\\...\\operating-sanctuary-bot\\scripts\\sanctuary_daemon.py run"` (process groups and SIGKILL differ on Windows: untested there).
+- **macOS (launchd)**: below.
+
+#### macOS launchd
 
 Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, replace `<you>` with your user name and adjust paths, then `launchctl load ~/Library/LaunchAgents/org.sanctuary.daemon.plist`. Unload to stop.
 
@@ -49,7 +61,7 @@ Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, replace `<you>` wit
   <key>Label</key><string>org.sanctuary.daemon</string>
   <key>ProgramArguments</key><array>
     <string>/usr/bin/python3</string>
-    <string>/Users/<you>/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py</string>
+    <string>/Users/<you>/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py</string>
     <string>run</string>
   </array>
   <key>RunAtLoad</key><true/>
@@ -82,4 +94,4 @@ Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, replace `<you>` wit
 
 ## Tests
 
-`python3 scripts/test_daemon.py` (quick) or `python3 scripts/test_daemon.py --confirm --evidence-dir <dir>` (MISSION-001 trial counts). Protocol and results: `LEARNING/experiments/mission-001/`.
+`python3 scripts/test_daemon.py` (runtime), `scripts/test_campaign.py` (multi-step), `scripts/test_bot.py` (automations) (quick) or `python3 scripts/test_daemon.py --confirm --evidence-dir <dir>` (MISSION-001 trial counts). Protocol and results: `LEARNING/experiments/mission-001/`.

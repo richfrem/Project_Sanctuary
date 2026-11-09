@@ -63,9 +63,9 @@
       "architecture.md",
       "chronicle/entries/",
       "context/soul.md",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/SKILL.md",
       "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd",
-      "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/",
       "plugins/sanctuary-core/README.md"
     ],
     "resources": [
@@ -127,7 +127,8 @@
   "related_missions": {
     "MISSION-005": "SIBLING: asynchronous multi-bot DAG barrier orchestration; a future consumer of the daemon's dispatch loop.",
     "MISSION-033": "SIBLING: single-orchestrator parallel delivery; overlaps on dispatch and supervision.",
-    "MISSION-038": "DEPENDS ON (soft): lease fencing and idempotent transitions the daemon should reuse rather than rebuild."
+    "MISSION-038": "DEPENDS ON (soft): lease fencing and idempotent transitions the daemon should reuse rather than rebuild.",
+    "MISSION-069": "EXTENDED BY: MISSION-069 governs automations proposed by missions and agents on the bot this mission built."
   },
   "preservation_obligation": {
     "required": true,

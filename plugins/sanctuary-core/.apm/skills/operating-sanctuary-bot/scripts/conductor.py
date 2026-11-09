@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""campaign.py - zero-token campaign conductor on top of the Sanctuary supervisor daemon.
+"""conductor.py - zero-token multi-step conductor for Sanctuary Bot runs (internal; users use bot.py).
 
 The conductor is the "brain": it picks the next step (triage), assembles the step prompt from
 the git trail and the last verification, hands the step to the daemon (the "muscle": gates,
@@ -12,11 +12,11 @@ Modes: pipeline (declared order + depends_on), backlog (highest priority first; 
 inherit a linked mission's priority_score), sweep (verify -> fix until verify passes).
 
 Usage:
-  campaign.py validate MANIFEST
-  campaign.py launch   MANIFEST [--start-daemon] [--home DIR]   # detached; prints PIDs and logs
-  campaign.py run      CAMPAIGN_ID [--home DIR]                  # foreground conductor (launch uses this)
-  campaign.py status   [CAMPAIGN_ID] [--home DIR]
-  campaign.py stop     CAMPAIGN_ID [--home DIR]
+  conductor.py validate MANIFEST
+  conductor.py launch   MANIFEST [--start-daemon] [--home DIR]   # detached; prints PIDs and logs
+  conductor.py run      CAMPAIGN_ID [--home DIR]                  # foreground conductor (launch uses this)
+  conductor.py status   [CAMPAIGN_ID] [--home DIR]
+  conductor.py stop     CAMPAIGN_ID [--home DIR]
 """
 from __future__ import annotations
 
@@ -34,8 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import triage  # noqa: E402
 
 HOME = Path(os.environ.get("SANCTUARY_DAEMON_HOME", Path.home() / ".sanctuary" / "daemon"))
-DAEMON = Path(os.environ.get("SANCTUARY_DAEMON_SCRIPT", Path(__file__).resolve().parents[2]
-                             / "running-sanctuary-daemon" / "scripts" / "sanctuary_daemon.py"))
+DAEMON = Path(os.environ.get("SANCTUARY_DAEMON_SCRIPT", Path(__file__).resolve().parent / "sanctuary_daemon.py"))
 DEFAULT_RAILS = {"max_cycles": 5, "step_timeout_sec": 300, "max_consecutive_failures": 2,
                  "require_commit": True, "allowed_paths": ["**"], "verify_cmd": None,
                  "verify_timeout_sec": 300, "verify_scope": "each_step", "revert_on_failure": False,
@@ -178,6 +177,8 @@ class Conductor:
 
     def prompt(self, goal: str, retry_ctx: str | None) -> str:
         parts = []
+        if self.m.get("previous_run"):
+            parts.append("PREVIOUS RUN OF THIS AUTOMATION: " + self.m["previous_run"])
         ls = self.state.get("last_summary")
         if ls:
             parts.append("PREVIOUS STEP: " + ls)
@@ -381,7 +382,7 @@ def cmd_launch(home: Path, manifest: Path, start_daemon: bool) -> int:
     cp = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--home", str(home), "run", m["id"]],
                           stdout=clog, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
     out.update({"conductor_pid": cp.pid, "state": str(d / "state.json"), "log": str(d / "conductor.log"),
-                "job_logs": str(home / "logs"), "stop": f"campaign.py stop {m['id']}"})
+                "job_logs": str(home / "logs"), "stop": f"conductor.py stop {m['id']}"})
     print(json.dumps(out, indent=2))
     return 0
 

@@ -145,7 +145,8 @@
     "MISSION-058": "EXTENDS CONTEXT: follows the external-content research and successor-handoff path exercised by 058; does not repeat its investigation.",
     "MISSION-030": "RELATED: examines how persistent snapshots and hooks interact with provenance and authority; does not depend on the specific hook implementation.",
     "MISSION-026": "CONSUMES CONTEXT: assesses the existing worktree and lease coordination boundary; does not assume it is a security sandbox.",
-    "MISSION-038": "VALIDATES / RELATED, NOT A DEPENDENCY: examines crash-safe lease claims as an open proposed control; does not assume the proposal is implemented."
+    "MISSION-038": "VALIDATES / RELATED, NOT A DEPENDENCY: examines crash-safe lease claims as an open proposed control; does not assume the proposal is implemented.",
+    "MISSION-069": "SIBLING: MISSION-069 covers agent-proposed automations and self-approval as a trust boundary."
   },
   "verdict": null,
   "evidence": [],

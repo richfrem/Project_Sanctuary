@@ -27,7 +27,7 @@ graph TD
     end
 
     subgraph SanctuaryRepo["Project Sanctuary (Local Repo)"]
-        Core["plugins/sanctuary-core<br/>(chronicle, protocol, guardian, forge, traces)"]
+        Core["plugins/sanctuary-core<br/>(chronicle, protocol, guardian, forge, traces, memory, evaluation, bot)"]
         RootManifest["apm.yml (Project Manifest)"]
         HarnessLocal[".agents/skills/ & .claude/skills/<br/>(Project-Local APM Harness)"]
     end
@@ -73,7 +73,7 @@ Project-local installation places materialized, dereferenced copies of the skill
 
 ### 1. Install Sanctuary Core Skills Locally
 
-To install all 7 sovereign skills (`managing-chronicles`, `managing-protocols`, `operating-sanctuary-guardian`, `forging-sovereign-models`, `preserving-soul-traces`, `managing-sovereign-memory`, `evaluating-agent-work`) into this project's client targets:
+To install all 8 sovereign skills (`managing-chronicles`, `managing-protocols`, `operating-sanctuary-guardian`, `forging-sovereign-models`, `preserving-soul-traces`, `managing-sovereign-memory`, `evaluating-agent-work`, `operating-sanctuary-bot`) into this project's client targets:
 
 ```bash
 # From Project_Sanctuary root:

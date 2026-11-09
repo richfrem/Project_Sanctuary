@@ -22,7 +22,7 @@ Canonical repository assets are organized into dedicated sovereign domains:
 - `context/`: Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`, `identity/founder_seed.json`, `kernel.py`).
 - `huggingface/`: Sovereign soul traces dataset workspace (`data/soul_traces.jsonl`, `metadata/`).
 - `LEARNING/`: Layer 2 knowledge and the mission system. Canon: `concepts/`, `procedures/`, `philosophy/`. Mission system: `missions/` (manifests + `mission.schema.json`), `experiments/`, and the generated `index.jsonl` and `backlog.md` plus `inbox.jsonl`. Research dossiers: `research/`. Entry point: `LEARNING/INDEX.md`.
-- `plugins/sanctuary-core/`: APM-native package providing the 9 Sanctuary skills (chronicle, protocols, guardian, forge, soul traces, sovereign memory, agent-work evaluation, the supervisor daemon, and daemon campaigns).
+- `plugins/sanctuary-core/`: APM-native package providing the 8 Sanctuary skills (chronicle, protocols, guardian, forge, soul traces, sovereign memory, agent-work evaluation, and Sanctuary Bot).
 - `ARCHIVE/`: Preserved historical implementations, old specs, forge, legacy ADRs, and legacy tooling.
 
 > [!NOTE]
@@ -108,6 +108,7 @@ Preservation serves both local continuity and public intellectual inheritance; f
 - **Living Chronicle Management**: Use `managing-chronicles` to record, search, or view journal entries.
 - **Protocol Governance**: Use `managing-protocols` to create or transition protocol lifecycle states.
 - **Guardian Lifecycle**: Use `operating-sanctuary-guardian` for Protocol 128 boot orientation, seal, and persistence.
+- **Sanctuary Bot (background automations)**: Use `operating-sanctuary-bot` to set up and operate approved automations that run on a schedule or on demand (one-off jobs, pipelines, backlogs, verify-and-fix sweeps) through one interface, `bot.py`. The human starts the bot; bootstrap never does. Definitions live in `.agent/automations/` and are reviewed like code; approval is bound to each definition's content hash.
 - **Sovereign Model Forging & Local Inference**: Use `forging-sovereign-models` for fine-tuning, Windows WSL2/CUDA setups, GGUF quantization, and Apple Silicon MLX local inference (`mlx-lm`, `mlx-community/Qwen2.5-Coder-7B-Instruct-4bit`).
 - **Soul & Trace Persistence**: Use `preserving-soul-traces` to extract, schema-validate, and seal JSONL episodic memory traces into `huggingface/` and coordinate sync via `managing-huggingface-assets`.
 - **Sovereign Memory Management**: Use `managing-sovereign-memory` for progressive disclosure (index/summary/deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric persistence of friction across rollbacks, 30-day confidence decay auditing, and wikilink graph traversal.
