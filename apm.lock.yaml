@@ -187,6 +187,17 @@ dependencies:
   - .agents/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
   - .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
   - .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
+  - .agents/skills/orchestrating-daemon-campaigns
+  - .agents/skills/orchestrating-daemon-campaigns/SKILL.md
+  - .agents/skills/orchestrating-daemon-campaigns/assets/example-campaign.json
+  - .agents/skills/orchestrating-daemon-campaigns/evals/evals.json
+  - .agents/skills/orchestrating-daemon-campaigns/evals/results.tsv
+  - .agents/skills/orchestrating-daemon-campaigns/references/campaign-interview.md
+  - .agents/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md
+  - .agents/skills/orchestrating-daemon-campaigns/references/conductor-loop.md
+  - .agents/skills/orchestrating-daemon-campaigns/scripts/campaign.py
+  - .agents/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py
+  - .agents/skills/orchestrating-daemon-campaigns/scripts/triage.py
   - .agents/skills/preserving-soul-traces
   - .agents/skills/preserving-soul-traces/SKILL.md
   - .agents/skills/preserving-soul-traces/evals/evals.json
@@ -211,6 +222,7 @@ dependencies:
   - .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md
   - .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
   - .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py
+  - .agents/skills/running-sanctuary-daemon/scripts/verify_health.py
   - .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
   - .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
   - .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc
@@ -392,6 +404,17 @@ dependencies:
   - .claude/skills/operating-sanctuary-guardian/tests/test_usage_hook.py
   - .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py
   - .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py
+  - .claude/skills/orchestrating-daemon-campaigns
+  - .claude/skills/orchestrating-daemon-campaigns/SKILL.md
+  - .claude/skills/orchestrating-daemon-campaigns/assets/example-campaign.json
+  - .claude/skills/orchestrating-daemon-campaigns/evals/evals.json
+  - .claude/skills/orchestrating-daemon-campaigns/evals/results.tsv
+  - .claude/skills/orchestrating-daemon-campaigns/references/campaign-interview.md
+  - .claude/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md
+  - .claude/skills/orchestrating-daemon-campaigns/references/conductor-loop.md
+  - .claude/skills/orchestrating-daemon-campaigns/scripts/campaign.py
+  - .claude/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py
+  - .claude/skills/orchestrating-daemon-campaigns/scripts/triage.py
   - .claude/skills/preserving-soul-traces
   - .claude/skills/preserving-soul-traces/SKILL.md
   - .claude/skills/preserving-soul-traces/evals/evals.json
@@ -416,6 +439,7 @@ dependencies:
   - .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md
   - .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
   - .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py
+  - .claude/skills/running-sanctuary-daemon/scripts/verify_health.py
   - .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
   - .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc
   - .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc
@@ -633,6 +657,16 @@ dependencies:
     .agents/skills/operating-sanctuary-guardian/tests/test_usage_hook.py: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
     .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py: sha256:e9cf804507f0cd370612e3acce328e7525aa6003b419714734d5b1e83ff4dbb4
     .agents/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py: sha256:20057c6834f7f4c33a9c9201faddcdc783305c9d854394546d3594dc1252252c
+    .agents/skills/orchestrating-daemon-campaigns/SKILL.md: sha256:39b0e909559c02063a62d8a9cbd8c84d53de97ed5a4816b2ef7967946764ceb2
+    .agents/skills/orchestrating-daemon-campaigns/assets/example-campaign.json: sha256:db29ed1978747b5709b5a319a3b6dfe09fb943582bad6ffbdacc978bf9d5a04a
+    .agents/skills/orchestrating-daemon-campaigns/evals/evals.json: sha256:1de53f0153872c510fb9818a78413b9f22e72b7c2b9a89c3733d65c5afef3bdd
+    .agents/skills/orchestrating-daemon-campaigns/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
+    .agents/skills/orchestrating-daemon-campaigns/references/campaign-interview.md: sha256:632a18f5dda197f909d5059f8c28a8ab497f0d443650f6292c8cd2a51616df71
+    .agents/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md: sha256:449fc902e853b071cc27c96bbc2dd554542862478c46e0aee77609e1a27235b6
+    .agents/skills/orchestrating-daemon-campaigns/references/conductor-loop.md: sha256:01e7095e7fd4b0175d1254cfa2dc1dd02eb69989c15c866dc04085d6cd4c9204
+    .agents/skills/orchestrating-daemon-campaigns/scripts/campaign.py: sha256:7e0588cb24652edf25916b5ad749e64aac04f9638e54d4e98cb757565189d3ec
+    .agents/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py: sha256:1145b93465319f21b9284f77d7423dbd28a5c4a426df425fa825585357d66406
+    .agents/skills/orchestrating-daemon-campaigns/scripts/triage.py: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
     .agents/skills/preserving-soul-traces/SKILL.md: sha256:b51ae9b5c683062f21912fec4c0dcb20d9b1d7ae0166efeb75b59e79d5daa9a9
     .agents/skills/preserving-soul-traces/evals/evals.json: sha256:518ef4a1687e0587bf067104e99ad15d5bcdf18c4277be6ac84990f44c0488c7
     .agents/skills/preserving-soul-traces/references/acceptance-criteria.md: sha256:c401e444f0f37a8c5cfc888e989be6e51a7a5b0e6fc155cc90c23e5767751df4
@@ -649,12 +683,13 @@ dependencies:
     .agents/skills/preserving-soul-traces/tests/test_soul_coverage.py: sha256:ba1c6751163619797d6d3481e4da1333aa895239241cc7f40c1a27d2dfb146e7
     .agents/skills/preserving-soul-traces/tests/test_startup_readonly.py: sha256:f1871c4ceb4eaa6906cfe17613ae3b13e850b923d6b5a616e43e39f5fe121e4b
     .agents/skills/preserving-soul-traces/tests/test_sync_env.py: sha256:bd31456d3b64b3f0ca13d2c38946d32e99659f1418e79c8a473ac664562d4979
-    .agents/skills/running-sanctuary-daemon/SKILL.md: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+    .agents/skills/running-sanctuary-daemon/SKILL.md: sha256:76affad78a24442e22aebaa8b2fe4f568b0f27b63520be97a2661b9131fa228f
     .agents/skills/running-sanctuary-daemon/evals/evals.json: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
-    .agents/skills/running-sanctuary-daemon/references/operations.md: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+    .agents/skills/running-sanctuary-daemon/references/operations.md: sha256:9d6ed914b96bfb399ce38c3bf7f108dbac3e8c091b828713645c9928bd5d8da3
     .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
     .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
     .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+    .agents/skills/running-sanctuary-daemon/scripts/verify_health.py: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc: sha256:fb21dd0702284b0790eac8cffb37a72dfaa2f2ad1e4eb286805481ef2722bca2
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:6ec1e5b4fa31b9d7fd9864e5cc5f828db737617960eda5435b20b53b88142e21
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc: sha256:e9e3f7b94b29941aaa8dc9903fb3be58d0a85ec62a3a91ff15412144e5fb513a
@@ -830,6 +865,16 @@ dependencies:
     .claude/skills/operating-sanctuary-guardian/tests/test_usage_hook.py: sha256:b769881cb2c3323e66a3fad7a9583fb3ac09b394abc011e21168fe2938df80c0
     .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_installed.py: sha256:e9cf804507f0cd370612e3acce328e7525aa6003b419714734d5b1e83ff4dbb4
     .claude/skills/operating-sanctuary-guardian/tests/test_wakeup_missions.py: sha256:20057c6834f7f4c33a9c9201faddcdc783305c9d854394546d3594dc1252252c
+    .claude/skills/orchestrating-daemon-campaigns/SKILL.md: sha256:39b0e909559c02063a62d8a9cbd8c84d53de97ed5a4816b2ef7967946764ceb2
+    .claude/skills/orchestrating-daemon-campaigns/assets/example-campaign.json: sha256:db29ed1978747b5709b5a319a3b6dfe09fb943582bad6ffbdacc978bf9d5a04a
+    .claude/skills/orchestrating-daemon-campaigns/evals/evals.json: sha256:1de53f0153872c510fb9818a78413b9f22e72b7c2b9a89c3733d65c5afef3bdd
+    .claude/skills/orchestrating-daemon-campaigns/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
+    .claude/skills/orchestrating-daemon-campaigns/references/campaign-interview.md: sha256:632a18f5dda197f909d5059f8c28a8ab497f0d443650f6292c8cd2a51616df71
+    .claude/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md: sha256:449fc902e853b071cc27c96bbc2dd554542862478c46e0aee77609e1a27235b6
+    .claude/skills/orchestrating-daemon-campaigns/references/conductor-loop.md: sha256:01e7095e7fd4b0175d1254cfa2dc1dd02eb69989c15c866dc04085d6cd4c9204
+    .claude/skills/orchestrating-daemon-campaigns/scripts/campaign.py: sha256:7e0588cb24652edf25916b5ad749e64aac04f9638e54d4e98cb757565189d3ec
+    .claude/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py: sha256:1145b93465319f21b9284f77d7423dbd28a5c4a426df425fa825585357d66406
+    .claude/skills/orchestrating-daemon-campaigns/scripts/triage.py: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
     .claude/skills/preserving-soul-traces/SKILL.md: sha256:b51ae9b5c683062f21912fec4c0dcb20d9b1d7ae0166efeb75b59e79d5daa9a9
     .claude/skills/preserving-soul-traces/evals/evals.json: sha256:518ef4a1687e0587bf067104e99ad15d5bcdf18c4277be6ac84990f44c0488c7
     .claude/skills/preserving-soul-traces/references/acceptance-criteria.md: sha256:c401e444f0f37a8c5cfc888e989be6e51a7a5b0e6fc155cc90c23e5767751df4
@@ -846,12 +891,13 @@ dependencies:
     .claude/skills/preserving-soul-traces/tests/test_soul_coverage.py: sha256:ba1c6751163619797d6d3481e4da1333aa895239241cc7f40c1a27d2dfb146e7
     .claude/skills/preserving-soul-traces/tests/test_startup_readonly.py: sha256:f1871c4ceb4eaa6906cfe17613ae3b13e850b923d6b5a616e43e39f5fe121e4b
     .claude/skills/preserving-soul-traces/tests/test_sync_env.py: sha256:bd31456d3b64b3f0ca13d2c38946d32e99659f1418e79c8a473ac664562d4979
-    .claude/skills/running-sanctuary-daemon/SKILL.md: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+    .claude/skills/running-sanctuary-daemon/SKILL.md: sha256:76affad78a24442e22aebaa8b2fe4f568b0f27b63520be97a2661b9131fa228f
     .claude/skills/running-sanctuary-daemon/evals/evals.json: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
-    .claude/skills/running-sanctuary-daemon/references/operations.md: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+    .claude/skills/running-sanctuary-daemon/references/operations.md: sha256:9d6ed914b96bfb399ce38c3bf7f108dbac3e8c091b828713645c9928bd5d8da3
     .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
     .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
     .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+    .claude/skills/running-sanctuary-daemon/scripts/verify_health.py: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc: sha256:fb21dd0702284b0790eac8cffb37a72dfaa2f2ad1e4eb286805481ef2722bca2
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:6ec1e5b4fa31b9d7fd9864e5cc5f828db737617960eda5435b20b53b88142e21
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc: sha256:e9e3f7b94b29941aaa8dc9903fb3be58d0a85ec62a3a91ff15412144e5fb513a
@@ -2348,6 +2394,105 @@ deployments:
   content_hash: sha256:20057c6834f7f4c33a9c9201faddcdc783305c9d854394546d3594dc1252252c
 - kind: project-relative
   target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: null
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:39b0e909559c02063a62d8a9cbd8c84d53de97ed5a4816b2ef7967946764ceb2
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/assets/example-campaign.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:db29ed1978747b5709b5a319a3b6dfe09fb943582bad6ffbdacc978bf9d5a04a
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/evals/evals.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:1de53f0153872c510fb9818a78413b9f22e72b7c2b9a89c3733d65c5afef3bdd
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/evals/results.tsv
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/references/campaign-interview.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:632a18f5dda197f909d5059f8c28a8ab497f0d443650f6292c8cd2a51616df71
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:449fc902e853b071cc27c96bbc2dd554542862478c46e0aee77609e1a27235b6
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/references/conductor-loop.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:01e7095e7fd4b0175d1254cfa2dc1dd02eb69989c15c866dc04085d6cd4c9204
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/scripts/campaign.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e0588cb24652edf25916b5ad749e64aac04f9638e54d4e98cb757565189d3ec
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:1145b93465319f21b9284f77d7423dbd28a5c4a426df425fa825585357d66406
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/orchestrating-daemon-campaigns/scripts/triage.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+- kind: project-relative
+  target: antigravity
   value: .agents/skills/preserving-soul-traces
   runtime: null
   scope: project
@@ -2516,7 +2661,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+  content_hash: sha256:76affad78a24442e22aebaa8b2fe4f568b0f27b63520be97a2661b9131fa228f
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/evals/evals.json
@@ -2534,7 +2679,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+  content_hash: sha256:9d6ed914b96bfb399ce38c3bf7f108dbac3e8c091b828713645c9928bd5d8da3
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md
@@ -2562,6 +2707,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/running-sanctuary-daemon/scripts/verify_health.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
 - kind: project-relative
   target: claude
   value: .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
@@ -4193,6 +4347,105 @@ deployments:
   content_hash: sha256:20057c6834f7f4c33a9c9201faddcdc783305c9d854394546d3594dc1252252c
 - kind: project-relative
   target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:39b0e909559c02063a62d8a9cbd8c84d53de97ed5a4816b2ef7967946764ceb2
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/assets/example-campaign.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:db29ed1978747b5709b5a319a3b6dfe09fb943582bad6ffbdacc978bf9d5a04a
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/evals/evals.json
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:1de53f0153872c510fb9818a78413b9f22e72b7c2b9a89c3733d65c5afef3bdd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/evals/results.tsv
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/references/campaign-interview.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:632a18f5dda197f909d5059f8c28a8ab497f0d443650f6292c8cd2a51616df71
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:449fc902e853b071cc27c96bbc2dd554542862478c46e0aee77609e1a27235b6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/references/conductor-loop.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:01e7095e7fd4b0175d1254cfa2dc1dd02eb69989c15c866dc04085d6cd4c9204
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/scripts/campaign.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:7e0588cb24652edf25916b5ad749e64aac04f9638e54d4e98cb757565189d3ec
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:1145b93465319f21b9284f77d7423dbd28a5c4a426df425fa825585357d66406
+- kind: project-relative
+  target: claude
+  value: .claude/skills/orchestrating-daemon-campaigns/scripts/triage.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+- kind: project-relative
+  target: claude
   value: .claude/skills/preserving-soul-traces
   runtime: null
   scope: project
@@ -4361,7 +4614,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+  content_hash: sha256:76affad78a24442e22aebaa8b2fe4f568b0f27b63520be97a2661b9131fa228f
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/evals/evals.json
@@ -4379,7 +4632,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+  content_hash: sha256:9d6ed914b96bfb399ce38c3bf7f108dbac3e8c091b828713645c9928bd5d8da3
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md
@@ -4407,6 +4660,15 @@ deployments:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
   content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+- kind: project-relative
+  target: claude
+  value: .claude/skills/running-sanctuary-daemon/scripts/verify_health.py
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
 - kind: project-relative
   target: codex
   value: .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
