@@ -26,5 +26,21 @@
   {
     "query": "How do I boil an egg?",
     "should_trigger": false
+  },
+  {
+    "query": "I want a Grok Bot style autonomous agent that keeps working while I'm away",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a bot that works through these three tasks overnight",
+    "should_trigger": true
+  },
+  {
+    "query": "Make an autonomous worker that keeps fixing until the tests pass",
+    "should_trigger": true
+  },
+  {
+    "query": "Run make test once in the background",
+    "should_trigger": false
   }
 ]

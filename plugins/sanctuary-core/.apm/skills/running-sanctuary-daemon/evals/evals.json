@@ -34,5 +34,21 @@
   {
     "query": "How do I boil an egg?",
     "should_trigger": false
+  },
+  {
+    "query": "Set up a bot to run the test suite in the background",
+    "should_trigger": true
+  },
+  {
+    "query": "Can a background worker run this lint job while I keep working?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is my daemon still running?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a Grok-style bot that works through several tasks overnight",
+    "should_trigger": false
   }
 ]

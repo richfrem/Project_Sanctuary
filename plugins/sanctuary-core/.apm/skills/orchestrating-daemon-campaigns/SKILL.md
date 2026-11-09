@@ -1,6 +1,6 @@
 ---
 name: orchestrating-daemon-campaigns
-description: "Interactively plans and launches on-demand daemon campaigns: multi-step unattended work (sequential pipelines, priority-ranked backlogs, or verify-and-fix sweeps) run by a zero-token conductor on top of the Sanctuary supervisor daemon, with triage, prompts built from the git trail, outcome checks (commit, allowed paths, verify command), optional revert-and-retry and circuit breakers. Use when the user wants to set up, launch, monitor or stop a background campaign or a multi-step daemon run. Single one-off jobs belong to running-sanctuary-daemon."
+description: "Interactively plans and launches on-demand daemon campaigns: multi-step autonomous bots, Grok-Bot-style background workflows and unattended campaigns (sequential pipelines, priority-ranked backlogs, or verify-and-fix sweeps) run by a zero-token conductor on top of the Sanctuary supervisor daemon, with triage, prompts built from the git trail, outcome checks, optional revert-and-retry and circuit breakers. Use when the user asks to set up an autonomous bot, an agent that works while they are away or overnight, a background worker for several tasks, a self-running pipeline, \"keep fixing until the tests pass\", or to launch, monitor or stop a campaign. A single one-off bot job belongs to running-sanctuary-daemon."
 allowed-tools: Bash, Read, Write
 ---
 

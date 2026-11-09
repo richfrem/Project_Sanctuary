@@ -1,6 +1,6 @@
 ---
 name: running-sanctuary-daemon
-description: "Runs the Sanctuary supervisor daemon: a zero-token, event-driven outer loop that dispatches authorized headless agent jobs (claude, codex, agy, local llama via cli-agent, or shell commands) with hard timeouts, a failure circuit breaker, policy gates and crash recovery. Use when planning or queueing a single unattended agent or test job (it interviews the user first: work type, engine, safety rails), chaining a few jobs with --after, starting or stopping the daemon, checking its status, or resetting it after a circuit-breaker trip. Multi-step campaigns with triage, evaluation and retries belong to orchestrating-daemon-campaigns. Never started by session bootstrap."
+description: "Runs the Sanctuary supervisor daemon: a zero-token, event-driven background service that dispatches authorized headless agent jobs (claude, codex, agy, local llama via cli-agent, or shell commands) with hard timeouts, a failure circuit breaker, policy gates and crash recovery. Use when the user wants to set up a single background bot, worker or unattended job (\"run this in the background\", \"have a bot run the tests\", \"queue a job for the daemon\"); it interviews the user first: work type, engine, safety rails. Also use to start, stop or check the daemon, or reset it after a circuit-breaker trip. Multi-step bots, Grok-Bot-style autonomous workflows and campaigns belong to orchestrating-daemon-campaigns. Never started by session bootstrap."
 allowed-tools: Bash, Read
 ---
 
