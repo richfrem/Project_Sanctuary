@@ -2,7 +2,7 @@
 """MISSION-001 test suite for sanctuary_daemon.py (criteria C1-C7 in ../protocol.md).
 
 Dev:      python3 test_daemon.py            (small trial counts, instrument check)
-Confirm:  python3 test_daemon.py --confirm  (frozen trial counts; writes ../evidence/confirm_results.json)
+Confirm:  python3 test_daemon.py --confirm  (frozen trial counts; writes ../evidence/confirm_v2_results.json)
 No model is called. Every test uses a throwaway --home directory and the shell runner.
 """
 import json
@@ -99,9 +99,15 @@ class DaemonCase(unittest.TestCase):
 
     # C2
     def test_c2_timeout_sigkill(self):
-        self.start()
+        # Amendment v2: a fresh daemon per trial. With one daemon, the 3rd consecutive timeout
+        # correctly opens the circuit breaker (C4) and holds trials 4-5 in QUEUED.
         trials = []
         for i in range(N_TIMEOUT):
+            self.stop()
+            self.tmp.cleanup()
+            self.tmp = tempfile.TemporaryDirectory()
+            self.home = Path(self.tmp.name)
+            self.start()
             p, _ = write_job(self.home, f"c2-{i}", shell("sleep 60 & sleep 60; wait"), timeout_sec=2)
             j = wait_for(lambda: load(p) if load(p).get("status") not in ("QUEUED", "RUNNING") else None, 20)
             self.assertIsNotNone(j)
@@ -238,6 +244,6 @@ if __name__ == "__main__":
     if CONFIRM:
         ev = HERE.parent / "evidence"
         ev.mkdir(exist_ok=True)
-        (ev / "confirm_results.json").write_text(json.dumps(RESULTS, indent=2))
+        (ev / "confirm_v2_results.json").write_text(json.dumps(RESULTS, indent=2))
     print(json.dumps({k: (v.get("pass") if isinstance(v, dict) else v) for k, v in RESULTS.items()}))
     sys.exit(0 if RESULTS["all_pass"] else 1)
