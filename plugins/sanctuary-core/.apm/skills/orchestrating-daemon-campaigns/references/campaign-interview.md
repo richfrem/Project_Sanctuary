@@ -40,6 +40,7 @@ Rails, with defaults:
 | `require_commit` | true | A step that changes nothing has not done its job. |
 | `allowed_paths` | `**` | Globs a step may change; anything else fails the step. Narrow it. |
 | `verify_cmd` | none | Run after each step (and as the sweep condition); failing it fails the step. |
+| `verify_scope` | `each_step` | Use `final` when the check only makes sense once every step is done (for example "the dataset contains all countries"); give steps their own `verify` for intermediate checks. |
 | `revert_on_failure` | false | Hard-reset the worktree to the step's starting commit on failure. Task worktree only. |
 | `max_retries_per_step` | 1 | One retry, with the failure reason in the prompt. |
 

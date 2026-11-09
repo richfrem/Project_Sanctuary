@@ -183,5 +183,21 @@ class CampaignCase(unittest.TestCase):
         self.assertEqual(triage.next_step(steps, "backlog", root)["id"], "y")
 
 
+    def test_verify_scope_final_runs_check_only_after_last_step(self):
+        verify = "test -f b.txt"
+        st = self.run_campaign(self.manifest(rails={"verify_cmd": verify, "verify_scope": "final"}, steps=[
+            {"id": "a", "shell": commit("a.txt")}, {"id": "b", "depends_on": ["a"], "shell": commit("b.txt")}]))
+        self.assertEqual(st["status"], "COMPLETED")
+        self.assertEqual([h.get("verify") for h in st["history"]], [None, "passed"])
+        each = self.run_campaign(self.manifest(id="t2", rails={"verify_cmd": "test -f never.txt", "max_consecutive_failures": 5},
+                                               steps=[{"id": "a", "shell": commit("a2.txt")}, {"id": "b", "depends_on": ["a"], "shell": commit("b2.txt")}]))
+        self.assertEqual(self.by_id(each)["b"]["status"], "BLOCKED")
+
+    def test_step_verify_override(self):
+        st = self.run_campaign(self.manifest(rails={"verify_cmd": "false"}, steps=[
+            {"id": "a", "shell": commit("a.txt"), "verify": "test -f a.txt"}]))
+        self.assertEqual(st["status"], "COMPLETED")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

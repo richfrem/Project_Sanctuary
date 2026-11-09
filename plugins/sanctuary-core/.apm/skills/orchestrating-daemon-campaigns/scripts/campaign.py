@@ -38,7 +38,8 @@ DAEMON = Path(os.environ.get("SANCTUARY_DAEMON_SCRIPT", Path(__file__).resolve()
                              / "running-sanctuary-daemon" / "scripts" / "sanctuary_daemon.py"))
 DEFAULT_RAILS = {"max_cycles": 5, "step_timeout_sec": 300, "max_consecutive_failures": 2,
                  "require_commit": True, "allowed_paths": ["**"], "verify_cmd": None,
-                 "verify_timeout_sec": 300, "revert_on_failure": False, "max_retries_per_step": 1}
+                 "verify_timeout_sec": 300, "verify_scope": "each_step", "revert_on_failure": False,
+                 "max_retries_per_step": 1}
 ENGINES = {"shell", "claude", "codex", "agy", "llama"}
 
 
@@ -116,6 +117,8 @@ def validate(m: dict) -> list[str]:
         errs.append(f"worktree {wt} does not exist")
     if rails["revert_on_failure"] and wt and not revert_allowed(wt):
         errs.append("revert_on_failure needs a dedicated task worktree (.worktrees/<task>, not main/master)")
+    if rails["verify_scope"] not in ("each_step", "final"):
+        errs.append("rails.verify_scope must be each_step or final")
     if int(rails["max_cycles"]) < 1 or int(rails["step_timeout_sec"]) < 1:
         errs.append("max_cycles and step_timeout_sec must be >= 1")
     return errs
@@ -155,8 +158,8 @@ class Conductor:
             f.write(json.dumps({"ts": time.time(), "msg": msg, **kw}) + "\n")
 
     # --- verification and git trail ---
-    def verify(self) -> tuple[bool | None, str]:
-        cmd = self.rails.get("verify_cmd")
+    def verify(self, cmd: str | None = None) -> tuple[bool | None, str]:
+        cmd = cmd if cmd is not None else self.rails.get("verify_cmd")
         if not cmd:
             return None, ""
         try:
@@ -225,7 +228,18 @@ class Conductor:
             time.sleep(0.5)  # zero tokens while waiting
         return {"status": "STOPPED"}
 
-    def evaluate(self, job: dict, pre: str) -> tuple[bool, str, dict]:
+    def step_verify_cmd(self, step: dict | None) -> str | None:
+        """Per-step `verify` wins; otherwise the campaign verify_cmd, which under
+        verify_scope=final runs only when this is the last pending step."""
+        if step and step.get("verify"):
+            return step["verify"]
+        if self.rails["verify_scope"] == "final" and step is not None:
+            others = [s for s in self.state["steps"] if s is not step and s.get("status") in ("PENDING", "RUNNING")]
+            if others:
+                return ""
+        return self.rails.get("verify_cmd")
+
+    def evaluate(self, job: dict, pre: str, step: dict | None = None) -> tuple[bool, str, dict]:
         post = git(self.wt, "rev-parse", "HEAD")
         tr = self.trail(pre, post)
         if job.get("status") != "COMPLETED":
@@ -235,7 +249,7 @@ class Conductor:
         bad = [f for f in tr["files"] if not any(fnmatch.fnmatch(f, g) for g in self.rails["allowed_paths"])]
         if bad:
             return False, "touched paths outside allowed_paths: " + ", ".join(bad[:10]), tr
-        ok, out = self.verify()
+        ok, out = self.verify(self.step_verify_cmd(step) or None) if self.step_verify_cmd(step) != "" else (None, "")
         tr["verify"] = None if ok is None else ("passed" if ok else "failed")
         if ok is False:
             return False, "verify failed: " + out.strip().splitlines()[-1][:300] if out.strip() else "verify failed", tr
@@ -306,7 +320,7 @@ class Conductor:
                 step["status"] = "PENDING"
                 self.state["status"] = "STOPPED"
                 break
-            good, reason, tr = self.evaluate(job, pre)
+            good, reason, tr = self.evaluate(job, pre, step)
             self.record(step["id"], good, reason, tr)
             if good:
                 step["status"] = "DONE"
@@ -320,6 +334,7 @@ class Conductor:
                     step["status"], step["reason"] = "FAILED", reason
                 self.fail()
             self.save()
+        triage.propagate_blocks(self.state["steps"])  # final view: dependents of failures show BLOCKED
         self.state["ended_at"] = time.time()
         self.save()
         self.log("conductor end", status=self.state["status"])
