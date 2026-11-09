@@ -1,5 +1,17 @@
 # Agent-Native Cognitive Backlog Architecture
 
+## Contents
+
+- [1. Core Purpose & Philosophy](#1-core-purpose--philosophy)
+- [2. Directory Layout & Artifacts](#2-directory-layout--artifacts)
+- [3. Mission Lifecycle & State Machine](#3-mission-lifecycle--state-machine)
+  - [Transition Invariants:](#transition-invariants)
+- [4. Single-Writer Authority & One-Directional Cloud Projection](#4-single-writer-authority--one-directional-cloud-projection)
+- [4a. Creating a Mission (required checklist)](#4a-creating-a-mission-required-checklist)
+- [5. CLI Tooling](#5-cli-tooling)
+- [Manifest schema](#manifest-schema)
+
+
 ## 1. Core Purpose & Philosophy
 
 Project Sanctuary operates as a sovereign engineering habitat and compounding epistemic platform for autonomous AI agents. Unlike human-centric project trackers that optimize for graphical user interfaces, rich formatting, and verbose commentary, the **Agent-Native Cognitive Backlog** is engineered for:
@@ -116,4 +128,4 @@ data, so any agent or bundle reading the folder sees it. `scripts/validate_missi
   `LEARNING/experiments/mission-schema/README.md`).
 
 
-Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Startup reports preservation status without changing preservation files. Capture and recovery occur at mission/session closure (`soul_coverage.py closure`) or an explicitly requested recovery action. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the preserving-soul-traces `references/coverage.md` contract.
+Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Startup reports preservation status without changing preservation files. Capture and recovery occur at mission/session closure (`soul_coverage.py closure`) or an explicitly requested recovery action. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the coverage contract (`coverage.md` in the `preserving-soul-traces` skill).
