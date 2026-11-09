@@ -155,7 +155,9 @@ def build_argv(home: Home, job: dict) -> tuple[list[str], str]:
     if runner.get("model"):
         argv += ["--model", runner["model"]]
     if runner.get("isolated", True):
-        argv.append("--isolated")  # default: no permission-bypass flags from run_agent
+        argv.append("--isolated")
+    if runner.get("clean_context"):
+        argv.append("--clean-context")  # claude: neutral cwd, no tools: for untrusted inputs  # default: no permission-bypass flags from run_agent
     for flag in ("effort", "mode", "tools"):
         if runner.get(flag):
             argv += [f"--{flag}", str(runner[flag])]
@@ -384,7 +386,8 @@ def cmd_enqueue(home: Home, a) -> int:
         runner = {"type": "shell", "argv": shlex.split(a.shell), "cwd": a.cwd}
     else:
         runner = {"type": "cli-agent", "cli": a.cli, "model": a.model, "instruction": a.instruction,
-                  "cwd": a.cwd, "allowed_root": a.allowed_root, "effort": a.effort, "mode": a.mode}
+                  "cwd": a.cwd, "allowed_root": a.allowed_root, "effort": a.effort, "mode": a.mode,
+                  "clean_context": a.clean_context}
     if a.allow_permission_bypass:
         if a.shell:
             print("--allow-permission-bypass applies only to cli-agent jobs", file=sys.stderr)
@@ -423,6 +426,7 @@ def main() -> int:
     e.add_argument("--allowed-root")
     e.add_argument("--effort")
     e.add_argument("--mode")
+    e.add_argument("--clean-context", action="store_true", help="cli-agent claude only: no tools, neutral cwd")
     e.add_argument("--after", help="job id that must COMPLETE first; otherwise this job is SKIPPED")
     e.add_argument("--allow-permission-bypass", action="store_true",
                    help="cli-agent only: run non-isolated; run_agent then passes the engine's permission-bypass "
