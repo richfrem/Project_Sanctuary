@@ -2,7 +2,7 @@
 
 Use this before anything touches `~/.sanctuary/daemon/queue/`. It turns a plain-language request ("clean up the auth module overnight") into one or more bounded, approved `enqueue` commands.
 
-Adapted from Richard's 2026-11-09 draft of a `plan-sanctuary-daemon-job` skill, folded into this skill so two skills do not compete for the same requests.
+Adapted from a 2026-11-09 draft `plan-sanctuary-daemon-job` skill, folded into this skill so two skills do not compete for the same requests.
 
 ## Operating principles
 1. **Ask before queueing.** Never enqueue on the first turn of a request.

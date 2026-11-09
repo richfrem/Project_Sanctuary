@@ -3,7 +3,7 @@
 %% The daemon never calls a model. Models run only inside the dispatched job.
 sequenceDiagram
     autonumber
-    actor Human as Richard (Human Gate)
+    actor Human as Human partner (Human Gate)
     participant Agent as Session agent (e.g. Claude Code)
     participant Queue as ~/.sanctuary/daemon/queue/*.json
     participant Daemon as sanctuary_daemon.py (0 tokens)
