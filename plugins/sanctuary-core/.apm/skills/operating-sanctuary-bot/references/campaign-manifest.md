@@ -21,6 +21,14 @@ These fields live inside an automation definition (see automations.md); the bot 
 ## Steps
 `steps` (pipeline and backlog): `[{"id", "goal" (agent engines) or "shell" (shell engine), "depends_on": [], "priority": n, "mission_id": "MISSION-0NN", "verify": "<optional per-step check, overrides verify_cmd>"}]`. Shell steps may use `{context_file}`, replaced by the path of the assembled prompt (useful for tests and scripted steps).
 
+Per-step options:
+- `engine`: override the run's engine for this step (for example shell steps around one AI step).
+- `require_commit`: override the rail for this step (an analysis step that only writes text uses `false`).
+- `run_if`: shell command run in the worktree first; non-zero marks the step SKIPPED, and its dependents SKIPPED too. A run whose steps are all DONE or SKIPPED is COMPLETED.
+- `inputs` (+ `input_max_chars`, default 30000): worktree files embedded in the prompt as data, marked as untrusted.
+- `output_only`: AI step that must reply with text only (no tools, no file changes); pair with `engine.clean_context: true` for untrusted inputs.
+- Placeholders in `shell`: `{context_file}` (the assembled prompt) and `{prev_output}` (the previous step's output: an AI step's reply or a shell step's log).
+
 ## Sweep
 `sweep`: `{"fix_goal": "..."}` for agent engines or `{"fix_shell": "..."}`; requires `rails.verify_cmd`.
 
