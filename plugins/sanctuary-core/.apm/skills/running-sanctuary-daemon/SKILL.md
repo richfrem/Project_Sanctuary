@@ -1,6 +1,6 @@
 ---
 name: running-sanctuary-daemon
-description: "Runs the Sanctuary supervisor daemon: a zero-token, event-driven outer loop that dispatches authorized headless agent jobs (claude, codex, agy, local llama via cli-agent, or shell commands) with hard timeouts, a failure circuit breaker, policy gates and crash recovery. Use when planning or queueing unattended agent or test jobs (it interviews the user first: work type, pipeline steps, engine, safety rails), setting up a background run or a chained pipeline, starting or stopping the daemon, checking its status, or resetting it after a circuit-breaker trip. Never started by session bootstrap."
+description: "Runs the Sanctuary supervisor daemon: a zero-token, event-driven outer loop that dispatches authorized headless agent jobs (claude, codex, agy, local llama via cli-agent, or shell commands) with hard timeouts, a failure circuit breaker, policy gates and crash recovery. Use when planning or queueing a single unattended agent or test job (it interviews the user first: work type, engine, safety rails), chaining a few jobs with --after, starting or stopping the daemon, checking its status, or resetting it after a circuit-breaker trip. Multi-step campaigns with triage, evaluation and retries belong to orchestrating-daemon-campaigns. Never started by session bootstrap."
 allowed-tools: Bash, Read
 ---
 
@@ -47,10 +47,12 @@ python3 $D reset                                 # human, after reviewing a BLOC
 5. Agent reads `status` and the job log, then continues the normal PR and closeout workflow.
 
 ## Verification
+- `python3 scripts/verify_health.py`: host preflight (Python version, platform, free disk); exits 1 if Python < 3.10.
 - `python3 scripts/test_daemon.py` runs the seven MISSION-001 criteria (detection < 2 s, SIGKILL timeout, idle zero-dispatch, circuit breaker, ordering and atomic writes, gates, crash recovery) plus C8 (`--after` pipelines) and C9 (`--allow-permission-bypass`) against throwaway homes. No model is called.
 - `status` shows daemon state and every job; logs are in `~/.sanctuary/daemon/logs/`, events in `events.jsonl`.
 
 ## References
+- Multi-step campaigns (triage, prompt hand-off, outcome checks, revert and retry): the `orchestrating-daemon-campaigns` skill
 - Interactive planning interview: [plan-job-interview.md](references/plan-job-interview.md)
 - Operations guide (start, launchd, rails, known gaps): [operations.md](references/operations.md)
 - Sequence diagram: [sanctuary-daemon-sequence.mmd](../operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd)

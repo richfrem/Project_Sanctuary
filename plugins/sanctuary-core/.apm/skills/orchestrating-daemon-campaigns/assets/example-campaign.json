@@ -1,0 +1,22 @@
+{
+  "id": "api-cleanup",
+  "mode": "pipeline",
+  "authorized_by": "<approver>",
+  "worktree": ".worktrees/api-cleanup",
+  "engine": {"cli": "claude", "model": "claude-sonnet-5-5", "allow_permission_bypass": true},
+  "rails": {
+    "max_cycles": 5,
+    "step_timeout_sec": 600,
+    "max_consecutive_failures": 2,
+    "require_commit": true,
+    "allowed_paths": ["api/**", "tests/**", "docs/api/**"],
+    "verify_cmd": "python3 -m pytest -q tests/api",
+    "revert_on_failure": true,
+    "max_retries_per_step": 1
+  },
+  "steps": [
+    {"id": "tests", "goal": "Add tests covering every handler in api/ (no handler changes). Commit as 'test(api): cover handlers'."},
+    {"id": "refactor", "depends_on": ["tests"], "goal": "Refactor api/ handlers to share validation; keep behaviour. Commit as 'refactor(api): shared validation'."},
+    {"id": "docs", "depends_on": ["refactor"], "goal": "Update docs/api/ to match the handlers. Commit as 'docs(api): update'."}
+  ]
+}

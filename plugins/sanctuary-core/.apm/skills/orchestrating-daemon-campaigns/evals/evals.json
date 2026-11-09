@@ -1,0 +1,30 @@
+[
+  {
+    "query": "Set up a background campaign to refactor the API endpoints while I'm away",
+    "should_trigger": true
+  },
+  {
+    "query": "Launch a daemon run that keeps fixing lint until it passes",
+    "should_trigger": true
+  },
+  {
+    "query": "Run these three missions in priority order unattended",
+    "should_trigger": true
+  },
+  {
+    "query": "What's the status of my background campaign? Stop it",
+    "should_trigger": true
+  },
+  {
+    "query": "Queue a single make test job on the daemon",
+    "should_trigger": false
+  },
+  {
+    "query": "Record a chronicle entry",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I boil an egg?",
+    "should_trigger": false
+  }
+]
