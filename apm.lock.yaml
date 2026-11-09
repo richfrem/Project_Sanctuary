@@ -208,6 +208,7 @@ dependencies:
   - .agents/skills/running-sanctuary-daemon/SKILL.md
   - .agents/skills/running-sanctuary-daemon/evals/evals.json
   - .agents/skills/running-sanctuary-daemon/references/operations.md
+  - .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md
   - .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
   - .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py
   - .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
@@ -412,6 +413,7 @@ dependencies:
   - .claude/skills/running-sanctuary-daemon/SKILL.md
   - .claude/skills/running-sanctuary-daemon/evals/evals.json
   - .claude/skills/running-sanctuary-daemon/references/operations.md
+  - .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md
   - .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
   - .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py
   - .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
@@ -594,7 +596,7 @@ dependencies:
     .agents/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:a72854ea2dbccdb48b0fc595af6b797771670c432600bc7a4c870334a4dbec08
     .agents/skills/operating-sanctuary-guardian/references/precompact-hook.md: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
     .agents/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
-    .agents/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd: sha256:5b1a4cab08e178299436096c869775d554c6a907f1f1aca55a21685bb930b162
+    .agents/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd: sha256:2e5ff096ff7cee67196b23044bea14bf36b67246a8dc19f8da418396fb50ed5a
     .agents/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py: sha256:0037fee57ad850569f5b74eebed91415b97c5b36c31548f87d47ad3f547d7eb2
     .agents/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py: sha256:692abc3e3b7d4a8c06b40de1a1717f4ced9dec1636ef2d497577036cdd9e6258
     .agents/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py: sha256:de2ec87ea0c0c2e8dfc00600887650c891f6eeee59ea67b67f587488fe12d8e3
@@ -647,11 +649,12 @@ dependencies:
     .agents/skills/preserving-soul-traces/tests/test_soul_coverage.py: sha256:ba1c6751163619797d6d3481e4da1333aa895239241cc7f40c1a27d2dfb146e7
     .agents/skills/preserving-soul-traces/tests/test_startup_readonly.py: sha256:f1871c4ceb4eaa6906cfe17613ae3b13e850b923d6b5a616e43e39f5fe121e4b
     .agents/skills/preserving-soul-traces/tests/test_sync_env.py: sha256:bd31456d3b64b3f0ca13d2c38946d32e99659f1418e79c8a473ac664562d4979
-    .agents/skills/running-sanctuary-daemon/SKILL.md: sha256:bc201be12355e7e754e97594387bdf47f8e467b73dc1cc1ff0f16ae952ea8750
-    .agents/skills/running-sanctuary-daemon/evals/evals.json: sha256:63c0856428ee07bbdb830a8e9e2c6d510e2bccc2d9b2f876babe33395124bf48
-    .agents/skills/running-sanctuary-daemon/references/operations.md: sha256:8d8452fb70ddb1057edeeb97191a4114333491d766835b1a5c53fa21679d2629
-    .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b
-    .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:bc08ac3146336ef16b0112e3f9c77e26b15861e38895c240703231e8d7f14893
+    .agents/skills/running-sanctuary-daemon/SKILL.md: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+    .agents/skills/running-sanctuary-daemon/evals/evals.json: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
+    .agents/skills/running-sanctuary-daemon/references/operations.md: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+    .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
+    .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
+    .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc: sha256:fb21dd0702284b0790eac8cffb37a72dfaa2f2ad1e4eb286805481ef2722bca2
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:6ec1e5b4fa31b9d7fd9864e5cc5f828db737617960eda5435b20b53b88142e21
     .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc: sha256:e9e3f7b94b29941aaa8dc9903fb3be58d0a85ec62a3a91ff15412144e5fb513a
@@ -790,7 +793,7 @@ dependencies:
     .claude/skills/operating-sanctuary-guardian/references/multi-agent-concurrency-and-flight-board.md: sha256:a72854ea2dbccdb48b0fc595af6b797771670c432600bc7a4c870334a4dbec08
     .claude/skills/operating-sanctuary-guardian/references/precompact-hook.md: sha256:476f122d4190b56e9a863d05cf2d2b376b659604a11942315dc304ecbc91448f
     .claude/skills/operating-sanctuary-guardian/references/protocol-128.md: sha256:cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1
-    .claude/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd: sha256:5b1a4cab08e178299436096c869775d554c6a907f1f1aca55a21685bb930b162
+    .claude/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd: sha256:2e5ff096ff7cee67196b23044bea14bf36b67246a8dc19f8da418396fb50ed5a
     .claude/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py: sha256:0037fee57ad850569f5b74eebed91415b97c5b36c31548f87d47ad3f547d7eb2
     .claude/skills/operating-sanctuary-guardian/scripts/capture_snapshot.py: sha256:692abc3e3b7d4a8c06b40de1a1717f4ced9dec1636ef2d497577036cdd9e6258
     .claude/skills/operating-sanctuary-guardian/scripts/evolution_metrics.py: sha256:de2ec87ea0c0c2e8dfc00600887650c891f6eeee59ea67b67f587488fe12d8e3
@@ -843,11 +846,12 @@ dependencies:
     .claude/skills/preserving-soul-traces/tests/test_soul_coverage.py: sha256:ba1c6751163619797d6d3481e4da1333aa895239241cc7f40c1a27d2dfb146e7
     .claude/skills/preserving-soul-traces/tests/test_startup_readonly.py: sha256:f1871c4ceb4eaa6906cfe17613ae3b13e850b923d6b5a616e43e39f5fe121e4b
     .claude/skills/preserving-soul-traces/tests/test_sync_env.py: sha256:bd31456d3b64b3f0ca13d2c38946d32e99659f1418e79c8a473ac664562d4979
-    .claude/skills/running-sanctuary-daemon/SKILL.md: sha256:bc201be12355e7e754e97594387bdf47f8e467b73dc1cc1ff0f16ae952ea8750
-    .claude/skills/running-sanctuary-daemon/evals/evals.json: sha256:63c0856428ee07bbdb830a8e9e2c6d510e2bccc2d9b2f876babe33395124bf48
-    .claude/skills/running-sanctuary-daemon/references/operations.md: sha256:8d8452fb70ddb1057edeeb97191a4114333491d766835b1a5c53fa21679d2629
-    .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b
-    .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:bc08ac3146336ef16b0112e3f9c77e26b15861e38895c240703231e8d7f14893
+    .claude/skills/running-sanctuary-daemon/SKILL.md: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
+    .claude/skills/running-sanctuary-daemon/evals/evals.json: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
+    .claude/skills/running-sanctuary-daemon/references/operations.md: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+    .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
+    .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
+    .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc: sha256:fb21dd0702284b0790eac8cffb37a72dfaa2f2ad1e4eb286805481ef2722bca2
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/pre_compact_snapshot.cpython-313.pyc: sha256:6ec1e5b4fa31b9d7fd9864e5cc5f828db737617960eda5435b20b53b88142e21
     .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/session_start_wakeup.cpython-311.pyc: sha256:e9e3f7b94b29941aaa8dc9903fb3be58d0a85ec62a3a91ff15412144e5fb513a
@@ -2017,7 +2021,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5b1a4cab08e178299436096c869775d554c6a907f1f1aca55a21685bb930b162
+  content_hash: sha256:2e5ff096ff7cee67196b23044bea14bf36b67246a8dc19f8da418396fb50ed5a
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py
@@ -2512,7 +2516,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:bc201be12355e7e754e97594387bdf47f8e467b73dc1cc1ff0f16ae952ea8750
+  content_hash: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/evals/evals.json
@@ -2521,7 +2525,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:63c0856428ee07bbdb830a8e9e2c6d510e2bccc2d9b2f876babe33395124bf48
+  content_hash: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/references/operations.md
@@ -2530,7 +2534,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8d8452fb70ddb1057edeeb97191a4114333491d766835b1a5c53fa21679d2629
+  content_hash: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+- kind: project-relative
+  target: antigravity
+  value: .agents/skills/running-sanctuary-daemon/references/plan-job-interview.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
@@ -2539,7 +2552,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b
+  content_hash: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
 - kind: project-relative
   target: antigravity
   value: .agents/skills/running-sanctuary-daemon/scripts/test_daemon.py
@@ -2548,7 +2561,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:bc08ac3146336ef16b0112e3f9c77e26b15861e38895c240703231e8d7f14893
+  content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
 - kind: project-relative
   target: claude
   value: .claude/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
@@ -3853,7 +3866,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:5b1a4cab08e178299436096c869775d554c6a907f1f1aca55a21685bb930b162
+  content_hash: sha256:2e5ff096ff7cee67196b23044bea14bf36b67246a8dc19f8da418396fb50ed5a
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-guardian/scripts/adaptive_checkpoint.py
@@ -4348,7 +4361,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:bc201be12355e7e754e97594387bdf47f8e467b73dc1cc1ff0f16ae952ea8750
+  content_hash: sha256:75e57dabd93450c712ad7343cdaa22f6a7896e9909ddeb53c0fec0c7bcdd82a3
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/evals/evals.json
@@ -4357,7 +4370,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:63c0856428ee07bbdb830a8e9e2c6d510e2bccc2d9b2f876babe33395124bf48
+  content_hash: sha256:7fba34e9cec1271ad016fc52463172345f9fbd3649b86e48b13508feb6f0174f
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/references/operations.md
@@ -4366,7 +4379,16 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:8d8452fb70ddb1057edeeb97191a4114333491d766835b1a5c53fa21679d2629
+  content_hash: sha256:54168128407d5f8a046fe32cd1f266c81dea11caef7fe796b120df519c550cb5
+- kind: project-relative
+  target: claude
+  value: .claude/skills/running-sanctuary-daemon/references/plan-job-interview.md
+  runtime: null
+  scope: project
+  owners:
+  - ./plugins/sanctuary-core
+  active_owner: ./plugins/sanctuary-core
+  content_hash: sha256:6c0269951d5bb54f5be8a6f9873b70f70363e71d82cee30450906f065d2ec276
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
@@ -4375,7 +4397,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b
+  content_hash: sha256:e4bbcbcb40bbb5e19deb079ed414f0d4beed6f76541172ccf2904e6b393e6023
 - kind: project-relative
   target: claude
   value: .claude/skills/running-sanctuary-daemon/scripts/test_daemon.py
@@ -4384,7 +4406,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:bc08ac3146336ef16b0112e3f9c77e26b15861e38895c240703231e8d7f14893
+  content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
 - kind: project-relative
   target: codex
   value: .codex/hooks/sanctuary-core/.apm/hooks/__pycache__/finalize_hook_install.cpython-313.pyc
