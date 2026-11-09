@@ -1,0 +1,8 @@
+{
+  "frozen_at": "2026-11-09",
+  "sha256": {
+    "protocol.md": "11c63d7447592a3a76013a7e7fc0edf4c49727ee6c3d361b38b2022338eece6c",
+    "daemon/sanctuary_daemon.py": "9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b",
+    "daemon/test_daemon.py": "70cc4f3986fc2ed77889abd6323b21972b5601737ab3b7105df203ef08dcc747"
+  }
+}

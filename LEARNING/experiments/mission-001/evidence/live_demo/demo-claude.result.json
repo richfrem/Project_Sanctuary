@@ -1,0 +1,57 @@
+{
+ "schema": 1,
+ "status": "ok",
+ "exit_code": 0,
+ "error": null,
+ "unit": "demo-claude",
+ "owner": "sanctuary-daemon",
+ "backend": "claude",
+ "executable": "/Users/richardfremmerlid/.local/bin/claude",
+ "version": "2.1.319 (Claude Code)",
+ "cwd": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/e82c5e09-9684-4c56-b766-daaa007647bb/scratchpad/m001demo/repo",
+ "started": 1794184413.9513652,
+ "ended": 1794184416.156969,
+ "duration_s": 2.206,
+ "output_file": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/e82c5e09-9684-4c56-b766-daaa007647bb/scratchpad/m001demo/home/logs/demo-claude.out.md",
+ "checks": [
+  {
+   "name": "cwd_boundary",
+   "ok": true,
+   "detail": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/e82c5e09-9684-4c56-b766-daaa007647bb/scratchpad/m001demo/repo"
+  },
+  {
+   "name": "unit_claim",
+   "ok": true,
+   "detail": "sanctuary-daemon"
+  }
+ ],
+ "enforced_by_code": [
+  "cwd_boundary",
+  "unit_claim"
+ ],
+ "instructed_only": [
+  "no git writes by the worker",
+  "stay inside the assigned scope",
+  "report limitations honestly"
+ ],
+ "limitations": [],
+ "usage": {
+  "total_tokens": null,
+  "source": "not reported by backend"
+ },
+ "attempts": [
+  {
+   "backend": "claude",
+   "status": "ok",
+   "exit": 0,
+   "started": 1794184414.026264,
+   "ended": 1794184416.156586,
+   "usage": {
+    "total_tokens": null,
+    "source": "not reported by backend"
+   }
+  }
+ ],
+ "claim_mode": "executor-acquired",
+ "cleanup_confirmed": true
+}

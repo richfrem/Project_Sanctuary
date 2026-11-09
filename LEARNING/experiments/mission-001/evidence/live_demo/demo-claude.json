@@ -1,0 +1,27 @@
+{
+  "id": "demo-claude",
+  "mission_id": "MISSION-001",
+  "status": "COMPLETED",
+  "authorized_by": "richard",
+  "created_at": 1794184413.736966,
+  "timeout_sec": 120,
+  "require_commit": false,
+  "max_attempts": 2,
+  "runner": {
+    "type": "cli-agent",
+    "cli": "claude",
+    "model": "claude-haiku-5-5",
+    "instruction": "Reply with exactly this line and nothing else: SANCTUARY-DAEMON-OK",
+    "cwd": "/private/tmp/claude-501/-Users-richardfremmerlid-Projects-Project-Sanctuary/e82c5e09-9684-4c56-b766-daaa007647bb/scratchpad/m001demo/repo",
+    "allowed_root": null,
+    "effort": null,
+    "mode": null
+  },
+  "running_at": 1794184413.840132,
+  "pid": 7782,
+  "pgid": 7782,
+  "attempts": 1,
+  "exit_code": 0,
+  "ended_at": 1794184416.206437,
+  "pgid_alive_after": false
+}

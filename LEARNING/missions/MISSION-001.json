@@ -1,11 +1,11 @@
 {
   "id": "MISSION-001",
   "title": "Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "hybrid",
   "target_platform": "Host daemon (macOS first; Python asyncio prototype, Rust port optional) supervising ephemeral local headless CLI agents (claude -p, cursor-agent, repo CLIs); pluggable secondary remote/cloud worker (e.g. Grok Bot, webhooks) for browser or out-of-band tasks",
   "created_at": "2026-11-02T08:00:00Z",
-  "updated_at": "2026-11-09T00:12:40.887878+00:00",
+  "updated_at": "2026-11-09T00:35:56.055850+00:00",
   "confidence_reviewed": "2026-11-08",
   "scores": {
     "strategic_leverage": 5,
@@ -27,7 +27,7 @@
     ],
     "routing_guidance": "Outer loop is deterministic; models run only inside dispatched ephemeral runs, each under its own budget."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": true,
   "issue_ref": null,
   "tags": [
@@ -39,15 +39,34 @@
     "zero-token",
     "grok-bot-optional"
   ],
-  "evidence": [],
-  "lessons_learned": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-09T00:35:56.055850+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-001/README.md",
+      "details": "Amended confirmatory run 2 (freeze_v2.json, 800a9bc9f): C1 20/20 detections, max 0.014 s (<2 s); C2 5/5 TIMED_OUT at 2.12-2.13 s with process group gone; C3 15 s idle, 0 dispatches, 0.07% CPU; C4 circuit opened after 3 failures, held, resumed after reset; C5 ordered, 0 bad reads; C6 4/4 gated jobs REJECTED; C7 recovered on attempt 2. Run 1 (00a0cda4d) failed C2 from a test-design defect (circuit breaker held trials 4-5); disclosed amendment. Live demo: real Haiku job via cli-agent plus a verified commit job."
+    }
+  ],
+  "lessons_learned": [
+    "On macOS, killpg(pgid, 0) raises EPERM when only a zombie group leader remains; reap the leader inside the kill loop.",
+    "cli-agent run_agent.py adds --dangerously-skip-permissions for claude/agy unless --isolated; a dispatcher must pass --isolated and gate any bypass explicitly.",
+    "Tests of one rail must isolate it from other rails: five consecutive timeouts correctly tripped the 3-failure circuit breaker."
+  ],
   "projected_impact": {
     "paths": [
-      "LEARNING/missions/MISSION-001.json",
+      "AGENTS.md",
       "LEARNING/experiments/mission-001/",
+      "LEARNING/missions/MISSION-001.json",
       "LEARNING/missions/MISSION-005.json",
       "LEARNING/missions/MISSION-033.json",
-      "LEARNING/missions/MISSION-038.json"
+      "LEARNING/missions/MISSION-038.json",
+      "architecture.md",
+      "chronicle/entries/",
+      "context/soul.md",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/SKILL.md",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd",
+      "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/",
+      "plugins/sanctuary-core/README.md"
     ],
     "resources": [
       "local CPU; no idle model calls"
@@ -55,7 +74,7 @@
     "basis": "Refined 2026-11-08 with the daemon refactor."
   },
   "assignee": "claude-code",
-  "worktree": ".worktrees/claude-code-maint-004-001",
+  "worktree": ".worktrees/claude-code-mission-001",
   "experiment": "1) Inventory existing capabilities first (cli-agent launch controls --timeout/--claim-dir/--result-json, manage_coordination.py leases, Agentic OS control plane) and reuse them. 2) Scaffold the daemon in LEARNING/experiments/mission-001/daemon/: OS-event file watcher (kqueue via watchfiles/watchdog, polling fallback with backoff); daemon state machine STAGED->QUEUED->RUNNING->COMPLETED|FAILED|BLOCKED_ON_HUMAN with atomic writes (temp file + os.replace); isolated subprocess runner with max_wall_clock_seconds (SIGTERM then SIGKILL), max_consecutive_failures (-> BLOCKED_ON_HUMAN), per-run run.log; abstract runner interface (local CLI, container, remote webhook). 3) Tests: detects QUEUED->RUNNING; kills a hanging `sleep 60`; records non-zero exit traces. Evidence in LEARNING/experiments/mission-001/evidence/.",
   "design_constraints": [
     "Daemon states (QUEUED, RUNNING, BLOCKED_ON_HUMAN, ...) live in the daemon's own state file; mission manifests keep schema statuses only (PROPOSED/STAGED/IN_PROGRESS/RESOLVED)",
@@ -66,19 +85,15 @@
   ],
   "score_basis": "Scores carried over from the 2026-11-02 registration (5x4)/(0.1x2)=100 and not reassessed after the 2026-11-08 refactor; treat as provisional.",
   "readiness": {
-    "assessed": "2026-11-08",
-    "assessment": "Refactored design; not yet inventoried or frozen. Python stdlib available; watchfiles/watchdog not verified installed.",
+    "assessed": "2026-11-09",
+    "assessment": "Executed 2026-11-09 by claude-code.",
     "verified_present": [
-      "Python 3",
-      "cli-agent",
-      "manage_coordination.py"
+      "Python 3 stdlib (select.kqueue)",
+      "cli-agent run_agent.py",
+      "claude CLI"
     ],
-    "missing_prerequisites": [
-      "Capability inventory",
-      "Frozen measurement protocol (2 s detection, timeout kill)",
-      "Watcher dependency choice/install"
-    ],
-    "first_enabling_step": "Inventory cli-agent and coordination capabilities the daemon must reuse."
+    "missing_prerequisites": [],
+    "first_enabling_step": "n/a (executed)"
   },
   "refactor_history": [
     {
@@ -113,5 +128,10 @@
     "MISSION-005": "SIBLING: asynchronous multi-bot DAG barrier orchestration; a future consumer of the daemon's dispatch loop.",
     "MISSION-033": "SIBLING: single-orchestrator parallel delivery; overlaps on dispatch and supervision.",
     "MISSION-038": "DEPENDS ON (soft): lease fencing and idempotent transitions the daemon should reuse rather than rebuild."
+  },
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-09T00:35:56.055850+00:00",
+    "workflow": "soul_coverage.py closure"
   }
 }

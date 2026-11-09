@@ -67,6 +67,7 @@ sanctuary-core/
 - **`forging-sovereign-models`**: Sovereign AI fine-tuning pipeline, Windows WSL2/CUDA runtime recipes, QLoRA execution, GGUF quantization, and Hugging Face artifact publishing.
 - **`preserving-soul-traces`**: Cognitive lineage and memory preservation engine; extracts markdown sessions and documents into canonical JSONL datasets (`soul_traces.jsonl`) and coordinates Hugging Face dataset persistence via `managing-huggingface-assets`.
 - **`managing-sovereign-memory`**: Zero-dependency, filesystem-native 3-layer memory engine. Provides progressive disclosure (Tier 1 index, Tier 2 summary, Tier 3 deep), procedural memory outcome tracking (`LEARNING/procedures/`), asymmetric persistence of friction across git rollbacks, 30-day confidence decay auditing, and associative graph traversal.
+- **`running-sanctuary-daemon`**: Zero-token, event-driven supervisor daemon that dispatches authorized headless agent jobs through `cli-agent` with hard timeouts, a failure circuit breaker, policy gates and crash recovery (MISSION-001). Started by the human, never by bootstrap.
 - **`evaluating-agent-work`**: Multi-dimensional cognitive value scoring (outcome utility, learning depth, verification rigor, token economy, anti-Asch truth grounding), real-world subscription budget tracking (ChatGPT Plus, Claude Pro, Gemini Pro), and RL value analytics.
 
 ## Architecture

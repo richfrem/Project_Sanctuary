@@ -1,0 +1,9 @@
+{
+  "frozen_at": "2026-11-09",
+  "supersedes": "freeze.json (commit 00a0cda4d)",
+  "sha256": {
+    "protocol.md": "eaa3ba30b7e9400c5626f68a69e487365d19884ec3f6cedb901d88af4cea1c92",
+    "daemon/sanctuary_daemon.py": "9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b",
+    "daemon/test_daemon.py": "43448e104f044b3c7e29057e4ffb699649a644f0ef37814327a9a147dd54c573"
+  }
+}

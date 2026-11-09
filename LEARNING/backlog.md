@@ -36,7 +36,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `RESOLVED` | `CORROBORATED` |
 | **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `RESOLVED` | `ABANDONED` |
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
-| **#18** | `MISSION-001` | **Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `PROPOSED` | - |
+| **#18** | `MISSION-001` | **Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `RESOLVED` | `CORROBORATED` |
 | **#19** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
 | **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `RESOLVED` | `ABANDONED` |
 | **#21** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
@@ -419,7 +419,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * The MISSION-024 antigravity assessment is an orphan aggregate score and needs agy or a human to log or retract it.
 
 ### MISSION-001: Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails (Rank #18)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `hybrid`
 - **Target Platform**: Host daemon (macOS first; Python asyncio prototype, Rust port optional) supervising ephemeral local headless CLI agents (claude -p, cursor-agent, repo CLIs); pluggable secondary remote/cloud worker (e.g. Grok Bot, webhooks) for browser or out-of-band tasks
 - **Cheapest Viable Model**: `none (deterministic daemon, 0 tokens)` (Tier: `cheap`, CLI: `local headless CLI (claude -p / cursor-agent / repo CLI); optional remote worker`)
@@ -428,6 +429,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > A zero-token, event-driven supervisor daemon can reliably orchestrate multi-step agent lifecycles, handle sequential state changes, and enforce operational rails (process timeouts, budget trips, state rollback) without burning tokens during idle state monitoring.
 - **Falsification Gate**:
   > The daemon fails to detect status transitions on disk within 2 seconds, allows an agent process to exceed hard timeout boundaries without SIGKILL termination, or requires model inference to maintain the listening event loop. Case counts and the measurement protocol are to be frozen before the confirmatory test.
+- **Empirical Evidence & Trials**:
+  * `2026-11-09T00:35:56.055850+00:00` [claude-code] (LEARNING/experiments/mission-001/README.md): Amended confirmatory run 2 (freeze_v2.json, 800a9bc9f): C1 20/20 detections, max 0.014 s (<2 s); C2 5/5 TIMED_OUT at 2.12-2.13 s with process group gone; C3 15 s idle, 0 dispatches, 0.07% CPU; C4 circuit opened after 3 failures, held, resumed after reset; C5 ordered, 0 bad reads; C6 4/4 gated jobs REJECTED; C7 recovered on attempt 2. Run 1 (00a0cda4d) failed C2 from a test-design defect (circuit breaker held trials 4-5); disclosed amendment. Live demo: real Haiku job via cli-agent plus a verified commit job.
+- **Lessons Learned & Epistemic Compounding**:
+  * On macOS, killpg(pgid, 0) raises EPERM when only a zombie group leader remains; reap the leader inside the kill loop.
+  * cli-agent run_agent.py adds --dangerously-skip-permissions for claude/agy unless --isolated; a dispatcher must pass --isolated and gate any bypass explicitly.
+  * Tests of one rail must isolate it from other rails: five consecutive timeouts correctly tripped the 3-failure circuit breaker.
 
 ### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #19)
 - **Status**: `RESOLVED`
