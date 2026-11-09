@@ -1,9 +1,9 @@
 {
- "base_commit": "c59f425d525dea7d3097f03e8bd660f3088a446c",
- "dataset_records": 1415,
+ "base_commit": "d05e6ae5d8f6b38c6f197fd337e1dc1c60fcbfb0",
+ "dataset_records": 1424,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-09T00:13:48Z",
+ "generated_at": "2026-11-09T00:39:46Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 9,
     "updated": 4
    },
-   "bytes": 158806,
+   "bytes": 159979,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -81,17 +81,17 @@
     "d779f93433951519c4a338546cdb651acbd980661b2e26dc759add292e01785f",
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
-    "0a76ef68f00a2c13bac16006abd22dbaa1b1b54b44593d47f381c2c5822315c3",
-    "ea2b0ecf899ea96f75e10e88820f627689c5e69bbf9e7af800125e116f8cc7d4",
-    "ea8469e61c611da530a28c2bd4c5401a22195b23f2fa809ffa98b6a76fe0c8bb",
-    "d12c08ff2b988a26552c3c4fdbc0ad9a8f62863581f71960ad6e6b9d98c0fc58",
+    "545fa24d5ace297b88339d94c250d1df01468db3caa999655b7790d608d908e5",
+    "40048e6821f5ca694d8623cdb96c1406124b0029584d8f96abe2464838dc8324",
+    "8f8905c7dfc4abaa129f73b01d442027e6c64bff9c00407643d5fc213694ff60",
+    "d3d1a4f90fccdd6725a4049a8a94feea5b2fdbe1df749112474a7d2a977ebe94",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "19ffca3fa5c989f6cd9cc52c36bef2c867ba84f1e0aab12b5297986b3279db21",
+   "source_sha256": "82158e9cb67de6f69eabd922e8c82be15716a442b93e8c542c1ab9957b32cb59",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 13064,
+   "bytes": 13632,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "9a7721ca5b84d5f980ddf3c4c92628c03bf739eb13ebdaea470f2a051f1b6637",
+   "source_sha256": "7dfebf84230934e5f0d98b490c9e9da8ed4e2b0257dc01476eb4054c4c047218",
    "status": "excluded"
   },
   {
@@ -140,19 +140,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 20258,
+   "bytes": 20281,
    "category": "root_architecture_docs",
    "path": "AGENTS.md",
    "record_ids": [
     "AGENTS"
    ],
    "record_sha256": [
-    "4462741e64680b8b9a6b0c531e2ec0cfb8969ea20025047b783db8193d822b99"
+    "937d314367db610fd2811e09df38679ed18703ea5c057c35bfcf0a5249564268"
    ],
    "required": true,
-   "source_sha256": "d889dbbb4632c34176612f704900dc8553192f434c81b3dce315ad51c8b343ae",
+   "source_sha256": "7966750f140597428ef8c8a5f392a113f8366911421da1a8a48c463d2cc7c54e",
    "status": "included"
   },
   {
@@ -807,12 +807,12 @@
    "status": "included"
   },
   {
-   "bytes": 149613,
+   "bytes": 150777,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "8d07532f0d04137d6512da9fe4ba71673ad029f16a04203dfea50d558e796622",
+   "source_sha256": "808171c6381d6fb0d7830e8d75a2aac69baa8baff6265115b6c8f3217a975268",
    "status": "excluded"
   },
   {
@@ -1068,6 +1068,291 @@
    ],
    "required": true,
    "source_sha256": "8f34228e3561cad03dc7a475d39ddb03d03abbabade065cecbb8ff2dcdc89fef",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 3312,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-001/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-001_README"
+   ],
+   "record_sha256": [
+    "68affb36344b53982583b20668c145e5163d8dbefb4b602a64151795e30e8c78"
+   ],
+   "required": true,
+   "source_sha256": "211da2835b6b0ad18491bda47d988cc9f62c78b0f49829951749541412d9d714",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 389,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-001/daemon/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-001_daemon_README"
+   ],
+   "record_sha256": [
+    "3646688a21c49e0dfb0f54d2b7c9b3f60ac526395aafc82dde2ddcb61a0360fd"
+   ],
+   "required": true,
+   "source_sha256": "b41812c530cc3e452a555023e8bb4bfd4e8c797c95f3ba855457532a2b9673ee",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "00a0cda4d848a39321bcd300da72c24fb40b56fc",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b"
+   },
+   "bytes": 16874,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/daemon/sanctuary_daemon.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "800a9bc9f07ff68bf7c0e44abf55fc5fb9bd09ab",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "43448e104f044b3c7e29057e4ffb699649a644f0ef37814327a9a147dd54c573"
+   },
+   "bytes": 10698,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/daemon/test_daemon.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "43448e104f044b3c7e29057e4ffb699649a644f0ef37814327a9a147dd54c573",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "b68eea08a59906b67c9c06b95206e7cb6776cfabd4b0ba73f42074d39858bfff"
+   },
+   "bytes": 1993,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/confirm_v2_results.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "b68eea08a59906b67c9c06b95206e7cb6776cfabd4b0ba73f42074d39858bfff",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "800a9bc9f07ff68bf7c0e44abf55fc5fb9bd09ab",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "f5af36d7a80c4c490eaa174b9a9c001bcf5fa1e64f3d6a8d0efe9d853cfb22a6"
+   },
+   "bytes": 79,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/diagnostic_c2_only_overwrote_confirm.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "f5af36d7a80c4c490eaa174b9a9c001bcf5fa1e64f3d6a8d0efe9d853cfb22a6",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "12adfedd16c2074ed412035b38ce3153f0e54db6a56d8f24cb7e23817b79e28d"
+   },
+   "bytes": 781,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/demo-claude.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "12adfedd16c2074ed412035b38ce3153f0e54db6a56d8f24cb7e23817b79e28d",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 230,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/demo-claude.out.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-001_evidence_live_demo_demo-claude.out"
+   ],
+   "record_sha256": [
+    "1f091c3dafc9855b1e5de11927cb40d73aebee66d07e22fd57f11cda2d5479f0"
+   ],
+   "required": true,
+   "source_sha256": "20b40a32615b4bd38e994dab17cc6db832713f0cf58220617fdba6c4a73283b8",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "ebd297b1529846fed931e9f2cf384d5ab86a5e3c299ad63c54ba1d62ef7620a0"
+   },
+   "bytes": 1536,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/demo-claude.result.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "ebd297b1529846fed931e9f2cf384d5ab86a5e3c299ad63c54ba1d62ef7620a0",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "be76d5589b479a02f409396f9533b88ba014f6e0e63f9b97cd5ddb024aba9dac"
+   },
+   "bytes": 697,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/demo-commit.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "be76d5589b479a02f409396f9533b88ba014f6e0e63f9b97cd5ddb024aba9dac",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "d40148e0bab63ba8e9e4e46f8505df3342afc9d1157e7038e46d126f2f91eebc"
+   },
+   "bytes": 580,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/events.jsonl",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "d40148e0bab63ba8e9e4e46f8505df3342afc9d1157e7038e46d126f2f91eebc",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 33,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-001/evidence/live_demo/scratch_repo_log.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-001_evidence_live_demo_scratch_repo_log"
+   ],
+   "record_sha256": [
+    "6212c08143cb612ecb07d3878d256e4b2f44ff3605bde1a10fcac948c146ab34"
+   ],
+   "required": true,
+   "source_sha256": "be0ce62389c1be5e00fe44ab295dabae35d54996eceee0508774c669a247f5a6",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "00a0cda4d848a39321bcd300da72c24fb40b56fc",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "9be32cf25a2269dce56cad2bcb0d0ea4dd4224c7227d4cb78518b95b42942991"
+   },
+   "bytes": 335,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/freeze.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "9be32cf25a2269dce56cad2bcb0d0ea4dd4224c7227d4cb78518b95b42942991",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "800a9bc9f07ff68bf7c0e44abf55fc5fb9bd09ab",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "7ffe17f3c93f36af4bf1e1e8f833d081ec5daa7356e1621714c99cffdba3e60f"
+   },
+   "bytes": 385,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-001/freeze_v2.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_001"
+   ],
+   "required": true,
+   "source_sha256": "7ffe17f3c93f36af4bf1e1e8f833d081ec5daa7356e1621714c99cffdba3e60f",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5274,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-001/protocol.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-001_protocol"
+   ],
+   "record_sha256": [
+    "a07bd45e402d2e85e99f666f2176344f38bb35bd936f92adc5672a7ed3420041"
+   ],
+   "required": true,
+   "source_sha256": "eaa3ba30b7e9400c5626f68a69e487365d19884ec3f6cedb901d88af4cea1c92",
    "status": "included"
   },
   {
@@ -26834,44 +27119,44 @@
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "0ed1b9a9ba6400154c13360de83308a9d99c4cd7",
+    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "9b6bdccc0bfb8b6359393b07f35fd1169afa99353f07c2d292d34d052e43d4d4"
+    "sha256": "628ee0db7ec99629106483402a76452eaf911206c9948796d9407c29df1b5041"
    },
-   "bytes": 10525,
+   "bytes": 12485,
    "category": "knowledge_supporting_data",
    "path": "LEARNING/inbox.jsonl",
    "record_ids": [
     "artifacts__LEARNING_inbox_jsonl"
    ],
    "required": false,
-   "source_sha256": "9b6bdccc0bfb8b6359393b07f35fd1169afa99353f07c2d292d34d052e43d4d4",
+   "source_sha256": "628ee0db7ec99629106483402a76452eaf911206c9948796d9407c29df1b5041",
    "status": "included"
   },
   {
-   "bytes": 52484,
+   "bytes": 52494,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "c65fd4440957dc975ad2a6ce68e889c56f060c09d42eb6e0a5cd7acb5a650df0",
+   "source_sha256": "f8eefc894f0b0b1b7fd9c06359d4c6ebb6bde0eb2509fdd8b6675586125f8065",
    "status": "excluded"
   },
   {
    "action": {
     "updated": 1
    },
-   "bytes": 6614,
+   "bytes": 8047,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-001.json",
    "record_ids": [
     "mission__MISSION-001"
    ],
    "record_sha256": [
-    "b68dbfe7285f8b049a60f6aa6152340e9181ac8079022df1c79fd858333e5ece"
+    "8a7da1405462debc0d5c73dfd47e08e6e2067b04d97245cb2632db24247a7216"
    ],
    "required": true,
-   "source_sha256": "79fb4ce5acb300c467c94767b42c50e833f19a0ab43315729c9b752acc71d390",
+   "source_sha256": "c77bdccb36bb0a0d41dda8f64ad5656f03d2400b3c86c466ee699a8cd886ab16",
    "status": "included"
   },
   {
@@ -26910,7 +27195,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5435,
    "category": "mission_manifests",
@@ -26927,7 +27212,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 1776,
    "category": "mission_manifests",
@@ -27403,7 +27688,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 9543,
    "category": "mission_manifests",
@@ -27488,7 +27773,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4513,
    "category": "mission_manifests",
@@ -29560,19 +29845,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 19560,
+   "bytes": 19568,
    "category": "root_architecture_docs",
    "path": "architecture.md",
    "record_ids": [
     "architecture"
    ],
    "record_sha256": [
-    "805c028943356091969a79b616094975233b522c67246ac82d1bd7ea4ba06760"
+    "991ef3dfe95ad2a73a7b3b737e9561285de258edcbaffa7e082cb6bbe2ab54eb"
    ],
    "required": true,
-   "source_sha256": "e335fa05dbe51f0dc870f3b2a2c8e3e4b8a52e11f170def59dd6ea6b069297f1",
+   "source_sha256": "7567173921675f2dc0835b3919d444eeb7b7193bf4234c6671a49f7ad89742e6",
    "status": "included"
   },
   {
@@ -36053,12 +36338,29 @@
    "status": "included"
   },
   {
-   "bytes": 98916,
+   "action": {
+    "added": 1
+   },
+   "bytes": 1105,
+   "category": "chronicle",
+   "path": "chronicle/entries/389_mission_001_a_zero_token_supervisor_daemon_replaces_the_grok_bot_vm_idea.md",
+   "record_ids": [
+    "chronicle_entries_389_mission_001_a_zero_token_supervisor_daemon_replaces_the_grok_bot_vm_idea"
+   ],
+   "record_sha256": [
+    "64bbb9d0c21bed853839c305bdf78e5287aa06223d3e4e0f755d9fa5e8d9863e"
+   ],
+   "required": true,
+   "source_sha256": "46e00ecf9cd65e3ed7a0ca8383cff94d4bf78972c8de6dd1f6765480d934701a",
+   "status": "included"
+  },
+  {
+   "bytes": 99194,
    "category": "derived_projections",
    "path": "chronicle/ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "c71a65c117bc7566d29282832d6bc88781adff0fbaacf44d5100aad91592bd97",
+   "source_sha256": "8d49aa455a27aa18fa8cd523bd1a1571273273a802777f7f4594ec88eb706f66",
    "status": "excluded"
   },
   {
@@ -36116,19 +36418,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 2552,
+   "bytes": 2571,
    "category": "curated_memory_identity",
    "path": "context/soul.md",
    "record_ids": [
     "context_soul"
    ],
    "record_sha256": [
-    "df0b9ec3e5dbd5692af24779fe5ef733026e57e23b2966b3842f1c8e32914e9e"
+    "66e704e825d14a85d005b5411e9ef1beb15d9a00a3bdbbbe2239c0d2e1614b09"
    ],
    "required": true,
-   "source_sha256": "ffc436d64e3ffe6833fcdd32f829607d2b439484cff90ae6913b7087fc1d4ce2",
+   "source_sha256": "f1c618787ad95aa16e6472b91de9e6717b6597bfd3278d2a0fbf77f24c1080fa",
    "status": "included"
   },
   {
@@ -37298,19 +37600,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 6180,
+   "bytes": 6352,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/SKILL.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_operating-sanctuary-guardian_SKILL"
    ],
    "record_sha256": [
-    "02b1810c8a762efd137be0ac313322663e31c1a755dd561af1dda32a2bcbf725"
+    "a237e19e1cb6c860767c5f906e39ad509e2778a4150693de44729ca17dfd659f"
    ],
    "required": false,
-   "source_sha256": "d030c66526ac9852e1f9bd153055324f0316feea8230306f7c4785a4ef2caebc",
+   "source_sha256": "ebbf7a86edfd9a8b7380627f374643c1e02414528e8313aa84de0fdb7bee2324",
    "status": "included"
   },
   {
@@ -37696,6 +37998,15 @@
    "required": false,
    "source_sha256": "cf8e8816842a831f4c35426be09558ce0d23910f404d6b5397c182b0ddaa64d1",
    "status": "included"
+  },
+  {
+   "bytes": 2720,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "5b1a4cab08e178299436096c869775d554c6a907f1f1aca55a21685bb930b162",
+   "status": "excluded"
   },
   {
    "bytes": 27415,
@@ -38214,6 +38525,67 @@
    "status": "excluded"
   },
   {
+   "action": {
+    "added": 1
+   },
+   "bytes": 3697,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/SKILL.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_running-sanctuary-daemon_SKILL"
+   ],
+   "record_sha256": [
+    "129bc0488d49e6b860385961935eaa8ea4d2de7edefb846afb1ec8713cdcc3f2"
+   ],
+   "required": false,
+   "source_sha256": "60cf2fd766d3cf82f630bfb709c6373bb7f899af880d0f76b251e68ab6ea180a",
+   "status": "included"
+  },
+  {
+   "bytes": 659,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/evals/evals.json",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "63c0856428ee07bbdb830a8e9e2c6d510e2bccc2d9b2f876babe33395124bf48",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5125,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/references/operations.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_running-sanctuary-daemon_references_operations"
+   ],
+   "record_sha256": [
+    "2dd814a4f40d2bacd20fecd59ea36350f7ff16f9349b84f28d7c92e84b004549"
+   ],
+   "required": false,
+   "source_sha256": "f5e21bd7c3a39be69168bd0c7abbeb1df736b5205d12640854a67ab03965a83d",
+   "status": "included"
+  },
+  {
+   "bytes": 16874,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "9b5c4ccbfedac9560a82101b3c045169f5845825f5a30e11223b3918fc32ae2b",
+   "status": "excluded"
+  },
+  {
+   "bytes": 10940,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/test_daemon.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "bc08ac3146336ef16b0112e3f9c77e26b15861e38895c240703231e8d7f14893",
+   "status": "excluded"
+  },
+  {
    "bytes": 590,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.claude-plugin/plugin.json",
@@ -38224,19 +38596,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 5962,
+   "bytes": 6242,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/README.md",
    "record_ids": [
     "plugins_sanctuary-core_README"
    ],
    "record_sha256": [
-    "bc6d8672b4edc4e573c99a70936ee950e6fd20009e306fd1cac87e916b2a7e88"
+    "98ddc612415b082df3269850fd6bc945f38c246b2734b44cf236dbc64259a5ce"
    ],
    "required": false,
-   "source_sha256": "3bdf629e21034cb3ddc0ca77c46c2ae5888d47e50bfa99aecd0499e6dbdc1ec1",
+   "source_sha256": "40e856aade7fed3407b40e83030ec6283b17ef8f1eb0b540695319a0da7d60ce",
    "status": "included"
   },
   {
@@ -40147,11 +40519,11 @@
     "required": false
    },
    "chronicle": {
-    "discovered": 381,
+    "discovered": 382,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 381,
+    "included": 382,
     "required": true
    },
    "curated_memory_identity": {
@@ -40179,19 +40551,19 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 164,
+    "discovered": 169,
     "excluded": 2,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 162,
+    "included": 167,
     "required": true
    },
    "experiment_supporting_artifacts": {
-    "discovered": 1151,
+    "discovered": 1161,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 1151,
+    "included": 1161,
     "required": true
    },
    "governance_protocols_adrs": {
@@ -40275,19 +40647,19 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 120,
-    "excluded": 120,
+    "discovered": 124,
+    "excluded": 124,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
     "required": false
    },
    "skill_documentation": {
-    "discovered": 60,
+    "discovered": 62,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 60,
+    "included": 62,
     "required": false
    },
    "sync_receipts": {
