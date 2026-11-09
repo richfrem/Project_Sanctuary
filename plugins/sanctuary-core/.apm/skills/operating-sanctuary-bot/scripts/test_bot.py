@@ -213,6 +213,21 @@ class SchedulerUnit(unittest.TestCase):
         with self.assertRaises(ValueError):
             reg.approve("cp", "tester")
 
+    def test_integration_result_recorded(self) -> None:
+        """A COMPLETED run with an integrate block records the integration outcome in history and inbox."""
+        self.put(job_def("i", {"every": "1m"}, integrate={"auto_merge_paths": ["LEARNING/research/x/**"]}))
+        reg = A.Registry(self.home, self.defs, self.clock)
+        reg.approve("i", "tester")
+        s = self.sched()
+        self.clock.t += 120
+        s.tick()
+        self.finish(self.launched[-1]["id"], "COMPLETED")
+        s.tick()
+        h = reg.history("i")[-1]
+        self.assertIn("integration", h)
+        self.assertIn("integration:", (self.home / "inbox.md").read_text())
+
+
 
 class EndToEnd(unittest.TestCase):
     def test_bot_cli_schedules_real_runs(self) -> None:

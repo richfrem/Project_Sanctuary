@@ -28,7 +28,7 @@ last_substantive_review: "2026-11-09"
 
 ## How it flows
 1. Daily at 07:00 the bot runs four steps in its runtime worktree `.worktrees/bot-arxiv-daily` (branch `bot/arxiv-daily`): fetch; digest (only if the papers changed; otherwise the run ends with nothing to commit); analyze (Claude Haiku, isolated: no tools, inputs passed as data, treated as untrusted); save (writes the analysis and seeds, commits).
-2. The bot never pushes or merges. An agent or the human opens a PR from `bot/arxiv-daily` to `main` to bring the digests into the knowledge base and the soul dataset.
+2. After each completed run the bot pushes `bot/arxiv-daily` and opens or updates one PR to `main`. It auto-merges only when every changed file is data under `LEARNING/research/arxiv_daily/**` (never code, mission manifests or governance files; those wait for human review). The Hugging Face sync happens at the next session closeout.
 
 ## Reading depth and limits
 - Summaries are the **first two sentences of each abstract**, not written summaries; nothing here is a reading of the full paper.

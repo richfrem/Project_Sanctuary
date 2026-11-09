@@ -66,5 +66,11 @@
       "shell": "python3 LEARNING/research/arxiv_daily/pipeline/save_analysis.py {prev_output} && git add LEARNING/research/arxiv_daily && git commit -qm \"docs(arxiv-daily): analysis $(date +%F)\""
     }
   ],
-  "pause_after_failed_runs": 3
+  "pause_after_failed_runs": 3,
+  "integrate": {
+    "base": "main",
+    "auto_merge_paths": [
+      "LEARNING/research/arxiv_daily/**"
+    ]
+  }
 }
