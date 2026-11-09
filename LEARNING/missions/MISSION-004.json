@@ -1,11 +1,11 @@
 {
   "id": "MISSION-004",
   "title": "Anti-Asch Epistemic Grounding Benchmark Suite",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Sanctuary test harness",
   "created_at": "2026-11-02T08:00:00Z",
-  "updated_at": "2026-11-06T08:05:00Z",
+  "updated_at": "2026-11-09T00:12:40.770737+00:00",
   "confidence_reviewed": "2026-11-02",
   "scores": {
     "strategic_leverage": 4,
@@ -27,7 +27,7 @@
       "gpt-6-luna"
     ]
   },
-  "verdict": null,
+  "verdict": "ABANDONED",
   "human_gate_required": false,
   "issue_ref": null,
   "tags": [
@@ -45,12 +45,20 @@
       "agent": "claude-code",
       "citation": "LEARNING/experiments/mission-004/runs/confirm-v3/RESULTS.md",
       "details": "Required experiment performed (no terminal verdict recorded). Preregistered mission-level result: CANNOT DECIDE. Qwen2.5-Coder-7B (confirm-v2, 120 items, frozen rule): false conformity 26/60 -> 2/60 (92.3% reduction), valid-correction drop 3.3 pp: CORROBORATED by the frozen rule but adherence-limited (58/60 independent-first false-pressure answers malformed/UNKNOWN; valid answers conformed 26/26 and 2/2). Haiku 5.5 CLEAN context (confirm-v3, 120 fresh items; hooks/memory/skills absent per CLI init diagnostics): baseline false conformity 0/60, so the reduction criterion is unscorable (floor effect); valid-correction drop 1.67 pp. Haiku 5.5 AMBIENT context (original invocation; hooks, memory, CLAUDE.md loaded; confirm-v2 items; labelled, not pooled, not used for the verdict): 4/60 -> 1/60, drop 3.3 pp. Independent cross-checks of all ground truths, an independent final review (accept), key-set validation (480 unique keys per arm), frozen hashes verified. Process failures recorded in MISSION-052 closeout: 480 calls launched before the experimental context was verified; orchestrator lock hold interrupted the worker; frozen evaluate.py could not run as a script (run unmodified via import)."
+    },
+    {
+      "timestamp": "2026-11-09T00:12:40.770737+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-004/runs/confirm-v3/RESULTS.md",
+      "details": "Closed 2026-11-08 at Richard's request, after the required experiment gave the preregistered mission-level result CANNOT DECIDE (hypothesis not settled; not falsified). Qwen: formally CORROBORATED but adherence-limited (58/60 independent-first answers malformed). Haiku clean: unscorable (0/60 baseline conformity, floor effect). A settling design (hardened Qwen output contract, piloted pressure giving 15-60% Haiku baseline, larger n, annotation-tolerant matcher frozen in advance) is a new study, captured as an inbox candidate."
     }
   ],
   "lessons_learned": [
     "Verify the experimental context (hooks, memory, instruction files, working directory) with supported diagnostics before launching hundreds of calls.",
     "A benchmark needs a pilot baseline conformity well above zero (roughly 15-60%) or the relative-reduction criterion is unscorable.",
-    "A malformed-response policy that counts UNKNOWN as non-conforming can make a treatment look effective; report contract adherence by condition next to the frozen verdict."
+    "A malformed-response policy that counts UNKNOWN as non-conforming can make a treatment look effective; report contract adherence by condition next to the frozen verdict.",
+    "Strict format scoring can manufacture an apparent conformity reduction when malformed answers count as non-conformity.",
+    "A model with near-zero baseline conformity cannot test a relative-reduction hypothesis; pilot the pressure design to a mid-range baseline first."
   ],
   "projected_impact": {
     "paths": [
@@ -62,5 +70,12 @@
   "related_missions": {
     "MISSION-009": "ABSORBED: identical hypothesis and thresholds; 009 closed ABANDONED as a duplicate on 2026-11-05, its unique tags merged here."
   },
-  "blocker": "Next step is a new preregistered version: hardened Qwen output contract, a pressure design with a pilot-checked non-zero Haiku baseline, an annotation-tolerant matcher frozen in advance, and n sized for the interval. No terminal verdict is supported by the current evidence."
+  "blocker": "Next step is a new preregistered version: hardened Qwen output contract, a pressure design with a pilot-checked non-zero Haiku baseline, an annotation-tolerant matcher frozen in advance, and n sized for the interval. No terminal verdict is supported by the current evidence.",
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-maint-004-001",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-09T00:12:40.770737+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
 }

@@ -49,7 +49,8 @@
     "MISSION-008": "PROVIDER of durable handoff storage; distinct from testing whether checkpoint content improves agent comprehension.",
     "MISSION-052": "CONTEXT: MISSION-052 records any lease or crash incident as evidence for what 038 must handle.",
     "MISSION-059": "RELATED TO MISSION-059: VALIDATES / RELATED, NOT A DEPENDENCY: examines crash-safe lease claims as an open proposed control; does not assume the proposal is implemented.",
-    "MISSION-068": "SIBLING (overlap, partial): compares lifecycle contract approaches; reuses this mission's concurrency and duplicate-request cases."
+    "MISSION-068": "SIBLING (overlap, partial): compares lifecycle contract approaches; reuses this mission's concurrency and duplicate-request cases.",
+    "MISSION-001": "PROVIDER (soft): MISSION-001 daemon should reuse these lease/idempotency mechanisms."
   },
   "projected_impact": {
     "paths": [

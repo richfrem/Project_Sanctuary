@@ -1,12 +1,12 @@
 {
   "id": "MISSION-001",
-  "title": "Grok Bot Cloud VM, Infinite Loops & Operational Rails",
-  "status": "STAGED",
-  "execution_surface": "cloud-worker",
-  "target_platform": "Cursor Premium ($30/mo) / Grok Bot",
+  "title": "Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails",
+  "status": "PROPOSED",
+  "execution_surface": "hybrid",
+  "target_platform": "Host daemon (macOS first; Python asyncio prototype, Rust port optional) supervising ephemeral local headless CLI agents (claude -p, cursor-agent, repo CLIs); pluggable secondary remote/cloud worker (e.g. Grok Bot, webhooks) for browser or out-of-band tasks",
   "created_at": "2026-11-02T08:00:00Z",
-  "updated_at": "2026-11-02T08:00:00Z",
-  "confidence_reviewed": "2026-11-02",
+  "updated_at": "2026-11-09T00:12:40.887878+00:00",
+  "confidence_reviewed": "2026-11-08",
   "scores": {
     "strategic_leverage": 5,
     "epistemic_depth": 4,
@@ -15,33 +15,103 @@
     "priority_score": 100.0
   },
   "priority_score": 100.0,
-  "hypothesis": "Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.",
-  "falsification_criteria": "Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.",
+  "hypothesis": "A zero-token, event-driven supervisor daemon can reliably orchestrate multi-step agent lifecycles, handle sequential state changes, and enforce operational rails (process timeouts, budget trips, state rollback) without burning tokens during idle state monitoring.",
+  "falsification_criteria": "The daemon fails to detect status transitions on disk within 2 seconds, allows an agent process to exceed hard timeout boundaries without SIGKILL termination, or requires model inference to maintain the listening event loop. Case counts and the measurement protocol are to be frozen before the confirmatory test.",
   "model_routing": {
     "cheapest_viable_tier": "cheap",
-    "recommended_model": "grok-bot",
-    "cli_target": "cursor-cloud",
+    "recommended_model": "none (deterministic daemon, 0 tokens)",
+    "cli_target": "local headless CLI (claude -p / cursor-agent / repo CLI); optional remote worker",
     "cost_weight": 0.1,
     "fallback_models": [
-      "gemini-3.8-flash"
-    ]
+      "grok-bot (secondary, capability-specific)"
+    ],
+    "routing_guidance": "Outer loop is deterministic; models run only inside dispatched ephemeral runs, each under its own budget."
   },
   "verdict": null,
   "human_gate_required": true,
   "issue_ref": null,
   "tags": [
-    "grok-bot",
-    "cloud-vm",
-    "infinite-loops",
-    "operational-rails"
+    "daemon",
+    "supervisor",
+    "event-loop",
+    "operational-rails",
+    "ephemeral-dispatch",
+    "zero-token",
+    "grok-bot-optional"
   ],
   "evidence": [],
   "lessons_learned": [],
   "projected_impact": {
     "paths": [
-      "LEARNING/experiments/mission-001/"
+      "LEARNING/missions/MISSION-001.json",
+      "LEARNING/experiments/mission-001/",
+      "LEARNING/missions/MISSION-005.json",
+      "LEARNING/missions/MISSION-033.json",
+      "LEARNING/missions/MISSION-038.json"
     ],
-    "resources": [],
-    "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+    "resources": [
+      "local CPU; no idle model calls"
+    ],
+    "basis": "Refined 2026-11-08 with the daemon refactor."
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-maint-004-001",
+  "experiment": "1) Inventory existing capabilities first (cli-agent launch controls --timeout/--claim-dir/--result-json, manage_coordination.py leases, Agentic OS control plane) and reuse them. 2) Scaffold the daemon in LEARNING/experiments/mission-001/daemon/: OS-event file watcher (kqueue via watchfiles/watchdog, polling fallback with backoff); daemon state machine STAGED->QUEUED->RUNNING->COMPLETED|FAILED|BLOCKED_ON_HUMAN with atomic writes (temp file + os.replace); isolated subprocess runner with max_wall_clock_seconds (SIGTERM then SIGKILL), max_consecutive_failures (-> BLOCKED_ON_HUMAN), per-run run.log; abstract runner interface (local CLI, container, remote webhook). 3) Tests: detects QUEUED->RUNNING; kills a hanging `sleep 60`; records non-zero exit traces. Evidence in LEARNING/experiments/mission-001/evidence/.",
+  "design_constraints": [
+    "Daemon states (QUEUED, RUNNING, BLOCKED_ON_HUMAN, ...) live in the daemon's own state file; mission manifests keep schema statuses only (PROPOSED/STAGED/IN_PROGRESS/RESOLVED)",
+    "Reuse cli-agent launch controls and manage_coordination.py leases rather than reimplementing them",
+    "Event-driven, not busy-polling; idle CPU negligible and zero model calls",
+    "Hard rails: wall-clock SIGKILL, max iterations, freeze to BLOCKED_ON_HUMAN after repeated non-zero exits",
+    "No live remote writes or destructive operations in tests; Human Gate applies to state-changing dispatches"
+  ],
+  "score_basis": "Scores carried over from the 2026-11-02 registration (5x4)/(0.1x2)=100 and not reassessed after the 2026-11-08 refactor; treat as provisional.",
+  "readiness": {
+    "assessed": "2026-11-08",
+    "assessment": "Refactored design; not yet inventoried or frozen. Python stdlib available; watchfiles/watchdog not verified installed.",
+    "verified_present": [
+      "Python 3",
+      "cli-agent",
+      "manage_coordination.py"
+    ],
+    "missing_prerequisites": [
+      "Capability inventory",
+      "Frozen measurement protocol (2 s detection, timeout kill)",
+      "Watcher dependency choice/install"
+    ],
+    "first_enabling_step": "Inventory cli-agent and coordination capabilities the daemon must reuse."
+  },
+  "refactor_history": [
+    {
+      "date": "2026-11-08",
+      "by": "claude-code at Richard's direction (design analysis supplied by Richard)",
+      "change": "Decoupled the zero-token host supervisor (outer loop) from the execution surface (inner loop); Grok Bot cloud VM demoted to an optional pluggable target. Status STAGED -> PROPOSED because the new design is not yet inventoried or frozen.",
+      "previous": {
+        "title": "Grok Bot Cloud VM, Infinite Loops & Operational Rails",
+        "execution_surface": "cloud-worker",
+        "target_platform": "Cursor Premium ($30/mo) / Grok Bot",
+        "hypothesis": "Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.",
+        "falsification_criteria": "Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.",
+        "model_routing": {
+          "cheapest_viable_tier": "cheap",
+          "recommended_model": "grok-bot",
+          "cli_target": "cursor-cloud",
+          "cost_weight": 0.1,
+          "fallback_models": [
+            "gemini-3.8-flash"
+          ]
+        },
+        "tags": [
+          "grok-bot",
+          "cloud-vm",
+          "infinite-loops",
+          "operational-rails"
+        ]
+      }
+    }
+  ],
+  "related_missions": {
+    "MISSION-005": "SIBLING: asynchronous multi-bot DAG barrier orchestration; a future consumer of the daemon's dispatch loop.",
+    "MISSION-033": "SIBLING: single-orchestrator parallel delivery; overlaps on dispatch and supervision.",
+    "MISSION-038": "DEPENDS ON (soft): lease fencing and idempotent transitions the daemon should reuse rather than rebuild."
   }
 }
