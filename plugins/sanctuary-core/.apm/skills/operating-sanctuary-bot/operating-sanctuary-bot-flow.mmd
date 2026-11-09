@@ -1,0 +1,63 @@
+%% Sanctuary Bot: setting up an automation and one scheduled run.
+%% Source: plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/ (bot.py -> automations.py, sanctuary_daemon.py, conductor.py)
+%% No component outside the dispatched engine calls a model.
+sequenceDiagram
+    autonumber
+    actor Human as Human partner (approver)
+    participant Agent as Session agent
+    participant Bot as bot.py (the one interface)
+    participant Defs as .agent/automations/name.json (repo, via PR)
+    participant Local as ~/.sanctuary/daemon (approvals, state, history, inbox)
+    participant Daemon as Bot runtime: daemon + scheduler (0 tokens)
+    participant Cond as Conductor (per run)
+    participant Engine as Engine (shell / llama / codex / agy / claude via cli-agent)
+    participant WT as Task worktree (git)
+
+    Note over Human,Daemon: Session bootstrap never starts the bot or touches automations.
+
+    rect rgba(127,127,127,0.08)
+    Note over Human,Defs: Set up (interactive)
+    Human->>Agent: "set up a bot that ..."
+    Agent->>Bot: doctor / setup (plumbing, read-only if already set up)
+    Agent->>Human: interview: what, when, steps, engine, rails, results
+    Agent->>Defs: write definition, bot.py validate
+    Agent->>Human: plain-language summary + worst case
+    Human->>Agent: "go"
+    Agent->>Defs: commit on a feature branch, PR
+    Human->>Bot: approve name --by approver
+    Bot->>Local: store approver + SHA-256 of the definition
+    Agent->>Bot: start (if not running)
+    end
+
+    loop While running and idle (about once a second, ~0% CPU)
+        Daemon->>Defs: read definitions
+        Daemon->>Local: due? approved hash still matches? paused? previous run finished?
+    end
+
+    alt Definition edited since approval
+        Daemon-->>Local: CHANGED_SINCE_APPROVAL (does not run)
+    else Paused (by user, or after repeated failed runs)
+        Daemon-->>Local: skip
+    else Due and approved
+        Daemon->>Local: record run id, next due time
+        Daemon->>Cond: start run (detached): steps, rails, PREVIOUS RUN summary
+        loop Each step (pipeline / backlog / sweep)
+            Cond->>Cond: triage: next actionable step
+            Cond->>Daemon: queue one job (timeout, worktree, engine)
+            Daemon->>Engine: launch isolated in its own process group
+            Engine->>WT: edit, test, commit
+            alt Over the time limit
+                Daemon->>Engine: SIGTERM group, 2 s, SIGKILL
+            end
+            Daemon-->>Cond: job result
+            Cond->>WT: check: commit made, allowed paths only, verify command
+            opt Check failed
+                Cond->>WT: revert (task worktree only) and retry once with the reason
+            end
+        end
+        Cond-->>Local: run state: COMPLETED / PARTIAL / EXHAUSTED / BLOCKED_ON_HUMAN
+        Daemon->>Local: history + inbox.md line, optional notify command, auto-pause after N failed runs
+    end
+
+    Human->>Bot: status / history / pause / resume / run-now / stop
+    Note over Agent,WT: The bot never pushes, opens PRs or merges; results go through the normal review workflow.

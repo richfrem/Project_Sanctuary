@@ -47,3 +47,4 @@ python3 $B run one-off.json --by <approver>   # run once without scheduling
 - Multi-step runs (modes, steps, rails): [campaign-manifest.md](references/campaign-manifest.md) • [conductor-loop.md](references/conductor-loop.md)
 - Running the bot (start at login on macOS, Linux, Windows; rails; known gaps): [operations.md](references/operations.md)
 - Example: [example-automation.json](assets/example-automation.json)
+- Flow diagram (setup, approval, a scheduled run): [operating-sanctuary-bot-flow.mmd](operating-sanctuary-bot-flow.mmd)

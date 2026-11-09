@@ -1,20 +1,30 @@
 flowchart TD
-    Start["Agent Task Boot / Navigation Query"] --> Route{"Operation Type"}
+    Start["Agent task / navigation query"] --> Route{"Operation type"}
 
-    %% Progressive Disclosure
-    Route -->|"Read Context / Docs"| TierCheck{"Granularity Required?"}
-    TierCheck -->|"Overview / Map"| Tier1["Tier 1: disclose.py --level index<br/>(Reads INDEX.md / TOC &lt; 200 tokens)"]
-    TierCheck -->|"Validate Topic"| Tier2["Tier 2: disclose.py --level summary<br/>(Extracts frontmatter &amp; abstract &lt; 100 tokens)"]
-    TierCheck -->|"Implement / Audit"| Tier3["Tier 3: disclose.py --level deep<br/>(Loads complete specification &amp; code)"]
+    %% Progressive disclosure
+    Route -->|"Read context or docs"| TierCheck{"Granularity required?"}
+    TierCheck -->|"Overview / map"| Tier1["Tier 1: disclose.py --tier 1 --target &lt;dir&gt;<br/>(index / TOC)"]
+    TierCheck -->|"Validate a topic"| Tier2["Tier 2: disclose.py --tier 2 --path &lt;file&gt;<br/>(frontmatter and abstract)"]
+    TierCheck -->|"Implement / audit"| Tier3["Tier 3: disclose.py --tier 3 --path &lt;file&gt;<br/>(full document)"]
 
-    %% Associative Graph
-    Route -->|"Explore Connections"| Graph["query_graph.py --concept &lt;name&gt;<br/>(Maps inbound backlinks &amp; outbound links in sub-10ms)"]
+    %% Associative graph
+    Route -->|"Explore connections"| Graph["query_graph.py --concept &lt;name&gt;<br/>(inbound backlinks and outbound links)"]
 
-    %% Asymmetric Persistence
-    Route -->|"Encounter Failure / Friction"| FailGuard["Asymmetric Persistence Guard"]
-    FailGuard --> Rec["record_insight.py --topic &lt;name&gt; --type friction<br/>(Appends insight to context/memory.md &amp; LEARNING/)"]
-    Rec --> Rollback["Safe Git Rollback (git checkout / git branch -D)<br/>*Code discarded, but learned memory preserved!*"]
+    %% Mission backlog (agent-native)
+    Route -->|"Missions and backlog"| Backlog{"Backlog operation"}
+    Backlog -->|"Find / rank work"| BList["manage_backlog.py list / get / related / route"]
+    Backlog -->|"Capture an idea"| BCap["manage_backlog.py capture<br/>(LEARNING/inbox.jsonl)"]
+    Backlog -->|"Register or edit a mission"| BVal["validate_missions.py / manage_backlog.py validate<br/>then manage_backlog.py compile<br/>(index.jsonl + backlog.md)"]
+    Backlog -->|"Close with a verdict"| BRes["manage_backlog.py record-result<br/>(verdict, evidence, lessons, preservation obligation)"]
 
-    %% Confidence Decay
-    Route -->|"Protocol 128 Audit"| Decay["audit_decay.py --check<br/>(Finds CONFIRMED entries &gt; 30 days old)"]
-    Decay -->|"Decay Triggered"| Downgrade["audit_decay.py --apply<br/>(Downgrades status to OBSERVED)"]
+    %% Procedural memory
+    Route -->|"Ran a documented procedure"| Proc["record_procedure_outcome.py --id &lt;id&gt; --outcome success|failure|blocked<br/>(LEARNING/procedures/)"]
+
+    %% Asymmetric persistence
+    Route -->|"Encounter failure / friction"| FailGuard["Asymmetric persistence guard"]
+    FailGuard --> Rec["record_insight.py --topic &lt;name&gt; --type friction --insight &lt;text&gt;<br/>(events log, then memory / concepts per --destination)"]
+    Rec --> Rollback["Safe git rollback<br/>code discarded, learned memory preserved"]
+
+    %% Confidence decay
+    Route -->|"Protocol 128 audit"| Decay["audit_decay.py --check<br/>(CONFIRMED entries older than 30 days)"]
+    Decay -->|"Decay triggered"| Downgrade["audit_decay.py --apply<br/>(downgrade to OBSERVED)"]
