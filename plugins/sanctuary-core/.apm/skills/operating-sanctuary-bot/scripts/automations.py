@@ -13,6 +13,40 @@ Machine-local state under <home>/automations/:
   state.json      {name: {last_run_at, last_status, next_due, current_run, failed_runs, paused, ...}}
   <name>/history.jsonl   one line per finished run
   <home>/inbox.md        human-readable run results (newest last)
+
+Key Input Dependencies:
+- config dict with `definitions_dir` (from ~/.sanctuary/daemon/config.json) and optional `notify_cmd`
+- <definitions_dir>/<name>.json definitions; ~/.sanctuary/daemon/automations/{approvals,state}.json
+- ~/.sanctuary/daemon/campaigns/<run-id>/state.json written by conductor.py
+- conductor.py (launched per run)
+
+Key Functions:
+- read_json(): Read a JSON file, returning `default` when it is missing or invalid.
+- write_json(): Write JSON atomically (temp file + os.replace), creating parent folders.
+- content_hash(): SHA-256 of a definition's canonical JSON (sorted keys, compact): the approval fingerprint.
+- parse_every(): Parse an interval like 30m, 6h, 1d or 1w into seconds; raises ValueError otherwise.
+- next_due(): First due time strictly after `after` (epoch seconds, local time for `at`). None = manual only.
+- catch_up(): Decide what to do when `due` <= now. Returns (run_now, next_due_after_decision).
+- to_campaign(): Turn an automation definition into a conductor manifest for one run (a `job` becomes a one-step pipeline).
+- class Registry: Automation definitions (repo) plus machine-local approvals, state and history.
+    - __init__(): Bind the registry to a daemon home, a definitions folder and a clock.
+    - names(): Names of all definition files in the definitions folder.
+    - load(): Load one definition by name.
+    - validate(): Check a definition (name, job/steps, schedule, worktree, engine) and its derived run manifest.
+    - approvals(): All approval records, keyed by automation name.
+    - approve(): Validate and approve a definition: store its hash, approver and time; reset pause state.
+    - approval_status(): APPROVED, NOT_APPROVED, CHANGED_SINCE_APPROVAL or DEFINITION_MISSING.
+    - state(): Machine-local run state for all automations.
+    - set(): Merge fields into one automation's state (atomic write).
+    - history(): The last `limit` finished runs of an automation.
+- class Scheduler: Called by the daemon while idle. Finishes running runs, then launches due approved runs.
+    - __init__(): Bind the scheduler to a daemon home, config, clock and launcher (injectable for tests).
+    - tick(): Finish completed runs, then launch due, approved, unpaused automations; returns event messages.
+    - _spawn_conductor(): Write the run manifest and start its conductor detached; returns the conductor pid.
+    - _reconcile(): Record a finished or crashed run: history, inbox, notify, failed-run count and auto-pause.
+    - _notify(): Run the configured notify command (argv list, no shell) with the run's result in its environment.
+- _alive(): True if a process id exists (EPERM counts as alive).
+- load_config(): Load `config.json` from the daemon home, or None when the bot is not set up.
 """
 from __future__ import annotations
 
@@ -25,6 +59,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from typing import Callable
 
 HERE = Path(__file__).resolve().parent
 CONDUCTOR = HERE / "conductor.py"
@@ -33,31 +68,40 @@ DEFAULT_PAUSE_AFTER = 3
 FINAL = {"COMPLETED", "PARTIAL", "STALLED", "EXHAUSTED", "BLOCKED_ON_HUMAN", "STOPPED"}
 
 
-def read_json(p: Path, default):
+# Read a JSON file, returning `default` when it is missing or invalid.
+def read_json(p: Path, default: object) -> object:
+    """Read a JSON file, returning `default` when it is missing or invalid."""
     try:
         return json.loads(p.read_text())
     except (OSError, json.JSONDecodeError):
         return default
 
 
-def write_json(p: Path, data) -> None:
+# Write JSON atomically (temp file + os.replace), creating parent folders.
+def write_json(p: Path, data: object) -> None:
+    """Write JSON atomically (temp file + os.replace), creating parent folders."""
     p.parent.mkdir(parents=True, exist_ok=True)
     tmp = p.with_name(f".{p.name}.{os.getpid()}.tmp")
     tmp.write_text(json.dumps(data, indent=2))
     os.replace(tmp, p)
 
 
+# SHA-256 of a definition's canonical JSON (sorted keys, compact).
 def content_hash(defn: dict) -> str:
+    """SHA-256 of a definition's canonical JSON (sorted keys, compact): the approval fingerprint."""
     return hashlib.sha256(json.dumps(defn, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
+# Parse an interval like 30m, 6h, 1d or 1w into seconds.
 def parse_every(text: str) -> int:
+    """Parse an interval like 30m, 6h, 1d or 1w into seconds; raises ValueError otherwise."""
     m = re.fullmatch(r"\s*(\d+)\s*([smhdw])\s*", str(text))
     if not m:
         raise ValueError(f"bad interval {text!r} (use e.g. 30m, 6h, 1d, 1w)")
     return int(m.group(1)) * UNITS[m.group(2)]
 
 
+# First due time strictly after `after` (epoch seconds, local time for `at`).
 def next_due(schedule: dict, after: float) -> float | None:
     """First due time strictly after `after` (epoch seconds, local time for `at`). None = manual only."""
     if not schedule or schedule.get("manual"):
@@ -76,6 +120,7 @@ def next_due(schedule: dict, after: float) -> float | None:
     return cand.timestamp()
 
 
+# Decide what to do when `due` <= now.
 def catch_up(schedule: dict, due: float, now: float) -> tuple[bool, float | None]:
     """Decide what to do when `due` <= now. Returns (run_now, next_due_after_decision)."""
     if schedule.get("catch_up", "once") == "skip":
@@ -85,7 +130,9 @@ def catch_up(schedule: dict, due: float, now: float) -> tuple[bool, float | None
     return True, next_due(schedule, now)
 
 
+# Turn an automation definition into a conductor manifest for one run (a `job` becomes a one-step pipeline).
 def to_campaign(name: str, defn: dict, run_id: str, approved_by: str, repo_root: Path, previous: str | None) -> dict:
+    """Turn an automation definition into a conductor manifest for one run (a `job` becomes a one-step pipeline)."""
     wt = Path(defn["worktree"])
     wt = wt if wt.is_absolute() else (repo_root / wt)
     m = {"id": run_id, "authorized_by": approved_by, "worktree": str(wt.resolve()),
@@ -105,8 +152,12 @@ def to_campaign(name: str, defn: dict, run_id: str, approved_by: str, repo_root:
     return m
 
 
+# Automation definitions (repo) plus machine-local approvals, state and history.
 class Registry:
-    def __init__(self, home: Path, definitions: Path, now=time.time):
+    """Automation definitions (repo) plus machine-local approvals, state and history."""
+    # Bind the registry to a daemon home, a definitions folder and a clock.
+    def __init__(self, home: Path, definitions: Path, now: Callable[[], float] = time.time) -> None:
+        """Bind the registry to a daemon home, a definitions folder and a clock."""
         self.home, self.defs, self.now = home, definitions, now
         self.dir = home / "automations"
         self.approvals_p, self.state_p = self.dir / "approvals.json", self.dir / "state.json"
@@ -114,12 +165,17 @@ class Registry:
 
     # --- definitions ---
     def names(self) -> list[str]:
+        """Names of all definition files in the definitions folder."""
         return sorted(p.stem for p in self.defs.glob("*.json")) if self.defs.is_dir() else []
 
+    # Load one definition by name.
     def load(self, name: str) -> dict:
+        """Load one definition by name."""
         return json.loads((self.defs / f"{name}.json").read_text())
 
+    # Check a definition (name, job/steps, schedule, worktree, engine) and its derived run manifest.
     def validate(self, name: str, defn: dict | None = None) -> list[str]:
+        """Check a definition (name, job/steps, schedule, worktree, engine) and its derived run manifest."""
         sys.path.insert(0, str(HERE))
         import conductor
         try:
@@ -144,9 +200,12 @@ class Registry:
 
     # --- approval ---
     def approvals(self) -> dict:
+        """All approval records, keyed by automation name."""
         return read_json(self.approvals_p, {})
 
+    # Validate and approve a definition.
     def approve(self, name: str, by: str) -> dict:
+        """Validate and approve a definition: store its hash, approver and time; reset pause state."""
         defn = self.load(name)
         errs = self.validate(name, defn)
         if errs:
@@ -161,7 +220,9 @@ class Registry:
         write_json(self.state_p, st)
         return a[name]
 
+    # APPROVED, NOT_APPROVED, CHANGED_SINCE_APPROVAL or DEFINITION_MISSING.
     def approval_status(self, name: str) -> str:
+        """APPROVED, NOT_APPROVED, CHANGED_SINCE_APPROVAL or DEFINITION_MISSING."""
         a = self.approvals().get(name)
         if not a:
             return "NOT_APPROVED"
@@ -172,28 +233,39 @@ class Registry:
 
     # --- state ---
     def state(self) -> dict:
+        """Machine-local run state for all automations."""
         return read_json(self.state_p, {})
 
+    # Merge fields into one automation's state (atomic write).
     def set(self, name: str, **kw) -> None:
+        """Merge fields into one automation's state (atomic write)."""
         st = self.state()
         st.setdefault(name, {}).update(kw)
         write_json(self.state_p, st)
 
+    # The last `limit` finished runs of an automation.
     def history(self, name: str, limit: int = 20) -> list[dict]:
+        """The last `limit` finished runs of an automation."""
         p = self.dir / name / "history.jsonl"
         lines = p.read_text().splitlines() if p.exists() else []
         return [json.loads(l) for l in lines[-limit:]]
 
 
+# Called by the daemon while idle.
 class Scheduler:
     """Called by the daemon while idle. Finishes running runs, then launches due approved runs."""
 
-    def __init__(self, home: Path, config: dict, now=time.time, launch=None):
+    # Bind the scheduler to a daemon home, config, clock and launcher (injectable for tests).
+    def __init__(self, home: Path, config: dict, now: Callable[[], float] = time.time,
+                 launch: Callable[[dict], int] | None = None) -> None:
+        """Bind the scheduler to a daemon home, config, clock and launcher (injectable for tests)."""
         self.home, self.cfg, self.now = home, config, now
         self.reg = Registry(home, Path(config["definitions_dir"]), now)
         self.launch = launch or self._spawn_conductor
 
+    # Finish completed runs, then launch due, approved, unpaused automations.
     def tick(self) -> list[str]:
+        """Finish completed runs, then launch due, approved, unpaused automations; returns event messages."""
         events = []
         for name in self.reg.names():
             s = self.reg.state().get(name, {})
@@ -227,7 +299,9 @@ class Scheduler:
             events.append(f"{name}: started {run_id}")
         return events
 
+    # Write the run manifest and start its conductor detached.
     def _spawn_conductor(self, camp: dict) -> int:
+        """Write the run manifest and start its conductor detached; returns the conductor pid."""
         d = self.home / "campaigns" / camp["id"]
         write_json(d / "manifest.json", camp)
         log = open(d / "conductor.out", "ab")
@@ -235,7 +309,9 @@ class Scheduler:
                              stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
         return p.pid
 
+    # Record a finished or crashed run.
     def _reconcile(self, name: str, s: dict) -> list[str]:
+        """Record a finished or crashed run: history, inbox, notify, failed-run count and auto-pause."""
         run_id = s["current_run"]
         st = read_json(self.home / "campaigns" / run_id / "state.json", {})
         status = st.get("status")
@@ -268,7 +344,9 @@ class Scheduler:
         self._notify(name, status, summary)
         return [f"{name}: {status}"]
 
+    # Run the configured notify command (argv list, no shell) with the run's result in its environment.
     def _notify(self, name: str, status: str, summary: str) -> None:
+        """Run the configured notify command (argv list, no shell) with the run's result in its environment."""
         cmd = self.cfg.get("notify_cmd")
         if not cmd:
             return
@@ -279,7 +357,9 @@ class Scheduler:
             pass
 
 
-def _alive(pid) -> bool:
+# True if a process id exists (EPERM counts as alive).
+def _alive(pid: int | None) -> bool:
+    """True if a process id exists (EPERM counts as alive)."""
     if not pid:
         return False
     try:
@@ -291,7 +371,9 @@ def _alive(pid) -> bool:
         return True
 
 
+# Load `config.json` from the daemon home, or None when the bot is not set up.
 def load_config(home: Path) -> dict | None:
+    """Load `config.json` from the daemon home, or None when the bot is not set up."""
     cfg = read_json(home / "config.json", None)
     if cfg and cfg.get("definitions_dir"):
         return cfg

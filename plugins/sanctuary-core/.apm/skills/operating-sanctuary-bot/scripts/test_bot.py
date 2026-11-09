@@ -2,6 +2,35 @@
 """Tests for automations.py (registry, approval, scheduler) and bot.py (end to end). No model calls.
 
 Run: python3 test_bot.py
+
+Key Input Dependencies:
+- bot.py, automations.py, conductor.py, sanctuary_daemon.py (siblings); git; temporary repos and homes
+
+Key Functions:
+- class Clock
+    - __init__()
+    - __call__()
+- git_repo(): test helper
+- job_def(): test helper
+- class ScheduleMath
+    - test_interval()
+    - test_daily_at()
+    - test_manual_and_bad()
+    - test_catch_up()
+- class SchedulerUnit
+    - setUp()
+    - tearDown()
+    - sched()
+    - put()
+    - finish()
+    - test_unapproved_and_tampered_never_run()
+    - test_due_run_overlap_memory_inbox_notify()
+    - test_overlap_skip_while_running()
+    - test_auto_pause_after_failed_runs_and_resume_rules()
+    - test_run_now_manual()
+    - test_validation()
+- class EndToEnd
+    - test_bot_cli_schedules_real_runs()
 """
 import datetime as dt
 import json
@@ -19,10 +48,10 @@ import automations as A  # noqa: E402
 
 
 class Clock:
-    def __init__(self, t):
+    def __init__(self, t: float) -> None:
         self.t = t
 
-    def __call__(self):
+    def __call__(self) -> float:
         return self.t
 
 
@@ -39,16 +68,17 @@ def git_repo(base: Path) -> tuple[Path, Path]:
     return repo, defs
 
 
-def job_def(name, schedule, shell="sh -c 'date > t.txt && git add t.txt && git commit -qm tick'", **kw):
+def job_def(name: str, schedule: dict, shell: str = "sh -c 'date > t.txt && git add t.txt && git commit -qm tick'",
+            **kw: object) -> dict:
     return {"name": name, "schedule": schedule, "worktree": ".worktrees/task", "engine": {"cli": "shell"},
             "job": {"shell": shell}, **kw}
 
 
 class ScheduleMath(unittest.TestCase):
-    def test_interval(self):
+    def test_interval(self) -> None:
         self.assertEqual(A.next_due({"every": "30m"}, 1000), 1000 + 1800)
 
-    def test_daily_at(self):
+    def test_daily_at(self) -> None:
         base = dt.datetime(2026, 11, 9, 8, 0).timestamp()  # after 07:00 -> tomorrow 07:00
         self.assertEqual(dt.datetime.fromtimestamp(A.next_due({"every": "1d", "at": "07:00"}, base)),
                          dt.datetime(2026, 11, 10, 7, 0))
@@ -56,14 +86,14 @@ class ScheduleMath(unittest.TestCase):
         self.assertEqual(dt.datetime.fromtimestamp(A.next_due({"every": "1d", "at": "07:00"}, early)),
                          dt.datetime(2026, 11, 9, 7, 0))
 
-    def test_manual_and_bad(self):
+    def test_manual_and_bad(self) -> None:
         self.assertIsNone(A.next_due({"manual": True}, 0))
         with self.assertRaises(ValueError):
             A.next_due({"every": "soon"}, 0)
         with self.assertRaises(ValueError):
             A.next_due({"every": "6h", "at": "07:00"}, 0)
 
-    def test_catch_up(self):
+    def test_catch_up(self) -> None:
         s_once, s_skip = {"every": "1h"}, {"every": "1h", "catch_up": "skip"}
         self.assertTrue(A.catch_up(s_once, 0, 3 * 3600)[0])          # missed 3 slots: run once
         self.assertFalse(A.catch_up(s_skip, 0, 3 * 3600)[0])         # skip: don't run, jump ahead
@@ -71,7 +101,7 @@ class ScheduleMath(unittest.TestCase):
 
 
 class SchedulerUnit(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
         base = Path(self.tmp.name).resolve()
         self.repo, self.defs = git_repo(base)
@@ -80,20 +110,20 @@ class SchedulerUnit(unittest.TestCase):
         self.launched = []
         self.cfg = {"definitions_dir": str(self.defs)}
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         self.tmp.cleanup()
 
-    def sched(self, cfg=None):
+    def sched(self, cfg: dict | None = None) -> A.Scheduler:
         return A.Scheduler(self.home, cfg or self.cfg, now=self.clock, launch=lambda c: self.launched.append(c) or 99999999)
 
-    def put(self, d):
+    def put(self, d: dict) -> None:
         (self.defs / f"{d['name']}.json").write_text(json.dumps(d))
 
-    def finish(self, run_id, status, step="job", commit="tick (abc)"):
+    def finish(self, run_id: str, status: str, step: str = "job", commit: str = "tick (abc)") -> None:
         A.write_json(self.home / "campaigns" / run_id / "state.json",
                      {"status": status, "cycles": 1, "history": [{"step": step, "reason": "ok", "commit": commit, "files": ["t.txt"]}]})
 
-    def test_unapproved_and_tampered_never_run(self):
+    def test_unapproved_and_tampered_never_run(self) -> None:
         self.put(job_def("a", {"every": "1h"}))
         s = self.sched()
         self.clock.t += 7200
@@ -106,7 +136,7 @@ class SchedulerUnit(unittest.TestCase):
         self.assertEqual(self.launched, [])
         self.assertEqual(A.Registry(self.home, self.defs).approval_status("a"), "CHANGED_SINCE_APPROVAL")
 
-    def test_due_run_overlap_memory_inbox_notify(self):
+    def test_due_run_overlap_memory_inbox_notify(self) -> None:
         out = Path(self.tmp.name) / "notified.txt"
         cfg = {**self.cfg, "notify_cmd": [sys.executable, "-c",
                                           f"import os; open({str(out)!r},'a').write(os.environ['BOT_AUTOMATION']+' '+os.environ['BOT_STATUS']+'\\n')"]}
@@ -136,7 +166,7 @@ class SchedulerUnit(unittest.TestCase):
         self.assertIn("a COMPLETED", out.read_text())
         self.assertIn("**a** COMPLETED", (self.home / "inbox.md").read_text())
 
-    def test_overlap_skip_while_running(self):
+    def test_overlap_skip_while_running(self) -> None:
         self.put(job_def("a", {"every": "1m"}))
         A.Registry(self.home, self.defs, self.clock).approve("a", "tester")
         s = A.Scheduler(self.home, self.cfg, now=self.clock, launch=lambda c: self.launched.append(c) or __import__("os").getpid())
@@ -145,7 +175,7 @@ class SchedulerUnit(unittest.TestCase):
             s.tick()
         self.assertEqual(len(self.launched), 1)
 
-    def test_auto_pause_after_failed_runs_and_resume_rules(self):
+    def test_auto_pause_after_failed_runs_and_resume_rules(self) -> None:
         self.put(job_def("a", {"every": "1m"}, pause_after_failed_runs=2))
         reg = A.Registry(self.home, self.defs, self.clock)
         reg.approve("a", "tester")
@@ -162,7 +192,7 @@ class SchedulerUnit(unittest.TestCase):
         s.tick()
         self.assertEqual(len(self.launched), 2)                    # paused: nothing new
 
-    def test_run_now_manual(self):
+    def test_run_now_manual(self) -> None:
         self.put(job_def("m", {"manual": True}))
         reg = A.Registry(self.home, self.defs, self.clock)
         reg.approve("m", "tester")
@@ -174,7 +204,7 @@ class SchedulerUnit(unittest.TestCase):
         s.tick()
         self.assertEqual(len(self.launched), 1)
 
-    def test_validation(self):
+    def test_validation(self) -> None:
         reg = A.Registry(self.home, self.defs, self.clock)
         (self.defs / "bad.json").write_text(json.dumps({**job_def("bad", {"every": "1h"}), "name": "other"}))
         self.assertTrue(any("name" in e for e in reg.validate("bad")))
@@ -185,7 +215,7 @@ class SchedulerUnit(unittest.TestCase):
 
 
 class EndToEnd(unittest.TestCase):
-    def test_bot_cli_schedules_real_runs(self):
+    def test_bot_cli_schedules_real_runs(self) -> None:
         with tempfile.TemporaryDirectory() as t:
             base = Path(t).resolve()
             repo, defs = git_repo(base)

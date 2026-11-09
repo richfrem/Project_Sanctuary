@@ -28,6 +28,44 @@ Usage:
                              [--after JOB_ID] [--allow-permission-bypass] [--require-commit] [--timeout SEC]
   sanctuary_daemon.py status [--home DIR]
   sanctuary_daemon.py reset  [--home DIR]
+
+Key Input Dependencies:
+- ~/.sanctuary/daemon/queue/*.json job files; state.json; daemon.lock
+- cli-agent run_agent.py for AI jobs (Env: SANCTUARY_RUN_AGENT; default ~/.claude/skills/cli-agent/scripts/run_agent.py)
+- automations.py + ~/.sanctuary/daemon/config.json for the scheduler (optional)
+- Env: SANCTUARY_DAEMON_HOME
+
+Key Functions:
+- now(): Current epoch time (seconds).
+- atomic_write_json(): Write JSON atomically (fsync, then os.replace).
+- read_json(): Read a JSON file, or None when missing or invalid.
+- class Home: The daemon's state folder: queue, logs, claims, state.json, events.jsonl, lock.
+    - __init__(): Bind to a root folder and create queue, logs and claims.
+    - state(): Daemon state (ACTIVE or BLOCKED_ON_HUMAN, consecutive failures).
+    - save_state(): Persist daemon state atomically.
+    - event(): Append one event line to events.jsonl.
+    - jobs(): All parseable job files, oldest first.
+- gate(): Return a rejection reason, or None if the job may run.
+- build_argv(): Build the job's command line: shell argv, or run_agent.py with the cli-agent launch controls.
+- git_head(): HEAD of a git checkout, or '' outside git.
+- kill_group(): SIGTERM the process group, wait GRACE_SEC, then SIGKILL.
+- group_alive(): True if any live member remains. EPERM on macOS means only a zombie remains.
+- class Watcher: Blocks until the queue directory changes or `timeout` elapses (kqueue, else polling).
+    - __init__(): Open a kqueue watch on the queue folder when available.
+    - wait(): Block until the queue changes or `timeout` seconds pass.
+- class Daemon: The supervisor loop: gates and dispatches jobs, runs the scheduler while idle.
+    - __init__(): Bind to a home and prepare the stop flag and warning set.
+    - _on_signal(): SIGTERM/SIGINT handler: request a clean stop.
+    - recover(): Kill and re-queue jobs left RUNNING by a stopped or crashed daemon.
+    - run(): Take the single-instance lock, recover, then loop: dispatch jobs or idle on the watcher.
+    - _scheduler(): Sanctuary Bot automations, if `bot.py setup` configured a definitions directory.
+    - tick(): Gate and dispatch the oldest runnable QUEUED job; returns True if one ran.
+    - dispatch(): Launch a job, wait for it under the rails, and record its final state.
+    - _wait(): Wait for the job; returns (status or None for a normal exit, exit code).
+    - _requeue_interrupted(): Record an interrupted job so the next daemon start re-runs it once.
+    - _count_outcome(): Update the consecutive-failure counter and open the circuit at the limit.
+- cmd_enqueue(): Write one QUEUED job file from command-line arguments; prints its id.
+- main(): Parse arguments and dispatch run, enqueue, status or reset.
 """
 from __future__ import annotations
 
@@ -59,11 +97,15 @@ RUN_AGENT = Path(os.environ.get("SANCTUARY_RUN_AGENT",
 
 # ---------- small helpers ----------
 
+# Current epoch time (seconds).
 def now() -> float:
+    """Current epoch time (seconds)."""
     return time.time()
 
 
+# Write JSON atomically (fsync, then os.replace).
 def atomic_write_json(path: Path, data: dict) -> None:
+    """Write JSON atomically (fsync, then os.replace)."""
     tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
@@ -72,15 +114,21 @@ def atomic_write_json(path: Path, data: dict) -> None:
     os.replace(tmp, path)
 
 
+# Read a JSON file, or None when missing or invalid.
 def read_json(path: Path) -> dict | None:
+    """Read a JSON file, or None when missing or invalid."""
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return None
 
 
+# The daemon's state folder.
 class Home:
-    def __init__(self, root: Path):
+    """The daemon's state folder: queue, logs, claims, state.json, events.jsonl, lock."""
+    # Bind to a root folder and create queue, logs and claims.
+    def __init__(self, root: Path) -> None:
+        """Bind to a root folder and create queue, logs and claims."""
         self.root = root
         self.queue = root / "queue"
         self.logs = root / "logs"
@@ -91,17 +139,25 @@ class Home:
         for d in (self.queue, self.logs, self.claims):
             d.mkdir(parents=True, exist_ok=True)
 
+    # Daemon state (ACTIVE or BLOCKED_ON_HUMAN, consecutive failures).
     def state(self) -> dict:
+        """Daemon state (ACTIVE or BLOCKED_ON_HUMAN, consecutive failures)."""
         return read_json(self.state_file) or {"daemon_status": "ACTIVE", "consecutive_failures": 0}
 
+    # Persist daemon state atomically.
     def save_state(self, s: dict) -> None:
+        """Persist daemon state atomically."""
         atomic_write_json(self.state_file, s)
 
+    # Append one event line to events.jsonl.
     def event(self, kind: str, **fields) -> None:
+        """Append one event line to events.jsonl."""
         with open(self.events, "a", encoding="utf-8") as f:
             f.write(json.dumps({"ts": now(), "event": kind, **fields}) + "\n")
 
+    # All parseable job files, oldest first.
     def jobs(self) -> list[tuple[Path, dict]]:
+        """All parseable job files, oldest first."""
         out = []
         for p in self.queue.glob("*.json"):
             j = read_json(p)
@@ -112,6 +168,7 @@ class Home:
 
 # ---------- gates ----------
 
+# Return a rejection reason, or None if the job may run.
 def gate(job: dict) -> str | None:
     """Return a rejection reason, or None if the job may run."""
     if not str(job.get("authorized_by", "")).strip():
@@ -139,7 +196,9 @@ def gate(job: dict) -> str | None:
     return None
 
 
+# Build the job's command line.
 def build_argv(home: Home, job: dict) -> tuple[list[str], str]:
+    """Build the job's command line: shell argv, or run_agent.py with the cli-agent launch controls."""
     runner = job["runner"]
     if runner["type"] == "shell":
         return list(runner["argv"]), runner.get("cwd") or str(home.root)
@@ -165,11 +224,14 @@ def build_argv(home: Home, job: dict) -> tuple[list[str], str]:
     return argv, cwd
 
 
+# HEAD of a git checkout, or '' outside git.
 def git_head(cwd: str) -> str:
+    """HEAD of a git checkout, or '' outside git."""
     r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=cwd, capture_output=True, text=True)
     return r.stdout.strip() if r.returncode == 0 else ""
 
 
+# SIGTERM the process group, wait GRACE_SEC, then SIGKILL.
 def kill_group(pgid: int, proc: subprocess.Popen | None = None) -> None:
     """SIGTERM the process group, wait GRACE_SEC, then SIGKILL.
 
@@ -193,6 +255,7 @@ def kill_group(pgid: int, proc: subprocess.Popen | None = None) -> None:
             time.sleep(0.05)
 
 
+# True if any live member remains.
 def group_alive(pgid: int) -> bool:
     """True if any live member remains. EPERM on macOS means only a zombie remains."""
     try:
@@ -204,10 +267,13 @@ def group_alive(pgid: int) -> bool:
 
 # ---------- watcher ----------
 
+# Blocks until the queue directory changes or `timeout` elapses (kqueue, else polling).
 class Watcher:
     """Blocks until the queue directory changes or `timeout` elapses (kqueue, else polling)."""
 
-    def __init__(self, path: Path):
+    # Open a kqueue watch on the queue folder when available.
+    def __init__(self, path: Path) -> None:
+        """Open a kqueue watch on the queue folder when available."""
         self.path = path
         self.kq = None
         if hasattr(select, "kqueue"):
@@ -220,7 +286,9 @@ class Watcher:
         else:
             self.kind = "poll"
 
+    # Block until the queue changes or `timeout` seconds pass.
     def wait(self, timeout: float) -> None:
+        """Block until the queue changes or `timeout` seconds pass."""
         if self.kq is not None:
             self.kq.control([self.kev], 1, timeout)
         else:
@@ -229,17 +297,25 @@ class Watcher:
 
 # ---------- daemon ----------
 
+# The supervisor loop.
 class Daemon:
-    def __init__(self, home: Home):
+    """The supervisor loop: gates and dispatches jobs, runs the scheduler while idle."""
+    # Bind to a home and prepare the stop flag and warning set.
+    def __init__(self, home: Home) -> None:
+        """Bind to a home and prepare the stop flag and warning set."""
         self.home = home
         self.stop = False
         self.current: tuple[Path, dict, subprocess.Popen] | None = None
         self.warned: set[str] = set()
 
-    def _on_signal(self, signum, _frame):
+    # SIGTERM/SIGINT handler.
+    def _on_signal(self, signum: int, _frame: object) -> None:
+        """SIGTERM/SIGINT handler: request a clean stop."""
         self.stop = True
 
+    # Kill and re-queue jobs left RUNNING by a stopped or crashed daemon.
     def recover(self) -> None:
+        """Kill and re-queue jobs left RUNNING by a stopped or crashed daemon."""
         for path, job in self.home.jobs():
             if job.get("status") == "RUNNING":
                 pgid = job.get("pgid")
@@ -252,7 +328,9 @@ class Daemon:
                 atomic_write_json(path, job)
                 self.home.event("recovered", job=job["id"], status=job["status"])
 
+    # Take the single-instance lock, recover, then loop.
     def run(self, once: bool = False) -> int:
+        """Take the single-instance lock, recover, then loop: dispatch jobs or idle on the watcher."""
         lock = open(self.home.lock_file, "w")
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -283,7 +361,8 @@ class Daemon:
         self.home.event("daemon_stop", pid=os.getpid())
         return 0
 
-    def _scheduler(self):
+    # Sanctuary Bot automations, if `bot.py setup` configured a definitions directory.
+    def _scheduler(self) -> object | None:
         """Sanctuary Bot automations, if `bot.py setup` configured a definitions directory."""
         sys.path.insert(0, str(Path(__file__).resolve().parent))
         try:
@@ -293,7 +372,9 @@ class Daemon:
         cfg = automations.load_config(self.home.root)
         return automations.Scheduler(self.home.root, cfg) if cfg else None
 
+    # Gate and dispatch the oldest runnable QUEUED job.
     def tick(self) -> bool:
+        """Gate and dispatch the oldest runnable QUEUED job; returns True if one ran."""
         st = self.home.state()
         jobs = self.home.jobs()
         by_id = {j.get("id"): j for _, j in jobs}
@@ -326,7 +407,9 @@ class Daemon:
             return True
         return False
 
+    # Run one gated job in its own process group, enforce its timeout, record the outcome.
     def dispatch(self, path: Path, job: dict) -> None:
+        """Launch a job, wait for it under the rails, and record its final state."""
         argv, cwd = build_argv(self.home, job)
         log = open(self.home.logs / f"{job['id']}.log", "ab")
         head_before = git_head(cwd) if job.get("require_commit") else ""
@@ -336,37 +419,51 @@ class Daemon:
                     "attempts": job.get("attempts", 0) + 1})
         atomic_write_json(path, job)
         self.home.event("dispatch", job=job["id"], mission=job.get("mission_id"), pid=proc.pid)
-        timeout = float(job.get("timeout_sec", DEFAULT_TIMEOUT_SEC))
-        status, code = None, None
-        while True:
-            code = proc.poll()
-            if code is not None:
-                break
-            if self.stop:  # daemon shutdown: kill job, recover on next start
-                kill_group(proc.pid, proc)
-                proc.wait()
-                log.close()
-                job.update({"status": "QUEUED" if job["attempts"] < job.get("max_attempts", MAX_ATTEMPTS) else "FAILED",
-                            "interrupted_at": now()})
-                job.setdefault("history", []).append({"ts": now(), "note": "interrupted by daemon stop"})
-                atomic_write_json(path, job)
-                self.home.event("interrupted", job=job["id"])
-                return
-            if now() - job["running_at"] > timeout:
-                kill_group(proc.pid, proc)
-                proc.wait()
-                status, code = "TIMED_OUT", proc.returncode
-                break
-            time.sleep(0.1)
+        status, code = self._wait(proc, job)
         log.close()
+        if status == "INTERRUPTED":
+            self._requeue_interrupted(path, job)
+            return
         if status is None:
             committed = (git_head(cwd) != head_before) if job.get("require_commit") else True
             status = "COMPLETED" if code == 0 and committed else "FAILED"
             if code == 0 and not committed:
                 job["reason"] = "exit 0 but no new commit (require_commit)"
-        job.update({"status": status, "exit_code": code, "ended_at": now(),
-                    "pgid_alive_after": group_alive(proc.pid)})
+        job.update({"status": status, "exit_code": code, "ended_at": now(), "pgid_alive_after": group_alive(proc.pid)})
         atomic_write_json(path, job)
+        self._count_outcome(status)
+        self.home.event("finished", job=job["id"], status=status, exit_code=code)
+
+    # Poll until exit, daemon stop (INTERRUPTED) or timeout (TIMED_OUT, process group killed).
+    def _wait(self, proc: subprocess.Popen, job: dict) -> tuple[str | None, int | None]:
+        """Wait for the job; returns (status or None for a normal exit, exit code)."""
+        timeout = float(job.get("timeout_sec", DEFAULT_TIMEOUT_SEC))
+        while True:
+            code = proc.poll()
+            if code is not None:
+                return None, code
+            if self.stop:  # daemon shutdown: kill job, recover on next start
+                kill_group(proc.pid, proc)
+                proc.wait()
+                return "INTERRUPTED", proc.returncode
+            if now() - job["running_at"] > timeout:
+                kill_group(proc.pid, proc)
+                proc.wait()
+                return "TIMED_OUT", proc.returncode
+            time.sleep(0.1)
+
+    # A job killed by daemon shutdown goes back to QUEUED (or FAILED after max attempts).
+    def _requeue_interrupted(self, path: Path, job: dict) -> None:
+        """Record an interrupted job so the next daemon start re-runs it once."""
+        job.update({"status": "QUEUED" if job["attempts"] < job.get("max_attempts", MAX_ATTEMPTS) else "FAILED",
+                    "interrupted_at": now()})
+        job.setdefault("history", []).append({"ts": now(), "note": "interrupted by daemon stop"})
+        atomic_write_json(path, job)
+        self.home.event("interrupted", job=job["id"])
+
+    # Global breaker: consecutive non-COMPLETED jobs open the circuit (BLOCKED_ON_HUMAN).
+    def _count_outcome(self, status: str) -> None:
+        """Update the consecutive-failure counter and open the circuit at the limit."""
         st = self.home.state()
         if status == "COMPLETED":
             st["consecutive_failures"] = 0
@@ -376,12 +473,13 @@ class Daemon:
                 st["daemon_status"] = "BLOCKED_ON_HUMAN"
                 self.home.event("circuit_open", failures=st["consecutive_failures"])
         self.home.save_state(st)
-        self.home.event("finished", job=job["id"], status=status, exit_code=code)
 
 
 # ---------- CLI ----------
 
-def cmd_enqueue(home: Home, a) -> int:
+# Write one QUEUED job file from command-line arguments.
+def cmd_enqueue(home: Home, a: argparse.Namespace) -> int:
+    """Write one QUEUED job file from command-line arguments; prints its id."""
     jid = a.id or f"{a.mission}-{uuid.uuid4().hex[:8]}"
     if a.shell:
         runner = {"type": "shell", "argv": shlex.split(a.shell), "cwd": a.cwd}
@@ -406,7 +504,9 @@ def cmd_enqueue(home: Home, a) -> int:
     return 0
 
 
+# Parse arguments and dispatch run, enqueue, status or reset.
 def main() -> int:
+    """Parse arguments and dispatch run, enqueue, status or reset."""
     ap = argparse.ArgumentParser(description="Sanctuary zero-token supervisor daemon (MISSION-001 POC)")
     ap.add_argument("--home", type=Path, default=DEFAULT_HOME)
     sub = ap.add_subparsers(dest="cmd", required=True)

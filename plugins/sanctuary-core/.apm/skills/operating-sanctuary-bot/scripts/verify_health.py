@@ -5,6 +5,13 @@ Prints the Python version, platform and free disk space on the current drive, an
 exits 0 if Python is >= 3.10, otherwise 1. Stdlib only.
 
 Usage: python3 verify_health.py
+
+Key Input Dependencies:
+- None (Python runtime and the current drive only)
+
+Key Functions:
+- check_environment(): Print and return the Python version, platform and free disk space (GB).
+- main(): Run the checks and return 0 if Python is new enough, else 1.
 """
 import shutil
 import sys
@@ -12,6 +19,7 @@ import sys
 MIN_PYTHON = (3, 10)
 
 
+# Print and return the Python version, platform and free disk space (GB).
 def check_environment() -> dict:
     """Print and return the Python version, platform and free disk space (GB)."""
     free_gb = shutil.disk_usage(".").free / 1024 ** 3
@@ -22,7 +30,9 @@ def check_environment() -> dict:
     return info
 
 
+# Run the checks and return 0 if Python is new enough, else 1.
 def main() -> int:
+    """Run the checks and return 0 if Python is new enough, else 1."""
     check_environment()
     try:
         assert sys.version_info >= MIN_PYTHON, f"Python {MIN_PYTHON[0]}.{MIN_PYTHON[1]}+ required"
