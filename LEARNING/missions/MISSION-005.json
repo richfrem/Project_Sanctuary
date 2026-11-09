@@ -44,5 +44,8 @@
     ],
     "resources": [],
     "basis": "Declared 2026-11-04 by claude-code (MISSION-031 backfill) from the mission's hypothesis; a mission always also edits its own manifest. Refine at checkout and confirm with `manage_coordination.py verify`."
+  },
+  "related_missions": {
+    "MISSION-001": "CONSUMER (soft): MISSION-001 daemon supervisor could drive this mission's asynchronous dispatch."
   }
 }

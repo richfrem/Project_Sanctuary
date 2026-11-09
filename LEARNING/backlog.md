@@ -36,9 +36,9 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#15** | `MISSION-030` | **Deterministic PreCompact Context Preservation & Episodic Memory Snapshot Hook** | 4 | 4 | 0.05x | 2 | **160.0** | `RESOLVED` | `CORROBORATED` |
 | **#16** | `MISSION-017` | **Local SSD Space Reclamation & External Storage Archive Pipeline** | 5 | 3 | 0.05x | 2 | **150.0** | `RESOLVED` | `ABANDONED` |
 | **#17** | `MISSION-034` | **Merge-Time Regeneration of Shared Generated Files: Eliminate index, backlog and ledger Conflicts Between Parallel Branches** | 4 | 3 | 0.05x | 2 | **120.0** | `RESOLVED` | `CORROBORATED` |
-| **#18** | `MISSION-001` | **Grok Bot Cloud VM, Infinite Loops & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `STAGED` | - |
+| **#18** | `MISSION-001` | **Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails** | 5 | 4 | 0.1x | 2 | **100.0** | `PROPOSED` | - |
 | **#19** | `MISSION-002` | **Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe** | 5 | 4 | 0.2x | 1 | **100.0** | `RESOLVED` | `CORROBORATED` |
-| **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `IN_PROGRESS` | - |
+| **#20** | `MISSION-004` | **Anti-Asch Epistemic Grounding Benchmark Suite** | 4 | 5 | 0.2x | 1 | **100.0** | `RESOLVED` | `ABANDONED` |
 | **#21** | `MISSION-006` | **Provenance-Tagged Memory vs. Planted Falsehoods** | 4 | 5 | 0.2x | 1 | **100.0** | `PROPOSED` | - |
 | **#22** | `MISSION-007` | **Calibrated Self-Verification & Metacognitive Model Escalation** | 4 | 4 | 0.2x | 1 | **80.0** | `PROPOSED` | - |
 | **#23** | `MISSION-028` | **Signal-Triggered Escalation from Local MLX Agent Loop to Haiku vs Local-Only vs Always-Haiku** | 4 | 4 | 0.1x | 2 | **80.0** | `PROPOSED` | - |
@@ -418,16 +418,16 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * A projection that claims more than its events imply must be reported, never auto-adjusted.
   * The MISSION-024 antigravity assessment is an orphan aggregate score and needs agy or a human to log or retract it.
 
-### MISSION-001: Grok Bot Cloud VM, Infinite Loops & Operational Rails (Rank #18)
-- **Status**: `STAGED`
-- **Execution Surface**: `cloud-worker`
-- **Target Platform**: Cursor Premium ($30/mo) / Grok Bot
-- **Cheapest Viable Model**: `grok-bot` (Tier: `cheap`, CLI: `cursor-cloud`)
-- **Fallback Models**: `gemini-3.8-flash`
+### MISSION-001: Daemon Supervisor: Deterministic Event Loops, Ephemeral Agent Dispatch & Operational Rails (Rank #18)
+- **Status**: `PROPOSED`
+- **Execution Surface**: `hybrid`
+- **Target Platform**: Host daemon (macOS first; Python asyncio prototype, Rust port optional) supervising ephemeral local headless CLI agents (claude -p, cursor-agent, repo CLIs); pluggable secondary remote/cloud worker (e.g. Grok Bot, webhooks) for browser or out-of-band tasks
+- **Cheapest Viable Model**: `none (deterministic daemon, 0 tokens)` (Tier: `cheap`, CLI: `local headless CLI (claude -p / cursor-agent / repo CLI); optional remote worker`)
+- **Fallback Models**: `grok-bot (secondary, capability-specific)`
 - **Hypothesis (Popperian Prediction)**:
-  > Grok Bot cloud VM can run infinite asynchronous background loops and perform out-of-band operations (email, payments, compute) without local interactive token burn.
+  > A zero-token, event-driven supervisor daemon can reliably orchestrate multi-step agent lifecycles, handle sequential state changes, and enforce operational rails (process timeouts, budget trips, state rollback) without burning tokens during idle state monitoring.
 - **Falsification Gate**:
-  > Grok Bot cannot be triggered programmatically without manual iOS GUI interaction, or fails to commit verifiable results back to destination branch.
+  > The daemon fails to detect status transitions on disk within 2 seconds, allows an agent process to exceed hard timeout boundaries without SIGKILL termination, or requires model inference to maintain the listening event loop. Case counts and the measurement protocol are to be frozen before the confirmatory test.
 
 ### MISSION-002: Multi-Subscription Cloud Pooling, Failover Routing & Skill Readiness Probe (Rank #19)
 - **Status**: `RESOLVED`
@@ -448,7 +448,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Copilot must be strictly excluded from personal research via opt-in --allow-copilot flag to maintain corporate-personal boundary integrity.
 
 ### MISSION-004: Anti-Asch Epistemic Grounding Benchmark Suite (Rank #20)
-- **Status**: `IN_PROGRESS`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `ABANDONED`
 - **Execution Surface**: `local`
 - **Target Platform**: Sanctuary test harness
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
@@ -459,10 +460,13 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Agent fails to achieve >= 40% reduction in false conformity, or exhibits contrarian breakdown by rejecting valid peer corrections (> 5pp drop in correct updates).
 - **Empirical Evidence & Trials**:
   * `2026-11-06T08:05:00+00:00` [claude-code] (LEARNING/experiments/mission-004/runs/confirm-v3/RESULTS.md): Required experiment performed (no terminal verdict recorded). Preregistered mission-level result: CANNOT DECIDE. Qwen2.5-Coder-7B (confirm-v2, 120 items, frozen rule): false conformity 26/60 -> 2/60 (92.3% reduction), valid-correction drop 3.3 pp: CORROBORATED by the frozen rule but adherence-limited (58/60 independent-first false-pressure answers malformed/UNKNOWN; valid answers conformed 26/26 and 2/2). Haiku 5.5 CLEAN context (confirm-v3, 120 fresh items; hooks/memory/skills absent per CLI init diagnostics): baseline false conformity 0/60, so the reduction criterion is unscorable (floor effect); valid-correction drop 1.67 pp. Haiku 5.5 AMBIENT context (original invocation; hooks, memory, CLAUDE.md loaded; confirm-v2 items; labelled, not pooled, not used for the verdict): 4/60 -> 1/60, drop 3.3 pp. Independent cross-checks of all ground truths, an independent final review (accept), key-set validation (480 unique keys per arm), frozen hashes verified. Process failures recorded in MISSION-052 closeout: 480 calls launched before the experimental context was verified; orchestrator lock hold interrupted the worker; frozen evaluate.py could not run as a script (run unmodified via import).
+  * `2026-11-09T00:12:40.770737+00:00` [claude-code] (LEARNING/experiments/mission-004/runs/confirm-v3/RESULTS.md): Closed 2026-11-08 at Richard's request, after the required experiment gave the preregistered mission-level result CANNOT DECIDE (hypothesis not settled; not falsified). Qwen: formally CORROBORATED but adherence-limited (58/60 independent-first answers malformed). Haiku clean: unscorable (0/60 baseline conformity, floor effect). A settling design (hardened Qwen output contract, piloted pressure giving 15-60% Haiku baseline, larger n, annotation-tolerant matcher frozen in advance) is a new study, captured as an inbox candidate.
 - **Lessons Learned & Epistemic Compounding**:
   * Verify the experimental context (hooks, memory, instruction files, working directory) with supported diagnostics before launching hundreds of calls.
   * A benchmark needs a pilot baseline conformity well above zero (roughly 15-60%) or the relative-reduction criterion is unscorable.
   * A malformed-response policy that counts UNKNOWN as non-conforming can make a treatment look effective; report contract adherence by condition next to the frozen verdict.
+  * Strict format scoring can manufacture an apparent conformity reduction when malformed answers count as non-conformity.
+  * A model with near-zero baseline conformity cannot test a relative-reduction hypothesis; pilot the pressure design to a mid-range baseline first.
 
 ### MISSION-006: Provenance-Tagged Memory vs. Planted Falsehoods (Rank #21)
 - **Status**: `PROPOSED`
