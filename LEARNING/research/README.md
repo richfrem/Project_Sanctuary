@@ -45,6 +45,7 @@ Research dossiers require less operational machinery than missions (no execution
 | `physics_of_forgetting` | KEEP | 2026-11-06 | MISSION-058: physical cost of remembering and forgetting (Landauer floor vs real storage energy, deletion is not erasure, flash retention); findings, evidence classes and gaps. |
 | `network_connectivity_and_neural_information_flow` | KEEP | 2026-11-08 | Literature connection from MISSION-063/MISSION-064 on when graph edge additions help vs harm information flow (over-squashing, oversmoothing, curvature bottlenecks, and random-walk metrics). |
 | `semantic_lifecycle_contracts` | KEEP | 2026-11-08 | MISSION-068 (PROPOSED): whether explicit semantic/lifecycle contracts (SHACL, OWL, solver, or ordinary code) prevent errors current scripts miss; sources at abstract depth. |
+| `arxiv_daily` | KEEP | 2026-11-09 | Daily cs.AI digest written by the Sanctuary Bot `arxiv-daily` automation (abstract extracts, unreviewed mission seeds); pipeline code lives in the dossier. |
 | `quantum_error_correction` | KEEP | 2025-12-29 | Evidence base of PROPOSED Protocol 126 (QEC-inspired robustness). |
 | `agent-skills-open-standard` | HISTORICAL | 2026-02-11 | Skills as an open standard; superseded by the built skills. |
 | `agentic_paradigms_attention` | HISTORICAL | 2025-12-23 | Agentic attention and Promise Theory synthesis. |
