@@ -1,41 +1,41 @@
 # arXiv Daily Digest
 
-Generated 2026-11-08 19:53 MST from the 5 newest cs.AI submissions.
+Generated 2026-11-08 20:30 MST from the 5 newest cs.AI submissions.
 
 ## Overview
 
-Newest titles: SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization; Scientist World: Grow a Research World for AI-Scientists; XStack: A Benchmark for ML Repo Migration; Same Behavior, Different Mechanism: What Finite Experiments Can Certify About Integrated Information; Towards interpreting any residual stream direction by scaling activation inversion.
+Newest titles: Phantom Consensus: Measuring Social Reasoning in Multi-Agent LLM Decision-Making; PhysioWave-T: Token-Efficient Wavelet Foundation Models for Biosignals; More with Less: Efficient Parallel Scientific Code Translation via an Agent-Skill Workflow; Flex-RSI: Benchmarking Recursive Self-Improvement of Frontier Agents; Ordered Policy Optimization.
 
 ## Papers
 
-### 1. SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization
+### 1. Phantom Consensus: Measuring Social Reasoning in Multi-Agent LLM Decision-Making
 
-- Link: http://arxiv.org/abs/2611.08483v1
-- Summary: LLM-guided evolutionary search uses AI agents to improve programs for mathematical and computational problems by iteratively refining solutions and combining high-scoring methods. However, the process is often slow because the LLM generates a long textual chain of thought for each round and must repeat this generation many times to maintain population diversity.
+- Link: http://arxiv.org/abs/2611.08971v1
+- Summary: Multi-agent LLM systems increasingly aggregate judgments across model instances, but reasoning about other agents can itself introduce failure. We study a setting in which LLMs shift their public decisions after observing ambiguous social signals while reporting inaccurate estimates of what other agents privately judged, even when the group's recorded private judgments do not support the apparent consensus.
 
-### 2. Scientist World: Grow a Research World for AI-Scientists
+### 2. PhysioWave-T: Token-Efficient Wavelet Foundation Models for Biosignals
 
-- Link: http://arxiv.org/abs/2611.08478v1
-- Summary: AI-Scientists arrived, but a world for them to grow in did not. Human scientists take theirs for granted $-$ centuries of open problems and shared ideas, waiting in the scientific literature.
+- Link: http://arxiv.org/abs/2611.08969v1
+- Summary: We present PhysioWave-T, a token-efficient wavelet foundation model family for EEG, ECG, and sEMG. Dynamic scale folding recombines J+1 wavelet subbands prior to tokenization, compressing sequence length from (J+1)CS to CS tokens for J levels, C channels, and S temporal patches.
 
-### 3. XStack: A Benchmark for ML Repo Migration
+### 3. More with Less: Efficient Parallel Scientific Code Translation via an Agent-Skill Workflow
 
-- Link: http://arxiv.org/abs/2611.08472v1
-- Summary: ML code should run where researchers choose, not where it was first written. Today, machine learning code mainly lives in two ecosystems, PyTorch on NVIDIA GPUs and JAX on Google TPUs.
+- Link: http://arxiv.org/abs/2611.08947v1
+- Summary: Translating parallel scientific codes between HPC programming frameworks is a critical but labor-intensive task. Existing LLM-based approaches rely on fixed sequential pipelines with undifferentiated repair strategies and correctness criteria that do not match scientific computing practice.
 
-### 4. Same Behavior, Different Mechanism: What Finite Experiments Can Certify About Integrated Information
+### 4. Flex-RSI: Benchmarking Recursive Self-Improvement of Frontier Agents
 
-- Link: http://arxiv.org/abs/2611.08469v1
-- Summary: Interpretability, AI auditing and assessments of machine consciousness increasingly rest on mechanism-level quantities: functionals of a system's causal transition law that describe how it computes, not what it outputs. Experiments see that law only through finite, partial and noisy interventions.
+- Link: http://arxiv.org/abs/2611.08946v1
+- Summary: Frontier language models are increasingly deployed as agents, and how well an agent performs depends not only on its model but also on its harness: the prompts, tools, memory, and control loop through which the model acts. When an agent is applied to a new problem, a natural question is whether it can use the feedback of the task to improve the way it works, and not merely its answer.
 
-### 5. Towards interpreting any residual stream direction by scaling activation inversion
+### 5. Ordered Policy Optimization
 
-- Link: http://arxiv.org/abs/2611.08465v1
-- Summary: To interpret a direction in a language model's residual stream, we can look for text that strongly activates it. But when such text is found by scanning a corpus, it is limited to what that corpus contains.
+- Link: http://arxiv.org/abs/2611.08936v1
+- Summary: Proximal Policy Optimization (PPO) stabilizes policy updates by clipping the importance ratio between the new policy and the data-collecting policy. The standard rule uses one fixed clipping range for all samples.
 
 ## Candidate Mission Ideas
 
 Unstarted seeds generated from titles; review before registering anything.
 
-- Test the central claim of "SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization" (http://arxiv.org/abs/2611.08483v1) on a small local reproduction, and record whether it holds.
-- Test the central claim of "Scientist World: Grow a Research World for AI-Scientists" (http://arxiv.org/abs/2611.08478v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "Phantom Consensus: Measuring Social Reasoning in Multi-Agent LLM Decision-Making" (http://arxiv.org/abs/2611.08971v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "PhysioWave-T: Token-Efficient Wavelet Foundation Models for Biosignals" (http://arxiv.org/abs/2611.08969v1) on a small local reproduction, and record whether it holds.
