@@ -1,0 +1,42 @@
+[
+  {
+    "query": "Set up a bot that runs the tests every night and fixes what breaks",
+    "should_trigger": true
+  },
+  {
+    "query": "I want something like Grok Bot that works while I'm away",
+    "should_trigger": true
+  },
+  {
+    "query": "Create a scheduled task to check arXiv every morning",
+    "should_trigger": true
+  },
+  {
+    "query": "Run this lint check in the background once",
+    "should_trigger": true
+  },
+  {
+    "query": "Pause my nightly automation",
+    "should_trigger": true
+  },
+  {
+    "query": "Is my background bot running? What did it do last night?",
+    "should_trigger": true
+  },
+  {
+    "query": "Start a multi-step pipeline: write tests, then refactor, then update docs",
+    "should_trigger": true
+  },
+  {
+    "query": "Record a chronicle entry about today's session",
+    "should_trigger": false
+  },
+  {
+    "query": "Start the local MLX inference server",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I boil an egg?",
+    "should_trigger": false
+  }
+]

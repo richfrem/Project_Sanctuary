@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""sanctuary_daemon.py - zero-token supervisor daemon (MISSION-001 proof of concept).
+"""sanctuary_daemon.py - Sanctuary Bot runtime: zero-token supervisor daemon (internal; users use bot.py).
 
 The daemon is the deterministic outer loop. It never calls a model itself. It waits on
 OS file events (macOS kqueue; polling fallback elsewhere) for job files in a queue
@@ -263,15 +263,32 @@ class Daemon:
         self.home.save_state(st)
         self.recover()
         watcher = Watcher(self.home.queue)
-        self.home.event("daemon_start", pid=os.getpid(), watcher=watcher.kind)
+        scheduler = None if once else self._scheduler()
+        self.home.event("daemon_start", pid=os.getpid(), watcher=watcher.kind, scheduler=bool(scheduler))
         while not self.stop:
             ran = self.tick()
             if once and not ran:
                 break
+            if not ran and scheduler is not None:
+                try:
+                    for msg in scheduler.tick():
+                        self.home.event("automation", msg=msg)
+                except Exception as exc:  # a bad definition must not stop the daemon
+                    self.home.event("scheduler_error", error=str(exc)[:300])
             if not ran and not self.stop:
                 watcher.wait(1.0)  # zero tokens, ~zero CPU while idle
         self.home.event("daemon_stop", pid=os.getpid())
         return 0
+
+    def _scheduler(self):
+        """Sanctuary Bot automations, if `bot.py setup` configured a definitions directory."""
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        try:
+            import automations
+        except ImportError:
+            return None
+        cfg = automations.load_config(self.home.root)
+        return automations.Scheduler(self.home.root, cfg) if cfg else None
 
     def tick(self) -> bool:
         st = self.home.state()

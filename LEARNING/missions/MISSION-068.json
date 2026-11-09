@@ -89,7 +89,8 @@
   ],
   "related_missions": {
     "MISSION-036": "SIBLING (overlap, partial): evidence and verdict contracts; shares the unassessed-vs-falsified and evidence-validity cases but does not compare enforcement approaches across the lifecycle.",
-    "MISSION-038": "SIBLING (overlap, partial): lease fencing and idempotent transitions; shares concurrency and duplicate-request cases but tests coordination mechanics, not a semantic model."
+    "MISSION-038": "SIBLING (overlap, partial): lease fencing and idempotent transitions; shares concurrency and duplicate-request cases but tests coordination mechanics, not a semantic model.",
+    "MISSION-069": "SIBLING: MISSION-069 applies authorization and lifecycle contracts to agent-proposed automations."
   },
   "projected_impact": {
     "paths": [

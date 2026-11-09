@@ -1,6 +1,6 @@
-# Campaign manifest
+# Multi-step runs: modes, steps and rails
 
-JSON file passed to `campaign.py validate|launch`. `validate` reports every problem; `launch` refuses an invalid manifest. Example: [example-campaign.json](../assets/example-campaign.json).
+These fields live inside an automation definition (see automations.md); the bot turns each run into an internal conductor manifest. `bot.py validate <name>` reports every problem. Example: [example-automation.json](../assets/example-automation.json).
 
 ## Contents
 - [Fields](#fields) • [Steps](#steps) • [Sweep](#sweep) • [States](#states)
@@ -8,9 +8,9 @@ JSON file passed to `campaign.py validate|launch`. `validate` reports every prob
 ## Fields
 | Field | Required | Meaning |
 |---|---|---|
-| `id` | yes | Campaign id; state lives in `~/.sanctuary/daemon/campaigns/<id>/`. |
+| `id` | (set by the bot) | Run id; state lives in `~/.sanctuary/daemon/campaigns/<run-id>/`. |
 | `mode` | yes | `pipeline`, `backlog` or `sweep`. |
-| `authorized_by` | yes | Who approved it; passed to every daemon job (the daemon rejects jobs without it). |
+| `authorized_by` | (set by the bot) | The approver from `bot.py approve`; passed to every job. |
 | `worktree` | yes | Existing task worktree; every step runs there. |
 | `engine` | yes | `{"cli": "shell" \| "llama" \| "codex" \| "agy" \| "claude", "model": "...", "allow_permission_bypass": false}`. `model` is required for claude. |
 | `mission_id` | no | Default mission id for daemon jobs. |

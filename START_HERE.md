@@ -45,6 +45,8 @@ For a known relevant concept, substitute its real path:
 python3 plugins/sanctuary-core/.apm/skills/managing-sovereign-memory/scripts/disclose.py --tier 2 --path LEARNING/concepts/<file>.md
 ```
 
+Sanctuary Bot is not part of bootstrap: startup never starts it, registers automations or runs them. If the task concerns background automations, `python3 plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/bot.py status` is a read-only check.
+
 These are conditional retrieval commands, not a requirement to load more material every session. Do not independently recheck local models, all manifests, the whole backlog or installed skills unless the task or a relevant warning requires it.
 
 ## 5. Check the workspace and begin the task

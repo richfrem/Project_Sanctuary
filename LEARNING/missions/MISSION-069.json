@@ -1,0 +1,103 @@
+{
+  "id": "MISSION-069",
+  "title": "Govern Mission-Spawned Automations: No Self-Approval, Staged Proposals, Lineage, Depth and Scope Limits, and Failure Isolation",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "operating-sanctuary-bot skill (bot.py, automations.py, sanctuary_daemon.py, conductor.py) on the local machine; isolated temporary homes and git repositories for tests",
+  "created_at": "2026-11-09T01:30:00Z",
+  "updated_at": "2026-11-09T01:30:00Z",
+  "confidence_reviewed": "2026-11-09",
+  "proposed_by": "Richard (requested 2026-11-09 as `audit-mission-spawned-automations`); registered by claude-code",
+  "interest_statement": "Sanctuary Bot lets agents write automation definitions that run unattended. Missions and sub-agents will want to propose bots of their own. Define the governance, verification gates and lifecycle constraints so that an agent can propose an automation but never approve its own, cannot spawn chains of bots, cannot widen its scope, and cannot take down unrelated work when it fails.",
+  "hypothesis": "With (1) a proposals staging area and approval that an in-tree agent cannot perform, (2) mandatory lineage and limits on proposed automations (spawned_by_mission, max_depth default 0, ttl by run count or expiry, allowed_paths a strict subset of the parent mission's scope), and (3) per-automation failure isolation, a deterministic test suite shows: zero agent-performed approvals accepted, zero proposals violating depth, ttl or scope accepted, and zero cases where a failing automation trips the global daemon breaker or blocks another automation's or job's run; while legitimate human-approved proposals still run. Thresholds and case counts are set at the start of execution and frozen before the confirmatory run.",
+  "falsification_criteria": "FALSIFIED if, after the design is frozen, the suite shows any agent-performed approval accepted, any depth/ttl/scope violation accepted, or any cross-automation failure propagation, or if the controls block a valid human-approved proposal. UNASSESSED if the suite cannot run. Note the threat-model limit: approval is a local file the same OS user can write, so 'agent cannot approve' must be defined against a stated mechanism (for example a human-only confirmation step or a credential the agent does not hold), not assumed.",
+  "baseline_evidence": "Observed 2026-11-09 while building operating-sanctuary-bot (not yet tested formally): (a) `bot.py approve <name> --by <anyone>` accepts any approver string from any process running as the user, so an in-tree agent with shell access can approve its own definition; the content-hash check only stops edits after approval. (b) The daemon's global circuit breaker counts every job, so three consecutive failed jobs from one automation put the whole daemon in BLOCKED_ON_HUMAN; per-automation auto-pause exists (pause_after_failed_runs) but does not isolate the global breaker. (c) No proposals staging area: definitions go straight to .agent/automations/ (they still cannot run unapproved). (d) No spawned_by_mission, max_depth or ttl fields. Actual approval registry path: ~/.sanctuary/daemon/automations/approvals.json (the request named ~/.sanctuary/approvals.json).",
+  "experiment": "Requested plan (adapt at execution; record any change before running): branch feature/mission-spawned-bot-governance. Step 1 audit-authority-and-staging (shell): inspect the definition and approval flow; prove whether an agent environment can write the approval registry or self-sign; test test_cannot_self_approve. Step 2 define-governance-schema (claude): schema extension for .agent/automations/proposals/ with spawned_by_mission, max_depth (default 0), ttl_runs or ttl_expiry, allowed_paths a subset of the parent mission's projected_impact; test test_schema_constraints. Step 3 verify-circuit-breaker-isolation (shell): a failing proposed automation pauses only itself and does not trip the global breaker or block unrelated jobs; test test_isolated_failure. Final verification: the full governance test file. Requested test path tests/test_automation_governance.py; Sanctuary keeps tests inside the skill (operating-sanctuary-bot/scripts/), so decide the location at execution. Requested rails: 300 s timeout, 3 cycles, revert on failure, verify scope final.",
+  "phases": [
+    "Audit approval authority and staging",
+    "Define governance schema and inheritance limits",
+    "Isolate failures from the global breaker",
+    "Freeze thresholds and run the governance suite"
+  ],
+  "scores": {
+    "strategic_leverage": 4,
+    "epistemic_depth": 3,
+    "cost_weight": 0.5,
+    "operational_friction": 2,
+    "priority_score": 12.0
+  },
+  "priority_score": 12.0,
+  "score_basis": "Provisional planning estimates, not measured ROI. Leverage 4: guards every future unattended automation and closes a known self-approval gap. Depth 3: needs a stated threat model for approval. Cost 0.5: mostly deterministic code and tests, one design step with a model. Friction 2: touches the bot's core and needs a human-only approval mechanism. Priority = (4x3)/(0.5x2) = 12.",
+  "strategic_intent": "Make agent-proposed automations safe by construction before any mission is allowed to propose one.",
+  "design_constraints": [
+    "Agents may only author proposals; approval stays a human act with a stated mechanism",
+    "Proposed automations default to max_depth 0 (cannot spawn further automations)",
+    "Child allowed_paths must be a strict subset of the parent mission scope",
+    "Proposals expire (ttl by runs or date) and on parent mission closure",
+    "A failing automation pauses only itself; the global daemon breaker must not trip from one automation",
+    "Tests use isolated homes and repositories; no live remote writes"
+  ],
+  "readiness": {
+    "assessed": "2026-11-09",
+    "assessment": "Registration only. Execution requires choosing the human-only approval mechanism and the test location, then freezing thresholds.",
+    "verified_present": [
+      "operating-sanctuary-bot skill with bot.py, automations.py, daemon and conductor tests"
+    ],
+    "missing_prerequisites": [
+      "Threat model for 'agent cannot approve'",
+      "Decision on test location",
+      "Explicit budget"
+    ],
+    "first_enabling_step": "Write the approval threat model and reproduce the self-approval gap as a failing test."
+  },
+  "model_routing": {
+    "cheapest_viable_tier": "standard",
+    "recommended_model": "claude-opus-5-5",
+    "cost_weight": 0.5,
+    "cli_target": "none",
+    "fallback_models": [
+      "claude-sonnet-5-5"
+    ],
+    "frontier_escalation_condition": "Threat-model design for human-only approval",
+    "routing_guidance": "Steps 1 and 3 are deterministic shell and tests; step 2 (schema design) uses a model."
+  },
+  "tags": [
+    "sanctuary-bot",
+    "automations",
+    "governance",
+    "human-gate",
+    "security",
+    "proposed-by-richard"
+  ],
+  "verdict": null,
+  "human_gate_required": true,
+  "issue_ref": null,
+  "evidence": [],
+  "lessons_learned": [],
+  "related_missions": {
+    "MISSION-001": "EXTENDS: governs automations run by the supervisor daemon and Sanctuary Bot that MISSION-001 built.",
+    "MISSION-059": "SIBLING: trust boundaries from external content through agent execution; agent-approved automations are one such boundary.",
+    "MISSION-068": "SIBLING: explicit lifecycle and authorization contracts; shares the approval and stale-evidence invariants."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-069.json",
+      "LEARNING/experiments/mission-069/",
+      "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/",
+      ".agent/automations/proposals/",
+      "docs/architecture/",
+      "tests/",
+      "LEARNING/missions/MISSION-001.json",
+      "LEARNING/missions/MISSION-059.json",
+      "LEARNING/missions/MISSION-068.json"
+    ],
+    "resources": [
+      "local CPU; one model-assisted design step"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl"
+    ]
+  }
+}

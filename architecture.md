@@ -41,7 +41,7 @@ graph TD
     Workstation --> AOS
 
     subgraph Sanctuary["Project Sanctuary Workspace"]
-        Core["plugins/sanctuary-core<br/>(chronicles, protocols, guardian, forge, soul traces, memory)"]
+        Core["plugins/sanctuary-core<br/>(chronicles, protocols, guardian, forge, soul traces, memory, evaluation, bot)"]
         Domains["7 Sovereign Workspace Domains<br/>(chronicle, protocols, LEARNING, context, huggingface, plugins, ARCHIVE)"]
     end
 
@@ -76,7 +76,8 @@ plugins/sanctuary-core/
     ├── forging-sovereign-models/    # QLoRA fine-tuning, WSL2/CUDA ML setup, GGUF
     ├── preserving-soul-traces/      # JSONL episodic memory extraction & dataset sync
     ├── managing-sovereign-memory/   # Progressive disclosure, procedural memory, decay audit
-    └── evaluating-agent-work/       # Multi-dimensional scoring, token budgets, RL value analytics
+    ├── evaluating-agent-work/       # Multi-dimensional scoring, token budgets, RL value analytics
+    └── operating-sanctuary-bot/     # Sanctuary Bot: scheduled/on-demand automations (bot.py over daemon, scheduler, conductor)
 ```
 
 ### Core Skill Capabilities
@@ -98,6 +99,9 @@ plugins/sanctuary-core/
    - Evaluates delegated subagent and `/cli-agent` dispatches across 5 anchored dimensions (useful outcome, learning depth, verification rigor, token economy, anti-Asch truth grounding).
    - Bounds token expenditure against real-world subscription quotas (ChatGPT Plus, Claude Pro, Gemini Pro), weighting model costs (cheap models like Haiku/Flash vs expensive models like Astra) to penalize bloated, low-value outputs and reward efficient, high-signal breakthroughs.
    - Generates visual dashboards and RL value policy simulations (AlphaGo / MCTS Q-value formulation).
+8. **`operating-sanctuary-bot`** (MISSION-001):
+   - One interface (`bot.py`) for Sanctuary Bot: approved automations on a schedule or on demand, run by a zero-token daemon with its own cross-platform scheduler and a multi-step conductor (triage, git-trail prompts, commit/path/verify checks, revert-and-retry, circuit breakers).
+   - Definitions in `.agent/automations/` (reviewed via PR); approval bound to a content hash; run state, history and inbox machine-local in `~/.sanctuary/daemon/`. Started by the human, never by bootstrap.
 
 ---
 
@@ -109,7 +113,7 @@ Project_Sanctuary/
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
 ├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, identity/, kernel.py)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
-├── plugins/         # sanctuary-core plugin (9 skills: chronicle, protocols, guardian, forge, soul traces, memory, evaluation, daemon, daemon campaigns)
+├── plugins/         # sanctuary-core plugin (8 skills: chronicle, protocols, guardian, forge, soul traces, memory, evaluation, Sanctuary Bot)
 ├── LEARNING/        # Layer 2: concepts/procedures/philosophy canon, the mission system (missions/, experiments/, index.jsonl, backlog.md, inbox.jsonl) and research/ dossiers
 └── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```
