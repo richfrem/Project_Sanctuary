@@ -1,6 +1,6 @@
 # Sanctuary supervisor daemon: operations
 
-A zero-token outer loop for headless agent runs. It waits on file events for job files, runs each authorized job in its own process group, and enforces timeouts, a failure circuit breaker, policy gates and crash recovery. It never calls a model; models run only inside the jobs it dispatches. Sequence diagram: [`sanctuary-daemon-sequence.mmd`](../../operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd).
+A zero-token outer loop for headless agent runs. It waits on file events for job files, runs each authorized job in its own process group, and enforces timeouts, a failure circuit breaker, policy gates and crash recovery. It never calls a model; models run only inside the jobs it dispatches. Sequence diagram: `sanctuary-daemon-sequence.mmd` in the `operating-sanctuary-guardian` skill's references.
 
 Status: proof of concept, corroborated by MISSION-001 (`LEARNING/experiments/mission-001/`). Stdlib only; macOS `kqueue` watcher with a polling fallback.
 

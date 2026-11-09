@@ -15,7 +15,7 @@
 Each prompt carries: `PREVIOUS STEP:` (last successful step's commit subject and hash, files changed, verify result), `RETRY:` (on a retry, the failure reason and whether it was reverted), `GOAL:` and `RULES:` (stay in the worktree, allowed paths, make verify pass, commit).
 
 ## Evaluation
-A step passes only if all hold: daemon job COMPLETED (not FAILED, TIMED_OUT or REJECTED); a new commit exists when `require_commit`; every changed file matches `allowed_paths`; `verify_cmd` (if set) exits 0. An exit code of 0 alone is not success.
+A step passes only if all hold: daemon job COMPLETED (not FAILED, TIMED_OUT or REJECTED); a new commit exists when `require_commit`; every changed file matches `allowed_paths`; the step's check exits 0: its own `verify` if set, otherwise `verify_cmd` (every step, or only the last one when `verify_scope` is `final`). An exit code of 0 alone is not success.
 
 ## Failure handling
 - `revert_on_failure`: `git reset --hard <start>` and `git clean -fd`, only in a `.worktrees/` checkout on a non-main branch (re-checked at revert time).

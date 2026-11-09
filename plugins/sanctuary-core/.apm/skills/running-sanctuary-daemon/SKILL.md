@@ -55,5 +55,5 @@ python3 $D reset                                 # human, after reviewing a BLOC
 - Multi-step campaigns (triage, prompt hand-off, outcome checks, revert and retry): the `orchestrating-daemon-campaigns` skill
 - Interactive planning interview: [plan-job-interview.md](references/plan-job-interview.md)
 - Operations guide (start, launchd, rails, known gaps): [operations.md](references/operations.md)
-- Sequence diagram: [sanctuary-daemon-sequence.mmd](../operating-sanctuary-guardian/references/sanctuary-daemon-sequence.mmd)
+- Sequence diagram: `sanctuary-daemon-sequence.mmd` in the `operating-sanctuary-guardian` skill's references
 - Evidence and frozen protocol: `LEARNING/experiments/mission-001/`
