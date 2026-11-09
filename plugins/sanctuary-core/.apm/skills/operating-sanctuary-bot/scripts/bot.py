@@ -256,6 +256,19 @@ def cmd_run(home: Path, a) -> int:
     if not a.by:
         print("--by is required (who approves this one-off run)", file=sys.stderr)
         return 2
+    cfg = config(home)
+    if cfg and Path(a.file).resolve().parent == Path(cfg["definitions_dir"]).resolve():
+        # A registered automation: run it through the scheduler so it is recorded in history and the inbox.
+        reg = registry(home)
+        name = Path(a.file).stem
+        if reg.approval_status(name) != "APPROVED":
+            print(f"{name} is {reg.approval_status(name)}: approve it first (bot.py approve {name} --by <approver>)", file=sys.stderr)
+            return 2
+        reg.set(name, run_now=True)
+        if not daemon_pid(home):
+            cmd_start(home, a)
+        print(f"{name}: queued to run now; follow it with `bot.py status` and `bot.py history {name}`")
+        return 0
     root = repo_root() or Path.cwd()
     name = defn.get("name", Path(a.file).stem)
     camp = A.to_campaign(name, defn, f"{name}-oneoff-{time.strftime('%Y%m%d-%H%M%S')}", a.by, root, None)
