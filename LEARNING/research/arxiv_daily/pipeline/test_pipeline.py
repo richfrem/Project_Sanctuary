@@ -11,24 +11,24 @@ import make_digest  # noqa: E402
 
 
 class TestArxivDaily(unittest.TestCase):
-    def test_incoming(self):
+    def test_incoming(self) -> None:
         data = json.loads((DOSSIER / "incoming.json").read_text())
         self.assertIsInstance(data, list)
         self.assertGreaterEqual(len(data), 1)
         self.assertTrue(all({"id", "title", "summary"} <= set(p) for p in data))
 
-    def test_latest_digest(self):
+    def test_latest_digest(self) -> None:
         text = (DOSSIER / "latest.md").read_text()
         self.assertIn("# arXiv Daily Digest", text)
         self.assertGreater(len(text), 200)
 
-    def test_archive_has_todays_digest(self):
+    def test_archive_has_todays_digest(self) -> None:
         self.assertTrue((DOSSIER / "digests" / f"{time.strftime('%Y-%m-%d')}.md").exists())
 
-    def test_two_sentence_summary(self):
+    def test_two_sentence_summary(self) -> None:
         self.assertEqual(make_digest.two_sentences("One. Two! Three?"), "One. Two!")
 
-    def test_save_analysis_parsing(self):
+    def test_save_analysis_parsing(self) -> None:
         import save_analysis
         sample = ("Warning: preamble\n# Analysis\n## Relevance to existing missions\n- none\n## Impact on the project\n- x\n"
                   "## Improvement ideas\n- y\n## New mission seeds\n```jsonl\n"

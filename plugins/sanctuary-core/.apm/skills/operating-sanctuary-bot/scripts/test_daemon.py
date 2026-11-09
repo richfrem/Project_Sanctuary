@@ -5,6 +5,33 @@ Quick:    python3 test_daemon.py            (small trial counts)
 Full:     python3 test_daemon.py --confirm [--evidence-dir DIR]  (MISSION-001 trial counts; writes DIR/confirm_results.json if given)
 Frozen MISSION-001 copy and evidence: LEARNING/experiments/mission-001/.
 No model is called. Every test uses a throwaway --home directory and the shell runner.
+
+Key Input Dependencies:
+- sanctuary_daemon.py (sibling); temporary --home folders; sh and sleep on PATH
+
+Key Functions:
+- write_job(): test helper
+- shell(): test helper
+- load(): test helper
+- wait_for(): test helper
+- class DaemonCase
+    - setUp()
+    - start()
+    - stop()
+    - tearDown()
+    - events()
+    - state()
+    - test_c1_detection_latency()
+    - test_c2_timeout_sigkill()
+    - test_c3_idle_zero_dispatch_low_cpu()
+    - _cpu()
+    - test_c4_circuit_breaker()
+    - test_c5_sequential_order_and_atomic_files()
+    - test_c6_gates()
+    - test_c7_crash_recovery()
+    - test_c8_after_dependency()
+    - test_c9_enqueue_bypass_flag()
+    - test_c10_clean_context_argv()
 """
 import json
 import os
@@ -16,6 +43,7 @@ import threading
 import time
 import unittest
 from pathlib import Path
+from typing import Callable
 
 HERE = Path(__file__).resolve().parent
 DAEMON = HERE / "sanctuary_daemon.py"
@@ -51,7 +79,7 @@ def load(p: Path) -> dict:
     return json.loads(p.read_text())
 
 
-def wait_for(pred, timeout=20.0, step=0.02):
+def wait_for(pred: Callable[[], object], timeout: float = 20.0, step: float = 0.02) -> object:
     end = time.time() + timeout
     while time.time() < end:
         v = pred()
@@ -62,35 +90,35 @@ def wait_for(pred, timeout=20.0, step=0.02):
 
 
 class DaemonCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
         self.home = Path(self.tmp.name)
         self.proc = None
 
-    def start(self):
+    def start(self) -> None:
         self.proc = subprocess.Popen([sys.executable, str(DAEMON), "--home", str(self.home), "run"],
                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         self.assertTrue(wait_for(lambda: (self.home / "events.jsonl").exists()
                                  and "daemon_start" in (self.home / "events.jsonl").read_text()))
 
-    def stop(self):
+    def stop(self) -> None:
         if self.proc and self.proc.poll() is None:
             self.proc.send_signal(signal.SIGTERM)
             self.proc.wait(timeout=15)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         self.stop()
         self.tmp.cleanup()
 
-    def events(self, kind):
+    def events(self, kind: str) -> list[dict]:
         p = self.home / "events.jsonl"
         return [json.loads(l) for l in p.read_text().splitlines() if json.loads(l)["event"] == kind] if p.exists() else []
 
-    def state(self):
+    def state(self) -> dict:
         return json.loads((self.home / "state.json").read_text())
 
     # C1
-    def test_c1_detection_latency(self):
+    def test_c1_detection_latency(self) -> None:
         self.start()
         lat = []
         for i in range(N_DETECT):
@@ -104,7 +132,7 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C1"]["pass"], lat)
 
     # C2
-    def test_c2_timeout_sigkill(self):
+    def test_c2_timeout_sigkill(self) -> None:
         # Amendment v2: a fresh daemon per trial. With one daemon, the 3rd consecutive timeout
         # correctly opens the circuit breaker (C4) and holds trials 4-5 in QUEUED.
         trials = []
@@ -129,7 +157,7 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C2"]["pass"], trials)
 
     # C3
-    def test_c3_idle_zero_dispatch_low_cpu(self):
+    def test_c3_idle_zero_dispatch_low_cpu(self) -> None:
         self.start()
         time.sleep(1.0)
         cpu0 = self._cpu()
@@ -147,7 +175,7 @@ class DaemonCase(unittest.TestCase):
         return int(mins) * 60 + float(secs)
 
     # C4
-    def test_c4_circuit_breaker(self):
+    def test_c4_circuit_breaker(self) -> None:
         self.start()
         for i in range(3):
             p, _ = write_job(self.home, f"c4-fail-{i}", shell("exit 3"))
@@ -165,12 +193,12 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C4"]["pass"], RESULTS["C4"])
 
     # C5
-    def test_c5_sequential_order_and_atomic_files(self):
+    def test_c5_sequential_order_and_atomic_files(self) -> None:
         out = self.home / "order.txt"
         bad = []
         stop = threading.Event()
 
-        def reader():
+        def reader() -> None:
             while not stop.is_set():
                 for f in (self.home / "queue").glob("*.json"):
                     try:
@@ -198,7 +226,7 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C5"]["pass"], RESULTS["C5"])
 
     # C6
-    def test_c6_gates(self):
+    def test_c6_gates(self) -> None:
         self.start()
         cases = {
             "c6-noauth": (shell("true"), {"authorized_by": ""}),
@@ -218,7 +246,7 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C6"]["pass"], RESULTS["C6"])
 
     # C7
-    def test_c7_crash_recovery(self):
+    def test_c7_crash_recovery(self) -> None:
         marker = self.home / "marker"
         p, _ = write_job(self.home, "c7", shell(f"test -f {marker} && exit 0; sleep 30"), timeout_sec=60)
         self.start()
@@ -242,7 +270,7 @@ class DaemonCase(unittest.TestCase):
 
 
     # C8 (added after MISSION-001): pipeline dependency
-    def test_c8_after_dependency(self):
+    def test_c8_after_dependency(self) -> None:
         self.start()
         p1, _ = write_job(self.home, "c8-a-fail", shell("exit 1"))
         p2, _ = write_job(self.home, "c8-b", shell("true"), after="c8-a-fail")
@@ -255,7 +283,7 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C8"]["pass"], RESULTS["C8"])
 
     # C9 (added after MISSION-001): enqueue CLI builds a gate-passing bypass job and rejects it for shell
-    def test_c9_enqueue_bypass_flag(self):
+    def test_c9_enqueue_bypass_flag(self) -> None:
         base = [sys.executable, str(DAEMON), "--home", str(self.home), "enqueue", "--mission", "M", "--authorized-by", "t"]
         r = subprocess.run(base + ["--id", "c9", "--cli", "claude", "--instruction", "x", "--cwd", str(self.home),
                                    "--allow-permission-bypass"], capture_output=True, text=True)
@@ -269,7 +297,7 @@ class DaemonCase(unittest.TestCase):
 
 
     # C10 (added after the arxiv-daily run): clean-context jobs must not pass --cwd/--allowed-root
-    def test_c10_clean_context_argv(self):
+    def test_c10_clean_context_argv(self) -> None:
         sys.path.insert(0, str(HERE))
         import sanctuary_daemon as sd
         home = sd.Home(self.home)

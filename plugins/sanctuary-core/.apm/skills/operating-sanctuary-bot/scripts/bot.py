@@ -14,6 +14,36 @@ multi-step conductor (conductor.py). Users and agents only need this file.
   bot.py run FILE                                              one-off run of a definition, without scheduling
   bot.py reset                                                 close the daemon circuit breaker after review
 State: ~/.sanctuary/daemon (override with --home or SANCTUARY_DAEMON_HOME).
+
+Key Input Dependencies:
+- ~/.sanctuary/daemon/config.json (written by `setup`; definitions folder, notify command)
+- <definitions_dir>/<name>.json automation definitions (default: repo .agent/automations/)
+- ~/.sanctuary/daemon/state.json, automations/approvals.json, automations/state.json, inbox.md
+- Sibling scripts: automations.py, conductor.py, sanctuary_daemon.py, verify_health.py
+- Env: SANCTUARY_DAEMON_HOME (state folder override)
+
+Key Functions:
+- repo_root(): The main checkout's root (also from inside a worktree), or None outside git.
+- config(): The bot's config, or None when not set up.
+- need_config(): The bot's config, or exit with a hint to run `bot.py setup`.
+- registry(): The automation registry for the configured definitions folder.
+- when(): Format an epoch timestamp as local `YYYY-MM-DD HH:MM`, or '-' when empty.
+- daemon_pid(): The running daemon's pid, or None.
+- cmd_setup(): Configure the definitions folder (default: repo .agent/automations) and notify command, then run doctor.
+- cmd_doctor(): Print host, config, bot-process and engine checks; non-zero if host or config is missing.
+- cmd_start(): Start the daemon detached if it is not running.
+- cmd_stop(): Stop the daemon (SIGTERM); a running job is killed and re-queued once.
+- rows(): One status row per automation: state, schedule, last run, next due time.
+- cmd_list(): Print the automations table.
+- cmd_status(): Print bot state, the automations table and the latest inbox lines.
+- cmd_show(): Print one automation's definition, approval and state as JSON.
+- cmd_validate(): Validate one definition and print its problems.
+- cmd_approve(): Approve a definition for the named approver (content hash).
+- cmd_simple(): pause, resume, run-now or forget one automation.
+- cmd_history(): Print an automation's finished runs.
+- cmd_run(): One-off run of a definition file (job or multi-step) through the conductor, no schedule.
+- cmd_reset(): Close the daemon's global circuit breaker.
+- main(): Parse arguments and dispatch to the command handlers.
 """
 from __future__ import annotations
 
@@ -37,7 +67,9 @@ DAEMON = HERE / "sanctuary_daemon.py"
 HOME = Path(os.environ.get("SANCTUARY_DAEMON_HOME", Path.home() / ".sanctuary" / "daemon"))
 
 
+# The main checkout's root (also from inside a worktree), or None outside git.
 def repo_root() -> Path | None:
+    """The main checkout's root (also from inside a worktree), or None outside git."""
     r = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
     if r.returncode:
         return None
@@ -48,33 +80,45 @@ def repo_root() -> Path | None:
     return top
 
 
+# The bot's config, or None when not set up.
 def config(home: Path) -> dict | None:
+    """The bot's config, or None when not set up."""
     return A.load_config(home)
 
 
+# The bot's config, or exit with a hint to run `bot.py setup`.
 def need_config(home: Path) -> dict:
+    """The bot's config, or exit with a hint to run `bot.py setup`."""
     cfg = config(home)
     if not cfg:
         sys.exit("Sanctuary Bot is not set up yet: run `bot.py setup` (from inside the repository).")
     return cfg
 
 
+# The automation registry for the configured definitions folder.
 def registry(home: Path) -> A.Registry:
+    """The automation registry for the configured definitions folder."""
     return A.Registry(home, Path(need_config(home)["definitions_dir"]))
 
 
-def when(ts) -> str:
+# Format an epoch timestamp as local `YYYY-MM-DD HH.
+def when(ts: float | None) -> str:
+    """Format an epoch timestamp as local `YYYY-MM-DD HH:MM`, or '-' when empty."""
     return time.strftime("%Y-%m-%d %H:%M", time.localtime(ts)) if ts else "-"
 
 
+# The running daemon's pid, or None.
 def daemon_pid(home: Path) -> int | None:
+    """The running daemon's pid, or None."""
     pid = A.read_json(home / "state.json", {}).get("pid")
     return pid if A._alive(pid) else None
 
 
 # ---------- commands ----------
 
-def cmd_setup(home: Path, a) -> int:
+# Configure the definitions folder (default.
+def cmd_setup(home: Path, a: argparse.Namespace) -> int:
+    """Configure the definitions folder (default: repo .agent/automations) and notify command, then run doctor."""
     root = repo_root()
     defs = Path(a.definitions).resolve() if a.definitions else (root / ".agent" / "automations" if root else None)
     if defs is None:
@@ -91,7 +135,9 @@ def cmd_setup(home: Path, a) -> int:
     return cmd_doctor(home, a)
 
 
-def cmd_doctor(home: Path, _a) -> int:
+# Print host, config, bot-process and engine checks.
+def cmd_doctor(home: Path, _a: argparse.Namespace) -> int:
+    """Print host, config, bot-process and engine checks; non-zero if host or config is missing."""
     r = subprocess.run([sys.executable, str(HERE / "verify_health.py")], capture_output=True, text=True)
     checks = [("host (python, disk)", r.returncode == 0, r.stdout.strip().splitlines()[-2] if r.stdout.strip() else "")]
     cfg = config(home)
@@ -107,7 +153,9 @@ def cmd_doctor(home: Path, _a) -> int:
     return 0 if checks[0][1] and checks[1][1] else 1
 
 
-def cmd_start(home: Path, _a) -> int:
+# Start the daemon detached if it is not running.
+def cmd_start(home: Path, _a: argparse.Namespace) -> int:
+    """Start the daemon detached if it is not running."""
     pid = daemon_pid(home)
     if pid:
         print(f"Sanctuary Bot already running (pid {pid})")
@@ -126,7 +174,9 @@ def cmd_start(home: Path, _a) -> int:
     return 0
 
 
-def cmd_stop(home: Path, _a) -> int:
+# Stop the daemon (SIGTERM).
+def cmd_stop(home: Path, _a: argparse.Namespace) -> int:
+    """Stop the daemon (SIGTERM); a running job is killed and re-queued once."""
     pid = daemon_pid(home)
     if not pid:
         print("Sanctuary Bot is not running")
@@ -140,7 +190,9 @@ def cmd_stop(home: Path, _a) -> int:
     return 0
 
 
+# One status row per automation.
 def rows(home: Path) -> list[dict]:
+    """One status row per automation: state, schedule, last run, next due time."""
     reg = registry(home)
     st = reg.state()
     out = []
@@ -159,7 +211,9 @@ def rows(home: Path) -> list[dict]:
     return out
 
 
-def cmd_list(home: Path, _a) -> int:
+# Print the automations table.
+def cmd_list(home: Path, _a: argparse.Namespace) -> int:
+    """Print the automations table."""
     rs = rows(home)
     if not rs:
         print("No automations yet. Ask your agent to set one up (it will interview you), or add a definition to "
@@ -171,7 +225,9 @@ def cmd_list(home: Path, _a) -> int:
     return 0
 
 
-def cmd_status(home: Path, a) -> int:
+# Print bot state, the automations table and the latest inbox lines.
+def cmd_status(home: Path, a: argparse.Namespace) -> int:
+    """Print bot state, the automations table and the latest inbox lines."""
     pid = daemon_pid(home)
     st = A.read_json(home / "state.json", {})
     print(f"Sanctuary Bot: {'running (pid %s)' % pid if pid else 'not running'}"
@@ -185,20 +241,26 @@ def cmd_status(home: Path, a) -> int:
     return 0
 
 
-def cmd_show(home: Path, a) -> int:
+# Print one automation's definition, approval and state as JSON.
+def cmd_show(home: Path, a: argparse.Namespace) -> int:
+    """Print one automation's definition, approval and state as JSON."""
     reg = registry(home)
     print(json.dumps({"definition": reg.load(a.name), "approval": reg.approvals().get(a.name),
                       "approval_status": reg.approval_status(a.name), "state": reg.state().get(a.name, {})}, indent=2))
     return 0
 
 
-def cmd_validate(home: Path, a) -> int:
+# Validate one definition and print its problems.
+def cmd_validate(home: Path, a: argparse.Namespace) -> int:
+    """Validate one definition and print its problems."""
     errs = registry(home).validate(a.name)
     print("valid" if not errs else "invalid:\n  " + "\n  ".join(errs))
     return 0 if not errs else 2
 
 
-def cmd_approve(home: Path, a) -> int:
+# Approve a definition for the named approver (content hash).
+def cmd_approve(home: Path, a: argparse.Namespace) -> int:
+    """Approve a definition for the named approver (content hash)."""
     if not a.by.strip():
         print("--by is required (the human approving this automation)", file=sys.stderr)
         return 2
@@ -213,7 +275,9 @@ def cmd_approve(home: Path, a) -> int:
     return 0
 
 
-def cmd_simple(home: Path, a) -> int:
+# pause, resume, run-now or forget one automation.
+def cmd_simple(home: Path, a: argparse.Namespace) -> int:
+    """pause, resume, run-now or forget one automation."""
     reg = registry(home)
     if a.name not in reg.names():
         print(f"no automation named {a.name}", file=sys.stderr)
@@ -244,13 +308,16 @@ def cmd_simple(home: Path, a) -> int:
     return 0
 
 
-def cmd_history(home: Path, a) -> int:
+# Print an automation's finished runs.
+def cmd_history(home: Path, a: argparse.Namespace) -> int:
+    """Print an automation's finished runs."""
     for h in registry(home).history(a.name, a.limit):
         print(f"{when(h['ended_at'])}  {h['status']:16} {h['summary']}")
     return 0
 
 
-def cmd_run(home: Path, a) -> int:
+# One-off run of a definition file (job or multi-step) through the conductor, no schedule.
+def cmd_run(home: Path, a: argparse.Namespace) -> int:
     """One-off run of a definition file (job or multi-step) through the conductor, no schedule."""
     defn = json.loads(Path(a.file).read_text())
     if not a.by:
@@ -281,11 +348,15 @@ def cmd_run(home: Path, a) -> int:
     return C.cmd_launch(home, tmp, start_daemon=True)
 
 
-def cmd_reset(home: Path, _a) -> int:
+# Close the daemon's global circuit breaker.
+def cmd_reset(home: Path, _a: argparse.Namespace) -> int:
+    """Close the daemon's global circuit breaker."""
     return subprocess.call([sys.executable, str(DAEMON), "--home", str(home), "reset"])
 
 
+# Parse arguments and dispatch to the command handlers.
 def main() -> int:
+    """Parse arguments and dispatch to the command handlers."""
     ap = argparse.ArgumentParser(description="Sanctuary Bot: scheduled and on-demand background automations")
     ap.add_argument("--home", type=Path, default=HOME)
     sub = ap.add_subparsers(dest="cmd", required=True)
