@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-TERMINAL = {"DONE", "FAILED", "BLOCKED"}
+TERMINAL = {"DONE", "FAILED", "BLOCKED", "SKIPPED"}
 
 
 def propagate_blocks(steps: list[dict]) -> list[str]:
@@ -19,6 +19,12 @@ def propagate_blocks(steps: list[dict]) -> list[str]:
         changed = False
         for s in steps:
             if s.get("status", "PENDING") != "PENDING":
+                continue
+            skipped = [d for d in s.get("depends_on", []) if by_id.get(d, {}).get("status") == "SKIPPED"]
+            if skipped:
+                s["status"], s["reason"] = "SKIPPED", f"dependency {', '.join(skipped)} skipped"
+                newly.append(s["id"])
+                changed = True
                 continue
             bad = [d for d in s.get("depends_on", []) if by_id.get(d, {}).get("status") in ("FAILED", "BLOCKED")]
             missing = [d for d in s.get("depends_on", []) if d not in by_id]
@@ -69,7 +75,7 @@ def next_step(steps: list[dict], mode: str, repo_root: Path | None = None) -> di
 def outcome(steps: list[dict]) -> str:
     """COMPLETED if all DONE; PARTIAL if all terminal with some FAILED/BLOCKED; STALLED otherwise."""
     states = {s.get("status", "PENDING") for s in steps}
-    if states == {"DONE"}:
+    if states <= {"DONE", "SKIPPED"}:
         return "COMPLETED"
     if states <= TERMINAL:
         return "PARTIAL"

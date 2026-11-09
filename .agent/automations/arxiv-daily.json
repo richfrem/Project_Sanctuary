@@ -1,6 +1,6 @@
 {
   "name": "arxiv-daily",
-  "description": "Daily fetch and digest of the newest arXiv cs.AI papers into LEARNING/research/arxiv_daily",
+  "description": "Daily arXiv cs.AI digest plus an analysis of relevance to Sanctuary missions, project impact, improvement ideas and mission seeds, in LEARNING/research/arxiv_daily",
   "schedule": {
     "every": "1d",
     "at": "07:00",
@@ -11,8 +11,8 @@
     "cli": "shell"
   },
   "rails": {
-    "max_cycles": 3,
-    "step_timeout_sec": 120,
+    "max_cycles": 6,
+    "step_timeout_sec": 300,
     "max_consecutive_failures": 2,
     "require_commit": true,
     "allowed_paths": [
@@ -23,8 +23,48 @@
     "revert_on_failure": true,
     "max_retries_per_step": 1
   },
-  "job": {
-    "shell": "python3 LEARNING/research/arxiv_daily/pipeline/fetch_arxiv.py && python3 LEARNING/research/arxiv_daily/pipeline/make_digest.py && git add LEARNING/research/arxiv_daily && git commit -qm \"chore(arxiv-daily): digest $(date +%F)\""
-  },
+  "mode": "pipeline",
+  "steps": [
+    {
+      "id": "fetch",
+      "shell": "python3 LEARNING/research/arxiv_daily/pipeline/fetch_arxiv.py",
+      "require_commit": false
+    },
+    {
+      "id": "digest",
+      "depends_on": [
+        "fetch"
+      ],
+      "run_if": "! git diff --quiet -- LEARNING/research/arxiv_daily/incoming.json",
+      "shell": "python3 LEARNING/research/arxiv_daily/pipeline/make_digest.py && git add LEARNING/research/arxiv_daily && git commit -qm \"chore(arxiv-daily): digest $(date +%F)\""
+    },
+    {
+      "id": "analyze",
+      "depends_on": [
+        "digest"
+      ],
+      "require_commit": false,
+      "output_only": true,
+      "engine": {
+        "cli": "claude",
+        "model": "claude-haiku-5-5",
+        "clean_context": true
+      },
+      "inputs": [
+        "LEARNING/research/arxiv_daily/latest.md",
+        "LEARNING/index.jsonl",
+        "LEARNING/research/README.md"
+      ],
+      "input_max_chars": 60000,
+      "goal": "You are Sanctuary's research analyst. INPUT FILE latest.md is today's arXiv cs.AI digest (abstract extracts only). INPUT FILE index.jsonl lists Sanctuary's missions (id, title, status, hypothesis). INPUT FILE research README lists its research dossiers. Write a markdown report with exactly these sections: '# arXiv analysis', '## Relevance to existing missions' (for each paper: mission IDs it supports, challenges or offers a method to, with one sentence why; write 'none' if nothing fits; never invent IDs), '## Impact on the project' (architecture, skills or practices worth changing, or 'none'), '## Improvement ideas' (at most 3, concrete and small), '## New mission seeds' (at most 2 falsifiable questions, each with an affordable first step), and end with a fenced ```jsonl block, one JSON object per seed: {\"paper\": <arXiv id URL>, \"question\": ..., \"first_step\": ..., \"related_missions\": [<existing IDs>]}. State that every point is based on abstracts only. Be specific and brief; under 700 words."
+    },
+    {
+      "id": "save",
+      "depends_on": [
+        "analyze"
+      ],
+      "shell": "python3 LEARNING/research/arxiv_daily/pipeline/save_analysis.py {prev_output} && git add LEARNING/research/arxiv_daily && git commit -qm \"docs(arxiv-daily): analysis $(date +%F)\""
+    }
+  ],
   "pause_after_failed_runs": 3
 }
