@@ -601,18 +601,18 @@ dependencies:
     .agents/skills/operating-sanctuary-bot/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .agents/skills/operating-sanctuary-bot/operating-sanctuary-bot-flow.mmd: sha256:f49f6cd182f88a5f91ecea83c1057c932fd5d8d2149ab66092527289cff4d9bb
     .agents/skills/operating-sanctuary-bot/references/automations.md: sha256:23615eba3a5744e5617d5e36df1633943ebeece014b727947c9d39c328c8be6b
-    .agents/skills/operating-sanctuary-bot/references/campaign-manifest.md: sha256:a2a7a1030cb9e5b02e24166d2b430dbaac27a23ee8638c2a87e7599950d61781
+    .agents/skills/operating-sanctuary-bot/references/campaign-manifest.md: sha256:6d8fb746709b92bc33416fc65b091be10ae6d71dbb7c87b8059c6272ffa997ed
     .agents/skills/operating-sanctuary-bot/references/conductor-loop.md: sha256:f2d6b5684d2eea53449c58ddd6320c72d1bf157d7a9347b59344f6adb36499fe
     .agents/skills/operating-sanctuary-bot/references/operations.md: sha256:baeadcf373ff04416a4340c331341d284190fc57464bf4b8622908566db07b00
     .agents/skills/operating-sanctuary-bot/references/setup-interview.md: sha256:9977ec7a5990f70f7bd7df45c7349da1827e5c881b6bd979b2a52a4881a9a461
     .agents/skills/operating-sanctuary-bot/scripts/automations.py: sha256:04984c7270f04a4e13364923b5b0fe185b055189a50c24face1cd483fa5ad1fe
-    .agents/skills/operating-sanctuary-bot/scripts/bot.py: sha256:a681c46884c62d7fa06fec1af23c0385332fdb6197032987fb836d24c3d43132
-    .agents/skills/operating-sanctuary-bot/scripts/conductor.py: sha256:27cdd1ee389248e50e550ff05a9f936d470395aa111b2f24adb615ac30fd9811
-    .agents/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py: sha256:c96f89d81da6fcdc688ed662538eb3d33a7124b0d444473ed9e51bbac6626c13
+    .agents/skills/operating-sanctuary-bot/scripts/bot.py: sha256:789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0
+    .agents/skills/operating-sanctuary-bot/scripts/conductor.py: sha256:11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8
+    .agents/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py: sha256:f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc
     .agents/skills/operating-sanctuary-bot/scripts/test_bot.py: sha256:d9f6018d57fb9abc16fc4270c8e397a74a2dbd6264b0feb4423f0e3c7331ca0e
-    .agents/skills/operating-sanctuary-bot/scripts/test_campaign.py: sha256:6d9ed1c73321d3cd3687aaf2738dbb2c1478ccdf3441efa8a41b147b90dddf3c
-    .agents/skills/operating-sanctuary-bot/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
-    .agents/skills/operating-sanctuary-bot/scripts/triage.py: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+    .agents/skills/operating-sanctuary-bot/scripts/test_campaign.py: sha256:3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617
+    .agents/skills/operating-sanctuary-bot/scripts/test_daemon.py: sha256:d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a
+    .agents/skills/operating-sanctuary-bot/scripts/triage.py: sha256:17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265
     .agents/skills/operating-sanctuary-bot/scripts/verify_health.py: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
     .agents/skills/operating-sanctuary-guardian/SKILL.md: sha256:7b2277e34b4638f6477817f945a0673d0191bafaadd82192e151e1167915049b
     .agents/skills/operating-sanctuary-guardian/evals/evals.json: sha256:2e89aba5e50103fdfeb41c303f89419dbaade74f4d04bf96aa6972536a03a02a
@@ -810,18 +810,18 @@ dependencies:
     .claude/skills/operating-sanctuary-bot/evals/results.tsv: sha256:ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415
     .claude/skills/operating-sanctuary-bot/operating-sanctuary-bot-flow.mmd: sha256:f49f6cd182f88a5f91ecea83c1057c932fd5d8d2149ab66092527289cff4d9bb
     .claude/skills/operating-sanctuary-bot/references/automations.md: sha256:23615eba3a5744e5617d5e36df1633943ebeece014b727947c9d39c328c8be6b
-    .claude/skills/operating-sanctuary-bot/references/campaign-manifest.md: sha256:a2a7a1030cb9e5b02e24166d2b430dbaac27a23ee8638c2a87e7599950d61781
+    .claude/skills/operating-sanctuary-bot/references/campaign-manifest.md: sha256:6d8fb746709b92bc33416fc65b091be10ae6d71dbb7c87b8059c6272ffa997ed
     .claude/skills/operating-sanctuary-bot/references/conductor-loop.md: sha256:f2d6b5684d2eea53449c58ddd6320c72d1bf157d7a9347b59344f6adb36499fe
     .claude/skills/operating-sanctuary-bot/references/operations.md: sha256:baeadcf373ff04416a4340c331341d284190fc57464bf4b8622908566db07b00
     .claude/skills/operating-sanctuary-bot/references/setup-interview.md: sha256:9977ec7a5990f70f7bd7df45c7349da1827e5c881b6bd979b2a52a4881a9a461
     .claude/skills/operating-sanctuary-bot/scripts/automations.py: sha256:04984c7270f04a4e13364923b5b0fe185b055189a50c24face1cd483fa5ad1fe
-    .claude/skills/operating-sanctuary-bot/scripts/bot.py: sha256:a681c46884c62d7fa06fec1af23c0385332fdb6197032987fb836d24c3d43132
-    .claude/skills/operating-sanctuary-bot/scripts/conductor.py: sha256:27cdd1ee389248e50e550ff05a9f936d470395aa111b2f24adb615ac30fd9811
-    .claude/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py: sha256:c96f89d81da6fcdc688ed662538eb3d33a7124b0d444473ed9e51bbac6626c13
+    .claude/skills/operating-sanctuary-bot/scripts/bot.py: sha256:789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0
+    .claude/skills/operating-sanctuary-bot/scripts/conductor.py: sha256:11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8
+    .claude/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py: sha256:f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc
     .claude/skills/operating-sanctuary-bot/scripts/test_bot.py: sha256:d9f6018d57fb9abc16fc4270c8e397a74a2dbd6264b0feb4423f0e3c7331ca0e
-    .claude/skills/operating-sanctuary-bot/scripts/test_campaign.py: sha256:6d9ed1c73321d3cd3687aaf2738dbb2c1478ccdf3441efa8a41b147b90dddf3c
-    .claude/skills/operating-sanctuary-bot/scripts/test_daemon.py: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
-    .claude/skills/operating-sanctuary-bot/scripts/triage.py: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+    .claude/skills/operating-sanctuary-bot/scripts/test_campaign.py: sha256:3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617
+    .claude/skills/operating-sanctuary-bot/scripts/test_daemon.py: sha256:d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a
+    .claude/skills/operating-sanctuary-bot/scripts/triage.py: sha256:17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265
     .claude/skills/operating-sanctuary-bot/scripts/verify_health.py: sha256:82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb
     .claude/skills/operating-sanctuary-guardian/SKILL.md: sha256:7b2277e34b4638f6477817f945a0673d0191bafaadd82192e151e1167915049b
     .claude/skills/operating-sanctuary-guardian/evals/evals.json: sha256:2e89aba5e50103fdfeb41c303f89419dbaade74f4d04bf96aa6972536a03a02a
@@ -1898,7 +1898,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a2a7a1030cb9e5b02e24166d2b430dbaac27a23ee8638c2a87e7599950d61781
+  content_hash: sha256:6d8fb746709b92bc33416fc65b091be10ae6d71dbb7c87b8059c6272ffa997ed
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/references/conductor-loop.md
@@ -1943,7 +1943,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a681c46884c62d7fa06fec1af23c0385332fdb6197032987fb836d24c3d43132
+  content_hash: sha256:789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/conductor.py
@@ -1952,7 +1952,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:27cdd1ee389248e50e550ff05a9f936d470395aa111b2f24adb615ac30fd9811
+  content_hash: sha256:11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py
@@ -1961,7 +1961,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c96f89d81da6fcdc688ed662538eb3d33a7124b0d444473ed9e51bbac6626c13
+  content_hash: sha256:f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/test_bot.py
@@ -1979,7 +1979,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6d9ed1c73321d3cd3687aaf2738dbb2c1478ccdf3441efa8a41b147b90dddf3c
+  content_hash: sha256:3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/test_daemon.py
@@ -1988,7 +1988,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+  content_hash: sha256:d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/triage.py
@@ -1997,7 +1997,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+  content_hash: sha256:17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265
 - kind: project-relative
   target: antigravity
   value: .agents/skills/operating-sanctuary-bot/scripts/verify_health.py
@@ -3851,7 +3851,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a2a7a1030cb9e5b02e24166d2b430dbaac27a23ee8638c2a87e7599950d61781
+  content_hash: sha256:6d8fb746709b92bc33416fc65b091be10ae6d71dbb7c87b8059c6272ffa997ed
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/references/conductor-loop.md
@@ -3896,7 +3896,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a681c46884c62d7fa06fec1af23c0385332fdb6197032987fb836d24c3d43132
+  content_hash: sha256:789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/conductor.py
@@ -3905,7 +3905,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:27cdd1ee389248e50e550ff05a9f936d470395aa111b2f24adb615ac30fd9811
+  content_hash: sha256:11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py
@@ -3914,7 +3914,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:c96f89d81da6fcdc688ed662538eb3d33a7124b0d444473ed9e51bbac6626c13
+  content_hash: sha256:f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/test_bot.py
@@ -3932,7 +3932,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:6d9ed1c73321d3cd3687aaf2738dbb2c1478ccdf3441efa8a41b147b90dddf3c
+  content_hash: sha256:3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/test_daemon.py
@@ -3941,7 +3941,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67
+  content_hash: sha256:d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/triage.py
@@ -3950,7 +3950,7 @@ deployments:
   owners:
   - ./plugins/sanctuary-core
   active_owner: ./plugins/sanctuary-core
-  content_hash: sha256:a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547
+  content_hash: sha256:17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265
 - kind: project-relative
   target: claude
   value: .claude/skills/operating-sanctuary-bot/scripts/verify_health.py

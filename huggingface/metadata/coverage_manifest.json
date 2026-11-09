@@ -1,9 +1,9 @@
 {
- "base_commit": "0b565e3cec69ac28ec818e9f44e293faa95164a0",
- "dataset_records": 1437,
+ "base_commit": "8ff7eed66d6953865bfedd111404ad924f0ca86e",
+ "dataset_records": 1442,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-09T02:00:02Z",
+ "generated_at": "2026-11-09T02:54:45Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 3
    },
-   "bytes": 164206,
+   "bytes": 166113,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "545fa24d5ace297b88339d94c250d1df01468db3caa999655b7790d608d908e5",
-    "6b6c4a2ad5623651c5df71a0134c354f2055b0743eee5f83866c0c7d30cdeebc",
-    "c06c6075c4b331a353550f9be81f25af9f8cdb7684c66620818e3472cae9b0f3",
-    "d0cfe76b02c78438144b3db02598df2108a2a85881c92cf95c2380ae0481df0b",
+    "826ee3496def0d96d599f5fd2d4de63be1363a14db84f162489c9dfb294730a7",
+    "e707b61f02700590e2bb9c121738582bf8c5859ae1fa0269e0d7cca821d9ac11",
+    "36f2cbfdb631a8f02be302e3e5c7e323c512b48ed3c645f2c8449e643cbd15ab",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "31ec63f79a36d93015e7dd335b4cb4570504d018c30de0850ca523e03c42107c",
+   "source_sha256": "f72f604e7a00fb89f7bd36625284f079d8836f1d6bb12d0509e5d212d9ce1d4c",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 17040,
+   "bytes": 17608,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "aae70fe8bbce5ff80c74973262a1d3ac86eb40e14e8d5fbfb708f2caa5393391",
+   "source_sha256": "c4a19b60afe8a4e88d7316189a996b0291b716a3823f4e461525328c2bd184ad",
    "status": "excluded"
   },
   {
@@ -28564,19 +28564,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 5527,
+   "bytes": 5723,
    "category": "knowledge_topics_concepts_research",
    "path": "LEARNING/research/README.md",
    "record_ids": [
     "LEARNING_research_README"
    ],
    "record_sha256": [
-    "afdd20e533066481da05e27b8c238f22e29b43cd584c5720bdee5430ba9407fe"
+    "78a1c09dcd547d58344ed3549b1f5037b4ce4eaff5340278fa4c644da3d35311"
    ],
    "required": true,
-   "source_sha256": "c69d3b9a9b28e41b01b3d1d0f1a0bad2d6cd07caa4cddd45caff7aa8f6dd720a",
+   "source_sha256": "953c6da700d6449af76ed0adeb8f4d7611d4beb2b1ec77e621afaf1e24d8e274",
    "status": "included"
   },
   {
@@ -28971,6 +28971,194 @@
    ],
    "required": true,
    "source_sha256": "61cb86983ce492d06f24c1fb7b5ab675c58f4b834eb23954ee129ab454f89580",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2540,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/README.md",
+   "record_ids": [
+    "LEARNING_research_arxiv_daily_README"
+   ],
+   "record_sha256": [
+    "5473f27382483d5c3e57c8f3b286aac1e953d79547636f8cb806ec37c136c7ff"
+   ],
+   "required": true,
+   "source_sha256": "e0065cc2cd5f1cedff9939eaf31218867f8c248c4f2b90dda555fdd896d57472",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 3483,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/analysis/2026-11-08.md",
+   "record_ids": [
+    "LEARNING_research_arxiv_daily_analysis_2026-11-08"
+   ],
+   "record_sha256": [
+    "ba16eed06daf165f4002f14d7393fd2cc91d3325e18e1b2c22b75b30230af861"
+   ],
+   "required": true,
+   "source_sha256": "0ee9959f0e284e28b4786a6e774f4d68143ab37d1c20cdd87e80657681274534",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2904,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/digests/2026-11-08.md",
+   "record_ids": [
+    "LEARNING_research_arxiv_daily_digests_2026-11-08"
+   ],
+   "record_sha256": [
+    "233553277e1fe11f0fd9adbe34505b6c9cf4d046ae34d4a9bf1b48c121bd4ea8"
+   ],
+   "required": true,
+   "source_sha256": "e2745052743037838a1d3d7a41531b00f695cd58b9fcbc07fb1aa449b06d57e1",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "6c5f64531675f1ccefcb0a6c220c75c80aa685d2",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "588d9fec5d5c5cce0888e7b62e2ab2757447805bdeeb9407bd1d4c9a6437803c"
+   },
+   "bytes": 7717,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/incoming.json",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "588d9fec5d5c5cce0888e7b62e2ab2757447805bdeeb9407bd1d4c9a6437803c",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2904,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/latest.md",
+   "record_ids": [
+    "LEARNING_research_arxiv_daily_latest"
+   ],
+   "record_sha256": [
+    "233553277e1fe11f0fd9adbe34505b6c9cf4d046ae34d4a9bf1b48c121bd4ea8"
+   ],
+   "required": true,
+   "source_sha256": "e2745052743037838a1d3d7a41531b00f695cd58b9fcbc07fb1aa449b06d57e1",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "6c5f64531675f1ccefcb0a6c220c75c80aa685d2",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "bfa690314869958eb584ea73bb1d19716efa755953f30111df1c348115caed47"
+   },
+   "bytes": 1093,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/pipeline/fetch_arxiv.py",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "bfa690314869958eb584ea73bb1d19716efa755953f30111df1c348115caed47",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "6c5f64531675f1ccefcb0a6c220c75c80aa685d2",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "3b7c3309c693e54396cbbf48f62b0f5601ba301acc6fd71800c3259031630971"
+   },
+   "bytes": 1598,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/pipeline/make_digest.py",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "3b7c3309c693e54396cbbf48f62b0f5601ba301acc6fd71800c3259031630971",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "b66f55f686ebd5c33b943f5f1f7c58f2eea4e9c8",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "9a4d838a821f5b9ba279142e02ec64dc9d7d4c3f68a0b6862151c96b8c75dd9d"
+   },
+   "bytes": 1958,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/pipeline/save_analysis.py",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "9a4d838a821f5b9ba279142e02ec64dc9d7d4c3f68a0b6862151c96b8c75dd9d",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "b66f55f686ebd5c33b943f5f1f7c58f2eea4e9c8",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "8fb0037491aea8b66b552eb47c58a91a245d3e13e0b2cf4024e81204e21862d0"
+   },
+   "bytes": 1822,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/pipeline/test_pipeline.py",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "8fb0037491aea8b66b552eb47c58a91a245d3e13e0b2cf4024e81204e21862d0",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "eff7502b6f348bb39af93393c2436a0dd6c2d65a",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "7c021639ac50a481ec8288d05f2e629476a631680c3512fe4ad0ac2160f0efa3"
+   },
+   "bytes": 951,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/seeds.jsonl",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "7c021639ac50a481ec8288d05f2e629476a631680c3512fe4ad0ac2160f0efa3",
    "status": "included"
   },
   {
@@ -36373,7 +36561,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1848,
    "category": "chronicle",
@@ -37379,7 +37567,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4470,
    "category": "skill_documentation",
@@ -37440,7 +37628,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 8767,
    "category": "skill_documentation",
@@ -37704,19 +37892,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 2211,
+   "bytes": 3031,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/references/campaign-manifest.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_operating-sanctuary-bot_references_campaign-manifest"
    ],
    "record_sha256": [
-    "ba1cbc4697a07606d4e3961296c44ccb8b634b0fa663300e524e7ed2af5f055f"
+    "4972ace0d55c19a37d3225d1427a2957aafbf0723692912e58fc907e4fb79ea2"
    ],
    "required": false,
-   "source_sha256": "a2a7a1030cb9e5b02e24166d2b430dbaac27a23ee8638c2a87e7599950d61781",
+   "source_sha256": "6d8fb746709b92bc33416fc65b091be10ae6d71dbb7c87b8059c6272ffa997ed",
    "status": "included"
   },
   {
@@ -37780,30 +37968,30 @@
    "status": "excluded"
   },
   {
-   "bytes": 12145,
+   "bytes": 12855,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/bot.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "a681c46884c62d7fa06fec1af23c0385332fdb6197032987fb836d24c3d43132",
+   "source_sha256": "789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0",
    "status": "excluded"
   },
   {
-   "bytes": 20563,
+   "bytes": 23013,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/conductor.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "27cdd1ee389248e50e550ff05a9f936d470395aa111b2f24adb615ac30fd9811",
+   "source_sha256": "11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8",
    "status": "excluded"
   },
   {
-   "bytes": 19582,
+   "bytes": 19998,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "c96f89d81da6fcdc688ed662538eb3d33a7124b0d444473ed9e51bbac6626c13",
+   "source_sha256": "f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc",
    "status": "excluded"
   },
   {
@@ -37816,30 +38004,30 @@
    "status": "excluded"
   },
   {
-   "bytes": 10896,
+   "bytes": 13571,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/test_campaign.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "6d9ed1c73321d3cd3687aaf2738dbb2c1478ccdf3441efa8a41b147b90dddf3c",
+   "source_sha256": "3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617",
    "status": "excluded"
   },
   {
-   "bytes": 12825,
+   "bytes": 13622,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/test_daemon.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "f56e87842eaf68c07043f604d5f734ab771a137a5ed2a160f3ffe1235e44ba67",
+   "source_sha256": "d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a",
    "status": "excluded"
   },
   {
-   "bytes": 2951,
+   "bytes": 3294,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/triage.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547",
+   "source_sha256": "17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265",
    "status": "excluded"
   },
   {
@@ -37853,7 +38041,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5851,
    "category": "skill_documentation",
@@ -37948,7 +38136,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7676,
    "category": "skill_documentation",
@@ -38152,7 +38340,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 3060,
    "category": "skill_documentation",
@@ -38237,7 +38425,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 2015,
    "category": "skill_documentation",
@@ -40766,19 +40954,19 @@
     "required": false
    },
    "knowledge_supporting_data": {
-    "discovered": 3,
+    "discovered": 9,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 3,
+    "included": 9,
     "required": false
    },
    "knowledge_topics_concepts_research": {
-    "discovered": 101,
+    "discovered": 105,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 101,
+    "included": 105,
     "required": true
    },
    "learning_loop_readme": {
