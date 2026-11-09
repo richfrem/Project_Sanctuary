@@ -147,9 +147,10 @@ def build_argv(home: Home, job: dict) -> tuple[list[str], str]:
     out_md = home.logs / f"{job['id']}.out.md"
     result = home.logs / f"{job['id']}.result.json"
     argv = [sys.executable, str(RUN_AGENT), "/dev/null", "/dev/null", str(out_md), runner["instruction"],
-            "--cli", runner["cli"], "--cwd", cwd,
-            "--allowed-root", str(Path(runner.get("allowed_root") or cwd).resolve()),
-            "--claim-dir", str(home.claims), "--unit", job["id"], "--owner", "sanctuary-daemon",
+            "--cli", runner["cli"]]
+    if not runner.get("clean_context"):  # clean context picks its own neutral cwd; run_agent refuses --cwd with it
+        argv += ["--cwd", cwd, "--allowed-root", str(Path(runner.get("allowed_root") or cwd).resolve())]
+    argv += ["--claim-dir", str(home.claims), "--unit", job["id"], "--owner", "sanctuary-daemon",
             "--timeout", str(int(job.get("timeout_sec", DEFAULT_TIMEOUT_SEC))),
             "--result-json", str(result)]
     if runner.get("model"):
