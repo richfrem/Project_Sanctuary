@@ -1,9 +1,9 @@
 {
- "base_commit": "8ff7eed66d6953865bfedd111404ad924f0ca86e",
+ "base_commit": "48e4f759a9cb2df068801d2ef3b0f2556fafc8df",
  "dataset_records": 1442,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-09T02:54:45Z",
+ "generated_at": "2026-11-09T03:08:34Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 3
    },
-   "bytes": 166113,
+   "bytes": 166667,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "545fa24d5ace297b88339d94c250d1df01468db3caa999655b7790d608d908e5",
-    "826ee3496def0d96d599f5fd2d4de63be1363a14db84f162489c9dfb294730a7",
-    "e707b61f02700590e2bb9c121738582bf8c5859ae1fa0269e0d7cca821d9ac11",
-    "36f2cbfdb631a8f02be302e3e5c7e323c512b48ed3c645f2c8449e643cbd15ab",
+    "72f5fb581ddc777d38fcdde2b2bc0ba038b73f75955dd520db0ffc7d6b3ac9bd",
+    "0653bcd7a487c90057c6066d6102eaa0e97e3294e418da0ca9c64933db21d169",
+    "25e9ee68745945a83dae37a7c808f33f600a2e0edb9868f687f0f326293b3f44",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "f72f604e7a00fb89f7bd36625284f079d8836f1d6bb12d0509e5d212d9ce1d4c",
+   "source_sha256": "b4e7fd5611713c3068c645af0f3389891c701370294758d7adf0a2885f5e307a",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 17608,
+   "bytes": 18176,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "c4a19b60afe8a4e88d7316189a996b0291b716a3823f4e461525328c2bd184ad",
+   "source_sha256": "6aa9126b638b113e69b5d73e2d3567eea7f553ebe7090acf109b06c36d341ba9",
    "status": "excluded"
   },
   {
@@ -28564,7 +28564,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5723,
    "category": "knowledge_topics_concepts_research",
@@ -28975,7 +28975,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 2540,
    "category": "knowledge_topics_concepts_research",
@@ -28992,7 +28992,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3483,
    "category": "knowledge_topics_concepts_research",
@@ -29009,7 +29009,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 2904,
    "category": "knowledge_topics_concepts_research",
@@ -29026,7 +29026,7 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29046,7 +29046,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 2904,
    "category": "knowledge_topics_concepts_research",
@@ -29063,7 +29063,7 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29083,7 +29083,7 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29103,7 +29103,7 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29123,27 +29123,27 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "b66f55f686ebd5c33b943f5f1f7c58f2eea4e9c8",
+    "git_commit": "66604d6fa599459452235cc367cab071f5d55ec9",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "8fb0037491aea8b66b552eb47c58a91a245d3e13e0b2cf4024e81204e21862d0"
+    "sha256": "36d7128d469efb2934ca7e6c2b01c3743bab44e1a212dc735231c15e75fd4165"
    },
-   "bytes": 1822,
+   "bytes": 1862,
    "category": "knowledge_supporting_data",
    "path": "LEARNING/research/arxiv_daily/pipeline/test_pipeline.py",
    "record_ids": [
     "artifacts__LEARNING_research_arxiv_daily"
    ],
    "required": false,
-   "source_sha256": "8fb0037491aea8b66b552eb47c58a91a245d3e13e0b2cf4024e81204e21862d0",
+   "source_sha256": "36d7128d469efb2934ca7e6c2b01c3743bab44e1a212dc735231c15e75fd4165",
    "status": "included"
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -37892,7 +37892,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 3031,
    "category": "skill_documentation",
@@ -37959,84 +37959,84 @@
    "status": "included"
   },
   {
-   "bytes": 12788,
+   "bytes": 19287,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/automations.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "04984c7270f04a4e13364923b5b0fe185b055189a50c24face1cd483fa5ad1fe",
+   "source_sha256": "5c32d916a16f973413981545c3cccfd81544cf8eb6ac20af5a63ee1baa6d1266",
    "status": "excluded"
   },
   {
-   "bytes": 12855,
+   "bytes": 17671,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/bot.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "789339926d8c72c8a16ef6cbe4e4166045bf56217c66dfe02e7f780ffa3819c0",
+   "source_sha256": "3df10a27bfb5b1963919b25bae62b844858528a5adc4d3bebd5cf8edb177d205",
    "status": "excluded"
   },
   {
-   "bytes": 23013,
+   "bytes": 31960,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/conductor.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "11c286f2a9b060e9a0f50d7ea3d525fe8ef3a4c3a596b5615d86e7126c573be8",
+   "source_sha256": "6dc9e842f00455f7bb86d5ca7beb0edce7b55f05e11d72781c74ad3957a7b874",
    "status": "excluded"
   },
   {
-   "bytes": 19998,
+   "bytes": 26664,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/sanctuary_daemon.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "f5e22e41700fc22874e4acf2522a393763e38ee127086acb8594291b2c12e3cc",
+   "source_sha256": "345d1e60b773c6f66340729373b399147a63fbad60f1295839ca4111f1a56519",
    "status": "excluded"
   },
   {
-   "bytes": 9761,
+   "bytes": 10768,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/test_bot.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "d9f6018d57fb9abc16fc4270c8e397a74a2dbd6264b0feb4423f0e3c7331ca0e",
+   "source_sha256": "00a82441d2f171fac90ab1b7df609099773dd2ba6afd4b05d6bb047356d4628a",
    "status": "excluded"
   },
   {
-   "bytes": 13571,
+   "bytes": 14953,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/test_campaign.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "3820676ccc02b417f75a987fb9dc97de9d0f24d39a28c90df9e1e61f91c17617",
+   "source_sha256": "46ee6d973ea0b348e8d9912d782f90b4b738bb678bb386a1e27bf96b658d63f8",
    "status": "excluded"
   },
   {
-   "bytes": 13622,
+   "bytes": 14534,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/test_daemon.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "d008ab91cb04c9df64146891dedff38e4c176fa5ddb6ac1223bc666ad57be16a",
+   "source_sha256": "1a0dd3a6ffe684ffb7c235d9ec9c3827821da659b43865ee8e4f7e769eb58577",
    "status": "excluded"
   },
   {
-   "bytes": 3294,
+   "bytes": 4482,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/triage.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "17d7fe0ae53990e16b838df125428eb881f03781480d63757df643939d611265",
+   "source_sha256": "57100ac47c47d7780953aa8ea554886f0643ba981aade1a0f3d637b62a475bb7",
    "status": "excluded"
   },
   {
-   "bytes": 1072,
+   "bytes": 1538,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-bot/scripts/verify_health.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb",
+   "source_sha256": "864f8b9f828318ccb9d76e71356f41db1a368b2e558320a9352a6d01d3f2466c",
    "status": "excluded"
   },
   {
