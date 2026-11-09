@@ -16,10 +16,10 @@ Queue work (the enqueue is the authorization record; leave `--authorized-by` emp
 
 ```bash
 # deterministic job
-python3 $D enqueue --mission MISSION-001 --authorized-by richard --timeout 60 --shell "make test"
+python3 $D enqueue --mission MISSION-001 --authorized-by <approver> --timeout 60 --shell "make test"
 
 # agent job through cli-agent (isolated by default: no permission bypass)
-python3 $D enqueue --mission MISSION-0NN --authorized-by richard --timeout 900 \
+python3 $D enqueue --mission MISSION-0NN --authorized-by <approver> --timeout 900 \
   --cli claude --model claude-opus-5-5 --cwd .worktrees/<task> \
   --instruction "Implement X, run the tests, commit with message 'feat: X'." --require-commit
 ```
@@ -40,7 +40,7 @@ A good later addition (not done here): the boot briefing reports the daemon read
 
 ### Optional: run at login with launchd
 
-Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, adjust paths, then `launchctl load ~/Library/LaunchAgents/org.sanctuary.daemon.plist`. Unload to stop.
+Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, replace `<you>` with your user name and adjust paths, then `launchctl load ~/Library/LaunchAgents/org.sanctuary.daemon.plist`. Unload to stop.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -49,13 +49,13 @@ Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, adjust paths, then 
   <key>Label</key><string>org.sanctuary.daemon</string>
   <key>ProgramArguments</key><array>
     <string>/usr/bin/python3</string>
-    <string>/Users/richardfremmerlid/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py</string>
+    <string>/Users/<you>/Projects/Project_Sanctuary/plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py</string>
     <string>run</string>
   </array>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
-  <key>StandardOutPath</key><string>/Users/richardfremmerlid/.sanctuary/daemon/launchd.log</string>
-  <key>StandardErrorPath</key><string>/Users/richardfremmerlid/.sanctuary/daemon/launchd.log</string>
+  <key>StandardOutPath</key><string>/Users/<you>/.sanctuary/daemon/launchd.log</string>
+  <key>StandardErrorPath</key><string>/Users/<you>/.sanctuary/daemon/launchd.log</string>
 </dict></plist>
 ```
 

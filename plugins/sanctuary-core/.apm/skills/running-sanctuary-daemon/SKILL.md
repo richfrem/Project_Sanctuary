@@ -31,10 +31,10 @@ Say plainly what the daemon cannot do (no retry-until-green loop; isolated claud
 ```bash
 D=plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/sanctuary_daemon.py
 python3 $D run                                   # human: start (foreground)
-python3 $D enqueue --mission MISSION-0NN --authorized-by richard --timeout 60 --shell "make test"
-python3 $D enqueue --mission MISSION-0NN --authorized-by richard --timeout 900 --require-commit \
+python3 $D enqueue --mission MISSION-0NN --authorized-by <approver> --timeout 60 --shell "make test"
+python3 $D enqueue --mission MISSION-0NN --authorized-by <approver> --timeout 900 --require-commit \
   --cli claude --model claude-opus-5-5 --cwd .worktrees/<task> --instruction "<bounded task>"
-python3 $D enqueue --mission MISSION-0NN --authorized-by richard --id step-2 --after step-1 --shell "make test"   # pipeline step
+python3 $D enqueue --mission MISSION-0NN --authorized-by <approver> --id step-2 --after step-1 --shell "make test"   # pipeline step
 python3 $D status
 python3 $D reset                                 # human, after reviewing a BLOCKED_ON_HUMAN trip
 ```
