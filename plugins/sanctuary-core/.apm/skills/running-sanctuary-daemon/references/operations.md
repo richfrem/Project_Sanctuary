@@ -24,6 +24,8 @@ python3 $D enqueue --mission MISSION-0NN --authorized-by richard --timeout 900 \
   --instruction "Implement X, run the tests, commit with message 'feat: X'." --require-commit
 ```
 
+Pipelines: `--after <job-id>` makes a job wait for another; it runs only if that job COMPLETED and is otherwise marked SKIPPED. Edits by claude or agy: add `--allow-permission-bypass` (cli-agent jobs only; requires explicit human approval), since isolated `-p` runs cannot edit files.
+
 After 3 consecutive failures the daemon stops dispatching (`BLOCKED_ON_HUMAN`). Review the logs in `~/.sanctuary/daemon/logs/`, then `python3 $D reset`.
 
 ## Should session bootstrap start it?
@@ -71,7 +73,8 @@ Save as `~/Library/LaunchAgents/org.sanctuary.daemon.plist`, adjust paths, then 
 
 ## Known gaps
 
-- `run_agent.py` without `--isolated` adds `--dangerously-skip-permissions` for claude and agy. Isolated claude runs get no edit permission in `-p` mode, so an unattended **editing** run currently needs the explicit bypass opt-in. A narrower option (`--permission-mode acceptEdits` plus an allowed-tools list) belongs in the companion `cli-agent` skill.
+- `run_agent.py` without `--isolated` adds `--dangerously-skip-permissions` for claude and agy. Isolated claude runs get no edit permission in `-p` mode, so an unattended **editing** run currently needs the explicit bypass opt-in (`enqueue --allow-permission-bypass`).
+- No retry-until-green loop; use a fixed `--after` pipeline. A narrower option (`--permission-mode acceptEdits` plus an allowed-tools list) belongs in the companion `cli-agent` skill.
 - Claude sign-in tokens expire (the live demo warned of expiry within days); for unattended runs use `claude setup-token`.
 - No token budget per job yet: only wall-clock and failure-count rails. A cost rail could read run_agent's `result.json` usage.
 - Linux (`inotify`) is untested; the polling fallback is used there.
