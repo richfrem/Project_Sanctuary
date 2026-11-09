@@ -1,0 +1,6 @@
+{"ts": 1794184413.838057, "event": "daemon_start", "pid": 7781, "watcher": "kqueue"}
+{"ts": 1794184413.840574, "event": "dispatch", "job": "demo-claude", "mission": "MISSION-001", "pid": 7782}
+{"ts": 1794184416.207621, "event": "finished", "job": "demo-claude", "status": "COMPLETED", "exit_code": 0}
+{"ts": 1794184416.221348, "event": "dispatch", "job": "demo-commit", "mission": "MISSION-001", "pid": 7820}
+{"ts": 1794184416.336245, "event": "finished", "job": "demo-commit", "status": "COMPLETED", "exit_code": 0}
+{"ts": 1794184416.336569, "event": "daemon_stop", "pid": 7781}

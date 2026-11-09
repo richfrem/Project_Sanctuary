@@ -1,0 +1,9 @@
+[
+  {"query": "Queue this test run for the Sanctuary daemon with a 60 second timeout", "should_trigger": true},
+  {"query": "Is the supervisor daemon running? Show me its job status", "should_trigger": true},
+  {"query": "The daemon tripped its circuit breaker, how do I reset it?", "should_trigger": true},
+  {"query": "Dispatch an unattended claude job in the mission worktree through the daemon", "should_trigger": true},
+  {"query": "Record a new chronicle entry about today's session", "should_trigger": false},
+  {"query": "Start the local MLX inference server", "should_trigger": false},
+  {"query": "How do I boil an egg?", "should_trigger": false}
+]

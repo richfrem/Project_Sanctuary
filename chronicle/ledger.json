@@ -1,6 +1,13 @@
 {
-  "total_entries": 380,
+  "total_entries": 381,
   "entries": [
+    {
+      "id": 389,
+      "title": "MISSION-001: A zero-token supervisor daemon replaces the Grok Bot VM idea",
+      "filename": "389_mission_001_a_zero_token_supervisor_daemon_replaces_the_grok_bot_vm_idea.md",
+      "date": "2026-11-08",
+      "status": "COMPLETE"
+    },
     {
       "id": 388,
       "title": "MISSION-023: Speculative decoding gives 1.4x on the M1, not 1.6x",

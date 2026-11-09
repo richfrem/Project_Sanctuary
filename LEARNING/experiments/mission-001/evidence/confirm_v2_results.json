@@ -1,0 +1,93 @@
+{
+  "mode": "confirm",
+  "C1": {
+    "n": 20,
+    "max_s": 0.013910055160522461,
+    "median_s": 0.007218837738037109,
+    "pass": true
+  },
+  "C2": {
+    "trials": [
+      {
+        "status": "TIMED_OUT",
+        "elapsed_s": 2.122596263885498,
+        "group_alive": false
+      },
+      {
+        "status": "TIMED_OUT",
+        "elapsed_s": 2.1155526638031006,
+        "group_alive": false
+      },
+      {
+        "status": "TIMED_OUT",
+        "elapsed_s": 2.1340999603271484,
+        "group_alive": false
+      },
+      {
+        "status": "TIMED_OUT",
+        "elapsed_s": 2.132030963897705,
+        "group_alive": false
+      },
+      {
+        "status": "TIMED_OUT",
+        "elapsed_s": 2.119762897491455,
+        "group_alive": false
+      }
+    ],
+    "pass": true
+  },
+  "C3": {
+    "idle_s": 15,
+    "cpu_s": 0.009999999999999995,
+    "cpu_frac": 0.0006666666666666663,
+    "dispatches": 0,
+    "pass": true
+  },
+  "C4": {
+    "blocked_after_3": true,
+    "held_while_blocked": true,
+    "ran_after_reset": true,
+    "pass": true
+  },
+  "C5": {
+    "order": [
+      "0",
+      "1",
+      "2"
+    ],
+    "unparseable_reads": 0,
+    "dispatch_count": 3,
+    "pass": true
+  },
+  "C6": {
+    "cases": {
+      "c6-noauth": {
+        "status": "REJECTED",
+        "reason": "missing authorized_by (Human Gate)"
+      },
+      "c6-copilot": {
+        "status": "REJECTED",
+        "reason": "backend 'copilot' is not allowed for this repository"
+      },
+      "c6-flag": {
+        "status": "REJECTED",
+        "reason": "forbidden flag --dangerously-skip-permissions"
+      },
+      "c6-bypass": {
+        "status": "REJECTED",
+        "reason": "non-isolated cli-agent run needs explicit allow_permission_bypass (run_agent adds a permission bypass)"
+      }
+    },
+    "dispatches": 0,
+    "pass": true
+  },
+  "C7": {
+    "group_killed_on_stop": true,
+    "status_after_stop": "QUEUED",
+    "attempts": 2,
+    "pass": true
+  },
+  "tests_run": 7,
+  "failures": 0,
+  "all_pass": true
+}
