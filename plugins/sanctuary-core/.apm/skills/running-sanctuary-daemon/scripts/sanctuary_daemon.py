@@ -18,12 +18,14 @@ companion repo's run_agent.py, which enforces --cwd/--allowed-root, duplicate-la
 claims, its own timeout and a structured --result-json.
 
 Daemon job states (these live in the daemon's own files, never in mission manifests):
-  QUEUED -> RUNNING -> COMPLETED | FAILED | TIMED_OUT ; REJECTED for gated jobs.
+  QUEUED -> RUNNING -> COMPLETED | FAILED | TIMED_OUT ; REJECTED for gated jobs;
+  SKIPPED when a job's `after` prerequisite ended without COMPLETED.
 Daemon states: ACTIVE | BLOCKED_ON_HUMAN.
 
 Usage:
   sanctuary_daemon.py run [--home DIR] [--once]
-  sanctuary_daemon.py enqueue --mission ID --authorized-by NAME (--shell CMD | --cli NAME --instruction TEXT --cwd DIR) [...]
+  sanctuary_daemon.py enqueue --mission ID --authorized-by NAME (--shell CMD | --cli NAME --instruction TEXT --cwd DIR)
+                             [--after JOB_ID] [--allow-permission-bypass] [--require-commit] [--timeout SEC]
   sanctuary_daemon.py status [--home DIR]
   sanctuary_daemon.py reset  [--home DIR]
 """
@@ -229,6 +231,7 @@ class Daemon:
         self.home = home
         self.stop = False
         self.current: tuple[Path, dict, subprocess.Popen] | None = None
+        self.warned: set[str] = set()
 
     def _on_signal(self, signum, _frame):
         self.stop = True
@@ -272,9 +275,25 @@ class Daemon:
 
     def tick(self) -> bool:
         st = self.home.state()
-        for path, job in self.home.jobs():
+        jobs = self.home.jobs()
+        by_id = {j.get("id"): j for _, j in jobs}
+        for path, job in jobs:
             if job.get("status") != "QUEUED":
                 continue
+            dep = job.get("after")
+            if dep:
+                prereq = by_id.get(dep)
+                pstat = prereq.get("status") if prereq else None
+                if pstat in (None, "QUEUED", "RUNNING"):
+                    if prereq is None and job.get("id") not in self.warned:
+                        self.warned.add(job.get("id"))
+                        self.home.event("waiting_missing_prereq", job=job.get("id"), after=dep)
+                    continue  # wait for the prerequisite
+                if pstat != "COMPLETED":
+                    job.update({"status": "SKIPPED", "reason": f"prerequisite {dep} ended {pstat}", "ended_at": now()})
+                    atomic_write_json(path, job)
+                    self.home.event("skipped", job=job.get("id"), after=dep, prereq_status=pstat)
+                    continue
             reason = gate(job)
             if reason:
                 job.update({"status": "REJECTED", "reason": reason, "ended_at": now()})
@@ -349,9 +368,18 @@ def cmd_enqueue(home: Home, a) -> int:
     else:
         runner = {"type": "cli-agent", "cli": a.cli, "model": a.model, "instruction": a.instruction,
                   "cwd": a.cwd, "allowed_root": a.allowed_root, "effort": a.effort, "mode": a.mode}
+    if a.allow_permission_bypass:
+        if a.shell:
+            print("--allow-permission-bypass applies only to cli-agent jobs", file=sys.stderr)
+            return 2
+        runner["isolated"] = False
     job = {"id": jid, "mission_id": a.mission, "status": "QUEUED", "authorized_by": a.authorized_by,
            "created_at": now(), "timeout_sec": a.timeout, "require_commit": a.require_commit,
            "max_attempts": MAX_ATTEMPTS, "runner": runner}
+    if a.after:
+        job["after"] = a.after
+    if a.allow_permission_bypass:
+        job["allow_permission_bypass"] = True
     atomic_write_json(home.queue / f"{jid}.json", job)
     print(jid)
     return 0
@@ -378,6 +406,10 @@ def main() -> int:
     e.add_argument("--allowed-root")
     e.add_argument("--effort")
     e.add_argument("--mode")
+    e.add_argument("--after", help="job id that must COMPLETE first; otherwise this job is SKIPPED")
+    e.add_argument("--allow-permission-bypass", action="store_true",
+                   help="cli-agent only: run non-isolated; run_agent then passes the engine's permission-bypass "
+                        "flag (needed for unattended edits by claude/agy). Requires explicit human approval.")
     sub.add_parser("status", help="print daemon state and jobs")
     sub.add_parser("reset", help="close the circuit breaker after human review")
     a = ap.parse_args()

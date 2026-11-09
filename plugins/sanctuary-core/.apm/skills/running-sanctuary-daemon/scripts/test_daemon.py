@@ -241,6 +241,33 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C7"]["pass"], RESULTS["C7"])
 
 
+    # C8 (added after MISSION-001): pipeline dependency
+    def test_c8_after_dependency(self):
+        self.start()
+        p1, _ = write_job(self.home, "c8-a-fail", shell("exit 1"))
+        p2, _ = write_job(self.home, "c8-b", shell("true"), after="c8-a-fail")
+        p3, _ = write_job(self.home, "c8-c", shell("sleep 0.5"))
+        p4, _ = write_job(self.home, "c8-d", shell("true"), after="c8-c")
+        ok = wait_for(lambda: load(p2)["status"] == "SKIPPED" and load(p4)["status"] == "COMPLETED")
+        d = load(p4)
+        RESULTS["C8"] = {"skipped": load(p2)["status"], "chained": d["status"],
+                         "order_ok": d["running_at"] >= load(p3)["ended_at"], "pass": bool(ok) and d["running_at"] >= load(p3)["ended_at"]}
+        self.assertTrue(RESULTS["C8"]["pass"], RESULTS["C8"])
+
+    # C9 (added after MISSION-001): enqueue CLI builds a gate-passing bypass job and rejects it for shell
+    def test_c9_enqueue_bypass_flag(self):
+        base = [sys.executable, str(DAEMON), "--home", str(self.home), "enqueue", "--mission", "M", "--authorized-by", "t"]
+        r = subprocess.run(base + ["--id", "c9", "--cli", "claude", "--instruction", "x", "--cwd", str(self.home),
+                                   "--allow-permission-bypass"], capture_output=True, text=True)
+        job = load(self.home / "queue" / "c9.json")
+        sys.path.insert(0, str(HERE))
+        import sanctuary_daemon as sd
+        bad = subprocess.run(base + ["--id", "c9s", "--shell", "true", "--allow-permission-bypass"], capture_output=True, text=True)
+        RESULTS["C9"] = {"gate": sd.gate(job), "isolated": job["runner"].get("isolated"), "shell_refused": bad.returncode == 2,
+                         "pass": r.returncode == 0 and sd.gate(job) is None and job["runner"]["isolated"] is False and bad.returncode == 2}
+        self.assertTrue(RESULTS["C9"]["pass"], RESULTS["C9"])
+
+
 if __name__ == "__main__":
     argv = [a for a in sys.argv if a != "--confirm"]
     prog = unittest.main(argv=argv, exit=False, verbosity=2)
