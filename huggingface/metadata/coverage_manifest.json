@@ -1,9 +1,9 @@
 {
- "base_commit": "00bfc9f06b7377413676f25096752e6468200d67",
- "dataset_records": 1425,
+ "base_commit": "de53be0d4ea4a6dc988ead332a15faa371b8cbd8",
+ "dataset_records": 1429,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-09T00:45:13Z",
+ "generated_at": "2026-11-09T00:57:18Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 3
    },
-   "bytes": 160821,
+   "bytes": 162188,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -82,16 +82,16 @@
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "545fa24d5ace297b88339d94c250d1df01468db3caa999655b7790d608d908e5",
-    "e7c95f2ea49e0524712213ab90ad01e0eb6efddf7a0095d33a34f5d07e52ffb0",
-    "575e8fd052fc15d0a6aaa551ef2f6f0215ebc3730ce4e9ce0587177e3ad8731f",
-    "f47cd2ce1ba10646494b72c50e18e9015c898fdc5090b18382f88dd7d01dca41",
+    "70614a9ad6efbf9b5174971db6bcddc0e86449b6d75bb2d948da7d298d9f1318",
+    "d88d96f0d81ec58e80f8ac3b3616689a686a6b76174dd14659e09c3ed031461e",
+    "5d6b87ba023b0750a32b7ac9312ef06b044c8933fef549586ed4a885e0c82c76",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "39bebf0df69b340e83f4d22d7700f6d418ca966abd609d059a231390097031c8",
+   "source_sha256": "4c0198afd61ef0f844cdcab96fda4d4a91f023a49031f583d8fd85852998918e",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 14200,
+   "bytes": 14768,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "faa518573c168b29bfcecb65c39903c827f08780ade7604237b9555fb5d6e1ed",
+   "source_sha256": "ac52c04b1afe7419f7d5972a60874fc5a49c636e9fa58e6536044108873b861f",
    "status": "excluded"
   },
   {
@@ -140,19 +140,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 20281,
+   "bytes": 20299,
    "category": "root_architecture_docs",
    "path": "AGENTS.md",
    "record_ids": [
     "AGENTS"
    ],
    "record_sha256": [
-    "937d314367db610fd2811e09df38679ed18703ea5c057c35bfcf0a5249564268"
+    "777b24e355a9aa444ea7446ef86f147ab2a15f19a17b7603e4d8eccf9ab1b237"
    ],
    "required": true,
-   "source_sha256": "7966750f140597428ef8c8a5f392a113f8366911421da1a8a48c463d2cc7c54e",
+   "source_sha256": "f78815cf1856b48f25b65c98f78706f4712d0436d603282227d6b9fca9b40855",
    "status": "included"
   },
   {
@@ -29845,19 +29845,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 19568,
+   "bytes": 19586,
    "category": "root_architecture_docs",
    "path": "architecture.md",
    "record_ids": [
     "architecture"
    ],
    "record_sha256": [
-    "991ef3dfe95ad2a73a7b3b737e9561285de258edcbaffa7e082cb6bbe2ab54eb"
+    "09f2c9df10b78a83cf46e627614d415f79cc5c04325245eac4fc86fb01b062d9"
    ],
    "required": true,
-   "source_sha256": "7567173921675f2dc0835b3919d444eeb7b7193bf4234c6671a49f7ad89742e6",
+   "source_sha256": "2c8082cd9b6ee5e49a54e8a892e021ebf58a865703efa47e3b0ac0bdb356d506",
    "status": "included"
   },
   {
@@ -36418,19 +36418,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 2571,
+   "bytes": 2589,
    "category": "curated_memory_identity",
    "path": "context/soul.md",
    "record_ids": [
     "context_soul"
    ],
    "record_sha256": [
-    "66e704e825d14a85d005b5411e9ef1beb15d9a00a3bdbbbe2239c0d2e1614b09"
+    "0c9eab195abb9710c74bd48e4df49ed094c1bbfb433601cfcc9f30c33b7425c1"
    ],
    "required": true,
-   "source_sha256": "f1c618787ad95aa16e6472b91de9e6717b6597bfd3278d2a0fbf77f24c1080fa",
+   "source_sha256": "a7b8a29130270adaec18d68c4a0b7e33f5976c6b8d06bb75b07c6771500fc2f6",
    "status": "included"
   },
   {
@@ -38334,6 +38334,128 @@
   },
   {
    "action": {
+    "added": 1
+   },
+   "bytes": 4209,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/SKILL.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_orchestrating-daemon-campaigns_SKILL"
+   ],
+   "record_sha256": [
+    "7c5fad0171dfa09bb9697ed4eae0199f9bc827e705063d1ec5999a98a7e01b9f"
+   ],
+   "required": false,
+   "source_sha256": "39b0e909559c02063a62d8a9cbd8c84d53de97ed5a4816b2ef7967946764ceb2",
+   "status": "included"
+  },
+  {
+   "bytes": 966,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/assets/example-campaign.json",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "db29ed1978747b5709b5a319a3b6dfe09fb943582bad6ffbdacc978bf9d5a04a",
+   "status": "excluded"
+  },
+  {
+   "bytes": 699,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/evals/evals.json",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "1de53f0153872c510fb9818a78413b9f22e72b7c2b9a89c3733d65c5afef3bdd",
+   "status": "excluded"
+  },
+  {
+   "bytes": 60,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/evals/results.tsv",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "ed4818ce227f7307635c6dd07e69808844609664e931f06d3f536f82c3789415",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5550,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/references/campaign-interview.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_orchestrating-daemon-campaigns_references_campaign-interview"
+   ],
+   "record_sha256": [
+    "f19ee5448c2d334dbcec1c128458d98db942dca41360597cf02993246c7c35d8"
+   ],
+   "required": false,
+   "source_sha256": "632a18f5dda197f909d5059f8c28a8ab497f0d443650f6292c8cd2a51616df71",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2128,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/references/campaign-manifest.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_orchestrating-daemon-campaigns_references_campaign-manifest"
+   ],
+   "record_sha256": [
+    "527a0260274dfd1c85d6234c9ac771017a3bb080297a178eccef29ae37c2c173"
+   ],
+   "required": false,
+   "source_sha256": "449fc902e853b071cc27c96bbc2dd554542862478c46e0aee77609e1a27235b6",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2338,
+   "category": "skill_documentation",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/references/conductor-loop.md",
+   "record_ids": [
+    "plugins_sanctuary-core_.apm_skills_orchestrating-daemon-campaigns_references_conductor-loop"
+   ],
+   "record_sha256": [
+    "fa45dde47b83e79cfcb40b17401189876b836311413a7fd7ab96112278a9fd73"
+   ],
+   "required": false,
+   "source_sha256": "01e7095e7fd4b0175d1254cfa2dc1dd02eb69989c15c866dc04085d6cd4c9204",
+   "status": "included"
+  },
+  {
+   "bytes": 20492,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/scripts/campaign.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "7e0588cb24652edf25916b5ad749e64aac04f9638e54d4e98cb757565189d3ec",
+   "status": "excluded"
+  },
+  {
+   "bytes": 10881,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/scripts/test_campaign.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "1145b93465319f21b9284f77d7423dbd28a5c4a426df425fa825585357d66406",
+   "status": "excluded"
+  },
+  {
+   "bytes": 2951,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/orchestrating-daemon-campaigns/scripts/triage.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "a111321c80064d5b71cfd39202782bd905cce84ef82d101ed8ce8a85f3296547",
+   "status": "excluded"
+  },
+  {
+   "action": {
     "unchanged": 1
    },
    "bytes": 5215,
@@ -38528,17 +38650,17 @@
    "action": {
     "updated": 1
    },
-   "bytes": 5021,
+   "bytes": 5323,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/SKILL.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_running-sanctuary-daemon_SKILL"
    ],
    "record_sha256": [
-    "5ff6551724afd2e6d936032cf4d4a4b4f4bccb90eabd278ae4d3b31752f862ed"
+    "be1f98b7d17e408ffdc717f4107445374384cc9a68bf9b26b5cf5f1880b44e42"
    ],
    "required": false,
-   "source_sha256": "6149b8f971be8229417f3c3285da74f7b604fb5e9176bfe022da07e26bf180b9",
+   "source_sha256": "76affad78a24442e22aebaa8b2fe4f568b0f27b63520be97a2661b9131fa228f",
    "status": "included"
   },
   {
@@ -38554,22 +38676,22 @@
    "action": {
     "updated": 1
    },
-   "bytes": 5520,
+   "bytes": 5498,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/references/operations.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_running-sanctuary-daemon_references_operations"
    ],
    "record_sha256": [
-    "db59367badf15b807fe4d1de0100f3054ec9b54bfd17faaf04cdaa7e9501ce4c"
+    "aa43ac5329348c99cf566b3f8564e046d36b479b1e9462cd8fec7e03abacc0c7"
    ],
    "required": false,
-   "source_sha256": "c424dcc6afbb8624359e0f22f2bb7bfc2ec9724d081d388c805d07eb11b4e575",
+   "source_sha256": "9d6ed914b96bfb399ce38c3bf7f108dbac3e8c091b828713645c9928bd5d8da3",
    "status": "included"
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7198,
    "category": "skill_documentation",
@@ -38603,6 +38725,15 @@
    "status": "excluded"
   },
   {
+   "bytes": 1072,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/running-sanctuary-daemon/scripts/verify_health.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "82c7d864980ad762807f3a481ffda403a5660911250251197eae8685f59251bb",
+   "status": "excluded"
+  },
+  {
    "bytes": 590,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.claude-plugin/plugin.json",
@@ -38613,19 +38744,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 6242,
+   "bytes": 6540,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/README.md",
    "record_ids": [
     "plugins_sanctuary-core_README"
    ],
    "record_sha256": [
-    "98ddc612415b082df3269850fd6bc945f38c246b2734b44cf236dbc64259a5ce"
+    "9a5d20bdf886a30731371b11f09858a74b4fdfb1203bac9a3128c55849652384"
    ],
    "required": false,
-   "source_sha256": "40e856aade7fed3407b40e83030ec6283b17ef8f1eb0b540695319a0da7d60ce",
+   "source_sha256": "5bb046ffc5d5b2251cd1167632bd50cbd48b4c792039e14437178a3d769fa903",
    "status": "included"
   },
   {
@@ -40664,19 +40795,19 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 124,
-    "excluded": 124,
+    "discovered": 131,
+    "excluded": 131,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
     "required": false
    },
    "skill_documentation": {
-    "discovered": 63,
+    "discovered": 67,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 63,
+    "included": 67,
     "required": false
    },
    "sync_receipts": {
