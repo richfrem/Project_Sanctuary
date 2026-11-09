@@ -17,6 +17,7 @@ A definition is `<definitions_dir>/<name>.json` (default `.agent/automations/`, 
 | `rails` | Per-run limits (see campaign-manifest.md). |
 | `pause_after_failed_runs` | Default 3. |
 | `mission_id` | Optional default mission id for the run's jobs. |
+| `integrate` | Optional: `{"base": "main", "auto_merge_paths": ["LEARNING/research/<dossier>/**"]}`, see Integration. |
 
 `bot.py validate <name>` checks all of it, including that the worktree exists and the engine is allowed.
 
@@ -28,6 +29,14 @@ The bot's own scheduler (inside the daemon, pure Python, any OS) checks about on
 
 ## Runs, memory and results
 Each run gets an id `<name>-<YYYYMMDD-HHMMSS>` and goes through the conductor (a `job` is a one-step pipeline), so commit, path and verify checks apply to every run. The run's prompt starts with `PREVIOUS RUN OF THIS AUTOMATION:` (how the last run ended, its commit and files). When a run ends the bot appends to `<name>/history.jsonl` and `inbox.md`, and runs `notify_cmd` if configured (argv list, no shell; env `BOT_AUTOMATION`, `BOT_STATUS`, `BOT_SUMMARY`). A run whose conductor died without a final state is recorded as `CRASHED`.
+
+## Integration
+With an `integrate` block, every COMPLETED run is brought toward `origin/<base>` (level 2):
+1. merge `origin/<base>` into the run's branch (a conflict aborts and is reported for review);
+2. push the branch and open, or reuse, one PR;
+3. **auto-merge only if** every changed file matches `auto_merge_paths` **and** none hits the built-in deny list, and no PR check is failing or pending.
+
+The deny list is part of the bot (`scripts/integrate.py`) and a definition cannot override it: mission manifests and backlog files (`LEARNING/missions/**`, `index.jsonl`, `backlog.md`, `inbox.jsonl`), governance (`.agent/**`, `protocols/**`, `context/**`, AGENTS/CLAUDE/START_HERE/INSTALL/architecture, `apm.*`), `plugins/**`, `huggingface/**`, `.github/**`, and **any code file by extension**, even inside an allowed folder. `auto_merge_paths` must name a dossier under `LEARNING/research/`. Anything else stays an open PR for human review, and the inbox says why. The bot never syncs Hugging Face: that stays in session closeout.
 
 ## Pausing
 `bot.py pause|resume <name>`. The bot pauses an automation itself after `pause_after_failed_runs` non-COMPLETED runs in a row; `resume` clears the count.

@@ -191,6 +191,9 @@ class Registry:
             next_due(defn.get("schedule", {"manual": True}), self.now())
         except (ValueError, KeyError) as e:
             errs.append(f"schedule: {e}")
+        sys.path.insert(0, str(HERE))
+        import integrate
+        errs += integrate.validate_integrate(defn.get("integrate"))
         if not defn.get("worktree") or not defn.get("engine"):
             errs.append("needs `worktree` and `engine`")
             return errs
@@ -257,11 +260,12 @@ class Scheduler:
 
     # Bind the scheduler to a daemon home, config, clock and launcher (injectable for tests).
     def __init__(self, home: Path, config: dict, now: Callable[[], float] = time.time,
-                 launch: Callable[[dict], int] | None = None) -> None:
+                 launch: Callable[[dict], int] | None = None, forge: object | None = None) -> None:
         """Bind the scheduler to a daemon home, config, clock and launcher (injectable for tests)."""
         self.home, self.cfg, self.now = home, config, now
         self.reg = Registry(home, Path(config["definitions_dir"]), now)
         self.launch = launch or self._spawn_conductor
+        self.forge = forge  # None: integrate.py uses the gh-backed Forge
 
     # Finish completed runs, then launch due, approved, unpaused automations.
     def tick(self) -> list[str]:
@@ -327,6 +331,11 @@ class Scheduler:
         summary = (f"{run_id} ended {status}; last step {last.get('step')}: {last.get('reason')}; "
                    f"commit {last.get('commit')}; files {', '.join((last.get('files') or [])[:10]) or 'none'}")
         rec = {"run": run_id, "status": status, "ended_at": self.now(), "cycles": st.get("cycles"), "summary": summary}
+        if ok:
+            rec["integration"] = self._integrate(name, summary)
+            summary += f"; integration: {rec['integration'].get('reason')}" + (
+                f" (PR #{rec['integration']['pr']})" if rec["integration"].get("pr") else "")
+            rec["summary"] = summary
         hp = self.reg.dir / name / "history.jsonl"
         hp.parent.mkdir(parents=True, exist_ok=True)
         with open(hp, "a") as f:
@@ -343,6 +352,25 @@ class Scheduler:
             f.write(line)
         self._notify(name, status, summary)
         return [f"{name}: {status}"]
+
+    # Level-2 integration after a COMPLETED run, if the definition asks for it.
+    def _integrate(self, name: str, summary: str) -> dict:
+        """Push the run branch, open or update its PR, and auto-merge only allowlisted changes."""
+        try:
+            defn = self.reg.load(name)
+        except (OSError, json.JSONDecodeError):
+            return {"reason": "definition unreadable: integration skipped"}
+        block = defn.get("integrate")
+        if not block:
+            return {"reason": "integration not configured"}
+        wt = Path(defn["worktree"])
+        wt = wt if wt.is_absolute() else self.reg.repo_root / wt
+        sys.path.insert(0, str(HERE))
+        import integrate
+        try:
+            return integrate.integrate(name, block, str(wt.resolve()), summary, self.forge)
+        except Exception as exc:  # integration must never break the scheduler
+            return {"reason": f"integration error: {str(exc)[:200]}"}
 
     # Run the configured notify command (argv list, no shell) with the run's result in its environment.
     def _notify(self, name: str, status: str, summary: str) -> None:
