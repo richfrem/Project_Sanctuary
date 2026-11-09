@@ -65,10 +65,7 @@ python3 scripts/capture_snapshot.py --type seal --context "Completed milestone"
 
 ## Verification
 
-```bash
-python3 scripts/guardian_wakeup.py --mode HOLISTIC
-python3 scripts/forge_llm.py verify
-```
+`python3 scripts/guardian_wakeup.py --mode HOLISTIC` and `python3 scripts/forge_llm.py verify`.
 
 ## References
 - Bootstrapping Protocol: [bootstrapping.md](references/bootstrapping.md)
@@ -79,6 +76,5 @@ python3 scripts/forge_llm.py verify
 - Acceptance Criteria: [acceptance-criteria.md](references/acceptance-criteria.md)
 - Sanctuary Bot (started by the human, never by bootstrap): the `operating-sanctuary-bot` skill (its flow diagram: `operating-sanctuary-bot-flow.mmd`)
 - Integrations: [Memory](references/integrations/memory-stack.md) • [Obsidian](references/integrations/obsidian-vault.md) • [Orchestration & shared learning loop](references/integrations/orchestration.md)
-- Two-repository skill maintenance: [Protocol 133 section 8](../../../../../protocols/133_Companion_Repository_Skill_Improvement_Protocol.md) • [Shared loop adapter](../evaluating-agent-work/references/shared-loop-adapter.md) • Moved capabilities: `dispatch_guard.py` now lives in the companion `cli-agent`; reusable evaluation logic in the companion `evaluating-agent-outcomes`
-
-Completion wiring: `record-result` durably marks the final manifest for preservation; after publishing sources to `origin/main`, `merge_prep.py regenerate` runs incremental local extraction, schema and coverage checks. Startup reports preservation status without changing preservation files. Capture and recovery occur at mission/session closure (`soul_coverage.py closure`) or an explicitly requested recovery action. Pending/failed/local-complete status is separate from the scientific verdict. Commit the export separately, then sync remotely only with authorization. See the preserving-soul-traces `references/coverage.md` contract.
+- Two-repository skill maintenance: Protocol 133 section 8 (repository: protocols/133_Companion_Repository_Skill_Improvement_Protocol.md) • Shared loop adapter (`evaluating-agent-work` skill: references/shared-loop-adapter.md) • Moved capabilities: `dispatch_guard.py` now lives in the companion `cli-agent`; reusable evaluation logic in the companion `evaluating-agent-outcomes`
+- Completion wiring (record-result, regenerate, closure, sync): [bootstrapping.md](references/bootstrapping.md) and [persist mode](references/modes/persist.md)

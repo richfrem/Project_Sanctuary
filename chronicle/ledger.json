@@ -1,6 +1,13 @@
 {
-  "total_entries": 381,
+  "total_entries": 382,
   "entries": [
+    {
+      "id": 390,
+      "title": "Sanctuary Bot: local, approved, scheduled automations",
+      "filename": "390_sanctuary_bot_local_approved_scheduled_automations.md",
+      "date": "2026-11-08",
+      "status": "COMPLETE"
+    },
     {
       "id": 389,
       "title": "MISSION-001: A zero-token supervisor daemon replaces the Grok Bot VM idea",

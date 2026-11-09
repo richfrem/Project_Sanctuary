@@ -1,6 +1,6 @@
 # Protocol 128: The Learning Loop & Guardian Lifecycle
 
-The authoritative definition is [`protocols/128_Hardened_Learning_Loop_v3.0.md`](../../../../../../protocols/128_Hardened_Learning_Loop_v3.0.md) (v3.1). This file is a derived quick reference; if it disagrees with the protocol, the protocol wins.
+The authoritative definition is `protocols/128_Hardened_Learning_Loop_v3.0.md` (repository: protocols/128_Hardened_Learning_Loop_v3.0.md) (v3.1). This file is a derived quick reference; if it disagrees with the protocol, the protocol wins.
 
 ## Five stages and the guardian commands for each
 
