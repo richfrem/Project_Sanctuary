@@ -109,7 +109,7 @@ Project_Sanctuary/
 ├── protocols/       # Canonized governance doctrines (Protocol 128, 78, 54, etc.)
 ├── context/         # Fast-boot runtime context (soul.md, user.md, memory.md, identity/, kernel.py)
 ├── huggingface/     # Sovereign soul traces dataset workspace (data/soul_traces.jsonl, metadata/)
-├── plugins/         # sanctuary-core plugin (8 skills: chronicle, protocols, guardian, forge, soul traces, memory, evaluation, daemon)
+├── plugins/         # sanctuary-core plugin (9 skills: chronicle, protocols, guardian, forge, soul traces, memory, evaluation, daemon, daemon campaigns)
 ├── LEARNING/        # Layer 2: concepts/procedures/philosophy canon, the mission system (missions/, experiments/, index.jsonl, backlog.md, inbox.jsonl) and research/ dossiers
 └── ARCHIVE/         # Preserved historical assets (includes archived forge/, legacy ADRs, and tooling)
 ```

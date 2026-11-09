@@ -22,7 +22,7 @@ Canonical repository assets are organized into dedicated sovereign domains:
 - `context/`: Fast-boot runtime context (`soul.md`, `user.md`, `memory.md`, `identity/founder_seed.json`, `kernel.py`).
 - `huggingface/`: Sovereign soul traces dataset workspace (`data/soul_traces.jsonl`, `metadata/`).
 - `LEARNING/`: Layer 2 knowledge and the mission system. Canon: `concepts/`, `procedures/`, `philosophy/`. Mission system: `missions/` (manifests + `mission.schema.json`), `experiments/`, and the generated `index.jsonl` and `backlog.md` plus `inbox.jsonl`. Research dossiers: `research/`. Entry point: `LEARNING/INDEX.md`.
-- `plugins/sanctuary-core/`: APM-native package providing the 8 Sanctuary skills (chronicle, protocols, guardian, forge, soul traces, sovereign memory, agent-work evaluation, and the supervisor daemon).
+- `plugins/sanctuary-core/`: APM-native package providing the 9 Sanctuary skills (chronicle, protocols, guardian, forge, soul traces, sovereign memory, agent-work evaluation, the supervisor daemon, and daemon campaigns).
 - `ARCHIVE/`: Preserved historical implementations, old specs, forge, legacy ADRs, and legacy tooling.
 
 > [!NOTE]
