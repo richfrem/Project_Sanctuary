@@ -1,0 +1,30 @@
+{
+  "name": "arxiv-daily",
+  "description": "Daily fetch and digest of the newest arXiv cs.AI papers into LEARNING/research/arxiv_daily",
+  "schedule": {
+    "every": "1d",
+    "at": "07:00",
+    "catch_up": "once"
+  },
+  "worktree": ".worktrees/bot-arxiv-daily",
+  "engine": {
+    "cli": "shell"
+  },
+  "rails": {
+    "max_cycles": 3,
+    "step_timeout_sec": 120,
+    "max_consecutive_failures": 2,
+    "require_commit": true,
+    "allowed_paths": [
+      "LEARNING/research/arxiv_daily/**"
+    ],
+    "verify_cmd": "python3 LEARNING/research/arxiv_daily/pipeline/test_pipeline.py",
+    "verify_scope": "final",
+    "revert_on_failure": true,
+    "max_retries_per_step": 1
+  },
+  "job": {
+    "shell": "python3 LEARNING/research/arxiv_daily/pipeline/fetch_arxiv.py && python3 LEARNING/research/arxiv_daily/pipeline/make_digest.py && git add LEARNING/research/arxiv_daily && git commit -qm \"chore(arxiv-daily): digest $(date +%F)\""
+  },
+  "pause_after_failed_runs": 3
+}
