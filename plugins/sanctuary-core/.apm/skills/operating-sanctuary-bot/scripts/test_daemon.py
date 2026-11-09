@@ -268,6 +268,19 @@ class DaemonCase(unittest.TestCase):
         self.assertTrue(RESULTS["C9"]["pass"], RESULTS["C9"])
 
 
+    # C10 (added after the arxiv-daily run): clean-context jobs must not pass --cwd/--allowed-root
+    def test_c10_clean_context_argv(self):
+        sys.path.insert(0, str(HERE))
+        import sanctuary_daemon as sd
+        home = sd.Home(self.home)
+        base = {"id": "j", "runner": {"type": "cli-agent", "cli": "claude", "instruction": "x", "cwd": str(self.home)}}
+        normal, _ = sd.build_argv(home, base)
+        clean, _ = sd.build_argv(home, {**base, "runner": {**base["runner"], "clean_context": True}})
+        RESULTS["C10"] = {"pass": "--cwd" in normal and "--cwd" not in clean and "--allowed-root" not in clean
+                          and "--clean-context" in clean and "--isolated" in clean and "--timeout" in clean}
+        self.assertTrue(RESULTS["C10"]["pass"], clean)
+
+
 if __name__ == "__main__":
     argv = [a for a in sys.argv if a != "--confirm"]
     prog = unittest.main(argv=argv, exit=False, verbosity=2)
