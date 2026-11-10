@@ -1,9 +1,9 @@
 {
- "base_commit": "d6bb30509a936ac3d77e8c64232eebdee34a8dc5",
- "dataset_records": 1442,
+ "base_commit": "5d0fbdc914f9920f593cb6e712ebdcdedf5a333a",
+ "dataset_records": 1448,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-09T03:31:50Z",
+ "generated_at": "2026-11-10T15:23:39Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,8 +54,7 @@
   },
   {
    "action": {
-    "unchanged": 10,
-    "updated": 3
+    "unchanged": 13
    },
    "bytes": 167231,
    "category": "event_ledger",
@@ -121,12 +120,12 @@
    "status": "included"
   },
   {
-   "bytes": 18744,
+   "bytes": 19312,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "df7be850c010f9a00b3228f8c3b0275dcbf13469dbf74233b4f0f51f2493390f",
+   "source_sha256": "3c313c91e26507e6f6de68fface470f31f4226f16e43baa1088e6bc37487e274",
    "status": "excluded"
   },
   {
@@ -807,12 +806,12 @@
    "status": "included"
   },
   {
-   "bytes": 152832,
+   "bytes": 154709,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "47721e7bbc5e11535e30505f9c1a3ff662a38e7dd63de8e3923935024212df67",
+   "source_sha256": "a3e83ee8c73e79ccf8f9263fb21edb8b90ea6a72fa95da300492e3f5374a64a9",
    "status": "excluded"
   },
   {
@@ -27134,12 +27133,12 @@
    "status": "included"
   },
   {
-   "bytes": 53274,
+   "bytes": 54099,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "7e61f38a207171ff543f797d235c9842b55d4a77b0b5a053d92da2d77b6365f6",
+   "source_sha256": "d60f64426e46a79105b5d805f7922bf571c6b954f3857d41e89cb385bbb6093a",
    "status": "excluded"
   },
   {
@@ -28316,6 +28315,23 @@
    "status": "included"
   },
   {
+   "action": {
+    "added": 1
+   },
+   "bytes": 7601,
+   "category": "mission_manifests",
+   "path": "LEARNING/missions/MISSION-070.json",
+   "record_ids": [
+    "mission__MISSION-070"
+   ],
+   "record_sha256": [
+    "b5b8c11203a834c26e63b56c0ecf45c48eb0fb3a62f19a95d0fb682ea34cc089"
+   ],
+   "required": true,
+   "source_sha256": "fd2754f91836d9be51b33a742949b5908637d07257d2190dd71e57515ab59d2c",
+   "status": "included"
+  },
+  {
    "bytes": 9149,
    "category": "mission_schema",
    "path": "LEARNING/missions/mission.schema.json",
@@ -28564,19 +28580,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 5723,
+   "bytes": 5895,
    "category": "knowledge_topics_concepts_research",
    "path": "LEARNING/research/README.md",
    "record_ids": [
     "LEARNING_research_README"
    ],
    "record_sha256": [
-    "78a1c09dcd547d58344ed3549b1f5037b4ce4eaff5340278fa4c644da3d35311"
+    "fa3224ec52a2eb3de7b9f9af48b15bb1830db37d236c5f7ef62119b6a197f522"
    ],
    "required": true,
-   "source_sha256": "953c6da700d6449af76ed0adeb8f4d7611d4beb2b1ec77e621afaf1e24d8e274",
+   "source_sha256": "7d5d3d5712742e1a4c1b56e0840fd5b9d1ceed8216d151a37149f2c1825d18f9",
    "status": "included"
   },
   {
@@ -28975,7 +28991,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 2707,
    "category": "knowledge_topics_concepts_research",
@@ -28992,7 +29008,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4001,
    "category": "knowledge_topics_concepts_research",
@@ -29009,7 +29025,24 @@
   },
   {
    "action": {
-    "updated": 1
+    "added": 1
+   },
+   "bytes": 3285,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/analysis/2026-11-09.md",
+   "record_ids": [
+    "LEARNING_research_arxiv_daily_analysis_2026-11-09"
+   ],
+   "record_sha256": [
+    "622a9ff9bac1344dc6b25dacdcefc604d87a863e3d81ea794d5e60cd8edaca23"
+   ],
+   "required": true,
+   "source_sha256": "ad00a8de01eed8251001589c39592e50c25e91a761b4cc70ed8c4f600785ef41",
+   "status": "included"
+  },
+  {
+   "action": {
+    "unchanged": 1
    },
    "bytes": 3219,
    "category": "knowledge_topics_concepts_research",
@@ -29026,39 +29059,56 @@
   },
   {
    "action": {
-    "updated": 1
+    "added": 1
    },
-   "artifact_ref": {
-    "commit_on_origin_main": true,
-    "git_commit": "a2971425bf6ed51e907c86bae419d26884384b20",
-    "repo": "richfrem/Project_Sanctuary",
-    "sha256": "157dd7e5fb831359a6f066a4b239f4b8b775ac1eb45c3f2d6a05cea58b5d2dab"
-   },
-   "bytes": 7981,
-   "category": "knowledge_supporting_data",
-   "path": "LEARNING/research/arxiv_daily/incoming.json",
+   "bytes": 3086,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/arxiv_daily/digests/2026-11-09.md",
    "record_ids": [
-    "artifacts__LEARNING_research_arxiv_daily"
+    "LEARNING_research_arxiv_daily_digests_2026-11-09"
    ],
-   "required": false,
-   "source_sha256": "157dd7e5fb831359a6f066a4b239f4b8b775ac1eb45c3f2d6a05cea58b5d2dab",
+   "record_sha256": [
+    "74a0cd4e3cb67b082a34ff601302bc795fc6a4c875de922b571a6f6a8bfb34f1"
+   ],
+   "required": true,
+   "source_sha256": "71726dc4a366e81a5cda738eaf089c6c2aa5380066b120f44f02d0c3351f8a6e",
    "status": "included"
   },
   {
    "action": {
     "updated": 1
    },
-   "bytes": 3219,
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "5f28ad11730b1f4c4822c411ef75c779a88f668c",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "ef3b11f438eaf999f725f324cfe2c99629d1279814b978d6efec9b6bfb52bde2"
+   },
+   "bytes": 7621,
+   "category": "knowledge_supporting_data",
+   "path": "LEARNING/research/arxiv_daily/incoming.json",
+   "record_ids": [
+    "artifacts__LEARNING_research_arxiv_daily"
+   ],
+   "required": false,
+   "source_sha256": "ef3b11f438eaf999f725f324cfe2c99629d1279814b978d6efec9b6bfb52bde2",
+   "status": "included"
+  },
+  {
+   "action": {
+    "updated": 1
+   },
+   "bytes": 3086,
    "category": "knowledge_topics_concepts_research",
    "path": "LEARNING/research/arxiv_daily/latest.md",
    "record_ids": [
     "LEARNING_research_arxiv_daily_latest"
    ],
    "record_sha256": [
-    "90793cd2648b0890f5480af41c2b525c3d05c84f4343dcfbfb40bc8b8d7f5c55"
+    "74a0cd4e3cb67b082a34ff601302bc795fc6a4c875de922b571a6f6a8bfb34f1"
    ],
    "required": true,
-   "source_sha256": "e72e066c6ca011555fc6e058534138474402f55212baa51ff7b4572a03df2126",
+   "source_sha256": "71726dc4a366e81a5cda738eaf089c6c2aa5380066b120f44f02d0c3351f8a6e",
    "status": "included"
   },
   {
@@ -29147,18 +29197,18 @@
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "069aebdf29ee1ac4eaa72e13ec4f3fc5b82a1b12",
+    "git_commit": "40d38ff586a425f50fe7c9fbebadda777d394b42",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "5dc2e0fae0ae3e0cc138c7b8e9f8099a1061e53cf0a0c16d1c56e6f6fb627c37"
+    "sha256": "c6893bf45d1acdbd1b3c947b1735db609385adc5e8e90f91f9cac5e751a33bcf"
    },
-   "bytes": 2051,
+   "bytes": 2812,
    "category": "knowledge_supporting_data",
    "path": "LEARNING/research/arxiv_daily/seeds.jsonl",
    "record_ids": [
     "artifacts__LEARNING_research_arxiv_daily"
    ],
    "required": false,
-   "source_sha256": "5dc2e0fae0ae3e0cc138c7b8e9f8099a1061e53cf0a0c16d1c56e6f6fb627c37",
+   "source_sha256": "c6893bf45d1acdbd1b3c947b1735db609385adc5e8e90f91f9cac5e751a33bcf",
    "status": "included"
   },
   {
@@ -29584,6 +29634,57 @@
    ],
    "required": true,
    "source_sha256": "35dfeae91e4065b26b2c88540b1177a4b55b3c18a91d29341faf38e9dc0a580b",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 1524,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/jepa_and_macro_moe/README.md",
+   "record_ids": [
+    "LEARNING_research_jepa_and_macro_moe_README"
+   ],
+   "record_sha256": [
+    "14b780b4c21362264aa41b7a7641e651cea32ad1ab4de9f0833faa5af8b7260d"
+   ],
+   "required": true,
+   "source_sha256": "134858ff77237f2c84acbdcd5bf83c631c3a2fc8f759332c28a95f332dac1f1d",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 34160,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/jepa_and_macro_moe/argon_analysis.md",
+   "record_ids": [
+    "LEARNING_research_jepa_and_macro_moe_argon_analysis"
+   ],
+   "record_sha256": [
+    "9c55ab2cf8324b02d3df322024b3d2853633815c1451abbf00ab72b970d38fb7"
+   ],
+   "required": true,
+   "source_sha256": "5f758ca642ba2832437179cf5a2c14c1ebde75e118310b87568fc7dd093279f9",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 10982,
+   "category": "knowledge_topics_concepts_research",
+   "path": "LEARNING/research/jepa_and_macro_moe/summary.md",
+   "record_ids": [
+    "LEARNING_research_jepa_and_macro_moe_summary"
+   ],
+   "record_sha256": [
+    "b23eda434203d2f4541ba6a2f664e6e2ee55954370cbb2d4e66e7412456cc8f6"
+   ],
+   "required": true,
+   "source_sha256": "13af852b21711bcb287d25f216172ff0308f4664297b95230594dffa898a41db",
    "status": "included"
   },
   {
@@ -37822,7 +37923,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4893,
    "category": "skill_documentation",
@@ -37875,7 +37976,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4346,
    "category": "skill_documentation",
@@ -40980,11 +41081,11 @@
     "required": false
    },
    "knowledge_topics_concepts_research": {
-    "discovered": 105,
+    "discovered": 110,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 105,
+    "included": 110,
     "required": true
    },
    "learning_loop_readme": {
@@ -40996,11 +41097,11 @@
     "required": false
    },
    "mission_manifests": {
-    "discovered": 69,
+    "discovered": 70,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 69,
+    "included": 70,
     "required": true
    },
    "mission_schema": {
