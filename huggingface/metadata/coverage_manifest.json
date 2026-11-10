@@ -1,9 +1,9 @@
 {
- "base_commit": "ad411504d95c3c5c2c21125222df891f9066c433",
- "dataset_records": 1452,
+ "base_commit": "2f0df301c6ab0d9e75cf5378334f712e70bb9fd1",
+ "dataset_records": 1455,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-10T17:07:29Z",
+ "generated_at": "2026-11-10T18:03:10Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,9 +54,10 @@
   },
   {
    "action": {
-    "unchanged": 13
+    "unchanged": 9,
+    "updated": 4
    },
-   "bytes": 168171,
+   "bytes": 169080,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -80,17 +81,17 @@
     "d779f93433951519c4a338546cdb651acbd980661b2e26dc759add292e01785f",
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
-    "c4468509e310a276a8601d0f28e04a6dfe07bc6a4e4656a2d9ae928499ab3bcb",
-    "f65d697a4b12ba7b87a86bc2c6960a231ec9769d04f4f79deaeba43e278d2886",
-    "28ca709bfd7191e6cd41d5bf2c87bd29e9f4b34c047e5c545e34e985b32fc6bf",
-    "10c3549d2eb2e41de2e0bdae261af63dc0c68bc08a0218134f46428dad28bad3",
+    "bdf8a15cf5a39c9eb8a8208c8fe56ccda757435582225ba1afc4b49f379ecc25",
+    "8872ecf79ca8551d253335b5d0937e83c419108c167f203c9d3446bf4e55a562",
+    "b1d05cdc2fe15013b4ae345dac52b094d087b80219d885835af5b40abc324a9b",
+    "c8194ad6c77b00f1dafdb5256bdbb326de185b9960599a59b82b822e8bc68212",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "89789d49ad2d2f7d30254455353e109bb6e102d34b8bbf8343d1a21c50386017",
+   "source_sha256": "0d7d22825c8be1fe2b4e251f6566907c324c6ae3370e0efd798dc87dded0a0d7",
    "status": "included"
   },
   {
@@ -806,12 +807,12 @@
    "status": "included"
   },
   {
-   "bytes": 155848,
+   "bytes": 158203,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "267c7d8af91cac2ef46a4151002beff3c2e798a30c89d7b9b8df212bbdc70720",
+   "source_sha256": "71a9923a951884758c5e27d7fa42036b45ca0fd83b1f0662bf4e21367d777c36",
    "status": "excluded"
   },
   {
@@ -27080,7 +27081,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 4935,
    "category": "experiment_knowledge",
@@ -27114,7 +27115,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27134,7 +27135,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27171,7 +27172,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27191,7 +27192,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27207,6 +27208,103 @@
    ],
    "required": true,
    "source_sha256": "98ba1fd6e18b01237b2ba78e745978bb287a59a15132572e76dc3d039f343486",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 1467,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-071/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-071_README"
+   ],
+   "record_sha256": [
+    "c821e5bb6271beab4fa663293c3151f9f18533d84fc826f324a6429367be6124"
+   ],
+   "required": true,
+   "source_sha256": "e8742aeb55b9a9cffbbd513aea6957467c3fa04699c2110905cc8612cbba2ca8",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2f0df301c6ab0d9e75cf5378334f712e70bb9fd1",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "89fab224d96d01d5715582473de2455100fea23895cb5900b3d4bbe0634bccb7"
+   },
+   "bytes": 255,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-071/freeze.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_071"
+   ],
+   "required": true,
+   "source_sha256": "89fab224d96d01d5715582473de2455100fea23895cb5900b3d4bbe0634bccb7",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2f0df301c6ab0d9e75cf5378334f712e70bb9fd1",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "04b28d9cb4c722fd7fd4c708f58725015fac7e3927efc896803e5cecb455f09e"
+   },
+   "bytes": 2831,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-071/results.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_071"
+   ],
+   "required": true,
+   "source_sha256": "04b28d9cb4c722fd7fd4c708f58725015fac7e3927efc896803e5cecb455f09e",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2f0df301c6ab0d9e75cf5378334f712e70bb9fd1",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "d65ad38be03e08ef301ae76c15260f64a73dfc47463d596188ec4a03c7a2e9d8"
+   },
+   "bytes": 2797,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-071/run.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_071"
+   ],
+   "required": true,
+   "source_sha256": "d65ad38be03e08ef301ae76c15260f64a73dfc47463d596188ec4a03c7a2e9d8",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "2f0df301c6ab0d9e75cf5378334f712e70bb9fd1",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "5113acfd93be47a6bcefd4495d7526c1d75ed4a25b2d8453c4f9f8b139c1b184"
+   },
+   "bytes": 388,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-071/task.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_071"
+   ],
+   "required": true,
+   "source_sha256": "5113acfd93be47a6bcefd4495d7526c1d75ed4a25b2d8453c4f9f8b139c1b184",
    "status": "included"
   },
   {
@@ -27264,12 +27362,12 @@
    "status": "included"
   },
   {
-   "bytes": 54121,
+   "bytes": 54907,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "74bf3879f90c5fab79a866190c31547471a47348debfd2376d4ba87ad820f766",
+   "source_sha256": "c6dac26e506bd208b854f8d502e61faf6bcb4ad6b674e1a69309c4fa7434de89",
    "status": "excluded"
   },
   {
@@ -28460,6 +28558,23 @@
    ],
    "required": true,
    "source_sha256": "663bc25acd8a21f6a7734afee4aed191ca0b7ca31e45e3ceaf539dee64971a36",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5115,
+   "category": "mission_manifests",
+   "path": "LEARNING/missions/MISSION-071.json",
+   "record_ids": [
+    "mission__MISSION-071"
+   ],
+   "record_sha256": [
+    "6b378c28f13a1cbdca9d2d2bd1b02eea70295b477ef01ec008711b0bcf762e05"
+   ],
+   "required": true,
+   "source_sha256": "4910616b4f308ed1fe89db48510f1e8682267e63b742110f2d3d47db64e0b591",
    "status": "included"
   },
   {
@@ -41172,19 +41287,19 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 172,
+    "discovered": 173,
     "excluded": 2,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 170,
+    "included": 171,
     "required": true
    },
    "experiment_supporting_artifacts": {
-    "discovered": 1165,
+    "discovered": 1169,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 1165,
+    "included": 1169,
     "required": true
    },
    "governance_protocols_adrs": {
@@ -41228,11 +41343,11 @@
     "required": false
    },
    "mission_manifests": {
-    "discovered": 70,
+    "discovered": 71,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 70,
+    "included": 71,
     "required": true
    },
    "mission_schema": {
