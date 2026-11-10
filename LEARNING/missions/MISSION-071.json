@@ -1,0 +1,92 @@
+{
+  "id": "MISSION-071",
+  "title": "OpenRouter Micro-Tier End-to-End Smoke: Mission Spec to Verified Output via cli-agent",
+  "status": "RESOLVED",
+  "execution_surface": "local",
+  "target_platform": "Installed cli-agent skill (jev_router.py, openrouter_client.py, smoke_test_openrouter.py) consumed from richfrem/agent-plugins-skills; OpenRouter API",
+  "created_at": "2026-11-10T17:40:00Z",
+  "updated_at": "2026-11-10T18:02:20.975429+00:00",
+  "confidence_reviewed": "2026-11-10",
+  "proposed_by": "Richard",
+  "interest_statement": "Trivial, repeatable proof that after relocating the router and client out of this repo, a Sanctuary mission spec naming a cheap OpenRouter model still runs start to end through the installed companion skill.",
+  "hypothesis": "A mission-style task spec that pins a cheap OpenRouter model (meta-llama/llama-3.2-3b-instruct) will, through the installed cli-agent skill alone, be routed to TIER_1_MICRO by the zero-token JEV router, executed live by openrouter_client.py without fallback, return exactly the expected JSON output, and increment the local spend ledger, on 3 of 3 consecutive runs at under $0.0001 per run.",
+  "falsification_criteria": "FALSIFIED if, in any of 3 consecutive runs: (1) routing tier or complexity class differs from the spec; (2) the live call does not return status OK or a fallback triggers; (3) the parsed output differs from expected_output or keys are not sorted; (4) the ledger does not increment; or (5) a run costs more than $0.0001. ABANDONED if no OPENROUTER_API_KEY is available or the installed cli-agent skill lacks the three scripts.",
+  "baseline_evidence": "Ad-hoc single run on 2026-11-10 from a scratch script passed all four checks (llama-3.2-3b, 100 in / 21 out tokens, $0.0000092, 0.64 s). Not recorded as a mission; this mission makes it a registered, frozen, repeatable result.",
+  "experiment": "Freeze the spec (references/openrouter-smoke-task.json shape) and evaluator (installed smoke_test_openrouter.py, hash recorded). Run the smoke test 3 times through the installed skill path only (no sibling-clone import). Record per-run route, status, tokens, cost, ledger delta, and output into results.json. Verdict from the frozen criteria.",
+  "phases": [
+    "Freeze spec and evaluator hashes",
+    "Three consecutive live runs via installed cli-agent",
+    "Record results and verdict"
+  ],
+  "scores": {
+    "strategic_leverage": 2,
+    "epistemic_depth": 1,
+    "cost_weight": 0.25,
+    "operational_friction": 1,
+    "priority_score": 8.0
+  },
+  "priority_score": 8.0,
+  "score_basis": "Leverage 2: guards the consumer/companion boundary after the relocation. Depth 1: a smoke test, no new knowledge. Cost 0.25: three sub-cent calls. Friction 1: one command. Priority = (2*1)/(0.25*1) = 8.0.",
+  "model_routing": {
+    "cheapest_viable_tier": "cheap",
+    "recommended_model": "openrouter/meta-llama/llama-3.2-3b-instruct",
+    "cost_weight": 0.25,
+    "cli_target": "none",
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "claude-haiku-5.5"
+    ],
+    "frontier_escalation_condition": "None; a failure is a finding, not an escalation.",
+    "routing_guidance": "Routing by the installed jev_router.py; execution by openrouter_client.py with local fallback disabled so a fallback counts as failure."
+  },
+  "tags": [
+    "openrouter",
+    "jev-router",
+    "cli-agent",
+    "smoke-test",
+    "companion-repo",
+    "proposed-by-richard"
+  ],
+  "verdict": "CORROBORATED",
+  "human_gate_required": true,
+  "issue_ref": null,
+  "evidence": [
+    {
+      "timestamp": "2026-11-10T18:02:20.975429+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-071/README.md",
+      "details": "3/3 consecutive live runs through the installed cli-agent skill (jev_router + openrouter_client + smoke_test_openrouter, fallback disabled) passed all four checks (route, live OK, exact output, ledger increment) on meta-llama/llama-3.2-3b-instruct at $0.0000092/run; freeze.json records spec and evaluator hashes; results.json has per-run data."
+    }
+  ],
+  "lessons_learned": [
+    "The consumer path (Sanctuary spec -> installed cli-agent) works after relocation; no local copy of the router or client is needed.",
+    "One trivial task is a smoke result, not a routing-accuracy claim."
+  ],
+  "related_missions": {
+    "MISSION-070": "EXTENDS: trivial repeatable check of the router and client MISSION-070 introduced, now consumed from cli-agent."
+  },
+  "upstream_skill_dependencies": [
+    "cli-agent (agent-plugins-skills PR #763, #764)"
+  ],
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-071.json",
+      "LEARNING/experiments/mission-071/"
+    ],
+    "resources": [
+      "OpenRouter API key"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl"
+    ]
+  },
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-mission-071",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-10T18:02:20.975429+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
+}
