@@ -16,12 +16,21 @@ import sys
 import time
 from typing import Any, Callable, Dict, List
 
-# Add guardian scripts to path
+# The router and client live in the companion cli-agent skill (richfrem/agent-plugins-skills).
+# Resolve its scripts dir: CLI_AGENT_SCRIPTS env, the APM-installed copy, or the sibling clone.
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-GUARDIAN_SCRIPTS = os.path.abspath(
-    os.path.join(SCRIPT_DIR, "../../../plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts")
-)
-sys.path.insert(0, GUARDIAN_SCRIPTS)
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "../../.."))
+_CANDIDATES = [
+    os.environ.get("CLI_AGENT_SCRIPTS", ""),
+    os.path.join(REPO_ROOT, ".claude", "skills", "cli-agent", "scripts"),
+    os.path.expanduser("~/.claude/skills/cli-agent/scripts"),
+    os.path.join(REPO_ROOT, "..", "agent-plugins-skills", "plugins", "agent-orchestration",
+                 ".apm", "skills", "cli-agent", "scripts"),
+]
+CLI_AGENT_SCRIPTS = next((c for c in _CANDIDATES if c and os.path.isfile(os.path.join(c, "jev_router.py"))), None)
+if CLI_AGENT_SCRIPTS is None:
+    sys.exit("cli-agent scripts not found (jev_router.py); install the cli-agent skill or set CLI_AGENT_SCRIPTS")
+sys.path.insert(0, CLI_AGENT_SCRIPTS)
 
 from jev_router import JEVRouter, RoutingDecision
 from openrouter_client import invoke_micro_tier, get_cumulative_spend

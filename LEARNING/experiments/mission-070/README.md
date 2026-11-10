@@ -66,10 +66,10 @@ Our empirical testing surfaced a key insight regarding small models:
 
 ## Artifacts & Code Deliverables
 
-1. **JEV Router Substrate:**  
-   [`plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/jev_router.py`](../../../plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/jev_router.py)
-2. **Sanctuary OpenRouter Client:**  
-   [`plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/openrouter_client.py`](../../../plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/openrouter_client.py)
+1. **JEV Router Substrate** (relocated 2026-11-10 to the companion `cli-agent` skill, since routing is generic):  
+   `richfrem/agent-plugins-skills` → `plugins/agent-orchestration/.apm/skills/cli-agent/scripts/jev_router.py` (reference: `references/jev-router.md`; installed copy under `.claude/skills/cli-agent/`)
+2. **OpenRouter Micro-Tier Client** (relocated with it):  
+   `plugins/agent-orchestration/.apm/skills/cli-agent/scripts/openrouter_client.py` (reference: `references/openrouter-micro-tier-dispatch.md`). `evaluate_benchmark.py` imports both from the installed skill or `CLI_AGENT_SCRIPTS`.
 3. **Protocol & Freeze Seal:**  
    [`LEARNING/experiments/mission-070/protocol.md`](protocol.md) & [`freeze.json`](freeze.json)
 4. **Held-Out Test Matrix & Empirical Results:**  
