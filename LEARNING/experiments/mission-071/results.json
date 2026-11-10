@@ -1,0 +1,68 @@
+{
+  "mission": "MISSION-071",
+  "verdict": "CORROBORATED",
+  "freeze": {
+    "task_sha256": "5113acfd93be47a6bcefd4495d7526c1d75ed4a25b2d8453c4f9f8b139c1b184",
+    "evaluator_sha256": "443ccaf5ed538e2e8b833e57f00825201da7246b8a25092273847f78772f51e3",
+    "runs": 3,
+    "max_cost_usd": 0.0001,
+    "frozen_at": "2026-11-10T18:02:01Z"
+  },
+  "runs": [
+    {
+      "run": 1,
+      "exit": 0,
+      "prompt_tokens": 100,
+      "completion_tokens": 21,
+      "cost_usd": 9.2e-06,
+      "latency_s": 0.423,
+      "fallback": "False",
+      "checks": {
+        "route": "PASS",
+        "output": "PASS",
+        "live": "PASS",
+        "ledger": "PASS"
+      },
+      "cost_ok": true,
+      "stdout": "[route] tier=TIER_1_MICRO runtime=openrouter model=meta-llama/llama-3.2-3b-instruct class=MECHANICAL_CHORE tokens=0 latency=0.132ms\n[call]  status=OK model=meta-llama/llama-3.2-3b-instruct tokens=100in/21out cost=$0.00000920 latency=0.423s fallback=False\n[out]   '{\"apple\": 2, \"mango\": 3, \"zebra\": 1}'\n[spend] ledger 0.00030200 -> 0.00031100 (cap $10.00)\n[verify] route=PASS output=PASS live_openrouter=PASS ledger_incremented=PASS",
+      "pass": true
+    },
+    {
+      "run": 2,
+      "exit": 0,
+      "prompt_tokens": 100,
+      "completion_tokens": 21,
+      "cost_usd": 9.2e-06,
+      "latency_s": 0.421,
+      "fallback": "False",
+      "checks": {
+        "route": "PASS",
+        "output": "PASS",
+        "live": "PASS",
+        "ledger": "PASS"
+      },
+      "cost_ok": true,
+      "stdout": "[route] tier=TIER_1_MICRO runtime=openrouter model=meta-llama/llama-3.2-3b-instruct class=MECHANICAL_CHORE tokens=0 latency=0.198ms\n[call]  status=OK model=meta-llama/llama-3.2-3b-instruct tokens=100in/21out cost=$0.00000920 latency=0.421s fallback=False\n[out]   '{\"apple\": 2, \"mango\": 3, \"zebra\": 1}'\n[spend] ledger 0.00031100 -> 0.00032000 (cap $10.00)\n[verify] route=PASS output=PASS live_openrouter=PASS ledger_incremented=PASS",
+      "pass": true
+    },
+    {
+      "run": 3,
+      "exit": 0,
+      "prompt_tokens": 100,
+      "completion_tokens": 21,
+      "cost_usd": 9.2e-06,
+      "latency_s": 0.646,
+      "fallback": "False",
+      "checks": {
+        "route": "PASS",
+        "output": "PASS",
+        "live": "PASS",
+        "ledger": "PASS"
+      },
+      "cost_ok": true,
+      "stdout": "[route] tier=TIER_1_MICRO runtime=openrouter model=meta-llama/llama-3.2-3b-instruct class=MECHANICAL_CHORE tokens=0 latency=0.206ms\n[call]  status=OK model=meta-llama/llama-3.2-3b-instruct tokens=100in/21out cost=$0.00000920 latency=0.646s fallback=False\n[out]   '{\"apple\": 2, \"mango\": 3, \"zebra\": 1}'\n[spend] ledger 0.00032000 -> 0.00032900 (cap $10.00)\n[verify] route=PASS output=PASS live_openrouter=PASS ledger_incremented=PASS",
+      "pass": true
+    }
+  ],
+  "total_cost_usd": 2.76e-05
+}
