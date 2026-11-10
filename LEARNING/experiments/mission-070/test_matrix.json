@@ -1,0 +1,402 @@
+[
+  {
+    "id": "TASK-001",
+    "category": "MECHANICAL",
+    "description": "Format markdown table columns in LEARNING/concepts/macro_moe.md to align pipe characters and clean trailing whitespace.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-002",
+    "category": "MECHANICAL",
+    "description": "Fix invalid trailing comma in chronicle/ledger.json schema block and sort dictionary keys alphabetically.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-003",
+    "category": "MECHANICAL",
+    "description": "Update copyright year from 2025 to 2026 across python file headers in context/kernel.py.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-004",
+    "category": "MECHANICAL",
+    "description": "Reformat docstrings in plugins/sanctuary-core to conform to Google docstring format with Args and Returns sections.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-005",
+    "category": "MECHANICAL",
+    "description": "Clean trailing whitespace and enforce single newline at EOF across all markdown files in LEARNING/procedures/.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-006",
+    "category": "MECHANICAL",
+    "description": "Sort list of tags in MISSION-069.json in alphabetical ascending order.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-007",
+    "category": "MECHANICAL",
+    "description": "Convert markdown bullet list into an ordered numbered list in docs/setup.md.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-008",
+    "category": "MECHANICAL",
+    "description": "Validate and pretty-print JSON payload in .agent/automations/daily_arxiv.json with 2-space indentation.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-009",
+    "category": "MECHANICAL",
+    "description": "Replace deprecated Markdown image syntax with standard HTML figure tag in report.md.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-010",
+    "category": "MECHANICAL",
+    "description": "Extract all URL links from README.md and verify they start with https://.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-011",
+    "category": "MECHANICAL",
+    "description": "Fix typo in variable name 'recieved_bytes' to 'received_bytes' in network logger script.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-012",
+    "category": "MECHANICAL",
+    "description": "Add missing type hint ': str' to argument 'path' in function signature def read_text(path).",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-013",
+    "category": "MECHANICAL",
+    "description": "Sort import statements in scripts/cleanup.py according to standard isort grouping (stdlib, third-party, local).",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-014",
+    "category": "MECHANICAL",
+    "description": "Format git commit message subject line to follow imperative mood and <= 50 character limit.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-015",
+    "category": "MECHANICAL",
+    "description": "Remove unused imported module 'import sys' from top of guardian_wakeup.py.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-016",
+    "category": "MECHANICAL",
+    "description": "Normalize YAML frontmatter separators in LEARNING/concepts/ to standard three dashes '---'.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-017",
+    "category": "MECHANICAL",
+    "description": "Replace hardcoded path string '/tmp/test.log' with tempfile.gettempdir() in test helper.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-018",
+    "category": "MECHANICAL",
+    "description": "Format markdown code fences to consistently specify language identifier '```python' instead of bare '```'.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-019",
+    "category": "MECHANICAL",
+    "description": "Validate that all entries in chronicle/ledger.json contain non-empty 'timestamp' and 'id' fields.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-020",
+    "category": "MECHANICAL",
+    "description": "Rename key 'confidence_score' to 'priority_score' in draft mission manifest JSON.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "MECHANICAL_CHORE"
+  },
+  {
+    "id": "TASK-021",
+    "category": "CODING",
+    "description": "Write a pytest unit test function verifying that hash_file() returns expected SHA-256 for a known string input.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-022",
+    "category": "CODING",
+    "description": "Implement a Python helper function that parses a .jsonl file and yields valid JSON objects, skipping blank lines.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-023",
+    "category": "CODING",
+    "description": "Add an optional command-line flag '--dry-run' to argparse in sync_soul_dataset.py and pass it to runner.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-024",
+    "category": "CODING",
+    "description": "Implement an exponential backoff retry decorator in Python with max_retries=3 and base_delay=1.0.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-025",
+    "category": "CODING",
+    "description": "Write a Python script that calculates the cosine similarity between two float vectors using math.sqrt and sum.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-026",
+    "category": "CODING",
+    "description": "Implement a function that reads a git commit log using subprocess.check_output and returns a list of commit hashes.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-027",
+    "category": "CODING",
+    "description": "Write a unit test with pytest.raises(ValueError) verifying that validate_manifest() rejects missing 'hypothesis'.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-028",
+    "category": "CODING",
+    "description": "Construct a Python dataclass representing an AgentLease with fields agent_id, mission_id, and expires_at.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-029",
+    "category": "CODING",
+    "description": "Scaffold a bash script that checks if Ollama service is listening on port 11434 and echoes status.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-030",
+    "category": "CODING",
+    "description": "Implement a sliding window token counter that estimates character length / 4.0 for incoming prompt strings.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-031",
+    "category": "CODING",
+    "description": "Create a Python context manager that records execution time in milliseconds and logs it to sys.stderr.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-032",
+    "category": "CODING",
+    "description": "Write a function that parses ISO 8601 UTC timestamp strings and returns seconds elapsed since that time.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-033",
+    "category": "CODING",
+    "description": "Scaffold a simple AST visitor in Python to find all function definitions without docstrings.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-034",
+    "category": "CODING",
+    "description": "Implement a Python dictionary merge that preserves nested keys without overwriting parent dictionaries.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-035",
+    "category": "CODING",
+    "description": "Write a unit test mocking an HTTP 500 response from an external API endpoint and verifying retry behavior.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
+    "expected_complexity": "CODING_SYNTAX"
+  },
+  {
+    "id": "TASK-036",
+    "category": "TRIAGE",
+    "description": "Read LEARNING/missions/ directory, extract priority_score from each manifest, and output a sorted markdown list.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "GENERAL_TRIAGE"
+  },
+  {
+    "id": "TASK-037",
+    "category": "TRIAGE",
+    "description": "Scan recent git commit messages on main and categorize them into feat, fix, docs, refactor, or chore.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "GENERAL_TRIAGE"
+  },
+  {
+    "id": "TASK-038",
+    "category": "TRIAGE",
+    "description": "Compare tags across all mission manifests and identify orphan tags that only appear in a single mission.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "GENERAL_TRIAGE"
+  },
+  {
+    "id": "TASK-039",
+    "category": "TRIAGE",
+    "description": "Inspect cognitive backlog inbox.jsonl and identify candidate missions that lack required interest statements.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "GENERAL_TRIAGE"
+  },
+  {
+    "id": "TASK-040",
+    "category": "TRIAGE",
+    "description": "Parse chronicle entries and count how many entries were logged by Claude, Gemini, Codex, or Qwen.",
+    "expected_tier": "TIER_1_MICRO",
+    "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+    "expected_complexity": "GENERAL_TRIAGE"
+  },
+  {
+    "id": "TASK-041",
+    "category": "ARCHITECTURAL",
+    "description": "Derive mathematical proof that non-generative JEPAs trained with VICReg regularizers converge to the Platonic manifold with sample complexity O(d) whereas autoregressive LLMs require O(d^2) due to nuisance shared information.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "claude-3-5-sonnet",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-042",
+    "category": "ARCHITECTURAL",
+    "description": "Design an Orthogonal Procrustes alignment algorithm across heterogeneous embedding spaces (MLX BGE-small vs OpenAI vs Gemini) and prove metric preservation under orthogonal group O(d).",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "gemini-4-argon",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-043",
+    "category": "ARCHITECTURAL",
+    "description": "Formulate a new Popperian research mission exploring anti-Asch epistemic resistance under adversarial consensus cascades in multi-agent LLM systems with concrete falsification criteria.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "claude-3-5-sonnet",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-044",
+    "category": "ARCHITECTURAL",
+    "description": "Resolve a constitutional doctrinal conflict between Protocol 128 autonomous execution lifecycle and Protocol 78 human verification gate when an automated background daemon detects memory corruption.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "gemini-4-argon",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-045",
+    "category": "ARCHITECTURAL",
+    "description": "Perform deep cognitive root-cause analysis on how autoregressive linguistic sycophancy corrupts multi-agent jury deliberation and synthesize an axiomatic mathematical defense based on latent orthogonal discrepancy.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "gemini-4-argon",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-046",
+    "category": "ARCHITECTURAL",
+    "description": "Architect a 4-tier Macro-MoE scheduling system that balances local Apple Silicon unified memory constraints against cloud micro-models and frontier rate-limits under strict formal token economics.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "claude-3-5-sonnet",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-047",
+    "category": "ARCHITECTURAL",
+    "description": "Derive information-theoretic bounds on mutual information I(View1; View2 | Environmental_State) for source code vs execution traces in autonomous software engineering agents.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "gemini-4-argon",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-048",
+    "category": "ARCHITECTURAL",
+    "description": "Develop a formal specification for a zero-knowledge proof verification pipeline validating that local LoRA weights were fine-tuned strictly on curated Platonic session traces without data contamination.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "claude-3-5-sonnet",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-049",
+    "category": "ARCHITECTURAL",
+    "description": "Evaluate asymptotic computational complexity and memory safety bounds of distributed graph-planning in Sanctuary sovereign memory when associative link density scales to 10^5 concepts.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "claude-3-5-sonnet",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  },
+  {
+    "id": "TASK-050",
+    "category": "ARCHITECTURAL",
+    "description": "Formulate the epistemic foundation and axiomatic rules for Sanctuary Protocol 134 governing autonomous self-directed inquiry and Popperian falsification without human prompting.",
+    "expected_tier": "TIER_3_FRONTIER",
+    "recommended_model": "gemini-4-argon",
+    "expected_complexity": "EPISTEMIC_ARCHITECTURAL"
+  }
+]
