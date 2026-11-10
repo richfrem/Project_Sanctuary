@@ -1,9 +1,9 @@
 {
- "base_commit": "0f56ed26febb561398e7b8af6efe22259ed6dad3",
+ "base_commit": "ad411504d95c3c5c2c21125222df891f9066c433",
  "dataset_records": 1452,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-10T16:22:21Z",
+ "generated_at": "2026-11-10T17:07:29Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -120,12 +120,12 @@
    "status": "included"
   },
   {
-   "bytes": 20448,
+   "bytes": 21016,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "0bf47f55be38394353e4c23f9410afc68e9510f46adc633921dde81f04a21a68",
+   "source_sha256": "f9e9510466f225b7c6bbb32744845e56136b3ebab0e556ee59ca2fac2ee90ad6",
    "status": "excluded"
   },
   {
@@ -139,7 +139,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 21035,
    "category": "root_architecture_docs",
@@ -27080,19 +27080,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 4788,
+   "bytes": 4935,
    "category": "experiment_knowledge",
    "path": "LEARNING/experiments/mission-070/README.md",
    "record_ids": [
     "LEARNING_experiments_mission-070_README"
    ],
    "record_sha256": [
-    "fa51ba1f49ed934f14303ae09574ea690b64b3f7595a078a30a970dc698a2d9e"
+    "cfe15bc8b776a032aacf6fcca5e19e2024684c8d114e04de4eec21cfd18873b9"
    ],
    "required": true,
-   "source_sha256": "8fc893f7c1683dd9530a1a68df3a2de3d0e334ec155c4f1c29cc2c916dd8e8c1",
+   "source_sha256": "c7d537cdfdfcdcbb7e915a6c971097d1556b399d4b6fca16d3a21e13e46c0114",
    "status": "included"
   },
   {
@@ -27114,27 +27114,27 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "bd6f4a07aec526b79caeeed18d31d85e359666e4",
+    "git_commit": "ad411504d95c3c5c2c21125222df891f9066c433",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "4e4eb8de2d7fe203820064e0e989ac9928fb61fe004d6a2152c50ae1db350296"
+    "sha256": "e1f8a4710c666a527598427787632a3b46f627f3be18b06be8f579e05c1951e4"
    },
-   "bytes": 15167,
+   "bytes": 15853,
    "category": "experiment_supporting_artifacts",
    "path": "LEARNING/experiments/mission-070/evaluate_benchmark.py",
    "record_ids": [
     "artifacts__LEARNING_experiments_mission_070"
    ],
    "required": true,
-   "source_sha256": "4e4eb8de2d7fe203820064e0e989ac9928fb61fe004d6a2152c50ae1db350296",
+   "source_sha256": "e1f8a4710c666a527598427787632a3b46f627f3be18b06be8f579e05c1951e4",
    "status": "included"
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27171,7 +27171,7 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -27191,7 +27191,7 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -38754,15 +38754,6 @@
    "status": "excluded"
   },
   {
-   "bytes": 13942,
-   "category": "skill_code_and_tests",
-   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/jev_router.py",
-   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
-   "required": false,
-   "source_sha256": "3d52341d9f58540a7718d283601b7340991bd6ab1d05337e5e777832420d088c",
-   "status": "excluded"
-  },
-  {
    "bytes": 9081,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/learning_debrief.py",
@@ -38805,15 +38796,6 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231",
-   "status": "excluded"
-  },
-  {
-   "bytes": 11105,
-   "category": "skill_code_and_tests",
-   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/openrouter_client.py",
-   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
-   "required": false,
-   "source_sha256": "c2727a70baea24f9a34768ba8e970ad12059ed100d810d644ffef70af200f38d",
    "status": "excluded"
   },
   {
@@ -38949,15 +38931,6 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6",
-   "status": "excluded"
-  },
-  {
-   "bytes": 3571,
-   "category": "skill_code_and_tests",
-   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_jev_router.py",
-   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
-   "required": false,
-   "source_sha256": "2cbaf17aa8871a9e0b7be2ff612352853808dc00102d138c9478a9ecc9cdadd4",
    "status": "excluded"
   },
   {
@@ -41295,8 +41268,8 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 138,
-    "excluded": 138,
+    "discovered": 135,
+    "excluded": 135,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
