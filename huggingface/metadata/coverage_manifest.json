@@ -1,9 +1,9 @@
 {
- "base_commit": "5d0fbdc914f9920f593cb6e712ebdcdedf5a333a",
- "dataset_records": 1448,
+ "base_commit": "be6fce8a3351fd17f2f46cc7f0841b84f1da4d31",
+ "dataset_records": 1452,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-10T15:23:39Z",
+ "generated_at": "2026-11-10T15:54:42Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,9 +54,10 @@
   },
   {
    "action": {
-    "unchanged": 13
+    "unchanged": 9,
+    "updated": 4
    },
-   "bytes": 167231,
+   "bytes": 168171,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -80,17 +81,17 @@
     "d779f93433951519c4a338546cdb651acbd980661b2e26dc759add292e01785f",
     "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
-    "545fa24d5ace297b88339d94c250d1df01468db3caa999655b7790d608d908e5",
-    "84522bc446dc0f7571832628964b4baee2f799a14b14a754a86330c4eac46f31",
-    "8aa36b8067a6f17a18b24ca7af58e2b05eeba18813be613f946bfe93f67189ee",
-    "1aa2bb3b5b333aec481258a270ab4421168ccfe76c312b8b1d35ef206dc4b4db",
+    "c4468509e310a276a8601d0f28e04a6dfe07bc6a4e4656a2d9ae928499ab3bcb",
+    "f65d697a4b12ba7b87a86bc2c6960a231ec9769d04f4f79deaeba43e278d2886",
+    "28ca709bfd7191e6cd41d5bf2c87bd29e9f4b34c047e5c545e34e985b32fc6bf",
+    "10c3549d2eb2e41de2e0bdae261af63dc0c68bc08a0218134f46428dad28bad3",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
    ],
    "required": true,
-   "source_sha256": "fc1be2b7a3cf22c41d77bbf026ea511d8cf38d709a18857e989678b8e13f87d5",
+   "source_sha256": "89789d49ad2d2f7d30254455353e109bb6e102d34b8bbf8343d1a21c50386017",
    "status": "included"
   },
   {
@@ -120,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 19312,
+   "bytes": 19880,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "3c313c91e26507e6f6de68fface470f31f4226f16e43baa1088e6bc37487e274",
+   "source_sha256": "6b6cba19568084c627b5a3377c6f4c3475342b4ac8f69a655bd7e1d3e01155e1",
    "status": "excluded"
   },
   {
@@ -806,12 +807,12 @@
    "status": "included"
   },
   {
-   "bytes": 154709,
+   "bytes": 155848,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "a3e83ee8c73e79ccf8f9263fb21edb8b90ea6a72fa95da300492e3f5374a64a9",
+   "source_sha256": "267c7d8af91cac2ef46a4151002beff3c2e798a30c89d7b9b8df212bbdc70720",
    "status": "excluded"
   },
   {
@@ -27080,6 +27081,137 @@
   },
   {
    "action": {
+    "added": 1
+   },
+   "bytes": 4788,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-070/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-070_README"
+   ],
+   "record_sha256": [
+    "fa51ba1f49ed934f14303ae09574ea690b64b3f7595a078a30a970dc698a2d9e"
+   ],
+   "required": true,
+   "source_sha256": "8fc893f7c1683dd9530a1a68df3a2de3d0e334ec155c4f1c29cc2c916dd8e8c1",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 3020,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-070/discovery.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-070_discovery"
+   ],
+   "record_sha256": [
+    "3616e95993219e0f45699221b82964a46074532e3aa11740f3e44bd00f73b63b"
+   ],
+   "required": true,
+   "source_sha256": "39ad2844c88db4ba9fd9a13545ba290f880833ed7d34ecef615f8c69d26f9456",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "bd6f4a07aec526b79caeeed18d31d85e359666e4",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "4e4eb8de2d7fe203820064e0e989ac9928fb61fe004d6a2152c50ae1db350296"
+   },
+   "bytes": 15167,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-070/evaluate_benchmark.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_070"
+   ],
+   "required": true,
+   "source_sha256": "4e4eb8de2d7fe203820064e0e989ac9928fb61fe004d6a2152c50ae1db350296",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "bd6f4a07aec526b79caeeed18d31d85e359666e4",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "9c23f61d9c7882cfc09d5fcfd46aa826d9cd7dcd49b1209aaaa6e4b4ebca6b54"
+   },
+   "bytes": 354,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-070/freeze.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_070"
+   ],
+   "required": true,
+   "source_sha256": "9c23f61d9c7882cfc09d5fcfd46aa826d9cd7dcd49b1209aaaa6e4b4ebca6b54",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 4256,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-070/protocol.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-070_protocol"
+   ],
+   "record_sha256": [
+    "629c2c389a1ff06e757f4129a14389773fa7abe1498a340ce5d13658b9e7c9eb"
+   ],
+   "required": true,
+   "source_sha256": "19114b024a7ba7fac9792aeee337c7921dc37d254ef513f6027d0a79ef2c486a",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "bd6f4a07aec526b79caeeed18d31d85e359666e4",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "f29c43a3138e5051764e701334c9a34d7a22cf726585d3919821e8853c33eb1d"
+   },
+   "bytes": 8092,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-070/results.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_070"
+   ],
+   "required": true,
+   "source_sha256": "f29c43a3138e5051764e701334c9a34d7a22cf726585d3919821e8853c33eb1d",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "bd6f4a07aec526b79caeeed18d31d85e359666e4",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "98ba1fd6e18b01237b2ba78e745978bb287a59a15132572e76dc3d039f343486"
+   },
+   "bytes": 17142,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-070/test_matrix.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_070"
+   ],
+   "required": true,
+   "source_sha256": "98ba1fd6e18b01237b2ba78e745978bb287a59a15132572e76dc3d039f343486",
+   "status": "included"
+  },
+  {
+   "action": {
     "unchanged": 1
    },
    "bytes": 4838,
@@ -27133,12 +27265,12 @@
    "status": "included"
   },
   {
-   "bytes": 54099,
+   "bytes": 54121,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "d60f64426e46a79105b5d805f7922bf571c6b954f3857d41e89cb385bbb6093a",
+   "source_sha256": "74bf3879f90c5fab79a866190c31547471a47348debfd2376d4ba87ad820f766",
    "status": "excluded"
   },
   {
@@ -28316,19 +28448,19 @@
   },
   {
    "action": {
-    "added": 1
+    "updated": 1
    },
-   "bytes": 7601,
+   "bytes": 8960,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-070.json",
    "record_ids": [
     "mission__MISSION-070"
    ],
    "record_sha256": [
-    "b5b8c11203a834c26e63b56c0ecf45c48eb0fb3a62f19a95d0fb682ea34cc089"
+    "6383a1f13cbcba884c9d7983b11a123d0dbf2cee5c4b97f234780c0f122821b4"
    ],
    "required": true,
-   "source_sha256": "fd2754f91836d9be51b33a742949b5908637d07257d2190dd71e57515ab59d2c",
+   "source_sha256": "663bc25acd8a21f6a7734afee4aed191ca0b7ca31e45e3ceaf539dee64971a36",
    "status": "included"
   },
   {
@@ -28580,7 +28712,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5895,
    "category": "knowledge_topics_concepts_research",
@@ -29025,7 +29157,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3285,
    "category": "knowledge_topics_concepts_research",
@@ -29059,7 +29191,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3086,
    "category": "knowledge_topics_concepts_research",
@@ -29076,7 +29208,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29096,7 +29228,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 3086,
    "category": "knowledge_topics_concepts_research",
@@ -29113,7 +29245,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29133,7 +29265,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29153,7 +29285,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29173,7 +29305,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29193,7 +29325,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29638,7 +29770,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1524,
    "category": "knowledge_topics_concepts_research",
@@ -29655,7 +29787,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 34160,
    "category": "knowledge_topics_concepts_research",
@@ -29672,7 +29804,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 10982,
    "category": "knowledge_topics_concepts_research",
@@ -38623,6 +38755,15 @@
    "status": "excluded"
   },
   {
+   "bytes": 13942,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/jev_router.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "3d52341d9f58540a7718d283601b7340991bd6ab1d05337e5e777832420d088c",
+   "status": "excluded"
+  },
+  {
    "bytes": 9081,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/learning_debrief.py",
@@ -38665,6 +38806,15 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "9f0ddab5ddd4e729c2778e15347933933e48045fa9da1545072b28d3d8602231",
+   "status": "excluded"
+  },
+  {
+   "bytes": 11105,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/openrouter_client.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "c2727a70baea24f9a34768ba8e970ad12059ed100d810d644ffef70af200f38d",
    "status": "excluded"
   },
   {
@@ -38800,6 +38950,15 @@
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
    "source_sha256": "fa62b5a16e7a0b2ecb3fd6dc929a3110564198e9ca040a60afd0d9f0011623c6",
+   "status": "excluded"
+  },
+  {
+   "bytes": 3571,
+   "category": "skill_code_and_tests",
+   "path": "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/tests/test_jev_router.py",
+   "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
+   "required": false,
+   "source_sha256": "2cbaf17aa8871a9e0b7be2ff612352853808dc00102d138c9478a9ecc9cdadd4",
    "status": "excluded"
   },
   {
@@ -41041,19 +41200,19 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 169,
+    "discovered": 172,
     "excluded": 2,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 167,
+    "included": 170,
     "required": true
    },
    "experiment_supporting_artifacts": {
-    "discovered": 1161,
+    "discovered": 1165,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 1161,
+    "included": 1165,
     "required": true
    },
    "governance_protocols_adrs": {
@@ -41137,8 +41296,8 @@
     "required": false
    },
    "skill_code_and_tests": {
-    "discovered": 135,
-    "excluded": 135,
+    "discovered": 138,
+    "excluded": 138,
     "excluded_sensitive": 0,
     "failed": 0,
     "included": 0,
