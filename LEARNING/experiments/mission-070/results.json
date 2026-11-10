@@ -1,0 +1,279 @@
+{
+  "mission": "MISSION-070",
+  "verdict": "CORROBORATED",
+  "timestamp": "2026-11-10T15:48:27Z",
+  "gates": {
+    "G1_latency_and_tokens": {
+      "pass": true,
+      "mean_latency_ms": 0.252,
+      "tokens_consumed": 0
+    },
+    "G2_arch_misclassification": {
+      "pass": true,
+      "misclass_rate_pct": 0.0
+    },
+    "G3_micro_tier_pass_rate": {
+      "pass": true,
+      "pass_rate_pct": 90.0
+    },
+    "G4_storage_and_budget": {
+      "pass": true,
+      "storage_mb_added": 0.0,
+      "cumulative_spend_usd": 0.000285
+    }
+  },
+  "metrics": {
+    "total_tasks": 50,
+    "routing_tokens": 0,
+    "mean_latency_ms": 0.252,
+    "p95_latency_ms": 0.64,
+    "overall_accuracy_pct": 100.0,
+    "frontier_quota_shielding_pct": 100.0,
+    "category_accuracy": {
+      "MECHANICAL": 100.0,
+      "CODING": 100.0,
+      "TRIAGE": 100.0,
+      "ARCHITECTURAL": 100.0
+    }
+  },
+  "live_execution": {
+    "tasks_tested": 10,
+    "tasks_passed": 9,
+    "pass_rate_pct": 90.0,
+    "total_cost_usd": 8.77e-05,
+    "results": [
+      {
+        "id": "LIVE-001",
+        "task_ref": "TASK-001",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 8.4e-06,
+        "latency_s": 0.575,
+        "prompt_tokens": 102,
+        "completion_tokens": 22,
+        "validated_pass": true,
+        "output_snippet": "| Name | Role | |------|------| | Alice | Admin | | Bob  | User |"
+      },
+      {
+        "id": "LIVE-002",
+        "task_ref": "TASK-002",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 8.2e-06,
+        "latency_s": 0.382,
+        "prompt_tokens": 107,
+        "completion_tokens": 19,
+        "validated_pass": true,
+        "output_snippet": "{\"a\":1, \"b\": 2, \"c\": 3}"
+      },
+      {
+        "id": "LIVE-003",
+        "task_ref": "TASK-003",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 6.75e-06,
+        "latency_s": 0.427,
+        "prompt_tokens": 102,
+        "completion_tokens": 11,
+        "validated_pass": true,
+        "output_snippet": "# Copyright (c) 2026 Project Sanctuary"
+      },
+      {
+        "id": "LIVE-004",
+        "task_ref": "TASK-006",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 7.35e-06,
+        "latency_s": 0.258,
+        "prompt_tokens": 84,
+        "completion_tokens": 21,
+        "validated_pass": true,
+        "output_snippet": "`[\"anti-asch\", \"budget\", \"jepa\", \"macro-moe\"]`"
+      },
+      {
+        "id": "LIVE-005",
+        "task_ref": "TASK-007",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 7.35e-06,
+        "latency_s": 0.255,
+        "prompt_tokens": 99,
+        "completion_tokens": 16,
+        "validated_pass": true,
+        "output_snippet": "1. Checkout worktree 2. Run tests 3. Merge PR"
+      },
+      {
+        "id": "LIVE-006",
+        "task_ref": "TASK-011",
+        "model": "qwen/qwen3-coder-30b-a3b-instruct",
+        "status": "OK",
+        "cost_usd": 1.935e-05,
+        "latency_s": 0.373,
+        "prompt_tokens": 81,
+        "completion_tokens": 12,
+        "validated_pass": true,
+        "output_snippet": "received_bytes = socket.recv(1024)"
+      },
+      {
+        "id": "LIVE-007",
+        "task_ref": "TASK-012",
+        "model": "qwen/qwen3-coder-30b-a3b-instruct",
+        "status": "OK",
+        "cost_usd": 1.56e-05,
+        "latency_s": 0.847,
+        "prompt_tokens": 76,
+        "completion_tokens": 7,
+        "validated_pass": true,
+        "output_snippet": "def read_text(path: str):"
+      },
+      {
+        "id": "LIVE-008",
+        "task_ref": "TASK-016",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 4.3e-06,
+        "latency_s": 0.215,
+        "prompt_tokens": 77,
+        "completion_tokens": 3,
+        "validated_pass": false,
+        "output_snippet": "--- ---"
+      },
+      {
+        "id": "LIVE-009",
+        "task_ref": "TASK-018",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 5.05e-06,
+        "latency_s": 0.288,
+        "prompt_tokens": 92,
+        "completion_tokens": 3,
+        "validated_pass": true,
+        "output_snippet": "```python"
+      },
+      {
+        "id": "LIVE-010",
+        "task_ref": "TASK-020",
+        "model": "meta-llama/llama-3.2-3b-instruct",
+        "status": "OK",
+        "cost_usd": 5.35e-06,
+        "latency_s": 0.259,
+        "prompt_tokens": 77,
+        "completion_tokens": 10,
+        "validated_pass": true,
+        "output_snippet": "{\"priority_score\": 40.0}"
+      }
+    ]
+  },
+  "routing_sample": [
+    {
+      "task_id": "TASK-001",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.149,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-002",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.136,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-003",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.135,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-004",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.139,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-005",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-1b-instruct",
+      "complexity_class": "GENERAL_TRIAGE",
+      "latency_ms": 0.136,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-006",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.124,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-007",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.125,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-008",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.133,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-009",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.127,
+      "tokens_consumed": 0,
+      "is_match": true
+    },
+    {
+      "task_id": "TASK-010",
+      "category": "MECHANICAL",
+      "expected_tier": "TIER_1_MICRO",
+      "routed_tier": "TIER_1_MICRO",
+      "recommended_model": "meta-llama/llama-3.2-3b-instruct",
+      "complexity_class": "MECHANICAL_CHORE",
+      "latency_ms": 0.127,
+      "tokens_consumed": 0,
+      "is_match": true
+    }
+  ]
+}
