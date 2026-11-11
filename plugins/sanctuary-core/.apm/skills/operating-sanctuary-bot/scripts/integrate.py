@@ -10,7 +10,8 @@ Purpose:
     The deny list is hard-coded here and cannot be overridden by a definition: mission manifests
     and backlog files, governance files, plugins, the soul dataset, and any code file by
     extension (even inside an allowed folder). Auto-merge globs must sit under LEARNING/research/.
-    The bot never syncs Hugging Face; that stays in session closeout.
+    Remote preservation is opt-in via the hash-approved preserve_remote flag. Its separate
+    lifecycle path publishes only fixed generated exports and receipts, never arbitrary sources.
 
 Usage:
     Called by automations.Scheduler after a COMPLETED run whose definition has an `integrate` block:
@@ -68,6 +69,8 @@ def validate_integrate(block: dict | None) -> list[str]:
     if not block:
         return []
     errs = []
+    if "preserve_remote" in block and not isinstance(block["preserve_remote"], bool):
+        errs.append("integrate.preserve_remote must be a boolean")
     paths = block.get("auto_merge_paths", [])
     if not isinstance(paths, list):
         return ["integrate.auto_merge_paths must be a list of globs"]
@@ -214,7 +217,7 @@ def _sync_with_base(wt: str, base: str) -> str | None:
 
 
 # Finish delivery without switching or overwriting an occupied checkout.
-def finish_delivery(worktree: str, base: str, forge: Forge) -> dict:
+def finish_delivery(worktree: str, base: str, forge: Forge, preserve_remote: bool = False) -> dict:
     """Verify workflows, fast-forward clean local base, and run supported regeneration.
 
     Returns:
@@ -231,14 +234,19 @@ def finish_delivery(worktree: str, base: str, forge: Forge) -> dict:
         return {**result, "reason": "cannot locate primary checkout"}
     primary = Path(common).parent
     result["checkout"] = str(primary)
-    result["ci"]["source"] = forge.workflow_state(revision)
+    if preserve_remote:
+        from preserve import wait_state
+        result["ci"]["source"] = wait_state(lambda: forge.workflow_state(revision))
+    else:
+        result["ci"]["source"] = forge.workflow_state(revision)
     companion = primary.parent / "agent-plugins-skills"
     if companion.exists():
         code, out = _git(str(companion), "fetch", "-q", "origin", "main")
         if code:
             return {**result, "reason": "companion fetch failed: " + out[-200:]}
         companion_revision = _git(str(companion), "rev-parse", "origin/main")[1]
-        result["ci"]["companion"] = forge.workflow_state(companion_revision, "richfrem/agent-plugins-skills")
+        probe = lambda: forge.workflow_state(companion_revision, "richfrem/agent-plugins-skills")
+        result["ci"]["companion"] = wait_state(probe) if preserve_remote else probe()
     else:
         result["ci"]["companion"] = "unverified"
     if any(state not in ("pass", "none") for state in result["ci"].values()):
@@ -266,6 +274,9 @@ def finish_delivery(worktree: str, base: str, forge: Forge) -> dict:
     result["regeneration"] = {"exit_code": proc.returncode, "output": (proc.stdout + proc.stderr)[-4000:]}
     if proc.returncode:
         return {**result, "reason": "post-merge regeneration failed; inspect regeneration evidence"}
+    if preserve_remote:
+        from preserve import preserve
+        return {**result, **preserve(worktree, str(primary), base, forge)}
     changes = _git(worktree, "status", "--porcelain")[1]
     if changes:
         return {**result, "reason": "local checkout synchronized; regeneration produced changes requiring a scoped follow-up PR",
@@ -290,6 +301,17 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
     base = block.get("base", "main")
     forge = forge or Forge(worktree)
     res = {"complete": False, "stage": "sync", "pr": None, "merged": False, "reason": "", "files": []}
+    if block.get("preserve_remote") is True:
+        from preserve import LIFECYCLE, changed_paths, preserve
+        code, common = _git(worktree, "rev-parse", "--path-format=absolute", "--git-common-dir")
+        if code:
+            return {**res, "reason": "cannot locate primary checkout for preservation"}
+        dirty = changed_paths(worktree)
+        ahead = set(_git(worktree, "diff", "--name-only", f"origin/{base}...HEAD")[1].splitlines())
+        if (dirty or ahead) and (dirty | ahead) <= LIFECYCLE:
+            if _git(worktree, "fetch", "-q", "origin", base)[0]:
+                return {**res, "reason": "preservation resume fetch failed"}
+            return {**res, **preserve(worktree, str(Path(common).parent), base, forge)}
     err = _sync_with_base(worktree, base)
     if err:
         return {**res, "reason": err}
@@ -297,7 +319,7 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
     files = [f for f in _git(worktree, "diff", "--name-only", f"origin/{base}...HEAD")[1].splitlines() if f]
     res.update(stage="push", files=files)
     if not files:
-        return {**res, **finish_delivery(worktree, base, forge)}
+        return {**res, **finish_delivery(worktree, base, forge, block.get("preserve_remote") is True)}
     code, out = _git(worktree, "push", "-q", "-u", "origin", branch)
     if code != 0:
         return {**res, "reason": "push failed: " + out[-200:]}
@@ -315,4 +337,4 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
         return {**res, "reason": f"PR checks {checks}: left open"}
     if not forge.merge(pr):
         return {**res, "reason": "merge failed: left open"}
-    return {**res, "merged": True, **finish_delivery(worktree, base, forge)}
+    return {**res, "merged": True, **finish_delivery(worktree, base, forge, block.get("preserve_remote") is True)}

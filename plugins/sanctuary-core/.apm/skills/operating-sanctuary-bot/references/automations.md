@@ -3,7 +3,7 @@
 A definition is `<definitions_dir>/<name>.json` (default `.agent/automations/`, set by `bot.py setup`). The file name equals `name`.
 
 ## Contents
-- [Definition](#definition) • [Schedules](#schedules) • [Approval](#approval) • [Runs, memory and results](#runs-memory-and-results) • [Pausing](#pausing) • [Machine-local state](#machine-local-state)
+- [Definition](#definition) • [Schedules](#schedules) • [Approval](#approval) • [Runs, memory and results](#runs-memory-and-results) • [Remote preservation](#remote-preservation) • [Pausing](#pausing) • [Machine-local state](#machine-local-state)
 
 ## Definition
 | Field | Meaning |
@@ -17,7 +17,7 @@ A definition is `<definitions_dir>/<name>.json` (default `.agent/automations/`, 
 | `rails` | Per-run limits (see campaign-manifest.md). |
 | `pause_after_failed_runs` | Default 3. |
 | `mission_id` | Optional default mission id for the run's jobs. |
-| `integrate` | Optional: `{"base": "main", "auto_merge_paths": ["LEARNING/research/<dossier>/**"]}`, see Integration. |
+| `integrate` | Optional: `{"base": "main", "auto_merge_paths": ["LEARNING/research/<dossier>/**"], "preserve_remote": false}`, see Integration. |
 
 `bot.py validate <name>` checks all of it, including that the worktree exists and the engine is allowed.
 
@@ -43,7 +43,21 @@ No-change runs also perform steps 4–6, recovering already merged artifacts mis
 
 The arXiv pipeline retains its digest → abstract-based relevance/impact/improvement analysis → future-mission seeds → save sequence. Seeds remain unreviewed candidates; the bot does not register or execute those missions.
 
-The deny list is part of the bot (`scripts/integrate.py`) and a definition cannot override it: mission manifests and backlog files (`LEARNING/missions/**`, `index.jsonl`, `backlog.md`, `inbox.jsonl`), governance (`.agent/**`, `protocols/**`, `context/**`, AGENTS/CLAUDE/START_HERE/INSTALL/architecture, `apm.*`), `plugins/**`, `huggingface/**`, `.github/**`, and **any code file by extension**, even inside an allowed folder. `auto_merge_paths` must name a dossier under `LEARNING/research/`. Anything else stays an open PR for human review, and the inbox says why. The bot never syncs Hugging Face: that stays in session closeout.
+The deny list is part of the bot (`scripts/integrate.py`) and a definition cannot override it: mission manifests and backlog files (`LEARNING/missions/**`, `index.jsonl`, `backlog.md`, `inbox.jsonl`), governance (`.agent/**`, `protocols/**`, `context/**`, AGENTS/CLAUDE/START_HERE/INSTALL/architecture, `apm.*`), `plugins/**`, `huggingface/**`, `.github/**`, and **any code file by extension**, even inside an allowed folder. `auto_merge_paths` must name a dossier under `LEARNING/research/`. Anything else stays an open PR for human review, and the inbox says why. The explicit preservation opt-in below adds a separate fixed-file lifecycle; it does not broaden this research-data allowlist.
+
+## Remote preservation
+
+Richard authorized full arXiv closeout, including Hugging Face, on 2026-11-11. Its definition sets `integrate.preserve_remote: true`. The flag must be boolean and is part of the content-hash approval. Recheck approval immediately before integration so a mid-run definition edit cannot enable new remote actions.
+
+After source merge, CI and local synchronization, `preserve.py` completes:
+
+1. Supported regeneration and local schema/coverage/currency validation.
+2. A separate generated-export PR, merge, post-merge workflow verification and local fast-forward.
+3. Installed `managing-huggingface-assets` credential validation and the existing `sync_soul_dataset.py` with the runtime dataset path and primary environment. No copied credentials, custom transport, partial-upload flag or silent fallback.
+4. Four-fact checking and a separate receipt PR, merge, workflow verification and local synchronization. No new check-in or watched learning source is added after capture.
+5. Completion only when the published receipt verifies both actual current local/remote hashes. An unchanged already-verified export skips another upload.
+
+This lifecycle's generated-file exception is an exact code-defined set: the three dataset/manifest files, generated mission index/backlog, Chronicle/cognitive ledgers and the sync-receipt JSONL. Any source or unexpected file refuses publication. The source-run allowlist continues denying code, missions and governance. Checks wait at most 180 seconds per stage; commands have 300-second timeouts. Failures preserve files/commits and record PARTIAL; a later invocation can resume a lifecycle-only pending branch. A dirty or occupied primary checkout remains untouched. The persistent automation runtime worktree is retained for its next scheduled run.
 
 ## Pausing
 `bot.py pause|resume <name>`. The bot pauses an automation itself after `pause_after_failed_runs` non-COMPLETED runs in a row; `resume` clears the count.
