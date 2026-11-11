@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-06T18:43:18.793081+00:00",
-  "total_tokens_consumed": 9825632,
-  "total_turns": 36,
+  "updated_at": "2026-11-11T17:59:48.271866+00:00",
+  "total_tokens_consumed": 9833961,
+  "total_turns": 37,
   "tasks": {
     "task-automaton-review": {
       "tokens_consumed": 55658,
@@ -183,9 +183,32 @@
       "turns": 1,
       "last_backend": "codex",
       "last_model": "default"
+    },
+    "MISSION-062-OPENROUTER-CODER": {
+      "tokens_consumed": 8329,
+      "turns": 1,
+      "last_backend": "openrouter",
+      "last_model": "qwen/qwen3-coder-30b-a3b-instruct"
     }
   },
   "recent_records": [
+    {
+      "record_id": "d0c5ea06-6528-4009-91d5-92c00c1291ce",
+      "timestamp": "2026-11-11T17:59:48.271866+00:00",
+      "task_id": "MISSION-062-OPENROUTER-CODER",
+      "backend": "openrouter",
+      "model": "qwen/qwen3-coder-30b-a3b-instruct",
+      "tokens_est": 8329,
+      "turns": 1,
+      "summary": "Three drafts through installed cli-agent; all required rejection/correction. Supervisor repaired one recurrence line before frozen deterministic evaluation. Parent tokens unknown.",
+      "source": "measured",
+      "task_class": "code",
+      "outcome": "partial",
+      "tokens_in": 4284,
+      "tokens_out": 4045,
+      "cost_usd": 0.0030696,
+      "retries": 2
+    },
     {
       "record_id": "df70f2ed-43f8-4546-8083-d4dc254ef2c1",
       "timestamp": "2026-11-06T18:43:18.793081+00:00",
@@ -1800,16 +1823,6 @@
       "wall_seconds": 1224,
       "retries": 0,
       "quality": 3
-    },
-    {
-      "record_id": "e1a22820-77d8-4f32-93a6-e9a318668375",
-      "timestamp": "2026-11-03T03:14:55.833725+00:00",
-      "task_id": "task-opus-astra-missions-eval",
-      "backend": "claude",
-      "model": "claude-opus",
-      "tokens_est": 4500,
-      "turns": 1,
-      "summary": "Claude Opus evaluation and peer review of Astra 10 sovereign research missions"
     }
   ]
 }

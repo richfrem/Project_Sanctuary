@@ -1,11 +1,11 @@
 {
   "id": "MISSION-062",
   "title": "Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Additive combinatorics: sizes of h-fold sumsets of 3-element subsets of {1,...,q} (exhaustive counting by local deterministic computation; bounded CPU)",
   "created_at": "2026-11-07T05:20:00Z",
-  "updated_at": "2026-11-07T05:20:00Z",
+  "updated_at": "2026-11-11T18:02:01.857473+00:00",
   "confidence_reviewed": "2026-11-07",
   "hypothesis": "For k = 3 and every h in {5,...,16}, at every q in [3h, 250] the h most frequent values of |hA| over the 3-element subsets A of {1,...,q} are exactly P_0,...,P_(h-1), where P_l = C(h+2,2) - C(l+1,2), each occurring for strictly more sets than every other size. Equivalently, the empirical threshold q0(h,3) is at most 3h in this range, far below the h^5 scaling that the proof of Corollary 4.1 in arXiv:2611.07303 requires.",
   "falsification_criteria": "FALSIFIED if any (h,q) with h in {5,...,16} and 3h <= q <= 250 fails the ok-test (some P_l has f_q(P_l) = 0 or f_q(P_l) <= the maximum f_q over all unlisted sizes; a tie counts as failure), after the failing cell is recomputed by the independent reference implementation. UNASSESSED, neither corroborated nor falsified, if the validity gate fails (reproduce the paper's published threshold cells (h,k) = (3,3)->5, (4,3)->6, (2,4)->8, (3,4)->16 with failures at q = 4, 5, 7, 15; exact agreement between the fast and the reference implementation for every h <= 6, q <= 40; |hE| = 2h+1 for E = {1,2,3}, h >= 2) or if the budget is exhausted before the whole region is covered. The constant 3, the h range, the q bound 250, the ok-test and the budget are fixed in protocol.md and committed before the held-out run and are not changed afterwards. Results for h <= 4 and the k = 4 cells are calibration, not primary evidence; secondary tables cannot rescue a failed primary claim. No claim is made for q > 250, h > 16, k != 3, or asymptotic truth, and a corroboration is evidence about a finite range, not a proof. The cited paper's claims are context, not evidence for this hypothesis.",
@@ -105,14 +105,15 @@
   ],
   "model_routing": {
     "cheapest_viable_tier": "cheap",
-    "recommended_model": "claude-haiku-5.5",
+    "recommended_model": "qwen/qwen3-coder-30b-a3b-instruct",
     "cost_weight": 0.1,
-    "cli_target": "claude",
+    "cli_target": "installed-cli-agent/openrouter_client.py",
     "fallback_models": [
+      "claude-haiku-5.5",
       "qwen2-7b-mlx-4bit"
     ],
     "frontier_escalation_condition": "None: the computation is deterministic code with no model calls. Model assistance is limited to writing and reviewing the implementation and interpreting results.",
-    "routing_guidance": "Python/NumPy or a small C program for all counting. Budget: max 40000 additional model tokens, at most 1 wall-hour of experiment compute. If the projection exceeds the budget after the validity gate, checkpoint and report UNASSESSED rather than silently reducing the held-out region. Resolve actual supported model identifiers against the installed CLIs before any model call."
+    "routing_guidance": "Executed under Richard\u2019s 2026-11-11 instruction through installed cli-agent OpenRouter client with fallback disabled. JEV recommendation was advisory and overridden by supervisor for a live-priced coding specialist. Model drafts required rejection/correction; independent deterministic instruments provide the empirical result. API tokens/cost recorded; parent total unverified."
   },
   "projected_impact": {
     "paths": [
@@ -120,7 +121,9 @@
       "LEARNING/experiments/mission-062/",
       "LEARNING/missions/MISSION-056.json",
       "LEARNING/missions/MISSION-057.json",
-      "LEARNING/missions/MISSION-060.json"
+      "LEARNING/missions/MISSION-060.json",
+      ".agent/learning/budget_ledger.json",
+      "LEARNING/inbox.jsonl"
     ],
     "resources": [
       "bounded local CPU (8 cores, about 2 CPU-hours), at most 4 GiB RAM, no network at execution"
@@ -129,13 +132,14 @@
       "LEARNING/index.jsonl",
       "LEARNING/backlog.md"
     ],
-    "basis": "Prospective execution impact is confined to LEARNING/experiments/mission-062/ (scripts, protocol, results). No skill, evaluator or shared code is changed. Registration itself changes only the manifest, justified reciprocal links, the design note and generated views."
+    "basis": "Prospective execution impact is confined to LEARNING/experiments/mission-062/ (scripts, protocol, results). No skill, evaluator or shared code is changed. Registration itself changes only the manifest, justified reciprocal links, the design note and generated views. Execution closeout also records measured worker usage in the existing budget ledger and the required unstarted follow-up in the existing inbox; both explicitly declared after verification surfaced the omission."
   },
   "related_missions": {
     "MISSION-056": "FOLLOWS (practice, soft): reuses this resolved curiosity mission's exact-computation practice, protocol.md and freeze.json, development versus held-out split, and the rule that an invalid instrument is UNASSESSED; and its lesson to sequence the freeze commit before the scoring command.",
     "MISSION-057": "FOLLOWS (practice, soft): reuses the lesson to compare against an established baseline (here the paper's proved region and published threshold table), not a naive value, and the rule that secondary tables cannot rescue a failed primary claim.",
     "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an own-choice, interest-driven registration with value, interest and readiness recorded separately (priority formula 30.0 despite strategic leverage 2). One prospective observation for 060; it neither supports nor tests 060's hypothesis.",
-    "MISSION-063": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent evaluators and pre-registered validity gates. No code or data dependency."
+    "MISSION-063": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent evaluators and pre-registered validity gates. No code or data dependency.",
+    "MISSION-071": "CONSUMES: installed OpenRouter dispatch path; its smoke evidence is not evidence of routing accuracy or coding competence."
   },
   "tags": [
     "additive-combinatorics",
@@ -147,7 +151,37 @@
     "exact-computation",
     "registered-2026-11-07"
   ],
-  "verdict": null,
-  "evidence": [],
-  "lessons_learned": []
+  "verdict": "CORROBORATED",
+  "evidence": [
+    {
+      "timestamp": "2026-11-11T18:02:01.857473+00:00",
+      "agent": "codex",
+      "citation": "LEARNING/experiments/mission-062/README.md",
+      "details": "Frozen commit f7bc7c4e5 preceded execution. Validity:375 independent histogram cells and 4 published calibration thresholds pass. Primary:2634/2634 strict-dominance cells pass within k3,h5..16,q3h..250. Frozen run3.762s; finite evidence only. Worker3drafts required supervisor correction; total parent-token accounting unverified."
+    }
+  ],
+  "lessons_learned": [
+    "Observed finite k3 threshold h+2 for h2..16 through q250; not a theorem.",
+    "Cheap model calls are not autonomous correctness: all three drafts required rejection or supervisor repair before freeze.",
+    "Use conservation laws and an independent algorithm to validate optimized counters; disclose repair and total-cost telemetry gaps."
+  ],
+  "assignee": "codex",
+  "worktree": ".worktrees/codex-mission-062",
+  "run_assessment": {
+    "primary_cells": 2634,
+    "validity_passed": true,
+    "freeze_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "worker_autonomous_delivery": false,
+    "worker_tokens": 8329,
+    "worker_client_priced_usd": 0.0030696,
+    "parent_tokens": null,
+    "total_token_budget_compliance": "unverified; incomplete parent attribution",
+    "limits": "Finite k=3,h=5..16,q=3h..250 only; no asymptotic proof.",
+    "followup_inbox": "SEED-20261111-e6ca6c"
+  },
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-11T18:02:01.857473+00:00",
+    "workflow": "soul_coverage.py closure"
+  }
 }

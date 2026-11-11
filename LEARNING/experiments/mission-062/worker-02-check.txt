@@ -1,0 +1,2 @@
+Rejected before freeze. Loops allow max gap equal to QMAX, but sumset storage ends at H*(QMAX-1), causing out-of-bounds writes. Also parse bounds must precede narrowing cast.
+Sanitizer exit: -15

@@ -1,0 +1,92 @@
+{
+  "source": "https://openrouter.ai/api/v1/models",
+  "checked_utc": "2026-11-11",
+  "selected": {
+    "id": "qwen/qwen3-coder-30b-a3b-instruct",
+    "canonical_slug": "qwen/qwen3-coder-30b-a3b-instruct",
+    "hugging_face_id": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+    "name": "Qwen: Qwen3 Coder 30B A3B Instruct",
+    "created": 1753972379,
+    "description": "Qwen3-Coder-30B-A3B-Instruct is a 30.5B parameter Mixture-of-Experts (MoE) model with 128 experts (8 active per forward pass), designed for advanced code generation, repository-scale understanding, and agentic tool use. Built on the...",
+    "context_length": 262144,
+    "architecture": {
+      "modality": "text->text",
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "tokenizer": "Qwen3",
+      "instruct_type": null
+    },
+    "pricing": {
+      "prompt": "0.00000015",
+      "completion": "0.0000006"
+    },
+    "top_provider": {
+      "context_length": 262144,
+      "max_completion_tokens": 235929,
+      "is_moderated": true
+    },
+    "per_request_limits": null,
+    "supported_parameters": [
+      "frequency_penalty",
+      "max_tokens",
+      "response_format",
+      "stop",
+      "structured_outputs",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_k",
+      "top_p"
+    ],
+    "default_parameters": {},
+    "supported_voices": null,
+    "knowledge_cutoff": "2025-06-30",
+    "expiration_date": null,
+    "links": {
+      "details": "/api/v1/models/qwen/qwen3-coder-30b-a3b-instruct/endpoints"
+    },
+    "endpoints": [
+      "/api/v1/chat/completions",
+      "/api/v1/completions",
+      "/api/v1/messages",
+      "/api/v1/responses"
+    ],
+    "benchmarks": {
+      "design_arena": [
+        {
+          "arena": "models",
+          "category": "dataviz",
+          "elo": 1085,
+          "win_rate": 54.7,
+          "rank": 107
+        },
+        {
+          "arena": "models",
+          "category": "uicomponent",
+          "elo": 1041,
+          "win_rate": 54.1,
+          "rank": 113
+        },
+        {
+          "arena": "models",
+          "category": "website",
+          "elo": 1083,
+          "win_rate": 57.1,
+          "rank": 116
+        }
+      ]
+    }
+  },
+  "jev": {
+    "tier": "TIER_1_MICRO",
+    "model": "meta-llama/llama-3.2-3b-instruct",
+    "confidence": 0.022,
+    "latency_ms": 0.202
+  },
+  "override": "coding-specialist selection; low routing score is not competence evidence",
+  "environment_failure": "worktree default Python 3.13 certificate verification failed on metadata fetch; recovered with Homebrew Python without disabling TLS"
+}

@@ -1,0 +1,46 @@
+{
+  "attempts": [
+    {
+      "model": "qwen/qwen3-coder-30b-a3b-instruct",
+      "prompt_tokens": 456,
+      "completion_tokens": 1030,
+      "cost_usd": 0.0006864,
+      "latency_s": 1.818,
+      "fallback_triggered": false,
+      "status": "OK"
+    },
+    {
+      "model": "qwen/qwen3-coder-30b-a3b-instruct",
+      "prompt_tokens": 1683,
+      "completion_tokens": 1508,
+      "cost_usd": 0.00115725,
+      "latency_s": 1.441,
+      "fallback_triggered": false,
+      "status": "OK"
+    },
+    {
+      "model": "qwen/qwen3-coder-30b-a3b-instruct",
+      "prompt_tokens": 2145,
+      "completion_tokens": 1507,
+      "cost_usd": 0.00122595,
+      "latency_s": 1.174,
+      "fallback_triggered": false,
+      "status": "OK"
+    }
+  ],
+  "total_input_tokens": 4284,
+  "total_output_tokens": 4045,
+  "total_worker_tokens": 8329,
+  "total_client_priced_usd": 0.0030696,
+  "billing_basis": "API-reported tokens priced by installed client catalog; matches live selected-model rates; vendor invoice not independently audited",
+  "parent_tokens": null,
+  "parent_token_coverage": "unknown; bot and mission work interleaved in same parent session, no invented allocation",
+  "mission_token_ceiling": 40000,
+  "no_local_or_frontier_fallback": true,
+  "worker_delivered_without_supervisor_fix": false,
+  "supervisor_algorithm_corrections": 1,
+  "human_intervention_coverage": "partial; user authorized mission/model/orchestration, no observed mission implementation correction by user",
+  "lessons_retrieval_timing": "Generic lesson search was performed after dispatch, not before; returned no matches. Do not claim lesson-guided dispatch.",
+  "worker_output_ceiling": 16000,
+  "total_mission_token_budget_compliance": "not independently verified: parent tokens unattributed"
+}

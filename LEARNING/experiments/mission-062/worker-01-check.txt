@@ -1,0 +1,9 @@
+Rejected before experiments: contract requires all q histograms and normalized shapes computed once. Output returns only QMAX, recomputes shapes repeatedly, uses atoi and contains unused locals.
+Compile exit: 1
+LEARNING/experiments/mission-062/worker-01-proposal.c:45:25: error: unused variable 'max_size' [-Werror,-Wunused-variable]
+   45 |                     int max_size = binomial_coefficient(H + 2, 2);
+      |                         ^~~~~~~~
+LEARNING/experiments/mission-062/worker-01-proposal.c:71:29: error: unused variable 'max_size' [-Werror,-Wunused-variable]
+   71 |                         int max_size = binomial_coefficient(H + 3, 3);
+      |                             ^~~~~~~~
+2 errors generated.

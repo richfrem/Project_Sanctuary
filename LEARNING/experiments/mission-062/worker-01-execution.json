@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "elapsed_s": 24.4402761249803,
+  "model": "qwen/qwen3-coder-30b-a3b-instruct",
+  "fallback_permitted": false
+}
