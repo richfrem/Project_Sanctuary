@@ -91,3 +91,9 @@ End with:
 “Recommendation only. No mission execution started.”
 
 Do not repeat the bootstrap report or end after listing scores without making a recommendation.
+
+## Closing reminders (include these in the report, just before the final line "Recommendation only. No mission execution started.", which stays last)
+
+1. **Plain-language summary.** Add two or three everyday-language sentences: which mission you recommend and why, without IDs or jargon.
+2. **Relevance to Sanctuary.** Say whether anything you noticed (for example, stale scores, unclear readiness fields or a missing tool) could improve Sanctuary's selection process or related workflows. Give evidence, or say "None identified." Do not act on it.
+3. **Git and workspace housekeeping.** This task is read-only, so none of these should be needed: commit, push, pull request, merge, checkout `main`, pull `origin main`, delete a branch, remove a worktree. If you created or changed anything anyway, say so, stop, and ask me before taking any of those steps.
