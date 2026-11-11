@@ -381,3 +381,69 @@ class TestAgyJsonUsage(unittest.TestCase):
         self.assertIsNone(up.parse_agy_json_usage("plain text answer"))
         self.assertIsNone(up.parse_agy_json_usage('{"status":"ERROR"}'))
         self.assertIsNone(up.parse_agy_json_usage(""))
+
+
+class TestOpenRouterLedger(unittest.TestCase):
+    """OpenRouter has no free usage probe; the zero-token source is the cli-agent spend ledger."""
+
+    def _ledger(self, d, **fields):
+        p = Path(d) / "ledger.json"
+        p.write_text(json.dumps(fields), encoding="utf-8")
+        return str(p)
+
+    def test_reads_spend_and_cap_from_ledger(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = up.read_openrouter_ledger(self._ledger(d, cumulative_spend_usd=2.5, hard_cap_usd=10.0, last_updated="t"))
+        self.assertEqual((r["status"], r["spend_usd"], r["cap_usd"], r["remaining_pct"]), ("ok", 2.5, 10.0, 75.0))
+
+    def test_explicit_cap_and_env_cap_precedence(self):
+        import os
+        with tempfile.TemporaryDirectory() as d:
+            p = self._ledger(d, cumulative_spend_usd=1.0, hard_cap_usd=10.0)
+            self.assertEqual(up.read_openrouter_ledger(p, cap_usd=4.0)["remaining_pct"], 75.0)
+            old = os.environ.get("OPENROUTER_MONTHLY_CAP_USD")
+            os.environ["OPENROUTER_MONTHLY_CAP_USD"] = "20"
+            try:
+                self.assertEqual(up.read_openrouter_ledger(p)["cap_usd"], 20.0)
+            finally:
+                if old is None:
+                    del os.environ["OPENROUTER_MONTHLY_CAP_USD"]
+                else:
+                    os.environ["OPENROUTER_MONTHLY_CAP_USD"] = old
+
+    def test_overspend_clamps_to_zero_and_bad_cap_uses_default(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = up.read_openrouter_ledger(self._ledger(d, cumulative_spend_usd=12.0, hard_cap_usd=-1))
+        self.assertEqual((r["cap_usd"], r["remaining_pct"]), (10.0, 0.0))
+
+    def test_missing_or_corrupt_ledger_is_unavailable_not_a_crash(self):
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(up.read_openrouter_ledger(str(Path(d) / "nope.json"))["status"], "unavailable")
+            bad = Path(d) / "bad.json"
+            bad.write_text("{not json", encoding="utf-8")
+            self.assertEqual(up.read_openrouter_ledger(str(bad))["status"], "unavailable")
+            self.assertEqual(up.read_openrouter_ledger(self._ledger(d, other=1))["status"], "unavailable")
+
+    def test_remaining_pct_and_headroom_flag_constrained(self):
+        data = {"status": "ok", "remaining_pct": 8.0}
+        self.assertEqual(up._remaining_pct(data, "openrouter"), 8.0)
+        self.assertIsNone(up._remaining_pct({"status": "unavailable"}, "openrouter"))
+        rep = up.headroom_report({"backends": {"openrouter": data}}, floor=15.0)
+        self.assertTrue(rep[0]["constrained"])
+
+    def test_snapshot_wrapper_adds_openrouter_and_keeps_requested_order(self):
+        import os
+        with tempfile.TemporaryDirectory() as d:
+            old = os.environ.get("OPENROUTER_SPEND_LEDGER")
+            os.environ["OPENROUTER_SPEND_LEDGER"] = self._ledger(d, cumulative_spend_usd=1.0, hard_cap_usd=10.0)
+            try:
+                snap = up.snapshot(["openrouter"])
+                self.assertEqual(list(snap["backends"]), ["openrouter"])
+                self.assertEqual(snap["backends"]["openrouter"]["remaining_pct"], 90.0)
+                snap2 = up.snapshot(["local", "openrouter"])
+                self.assertEqual(list(snap2["backends"]), ["local", "openrouter"])
+            finally:
+                if old is None:
+                    del os.environ["OPENROUTER_SPEND_LEDGER"]
+                else:
+                    os.environ["OPENROUTER_SPEND_LEDGER"] = old
