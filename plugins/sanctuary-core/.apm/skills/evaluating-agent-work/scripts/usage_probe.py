@@ -15,7 +15,7 @@ Key outputs: snapshot/diff JSON; BUDGET_CONSUMED events (via track_budget.py); r
 Safety: reads named usage fields only; never opens auth files; every emitted record passes
     assert_no_secrets(). Probes never send a prompt to a model (a prompt would spend tokens).
 Usage:
-    python3 usage_probe.py snapshot [--backends claude,agy,codex] [--out FILE]
+    python3 usage_probe.py snapshot [--backends claude,agy,codex[,openrouter]] [--out FILE]
     python3 usage_probe.py diff BEFORE.json AFTER.json
     python3 usage_probe.py headroom [--floor 15]
     python3 usage_probe.py recommend --task-class CLASS [--floor 15]
@@ -46,6 +46,49 @@ from usage_measure import (SECRET_PATTERNS, CATALOG_DIRS, assert_no_secrets, par
 
 STATIC_CEILINGS = {"claude": 60000, "codex": 80000, "agy": 150000, "local": 80000}
 DEFAULT_FLOOR_PCT = 15.0
+
+# OpenRouter has no usage API we may probe for free, so the zero-token source is the local spend ledger kept by the
+# cli-agent skill's openrouter_client.py (same env overrides and defaults). It shows spend against the hard monthly cap
+# (OPENROUTER_MONTHLY_CAP_USD, else the ledger's hard_cap_usd, else 10.0). It is NOT the account balance of a
+# subscription or credit purchase, and it only counts calls made through that client.
+OPENROUTER_DEFAULT_LEDGER = "~/.agent/coordination/openrouter_spend.json"
+OPENROUTER_DEFAULT_CAP_USD = 10.0
+
+
+def read_openrouter_ledger(path: Optional[str] = None, cap_usd: Optional[float] = None) -> Dict[str, Any]:
+    """Zero-token OpenRouter spend snapshot from the local ledger. Never reads keys; degrades to 'unavailable'."""
+    p = Path(os.path.expanduser(path or os.getenv("OPENROUTER_SPEND_LEDGER") or OPENROUTER_DEFAULT_LEDGER))
+    try:
+        ledger = json.loads(p.read_text(encoding="utf-8"))
+        spend = float(ledger["cumulative_spend_usd"])
+    except (OSError, ValueError, KeyError, TypeError):
+        return {"status": "unavailable", "source": "spend_ledger"}
+    cap = cap_usd
+    if cap is None:
+        for cand in (os.getenv("OPENROUTER_MONTHLY_CAP_USD"), ledger.get("hard_cap_usd")):
+            try:
+                cap = float(cand)
+                break
+            except (TypeError, ValueError):
+                continue
+    if cap is None or cap <= 0:
+        cap = OPENROUTER_DEFAULT_CAP_USD
+    remaining = max(0.0, 100.0 * (cap - spend) / cap)
+    return {"status": "ok", "source": "spend_ledger", "spend_usd": round(spend, 6), "cap_usd": cap,
+            "remaining_pct": round(remaining, 2), "ledger_updated": ledger.get("last_updated")}
+
+
+_shared_snapshot = snapshot
+
+
+def snapshot(backends: List[str], *args: Any, **kwargs: Any) -> Dict[str, Any]:
+    """Shared zero-token snapshot plus the Sanctuary-local 'openrouter' backend (spend ledger)."""
+    snap = _shared_snapshot([b for b in backends if b != "openrouter"], *args, **kwargs)
+    if "openrouter" in backends:
+        snap["backends"]["openrouter"] = read_openrouter_ledger()
+        snap["backends"] = {b: snap["backends"][b] for b in backends if b in snap["backends"]}
+        assert_no_secrets(snap)
+    return snap
 
 
 def get_project_root() -> Path:
@@ -154,6 +197,9 @@ def _remaining_pct(snap_backend: Dict[str, Any], backend: str) -> Optional[float
         for k in ("five_hour_pct_used", "weekly_pct_used"):
             if snap_backend.get(k) is not None:
                 vals.append(100.0 - snap_backend[k])
+    elif backend == "openrouter":
+        if snap_backend.get("remaining_pct") is not None:
+            vals.append(snap_backend["remaining_pct"])
     return min(vals) if vals else None
 
 
@@ -260,11 +306,12 @@ def main() -> None:
     elif args.cmd == "diff":
         print(json.dumps(diff(json.loads(Path(args.before).read_text()), json.loads(Path(args.after).read_text())), indent=2))
     elif args.cmd == "headroom":
-        snap = snapshot(["claude", "agy", "codex"])
+        snap = snapshot(["claude", "agy", "codex", "openrouter"])
         for b, data in snap["backends"].items():
             head = _remaining_pct(data, b)
             flag = "CONSTRAINED" if head is not None and head < args.floor else "ok"
-            print(f"{b:<7} status={data.get('status'):<12} tightest_window_remaining={'?' if head is None else f'{head:.1f}%':<7} {flag}")
+            extra = f"  (spend ${data['spend_usd']:.4f} of ${data['cap_usd']:.2f} cap)" if b == "openrouter" and data.get("status") == "ok" else ""
+            print(f"{b:<10} status={data.get('status'):<12} tightest_window_remaining={'?' if head is None else f'{head:.1f}%':<7} {flag}{extra}")
     elif args.cmd == "recommend":
         snap = snapshot(["claude", "agy", "codex"])
         print(json.dumps(recommend(load_measured(), snap, args.task_class, args.floor), indent=2))
