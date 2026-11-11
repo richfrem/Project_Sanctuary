@@ -97,7 +97,8 @@
   ],
   "related_missions": {
     "MISSION-066": "SIBLING (practice, soft): agent-chosen music-adjacent exact computation with freeze-before-held-out.",
-    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing; another music-practice combinatorics question."
+    "MISSION-056": "SIBLING (practice, soft): curiosity mission on rhythm spacing; another music-practice combinatorics question.",
+    "MISSION-073": "COMPLEMENTS (soft): 073 also starts from change ringing but tests an exact count of connected edge subsets of the 4-cube; origin of its question is the 4-bell extent / cube-rotation correspondence. No dependency."
   },
   "projected_impact": {
     "paths": [

@@ -1,0 +1,17 @@
+{
+ "gate_G": {
+  "rot_k3": 122,
+  "all_k3": 77,
+  "engine_equals_independent": true,
+  "integral": true,
+  "axis_symmetry_ok": true
+ },
+ "q4_dev": {
+  "props_masks": 300034,
+  "c_python_agree": true,
+  "connected_fraction_300k": 0.6523367,
+  "k4_fraction_300k": 0.6523233,
+  "k4_se": 0.00087,
+  "fix_py_elements": 308
+ }
+}
