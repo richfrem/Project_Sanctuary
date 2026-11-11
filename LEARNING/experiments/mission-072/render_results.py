@@ -52,6 +52,8 @@ def main() -> None:
     fig.tight_layout(rect=(0,.04,1,.94))
     fig.savefig(ROOT/'restart-costs.png',dpi=180)
     fig.savefig(ROOT/'restart-costs.svg')
+    svg = ROOT/'restart-costs.svg'
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
     print('Rendered restart-costs.png and restart-costs.svg from stored data.')
 
 

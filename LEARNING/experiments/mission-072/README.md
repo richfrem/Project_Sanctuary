@@ -60,3 +60,5 @@ A follow-up candidate will ask whether exact generating-function or polynomial c
 ## Delivery check note
 
 The pre-publication scope checker reads the published mission declaration and flagged the Chronicle entry added during closeout. The revised mission impact and active lease explicitly include Chronicle before publication. Final scope verification must be repeated after that declaration is integrated; the initial advisory failure is not reported as a pass. The same published-declaration boundary appeared for MISSION-062 administrative records and cleared after its metadata integration. No checker was bypassed or modified.
+
+The initial diff-format check flagged generator-produced trailing whitespace in the SVG and a blank journal EOF; these were normalized before publication, without altering frozen instruments or scientific outputs.
