@@ -1,0 +1,45 @@
+{
+ "v": 1,
+ "work_id": "MISSION-062-OPENROUTER-CODER",
+ "criteria": [
+  {
+   "id": "A1",
+   "required": true,
+   "result": "pass",
+   "detail": "LEARNING/experiments/mission-062/worker-03-proposal.c",
+   "evidence_ref": "LEARNING/experiments/mission-062/worker-03.json"
+  },
+  {
+   "id": "A2",
+   "required": true,
+   "result": "fail",
+   "detail": "exit 1; output tail: FAIL: worker counts normalized shapes, not all translated subsets: {3: 1, 4: 3, 5: 6, 6: 10, 7: 15, 8: 21} expected {3: 1, 4: 4, 5: 10, 6: 20, 7: 35, 8: 56}",
+   "evidence_ref": "LEARNING/experiments/mission-062/worker-03-proposal.c"
+  }
+ ],
+ "failure_hits": [
+  {
+   "id": "F1",
+   "detail": "exit 1"
+  }
+ ],
+ "incomplete": [
+  "A2"
+ ],
+ "blockers": [],
+ "limitations": [
+  "Parent orchestration, supervisor repair and review token usage unknown; worker assessment is not the scientific verdict."
+ ],
+ "usage": {
+  "total_tokens": 8329,
+  "source": "API-reported input/output counts from worker-01..03.json"
+ },
+ "unevaluated_failure_conditions": [],
+ "complete": false,
+ "integration_allowed": false,
+ "recommended": "repair",
+ "repair_instructions": [
+  "criterion A2 not met: Worker code passes its exact subset-count development contract -- exit 1; output tail: FAIL: worker counts normalized shapes, not all translated subsets: {3: 1, 4: 3, 5: 6, 6: 10, 7: 15, 8: 21} expected {3: 1, 4: 4, 5: 10, 6: 20, 7: 35, 8: 56}",
+  "failure condition F1 occurred"
+ ]
+}

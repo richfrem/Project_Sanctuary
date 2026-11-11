@@ -1,0 +1,13 @@
+{
+  "usage": {
+    "total_tokens": 8329,
+    "source": "API-reported input/output counts from worker-01..03.json"
+  },
+  "refs": {
+    "A1": "LEARNING/experiments/mission-062/worker-03.json",
+    "A2": "LEARNING/experiments/mission-062/worker-03-proposal.c"
+  },
+  "limitations": [
+    "Parent orchestration, supervisor repair and review token usage unknown; worker assessment is not the scientific verdict."
+  ]
+}

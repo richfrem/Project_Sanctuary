@@ -1,0 +1,59 @@
+{
+  "id": "MISSION-062-OPENROUTER-CODER",
+  "type": "task",
+  "goal": "Deliver a correct bounded C exact histogram counter without supervisor algorithm repair",
+  "scope": {
+    "paths": [
+      "LEARNING/experiments/mission-062/worker-03-proposal.c"
+    ]
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "text": "Final unmodified C proposal exists",
+      "required": true,
+      "check": {
+        "kind": "file_exists",
+        "path": "LEARNING/experiments/mission-062/worker-03-proposal.c"
+      }
+    },
+    {
+      "id": "A2",
+      "text": "Worker code passes its exact subset-count development contract",
+      "required": true,
+      "check": {
+        "kind": "command",
+        "argv": [
+          "/opt/homebrew/bin/python3",
+          "LEARNING/experiments/mission-062/check_worker.py",
+          "LEARNING/experiments/mission-062/worker-03-proposal.c"
+        ],
+        "expect_exit": 0
+      }
+    }
+  ],
+  "failure_conditions": [
+    {
+      "id": "F1",
+      "text": "Unmodified worker code violates exact subset-count conservation on development inputs",
+      "check": {
+        "kind": "command",
+        "argv": [
+          "/opt/homebrew/bin/python3",
+          "LEARNING/experiments/mission-062/check_worker.py",
+          "LEARNING/experiments/mission-062/worker-03-proposal.c"
+        ],
+        "expect_exit": 1
+      }
+    }
+  ],
+  "budget": {
+    "max_attempts": 3,
+    "max_tokens": 40000,
+    "per_attempt_token_reserve": 5000
+  },
+  "authorization": {
+    "may_merge": false
+  },
+  "contract_origin": "Executable mapping of acceptance requirements in the pre-dispatch worker prompt; assessment wiring authored after delivery, not a preregistered model comparison."
+}

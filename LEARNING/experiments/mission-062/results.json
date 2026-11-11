@@ -1,0 +1,165 @@
+{
+  "assessment": "CORROBORATED",
+  "validity": {
+    "passed": true,
+    "independent_histogram_cells": 375,
+    "scope": "k=3,4; h=2..6; every q=k..40",
+    "published_cells": [
+      {
+        "h": 3,
+        "k": 3,
+        "threshold": 5,
+        "verified_through": 120,
+        "preceding_cell_fails": true
+      },
+      {
+        "h": 4,
+        "k": 3,
+        "threshold": 6,
+        "verified_through": 120,
+        "preceding_cell_fails": true
+      },
+      {
+        "h": 2,
+        "k": 4,
+        "threshold": 8,
+        "verified_through": 60,
+        "preceding_cell_fails": true
+      },
+      {
+        "h": 3,
+        "k": 4,
+        "threshold": 16,
+        "verified_through": 50,
+        "preceding_cell_fails": true
+      }
+    ],
+    "arithmetic_progression_checked_h": [
+      2,
+      64
+    ]
+  },
+  "primary": {
+    "covered_cells": 2634,
+    "expected_cells": 2634,
+    "all_passed": true,
+    "scope": "k=3,h=5..16,q=3h..250"
+  },
+  "secondary": {
+    "k3": [
+      {
+        "h": 2,
+        "finite_threshold": 4,
+        "ratio": 2.0,
+        "proof_sufficient_bound": 60001
+      },
+      {
+        "h": 3,
+        "finite_threshold": 5,
+        "ratio": 1.6666666666666667,
+        "proof_sufficient_bound": 345745
+      },
+      {
+        "h": 4,
+        "finite_threshold": 6,
+        "ratio": 1.5,
+        "proof_sufficient_bound": 1259713
+      },
+      {
+        "h": 5,
+        "finite_threshold": 7,
+        "ratio": 1.4,
+        "proof_sufficient_bound": 3513841
+      },
+      {
+        "h": 6,
+        "finite_threshold": 8,
+        "ratio": 1.3333333333333333,
+        "proof_sufficient_bound": 8225569
+      },
+      {
+        "h": 7,
+        "finite_threshold": 9,
+        "ratio": 1.2857142857142858,
+        "proof_sufficient_bound": 17010001
+      },
+      {
+        "h": 8,
+        "finite_threshold": 10,
+        "ratio": 1.25,
+        "proof_sufficient_bound": 32072065
+      },
+      {
+        "h": 9,
+        "finite_threshold": 11,
+        "ratio": 1.2222222222222223,
+        "proof_sufficient_bound": 56298673
+      },
+      {
+        "h": 10,
+        "finite_threshold": 12,
+        "ratio": 1.2,
+        "proof_sufficient_bound": 93350881
+      },
+      {
+        "h": 11,
+        "finite_threshold": 13,
+        "ratio": 1.1818181818181819,
+        "proof_sufficient_bound": 147756049
+      },
+      {
+        "h": 12,
+        "finite_threshold": 14,
+        "ratio": 1.1666666666666667,
+        "proof_sufficient_bound": 225000001
+      },
+      {
+        "h": 13,
+        "finite_threshold": 15,
+        "ratio": 1.1538461538461537,
+        "proof_sufficient_bound": 331619185
+      },
+      {
+        "h": 14,
+        "finite_threshold": 16,
+        "ratio": 1.1428571428571428,
+        "proof_sufficient_bound": 475292833
+      },
+      {
+        "h": 15,
+        "finite_threshold": 17,
+        "ratio": 1.1333333333333333,
+        "proof_sufficient_bound": 664935121
+      },
+      {
+        "h": 16,
+        "finite_threshold": 18,
+        "ratio": 1.125,
+        "proof_sufficient_bound": 910787329
+      }
+    ],
+    "descriptive_log_log_slope": 0.7423960094679718,
+    "k4": [
+      {
+        "h": 2,
+        "finite_threshold_through_80": 8
+      },
+      {
+        "h": 3,
+        "finite_threshold_through_80": 16
+      },
+      {
+        "h": 4,
+        "finite_threshold_through_80": 24
+      }
+    ]
+  },
+  "resources": {
+    "elapsed_s": 3.7618295000866055,
+    "prior_compute_wall_upper_bound_s": 300,
+    "conservative_peak_rss_bytes": 28344320,
+    "cpu_s": 3.45345,
+    "rss_method": "sum of parent and child maximum RSS (conservative, not simultaneous sampling)"
+  },
+  "freeze_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b"
+}

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-08T15:23:20.118713+00:00",
-  "total_assessments": 36,
-  "cumulative_score": 496,
-  "average_fitness": 0.919,
+  "updated_at": "2026-11-11T18:02:36.163251+00:00",
+  "total_assessments": 37,
+  "cumulative_score": 500,
+  "average_fitness": 0.901,
   "dimension_totals": {
-    "useful_outcome": 100,
+    "useful_outcome": 101,
     "learning_depth": 96,
     "verification_rigor": 107,
-    "token_economy": 85,
-    "anti_asch_integrity": 108
+    "token_economy": 86,
+    "anti_asch_integrity": 110
   },
   "agents": {
     "astra": {
@@ -46,9 +46,23 @@
       "assessments": 1,
       "cumulative_score": 12,
       "average_fitness": 0.8
+    },
+    "openrouter-worker": {
+      "assessments": 1,
+      "cumulative_score": 4,
+      "average_fitness": 0.267
     }
   },
   "recent_assessments": [
+    {
+      "assessment_id": "5bc39fd1-de3a-4b85-b050-cfd515834986",
+      "timestamp": "2026-11-11T18:02:36.162244+00:00",
+      "task_id": "MISSION-062-OPENROUTER-CODER",
+      "agent_id": "openrouter-worker",
+      "raw_score": 4,
+      "fitness": 0.267,
+      "notes": "Partial code contribution only: 3 drafts failed exact contract or safety, parent corrected final recurrence before freeze. $0.0030696 worker cost; parent tokens unknown, no ROI claim. Worker made no fake tool-execution claims. Scientific corroboration is assessed separately."
+    },
     {
       "assessment_id": "467d4e89-d9b6-49aa-9860-ea0e12ff21f3",
       "timestamp": "2026-11-08T15:23:20.118113+00:00",
@@ -219,15 +233,6 @@
       "raw_score": 13,
       "fitness": 0.867,
       "notes": "Traced the orphan to f96e10701 and logged it as an explicitly reconstructed event instead of inventing notes; rebuild made order-independent; chronicle ledger rebuildable; 035 lease narrowed. Limits stated: assessor/notes unknown, 264b entry not listed."
-    },
-    {
-      "assessment_id": "c070aa05-4c29-476e-9f61-418638ee13b1",
-      "timestamp": "2026-11-05T01:14:10.131943+00:00",
-      "task_id": "MISSION-034",
-      "agent_id": "claude-code",
-      "raw_score": 13,
-      "fitness": 0.867,
-      "notes": "Pre-registered 5 predictions, all held; harness 60 merges x2 arms; reported (did not hide) a real ledger orphan; qualified the git-still-marks-conflict limit; one wrong start (opened 034 unasked earlier, cancelled)"
     }
   ]
 }

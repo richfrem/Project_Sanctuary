@@ -65,7 +65,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#44** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `IN_PROGRESS` | - |
 | **#45** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
 | **#46** | `MISSION-058` | **Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff** | 3 | 4 | 0.2x | 2 | **30.0** | `RESOLVED` | `FALSIFIED` |
-| **#47** | `MISSION-062` | **Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets** | 2 | 3 | 0.1x | 2 | **30.0** | `IN_PROGRESS` | - |
+| **#47** | `MISSION-062` | **Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets** | 2 | 3 | 0.1x | 2 | **30.0** | `RESOLVED` | `CORROBORATED` |
 | **#48** | `MISSION-065` | **Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?** | 1 | 3 | 0.1x | 1 | **30.0** | `RESOLVED` | `FALSIFIED` |
 | **#49** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
 | **#50** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
@@ -821,15 +821,22 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Concrete, checkable claims on Moltbook were rare (3 of the 12 posts evaluated); one yielded a real correction with primary sources.
 
 ### MISSION-062: Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets (Rank #47)
-- **Status**: `IN_PROGRESS`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: Additive combinatorics: sizes of h-fold sumsets of 3-element subsets of {1,...,q} (exhaustive counting by local deterministic computation; bounded CPU)
-- **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)
-- **Fallback Models**: `qwen2-7b-mlx-4bit`
+- **Cheapest Viable Model**: `qwen/qwen3-coder-30b-a3b-instruct` (Tier: `cheap`, CLI: `installed-cli-agent/openrouter_client.py`)
+- **Fallback Models**: `claude-haiku-5.5`, `qwen2-7b-mlx-4bit`
 - **Hypothesis (Popperian Prediction)**:
   > For k = 3 and every h in {5,...,16}, at every q in [3h, 250] the h most frequent values of |hA| over the 3-element subsets A of {1,...,q} are exactly P_0,...,P_(h-1), where P_l = C(h+2,2) - C(l+1,2), each occurring for strictly more sets than every other size. Equivalently, the empirical threshold q0(h,3) is at most 3h in this range, far below the h^5 scaling that the proof of Corollary 4.1 in arXiv:2611.07303 requires.
 - **Falsification Gate**:
   > FALSIFIED if any (h,q) with h in {5,...,16} and 3h <= q <= 250 fails the ok-test (some P_l has f_q(P_l) = 0 or f_q(P_l) <= the maximum f_q over all unlisted sizes; a tie counts as failure), after the failing cell is recomputed by the independent reference implementation. UNASSESSED, neither corroborated nor falsified, if the validity gate fails (reproduce the paper's published threshold cells (h,k) = (3,3)->5, (4,3)->6, (2,4)->8, (3,4)->16 with failures at q = 4, 5, 7, 15; exact agreement between the fast and the reference implementation for every h <= 6, q <= 40; |hE| = 2h+1 for E = {1,2,3}, h >= 2) or if the budget is exhausted before the whole region is covered. The constant 3, the h range, the q bound 250, the ok-test and the budget are fixed in protocol.md and committed before the held-out run and are not changed afterwards. Results for h <= 4 and the k = 4 cells are calibration, not primary evidence; secondary tables cannot rescue a failed primary claim. No claim is made for q > 250, h > 16, k != 3, or asymptotic truth, and a corroboration is evidence about a finite range, not a proof. The cited paper's claims are context, not evidence for this hypothesis.
+- **Empirical Evidence & Trials**:
+  * `2026-11-11T18:02:01.857473+00:00` [codex] (LEARNING/experiments/mission-062/README.md): Frozen commit f7bc7c4e5 preceded execution. Validity:375 independent histogram cells and 4 published calibration thresholds pass. Primary:2634/2634 strict-dominance cells pass within k3,h5..16,q3h..250. Frozen run3.762s; finite evidence only. Worker3drafts required supervisor correction; total parent-token accounting unverified.
+- **Lessons Learned & Epistemic Compounding**:
+  * Observed finite k3 threshold h+2 for h2..16 through q250; not a theorem.
+  * Cheap model calls are not autonomous correctness: all three drafts required rejection or supervisor repair before freeze.
+  * Use conservation laws and an independent algorithm to validate optimized counters; disclose repair and total-cost telemetry gaps.
 
 ### MISSION-065: Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral? (Rank #48)
 - **Status**: `RESOLVED`
