@@ -42,6 +42,12 @@ Generative only. The correspondence "24 cube rotations = S4 = rows of a four-bel
 
 ## Files
 
-`discovery.md` (domains, crossings, candidates, selection history), `protocol.md` + `freeze.json` (frozen), `burnside.c`, `aggregate.py`, `independent.py`, `check_h1.py`, `dev_*`, `fix_py.jsonl`, `burnside_n4.jsonl`, `summary_n4.json`, `check_h1_results.json`, `review.md`, `review_openrouter_raw.md`, `ringing_the_cube.*`.
+`discovery.md` (domains, crossings, candidates, selection history), `protocol.md` + `freeze.json` (frozen), `burnside.c`, `aggregate.py`, `independent.py`, `check_h1.py`, `dev_*` (except the two data files below), `fix_py.jsonl`, `burnside_n4.jsonl`, `summary_n4.json`, `check_h1_results.json`, `review.md`, `review_openrouter_raw.md`, `ringing_the_cube.*`.
 
 Reproduce: `cc -O2 -pthread -o burnside burnside.c; ./burnside 4 8 > burnside_n4.jsonl; python3 aggregate.py burnside_n4.jsonl; python3 check_h1.py` (about 2.5 minutes on 8 cores).
+
+## Amendment: removed oversize dev test data (post-merge)
+
+`dev_props_in.txt` (2.7 MB) and `dev_props_expected.txt` (4.1 MB), the 300,034-mask C-vs-Python differential test data, exceeded the soul-record limit (`max_record_bytes` 400,000) at closure and were removed from the repository; no frozen result changes. They are deterministic and regenerate byte-identically (checked): `python3 independent.py props 4 300000 7` writes `props_in.txt` and `props_expected.txt`; their SHA-256 values are the `dev_props_in.txt` and `dev_props_expected.txt` entries in `freeze.json`, which still records them as frozen. All other frozen files are unchanged.
+
+Also corrected: the manifest's `projected_impact` listed `LEARNING/research/` (an optional synthesis that was not written); the entry was removed so it no longer appears to claim a path held by another lease.
