@@ -1,0 +1,48 @@
+{
+  "mission": "MISSION-072",
+  "domain": {
+    "L_min": 9,
+    "L_max": 32,
+    "all_starts": true,
+    "rate_powers": [
+      1,
+      24
+    ],
+    "extra_rates": [
+      "3/4",
+      "7/8"
+    ],
+    "cost_rule": "unique {0,1,2,4,8,max(c_star-1/2,0),max(c_star,0),max(c_star+1/2,0)}"
+  },
+  "validity": {
+    "development_L": [
+      1,
+      8
+    ],
+    "development_reset_comparisons": 216,
+    "held_out_L": [
+      9,
+      16,
+      24,
+      32
+    ],
+    "held_out_reset_comparisons": 48,
+    "exact_fraction_equality": true
+  },
+  "budget": {
+    "experiment_wall_s": 900,
+    "memory_bytes": 1073741824,
+    "paid_model_calls": 0,
+    "parent_tokens": "unknown;20k planning ceiling, not a verified meter"
+  },
+  "sha256": {
+    "protocol.md": "7b1093490b770586842bd11fad958dc3fddeb76392034fda847c21e466640540",
+    "discounted.py": "c3d0c9387d5802cf5683ce83d68ecda8f7d0fbe3da72a5b771ad418fdf4c57cc",
+    "direct.py": "7f29f7871cef5ce05033ad657952be8bb73b39874685d5264ccacceebdb32e78",
+    "development.py": "a4823302452bc1d62b20f6b38cb0e265965a59303250a305ff1fa5d6ae7bacdf",
+    "development.json": "779223e56a6ac4d380b05c74c5aa48958c531a72b66edce551c5a7ba781c5368",
+    "evaluate.py": "1d11152b6a62880616b71f96b1e717159c8873fc0324e5b4d0850437c0050d8a"
+  },
+  "python": "Python 3.15.2",
+  "held_out_computed_before_freeze": false
+}

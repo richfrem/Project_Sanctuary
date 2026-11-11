@@ -71,7 +71,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#50** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
 | **#51** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#52** | `MISSION-059` | **Audit Sanctuary trust boundaries from external content through agent execution, persistent memory and public soul publication** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#53** | `MISSION-072` | **When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests** | 1 | 4 | 0.1x | 2 | **20.0** | `PROPOSED` | - |
+| **#53** | `MISSION-072` | **When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests** | 1 | 4 | 0.1x | 2 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#54** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#55** | `MISSION-067` | **Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `FALSIFIED` |
 | **#56** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
@@ -901,7 +901,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > (1) One reachable selected path produces a statically proven or dynamically reproduced unauthorized effect under the independently established policy. (2) A required paired test permits a forbidden effect or breaks the corresponding permitted operation. (3) A selected publication path demonstrably discloses a synthetic prohibited secret or loses a required trust/provenance distinction that causes unauthorized successor behavior.
 
 ### MISSION-072: When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests (Rank #53)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: Python standard-library Fraction arithmetic; finite nearest-neighbor Markov walk with absorbing 0 and reflecting L
 - **Cheapest Viable Model**: `deterministic-python-fraction` (Tier: `free-local`, CLI: `python3`)
@@ -910,6 +911,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > For every L=9..32 and start x=1..L in an unbiased nearest-neighbor walk on 0..L (0 absorbing; L deterministically steps to L-1), and every frozen reset-cost c in C(L,x)={0,1,2,4,8,max(c_star-1/2,0),max(c_star,0),max(c_star+1/2,0)}, the exact moment condition Var(T)>E[T]^2+(2c-1)E[T] is equivalent to the existence of a strict reduction in expected absorption time for at least one reset probability in R={2^-j:j=1..24} union {3/4,7/8}. Here c_star=1+E[T(T-1)]/(2E[T])-E[T]. At each event, reset to x with probability r and spend c time units, or take a walk step with probability 1-r and spend one time unit. No walk step occurs on reset. Equality predicts no strict grid improvement.
 - **Falsification Gate**:
   > FALSIFIED if any registered held-out (L,x,c) disagrees between the moment prediction and exact sampled-rate search, after reproducing the disagreeing case with an independent dense rational Markov linear solver. Any validity-gate mismatch, resource breach, missing registered cases, or inability to independently confirm a counterexample leaves UNASSESSED with verdict null. A corroboration applies only to this finite family, cost construction and probability grid, not to all rates, arbitrary graphs, continuous diffusion or real search systems.
+- **Empirical Evidence & Trials**:
+  * `2026-11-11T18:31:52.878706+00:00` [codex] (LEARNING/experiments/mission-072/README.md): Freeze084c64ab3 preceded all L>=9 execution. Development216 exact comparisons;held-out gate48 exact matrix checks and baseline moments. All3235 cases /84110 exact rate comparisons classify correctly in registered finite grid. Runtime2.554s plus0.101s development; conservativeRSS31.2MB. Post-hoc bimodal example is outside primary evidence. No paid dispatch; parent tokens unknown.
+- **Lessons Learned & Epistemic Compounding**:
+  * Charging a full time unit per reset shifts the local variance condition from CV²>1-1/mu to CV²>1+1/mu in the stated model.
+  * The local moment rule classified the tested reflected-walk grid, but an independently checked post-hoc bimodal example shows no universal local-to-global implication.
+  * Separate finite exact evidence, continuous-rate claims and practical retry analogies; retain clock convention and overhead.
 
 ### MISSION-066: Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony? (Rank #54)
 - **Status**: `RESOLVED`

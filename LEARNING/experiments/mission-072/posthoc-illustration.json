@@ -1,0 +1,12 @@
+{
+  "status": "post-hoc illustration only; outside registered reflected-walk primary domain",
+  "process": "Independent attempt duration1 with probability1/10,100 with probability9/10; instantaneous reset, fresh independent attempt each restart.",
+  "r": "9/10",
+  "baseline_mean": "901/10",
+  "derivative_at_zero": "357291/100",
+  "mean_at_r": "10999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999/1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009",
+  "mean_at_r_decimal": 11.0,
+  "strictly_improves": true,
+  "independent_state_recurrence_matches": true,
+  "interpretation": "A nonnegative local derivative does not generally rule out improvement at a distant restart rate. This is not evidence against the finite reflected-walk result and not a novelty claim."
+}

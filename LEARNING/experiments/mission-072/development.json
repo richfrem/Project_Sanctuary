@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "lengths": [
+    1,
+    8
+  ],
+  "reset_mean_comparisons": 216,
+  "baseline_moments_exact": true,
+  "mu_equals_x_times_2L_minus_x": true,
+  "one_step_clock_checks": true,
+  "elapsed_s": 0.10128654190339148,
+  "held_out_evaluated": false
+}
