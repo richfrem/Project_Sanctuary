@@ -1,11 +1,11 @@
 {
   "id": "MISSION-072",
   "title": "When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "Python standard-library Fraction arithmetic; finite nearest-neighbor Markov walk with absorbing 0 and reflecting L",
   "created_at": "2026-11-11T18:15:26Z",
-  "updated_at": "2026-11-11T18:15:26Z",
+  "updated_at": "2026-11-11T18:31:52.878706+00:00",
   "confidence_reviewed": "2026-11-11",
   "proposed_by": "codex",
   "interest_statement": "Richard authorized a separate inquiry on any topic after MISSION-062 full closeout. I chose the tension between abandoning a long search to improve its average and paying real time to restart. The interesting gap is whether a two-moment local condition actually classifies finite-rate improvement, and how clock conventions move the boundary. This is a bounded exploration of known restart physics, not a novelty claim.",
@@ -55,7 +55,8 @@
       "LEARNING/missions/MISSION-072.json",
       "LEARNING/experiments/mission-072/",
       "LEARNING/missions/MISSION-063.json",
-      "LEARNING/inbox.jsonl"
+      "LEARNING/inbox.jsonl",
+      "chronicle/entries/"
     ],
     "resources": [
       "bounded local CPU; 900-second experiment ceiling, 1GiB RAM; no paid model calls"
@@ -63,9 +64,10 @@
     "shared_generated": [
       "LEARNING/index.jsonl",
       "LEARNING/backlog.md",
-      ".agent/learning/events.jsonl"
+      ".agent/learning/events.jsonl",
+      "chronicle/ledger.json"
     ],
-    "basis": "Own-choice inquiry authorized after verified full MISSION-062 closure. Only mission records, experiments, reciprocal relation and the required follow-up inbox entry; no shared skill or evaluator edits."
+    "basis": "Own-choice inquiry authorized after verified full MISSION-062 closure. Only mission records, experiments, reciprocal relation and the required follow-up inbox entry; no shared skill or evaluator edits. Closeout includes one episodic Chronicle entry describing the two-inquiry session and observed delivery corrections; substantive science stays in experiment records."
   },
   "sources": [
     {
@@ -90,9 +92,39 @@
     "finite-grid"
   ],
   "human_gate_required": false,
-  "verdict": null,
-  "evidence": [],
-  "lessons_learned": [],
+  "verdict": "CORROBORATED",
+  "evidence": [
+    {
+      "timestamp": "2026-11-11T18:31:52.878706+00:00",
+      "agent": "codex",
+      "citation": "LEARNING/experiments/mission-072/README.md",
+      "details": "Freeze084c64ab3 preceded all L>=9 execution. Development216 exact comparisons;held-out gate48 exact matrix checks and baseline moments. All3235 cases /84110 exact rate comparisons classify correctly in registered finite grid. Runtime2.554s plus0.101s development; conservativeRSS31.2MB. Post-hoc bimodal example is outside primary evidence. No paid dispatch; parent tokens unknown."
+    }
+  ],
+  "lessons_learned": [
+    "Charging a full time unit per reset shifts the local variance condition from CV\u00b2>1-1/mu to CV\u00b2>1+1/mu in the stated model.",
+    "The local moment rule classified the tested reflected-walk grid, but an independently checked post-hoc bimodal example shows no universal local-to-global implication.",
+    "Separate finite exact evidence, continuous-rate claims and practical retry analogies; retain clock convention and overhead."
+  ],
   "assignee": "codex",
-  "worktree": ".worktrees/codex-mission-072"
+  "worktree": ".worktrees/codex-mission-072",
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-11T18:31:52.878706+00:00",
+    "workflow": "soul_coverage.py closure"
+  },
+  "run_assessment": {
+    "primary_cases": 3235,
+    "rate_comparisons": 84110,
+    "improving_cases": 1532,
+    "held_out_gate_comparisons": 48,
+    "development_comparisons": 216,
+    "freeze_commit": "084c64ab3c9089cb075546b891c9ca940ba1be4c",
+    "parent_tokens": null,
+    "paid_worker_calls": 0,
+    "total_financial_cost": "unknown; no additional paid dispatch, parent inference unattributed",
+    "parent_token_planning_ceiling_compliance": "unverified",
+    "posthoc_illustration": "Separately verified two-duration process; excluded from registered primary evidence.",
+    "followup_inbox": "SEED-20261111-2e2261"
+  }
 }

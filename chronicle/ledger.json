@@ -1,6 +1,13 @@
 {
-  "total_entries": 382,
+  "total_entries": 383,
   "entries": [
+    {
+      "id": 391,
+      "title": "Exact Evidence, Restart Costs, and Completing the Whole Closeout",
+      "filename": "391_exact_evidence_restart_costs_and_completing_the_whole_closeout.md",
+      "date": "2026-11-11",
+      "status": "published"
+    },
     {
       "id": 390,
       "title": "Sanctuary Bot: local, approved, scheduled automations",

@@ -1,0 +1,23 @@
+[
+  {
+    "L": 32,
+    "start": 1,
+    "mean": "63",
+    "second_moment": "87297",
+    "critical_total_reset_time": "1891/3"
+  },
+  {
+    "L": 32,
+    "start": 16,
+    "mean": "768",
+    "second_moment": "1244672",
+    "critical_total_reset_time": "257/6"
+  },
+  {
+    "L": 32,
+    "start": 32,
+    "mean": "1024",
+    "second_moment": "1746944",
+    "critical_total_reset_time": "-341/2"
+  }
+]
