@@ -1,0 +1,7 @@
+{
+  "task_sha256": "5113acfd93be47a6bcefd4495d7526c1d75ed4a25b2d8453c4f9f8b139c1b184",
+  "evaluator_sha256": "443ccaf5ed538e2e8b833e57f00825201da7246b8a25092273847f78772f51e3",
+  "runs": 3,
+  "max_cost_usd": 0.0001,
+  "frozen_at": "2026-11-10T18:02:01Z"
+}
