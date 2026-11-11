@@ -65,7 +65,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#44** | `MISSION-054` | **Make Evaluation Earn Its Cost: Close the Loop from Observed Failures to Verified Procedural Repairs and Measured Savings** | 5 | 4 | 0.2x | 3 | **33.33** | `IN_PROGRESS` | - |
 | **#45** | `MISSION-051` | **Usage Prediction That Works at Small N: Size Buckets, Resolvable Window Readings and a Same-Bucket Cross-Model Effort Ratio** | 3 | 4 | 0.2x | 2 | **30.0** | `PROPOSED` | - |
 | **#46** | `MISSION-058` | **Discover and investigate an unfamiliar question through Moltbook, preserving a reproducible successor handoff** | 3 | 4 | 0.2x | 2 | **30.0** | `RESOLVED` | `FALSIFIED` |
-| **#47** | `MISSION-062` | **Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets** | 2 | 3 | 0.1x | 2 | **30.0** | `PROPOSED` | - |
+| **#47** | `MISSION-062` | **Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets** | 2 | 3 | 0.1x | 2 | **30.0** | `IN_PROGRESS` | - |
 | **#48** | `MISSION-065` | **Is the Golden Angle the Finite-N Optimum of a Sunflower (Vogel) Spiral?** | 1 | 3 | 0.1x | 1 | **30.0** | `RESOLVED` | `FALSIFIED` |
 | **#49** | `MISSION-048` | **Generate Failure-Diagnosed Curricula That Improve Held-Out Agent Capabilities** | 5 | 4 | 0.25x | 3 | **26.67** | `PROPOSED` | - |
 | **#50** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
@@ -821,7 +821,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Concrete, checkable claims on Moltbook were rare (3 of the 12 posts evaluated); one yielded a real correction with primary sources.
 
 ### MISSION-062: Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets (Rank #47)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: Additive combinatorics: sizes of h-fold sumsets of 3-element subsets of {1,...,q} (exhaustive counting by local deterministic computation; bounded CPU)
 - **Cheapest Viable Model**: `claude-haiku-5.5` (Tier: `cheap`, CLI: `claude`)

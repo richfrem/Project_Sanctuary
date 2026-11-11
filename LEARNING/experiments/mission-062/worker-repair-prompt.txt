@@ -1,0 +1,128 @@
+You are an isolated output-only coding worker. Do NOT use tools, filesystem, network, shell or git. You are not alone in the project; do not propose altering other workers' files. Your sole ownership is a proposed C source file fast.c returned as text. Do not run any experiment.
+Write a portable complete C11 program. Return one fenced c code block, then at most 200 words explaining correctness and complexity. Compile contract: cc -O3 -std=c11 -Wall -Wextra -Werror fast.c -o fast. CLI: fast H K QMAX, accepting 2<=H<=16, K=3 or 4, K<=QMAX<=250. Print CSV header q,size,count and all nonzero histogram counts for every q from K to QMAX, in ascending q,size. Counts are the number of K-element subsets A of {1,...,q} whose H-fold sumset (repetition allowed) has exactly size distinct integers.
+Use exact translation invariance: normalize each subset to {0,u,v} or {0,u,v,w} with positive strictly increasing gaps; for shape maximum v, q-v translations occur for q>=v+1. Enumerate all normalized shapes with maximum<QMAX. Compute sumset size by enumerating weak compositions of H into K terms and marking the exact integer sums; never use floating point or probabilistic hashing. Accumulate per-maximum/per-size shape counts, then derive all q histograms using prefix counts/weighted prefix sums so every original subset is counted. h-fold cardinality is at most binomial(H+K-1,K-1); maximum sum <=H*(QMAX-1). Use bounded heap arrays sized from validated inputs, uint64_t histograms, and correct PRIu64 formatting. Check allocations, parse inputs strictly, free memory, no undefined behavior. Do not hardcode expected thresholds or benchmark answers. No multicore code needed. No model calls inside the program. Keep code focused and readable.
+Your first proposal was rejected before any experiment. It emitted only QMAX instead of all q, recomputed every normalized shape for every q, used atoi instead of strict parsing and failed -Werror due to unused max_size locals. Repair all of these. Algorithm: allocate N[(QMAX+1)*(max_card+1)] zeroed; enumerate each normalized shape with max v once; mark all sums and increment N[v,size]. Maintain prefix[size] and hist[size]. For each q from 1 to QMAX, add N[q-1,size] to prefix[size], then add prefix[size] to hist[size]; print hist for each q>=K. This recurrence gives sum_v<q (q-v)*N[v,size]. Do not print only QMAX. No unused arrays/locals. Use strtol, errno, full-string end-pointer validation. Add purpose/Input Dependencies/Key Functions header and comments/docstrings. Provide a complete self-contained replacement, one fenced c block only.
+First source:
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_H 16
+#define MAX_K 4
+#define MAX_Q 250
+
+static uint64_t *histogram;
+static uint64_t *counts;
+static bool *sumset;
+static int H, K, QMAX;
+
+static inline uint64_t binomial_coefficient(int n, int k) {
+    if (k > n || k < 0) return 0;
+    if (k == 0 || k == n) return 1;
+    if (k > n - k) k = n - k;
+    uint64_t result = 1;
+    for (int i = 0; i < k; ++i) {
+        result = result * (n - i) / (i + 1);
+    }
+    return result;
+}
+
+static void compute_histograms() {
+    int max_sum = H * (QMAX - 1);
+    int max_size = binomial_coefficient(H + K - 1, K - 1);
+    histogram = calloc(max_size + 1, sizeof(uint64_t));
+    counts = calloc(QMAX + 1, sizeof(uint64_t));
+    sumset = calloc(max_sum + 1, sizeof(bool));
+
+    if (!histogram || !counts || !sumset) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // For K=3
+    if (K == 3) {
+        for (int q = 3; q <= QMAX; ++q) {
+            for (int v = 2; v < q; ++v) {
+                for (int u = 1; u < v; ++u) {
+                    int max_size = binomial_coefficient(H + 2, 2);
+                    memset(sumset, 0, (max_sum + 1) * sizeof(bool));
+                    int count = 0;
+                    for (int a = 0; a <= H; ++a) {
+                        for (int b = 0; b <= H - a; ++b) {
+                            int c = H - a - b;
+                            if (c < 0) continue;
+                            int sum = a * 0 + b * u + c * v;
+                            if (!sumset[sum]) {
+                                sumset[sum] = true;
+                                count++;
+                            }
+                        }
+                    }
+                    histogram[count]++;
+                }
+            }
+        }
+    }
+
+    // For K=4
+    if (K == 4) {
+        for (int q = 4; q <= QMAX; ++q) {
+            for (int w = 3; w < q; ++w) {
+                for (int v = 2; v < w; ++v) {
+                    for (int u = 1; u < v; ++u) {
+                        int max_size = binomial_coefficient(H + 3, 3);
+                        memset(sumset, 0, (max_sum + 1) * sizeof(bool));
+                        int count = 0;
+                        for (int a = 0; a <= H; ++a) {
+                            for (int b = 0; b <= H - a; ++b) {
+                                for (int c = 0; c <= H - a - b; ++c) {
+                                    int d = H - a - b - c;
+                                    if (d < 0) continue;
+                                    int sum = a * 0 + b * u + c * v + d * w;
+                                    if (!sumset[sum]) {
+                                        sumset[sum] = true;
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+                        histogram[count]++;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("q,size,count\n");
+    for (int size = 1; size <= max_size; ++size) {
+        if (histogram[size] > 0) {
+            printf("%d,%d,%" PRIu64 "\n", QMAX, size, histogram[size]);
+        }
+    }
+
+    free(histogram);
+    free(counts);
+    free(sumset);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s H K QMAX\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    H = atoi(argv[1]);
+    K = atoi(argv[2]);
+    QMAX = atoi(argv[3]);
+
+    if (H < 2 || H > MAX_H || K < 3 || K > MAX_K || QMAX < K || QMAX > MAX_Q) {
+        fprintf(stderr, "Invalid input parameters\n");
+        return EXIT_FAILURE;
+    }
+
+    compute_histograms();
+    return 0;
+}

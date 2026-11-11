@@ -1,0 +1,43 @@
+{
+  "histograms": [
+    {
+      "h": 2,
+      "k": 3,
+      "qmax": 12,
+      "matched": true,
+      "elapsed_s": 0.2680000839754939
+    },
+    {
+      "h": 3,
+      "k": 3,
+      "qmax": 12,
+      "matched": true,
+      "elapsed_s": 0.007055958034470677
+    },
+    {
+      "h": 4,
+      "k": 3,
+      "qmax": 12,
+      "matched": true,
+      "elapsed_s": 0.005194291938096285
+    },
+    {
+      "h": 2,
+      "k": 4,
+      "qmax": 12,
+      "matched": true,
+      "elapsed_s": 0.004959458019584417
+    },
+    {
+      "h": 3,
+      "k": 4,
+      "qmax": 12,
+      "matched": true,
+      "elapsed_s": 0.004943458130583167
+    }
+  ],
+  "invalid_cli_cases": 4,
+  "held_out_computed": false,
+  "supervisor_correction": "Third model draft still used hist=prefix, counting shapes but not translations. Supervisor changed one line to hist+=prefix. No fourth model attempt.",
+  "environment_incident": "Worker-2 ASan process paused in macOS crash handling; parent terminated owned PID after ~150s. Sanitizer command lacked its own timeout; all subsequent executions bounded."
+}

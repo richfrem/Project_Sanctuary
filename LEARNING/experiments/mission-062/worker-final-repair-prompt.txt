@@ -1,0 +1,160 @@
+You are an isolated output-only coding worker. Do NOT use tools, filesystem, network, shell or git. You are not alone in the project; do not propose altering other workers' files. Your sole ownership is a proposed C source file fast.c returned as text. Do not run any experiment.
+Write a portable complete C11 program. Return one fenced c code block, then at most 200 words explaining correctness and complexity. Compile contract: cc -O3 -std=c11 -Wall -Wextra -Werror fast.c -o fast. CLI: fast H K QMAX, accepting 2<=H<=16, K=3 or 4, K<=QMAX<=250. Print CSV header q,size,count and all nonzero histogram counts for every q from K to QMAX, in ascending q,size. Counts are the number of K-element subsets A of {1,...,q} whose H-fold sumset (repetition allowed) has exactly size distinct integers.
+Use exact translation invariance: normalize each subset to {0,u,v} or {0,u,v,w} with positive strictly increasing gaps; for shape maximum v, q-v translations occur for q>=v+1. Enumerate all normalized shapes with maximum<QMAX. Compute sumset size by enumerating weak compositions of H into K terms and marking the exact integer sums; never use floating point or probabilistic hashing. Accumulate per-maximum/per-size shape counts, then derive all q histograms using prefix counts/weighted prefix sums so every original subset is counted. h-fold cardinality is at most binomial(H+K-1,K-1); maximum sum <=H*(QMAX-1). Use bounded heap arrays sized from validated inputs, uint64_t histograms, and correct PRIu64 formatting. Check allocations, parse inputs strictly, free memory, no undefined behavior. Do not hardcode expected thresholds or benchmark answers. No multicore code needed. No model calls inside the program. Keep code focused and readable.
+FINAL REPAIR ATTEMPT. Previous revision compiled but had a heap buffer overflow: enumerate normalized maximum gap strictly LESS THAN QMAX, never <=QMAX, because largest legitimate sum is H*(QMAX-1). ASan confirms this on the DEVELOPMENT case H=2,K=3,QMAX=8. Parse strtol into a long temporary, check end!=start, errno, full-string end, and range BEFORE casting to int; reject 4294967298. Implement the exact prefix recurrence: for q=1..QMAX, add N[q-1,size] to prefix[size], add prefix[size] to hist[size], emit q>=K. Never reset hist each q and never loop all earlier v repeatedly during output. Header must list actual functions, not nonexistent functions. Return a complete corrected C source in one fenced c block only. No experiment execution.
+Previous source:
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <string.h>
+#include <stdbool.h>
+#include <errno.h>
+
+// Purpose: Compute histogram of sumset sizes for K-element subsets of {1,...,q}
+// Input Dependencies: H (2-16), K (3 or 4), QMAX (K-QMAX<=250)
+// Key Functions: parse_args, compute_histograms, enumerate_shapes, process_shapes
+
+static uint64_t *N; // N[v][size] = count of shapes with max v and sumset size
+static uint64_t *prefix; // prefix[size] = sum of N[<v][size] for current q
+static uint64_t *hist; // hist[size] = count of subsets with sumset size
+static bool *sumset; // sumset[sum] = whether sum is achievable
+static int H, K, QMAX;
+
+static inline uint64_t binomial_coefficient(int n, int k) {
+    if (k > n || k < 0) return 0;
+    if (k == 0 || k == n) return 1;
+    if (k > n - k) k = n - k;
+    uint64_t result = 1;
+    for (int i = 0; i < k; ++i) {
+        result = result * (n - i) / (i + 1);
+    }
+    return result;
+}
+
+static bool parse_args(int argc, char *argv[]) {
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s H K QMAX\n", argv[0]);
+        return false;
+    }
+
+    char *endptr;
+    errno = 0;
+    H = (int)strtol(argv[1], &endptr, 10);
+    if (errno || *endptr != '\0' || H < 2 || H > 16) {
+        fprintf(stderr, "Invalid H: %s\n", argv[1]);
+        return false;
+    }
+
+    errno = 0;
+    K = (int)strtol(argv[2], &endptr, 10);
+    if (errno || *endptr != '\0' || (K != 3 && K != 4)) {
+        fprintf(stderr, "Invalid K: %s\n", argv[2]);
+        return false;
+    }
+
+    errno = 0;
+    QMAX = (int)strtol(argv[3], &endptr, 10);
+    if (errno || *endptr != '\0' || QMAX < K || QMAX > 250) {
+        fprintf(stderr, "Invalid QMAX: %s\n", argv[3]);
+        return false;
+    }
+
+    return true;
+}
+
+static void enumerate_shapes() {
+    int max_card = binomial_coefficient(H + K - 1, K - 1);
+    int max_sum = H * (QMAX - 1);
+
+    // Allocate arrays
+    N = calloc((size_t)(QMAX + 1) * (size_t)(max_card + 1), sizeof(uint64_t));
+    prefix = calloc((size_t)(max_card + 1), sizeof(uint64_t));
+    hist = calloc((size_t)(max_card + 1), sizeof(uint64_t));
+    sumset = calloc((size_t)(max_sum + 1), sizeof(bool));
+
+    if (!N || !prefix || !hist || !sumset) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Enumerate all normalized shapes once
+    if (K == 3) {
+        // Shape: {0, u, v} with 0 < u < v
+        for (int v = 2; v <= QMAX; ++v) {
+            for (int u = 1; u < v; ++u) {
+                memset(sumset, 0, (size_t)(max_sum + 1) * sizeof(bool));
+                int count = 0;
+                for (int a = 0; a <= H; ++a) {
+                    for (int b = 0; b <= H - a; ++b) {
+                        int c = H - a - b;
+                        if (c < 0) continue;
+                        int sum = a * 0 + b * u + c * v;
+                        if (!sumset[sum]) {
+                            sumset[sum] = true;
+                            count++;
+                        }
+                    }
+                }
+                N[v * (max_card + 1) + count]++;
+            }
+        }
+    } else if (K == 4) {
+        // Shape: {0, u, v, w} with 0 < u < v < w
+        for (int w = 3; w <= QMAX; ++w) {
+            for (int v = 2; v < w; ++v) {
+                for (int u = 1; u < v; ++u) {
+                    memset(sumset, 0, (size_t)(max_sum + 1) * sizeof(bool));
+                    int count = 0;
+                    for (int a = 0; a <= H; ++a) {
+                        for (int b = 0; b <= H - a; ++b) {
+                            for (int c = 0; c <= H - a - b; ++c) {
+                                int d = H - a - b - c;
+                                if (d < 0) continue;
+                                int sum = a * 0 + b * u + c * v + d * w;
+                                if (!sumset[sum]) {
+                                    sumset[sum] = true;
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                    N[w * (max_card + 1) + count]++;
+                }
+            }
+        }
+    }
+
+    // Process shapes to compute histograms
+    printf("q,size,count\n");
+    for (int q = K; q <= QMAX; ++q) {
+        memset(hist, 0, (size_t)(max_card + 1) * sizeof(uint64_t));
+        for (int v = 1; v < q; ++v) {
+            for (int size = 0; size <= max_card; ++size) {
+                prefix[size] += N[v * (max_card + 1) + size];
+            }
+        }
+        for (int size = 0; size <= max_card; ++size) {
+            hist[size] = prefix[size];
+        }
+        for (int size = 1; size <= max_card; ++size) {
+            if (hist[size] > 0) {
+                printf("%d,%d,%" PRIu64 "\n", q, size, hist[size]);
+            }
+        }
+    }
+
+    free(N);
+    free(prefix);
+    free(hist);
+    free(sumset);
+}
+
+int main(int argc, char *argv[]) {
+    if (!parse_args(argc, argv)) {
+        return EXIT_FAILURE;
+    }
+
+    enumerate_shapes();
+    return 0;
+}

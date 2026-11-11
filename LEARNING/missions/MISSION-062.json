@@ -1,7 +1,7 @@
 {
   "id": "MISSION-062",
   "title": "Is the Proof Regime for the Most Frequent Sumset Sizes Far From Sharp? An Exhaustive Check for 3-Element Sets",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "Additive combinatorics: sizes of h-fold sumsets of 3-element subsets of {1,...,q} (exhaustive counting by local deterministic computation; bounded CPU)",
   "created_at": "2026-11-07T05:20:00Z",
@@ -149,5 +149,7 @@
   ],
   "verdict": null,
   "evidence": [],
-  "lessons_learned": []
+  "lessons_learned": [],
+  "assignee": "codex",
+  "worktree": ".worktrees/codex-mission-062"
 }

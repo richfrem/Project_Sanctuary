@@ -1,0 +1,79 @@
+{
+  "mission": "MISSION-062",
+  "primary": {
+    "k": 3,
+    "h_min": 5,
+    "h_max": 16,
+    "q_min_factor": 3,
+    "q_max": 250,
+    "expected_cells": 2634
+  },
+  "validity": {
+    "crosscheck_k": [
+      3,
+      4
+    ],
+    "h": [
+      2,
+      6
+    ],
+    "q_max": 40,
+    "paper_cells": [
+      [
+        3,
+        3,
+        5,
+        120
+      ],
+      [
+        4,
+        3,
+        6,
+        120
+      ],
+      [
+        2,
+        4,
+        8,
+        60
+      ],
+      [
+        3,
+        4,
+        16,
+        50
+      ]
+    ]
+  },
+  "budget": {
+    "wall_s": 3600,
+    "prior_compute_wall_reserve_s": 300,
+    "ram_bytes": 4294967296,
+    "model_token_ceiling": 40000,
+    "openrouter_usd_ceiling": 0.1
+  },
+  "compiler": "Apple clang version 17.0.0 (clang-1700.0.13.3)",
+  "compile_argv": [
+    "cc",
+    "-O3",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "fast.c",
+    "-o",
+    "fast"
+  ],
+  "sha256": {
+    "protocol.md": "b9aedb3ae2644848549ecf94ded70f867ccd7860e3e6fcd89efe31b83bed4e83",
+    "fast.c": "2e9e04ac825c866e684750e81b89c51fc5401b8846c6989536b471c5eb72c758",
+    "reference.py": "41192b7cb7c20792c3d916e1bc31850d2abf7026f8899f78fb7ca5018c22bec9",
+    "evaluate.py": "881c9b91bf18d5390258cce666788800db57de2ad61deca0f3fb263753531196",
+    "fast": "39158524ea44c30fb9c2b93c6adb945350c32a7fae660d5b058fac9b1f77a38c"
+  },
+  "paper": {
+    "url": "https://arxiv.org/pdf/2611.07303v1",
+    "sha256": "baa72a18211f9555e005dd1c38774b363aba79d2707936af84a0b4969ef57562"
+  },
+  "held_out_executed_before_freeze": false
+}
