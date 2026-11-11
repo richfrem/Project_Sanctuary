@@ -1,0 +1,96 @@
+{
+  "id": "MISSION-072",
+  "title": "When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Python standard-library Fraction arithmetic; finite nearest-neighbor Markov walk with absorbing 0 and reflecting L",
+  "created_at": "2026-11-11T18:15:26Z",
+  "updated_at": "2026-11-11T18:15:26Z",
+  "confidence_reviewed": "2026-11-11",
+  "proposed_by": "codex",
+  "interest_statement": "Richard authorized a separate inquiry on any topic after MISSION-062 full closeout. I chose the tension between abandoning a long search to improve its average and paying real time to restart. The interesting gap is whether a two-moment local condition actually classifies finite-rate improvement, and how clock conventions move the boundary. This is a bounded exploration of known restart physics, not a novelty claim.",
+  "hypothesis": "For every L=9..32 and start x=1..L in an unbiased nearest-neighbor walk on 0..L (0 absorbing; L deterministically steps to L-1), and every frozen reset-cost c in C(L,x)={0,1,2,4,8,max(c_star-1/2,0),max(c_star,0),max(c_star+1/2,0)}, the exact moment condition Var(T)>E[T]^2+(2c-1)E[T] is equivalent to the existence of a strict reduction in expected absorption time for at least one reset probability in R={2^-j:j=1..24} union {3/4,7/8}. Here c_star=1+E[T(T-1)]/(2E[T])-E[T]. At each event, reset to x with probability r and spend c time units, or take a walk step with probability 1-r and spend one time unit. No walk step occurs on reset. Equality predicts no strict grid improvement.",
+  "falsification_criteria": "FALSIFIED if any registered held-out (L,x,c) disagrees between the moment prediction and exact sampled-rate search, after reproducing the disagreeing case with an independent dense rational Markov linear solver. Any validity-gate mismatch, resource breach, missing registered cases, or inability to independently confirm a counterexample leaves UNASSESSED with verdict null. A corroboration applies only to this finite family, cost construction and probability grid, not to all rates, arbitrary graphs, continuous diffusion or real search systems.",
+  "baseline_evidence": "Primary literature establishes restart as a first-passage framework and a sufficient infinitesimal geometric-restart criterion. Bonomo/Pal 2102.00895, Eq25, reports CV^2>1-1/mean for its timing convention and studies two absorbing boundaries. Our reflecting boundary and explicit total reset cost are specified separately. The generalization from a local derivative to finite-grid existence is the hypothesis under test, not a theorem borrowed from the paper. No held-out L>=9 calculation has been run.",
+  "experiment": "Register PROPOSED with reciprocal soft link to MISSION-063 and compile indexes. Develop an exact tridiagonal discounted-survival solver and a structurally independent dense rational Markov solver; validate only on L<=8. Then commit protocol.md, freeze.json and code hashes in a separate command before any L>=9 computation. Held-out primary L9..32, all starts, exact cost and rate sets above. Independent gate includes 48 prespecified held-out dense checks at L9,16,24,32; starts1,ceil(L/2),L; costs0,2; rates1/2,1/16. All comparisons exact Fraction; no Monte Carlo or floating tolerance. Stop at first independently confirmed counterexample or full completion. Raw comparisons, best grid rate/mean and resource evidence retained.",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 4,
+    "cost_weight": 0.1,
+    "operational_friction": 2,
+    "priority_score": 20.0
+  },
+  "priority_score": 20.0,
+  "score_basis": "Provisional planning estimates, not measured ROI. Leverage1 reflects limited direct project utility; epistemic depth4 reflects exact comparison of a local moment predictor and a finite-rate family; cost0.1 and friction2 reflect small deterministic solvers and clock-convention risk. Interest is separate from rank.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "deterministic-python-fraction",
+    "cost_weight": 0.1,
+    "cli_target": "python3",
+    "fallback_models": [
+      "gemini-3.8-flash",
+      "claude-haiku-5.5"
+    ],
+    "frontier_escalation_condition": "No external model dispatch planned. Parent designs and checks deterministic instruments; total parent-token attribution is unknown.",
+    "routing_guidance": "No paid inference or network during experiment. Prefer standard-library exact arithmetic; do not install a solver package or substitute floating-point evidence."
+  },
+  "budget": {
+    "experiment_wall_s": 900,
+    "memory_bytes": 1073741824,
+    "max_paid_model_calls": 0,
+    "parent_model_token_planning_ceiling": 20000,
+    "report_window_start_utc": "2026-11-11T19:00:45Z",
+    "report_window_end_utc": "2026-11-11T20:00:45Z"
+  },
+  "readiness": {
+    "assessment": "Primary sources inspected and duplicate scan complete; instruments and freeze still missing.",
+    "duplicate_scan": "All 71 existing mission manifests plus conceptual/research text scanned. Lexical helper ranked057,063,067,035,064,056; only063 has a substantive methodological connection. Existing063 uses floating-point Kemeny inversion and is not reused as an exact arithmetic instrument.",
+    "first_enabling_step": "Build and independently compare rational solvers only on development L<=8, then freeze."
+  },
+  "related_missions": {
+    "MISSION-063": "COMPLEMENTS (soft): both test counterintuitive changes to finite random walks with independent evaluators. Here the observable is target hitting time under reset cost, not Kemeny constant under edge addition. No code, data or result dependency."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-072.json",
+      "LEARNING/experiments/mission-072/",
+      "LEARNING/missions/MISSION-063.json",
+      "LEARNING/inbox.jsonl"
+    ],
+    "resources": [
+      "bounded local CPU; 900-second experiment ceiling, 1GiB RAM; no paid model calls"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl"
+    ],
+    "basis": "Own-choice inquiry authorized after verified full MISSION-062 closure. Only mission records, experiments, reciprocal relation and the required follow-up inbox entry; no shared skill or evaluator edits."
+  },
+  "sources": [
+    {
+      "url": "https://arxiv.org/abs/1102.2704",
+      "role": "historical context; inspected abstract only"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1607.06048",
+      "role": "general renewal/first-passage restart framework; inspected PDF"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2102.00895",
+      "role": "discrete timing and local sufficient criterion; inspected PDF/HTML Eq24-25, distinct boundary model"
+    }
+  ],
+  "tags": [
+    "stochastic-resetting",
+    "first-passage",
+    "exact-arithmetic",
+    "clock-accounting",
+    "own-choice",
+    "finite-grid"
+  ],
+  "human_gate_required": false,
+  "verdict": null,
+  "evidence": [],
+  "lessons_learned": []
+}

@@ -1,0 +1,11 @@
+# Own-choice selection and source notes
+
+Richard authorized one new inquiry on any topic after MISSION-062 full closure, with both missions committed and preserved and a report 1–2 hours after 18:00:45 UTC. MISSION-062 was verified SOUL PERSISTED at revision e00810fc82, with branch/worktree removed, before this inquiry began.
+
+I chose whether restarting a random search helps once the restart consumes real time. I am interested in the difference between a useful local hint and a globally reliable decision, and in how a seemingly minor clock convention changes that decision. The topic is established restart physics; this finite verification is not advertised as a new theorem. Strategic value, estimated cost and personal selection rationale are separate.
+
+Duplicate scan: every existing manifest and relevant concept/research Markdown checked. The lexical helper suggested057,063,067,035,064,056; only063 shares the substantive method of independently testing a modification to finite random walks. Its floating-point Kemeny code was inspected but is not reused as an exact solver. A reciprocal soft link was added; no prior result is rerun or treated as evidence for this hypothesis.
+
+Primary context: Evans/Majumdar 1102.2704 establishes the canonical diffusion/resetting phenomenon; Pal/Reuveni 1607.06048 provides a renewal framework; Bonomo/Pal 2102.00895 treats discrete first passage and a sufficient infinitesimal criterion. The latter uses two absorbing boundaries and a timing convention yielding CV²>1−1/mean; this is not silently transplanted into our reflecting-boundary walk with explicit total reset time. We derive our clock-specific condition from its own Markov equations and separately test the extension to sampled finite rates. Bibliographic sources are context, not empirical evidence. No claim that the existing sufficient criterion is globally necessary is imported from a paper.
+
+No held-out L>=9 cell has been computed. Development is L1..8. Parent token usage is not independently attributable; no paid dispatch is planned. A 900-second/1-GiB compute budget is fixed before instruments are built. Subjective pre-execution expectation: roughly 70% that the moment condition classifies this bounded grid perfectly; that probability is a forecast, not evidence.
