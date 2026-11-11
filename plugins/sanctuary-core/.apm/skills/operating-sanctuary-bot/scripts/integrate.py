@@ -32,13 +32,17 @@ Key Functions:
         - find_or_create_pr(): Open PR number for the branch, creating it if needed.
         - checks_state(): "pass", "none", "pending" or "fail" for a PR's checks.
         - merge(): Merge a PR with a merge commit.
-    - integrate(): Sync with base, push, open/update the PR, merge if allowed.
+    - _git(), _sync_with_base(): Git execution and conflict-safe synchronization.
+    - finish_delivery(): Verify post-merge workflows, local checkout and regeneration.
+    - Forge.workflow_state(): Check workflows for an exact revision.
+    - integrate(): Sync with base, push, open/update the PR, merge and finish delivery.
 """
 from __future__ import annotations
 
 import fnmatch
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 CODE_EXTENSIONS = (".py", ".sh", ".bash", ".zsh", ".js", ".mjs", ".ts", ".tsx", ".jsx", ".cs", ".ps1",
@@ -123,7 +127,7 @@ class Forge:
     def _gh(self, *args: str) -> tuple[int, str]:
         """Run a gh command in the worktree and return its exit code and stdout."""
         r = subprocess.run(["gh", *args], cwd=self.wt, capture_output=True, text=True, timeout=120)
-        return r.returncode, r.stdout.strip()
+        return r.returncode, (r.stdout or r.stderr).strip()
 
     # Reuse the branch's open PR, or create one.
     def find_or_create_pr(self, branch: str, base: str, title: str, body: str) -> int | None:
@@ -147,7 +151,7 @@ class Forge:
         except json.JSONDecodeError:
             return "none" if code == 0 else "fail"
         if not states:
-            return "none"
+            return "none" if code == 0 else "fail"
         if states & {"FAILURE", "ERROR", "CANCELLED", "TIMED_OUT", "ACTION_REQUIRED"}:
             return "fail"
         if states & {"PENDING", "QUEUED", "IN_PROGRESS", "EXPECTED", "WAITING"}:
@@ -158,6 +162,36 @@ class Forge:
     def merge(self, pr: int) -> bool:
         """Merge a PR; returns True on success."""
         return self._gh("pr", "merge", str(pr), "--merge")[0] == 0
+
+
+    # Inspect workflows for the integrated revision; errors are never treated as no checks.
+    def workflow_state(self, revision: str, repository: str | None = None) -> str:
+        """Return pass, none, pending or fail for workflows at an exact revision."""
+        args = ["run", "list", "--commit", revision, "--limit", "100", "--json", "status,conclusion"]
+        if repository:
+            args += ["--repo", repository]
+        code, out = self._gh(*args)
+        if code:
+            return "fail"
+        try:
+            runs = json.loads(out)
+        except (ValueError, TypeError):
+            return "fail"
+        if not runs:
+            endpoint = f"repos/{repository}/actions/workflows" if repository else "repos/{owner}/{repo}/actions/workflows"
+            code, out = self._gh("api", endpoint, "--paginate")
+            try:
+                workflows = json.loads(out).get("workflows", [])
+            except (ValueError, AttributeError):
+                return "fail"
+            if code:
+                return "fail"
+            return "pending" if any(w.get("state") == "active" for w in workflows) else "none"
+        if len(runs) >= 100:
+            return "pending"
+        if any(r.get("status") != "completed" for r in runs):
+            return "pending"
+        return "pass" if all(r.get("conclusion") in ("success", "skipped", "neutral") for r in runs) else "fail"
 
 
 # Run a git command in the worktree; returns (exit code, combined output).
@@ -179,6 +213,66 @@ def _sync_with_base(wt: str, base: str) -> str | None:
     return None
 
 
+# Finish delivery without switching or overwriting an occupied checkout.
+def finish_delivery(worktree: str, base: str, forge: Forge) -> dict:
+    """Verify workflows, fast-forward clean local base, and run supported regeneration.
+
+    Returns:
+        Separate CI, checkout and regeneration evidence; complete is false on any gap.
+        Regenerated changes remain in the runtime branch for a reviewed follow-up PR.
+    """
+    result = {"complete": False, "stage": "post_merge", "reason": "", "ci": {}}
+    if _git(worktree, "fetch", "-q", "origin", base)[0]:
+        return {**result, "reason": "post-merge fetch failed"}
+    revision = _git(worktree, "rev-parse", f"origin/{base}")[1]
+    result["revision"] = revision
+    code, common = _git(worktree, "rev-parse", "--path-format=absolute", "--git-common-dir")
+    if code:
+        return {**result, "reason": "cannot locate primary checkout"}
+    primary = Path(common).parent
+    result["checkout"] = str(primary)
+    result["ci"]["source"] = forge.workflow_state(revision)
+    companion = primary.parent / "agent-plugins-skills"
+    if companion.exists():
+        code, out = _git(str(companion), "fetch", "-q", "origin", "main")
+        if code:
+            return {**result, "reason": "companion fetch failed: " + out[-200:]}
+        companion_revision = _git(str(companion), "rev-parse", "origin/main")[1]
+        result["ci"]["companion"] = forge.workflow_state(companion_revision, "richfrem/agent-plugins-skills")
+    else:
+        result["ci"]["companion"] = "unverified"
+    if any(state not in ("pass", "none") for state in result["ci"].values()):
+        return {**result, "reason": "post-merge workflows incomplete: " + str(result["ci"])}
+    if _git(str(primary), "symbolic-ref", "--short", "HEAD") != (0, base):
+        return {**result, "reason": "primary checkout is not on " + base + "; left untouched"}
+    if _git(str(primary), "status", "--porcelain")[1]:
+        return {**result, "reason": "primary checkout has uncommitted work; left untouched"}
+    code, out = _git(str(primary), "merge", "--ff-only", f"origin/{base}")
+    if code:
+        return {**result, "reason": "primary fast-forward failed: " + out[-200:]}
+    if _git(str(primary), "rev-parse", "HEAD")[1] != revision:
+        return {**result, "reason": "primary revision verification failed"}
+    result["local_synced"] = True
+    if _git(worktree, "status", "--porcelain")[1]:
+        return {**result, "reason": "runtime checkout dirty; regeneration left pending"}
+    code, out = _git(worktree, "merge", "--ff-only", f"origin/{base}")
+    if code:
+        return {**result, "reason": "runtime fast-forward failed: " + out[-200:]}
+    script = Path(worktree) / "plugins/sanctuary-core/.apm/skills/operating-sanctuary-guardian/scripts/merge_prep.py"
+    if not script.is_file():
+        return {**result, "reason": "supported regeneration command missing"}
+    proc = subprocess.run([sys.executable, str(script), "regenerate", "--root", worktree, "--format", "json"],
+                          cwd=worktree, capture_output=True, text=True, timeout=300)
+    result["regeneration"] = {"exit_code": proc.returncode, "output": (proc.stdout + proc.stderr)[-4000:]}
+    if proc.returncode:
+        return {**result, "reason": "post-merge regeneration failed; inspect regeneration evidence"}
+    changes = _git(worktree, "status", "--porcelain")[1]
+    if changes:
+        return {**result, "reason": "local checkout synchronized; regeneration produced changes requiring a scoped follow-up PR",
+                "pending_changes": changes}
+    return {**result, "complete": True, "stage": "delivered", "reason": "post-merge workflows verified; local checkout synchronized; regeneration complete"}
+
+
 # Level-2 integration: sync, push, PR, merge if the path policy and checks allow it.
 def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge | None = None) -> dict:
     """Bring a completed run into origin/<base>, auto-merging only allowlisted, non-protected changes.
@@ -195,7 +289,7 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
     """
     base = block.get("base", "main")
     forge = forge or Forge(worktree)
-    res = {"stage": "sync", "pr": None, "merged": False, "reason": "", "files": []}
+    res = {"complete": False, "stage": "sync", "pr": None, "merged": False, "reason": "", "files": []}
     err = _sync_with_base(worktree, base)
     if err:
         return {**res, "reason": err}
@@ -203,7 +297,7 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
     files = [f for f in _git(worktree, "diff", "--name-only", f"origin/{base}...HEAD")[1].splitlines() if f]
     res.update(stage="push", files=files)
     if not files:
-        return {**res, "reason": "nothing new to integrate"}
+        return {**res, **finish_delivery(worktree, base, forge)}
     code, out = _git(worktree, "push", "-q", "-u", "origin", branch)
     if code != 0:
         return {**res, "reason": "push failed: " + out[-200:]}
@@ -221,4 +315,4 @@ def integrate(name: str, block: dict, worktree: str, summary: str, forge: Forge 
         return {**res, "reason": f"PR checks {checks}: left open"}
     if not forge.merge(pr):
         return {**res, "reason": "merge failed: left open"}
-    return {**res, "stage": "merged", "merged": True, "reason": f"auto-merged (checks: {checks})"}
+    return {**res, "merged": True, **finish_delivery(worktree, base, forge)}

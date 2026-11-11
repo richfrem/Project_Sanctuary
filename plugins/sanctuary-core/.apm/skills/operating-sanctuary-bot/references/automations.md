@@ -34,7 +34,14 @@ Each run gets an id `<name>-<YYYYMMDD-HHMMSS>` and goes through the conductor (a
 With an `integrate` block, every COMPLETED run is brought toward `origin/<base>` (level 2):
 1. merge `origin/<base>` into the run's branch (a conflict aborts and is reported for review);
 2. push the branch and open, or reuse, one PR;
-3. **auto-merge only if** every changed file matches `auto_merge_paths` **and** none hits the built-in deny list, and no PR check is failing or pending.
+3. **auto-merge only if** every changed file matches `auto_merge_paths` **and** none hits the built-in deny list, and no PR check is failing or pending;
+4. fetch the merged revision and inspect its GitHub Actions runs and those at the companion repository's current remote main; pending, failed or unavailable checks keep delivery PARTIAL;
+5. fast-forward the primary checkout only when it is clean and already on the base branch, then verify its HEAD matches the fetched remote revision; never switch another user's branch or overwrite edits;
+6. fast-forward the runtime branch and invoke the Guardian's supported `merge_prep.py regenerate` there. A failed command or generated changes keep delivery PARTIAL, with evidence and the pending follow-up recorded in history and inbox. Generated exports need a separate scoped PR, never a direct main commit or a research-allowlist bypass.
+
+No-change runs also perform steps 4–6, recovering already merged artifacts missing locally. The conductor's COMPLETED result alone does not make the automation COMPLETED: a configured integration must report `complete: true`. CI failures require inspection and repair; pending CI can be rechecked by a subsequent run. No workflow runs reported is recorded separately as `none`, not as passing tests.
+
+The arXiv pipeline retains its digest → abstract-based relevance/impact/improvement analysis → future-mission seeds → save sequence. Seeds remain unreviewed candidates; the bot does not register or execute those missions.
 
 The deny list is part of the bot (`scripts/integrate.py`) and a definition cannot override it: mission manifests and backlog files (`LEARNING/missions/**`, `index.jsonl`, `backlog.md`, `inbox.jsonl`), governance (`.agent/**`, `protocols/**`, `context/**`, AGENTS/CLAUDE/START_HERE/INSTALL/architecture, `apm.*`), `plugins/**`, `huggingface/**`, `.github/**`, and **any code file by extension**, even inside an allowed folder. `auto_merge_paths` must name a dossier under `LEARNING/research/`. Anything else stays an open PR for human review, and the inbox says why. The bot never syncs Hugging Face: that stays in session closeout.
 
