@@ -15,7 +15,7 @@ One interface, `scripts/bot.py`, over everything the user should not have to thi
 - **Interview, then approve, then run.** Never register, approve or run on the first turn. The user approves each automation with an explicit "go"; `bot.py approve` records it against the definition's content hash, so any later edit pauses it until re-approved.
 - **The human starts the bot.** Starting it on request in this conversation is fine; session bootstrap never starts it.
 - **Definitions are reviewed like code**: `.agent/automations/<name>.json` in the repo, through a feature branch and PR. Approvals, run state, history and the inbox stay machine-local in `~/.sanctuary/daemon/`.
-- **Edits happen only in a task or runtime worktree** (`.worktrees/<name>`, leased with `manage_coordination.py`), never on main. With an `integrate` block the bot pushes its branch and opens a PR, and auto-merges only allowlisted data under `LEARNING/research/`; code, mission manifests and governance files always wait for human review. After merge it verifies workflows in both repositories, fast-forwards a clean primary checkout already on main, and runs supported regeneration in its runtime worktree. Regenerated changes require a scoped follow-up PR and keep delivery PARTIAL; they are never committed on main or auto-merged through the research-data allowlist. It never syncs Hugging Face.
+- **Edits happen only in a task or runtime worktree** (`.worktrees/<name>`, leased with `manage_coordination.py`), never on main. With an `integrate` block the bot pushes its branch and opens a PR, and auto-merges only allowlisted data under `LEARNING/research/`; code, mission manifests and governance files always wait for human review. After merge it verifies workflows in both repositories, fast-forwards a clean primary checkout already on main, and runs supported regeneration in its runtime worktree. With the explicitly hash-approved `integrate.preserve_remote: true` flag, the separate preservation cycle publishes only fixed generated export/receipt paths through scoped PRs, uses the existing Hugging Face sync tool, verifies both remote hashes, and publishes the receipt before completion. Any unfinished stage stays PARTIAL. Ordinary research auto-merge rules remain unchanged; no arbitrary protected source can use this exception.
 - **No permission bypass unless approved**; never Copilot. **Cost is bounded by rails** (cycles, timeouts, failure limits), not tokens: say so.
 
 ## Workflow
@@ -39,7 +39,8 @@ python3 $B run one-off.json --by <approver>   # run once without scheduling
 ```
 
 ## Verification
-- `scripts/test_bot.py` (13: schedule maths, catch-up, approval tamper refusal, overlap, auto-pause, run-now, memory, inbox, notify, end-to-end with a real bot), `scripts/test_campaign.py` (14: multi-step conductor), `scripts/test_daemon.py` (10: runtime rails), `scripts/test_integrate.py` (18: push/PR/auto-merge policy against a real git remote). No model or network calls.
+- `scripts/test_bot.py` (14: schedule maths, catch-up, approval tamper refusal, overlap, auto-pause, run-now, memory, inbox, notify, end-to-end with a real bot), `scripts/test_campaign.py` (14: multi-step conductor), `scripts/test_daemon.py` (10: runtime rails), `scripts/test_integrate.py` (18: push/PR/auto-merge policy against a real git remote). No model or network calls.
+- `scripts/test_preserve.py` exercises full export/upload/receipt ordering, failure refusal, fixed-path isolation and resume against real local git with fake remote commands.
 - `bot.py doctor` checks host, config, bot process and engines.
 
 ## References

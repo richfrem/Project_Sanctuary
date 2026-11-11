@@ -104,6 +104,8 @@ class Policy(unittest.TestCase):
         """Allowlists must name a dossier under LEARNING/research/."""
         self.assertEqual(I.validate_integrate({"auto_merge_paths": ALLOW}), [])
         self.assertEqual(I.validate_integrate(None), [])
+        self.assertEqual(I.validate_integrate({"auto_merge_paths": ALLOW, "preserve_remote": True}), [])
+        self.assertTrue(I.validate_integrate({"auto_merge_paths": ALLOW, "preserve_remote": "true"}))
         for bad in (["**"], ["plugins/**"], ["LEARNING/research/**"], ["LEARNING/research/../missions/**"], ["LEARNING/missions/**"]):
             self.assertTrue(I.validate_integrate({"auto_merge_paths": bad}), bad)
 
