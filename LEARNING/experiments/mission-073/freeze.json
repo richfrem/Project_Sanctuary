@@ -1,0 +1,39 @@
+{
+ "mission": "MISSION-073",
+ "frozen_at_utc": "2026-11-11T20:40:49Z",
+ "toolchain": {
+  "cc": "Apple clang 17.0.0 (clang-1700.0.13.3), -O2 -pthread",
+  "python": "3.15.2"
+ },
+ "forecast": {
+  "k4_rotation_orbits_interval": [
+   14400000,
+   14800000
+  ],
+  "basis": "300000 random Q4 masks, k4 fraction 0.6523233 +- 0.00087; identity est 2.8017e9"
+ },
+ "initial_expectation_recorded_miss": {
+  "interval": [
+   1000000,
+   10000000
+  ],
+  "confidence": 0.6
+ },
+ "sha256": {
+  "burnside.c": "c216079896a9ae2bb42e176e9f9bf18af3526f955b1a910bc71c02536aadc08d",
+  "aggregate.py": "e6b2f806fb7e81ce261f1019c821ac9792e96b9ac720fe828183d428c3ac6e97",
+  "independent.py": "6492f1293da43aec2d36f808cd1e6641709e7eb5b917bb2e82c9f3cecf29a9cb",
+  "protocol.md": "0ab0cd93e4035cf5658767df69b3126f761621a273e5540b0c7966d235395f38",
+  "discovery.md": "d0de18e4f4bf2522a4ee2e4aa6ed43c90ddedab0cdfb1c420d2660bbf64f9f0e",
+  "review.md": "070628c54e912fb21f739ec33f39206afc5fa3f9ee348c909b692363729b0803",
+  "review_openrouter_raw.md": "4fe56baac3605f154a892654bb6ba2735b1a7d4f488e16cda384375e96b86ee3",
+  "dev_results.json": "c4046d01cec411925702722dffa92e3a77e46b418ff8cc602a0c00423c988534",
+  "dev_aggregate_n3.json": "ade1f26754a19c89d56f7f02040b4e8fb576547289216cab9456a8a5e0e8e18b",
+  "dev_independent_n3.json": "a561a61513be0b404e0156366e4da83942ead2aa61c799c222796cf95d820c20",
+  "dev_burnside_n3.jsonl": "3cf4f18a574142ebdd633c733f484779b8608ccb9343f5bc9c11c94fcf8051ea",
+  "fix_py.jsonl": "9fc0ac1fb616138bee87002311ba3d788fb0a73d88ed11b1e1832a7cfc33a662",
+  "dev_props_in.txt": "91ab0283d8151a68f8fb46658f759e07926f1053f7f12c9599a75c82905402e8",
+  "dev_props_expected.txt": "759c91b991529c64cde6e0682fb02d8b712f34f3ac0119f4be680e2be0cbc0e8"
+ },
+ "no_q4_full_enumeration_run_before_this_freeze": true
+}

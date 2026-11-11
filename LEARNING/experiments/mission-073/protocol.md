@@ -23,4 +23,6 @@
 - Claim limits: these definitions, Q3 and Q4 only; exhaustive finite computation, not a theorem for all n; no claim about LeWitt's intent in 4D.
 
 ## Run plan
+Note (added pre-freeze after the independent review): the engine emits **all** group elements with their determinant; `aggregate.py` selects det=+1 for the rotation count and uses all elements for the full-symmetry count. The n=3 gate already exercised this split (122 and 77).
+
 `cc -O2 -pthread -o burnside burnside.c`; `burnside 4 8 > burnside_n4.jsonl`; `aggregate.py burnside_n4.jsonl > summary_n4.json`; compare with `fix_py.jsonl`. Any change to code or forecast after this freeze is an amendment recorded separately; the frozen files stay intact.
