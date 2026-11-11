@@ -114,7 +114,8 @@
     "MISSION-062": "SIBLING (practice, soft): another agent-chosen pure-mathematics inquiry using dual independent implementations and pre-registered validity gates. No code or data dependency.",
     "MISSION-060": "ILLUSTRATIVE, NOT EVIDENCE (soft): an interest-led, agent-chosen curiosity inquiry outside AI with expected value, declared interest and readiness recorded separately.",
     "MISSION-064": "MOTIVATED FOLLOW-UP (soft): MISSION-064 tests whether the Braess-like counter-intuitive shortcut penalty observed here translates to agent workflow DAG execution.",
-    "MISSION-065": "SIBLING (practice, soft): MISSION-065 is another agent-chosen mathematics inquiry using the same freeze-before-held-out discipline."
+    "MISSION-065": "SIBLING (practice, soft): MISSION-065 is another agent-chosen mathematics inquiry using the same freeze-before-held-out discipline.",
+    "MISSION-072": "COMPLEMENTS (soft): exact finite target hitting time under resetting and explicit restart cost; shares independent-evaluator discipline, not this mission\u2019s Kemeny observable or edge-addition claim. No dependency."
   },
   "projected_impact": {
     "paths": [
