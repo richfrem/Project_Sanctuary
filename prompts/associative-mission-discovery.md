@@ -165,3 +165,9 @@ Report briefly:
 6. Evidence paths, mission state, merged revision and verified Hugging Face revision, or exact unfinished stages.
 
 Producing an idea does not prove this exercise improves creativity, novelty or efficiency. Such a comparative claim would require separate evidence; do not launch that study as part of this task.
+
+## Closing reminders (do these last, after the final response above)
+
+1. **Plain-language summary.** Write a short summary for someone who does not know the project or the field: what you set out to do, what you found or made, how solid it is and what it does not show. Use everyday words; keep IDs, hashes and file paths in the technical report, not here.
+2. **Relevance to Sanctuary.** Assess honestly whether anything from this work could improve Project Sanctuary or its related processes (skills, prompts, tooling, mission workflow, budgeting, preservation). Name any concrete candidate improvement with its evidence and your confidence, or say "No clear relevance identified." Do not force a connection. Capture candidates as unstarted inbox items; do not act on them.
+3. **Git and workspace housekeeping: ask me.** List which of these are applicable and their state: commit, push, pull request, merge, checkout `main`, pull `origin main`, delete the branch, remove the worktree. Steps this prompt explicitly authorizes above (within that scope) need no second approval. For every other step, and for any change outside the authorized scope (including side fixes on other branches), ask me one clear question naming the exact steps, and wait. This reminder is not itself authorization. Before proposing a deletion, verify the branch is merged into `origin/main` and the worktree has no unpreserved work.
