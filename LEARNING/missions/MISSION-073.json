@@ -1,11 +1,11 @@
 {
   "id": "MISSION-073",
   "title": "Incomplete Open Tesseracts: How Many Connected Edge Shapes Does the 4-Cube Have, and Does LeWitt's Rule Still Count 122 in 3D?",
-  "status": "PROPOSED",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "C (cc -O2, pthreads) exact Burnside enumeration plus standard-library Python independent checker; no network, no paid inference during the experiment",
   "created_at": "2026-11-11T20:39:14Z",
-  "updated_at": "2026-11-11T20:39:14Z",
+  "updated_at": "2026-11-11T20:45:04.196798+00:00",
   "confidence_reviewed": "2026-11-11",
   "proposed_by": "claude-code",
   "interest_statement": "Richard invoked the associative-mission-discovery prompt (own-choice, one mission). Four domains were chosen deliberately (not randomly): change ringing, periodical cicadas, Sol LeWitt's wall drawings and incomplete open cubes, and the Venetian doge election. The crossing that held my interest: the 24 rotations of a cube are in bijection with the 24 rows of a four-bell extent (rotation group = S4 acting on the four body diagonals), so ringing four bells is a tour of every cube orientation by edge half-turns. That made me ask what LeWitt's 'incomplete open' rule counts one dimension up, where the analogy visibly breaks (the 4-cube rotation group has order 192, not 120 = |S5|). The association is generative provenance; it is not what is tested. Prior-work check found LeWitt's 122 already verified (Rozhkovskaya 2014; Pitt; Weychert; Vejdemo-Johansson 2026 for Platonic solids) and no enumeration for the tesseract in the sources inspected, so the 3D count is a validity gate and the 4D count is the new-here contribution (a distinct framing relative to sources inspected, not an exhaustive novelty claim).",
@@ -97,8 +97,42 @@
     "exact-computation"
   ],
   "human_gate_required": false,
-  "verdict": null,
-  "evidence": [],
+  "verdict": "CORROBORATED",
+  "evidence": [
+    {
+      "timestamp": "2026-11-11T20:45:04.196798+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-073/README.md",
+      "details": "Freeze 442ca079a preceded the Q4 run. Gate: Q3 gives 122 rotation orbits (LeWitt) and 77 all-symmetry, equal to independent brute force. Held-out Q4 (155.4s wall, 761s CPU, 1.77MB RSS): full-span connected edge shapes 14,632,580 under 192 rotations and 7,338,217 under 384 symmetries; k=1..3 rotation orbits 1,3,123. H1 consistency (integral Burnside sums, axis symmetry, 0 mismatches vs independent Python on 308 group elements, 300,034 differential masks), H2 forecast interval [14.4M,14.8M] and H3 chirality bounds all hold. Original pre-sampling expectation [1e6,1e7] missed (recorded). One cheap cross-family review (qwen3-coder-next, 0.00123 USD) found no real defect. Ringing association generative only; scope is these definitions on Q3/Q4, not a theorem."
+    }
+  ],
   "assignee": "claude-code",
-  "worktree": ".worktrees/claude-mission-073"
+  "worktree": ".worktrees/claude-mission-073",
+  "lessons_learned": [
+    "Counting LeWitt's rule in 4D gives 14,632,580 rotation orbits (7,338,217 with reflections) of full-span connected edge sets in the tesseract; 3D gate reproduces 122.",
+    "The k=3 count 123 = 122 + the complete 3-face, which is legal in Q4 but excluded in Q3; the identity count reconstructs exactly (8 x 2367 = 18936).",
+    "A cheap 65% connected-fraction sample forecast the 2.8e9 identity term to 0.12%, while my prior intuition (about 15%) missed by 4x: sample before forecasting.",
+    "Cube rotations equal S4 (4-bell extent) but the 4-cube has 192 rotations, not |S5| = 120; the ringing analogy breaks exactly one dimension up."
+  ],
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-11T20:45:04.196798+00:00",
+    "workflow": "soul_coverage.py closure"
+  },
+  "run_assessment": {
+    "execution": "complete",
+    "scientific_assessment": "CORROBORATED for the frozen finite claims G,H1,H2,H3",
+    "freeze_commit": "442ca079a",
+    "q4_rotation_k4_orbits": 14632580,
+    "q4_all_symmetry_k4_orbits": 7338217,
+    "q3_rotation_k3_orbits": 122,
+    "wall_s": 155.41,
+    "cpu_s": 769.5,
+    "peak_rss_bytes": 1769472,
+    "paid_calls": 1,
+    "paid_usd": 0.00123136,
+    "parent_tokens": "unknown",
+    "transfer_claim": "association generative only; not tested",
+    "limits": "finite computation for Q3/Q4 under stated definitions; no second full recount of the 2^32 identity term"
+  }
 }

@@ -80,7 +80,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#59** | `MISSION-005` | **Asynchronous Multi-Bot DAG Barrier Orchestration** | 4 | 4 | 1.0x | 1 | **16.0** | `PROPOSED` | - |
 | **#60** | `MISSION-008` | **Functional Cognitive Continuity & Resumption Checkpoints** | 4 | 4 | 0.5x | 2 | **16.0** | `PROPOSED` | - |
 | **#61** | `MISSION-043` | **Accumulate Local Sovereign Capabilities Through Gated Sequential Adapter Updates** | 5 | 5 | 0.4x | 4 | **15.62** | `PROPOSED` | - |
-| **#62** | `MISSION-073` | **Incomplete Open Tesseracts: How Many Connected Edge Shapes Does the 4-Cube Have, and Does LeWitt's Rule Still Count 122 in 3D?** | 1 | 3 | 0.1x | 2 | **15.0** | `PROPOSED` | - |
+| **#62** | `MISSION-073` | **Incomplete Open Tesseracts: How Many Connected Edge Shapes Does the 4-Cube Have, and Does LeWitt's Rule Still Count 122 in 3D?** | 1 | 3 | 0.1x | 2 | **15.0** | `RESOLVED` | `CORROBORATED` |
 | **#63** | `MISSION-035` | **Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment** | 5 | 4 | 0.5x | 3 | **13.33** | `RESOLVED` | `FALSIFIED` |
 | **#64** | `MISSION-064` | **Test When Added Planning Edges Help or Harm Agent Workflow Execution** | 4 | 4 | 0.4x | 3 | **13.33** | `PROPOSED` | - |
 | **#65** | `MISSION-015` | **Scientific Self-Improvement without Self-Deception** | 5 | 5 | 1.0x | 2 | **12.5** | `PROPOSED` | - |
@@ -1020,7 +1020,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Fail if any update violates capability or retention thresholds, a regressive adapter is promoted, or resource limits cannot be met. A smaller model or easier task substitution after evaluation begins requires a new hypothesis.
 
 ### MISSION-073: Incomplete Open Tesseracts: How Many Connected Edge Shapes Does the 4-Cube Have, and Does LeWitt's Rule Still Count 122 in 3D? (Rank #62)
-- **Status**: `PROPOSED`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: C (cc -O2, pthreads) exact Burnside enumeration plus standard-library Python independent checker; no network, no paid inference during the experiment
 - **Cheapest Viable Model**: `deterministic-c-and-python` (Tier: `free-local`, CLI: `cc, python3`)
@@ -1029,6 +1030,13 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Let Q_n be the n-cube graph, S_n the non-empty, non-complete, connected edge subsets, and k(S) the number of axis directions in which S has an edge. Orbits are counted by exact Burnside enumeration over the rotation group (det +1 signed permutations, order 24 for n=3, 192 for n=4) and over all symmetries (48, 384). (G, development) The engine gives 122 rotation orbits at n=3, k=3 (LeWitt's count) and 77 under all symmetries, both equal to an independent brute-force canonical-form count. (H1, held-out n=4) Instrument consistency: every Burnside sum is divisible by its group order; identity counts depend only on k; the engine's fixed-set counts equal an independent Python brute count for every group element with at most 12 edge cycles (308 elements); and C and Python agree on all 300,034 development masks. (H2, held-out n=4 forecast) The number of rotation orbits with k=4 lies in [14,400,000, 14,800,000] (forecast frozen after dev sampling gave a connected fraction of 0.6523 +- 0.0009, so identity count about 2.80e9). (H3) Chirality is real in 4D: the all-symmetry k=4 count is strictly between half and all of the rotation k=4 count.
 - **Falsification Gate**:
   > UNASSESSED (verdict null) if the gate G fails, any H1 check fails or cannot be run, the run exceeds its resource ceiling, or output is incomplete: instrument failure is not a finding. FALSIFIED if H1 holds and H2 or H3 fails (the instrument is validated but the forecast or chirality claim is wrong); the measured count is then reported as the result. CORROBORATED only if G, H1, H2 and H3 all hold. Whatever the verdict, the exact Q4 counts by k for both groups are recorded. Claims are limited to these definitions (connected, incomplete, k axes, proper rotations count mirror images as distinct) on the 3-cube and 4-cube; exhaustive finite computation establishes that finite result only. The cicada/ringing/Venice crossings are untested provenance.
+- **Empirical Evidence & Trials**:
+  * `2026-11-11T20:45:04.196798+00:00` [claude-code] (LEARNING/experiments/mission-073/README.md): Freeze 442ca079a preceded the Q4 run. Gate: Q3 gives 122 rotation orbits (LeWitt) and 77 all-symmetry, equal to independent brute force. Held-out Q4 (155.4s wall, 761s CPU, 1.77MB RSS): full-span connected edge shapes 14,632,580 under 192 rotations and 7,338,217 under 384 symmetries; k=1..3 rotation orbits 1,3,123. H1 consistency (integral Burnside sums, axis symmetry, 0 mismatches vs independent Python on 308 group elements, 300,034 differential masks), H2 forecast interval [14.4M,14.8M] and H3 chirality bounds all hold. Original pre-sampling expectation [1e6,1e7] missed (recorded). One cheap cross-family review (qwen3-coder-next, 0.00123 USD) found no real defect. Ringing association generative only; scope is these definitions on Q3/Q4, not a theorem.
+- **Lessons Learned & Epistemic Compounding**:
+  * Counting LeWitt's rule in 4D gives 14,632,580 rotation orbits (7,338,217 with reflections) of full-span connected edge sets in the tesseract; 3D gate reproduces 122.
+  * The k=3 count 123 = 122 + the complete 3-face, which is legal in Q4 but excluded in Q3; the identity count reconstructs exactly (8 x 2367 = 18936).
+  * A cheap 65% connected-fraction sample forecast the 2.8e9 identity term to 0.12%, while my prior intuition (about 15%) missed by 4x: sample before forecasting.
+  * Cube rotations equal S4 (4-bell extent) but the 4-cube has 192 rotations, not |S5| = 120; the ringing analogy breaks exactly one dimension up.
 
 ### MISSION-035: Measured Agent Usage Telemetry: Orchestrator-Queried Before/After Token and Quota Snapshots per Mission, Feeding Evidence-Based Model Assignment (Rank #63)
 - **Status**: `RESOLVED`

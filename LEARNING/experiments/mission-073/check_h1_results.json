@@ -1,0 +1,15 @@
+{
+ "H1c_elements_compared": 308,
+ "H1c_mismatches": 0,
+ "H1d_group_elements": 384,
+ "H1d_det_plus": 192,
+ "H1d_identity_cycles": 32,
+ "H1a_integral": true,
+ "H1b_axis_symmetry": true,
+ "H2_rot_k4": 14632580,
+ "H2_in_interval": true,
+ "H3_all_k4": 7338217,
+ "H3_half_rot": 7316290.0,
+ "H3_holds": true,
+ "H1_holds": true
+}

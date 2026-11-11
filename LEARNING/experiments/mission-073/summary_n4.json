@@ -1,0 +1,45 @@
+{
+ "n": 4,
+ "group_order_full": 384,
+ "identity_axis_symmetry_ok": true,
+ "identity_count_by_k": {
+  "1": 32,
+  "2": 216,
+  "3": 18936,
+  "4": 2805229948
+ },
+ "rotations": {
+  "group_order": 192,
+  "orbits_by_k": {
+   "1": 1,
+   "2": 3,
+   "3": 123,
+   "4": 14632580
+  },
+  "burnside_sum_by_k": {
+   "1": 192,
+   "2": 576,
+   "3": 23616,
+   "4": 2809455360
+  },
+  "integral": true,
+  "orbits_k_ge_n_minus_1": 14632703
+ },
+ "all_symmetries": {
+  "group_order": 384,
+  "orbits_by_k": {
+   "1": 1,
+   "2": 3,
+   "3": 78,
+   "4": 7338217
+  },
+  "burnside_sum_by_k": {
+   "1": 384,
+   "2": 1152,
+   "3": 29952,
+   "4": 2817875328
+  },
+  "integral": true,
+  "orbits_k_ge_n_minus_1": 7338295
+ }
+}
