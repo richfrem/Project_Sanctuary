@@ -1,41 +1,41 @@
 # arXiv Daily Digest
 
-Generated 2026-11-09 07:00 MST from the 5 newest cs.AI submissions.
+Generated 2026-11-11 07:00 MST from the 5 newest cs.AI submissions.
 
 ## Overview
 
-Newest titles: On Agentic Manipulation Policies; CPU-ARC: Agentic Reasoning Caching for on-CPU Reasoning Reuse; On the Reliability of Majority-Vote Pseudo-Labels in Test-Time Reinforcement Learning; GRAC: Graph-Based Retrieval-Augmented Captioning for Surgical Scene Description; Grasp-TAGS: Task-Aware Grasp Selection via Critic Distillation for Prehensile Loco-Manipulation.
+Newest titles: Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training; Toward Foundation Detection Models via Example-Based Grounding in EM-DETR; Contrastive Discovery: Open-Ended Scientific Discovery over Competing Explanations; Comparative Analysis of Agent Evaluation Frameworks: Stability, Detection, and Discovery in Enterprise Analytics Agents; ReTrace: Distilling Tool-Using Agents into Planner-Free Workflows.
 
 ## Papers
 
-### 1. On Agentic Manipulation Policies
+### 1. Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training
 
-- Link: http://arxiv.org/abs/2611.09892v1
-- Summary: Recent work on robot manipulation has focused on specialist policies trained on demonstrations. We show that generalist AI models can control manipulators more reliably than specialist policies such as vision-language-action models (VLAs) and world-action models (WAMs).
+- Link: http://arxiv.org/abs/2611.14519v1
+- Summary: Foundation models pretrained on large natural-image collections are increasingly adapted for medical image segmentation, in the expectation that they will replace models trained for each task. Most comparisons, however, use data from the training distribution and a single task-specific baseline whose configuration is rarely justified, and therefore provide limited evidence of performance at new clinical sites.
 
-### 2. CPU-ARC: Agentic Reasoning Caching for on-CPU Reasoning Reuse
+### 2. Toward Foundation Detection Models via Example-Based Grounding in EM-DETR
 
-- Link: http://arxiv.org/abs/2611.09891v1
-- Summary: Large language models reinvent the wheel all the time. They conflate task-solving with the execution of the solutions, which forces them to solve every problem from scratch.
+- Link: http://arxiv.org/abs/2611.14518v1
+- Summary: DeepLearning (DL)-based Computer-Aided Diagnostic (CAD) systems have shown great promise in supporting clinicians, but their performance heavily depends on the availability of large, well-annotated datasets. In medical lesion detection, the scarcity of comprehensive, stan dardized annotations and the heterogeneity of existing datasets limit the development of robust foundation models.
 
-### 3. On the Reliability of Majority-Vote Pseudo-Labels in Test-Time Reinforcement Learning
+### 3. Contrastive Discovery: Open-Ended Scientific Discovery over Competing Explanations
 
-- Link: http://arxiv.org/abs/2611.09872v1
-- Summary: Test-time reinforcement learning (TTRL) adapts pretrained language models to unlabeled target-domain data using self-generated pseudo-labels, whose reliability remains poorly understood. We analyze majority-vote supervision for TTRL with online Direct Preference Optimization (DPO) and decompose its error into population-majority bias and prompt-dependent finite-rollout variation.
+- Link: http://arxiv.org/abs/2611.14514v1
+- Summary: LLM agents are increasingly used for open-ended, data-driven scientific discovery, yet most of them evaluate hypotheses pointwise, testing an empirical claim $h$ only against its complement $\neg h$. When evidence rejects $h$, the agent learns that one explanation is unlikely but not which alternative the evidence supports.
 
-### 4. GRAC: Graph-Based Retrieval-Augmented Captioning for Surgical Scene Description
+### 4. Comparative Analysis of Agent Evaluation Frameworks: Stability, Detection, and Discovery in Enterprise Analytics Agents
 
-- Link: http://arxiv.org/abs/2611.09866v1
-- Summary: Purpose: Surgical operative reports support procedural documentation, surgical training, performance assessment, and workflow review. However, extracting meaningful information often requires extensive manual review and clinical expertise.
+- Link: http://arxiv.org/abs/2611.14493v1
+- Summary: Deploying LLM-based analytics agents in enterprise settings requires evaluation frameworks that can reliably detect failures across complex, multi-tool workflows. We present a three-phase comparative study of three evaluation frameworks, each representing a distinct evaluation paradigm (trace-based LLM judging, text-only LLM judging with red-teaming, and deterministic heuristics), applied to two analytics agents in a controlled research setting using frozen execution traces.
 
-### 5. Grasp-TAGS: Task-Aware Grasp Selection via Critic Distillation for Prehensile Loco-Manipulation
+### 5. ReTrace: Distilling Tool-Using Agents into Planner-Free Workflows
 
-- Link: http://arxiv.org/abs/2611.09864v1
-- Summary: Loco-manipulation, which requires mobile manipulators to coordinate locomotion and manipulation over long horizons, is a key capability for large-object rearrangement in applications such as service robotics and warehouse automation. Despite recent progress, reliably executing these tasks remains challenging because performance depends on complex robot-object and object-environment interaction dynamics.
+- Link: http://arxiv.org/abs/2611.14492v1
+- Summary: Business process automation runs the same Standard Operating Procedure (SOP) again and again on new inputs. Large Language Model (LLM) agents can follow an SOP written in natural language, but they call an LLM to choose every step of every run, which adds latency and cost at scale.
 
 ## Candidate Mission Ideas
 
 Unstarted seeds generated from titles; review before registering anything.
 
-- Test the central claim of "On Agentic Manipulation Policies" (http://arxiv.org/abs/2611.09892v1) on a small local reproduction, and record whether it holds.
-- Test the central claim of "CPU-ARC: Agentic Reasoning Caching for on-CPU Reasoning Reuse" (http://arxiv.org/abs/2611.09891v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training" (http://arxiv.org/abs/2611.14519v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "Toward Foundation Detection Models via Example-Based Grounding in EM-DETR" (http://arxiv.org/abs/2611.14518v1) on a small local reproduction, and record whether it holds.
