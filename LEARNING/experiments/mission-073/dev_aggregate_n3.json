@@ -1,0 +1,40 @@
+{
+ "n": 3,
+ "group_order_full": 48,
+ "identity_axis_symmetry_ok": true,
+ "identity_count_by_k": {
+  "1": 12,
+  "2": 54,
+  "3": 2366
+ },
+ "rotations": {
+  "group_order": 24,
+  "orbits_by_k": {
+   "1": 1,
+   "2": 3,
+   "3": 122
+  },
+  "burnside_sum_by_k": {
+   "1": 24,
+   "2": 72,
+   "3": 2928
+  },
+  "integral": true,
+  "orbits_k_ge_n_minus_1": 125
+ },
+ "all_symmetries": {
+  "group_order": 48,
+  "orbits_by_k": {
+   "1": 1,
+   "2": 3,
+   "3": 77
+  },
+  "burnside_sum_by_k": {
+   "1": 48,
+   "2": 144,
+   "3": 3696
+  },
+  "integral": true,
+  "orbits_k_ge_n_minus_1": 80
+ }
+}

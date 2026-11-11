@@ -1,0 +1,36 @@
+{
+ "rotations": 24,
+ "distinct_diagonal_perms": 24,
+ "is_all_S4": true,
+ "adjacent_place_swaps_as_rotations": {
+  "(0 1)": {
+   "order2": true,
+   "edges_fixed_as_sets": 2,
+   "vertices_fixed": 0
+  },
+  "(1 2)": {
+   "order2": true,
+   "edges_fixed_as_sets": 2,
+   "vertices_fixed": 0
+  },
+  "(2 3)": {
+   "order2": true,
+   "edges_fixed_as_sets": 2,
+   "vertices_fixed": 0
+  }
+ },
+ "extent_rows": 24,
+ "extent_distinct": true,
+ "every_step_adjacent_swap": true,
+ "last_row_to_first_adjacent": true,
+ "first_row": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "tour_visits_distinct_orientations": 24,
+ "tour_covers_all_24": true,
+ "rotations_of_4cube": 192,
+ "order_S5": 120
+}

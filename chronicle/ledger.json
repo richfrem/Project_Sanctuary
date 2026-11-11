@@ -1,6 +1,13 @@
 {
-  "total_entries": 383,
+  "total_entries": 384,
   "entries": [
+    {
+      "id": 392,
+      "title": "Counting LeWitt's Cubes in Four Dimensions",
+      "filename": "392_counting_lewitts_cubes_in_four_dimensions.md",
+      "date": "2026-11-11",
+      "status": "published"
+    },
     {
       "id": 391,
       "title": "Exact Evidence, Restart Costs, and Completing the Whole Closeout",
