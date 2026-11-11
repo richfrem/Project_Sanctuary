@@ -1,7 +1,7 @@
 {
   "id": "MISSION-072",
   "title": "When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests",
-  "status": "PROPOSED",
+  "status": "IN_PROGRESS",
   "execution_surface": "local",
   "target_platform": "Python standard-library Fraction arithmetic; finite nearest-neighbor Markov walk with absorbing 0 and reflecting L",
   "created_at": "2026-11-11T18:15:26Z",
@@ -92,5 +92,7 @@
   "human_gate_required": false,
   "verdict": null,
   "evidence": [],
-  "lessons_learned": []
+  "lessons_learned": [],
+  "assignee": "codex",
+  "worktree": ".worktrees/codex-mission-072"
 }

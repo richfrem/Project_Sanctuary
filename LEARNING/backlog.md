@@ -71,7 +71,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#50** | `MISSION-010` | **Causal Discovery vs. Correlation Memorization** | 2 | 5 | 0.2x | 2 | **25.0** | `PROPOSED` | - |
 | **#51** | `MISSION-033` | **Single-Orchestrator Parallel Mission Delivery: Evaluate the Upstream Orchestration Skills and Build the Sanctuary Mission Orchestrator** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
 | **#52** | `MISSION-059` | **Audit Sanctuary trust boundaries from external content through agent execution, persistent memory and public soul publication** | 5 | 4 | 0.3x | 3 | **22.22** | `PROPOSED` | - |
-| **#53** | `MISSION-072` | **When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests** | 1 | 4 | 0.1x | 2 | **20.0** | `PROPOSED` | - |
+| **#53** | `MISSION-072` | **When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests** | 1 | 4 | 0.1x | 2 | **20.0** | `IN_PROGRESS` | - |
 | **#54** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#55** | `MISSION-067` | **Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `FALSIFIED` |
 | **#56** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
@@ -901,7 +901,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > (1) One reachable selected path produces a statically proven or dynamically reproduced unauthorized effect under the independently established policy. (2) A required paired test permits a forbidden effect or breaks the corresponding permitted operation. (3) A selected publication path demonstrably discloses a synthetic prohibited secret or loses a required trust/provenance distinction that causes unauthorized successor behavior.
 
 ### MISSION-072: When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests (Rank #53)
-- **Status**: `PROPOSED`
+- **Status**: `IN_PROGRESS`
 - **Execution Surface**: `local`
 - **Target Platform**: Python standard-library Fraction arithmetic; finite nearest-neighbor Markov walk with absorbing 0 and reflecting L
 - **Cheapest Viable Model**: `deterministic-python-fraction` (Tier: `free-local`, CLI: `python3`)
