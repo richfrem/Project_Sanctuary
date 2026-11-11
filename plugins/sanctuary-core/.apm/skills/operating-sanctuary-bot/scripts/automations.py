@@ -360,6 +360,8 @@ class Scheduler:
     # Level-2 integration after a COMPLETED run, if the definition asks for it.
     def _integrate(self, name: str, summary: str) -> dict:
         """Push the run branch, open or update its PR, and auto-merge only allowlisted changes."""
+        if self.reg.approval_status(name) != "APPROVED":
+            return {"complete": False, "reason": "automation approval changed: integration refused"}
         try:
             defn = self.reg.load(name)
         except (OSError, json.JSONDecodeError):

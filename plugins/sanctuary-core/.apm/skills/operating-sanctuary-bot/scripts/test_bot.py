@@ -244,6 +244,22 @@ class SchedulerUnit(unittest.TestCase):
         self.assertEqual(reg.state()["i"]["last_status"], "PARTIAL")
         self.assertIn("delivery PARTIAL", (self.home / "inbox.md").read_text())
 
+    def test_approval_rechecked_before_remote_preservation(self) -> None:
+        """A mid-run definition change cannot authorize new remote side effects."""
+        self.put(job_def("i", {"every": "1m"}, integrate={"auto_merge_paths": ["LEARNING/research/x/**"]}))
+        reg = A.Registry(self.home, self.defs, self.clock)
+        reg.approve("i", "tester")
+        scheduler = self.sched()
+        self.clock.t += 120
+        scheduler.tick()
+        self.put(job_def("i", {"every": "1m"}, integrate={"auto_merge_paths": ["LEARNING/research/x/**"],
+                                                       "preserve_remote": True}))
+        self.finish(self.launched[-1]["id"], "COMPLETED")
+        scheduler.tick()
+        result = reg.history("i")[-1]
+        self.assertEqual(result["status"], "PARTIAL")
+        self.assertIn("approval changed", result["integration"]["reason"])
+
 
 
 class EndToEnd(unittest.TestCase):

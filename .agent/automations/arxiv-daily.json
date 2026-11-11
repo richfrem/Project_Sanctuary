@@ -71,6 +71,7 @@
     "base": "main",
     "auto_merge_paths": [
       "LEARNING/research/arxiv_daily/**"
-    ]
+    ],
+    "preserve_remote": true
   }
 }
