@@ -1,9 +1,9 @@
 {
- "base_commit": "f8688d609ae810792bc62e4a856f9d9ce0a6533c",
- "dataset_records": 1457,
+ "base_commit": "500b098f5835af659d03243ae4f7e2c9953116ea",
+ "dataset_records": 1467,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-11T17:57:47Z",
+ "generated_at": "2026-11-11T18:08:20Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -35,29 +35,29 @@
    "status": "excluded"
   },
   {
-   "bytes": 49164,
+   "bytes": 49660,
    "category": "derived_projections",
    "path": ".agent/learning/budget_ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "08a0624df489c48d65d681030e0bace97e1b3f09f8033948aefc295dd39474ff",
+   "source_sha256": "7ebd82b4163a0509d10ac108762c14320522165c2e1c42ed3875217786c21d60",
    "status": "excluded"
   },
   {
-   "bytes": 11462,
+   "bytes": 11663,
    "category": "derived_projections",
    "path": ".agent/learning/cognitive_ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "3b8f82ed5ed063e19be94e09a2229fd546d557b3b61b3d6900ccdfd7e9ff42b4",
+   "source_sha256": "933a0b4ad0e5905efbdbea5d5c06035e859c49bea1b8270097679cb17b06bded",
    "status": "excluded"
   },
   {
    "action": {
-    "unchanged": 10,
-    "updated": 3
+    "unchanged": 6,
+    "updated": 7
    },
-   "bytes": 170166,
+   "bytes": 173890,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -78,20 +78,20 @@
    "record_sha256": [
     "96bc3136e8a41c89a9da88dae6365a76e8a23d897493231b513ec26cb132e892",
     "8268c2245cae102ac457e81ee3582def7a633262b6fd8992a0ced92c4cea1aa1",
-    "d779f93433951519c4a338546cdb651acbd980661b2e26dc759add292e01785f",
-    "270ed61728fae665715178dcf2db1f1ef0844111b05de438405e2964b615d1c5",
+    "ae58cad946b2f592b37478df6124bf1ec924cd64d16c3bbbf2a1a94eb09f91e2",
+    "7c4b23fdd16179eee5ed1e60d9c3c76c9f3b3866ae9e25d8d09cd57a656aba0a",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
-    "bdf8a15cf5a39c9eb8a8208c8fe56ccda757435582225ba1afc4b49f379ecc25",
-    "1e8668fd34c7b63e66072734aeab56f54a8949d80909dc82ea945ebb231fd23e",
-    "24b235c78e8059cc6aa240a6486659cb622fbc8fa3791d245aed4ecd65518f8f",
-    "7ea8dbee42b1e351f7441f818652822b7bbddd4c3d7e8a2e42eb4ead8b919161",
+    "78a5331c482da55fe95670ed53486b3e7dc04e8829ddbe94c28f43c89ec745b7",
+    "9a4fdebe68dbcb8f66921b8e35040411110a15d4d6199b30a54c0936a69dba6c",
+    "ce6bb2ddb8729f95cdc31b5b69e3389d7407f609b965b276ff0cab75f095e5b9",
+    "2165bd450bb67a04cbaf83e525b783b893a41fd7f7c35c80fa1961c9067f4b1f",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
-    "680003a34b016b74fcd4c9424de1d59d8490286ec0a59dbcf8ec4037dd1b2978"
+    "d2e4427b362f08a1f705a14122e391d9762dff77ef90595fd8db2f222ca30cc9"
    ],
    "required": true,
-   "source_sha256": "99a2bc63c712db6265e3aeb561b9d59d8342587e7e75a200b6846651395acb3d",
+   "source_sha256": "bdf700a1895b22f262ad0f7fa8ef562271e54af7fa0bc3b249ea7d46b5537907",
    "status": "included"
   },
   {
@@ -121,12 +121,12 @@
    "status": "included"
   },
   {
-   "bytes": 22152,
+   "bytes": 22720,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "eaf9a400684f90f9c49ad67c9723a0106e0ffb1b3b1efcdcef7875a43d7994e1",
+   "source_sha256": "e7c267738e84a635fd1b08ae25ffd9a665173ee19cfd01baf5a9f83c8b27aae0",
    "status": "excluded"
   },
   {
@@ -807,12 +807,12 @@
    "status": "included"
   },
   {
-   "bytes": 158203,
+   "bytes": 159170,
    "category": "derived_projections",
    "path": "LEARNING/backlog.md",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "71a9923a951884758c5e27d7fa42036b45ca0fd83b1f0662bf4e21367d777c36",
+   "source_sha256": "e086713e26f6f68605d848be66014b16f63376550d05c7d5fa8755111baadd3e",
    "status": "excluded"
   },
   {
@@ -26523,6 +26523,217 @@
   },
   {
    "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "881c495a3aece62a41d293d6fa17888b01160ba35ac46787b089a98fe8aca107"
+   },
+   "bytes": 26,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/.gitignore",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "881c495a3aece62a41d293d6fa17888b01160ba35ac46787b089a98fe8aca107",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 8075,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/README.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_README"
+   ],
+   "record_sha256": [
+    "49ff72969895179588ac461c3148bf69379ca718c1fbe6c3b004b563ee8a5f5f"
+   ],
+   "required": true,
+   "source_sha256": "260c530a72436c6376e5917f650b95ecc97dccc67b1368399106a2e15adaf560",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "bdb1d946e351983f232762cb8ae00524cbc4c5b6993e43871a15590b52979233"
+   },
+   "bytes": 1416,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/check_worker.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "bdb1d946e351983f232762cb8ae00524cbc4c5b6993e43871a15590b52979233",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "dadb2e08199c078887bd509d9aed4cdab6ef8fe7d13643ec915f834ec57cf59c"
+   },
+   "bytes": 1070,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/development-checks.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "dadb2e08199c078887bd509d9aed4cdab6ef8fe7d13643ec915f834ec57cf59c",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 2418,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/dispatch-plan.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_dispatch-plan"
+   ],
+   "record_sha256": [
+    "2922227d7d7ef39a343309594691744cd6e3b78f665476bd50e37d16cc1ac6e7"
+   ],
+   "required": true,
+   "source_sha256": "1526d12e08164a3a98595b07f85297a4623196d45547a85b31aa99e8ae9b1bad",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "881c9b91bf18d5390258cce666788800db57de2ad61deca0f3fb263753531196"
+   },
+   "bytes": 7469,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/evaluate.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "881c9b91bf18d5390258cce666788800db57de2ad61deca0f3fb263753531196",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "2e9e04ac825c866e684750e81b89c51fc5401b8846c6989536b471c5eb72c758"
+   },
+   "bytes": 4821,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/fast.c",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "2e9e04ac825c866e684750e81b89c51fc5401b8846c6989536b471c5eb72c758",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "93081bec1321cd2bac20010dfad0bed86ac2f15507a80edaf443a03b552291c9"
+   },
+   "bytes": 1571,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/freeze.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "93081bec1321cd2bac20010dfad0bed86ac2f15507a80edaf443a03b552291c9",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "aab11c8c619940e17d764dff56cb7c8d204b5df7c988561f63d5a8ab4d604b25"
+   },
+   "bytes": 2632,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/model-selection.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "aab11c8c619940e17d764dff56cb7c8d204b5df7c988561f63d5a8ab4d604b25",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 5535,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/protocol.md",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_protocol"
+   ],
+   "record_sha256": [
+    "bc780f5002aa3c7cf540f6ed471f848850674b5c42ff8ab80b17e44600b8c73a"
+   ],
+   "required": true,
+   "source_sha256": "b9aedb3ae2644848549ecf94ded70f867ccd7860e3e6fcd89efe31b83bed4e83",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "41192b7cb7c20792c3d916e1bc31850d2abf7026f8899f78fb7ca5018c22bec9"
+   },
+   "bytes": 2790,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/reference.py",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "41192b7cb7c20792c3d916e1bc31850d2abf7026f8899f78fb7ca5018c22bec9",
+   "status": "included"
+  },
+  {
+   "action": {
     "unchanged": 1
    },
    "bytes": 11138,
@@ -26536,6 +26747,1044 @@
    ],
    "required": true,
    "source_sha256": "3449bc7a007d98282596714bfad2d6bef19319a41ccbf3dcd4c9901bca63f1f1",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "21fc04d4ef98e761d9756a5fcdeb602bf4cad9bf056a617a3fd432df467224b7"
+   },
+   "bytes": 3718,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/results.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "21fc04d4ef98e761d9756a5fcdeb602bf4cad9bf056a617a3fd432df467224b7",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "892169e5055567cae76650f0ac0aadef4d414c7b8982311bebda027351ee9363"
+   },
+   "bytes": 28516,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h10-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "892169e5055567cae76650f0ac0aadef4d414c7b8982311bebda027351ee9363",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "1490facfab38043f9d036aa7bca963aef91d38719256fe39629e4941dc34ac15"
+   },
+   "bytes": 31328,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h11-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "1490facfab38043f9d036aa7bca963aef91d38719256fe39629e4941dc34ac15",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "5147d21ba5ec9aabdc6478828339336e4dbdae63da79b119142687d0cd7c5bf3"
+   },
+   "bytes": 33995,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h12-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "5147d21ba5ec9aabdc6478828339336e4dbdae63da79b119142687d0cd7c5bf3",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "ecc0781a2b6776f9cea59c1f15757681df26945add29beac25778f1ab722bbcc"
+   },
+   "bytes": 37498,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h13-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "ecc0781a2b6776f9cea59c1f15757681df26945add29beac25778f1ab722bbcc",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "0efcc9bd06b19d50118d4570966c5eb1090074c65089549297ec074841aefdf4"
+   },
+   "bytes": 40897,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h14-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "0efcc9bd06b19d50118d4570966c5eb1090074c65089549297ec074841aefdf4",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "2001f92d542f4e2e60d969a849783cb0844ae54700516c67e8663cea44ba57b0"
+   },
+   "bytes": 44322,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h15-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "2001f92d542f4e2e60d969a849783cb0844ae54700516c67e8663cea44ba57b0",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "6734e091a1e55a7bd106d219f253e06b171d1a82871148c447bcfbec9dd92630"
+   },
+   "bytes": 47243,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h16-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "6734e091a1e55a7bd106d219f253e06b171d1a82871148c447bcfbec9dd92630",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "e23d6b90c86d845494b2a637b2d121fafed671b96e9a8f9dc614dd2942409e16"
+   },
+   "bytes": 5635,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h2-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "e23d6b90c86d845494b2a637b2d121fafed671b96e9a8f9dc614dd2942409e16",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "97ec2d7b63078a48c9bc94cd1492ac4e5033c0804a4a9320ad4de4d89ea1aabf"
+   },
+   "bytes": 665,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h2-k3-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "97ec2d7b63078a48c9bc94cd1492ac4e5033c0804a4a9320ad4de4d89ea1aabf",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "f43935dcc28620eefc34da3950413dcbb9b559c2a78129ba7c72e208a4fb73ff"
+   },
+   "bytes": 1323,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h2-k4-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "f43935dcc28620eefc34da3950413dcbb9b559c2a78129ba7c72e208a4fb73ff",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "5bacdf724393d083a1edd0e77338d48a2277a3f949d5285b3fcf3c565a3c75a3"
+   },
+   "bytes": 2161,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h2-k4-q60.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "5bacdf724393d083a1edd0e77338d48a2277a3f949d5285b3fcf3c565a3c75a3",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "ce02cd812853f320d8473423a05752bbdd8b5da6c2e8592d28989984b6d1d852"
+   },
+   "bytes": 3036,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h2-k4-q80.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "ce02cd812853f320d8473423a05752bbdd8b5da6c2e8592d28989984b6d1d852",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "a37701cad1fb66c9e959ad17eaf29959f80c1cb1c6616ec0db68f7e210557042"
+   },
+   "bytes": 3617,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k3-q120.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "a37701cad1fb66c9e959ad17eaf29959f80c1cb1c6616ec0db68f7e210557042",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "7787d1c390ae252e9e6949f50a2ce0fc2873bab966cf088ce21bfea8e19376a6"
+   },
+   "bytes": 8490,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "7787d1c390ae252e9e6949f50a2ce0fc2873bab966cf088ce21bfea8e19376a6",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "e7921340b5c9e7565533e8152fef3a12cdaf0d599943792f2d1a1892ac2dc497"
+   },
+   "bytes": 1001,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k3-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "e7921340b5c9e7565533e8152fef3a12cdaf0d599943792f2d1a1892ac2dc497",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "0fa24ee749d05c1104262dcb0580ee997d430b8a1518c002dfa5f595db1da1de"
+   },
+   "bytes": 3340,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k4-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "0fa24ee749d05c1104262dcb0580ee997d430b8a1518c002dfa5f595db1da1de",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "832c78f96a650c8b7b89ec31ad3c4a176cd21ac992fa194d8cc5a9d0796ac250"
+   },
+   "bytes": 4420,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k4-q50.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "832c78f96a650c8b7b89ec31ad3c4a176cd21ac992fa194d8cc5a9d0796ac250",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "3ebde63312c66b658182c7540eb493a5b8fe6dd4bdcdc538bf98c123c6660eec"
+   },
+   "bytes": 7800,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h3-k4-q80.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "3ebde63312c66b658182c7540eb493a5b8fe6dd4bdcdc538bf98c123c6660eec",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "d619b218ceb0e6c4e5df587d3fbdea4374e78e9f94fde9022e206314f1b208ba"
+   },
+   "bytes": 4935,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h4-k3-q120.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "d619b218ceb0e6c4e5df587d3fbdea4374e78e9f94fde9022e206314f1b208ba",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "e00330e3d319deef4fe6446d5b7dd41a4603fa018e8ffc0df1b32f188b8812bb"
+   },
+   "bytes": 11546,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h4-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "e00330e3d319deef4fe6446d5b7dd41a4603fa018e8ffc0df1b32f188b8812bb",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "815dfe92707751344855310f53710f1ae8f2a21dded98f42aa6fc0c925d5c1fa"
+   },
+   "bytes": 1364,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h4-k3-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "815dfe92707751344855310f53710f1ae8f2a21dded98f42aa6fc0c925d5c1fa",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "03617822638800e2d31abd6cf8f14365be65c357d819db691ebb4f11a48f1ef3"
+   },
+   "bytes": 5361,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h4-k4-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "03617822638800e2d31abd6cf8f14365be65c357d819db691ebb4f11a48f1ef3",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "6fb470c46492229f67fd2eb28e020d509469b62ebf428cdaad3e51bf78882c74"
+   },
+   "bytes": 12919,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h4-k4-q80.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "6fb470c46492229f67fd2eb28e020d509469b62ebf428cdaad3e51bf78882c74",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "18686fb582bc555eb3a22630a5d8ac82d9e32d46efd7f97e9785e332d5768f37"
+   },
+   "bytes": 14652,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h5-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "18686fb582bc555eb3a22630a5d8ac82d9e32d46efd7f97e9785e332d5768f37",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "88690231b8ac95a10628d9537c66c77dd955bec34a752e23ac8d6b40eaf8fb05"
+   },
+   "bytes": 1723,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h5-k3-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "88690231b8ac95a10628d9537c66c77dd955bec34a752e23ac8d6b40eaf8fb05",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "8e73b0ec76c41a1010ea713954d58961172895775d00395300006d6932459d76"
+   },
+   "bytes": 9398,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h5-k4-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "8e73b0ec76c41a1010ea713954d58961172895775d00395300006d6932459d76",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "2650959d59c3a12376f424bba0985547837f49f4c9ac78144aed096166866f7a"
+   },
+   "bytes": 17377,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h6-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "2650959d59c3a12376f424bba0985547837f49f4c9ac78144aed096166866f7a",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "867e72b055e80ca858df10f24981555b51b1a5d79c2483d4cc37359c436291c0"
+   },
+   "bytes": 2026,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h6-k3-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "867e72b055e80ca858df10f24981555b51b1a5d79c2483d4cc37359c436291c0",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "12ccbcf58714ac64e5db9b45c03f1ba604fbd3ddf27ce9e34f5727f54285cbb8"
+   },
+   "bytes": 13692,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h6-k4-q40.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "12ccbcf58714ac64e5db9b45c03f1ba604fbd3ddf27ce9e34f5727f54285cbb8",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "f7b3a971a49131471c9322240111cdc0508573e518c65636e8bfe76e8779fe03"
+   },
+   "bytes": 20225,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h7-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "f7b3a971a49131471c9322240111cdc0508573e518c65636e8bfe76e8779fe03",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "1affa7c123e559dc65b40e43a0f6931fb78358c225f4803e64e96b684f4c83dc"
+   },
+   "bytes": 22997,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h8-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "1affa7c123e559dc65b40e43a0f6931fb78358c225f4803e64e96b684f4c83dc",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "8962ecdc04357b432731ec92f33a75ee2693ff82399409de88b7a9d511042f15"
+   },
+   "bytes": 25796,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/runs/h9-k3-q250.csv",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "8962ecdc04357b432731ec92f33a75ee2693ff82399409de88b7a9d511042f15",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "0b059cac1ddcdf8b0a070c7894e95845e2b4b6fcf6a62b20594988241d88e70f"
+   },
+   "bytes": 1770,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/usage.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "0b059cac1ddcdf8b0a070c7894e95845e2b4b6fcf6a62b20594988241d88e70f",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 717,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-01-check.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-01-check"
+   ],
+   "record_sha256": [
+    "549e04270a148dfc4ce8479299f46fe4aa166666dace15667f3fb229a50975f8"
+   ],
+   "required": true,
+   "source_sha256": "5ad28d10f647609d7921b472b8c95ba3bf902dad33b0a31bc7f66ce125518551",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "4157a867224275973ca203c6f7d90d959b7007d98351a6d4253b2502d8f05b0b"
+   },
+   "bytes": 133,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-01-execution.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "4157a867224275973ca203c6f7d90d959b7007d98351a6d4253b2502d8f05b0b",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "7a68a29df1baef8ddc9084b3a74b11226d28a62f406ce6eb1e92b7c77209ccf2"
+   },
+   "bytes": 3777,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-01-proposal.c",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "7a68a29df1baef8ddc9084b3a74b11226d28a62f406ce6eb1e92b7c77209ccf2",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "8bc2882f13087b79ee264379e401bcb341990908b288755a7949861a38db5268"
+   },
+   "bytes": 4143,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-01.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "8bc2882f13087b79ee264379e401bcb341990908b288755a7949861a38db5268",
+   "status": "included"
+  },
+  {
+   "bytes": 0,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-01.stderr.txt",
+   "reason": "empty after sanitisation",
+   "required": true,
+   "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 195,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-02-check.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-02-check"
+   ],
+   "record_sha256": [
+    "72df4174ad374d6010438f93e4423d03f3895af3b5916d645cb4239868899c3f"
+   ],
+   "required": true,
+   "source_sha256": "1efa55cba836cf63cf5964fb6cd639e6633b1107690c39a29c1d1b67c6b3b546",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "2c8ce55afdf99f940e353ee81a81f15645f6aa0fce30c4740abcf5f66dba6434"
+   },
+   "bytes": 56,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-02-execution.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "2c8ce55afdf99f940e353ee81a81f15645f6aa0fce30c4740abcf5f66dba6434",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "b0026450b3f3cc196a5b381d27a34f61bd5539a3a9aedbc613673223ded2b20f"
+   },
+   "bytes": 5450,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-02.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "b0026450b3f3cc196a5b381d27a34f61bd5539a3a9aedbc613673223ded2b20f",
+   "status": "included"
+  },
+  {
+   "bytes": 0,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-02.stderr.txt",
+   "reason": "empty after sanitisation",
+   "required": true,
+   "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 16,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-03-compile.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-03-compile"
+   ],
+   "record_sha256": [
+    "434623976724f5e8c84ee8ed02cb6b17177dd9f6c8d240276e9ad73aea755497"
+   ],
+   "required": true,
+   "source_sha256": "b3b4a365f1dd445153f225a39777155c3cf7a50a3749440c2fb04676a6dbc8cb",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "602bbd18b1bffc8cd901a74c61f0f9e3b7650064d93679566994f7069ad576d2"
+   },
+   "bytes": 56,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-03-execution.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "602bbd18b1bffc8cd901a74c61f0f9e3b7650064d93679566994f7069ad576d2",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "09dba4bc70b0d43b8b8439542e3caf7b6bd09415bd4fbda0e60553e7968cc712"
+   },
+   "bytes": 4387,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-03-proposal.c",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "09dba4bc70b0d43b8b8439542e3caf7b6bd09415bd4fbda0e60553e7968cc712",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "f7bc7c4e5bd0efa950b67a6d9fe252a28b69277b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "b4ab1c2f38b3af0fb1d759e4678f5c2074a163e7f17fd1d319c02fc4c1d20548"
+   },
+   "bytes": 5687,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-03.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "b4ab1c2f38b3af0fb1d759e4678f5c2074a163e7f17fd1d319c02fc4c1d20548",
+   "status": "included"
+  },
+  {
+   "bytes": 0,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-03.stderr.txt",
+   "reason": "empty after sanitisation",
+   "required": true,
+   "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "b655322d5581e4eea536009ee67645533a14ec29b0fab10618322a5e04d6c150"
+   },
+   "bytes": 1436,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-assessment.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "b655322d5581e4eea536009ee67645533a14ec29b0fab10618322a5e04d6c150",
+   "status": "included"
+  },
+  {
+   "bytes": 0,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-assessment.stderr.txt",
+   "reason": "empty after sanitisation",
+   "required": true,
+   "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "status": "excluded"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "ad352cd6d209e5407816a229a6e813e32a725c1397aad5bf71d7c9f9f51608cf"
+   },
+   "bytes": 1705,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-contract.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "ad352cd6d209e5407816a229a6e813e32a725c1397aad5bf71d7c9f9f51608cf",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "artifact_ref": {
+    "commit_on_origin_main": true,
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
+    "repo": "richfrem/Project_Sanctuary",
+    "sha256": "cf5a9be7947e6b3018c69db0436e48bf5f734d5d149490495d2a3c865ee97593"
+   },
+   "bytes": 415,
+   "category": "experiment_supporting_artifacts",
+   "path": "LEARNING/experiments/mission-062/worker-evidence.json",
+   "record_ids": [
+    "artifacts__LEARNING_experiments_mission_062"
+   ],
+   "required": true,
+   "source_sha256": "cf5a9be7947e6b3018c69db0436e48bf5f734d5d149490495d2a3c865ee97593",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 7552,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-final-repair-prompt.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-final-repair-prompt"
+   ],
+   "record_sha256": [
+    "f23e122b1bf12266e8458f20657100db1c5d50bcc6cef8e2f11514a0bd1c1277"
+   ],
+   "required": true,
+   "source_sha256": "ce0f6b77887a5536bd65c981eac90c51da994d90e0b323d84a552733826e3f95",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 1744,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-prompt.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-prompt"
+   ],
+   "record_sha256": [
+    "b2d9e3b2d3185d4067effdb6ce9dab0f4cd0cceb537a927b4cf88163ffc39e3a"
+   ],
+   "required": true,
+   "source_sha256": "b2d9e3b2d3185d4067effdb6ce9dab0f4cd0cceb537a927b4cf88163ffc39e3a",
+   "status": "included"
+  },
+  {
+   "action": {
+    "added": 1
+   },
+   "bytes": 6387,
+   "category": "experiment_knowledge",
+   "path": "LEARNING/experiments/mission-062/worker-repair-prompt.txt",
+   "record_ids": [
+    "LEARNING_experiments_mission-062_worker-repair-prompt"
+   ],
+   "record_sha256": [
+    "47263a825357ec886d4d522cc77714cef275ab41767da561063f6b3081fa8c6f"
+   ],
+   "required": true,
+   "source_sha256": "d9cab00bf1b8179d1b85be020b8c88983bbd955d716ca896c34408bb0ca6589f",
    "status": "included"
   },
   {
@@ -27343,31 +28592,31 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
-    "git_commit": "2ef43b46bf7368e75a2aede03e2ad442f414e9fd",
+    "git_commit": "51afe14f941f457da7ccd1a4dfe9404a1977682b",
     "repo": "richfrem/Project_Sanctuary",
-    "sha256": "628ee0db7ec99629106483402a76452eaf911206c9948796d9407c29df1b5041"
+    "sha256": "962720ea554fa5980eeff510264cdf08f6f72a75ef371e3fe917f63354c4099c"
    },
-   "bytes": 12485,
+   "bytes": 13350,
    "category": "knowledge_supporting_data",
    "path": "LEARNING/inbox.jsonl",
    "record_ids": [
     "artifacts__LEARNING_inbox_jsonl"
    ],
    "required": false,
-   "source_sha256": "628ee0db7ec99629106483402a76452eaf911206c9948796d9407c29df1b5041",
+   "source_sha256": "962720ea554fa5980eeff510264cdf08f6f72a75ef371e3fe917f63354c4099c",
    "status": "included"
   },
   {
-   "bytes": 54907,
+   "bytes": 54946,
    "category": "derived_projections",
    "path": "LEARNING/index.jsonl",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "c6dac26e506bd208b854f8d502e61faf6bcb4ad6b674e1a69309c4fa7434de89",
+   "source_sha256": "1735dc8e434889879e3cd91ac828ff78cdeee6dcb289d9f3bb28818033081cff",
    "status": "excluded"
   },
   {
@@ -28409,19 +29658,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 14094,
+   "bytes": 16198,
    "category": "mission_manifests",
    "path": "LEARNING/missions/MISSION-062.json",
    "record_ids": [
     "mission__MISSION-062"
    ],
    "record_sha256": [
-    "9f80581a32d1e058d70cad1e2eb03b95737a66a80b5d75c8eb3f28285d6635c3"
+    "f4cd01ccb3aa8af9bb984e0b02cb205d881361ef799986fcaa5a8b285c0e7f90"
    ],
    "required": true,
-   "source_sha256": "336ac06d489465cb7adbc604608335710ff2225b2b2ee8790944299c8d833e85",
+   "source_sha256": "4fbf98d484fb18a22faca90489276c70f2077965efe17b0cfb26589438d48fa9",
    "status": "included"
   },
   {
@@ -30397,7 +31646,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 8584,
    "category": "root_architecture_docs",
@@ -30431,7 +31680,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 20495,
    "category": "root_architecture_docs",
@@ -38203,7 +39452,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 5809,
    "category": "skill_documentation",
@@ -38256,7 +39505,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7652,
    "category": "skill_documentation",
@@ -39384,7 +40633,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 6518,
    "category": "skill_documentation",
@@ -41339,19 +42588,19 @@
     "required": true
    },
    "experiment_knowledge": {
-    "discovered": 173,
-    "excluded": 2,
+    "discovered": 186,
+    "excluded": 6,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 171,
+    "included": 180,
     "required": true
    },
    "experiment_supporting_artifacts": {
-    "discovered": 1169,
+    "discovered": 1222,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 1169,
+    "included": 1222,
     "required": true
    },
    "governance_protocols_adrs": {
