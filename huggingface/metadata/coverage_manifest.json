@@ -1,9 +1,9 @@
 {
- "base_commit": "6654631a399060518577d7ecfabf4384db1265be",
+ "base_commit": "90b45c8fb409c7790294d0b9dde40af4bb53711f",
  "dataset_records": 1482,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-11T20:47:58Z",
+ "generated_at": "2026-11-11T21:00:25Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,11 +54,10 @@
   },
   {
    "action": {
-    "added": 1,
-    "unchanged": 9,
+    "unchanged": 10,
     "updated": 4
    },
-   "bytes": 177016,
+   "bytes": 177548,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -84,17 +83,17 @@
     "7c4b23fdd16179eee5ed1e60d9c3c76c9f3b3866ae9e25d8d09cd57a656aba0a",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "68e88c3979cc163f37b0e9e2120d04be488732b477bb853cc23f7af483d91ae1",
-    "442b914e42b4792a0c37b5a0c7eefa240a12d963a3f2856b470cb4a9c4fb7242",
-    "caa89e7674b9b70e41a7b014e7cbdbea9a4b191f1247c33ecd9fc2d6acb04278",
-    "8fa416e9ce3c0daa3ede2f33261bf7a79124becdc665f3a42db0db83620749cb",
-    "1d01b2cad9d79e70351c2f4695d612f50e8409f209ba734e47519f8c49800748",
+    "c666afa4a9853fb1971fb2a2a70afb4527e177f4f2e4ab91346e4b035720d4b9",
+    "8e93dc1013fae70c543b1145b30eabd2b20fb338ffabe8f31cb448cd0e9f57ae",
+    "3a9bde300e3794055f8bb77231ed1a8b089bf216118e3e88b37b1639cac23e9a",
+    "c4307818e23b73647007184f1b9681ef4ed1b127888bfa381dd2436f301e0b02",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "d2e4427b362f08a1f705a14122e391d9762dff77ef90595fd8db2f222ca30cc9"
    ],
    "required": true,
-   "source_sha256": "97dd27c63dac3e75e3f97fe1697335c3194650e896b45062e49f02ac2fbd5c19",
+   "source_sha256": "ac24a5581e4d51c5417837b85899f76cbdfab1a50d45049b5edf0d75c46cba68",
    "status": "included"
   },
   {
@@ -124,12 +123,12 @@
    "status": "included"
   },
   {
-   "bytes": 23856,
+   "bytes": 24424,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "d8f33af08b158ef638122bd43b6ddb7b4468fac9622082e302378c1b2a4d0e28",
+   "source_sha256": "59510e32d402ad28ffeb2c18e211bebe6743bccfdce70e9902fc8dd24e94aa18",
    "status": "excluded"
   },
   {
@@ -29372,7 +29371,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 6723,
    "category": "experiment_knowledge",
@@ -29389,7 +29388,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29409,7 +29408,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29429,7 +29428,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29449,7 +29448,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29469,7 +29468,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29489,7 +29488,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29509,7 +29508,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29529,7 +29528,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29549,7 +29548,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29569,7 +29568,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 5364,
    "category": "experiment_knowledge",
@@ -29586,7 +29585,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29606,7 +29605,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29626,7 +29625,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29646,7 +29645,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3904,
    "category": "experiment_knowledge",
@@ -29663,7 +29662,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1142,
    "category": "experiment_knowledge",
@@ -29680,7 +29679,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 3474,
    "category": "experiment_knowledge",
@@ -29697,7 +29696,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29717,7 +29716,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29737,7 +29736,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -29791,7 +29790,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30942,7 +30941,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "bytes": 7277,
    "category": "mission_manifests",
@@ -31044,7 +31043,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 11244,
    "category": "mission_manifests",
@@ -39458,7 +39457,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1624,
    "category": "chronicle",
@@ -39814,19 +39813,19 @@
   },
   {
    "action": {
-    "unchanged": 1
+    "updated": 1
    },
-   "bytes": 6695,
+   "bytes": 7450,
    "category": "skill_documentation",
    "path": "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/references/usage-telemetry-sources.md",
    "record_ids": [
     "plugins_sanctuary-core_.apm_skills_evaluating-agent-work_references_usage-telemetry-sources"
    ],
    "record_sha256": [
-    "067799d138c2013e137c5651e1cc5c7a8c148ec3c095fd0f54388c5a7c98170a"
+    "a81ef29c61394c93cb3542018c31f708854f8de76ed8303c0589e83ef77cdc19"
    ],
    "required": false,
-   "source_sha256": "9cfa4b625825e66f2d8d71a27269e5bca028e80b4a741d21ad13633c64ebc8a8",
+   "source_sha256": "fd808b8f1e837d15d621fc01c5039ce85d87761d67bc0c3a03d8e01f0daf5076",
    "status": "included"
   },
   {
@@ -39893,12 +39892,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 13299,
+   "bytes": 15882,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/scripts/usage_probe.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "37e57c97bc618fd5477de2c55ebdb8ed29cce3572ffbf7837d09b1af27d70f78",
+   "source_sha256": "153a58571da6acf8c16265d6d32dcdadcd67df3fd546da773c2f8fec3587f7f5",
    "status": "excluded"
   },
   {
@@ -40001,12 +40000,12 @@
    "status": "excluded"
   },
   {
-   "bytes": 20168,
+   "bytes": 23652,
    "category": "skill_code_and_tests",
    "path": "plugins/sanctuary-core/.apm/skills/evaluating-agent-work/tests/test_usage_probe.py",
    "reason": "code and tests are versioned in git (recover by commit); the skills' documentation is preserved by skill_documentation",
    "required": false,
-   "source_sha256": "833b3b4364d0a3efeef1087da1a4090279787a0fc070c96b84ee01b530ed60d8",
+   "source_sha256": "8369fe1b60fffe22917565e935635e53592ed9be367eae64623dff7ea507a907",
    "status": "excluded"
   },
   {
