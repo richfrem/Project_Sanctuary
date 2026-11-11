@@ -15,7 +15,7 @@ One interface, `scripts/bot.py`, over everything the user should not have to thi
 - **Interview, then approve, then run.** Never register, approve or run on the first turn. The user approves each automation with an explicit "go"; `bot.py approve` records it against the definition's content hash, so any later edit pauses it until re-approved.
 - **The human starts the bot.** Starting it on request in this conversation is fine; session bootstrap never starts it.
 - **Definitions are reviewed like code**: `.agent/automations/<name>.json` in the repo, through a feature branch and PR. Approvals, run state, history and the inbox stay machine-local in `~/.sanctuary/daemon/`.
-- **Edits happen only in a task or runtime worktree** (`.worktrees/<name>`, leased with `manage_coordination.py`), never on main. With an `integrate` block the bot pushes its branch and opens a PR, and auto-merges only allowlisted data under `LEARNING/research/`; code, mission manifests and governance files always wait for human review. It never syncs Hugging Face and never writes the repo's memory files from the background.
+- **Edits happen only in a task or runtime worktree** (`.worktrees/<name>`, leased with `manage_coordination.py`), never on main. With an `integrate` block the bot pushes its branch and opens a PR, and auto-merges only allowlisted data under `LEARNING/research/`; code, mission manifests and governance files always wait for human review. After merge it verifies workflows in both repositories, fast-forwards a clean primary checkout already on main, and runs supported regeneration in its runtime worktree. Regenerated changes require a scoped follow-up PR and keep delivery PARTIAL; they are never committed on main or auto-merged through the research-data allowlist. It never syncs Hugging Face.
 - **No permission bypass unless approved**; never Copilot. **Cost is bounded by rails** (cycles, timeouts, failure limits), not tokens: say so.
 
 ## Workflow
@@ -23,8 +23,9 @@ One interface, `scripts/bot.py`, over everything the user should not have to thi
 2. **Interview:** follow [setup-interview.md](references/setup-interview.md): what to run, how often, one step or several, engine, rails, notifications.
 3. **Write the definition** ([automations.md](references/automations.md)), run `bot.py validate <name>`, show a plain-language summary with worst-case time and quota, and wait for "go".
 4. **Commit the definition on a feature branch and open a PR** (or keep it local if the user says so), then `bot.py approve <name> --by <approver>` and, if needed, `bot.py start`.
-5. **Report:** `bot.py status`, when it next runs, and how to pause or stop it.
-6. **Later:** `status`, `history <name>`, `pause`/`resume`, `run-now`, and `~/.sanctuary/daemon/inbox.md` for results.
+5. **Report:** distinguish conductor completion, public merge, local delivery and pending regeneration/preservation. A configured integration that has not finished is PARTIAL. Never infer file delivery from a merge receipt.
+6. **Report:** `bot.py status`, when it next runs, and how to pause or stop it.
+7. **Later:** `status`, `history <name>`, `pause`/`resume`, `run-now`, and `~/.sanctuary/daemon/inbox.md` for results.
 
 ## Quick start
 ```bash
@@ -38,7 +39,7 @@ python3 $B run one-off.json --by <approver>   # run once without scheduling
 ```
 
 ## Verification
-- `scripts/test_bot.py` (11: schedule maths, catch-up, approval tamper refusal, overlap, auto-pause, run-now, memory, inbox, notify, end-to-end with a real bot), `scripts/test_campaign.py` (14: multi-step conductor), `scripts/test_daemon.py` (10: runtime rails), `scripts/test_integrate.py` (9: push/PR/auto-merge policy against a real git remote). No model or network calls.
+- `scripts/test_bot.py` (13: schedule maths, catch-up, approval tamper refusal, overlap, auto-pause, run-now, memory, inbox, notify, end-to-end with a real bot), `scripts/test_campaign.py` (14: multi-step conductor), `scripts/test_daemon.py` (10: runtime rails), `scripts/test_integrate.py` (18: push/PR/auto-merge policy against a real git remote). No model or network calls.
 - `bot.py doctor` checks host, config, bot process and engines.
 
 ## References

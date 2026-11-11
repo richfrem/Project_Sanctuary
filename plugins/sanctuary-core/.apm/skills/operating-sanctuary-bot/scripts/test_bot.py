@@ -39,6 +39,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -226,6 +227,22 @@ class SchedulerUnit(unittest.TestCase):
         h = reg.history("i")[-1]
         self.assertIn("integration", h)
         self.assertIn("integration:", (self.home / "inbox.md").read_text())
+
+    def test_incomplete_delivery_is_partial(self) -> None:
+        """Conductor success cannot hide incomplete post-merge delivery."""
+        self.put(job_def("i", {"every": "1m"}, integrate={"auto_merge_paths": ["LEARNING/research/x/**"]}))
+        reg = A.Registry(self.home, self.defs, self.clock)
+        reg.approve("i", "tester")
+        scheduler = self.sched()
+        self.clock.t += 120
+        scheduler.tick()
+        self.finish(self.launched[-1]["id"], "COMPLETED")
+        with patch.object(scheduler, "_integrate", return_value={"complete": False, "merged": True,
+                                                               "reason": "primary checkout dirty"}):
+            scheduler.tick()
+        self.assertEqual(reg.history("i")[-1]["status"], "PARTIAL")
+        self.assertEqual(reg.state()["i"]["last_status"], "PARTIAL")
+        self.assertIn("delivery PARTIAL", (self.home / "inbox.md").read_text())
 
 
 

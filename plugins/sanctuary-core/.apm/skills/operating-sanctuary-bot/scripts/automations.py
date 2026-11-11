@@ -335,6 +335,10 @@ class Scheduler:
             rec["integration"] = self._integrate(name, summary)
             summary += f"; integration: {rec['integration'].get('reason')}" + (
                 f" (PR #{rec['integration']['pr']})" if rec["integration"].get("pr") else "")
+            if rec["integration"].get("complete") is False:
+                status, ok = "PARTIAL", False
+                rec["status"] = status
+                summary = summary.replace("ended COMPLETED", "ended PARTIAL", 1) + "; delivery PARTIAL"
             rec["summary"] = summary
         hp = self.reg.dir / name / "history.jsonl"
         hp.parent.mkdir(parents=True, exist_ok=True)
@@ -359,7 +363,7 @@ class Scheduler:
         try:
             defn = self.reg.load(name)
         except (OSError, json.JSONDecodeError):
-            return {"reason": "definition unreadable: integration skipped"}
+            return {"complete": False, "reason": "definition unreadable: integration skipped"}
         block = defn.get("integrate")
         if not block:
             return {"reason": "integration not configured"}
@@ -370,7 +374,7 @@ class Scheduler:
         try:
             return integrate.integrate(name, block, str(wt.resolve()), summary, self.forge)
         except Exception as exc:  # integration must never break the scheduler
-            return {"reason": f"integration error: {str(exc)[:200]}"}
+            return {"complete": False, "reason": f"integration error: {str(exc)[:200]}"}
 
     # Run the configured notify command (argv list, no shell) with the run's result in its environment.
     def _notify(self, name: str, status: str, summary: str) -> None:
