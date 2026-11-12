@@ -1,9 +1,9 @@
 {
- "base_commit": "520e279d7a5d8c39cbb72bc982b96b79ce2c3c0b",
+ "base_commit": "e5a5c61d45c7ceaf876b4cca54ee37c7d8cd28bc",
  "dataset_records": 1498,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-12T04:56:13Z",
+ "generated_at": "2026-11-12T05:13:14Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -54,10 +54,10 @@
   },
   {
    "action": {
-    "unchanged": 9,
-    "updated": 5
+    "unchanged": 10,
+    "updated": 4
    },
-   "bytes": 181129,
+   "bytes": 181630,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -83,17 +83,17 @@
     "7c4b23fdd16179eee5ed1e60d9c3c76c9f3b3866ae9e25d8d09cd57a656aba0a",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "c2a603a9b58f4cf9c841aae82e39fa891d9825ec044e3830ff037e23c0c4d4df",
-    "fb345dfc47af967ffbc84e23d3d98cfb9ab244a59c42196514ceb73c8ff740f5",
-    "5c58ac793c4da9c22c51bacb2fc5a7febc0e4d03dff928bd80897b8d76e4bbf9",
-    "118e5843425c11772693e3cf1a0a8db7c2a5f56e8304eed1ae4dcdd083f7d84b",
-    "dbdd98a21627e2f8223dbb5daa6514d8f3fdb212ec06c4c78215725cbb6542be",
+    "5c31e28d436ab6cef9bbcdd298dbc508e0560b1469db1acd8766dd1c694f42ba",
+    "8da30ac32f4c60adfd9ce80319e0f35d431157729b4e5adb8c433fd6e77ac8d0",
+    "d8a82e795ccd0700ca994a7c001cd88c02fe7a7e7e747f10bd57c1dce27ec230",
+    "b16f2dc84ae4ed2e1ced7e9d602d4150a7fcf826c90bf9a99c43eaa1f1e79f7c",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "d2e4427b362f08a1f705a14122e391d9762dff77ef90595fd8db2f222ca30cc9"
    ],
    "required": true,
-   "source_sha256": "83ea215ea1c609e33a07b5c9a4df03b4feb36ec67c43eb3d52a6033ebfd7a131",
+   "source_sha256": "a0d71b96eb7cc2983fa7637bcf96163d3d6017c4c1870ad84f08ffb4ed666c29",
    "status": "included"
   },
   {
@@ -123,12 +123,12 @@
    "status": "included"
   },
   {
-   "bytes": 26696,
+   "bytes": 27264,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "6ac766f6f236e5c9977b1fbb5c18ed34372f82f00d20339dcf0a71ee35dbaeac",
+   "source_sha256": "86f3259f205197ef6f13ccde6186368e49e21dc6cd09a835cd85bc31669993fd",
    "status": "excluded"
   },
   {
@@ -30324,7 +30324,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30344,7 +30344,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 4737,
    "category": "experiment_knowledge",
@@ -30361,7 +30361,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30381,7 +30381,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30401,7 +30401,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30421,7 +30421,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30441,7 +30441,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30461,7 +30461,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30481,7 +30481,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30501,7 +30501,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30521,7 +30521,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30541,7 +30541,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30561,7 +30561,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 6408,
    "category": "experiment_knowledge",
@@ -30578,7 +30578,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30598,7 +30598,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30618,7 +30618,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30638,7 +30638,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30658,7 +30658,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30678,7 +30678,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30698,7 +30698,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30718,7 +30718,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30738,7 +30738,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30758,7 +30758,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30778,7 +30778,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30798,7 +30798,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30818,7 +30818,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30838,7 +30838,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30858,7 +30858,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30878,7 +30878,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 5412,
    "category": "experiment_knowledge",
@@ -30895,7 +30895,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1627,
    "category": "experiment_knowledge",
@@ -30912,7 +30912,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1569,
    "category": "experiment_knowledge",
@@ -30929,7 +30929,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30949,7 +30949,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -30969,7 +30969,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -31023,7 +31023,7 @@
   },
   {
    "action": {
-    "updated": 1
+    "unchanged": 1
    },
    "artifact_ref": {
     "commit_on_origin_main": true,
@@ -32327,7 +32327,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 9201,
    "category": "mission_manifests",
@@ -40775,7 +40775,7 @@
   },
   {
    "action": {
-    "added": 1
+    "unchanged": 1
    },
    "bytes": 1071,
    "category": "chronicle",
