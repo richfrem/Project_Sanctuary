@@ -1,0 +1,39 @@
+{
+ "frozen_at": "2026-11-11",
+ "note": "frozen before any held-out run; hashes of instruments, protocol and dev outputs",
+ "sha256": {
+  "tilings.c": "7a9b486fce06f2ac0bf386b397ae148e7b20461578c116ef8c40ebd38aec20a7",
+  "gate.py": "d9e1556f8d855123e02802969ea81abf8ddd741df07ed13b1c42c9bb2cddd6ef",
+  "analyze.py": "c53e62829d349e734a294d5a74f43278666c1d49171a7a52ccca63760c71af22",
+  "run_heldout.sh": "9ccb385da33c03add6851129ac807d3a2204f97e3276fae63c0b378dd15d72fe",
+  "protocol.md": "5b2f4b0fee2d97316ac9aaab677867e6f5a0b8ca75058720ca16aaaf59474628",
+  "dev_gate_result.json": "d51a6eb0eeb0cef78f011d8e01a24d5cdcba565510770c0bc75ffa72a36db91a",
+  "dev/c035_L1024.jsonl": "7a90828e32d874c5eccaae1a189d8477073a3c9d82f1111084dfde3a63158573",
+  "dev/c035_L128.jsonl": "711679f3ae8beab509fa1a29641d18734204ab1251ad2b23d5520fb05f897d25",
+  "dev/c035_L256.jsonl": "6e7ebeb5266d1ce5a50cd46dcff15903bdcff07249257c05241117f3618115c5",
+  "dev/c035_L512.jsonl": "09127bbcb5fd3328f63e2873641c37dab926365a901ac3030c1d74b9f9dbaa4c",
+  "dev/c035_L64.jsonl": "a7060147e4917ebd36f762db7bf68ae8b9c006a2659e1da8f03d642d480fcd49",
+  "dev/p035_L1024.jsonl": "19396c1e0d4860581342bcc9e19a414ac350793a0de54c00c7d7c65a6b6ed031",
+  "dev/p035_L128.jsonl": "bb5939dccc3fa87917600b355be16a2caf7816e664eed017a7b42b9ce4bca0d8",
+  "dev/p035_L256.jsonl": "a6be7e0042ee2b7df4ec5e9f46ddb81c7e306db3d83f11de89b3bc870eef327c",
+  "dev/p035_L512.jsonl": "6b00bdcaa22b147fd09da7806e850d0f32e6b68875d11dcbe53f661529907b3a",
+  "dev/p035_L64.jsonl": "c015098ca43d9455cb8fd40f2ce1a771c0b5096c699bbf14aa33cb124aacfcbb",
+  "dev/p050_L1024.jsonl": "a778eddd291c430e9af7ee182adf6afad3048d00247673a3e67099b1d04325cf",
+  "dev/p050_L128.jsonl": "6b58b7340f21ee567d2d850385649060759c58946708cceccf0beb831a4f5221",
+  "dev/p050_L256.jsonl": "6b64379a94a226a2ac0dbd889995697e76e80c81b42349bbed003b3838423904",
+  "dev/p050_L512.jsonl": "44a99ed39e15b97eba35c3c0a60acaa18fedb7ba32ae4453e411ee5297623038",
+  "dev/p050_L64.jsonl": "ba782fe617ebbc0cd98e2dc9695698afe639724e3f78f89423e0c1edd2069e74"
+ },
+ "seeds": {
+  "p050": 7401,
+  "p035": 7402,
+  "c035": 7403
+ },
+ "samples": {
+  "64": 20000,
+  "128": 10000,
+  "256": 4000,
+  "512": 2000,
+  "1024": 1000
+ }
+}
