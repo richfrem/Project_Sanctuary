@@ -74,7 +74,7 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
 | **#53** | `MISSION-072` | **When Does Restarting a Search Help Once Restart Time Is Charged? Exact Finite Random-Walk Tests** | 1 | 4 | 0.1x | 2 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#54** | `MISSION-066` | **Which Equal Temperaments Set Records for Approximating Just 5-Limit Harmony?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#55** | `MISSION-067` | **Random Change Ringing as a Shuffle: Does Ringing's One-Place Rule Mix Bells Fast When Swaps Run in Parallel?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `FALSIFIED` |
-| **#56** | `MISSION-074` | **Truchet Tiles as Critical Percolation: Do Random Quarter-Arc Loops Have Fractal Dimension 7/4?** | 1 | 2 | 0.1x | 1 | **20.0** | `IN_PROGRESS` | - |
+| **#56** | `MISSION-074` | **Truchet Tiles as Critical Percolation: Do Random Quarter-Arc Loops Have Fractal Dimension 7/4?** | 1 | 2 | 0.1x | 1 | **20.0** | `RESOLVED` | `CORROBORATED` |
 | **#57** | `MISSION-045` | **Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#58** | `MISSION-046` | **Resolve Multi-Model Disagreements Through Bounded Executable Discriminating Challenges** | 5 | 5 | 0.5x | 3 | **16.67** | `PROPOSED` | - |
 | **#59** | `MISSION-061` | **Test Whether Agent Evaluation Gates Reject Valid Alternative Solutions** | 5 | 4 | 0.4x | 3 | **16.67** | `PROPOSED` | - |
@@ -955,7 +955,8 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   * Swap overhead fell from 1.16 at n=6 to about 1.07 at n=7,8; whether it tends to 1 is open.
 
 ### MISSION-074: Truchet Tiles as Critical Percolation: Do Random Quarter-Arc Loops Have Fractal Dimension 7/4? (Rank #56)
-- **Status**: `IN_PROGRESS`
+- **Status**: `RESOLVED`
+- **Empirical Verdict**: `CORROBORATED`
 - **Execution Surface**: `local`
 - **Target Platform**: C (cc -O2) Monte Carlo of random Truchet quarter-arc tilings on an L x L torus plus standard-library Python independent loop tracer; no network, no paid inference during the experiment
 - **Cheapest Viable Model**: `deterministic-c-and-python` (Tier: `free-local`, CLI: `cc, python3`)
@@ -964,6 +965,12 @@ $$\text{Priority Score} = \frac{\text{Strategic Leverage (1–5)} \times \text{E
   > Tiles of an L x L torus (periodic) each take orientation A or B; arcs join into closed loops; loop length is the number of arcs. 'Uniform' bias: P(A)=p on every tile. 'Checker' bias: P(A)=p on tiles with i+j even and 1-p on odd tiles. (G, development) The C loop counter agrees exactly with an independent Python tracer on every loop-length multiset of 200 small random tilings (L in 4..12, p in {0,.2,.35,.5,.8,1}, both biases), and loop lengths sum to 2 L^2 for each tiling. (H1, held-out uniform p=0.5) The sample mean of the longest loop M(L), at L = 64,128,256,512,1024, has log-log least-squares slope d in [1.72, 1.78] (theory: hull dimension 7/4 = 1.75). (H2, held-out p=0.5, L=1024) The number of loops of length >= s per tile, N(s), at s = 128,256,...,4096, has log-log slope -alpha with alpha in [1.08, 1.20] (theory: 2/d_h = 8/7 = 1.143). (H3a, held-out uniform p=0.35) The longest-loop slope stays in [1.70, 1.80]: a uniform bias leaves the tiling critical because the two orientations are dual to horizontal and vertical bonds, whose probabilities sum to 1. (H3b, held-out checker q=0.35) The longest-loop slope is below 1.2: a checkerboard bias is ordinary bond percolation at 0.35 < 1/2, which is not fractal. Forecast probabilities recorded before the held-out run: H1 0.8, H2 0.6, H3a 0.75, H3b 0.9. AMENDMENT (before freeze, see protocol.md): the registered H3 was 'uniform p=0.35 slope < 1.2, forecast 0.9'. A 20-sample development run showed slope 1.76 (and 0.3-0.4 for checker 0.35); the registered H3 was wrong by my own forecast and is replaced by H3a/H3b. The miss is kept in protocol.md.
 - **Falsification Gate**:
   > UNASSESSED (verdict null) if gate G fails, a sum rule fails, the run exceeds the CPU ceiling or output is incomplete: instrument failure is not a finding. FALSIFIED if G holds and any of H1, H2, H3a, H3b fails; the measured slopes with bootstrap intervals are then the result. CORROBORATED only if G, H1, H2, H3a and H3b all hold. Intervals and fit windows are fixed in protocol.md before the held-out run. Claims are limited to this model, boundary condition and window; agreement with 7/4 on finite lattices does not prove the exponent. The theory link (Truchet loops = percolation hulls) is background, not tested for its own sake.
+- **Empirical Evidence & Trials**:
+  * `2026-11-12T00:06:31.583805+00:00` [claude-code] (LEARNING/experiments/mission-074/README.md): Freeze (hashes in freeze.json, files unchanged after run) preceded the held-out run; git commit of the freeze was blocked by the pre-commit gate and landed after the run (disclosed in README). Gate G: 200/200 tilings agree with independent walker. Held-out 111,000 tilings: H1 d=1.7508 [1.7446,1.7569]; H2 alpha=1.1359 [1.1328,1.1389]; H3a uniform 0.35 d=1.7529; H3b checker 0.35 d=0.3207; sum rule held in every row. Registered H3 (uniform 0.35 non-fractal, forecast 0.9) was wrong and replaced by H3a/H3b before freeze after a dev run. 149 s wall, one 0.0011 USD cross-family review with no valid finding.
+- **Lessons Learned & Epistemic Compounding**:
+  * A uniform orientation bias leaves Truchet loops critical because the orientations are dual horizontal/vertical bonds with probabilities p and 1-p; only a checkerboard bias breaks criticality.
+  * Never chain a freeze commit with the run: a blocked commit must stop the chain (second time a piped/chained command hid a gate failure this session).
+  * Quick 20-sample development runs can overturn a registered hypothesis premise; amend before freeze and keep the miss on record.
 
 ### MISSION-045: Select Cross-Vendor Collaborators by Empirically Complementary Error Profiles (Rank #57)
 - **Status**: `PROPOSED`

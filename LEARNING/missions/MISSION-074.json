@@ -1,11 +1,11 @@
 {
   "id": "MISSION-074",
   "title": "Truchet Tiles as Critical Percolation: Do Random Quarter-Arc Loops Have Fractal Dimension 7/4?",
-  "status": "IN_PROGRESS",
+  "status": "RESOLVED",
   "execution_surface": "local",
   "target_platform": "C (cc -O2) Monte Carlo of random Truchet quarter-arc tilings on an L x L torus plus standard-library Python independent loop tracer; no network, no paid inference during the experiment",
   "created_at": "2026-11-11T23:05:00Z",
-  "updated_at": "2026-11-11T23:20:00Z",
+  "updated_at": "2026-11-12T00:06:31.583805+00:00",
   "confidence_reviewed": "2026-11-11",
   "proposed_by": "claude-code",
   "interest_statement": "Richard invoked the self-directed-learning prompt (own-choice, one mission). I chose a picture that is both art and physics: Sebastien Truchet's square tiles, each carrying two quarter-circle arcs, laid down at random. The arcs join into closed loops of every size. Theory says that when the two tile orientations are equally likely the loops are the boundaries of critical percolation clusters, so a big loop should be a fractal of dimension 7/4 even though the tiling looks like decoration. I want to see that number come out of my own simulation and see what changes when the coin is biased. Pure curiosity: no operational benefit claimed.",
@@ -33,7 +33,7 @@
     "frontier_escalation_condition": "None for the experiment. One optional bounded review via cli-agent/OpenRouter on a different model family after freeze; parent tokens are not measured.",
     "routing_guidance": "No paid inference during the experiment. Review calls only after freeze, capped at 0.05 USD."
   },
-  "verdict": null,
+  "verdict": "CORROBORATED",
   "human_gate_required": false,
   "assignee": "claude-code",
   "worktree": ".worktrees/claude-code-mission-074",
@@ -46,7 +46,14 @@
     "own-choice",
     "self-directed-learning"
   ],
-  "evidence": [],
+  "evidence": [
+    {
+      "timestamp": "2026-11-12T00:06:31.583805+00:00",
+      "agent": "claude-code",
+      "citation": "LEARNING/experiments/mission-074/README.md",
+      "details": "Freeze (hashes in freeze.json, files unchanged after run) preceded the held-out run; git commit of the freeze was blocked by the pre-commit gate and landed after the run (disclosed in README). Gate G: 200/200 tilings agree with independent walker. Held-out 111,000 tilings: H1 d=1.7508 [1.7446,1.7569]; H2 alpha=1.1359 [1.1328,1.1389]; H3a uniform 0.35 d=1.7529; H3b checker 0.35 d=0.3207; sum rule held in every row. Registered H3 (uniform 0.35 non-fractal, forecast 0.9) was wrong and replaced by H3a/H3b before freeze after a dev run. 149 s wall, one 0.0011 USD cross-family review with no valid finding."
+    }
+  ],
   "related_missions": {},
   "projected_impact": {
     "paths": [
@@ -65,5 +72,32 @@
       "chronicle/ledger.json"
     ],
     "basis": "Own-choice inquiry authorised by the self-directed-learning prompt."
+  },
+  "lessons_learned": [
+    "A uniform orientation bias leaves Truchet loops critical because the orientations are dual horizontal/vertical bonds with probabilities p and 1-p; only a checkerboard bias breaks criticality.",
+    "Never chain a freeze commit with the run: a blocked commit must stop the chain (second time a piped/chained command hid a gate failure this session).",
+    "Quick 20-sample development runs can overturn a registered hypothesis premise; amend before freeze and keep the miss on record."
+  ],
+  "preservation_obligation": {
+    "required": true,
+    "requested_at": "2026-11-12T00:06:31.583805+00:00",
+    "workflow": "soul_coverage.py closure"
+  },
+  "run_assessment": {
+    "execution": "complete",
+    "scientific_assessment": "CORROBORATED for frozen finite claims G,H1,H2,H3a,H3b (H3 replaced by H3a/H3b before freeze after a development run overturned its premise)",
+    "freeze_commit": "9a7538984 (committed after the run because the first commit attempt was blocked by the pre-commit gate; freeze.json hashes were written before and verified unchanged)",
+    "H1_slope": 1.7508,
+    "H2_alpha": 1.1359,
+    "H3a_slope": 1.7529,
+    "H3b_slope": 0.3207,
+    "tilings": 111000,
+    "wall_s": 148.65,
+    "cpu_s": 130.9,
+    "paid_calls": 1,
+    "paid_usd": 0.0011,
+    "parent_tokens": "unknown",
+    "transfer_claim": "No clear connection yet",
+    "limits": "periodic torus L=64..1024 only; bootstrap intervals are sampling noise, not finite-size bias; non-contractible loops included; pass windows set from theory with slack; raw held-out outputs (13 MB) not committed, regenerate deterministically"
   }
 }

@@ -1,0 +1,5 @@
+# MISSION-074 review
+
+Reviewer: `qwen/qwen3-coder-next` via OpenRouter (`cli-agent`'s `openrouter_client.invoke_micro_tier`, different model family from the Claude parent), one call, no retries, after the held-out run. Cost about 0.0011 USD (ledger $0.0046 -> $0.0057 of the $10 cap). Raw output: `review_openrouter_raw.md` (truncated at the 900-token limit).
+
+Outcome: three items labelled "CRITICAL" (the arc mapping in `tilings.c`, the walker in `gate.py`, the normalisation in `analyze.py`). In each, the reviewer's own reasoning concluded "no bug here / mathematically correct", and the output cut off mid-sentence while confirming the tail-exponent normalisation. No finding survived its own analysis, so none changed any code or result. The severity labels did not match the reasoning (label inflation), the same pattern as MISSION-073's review. This is a low-power check, not proof of correctness; the real evidence is the 200-tiling independent-walker gate and the exact sum rule on all 111,000 held-out rows.
