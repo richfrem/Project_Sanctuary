@@ -217,5 +217,25 @@ class Check(unittest.TestCase):
         self.assertIn("Preserve intellectual inheritance faithfully.", rec[0]["content"])
 
 
+
+class LocalPathAndSecretFormatTests(unittest.TestCase):
+    def test_account_paths_are_replaced_and_idempotent(self):
+        out = S.scrub_local_paths("see /Users/alice/Projects/x and /home/bob/.cache and /Users/<user>/y")
+        self.assertNotIn("alice", out); self.assertNotIn("bob", out)
+        self.assertEqual(out, S.scrub_local_paths(out))
+        self.assertIn("/Users/<user>/Projects/x", out)
+
+    def test_make_record_never_carries_an_account_path(self):
+        rec = S.make_record("r", "path /Users/alice/a", "src", "learning", "m")
+        self.assertNotIn("alice", rec["content"])
+        import hashlib
+        self.assertEqual(rec["sha256"], hashlib.sha256(rec["content"].encode()).hexdigest())
+
+    def test_more_credential_formats_are_refused(self):
+        for text in ("AKIA" + "A" * 16, "github_pat_" + "a" * 30, "xoxb-" + "1" * 12, "-----BEGIN RSA PRIVATE KEY-----",
+                     "AIza" + "a" * 35, "gho_" + "a" * 36):
+            self.assertIsNotNone(S.has_secret(text), text)
+        self.assertIsNone(S.has_secret("an ordinary sentence about keys and tokens"))
+
 if __name__ == "__main__":
     unittest.main()

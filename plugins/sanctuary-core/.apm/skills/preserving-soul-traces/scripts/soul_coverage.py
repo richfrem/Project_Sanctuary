@@ -31,7 +31,17 @@ MANIFEST = Path("huggingface/metadata/coverage_manifest.json")
 RECEIPTS = Path(".agent/learning/soul_sync_receipts.jsonl")
 POLICY = HERE.parent / "references" / "coverage-policy.json"
 SECRET_RX = [re.compile(p) for p in (r"(?<![A-Za-z0-9])sk-[A-Za-z0-9_\-]{20,}", r"Bearer\s+[A-Za-z0-9._\-]{16,}", r"eyJ[A-Za-z0-9_\-]{8,}\.[A-Za-z0-9_\-]{8,}\.[A-Za-z0-9_\-]{6,}",
-                                       r"(?i)(api[_-]?key|access[_-]?token|refresh[_-]?token|secret)\"?\s*[:=]\s*\"?[A-Za-z0-9._\-]{20,}", r"(?<![A-Za-z0-9])hf_[A-Za-z0-9]{30,}", r"(?<![A-Za-z0-9])ghp_[A-Za-z0-9]{30,}")]
+                                       r"(?i)(api[_-]?key|access[_-]?token|refresh[_-]?token|secret)\"?\s*[:=]\s*\"?[A-Za-z0-9._\-]{20,}", r"(?<![A-Za-z0-9])hf_[A-Za-z0-9]{30,}", r"(?<![A-Za-z0-9])gh[pousr]_[A-Za-z0-9]{30,}",
+                                       r"github_pat_[A-Za-z0-9_]{22,}", r"(?<![A-Z0-9])(?:AKIA|ASIA)[0-9A-Z]{16}(?![A-Z0-9])", r"xox[abprs]-[A-Za-z0-9-]{10,}",
+                                       r"-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----", r"(?<![A-Za-z0-9])AIza[0-9A-Za-z_\-]{35}")]
+# Local account paths are personal data in a PUBLIC dataset: replaced, not refused, so provenance text survives.
+LOCAL_PATH_RX = [(re.compile(r"/Users/[^/\s\"'`<>:)\]]+"), "/Users/<user>"), (re.compile(r"/home/[^/\s\"'`<>:)\]]+"), "/home/<user>")]
+
+
+def scrub_local_paths(text):
+    for rx, repl in LOCAL_PATH_RX:
+        text = rx.sub(repl, text)
+    return text
 EVENT_CHUNK = 40
 
 
@@ -100,6 +110,7 @@ def has_secret(text):
 
 
 def make_record(rec_id, content, source, snapshot_type, model_version, ts=None):
+    content = scrub_local_paths(content)
     return {"id": rec_id, "sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(), "timestamp": ts or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "model_version": model_version, "snapshot_type": snapshot_type, "valence": 0.5, "uncertainty": 0.1, "semantic_entropy": 0.5, "alignment_score": 0.85,
             "stability_class": "STABLE", "adr_version": "084", "content": content, "source_file": source}
@@ -246,6 +257,9 @@ def export(root, dry=False, model_version="Sanctuary-Qwen2-7B-v1.0-GGUF-Final"):
         ids, actions = [], Counter()
         for rid, content, prebuilt in items:
             new = prebuilt or make_record(rid, content, path, rule["snapshot_type"], model_version)
+            if scrub_local_paths(new["content"]) != new["content"]:       # prebuilt (markdown) records bypass make_record
+                new = {**new, "content": scrub_local_paths(new["content"])}
+                new["sha256"] = hashlib.sha256(new["content"].encode("utf-8")).hexdigest()
             old = recs.get(rid)
             if old and old["sha256"] == new["sha256"]:
                 actions["unchanged"] += 1
