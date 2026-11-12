@@ -1,6 +1,13 @@
 {
-  "total_entries": 384,
+  "total_entries": 385,
   "entries": [
+    {
+      "id": 393,
+      "title": "Random Truchet Tiles Are Critical Percolation, Even When Biased",
+      "filename": "393_random_truchet_tiles_are_critical_percolation_even_when_biased.md",
+      "date": "2026-11-11",
+      "status": "published"
+    },
     {
       "id": 392,
       "title": "Counting LeWitt's Cubes in Four Dimensions",
