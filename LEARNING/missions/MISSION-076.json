@@ -1,0 +1,73 @@
+{
+  "id": "MISSION-076",
+  "title": "How Fast Does a Cross-Reference Rescue a Dying Annotation Tradition? Rescue-Time Scaling in Directed Percolation with Long-Range Links",
+  "status": "IN_PROGRESS",
+  "execution_surface": "local",
+  "target_platform": "C (cc -O2) Monte Carlo plus standard-library Python independent implementation; no network or paid inference during the experiment",
+  "created_at": "2026-11-12T03:00:00Z",
+  "updated_at": "2026-11-12T03:00:00Z",
+  "confidence_reviewed": "2026-11-12",
+  "proposed_by": "claude-code",
+  "interest_statement": "Richard invoked the associative-mission-discovery prompt and gave five stimulus topics (not constraints). Ant trails (stigmergy), copied manuscripts with marginal notes, and coral reefs recovering from distant larvae all share one abstract fact: a population with an absorbing dead state has a sharp survival threshold, and recruitment from far away behaves differently from recruitment next door. I wanted to find out, by computing it, how quickly a few cross-references (or distant larvae) rescue a tradition sitting exactly at its threshold, compared with the same amount of extra local recruitment. It also builds on what I learned about critical percolation in MISSION-074. Pure curiosity; no operational benefit claimed.",
+  "hypothesis": "Model: bond directed percolation (1+1) on a ring, a stand-in for an annotation tradition copied generation by generation (a note prompts notes in adjacent positions) and, equally, for a reef or trail. At p = p_c the process sits exactly at its extinction threshold. Question: how does the time t* at which a small amount of extra recruitment doubles the survival probability scale with its size phi when it is long-range (one random site, a 'cross-reference') versus nearest-neighbour (matched added offspring p = p_c + phi/2)? (G) sim.c agrees with an independent Python implementation, |z| < 4 at all checkpoints of four configurations. (H1) baseline delta in [0.14, 0.18] on t in [100,1000]. (H2) a_LR in [0.60, 0.90] (heuristic 1/(1+theta) = 0.76 or 0.68), with >= 4 uncensored phi in {0.2,...,0.00625}. (H3) a_NN in [1.4, 2.1] (nu_parallel = 1.73), >= 3 uncensored phi. (H4) t*_LR < t*_NN at phi = 0.05 and 0.025, and t*_LR >= t*_NN at phi = 0.2. Forecasts recorded before the held-out run: G 0.95, H1 0.9, H2 0.55, H3 0.55, H4 0.5. Full definitions, fit windows and disclosures are in LEARNING/experiments/mission-076/protocol.md. PREMISE MISS recorded: my heuristic implied t*_LR(0.1) of about 6, the development pilot gave 373; only exponents are claimed.",
+  "falsification_criteria": "UNASSESSED (verdict null) if the gate fails, a run does not finish, or censoring leaves < 4 LR or < 3 NN points. FALSIFIED if the gate holds and any of H1-H4 fails; measured exponents with bootstrap intervals are then the result. CORROBORATED only if G, H1, H2, H3, H4 all hold. Claims are limited to this model, ring size 2^20, the cap rule, the definition of t* and the fit window; they do not establish the mechanism in ants, manuscripts or reefs.",
+  "baseline_evidence": "Background, not relied on as evidence: 1D directed-percolation exponents (delta 0.1595, theta 0.3137, nu_parallel 1.734, p_c 0.6447001 for bond DP) and the known result that the contact process on small-world networks is mean-field for any shortcut density (arXiv 1307.6186; one search, snippet-level reading only). No prior Sanctuary work (repo search: only MISSION-074 shares percolation vocabulary). The rescue-time scaling with long-range versus matched local recruitment was not found in the sources inspected: a distinct framing relative to those sources, not established novelty. Analogy domains (ants, scribal copying, reefs) are provenance for the question; details marked uncertain in discovery.md were not verified and are not relied on.",
+  "experiment": "Phase 1 elaboration: discovery.md (done). Phase 2 development: sim.c, gate.py (independent Python, gate G passed on dev seeds, worst |z| = 2.56), development pilot dev/ (seed base 100). Phase 3: protocol.md + freeze.json (SHA-256 of code, dev outputs, forecasts) committed before the held-out run; commit must succeed before the run starts. Phase 4: run_heldout.sh (seed base 7600, 5 parallel processes, about 10-15 min wall), analyze.py frozen. Phase 5: assess, one bounded cross-family review via cli-agent/OpenRouter (cap 0.05 USD), README with results and limits, Chronicle entry, inbox follow-ups (Allee/quorum variant for real ant recruitment).",
+  "scores": {
+    "strategic_leverage": 1,
+    "epistemic_depth": 2,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 10.0
+  },
+  "priority_score": 10.0,
+  "score_basis": "Planning estimates, not measured ROI. Leverage 1: curiosity-driven. Depth 2: a scaling law for a known model measured with an independently checked instrument and pre-set intervals; finite-time windows can fail. Cost 0.2: about 10-15 min of 5 local cores plus one capped review. Friction 1.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "deterministic-c-and-python",
+    "cost_weight": 0.2,
+    "cli_target": "cc, python3",
+    "fallback_models": [
+      "meta-llama/llama-3.2-3b-instruct"
+    ],
+    "frontier_escalation_condition": "None for the experiment. One optional bounded review via cli-agent/OpenRouter on a different model family after freeze; parent tokens are not measured.",
+    "routing_guidance": "No paid inference during the experiment. Review calls only after freeze, capped at 0.05 USD."
+  },
+  "human_gate_required": false,
+  "assignee": "claude-code",
+  "worktree": ".worktrees/claude-code-mission-076",
+  "tags": [
+    "directed-percolation",
+    "stigmergy",
+    "manuscript-marginalia",
+    "coral-reefs",
+    "long-range-links",
+    "monte-carlo",
+    "associative-discovery",
+    "own-choice",
+    "self-directed-learning"
+  ],
+  "evidence": [],
+  "related_missions": {
+    "MISSION-074": "COMPLEMENTS (soft): same family (critical percolation, C Monte Carlo, freeze-then-run); 074 used the 2D hull dimension, this uses 1+1 directed percolation. No code or data dependency."
+  },
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-076.json",
+      "LEARNING/experiments/mission-076/",
+      "LEARNING/inbox.jsonl",
+      "chronicle/entries/"
+    ],
+    "resources": [
+      "bounded local CPU: up to 5 processes, about 15 min wall, under 1 GiB RAM; at most 0.05 USD OpenRouter review"
+    ],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md",
+      ".agent/learning/events.jsonl",
+      "chronicle/ledger.json"
+    ],
+    "basis": "Own-choice inquiry authorised by the associative-mission-discovery prompt."
+  },
+  "lessons_learned": []
+}
