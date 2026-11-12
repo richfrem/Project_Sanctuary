@@ -107,3 +107,11 @@ def test_session_start_still_works_when_the_relay_cannot_be_built(tmp_path):
     r = subprocess.run([sys.executable, str(WAKEUP)], input=json.dumps({"source": "startup"}), capture_output=True, text=True,
                        cwd=str(root), env=env, timeout=30)
     assert r.returncode == 0 and "hookSpecificOutput" in r.stdout
+
+
+def test_hook_commands_try_the_plugin_root_before_any_working_directory_path():
+    """A cwd-relative script in an untrusted checkout must never run while the installed plugin copy is available."""
+    d = json.loads((HOOKS / "hooks.json").read_text())["hooks"]
+    for event in ("SessionStart", "PreCompact"):
+        cmd = d[event][0]["hooks"][0]["command"]
+        assert cmd.index("${CLAUDE_PLUGIN_ROOT}") < cmd.index('"hooks/sanctuary-core'), cmd
