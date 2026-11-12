@@ -1,0 +1,60 @@
+{
+  "id": "MISSION-075",
+  "title": "Document the Forensic Code Auditor Skill in Project Sanctuary",
+  "status": "PROPOSED",
+  "execution_surface": "local",
+  "target_platform": "Documentation of the external skill at /Users/richardfremmerlid/Projects/forensic-code-auditor/.apm/skills/forensic-code-auditor (public repo richfrem/forensic-code-auditor); read-only on the source, writes only inside this repository",
+  "created_at": "2026-11-12T00:30:00Z",
+  "updated_at": "2026-11-12T00:30:00Z",
+  "confidence_reviewed": "2026-11-12",
+  "proposed_by": "claude-code",
+  "interest_statement": "Requested by Richard as a high-priority mission: document his forensic security auditor skill in this repository so Sanctuary agents and public readers can find what it is, when to use it, its evidence contracts, and its tested limits. Registration only; execution has not been started or authorized.",
+  "hypothesis": "A reader who has never seen the skill can, from the new Sanctuary documentation alone, answer: what the skill audits and what it excludes; the mandatory discovery gate and the Step 0 plus seven-step workflow; the four evidence levels and the separation of verification, assurance and severity; the review modes; which references, scripts, agents and tests ship with it; how it is installed and how it relates to the companion-repository ownership rule; and what its own TESTING.md says about benchmark limits. Every statement in the documentation traces to a file and line in the source at a recorded commit (currently 3087062).",
+  "falsification_criteria": "UNASSESSED if the source is unreadable or changes mid-run without a recorded commit. The mission fails if a spot-check of at least 15 randomly chosen claims in the documentation finds any that the cited source does not support, or if a required question above cannot be answered from the document. Documentation quality is assessed against these checks, not by reviewer agreement alone. Describing the skill is not evidence that it works: any claim of effectiveness must cite the skill's own TESTING.md and eval records and be labelled as reported there, not re-verified, unless this mission re-runs them under a separate authorization.",
+  "baseline_evidence": "Source inspected at registration only: skill directory listing, SKILL.md frontmatter and first 60 lines, README.md first 25 lines, git log (HEAD 3087062, PR #11). The skill is listed among global skills available to Sanctuary agents, but no Sanctuary document describes it (grep not yet run; to be done at start). The companion repository contains the generic skills; the source repo is a separate public repository.",
+  "experiment": "Phase 1: targeted related-work check in LEARNING and plugins; decide the documentation home (candidates: a LEARNING/concepts page plus a short pointer from the evaluating or guardian skill references, not a copy of the skill). Phase 2: read SKILL.md, instructions.md, ARCHITECTURE.md, TESTING.md, the analyst agent and reference index; list scripts and tests without running them. Phase 3: write the document with source file and line citations at a recorded commit. Phase 4: citation spot-check (at least 15 claims) and one bounded cross-family review. Phase 5: closeout per mission-execution rule. Running the skill's tests or auditing code with it is out of scope unless separately authorized.",
+  "scores": {
+    "strategic_leverage": 3,
+    "epistemic_depth": 2,
+    "cost_weight": 0.2,
+    "operational_friction": 1,
+    "priority_score": 30.0
+  },
+  "priority_score": 30.0,
+  "score_basis": "Planning estimates under the project formula (leverage x depth / (cost x friction)), not measured ROI. Leverage 3: durable discoverability of a security-review skill for agents and readers. Depth 2: documentation with verifiable citations, not new empirical knowledge. Cost 0.2, friction 1: local reading and writing. The requester designated this high priority; by the formula it ranks below MISSION-006/007/028 (100/80/80), and the score was not inflated to match the designation. Richard may override ordering.",
+  "model_routing": {
+    "cheapest_viable_tier": "free-local",
+    "recommended_model": "claude-sonnet-5-5",
+    "cost_weight": 0.2,
+    "cli_target": "claude",
+    "fallback_models": [
+      "qwen/qwen3-coder-next"
+    ],
+    "frontier_escalation_condition": "None expected. Optional bounded cross-family review via OpenRouter, capped at 0.05 USD.",
+    "routing_guidance": "Reading and writing documentation; no paid inference required except the optional review."
+  },
+  "verdict": null,
+  "human_gate_required": false,
+  "assignee": "claude-code",
+  "tags": [
+    "documentation",
+    "forensic-code-auditor",
+    "security-review",
+    "companion-skill",
+    "human-requested",
+    "high-priority"
+  ],
+  "evidence": [],
+  "related_missions": {},
+  "projected_impact": {
+    "paths": [
+      "LEARNING/missions/MISSION-075.json"
+    ],
+    "resources": [],
+    "shared_generated": [
+      "LEARNING/index.jsonl",
+      "LEARNING/backlog.md"
+    ],
+    "basis": "Registration only. Documentation paths will be declared when execution is authorized and the home is chosen."
+  }
+}
