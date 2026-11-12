@@ -1,9 +1,9 @@
 {
- "base_commit": "e5a5c61d45c7ceaf876b4cca54ee37c7d8cd28bc",
- "dataset_records": 1498,
+ "base_commit": "7417f758758a682043ee9aeb18d57f4adec1a4f3",
+ "dataset_records": 1499,
  "export_schema": "soul-coverage/1",
  "extractor_version": "2",
- "generated_at": "2026-11-12T05:13:14Z",
+ "generated_at": "2026-11-12T07:05:23Z",
  "index_record_id": "soul_index",
  "policy_sha256": "909b1cf3fa6f285a1db689b75e830806c6fbb82fd6ba1350341f6f0743d5c123",
  "policy_version": "1",
@@ -57,7 +57,7 @@
     "unchanged": 10,
     "updated": 4
    },
-   "bytes": 181630,
+   "bytes": 182048,
    "category": "event_ledger",
    "path": ".agent/learning/events.jsonl",
    "record_ids": [
@@ -83,17 +83,17 @@
     "7c4b23fdd16179eee5ed1e60d9c3c76c9f3b3866ae9e25d8d09cd57a656aba0a",
     "69e3760f672bc5b3b8bc27325c779c364e23af51afecd1f2dac2faf6cf2738d2",
     "c2a603a9b58f4cf9c841aae82e39fa891d9825ec044e3830ff037e23c0c4d4df",
-    "5c31e28d436ab6cef9bbcdd298dbc508e0560b1469db1acd8766dd1c694f42ba",
-    "8da30ac32f4c60adfd9ce80319e0f35d431157729b4e5adb8c433fd6e77ac8d0",
-    "d8a82e795ccd0700ca994a7c001cd88c02fe7a7e7e747f10bd57c1dce27ec230",
-    "b16f2dc84ae4ed2e1ced7e9d602d4150a7fcf826c90bf9a99c43eaa1f1e79f7c",
+    "9e592c252c4f4b512777fd8982683a6cbdb8d7b164f94f821453a75d9fa3bb8e",
+    "00a168a11532fe7ddea7e1d39bed9077859ba9d431378380a0dc47b9b9416f53",
+    "c4d3cf1b7e822c3c3968138709c366f9766062cf780a8dc3daa917de19189d9d",
+    "296390dcf3f893b50958edd9972ddabfd10c6feaaef0647be663caaf288c5bcb",
     "f46672e296fac72a5c414db5526cd46dade84e3cddb23d3685c1dd1aabbb6a01",
     "8d5e240b2c41206c0f3625e0678ba2ec31bc625634374dac7579a3acbd1c6a47",
     "cffc5a51ed4d422714650dcd0f28b2c92802fa4766417eeed22004dccd88c568",
     "d2e4427b362f08a1f705a14122e391d9762dff77ef90595fd8db2f222ca30cc9"
    ],
    "required": true,
-   "source_sha256": "a0d71b96eb7cc2983fa7637bcf96163d3d6017c4c1870ad84f08ffb4ed666c29",
+   "source_sha256": "1769efed378dcc6e1e7f4ddabcc5e0fff2402ced1037bb389e15cb1145cdaf3e",
    "status": "included"
   },
   {
@@ -123,12 +123,12 @@
    "status": "included"
   },
   {
-   "bytes": 27264,
+   "bytes": 28400,
    "category": "sync_receipts",
    "path": ".agent/learning/soul_sync_receipts.jsonl",
    "reason": "local publication receipts (they describe the dataset, they are not learning content)",
    "required": false,
-   "source_sha256": "86f3259f205197ef6f13ccde6186368e49e21dc6cd09a835cd85bc31669993fd",
+   "source_sha256": "7dfddfefd59b13688f99c65062a3ef371576481ae217a466fde49ef1daf98d05",
    "status": "excluded"
   },
   {
@@ -40791,12 +40791,29 @@
    "status": "included"
   },
   {
-   "bytes": 100471,
+   "action": {
+    "added": 1
+   },
+   "bytes": 5258,
+   "category": "chronicle",
+   "path": "chronicle/entries/395_checking_claims_against_raw_data_and_the_agents_own_errors_in_doing_it.md",
+   "record_ids": [
+    "chronicle_entries_395_checking_claims_against_raw_data_and_the_agents_own_errors_in_doing_it"
+   ],
+   "record_sha256": [
+    "d280c138f52663ee34834fc8c06c5630d5610440e6a066b8f103c4cc336b95c6"
+   ],
+   "required": true,
+   "source_sha256": "be066a58f2693ef540f4ba4f45bbec9a49b1c499aa12b45a9edec42eae4b76dd",
+   "status": "included"
+  },
+  {
+   "bytes": 100743,
    "category": "derived_projections",
    "path": "chronicle/ledger.json",
    "reason": "derived from events.jsonl or manifests and regenerable (the underlying events/manifests are preserved)",
    "required": false,
-   "source_sha256": "d62e8a74c888d018b8d8f08aa00dacf75e917bee5826f9bf18b429ad59c45e9e",
+   "source_sha256": "633c5abf5a75fcd0a96633b5ddabcee419cac4341534955f5c7e16b56ac62966",
    "status": "excluded"
   },
   {
@@ -45140,11 +45157,11 @@
     "required": false
    },
    "chronicle": {
-    "discovered": 387,
+    "discovered": 388,
     "excluded": 0,
     "excluded_sensitive": 0,
     "failed": 0,
-    "included": 387,
+    "included": 388,
     "required": true
    },
    "curated_memory_identity": {
