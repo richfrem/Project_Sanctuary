@@ -1,6 +1,13 @@
 {
-  "total_entries": 386,
+  "total_entries": 387,
   "entries": [
+    {
+      "id": 395,
+      "title": "Checking claims against raw data, and the agent's own errors in doing it",
+      "filename": "395_checking_claims_against_raw_data_and_the_agents_own_errors_in_doing_it.md",
+      "date": "2026-11-12",
+      "status": "Final"
+    },
     {
       "id": 394,
       "title": "Cross-references rescue a dying tradition sooner than local help, when the help is small",
