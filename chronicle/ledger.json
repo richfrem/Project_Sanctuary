@@ -1,6 +1,13 @@
 {
-  "total_entries": 385,
+  "total_entries": 386,
   "entries": [
+    {
+      "id": 394,
+      "title": "Cross-references rescue a dying tradition sooner than local help, when the help is small",
+      "filename": "394_cross_references_rescue_a_dying_tradition_sooner_than_local_help_when_the_help_is_small.md",
+      "date": "2026-11-11",
+      "status": "Final"
+    },
     {
       "id": 393,
       "title": "Random Truchet Tiles Are Critical Percolation, Even When Biased",

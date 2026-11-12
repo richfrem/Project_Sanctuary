@@ -1,0 +1,30 @@
+{
+ "frozen_at": "2026-11-12 before held-out run",
+ "files": {
+  "sim.c": "bbd18e81292af9bf353c0b4efc36b030c4b7c1962223c0d66d8a0ce3eb58dfc6",
+  "gate.py": "d8ce7d29eaba66857935c37541cee7ad96d12cf9ecc9dcc1dd3c66679cb4ddcb",
+  "analyze.py": "217ef0d04e08ce4772839701f3bf51070d9686003bb06a63f5785a50de0a297c",
+  "run_heldout.sh": "bdfc69d2a1fe7aad6ad92a5c7bcf48efb003dbd68a1fca5970a84c5f03d9a29f",
+  "run_dev.sh": "9668bc115014ebebc427be07afb3776a6241b75fa3fcc6e8f8c8d14507d58a36",
+  "protocol.md": "6cfeb9c29b0a2eff80435c9e5e27884dc955ea1cd2991d2cc61420801d112f2b",
+  "discovery.md": "c987f2f98652bc6b55900fbce41bb88f7953c199bcf83948969297ef9887804b",
+  "dev/base.csv": "071937d9abfa98f1b3e36877bd64c99ea043f73e3b47dc055575a80fcc12f3c9",
+  "dev/lr_0.001.csv": "d59d90c90d427d73dbe30f8bb930920a34d8787d5e34f1c56892dfdf4aac3bac",
+  "dev/lr_0.003.csv": "3042df54ba4af318738774cb439fcdfe369665ad78cd6abce4f40493b3d175e8",
+  "dev/lr_0.01.csv": "a854f8eed1f12425a9bd0fe87fc8face4e51cbdb77dc929f6f0eb230522565af",
+  "dev/lr_0.03.csv": "02ab77c799e7a7a994f5807e5eecdc11796a8c198ed1bff5ebd0eb1136906022",
+  "dev/lr_0.1.csv": "c5a16eb2890cfe7219c8e69cdcbb1d88e3c1fb7791825d2d3f4f932f5a1cc7d0",
+  "dev/nn_0.01.csv": "c280e0e4a41fd39c69a9f8adf77e9f66aeca6268b08a5e0f906343681ce3e8ce",
+  "dev/nn_0.03.csv": "9ce5c4518caf89036a386a0de0dfd3ed928287a8e90e2f323d06555029c31983",
+  "dev/nn_0.1.csv": "4a9cc69895625e0bfc0cc4886dfc0d4b068b3c982a2fd97f038630f707ee11c0"
+ },
+ "heldout_seed_base": 7600,
+ "dev_seed_base": 100,
+ "forecasts": {
+  "G": 0.95,
+  "H1": 0.9,
+  "H2": 0.55,
+  "H3": 0.55,
+  "H4": 0.5
+ }
+}
