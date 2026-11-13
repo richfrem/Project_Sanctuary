@@ -1,41 +1,41 @@
 # arXiv Daily Digest
 
-Generated 2026-11-11 07:00 MST from the 5 newest cs.AI submissions.
+Generated 2026-11-13 07:16 MST from the 5 newest cs.AI submissions.
 
 ## Overview
 
-Newest titles: Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training; Toward Foundation Detection Models via Example-Based Grounding in EM-DETR; Contrastive Discovery: Open-Ended Scientific Discovery over Competing Explanations; Comparative Analysis of Agent Evaluation Frameworks: Stability, Detection, and Discovery in Enterprise Analytics Agents; ReTrace: Distilling Tool-Using Agents into Planner-Free Workflows.
+Newest titles: AgentSSL: Can MLE Agents Leverage Unlabeled Data?; CoReMem: Cost-Internalizing Memory for Successive Coding Tasks with Prospective Valuation; Sketching Language Models for Context Attribution; Classical Energies Learn to Reason 1,000x Faster than Looped Models; Consistent Video-to-Video Translation via Explicit Correspondences.
 
 ## Papers
 
-### 1. Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training
+### 1. AgentSSL: Can MLE Agents Leverage Unlabeled Data?
 
-- Link: http://arxiv.org/abs/2611.14519v1
-- Summary: Foundation models pretrained on large natural-image collections are increasingly adapted for medical image segmentation, in the expectation that they will replace models trained for each task. Most comparisons, however, use data from the training distribution and a single task-specific baseline whose configuration is rarely justified, and therefore provide limited evidence of performance at new clinical sites.
+- Link: http://arxiv.org/abs/2611.17323v1
+- Summary: Applying machine learning systems to new domains introduces bottlenecks in both labeled data acquisition and manual pipeline engineering. While recent MLE agents show promise in automating pipeline design, they have been studied almost exclusively in fully supervised settings, leaving them untested in realistic regimes where labeled data is scarce but unlabeled data is abundant.
 
-### 2. Toward Foundation Detection Models via Example-Based Grounding in EM-DETR
+### 2. CoReMem: Cost-Internalizing Memory for Successive Coding Tasks with Prospective Valuation
 
-- Link: http://arxiv.org/abs/2611.14518v1
-- Summary: DeepLearning (DL)-based Computer-Aided Diagnostic (CAD) systems have shown great promise in supporting clinicians, but their performance heavily depends on the availability of large, well-annotated datasets. In medical lesion detection, the scarcity of comprehensive, stan dardized annotations and the heterogeneity of existing datasets limit the development of robust foundation models.
+- Link: http://arxiv.org/abs/2611.17316v1
+- Summary: Coding agents tackle successive tasks on an evolving repository, carrying forward edits and writing memory before the next task is known. Selecting memory for unknown next tasks requires balancing future usefulness against the costs of writing and reading it.
 
-### 3. Contrastive Discovery: Open-Ended Scientific Discovery over Competing Explanations
+### 3. Sketching Language Models for Context Attribution
 
-- Link: http://arxiv.org/abs/2611.14514v1
-- Summary: LLM agents are increasingly used for open-ended, data-driven scientific discovery, yet most of them evaluate hypotheses pointwise, testing an empirical claim $h$ only against its complement $\neg h$. When evidence rejects $h$, the agent learns that one explanation is unlikely but not which alternative the evidence supports.
+- Link: http://arxiv.org/abs/2611.17313v1
+- Summary: Context attribution asks how removing parts of a prompt changes a language model's output. We study leave-one-out (LOO) attribution for a prompt of $n$ tokens and a fixed measurement function.
 
-### 4. Comparative Analysis of Agent Evaluation Frameworks: Stability, Detection, and Discovery in Enterprise Analytics Agents
+### 4. Classical Energies Learn to Reason 1,000x Faster than Looped Models
 
-- Link: http://arxiv.org/abs/2611.14493v1
-- Summary: Deploying LLM-based analytics agents in enterprise settings requires evaluation frameworks that can reliably detect failures across complex, multi-tool workflows. We present a three-phase comparative study of three evaluation frameworks, each representing a distinct evaluation paradigm (trace-based LLM judging, text-only LLM judging with red-teaming, and deterministic heuristics), applied to two analytics agents in a controlled research setting using frozen execution traces.
+- Link: http://arxiv.org/abs/2611.17309v1
+- Summary: Looped models have emerged as a prominent paradigm for reasoning, with successes on simple reasoning puzzles such as Sudoku-Extreme and Maze-Unique. However, these models can be unstable, slow to train, and use many parameters and FLOPs to solve simple puzzles.
 
-### 5. ReTrace: Distilling Tool-Using Agents into Planner-Free Workflows
+### 5. Consistent Video-to-Video Translation via Explicit Correspondences
 
-- Link: http://arxiv.org/abs/2611.14492v1
-- Summary: Business process automation runs the same Standard Operating Procedure (SOP) again and again on new inputs. Large Language Model (LLM) agents can follow an SOP written in natural language, but they call an LLM to choose every step of every run, which adds latency and cost at scale.
+- Link: http://arxiv.org/abs/2611.17298v1
+- Summary: Interactive video-to-video applications require real-time generation while maintaining long-range temporal consistency. However, recent methods achieve speed by restricting attention to a fixed-length causal window.
 
 ## Candidate Mission Ideas
 
 Unstarted seeds generated from titles; review before registering anything.
 
-- Test the central claim of "Medical Image Segmentation: Foundation Model Adaptation versus Task-Specific Training" (http://arxiv.org/abs/2611.14519v1) on a small local reproduction, and record whether it holds.
-- Test the central claim of "Toward Foundation Detection Models via Example-Based Grounding in EM-DETR" (http://arxiv.org/abs/2611.14518v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "AgentSSL: Can MLE Agents Leverage Unlabeled Data?" (http://arxiv.org/abs/2611.17323v1) on a small local reproduction, and record whether it holds.
+- Test the central claim of "CoReMem: Cost-Internalizing Memory for Successive Coding Tasks with Prospective Valuation" (http://arxiv.org/abs/2611.17316v1) on a small local reproduction, and record whether it holds.
